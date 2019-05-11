@@ -1,0 +1,145 @@
+<CommQry title="TRewJ04CustomerPId" navigate="TRewJ04CustomerPId" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.J04Getter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="adminClientId" desc="客户号" edittype="text" datatype="string" xpath="/adminClientId" />
+        <Field id="contactName" desc="客户名称" edittype="text" datatype="string"
+        xpath="/contactName" />
+        <Field id="contactCode" desc="客户类型" edittype="text" datatype="string"
+        xpath="/contactCode" />
+        <Field id="genderTpCd" desc="性别" edittype="select" translated="LIST:1,男;0,女" datatype="string"
+        xpath="/genderTpCd" />
+	<Field id="aa" desc="证件类型" edittype="text" datatype="string" xpath="/aa" />
+	<Field id="aaa" desc="证件号码" edittype="text" datatype="string" xpath="/aa" />
+	<Field id="aaaa" desc="证件号码" edittype="text" datatype="string" xpath="/aa" />
+	<Field id="aaaaa" desc="签发机构" edittype="text" datatype="string" xpath="/aa" />
+		<Field id="bonCountryTpCd" desc="国籍" edittype="text" datatype="string"
+        xpath="/bonCountryTpCd" />
+        <Field id="nativeplace" desc="户籍" edittype="text" datatype="string"
+        xpath="/nativeplace" />
+        <Field id="maritalTpCd" desc="婚姻状态" edittype="text" datatype="string"
+        xpath="/maritalTpCd" />
+        <Field id="orgName" desc="单位名称"  datatype="string" edittype="text"
+        xpath="/orgName" />
+	<Field id="aaaaaa" desc="员工标识" edittype="text" datatype="string" xpath="/aa" />
+		<Field id="localInd" desc="本地客户标识" edittype="text" datatype="string"
+        xpath="/localInd" />
+        <Field id="bankStockholderInd" desc="本行股东标识" edittype="text" datatype="string"
+        xpath="/bankStockholderInd" />
+        <Field id="hostOrg" desc="所属机构" edittype="text" datatype="string"
+        xpath="/hostOrg" />
+        
+        <!--
+        <Field id="clientSubTpCd" desc="" edittype="text" datatype="string"
+        xpath="/clientSubTpCd" />
+        <Field id="contactTypeCode" desc="" edittype="text" datatype="string"
+        xpath="/contactTypeCode" />
+        <Field id="organkey" desc="" edittype="text" datatype="string"
+        xpath="/organkey" />
+        <Field id="createUser" desc="" edittype="text" datatype="string"
+        xpath="/createUser" />
+        <Field id="createDt" desc="" edittype="text" datatype="string"
+        xpath="/createDt" />
+        <Field id="clientStTpCd" desc="" edittype="text" datatype="string"
+        xpath="/clientStTpCd" />
+        <Field id="clientSt2TpCd" desc="" edittype="text" datatype="string"
+        xpath="/clientSt2TpCd" />
+        <Field id="clientSt3TpCd" desc="" edittype="text" datatype="string"
+        xpath="/clientSt3TpCd" />
+        <Field id="onlineBankInd" desc="" edittype="text" datatype="string"
+        xpath="/onlineBankInd" />
+        <Field id="dwellerInd" desc="" edittype="text" datatype="string"
+        xpath="/dwellerInd" />
+        <Field id="langTpCd" desc="" edittype="text" datatype="string"
+        xpath="/langTpCd" />
+        <Field id="custLevelTpCd" desc="" edittype="text" datatype="string"
+        xpath="/custLevelTpCd" />
+        <Field id="networkCheckInd" desc="" edittype="text" datatype="string"
+        xpath="/networkCheckInd" />
+        <Field id="infoOverInd" desc="" edittype="text" datatype="string"
+        xpath="/infoOverInd" />
+        <Field id="preCountryTpCd" desc="" edittype="text" datatype="string"
+        xpath="/preCountryTpCd" />
+        <Field id="recheckInd" desc="" edittype="text" datatype="string"
+        xpath="/recheckInd" />
+        <Field id="creditLevelTpCd" desc="" edittype="text" datatype="string"
+        xpath="/creditLevelTpCd" />
+        <Field id="hasExBizInd" desc="" edittype="text" datatype="string"
+        xpath="/hasExBizInd" />
+        <Field id="nativeplace" desc="" edittype="text" datatype="string"
+        xpath="/nativeplace" />
+        <Field id="highestEduTpCd" desc="" edittype="text" datatype="string"
+        xpath="/highestEduTpCd" />
+        <Field id="birthDt" desc="" edittype="text" datatype="string"
+        xpath="/birthDt" />
+        <Field id="deceasedDt" desc="" edittype="text" datatype="string"
+        xpath="/deceasedDt" />
+        <Field id="loadInd" desc="" edittype="text" datatype="string"
+        xpath="/loadInd" />
+        <Field id="holdboxInd" desc="" edittype="text" datatype="string"
+        xpath="/holdboxInd" />
+        <Field id="degreeTpCd" desc="" edittype="text" datatype="string"
+        xpath="/degreeTpCd" />
+        <Field id="industryTpCd" desc="" edittype="text" datatype="string"
+        xpath="/industryTpCd" />
+        <Field id="orgStatus" desc="" edittype="text" datatype="string"
+        xpath="/orgStatus" />
+        <Field id="scaleTpCd" desc="" edittype="text" datatype="string"
+        xpath="/scaleTpCd" />
+        <Field id="hiredDt" desc="" edittype="text" datatype="string"
+        xpath="/hiredDt" />
+        <Field id="occupationTpCd" desc="" edittype="text" datatype="string"
+        xpath="/occupationTpCd" />
+        <Field id="positionTpCd" desc="" edittype="text" datatype="string"
+        xpath="/positionTpCd" />
+        <Field id="titleTpCd" desc="" edittype="text" datatype="string"
+        xpath="/titleTpCd" />
+        <Field id="bankStaffInd" desc="" edittype="text" datatype="string"
+        xpath="/bankStaffInd" />
+        <Field id="nationTpCd" desc="" edittype="text" datatype="string"
+        xpath="/nationTpCd" />
+        <Field id="incomeSrcScopeTpCd" desc="" edittype="text" datatype="string"
+        xpath="/incomeSrcScopeTpCd" />
+        <Field id="acceptMsgInd" desc="" edittype="text" datatype="string"
+        xpath="/acceptMsgInd" />
+        <Field id="rankTpCd" desc="" edittype="text" datatype="string"
+        xpath="/rankTpCd" />
+        <Field id="blankspace1" desc="" edittype="text" datatype="string"
+        xpath="/blankspace1" />
+        <Field id="blankspace2" desc="" edittype="text" datatype="string"
+        xpath="/blankspace2" />
+        <Field id="blankspace3" desc="" edittype="text" datatype="string"
+        xpath="/blankspace3" />
+        <Field id="lastUpdateOrg" desc="" edittype="text" datatype="string"
+        xpath="/lastUpdateOrg" />
+        <Field id="lastUpdateUser" desc="" edittype="text" datatype="string"
+        xpath="/lastUpdateUser" />
+        <Field id="lastUpdateDt" desc="" edittype="text" datatype="string"
+        xpath="/lastUpdateDt" />
+        <Field id="lastUpdateTxId" desc="" edittype="text" datatype="string"
+        xpath="/lastUpdateTxId" />
+        <Field id="contactName" desc="" edittype="text" datatype="string"
+        xpath="/contactName" />
+        <Field id="idTpCd" desc="" edittype="text" datatype="string" xpath="/idTpCd" />
+        <Field id="refNum" desc="" edittype="text" datatype="string" xpath="/refNum" />
+        <Field id="address" desc="" edittype="text" datatype="string"
+        xpath="/address" />
+        <Field id="issueOrg" desc="" edittype="text" datatype="string"
+        xpath="/issueOrg" />
+        <Field id="issueDt" desc="" edittype="text" datatype="string"
+        xpath="/issueDt" />
+        <Field id="picId" desc="" edittype="text" datatype="string" xpath="/picId" />
+        <Field id="expiryDt" desc="" edittype="text" datatype="string"
+        xpath="/expiryDt" />
+        <Field id="freeTradeAreaFlag" desc="" edittype="text" datatype="string"
+        xpath="/freeTradeAreaFlag" />
+        <Field id="nationalEconomyDepartTpCd" desc="" edittype="text" datatype="string"
+        xpath="/nationalEconomyDepartTpCd" />
+        <Field id="warnId" desc="预警表ID" edittype="text" datatype="string"
+        xpath="/warnId" />
+        <Field id="dataDt" desc="数据日期" edittype="text" datatype="date"
+        xpath="/dataDt" />-->
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

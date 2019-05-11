@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 用于直接生成SQL语句，支持同步和异步提交 -->
+<!-- title:标题 navigate:导航信息 type:方式（sql|call) interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号 transdataactionurl:数据整理URL txnlogflag:true记录日志 async:异步提交标志
+	pagesize:页面显示记录数(缺省为10) -->
+<CommQry title="UndoConfirm.title" navigate="系统维护 &gt; 主管确认 &gt; 待办事项"
+	type="call" interface="true" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do" txnlogflag="true"
+	getterclassname="com.huateng.ebank.business.databak.getter.RecoverBakFileGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示 -->
+		<Field id="filePath" desc="文件名称" status="F" size="256"
+			require="" readonly="true" edittype="text" datatype="string"
+			tip="文件名称" xpath="/filePath" />
+		<Field id="fileSize" desc="文件大小" status="F" size="32"
+			require="" readonly="true" edittype="text" datatype="string"
+			tip="文件大小" xpath="/fileSize" />
+		<Field id="lastModifyTime" desc="备份时间" status="F" size="32"
+			require="" readonly="true" edittype="date" datatype="timestamp"
+			tip="备份时间" xpath="/lastModifyTime" />
+		<Field id="exits" desc="是否存在备份文件" require="" edittype="radio" readonly="true"
+			translated="DATA_DIC.8000"  datatype="string"  size="1" default="N"
+			tip="是否存在备份文件" xpath="/exits"/>
+		<Field id="recoverReason" desc="恢复原因" status="F" size="512"
+			require="true" readonly="" edittype="textarea" datatype="string"
+			tip="恢复原因" xpath="/recoverReason" />
+	</Fields>
+	<Where>
+	</Where>
+	<Operations>
+		<Button id="btDone" name="btDone" desc="执行恢复" operation="asysubmit"
+			updateClass="com.huateng.ebank.business.databak.updater.RecoverBakFileUpdate"
+			url="/common/success.jsp?type=databak" txn="" />
+	</Operations>
+
+
+</CommQry>

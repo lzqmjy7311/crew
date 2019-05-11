@@ -1,0 +1,111 @@
+package com.gbicc.company.warnDisposal.getter;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.util.StringUtils;
+
+import com.gbicc.company.warnDisposal.entity.TCmCustomer;
+import com.gbicc.company.warnDisposal.entity.TCmWarnTask;
+import com.gbicc.company.warnDisposal.service.TCmWarnTaskService;
+import com.gbicc.warn.ComninationWarn.entity.TCwCreditAssetsMonitor;
+import com.huateng.common.err.Module;
+import com.huateng.common.err.Rescode;
+import com.huateng.commquery.result.Result;
+import com.huateng.commquery.result.ResultMng;
+import com.huateng.ebank.business.common.DAOUtils;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.business.common.PageQueryCondition;
+import com.huateng.ebank.business.common.PageQueryResult;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.framework.operation.orm.HQLDAO;
+import com.huateng.ebank.framework.util.ApplicationContextUtils;
+import com.huateng.ebank.framework.web.commQuery.BaseGetter;
+import com.huateng.exception.AppException;
+
+@SuppressWarnings("unchecked")
+public class TCmCustomerListGetter extends BaseGetter {
+
+	@Override
+	public Result call() throws AppException {
+		try {
+			PageQueryResult pageResult = getData();
+			ResultMng.fillResultByList(getCommonQueryBean(),
+					getCommQueryServletRequest(), pageResult.getQueryResult(),
+					getResult());
+			result.setContent(pageResult.getQueryResult());
+			result.getPage().setTotalPage(
+					pageResult.getPageCount(getResult().getPage()
+							.getEveryPage()));
+			result.init();
+			return result;
+		} catch (AppException appEx) {
+			throw appEx;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			throw new AppException(Module.SYSTEM_MODULE,
+					Rescode.DEFAULT_RESCODE, ex.getMessage(), ex);
+		}
+	}
+
+	protected PageQueryResult getData() throws Exception {
+		String custcode = (String) getCommQueryServletRequest().getParameterMap().get("custcode");
+		String custname = (String) getCommQueryServletRequest().getParameterMap().get("custname");
+		// 分页大小
+		int pageSize = getResult().getPage().getEveryPage();
+		// 页码
+		int pageIndex = getResult().getPage().getCurrentPage();
+
+		StringBuffer sbf = new StringBuffer("");
+		sbf.append(" SELECT ROWNUMBER() OVER()  AS ROWNUM,I.CUSTOMER_NUM AS \"id\",");
+		sbf.append(" I.CUSTOMER_NUM AS \"custcode\",");
+		sbf.append(" C.CHINESE_NAME AS \"custname\",");
+		sbf.append(" D.WARN_Y_LEVEL AS \"custWarnLevel\",");
+		sbf.append(" I.CORE_HANDLING_ORG_CD AS \"operBank\",");
+		sbf.append(" I.CUST_MANAGER_ID AS \"operator\",");
+		sbf.append(" I.ADVANCE_AMOUNT AS \"loanAmount\",");
+		sbf.append(" I.ADVANCE_BALANCE AS \"loanBalance\",");
+		sbf.append(" C.BUSINESS_LICENSE_NUM AS \"businessCode\",");
+		sbf.append(" I.CORPORATIVE  AS \"legalRep\"");
+		sbf.append(" FROM T_ODS_CMS_CORP_INDEX I LEFT JOIN T_ODS_CMS_CORPORATION C ON I.CUSTOMER_NUM=C.CUSTOMER_NUM ");
+		sbf.append(" LEFT JOIN (SELECT * FROM (SELECT ROW_NUMBER() OVER(PARTITION BY TM.CUSTOMER_NUM ORDER BY TM.WARN_DATE DESC) R,TM.CUSTOMER_NUM,TM.WARN_Y_LEVEL FROM T_CM_CUSTOMER_WARN_LEV_DTL TM) TN WHERE TN.R=1) D ON I.CUSTOMER_NUM=D.CUSTOMER_NUM ");
+		sbf.append(" WHERE 1=1 ");
+		
+		StringBuffer sbfCount = new StringBuffer("");
+		sbfCount.append(" SELECT COUNT(1) AS \"SCOUNT\" FROM T_ODS_CMS_CORP_INDEX I LEFT JOIN T_ODS_CMS_CORPORATION C ON I.CUSTOMER_NUM=C.CUSTOMER_NUM");
+		sbfCount.append(" LEFT JOIN (SELECT * FROM (SELECT ROW_NUMBER() OVER(PARTITION BY TM.CUSTOMER_NUM ORDER BY TM.WARN_DATE DESC) R,TM.CUSTOMER_NUM,TM.WARN_Y_LEVEL FROM T_CM_CUSTOMER_WARN_LEV_DTL TM) TN WHERE TN.R=1) D ON I.CUSTOMER_NUM=D.CUSTOMER_NUM ");
+		sbfCount.append(" WHERE 1=1 ");
+		GlobalInfo info=GlobalInfo.getCurrentInstance();
+		String userId=info.getTlrno();
+		sbf.append("  AND I.CUST_MANAGER_ID='"+userId+"'");
+		sbfCount.append("  AND I.CUST_MANAGER_ID='"+userId+"'");
+		if(StringUtils.hasText(custname)){
+			sbf.append(" AND C.CHINESE_NAME like '%"+custname+"%'");
+			sbfCount.append(" AND C.CHINESE_NAME like '%"+custname+"%'");
+		}
+		if(StringUtils.hasText(custcode)){
+			sbf.append(" and I.CUSTOMER_NUM like '%"+custcode+"%'");
+			sbfCount.append(" and I.CUSTOMER_NUM like '%"+custcode+"%'");
+		}
+		sbf.append(" AND ROWNUM>="+((pageIndex-1)*pageSize+1)+" AND ROWNUM<="+(pageIndex*pageSize));
+		
+		String sql= sbf.toString();
+		System.out.println("TCmCustomerListGetter 客户列表查询------------"+sql);
+		JdbcTemplate jdbcTemplate=(JdbcTemplate) ApplicationContextUtils.getBean("JdbcTemplate");
+		
+		PageQueryResult pageQueryResult=new PageQueryResult();
+		List<TCmCustomer> listTT=jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(TCmCustomer.class));
+		List<Map<String,Object>> list=jdbcTemplate.queryForList(sbfCount.toString());
+		for(Map<String,Object> map:list){
+			pageQueryResult.setTotalCount((Integer)map.get("SCOUNT"));
+		}
+		//List<TCmCustomer> countList=jdbcTemplate.query(countSql, BeanPropertyRowMapper.newInstance(TCmCustomer.class));
+		pageQueryResult.setQueryResult(listTT);
+		return pageQueryResult;
+	}
+}

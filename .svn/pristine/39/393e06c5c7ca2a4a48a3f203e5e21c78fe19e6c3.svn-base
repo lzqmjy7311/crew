@@ -1,0 +1,27 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign typeId="${RequestParameters['typeId']?default('')}" />
+<#assign fdDate="${RequestParameters['fdDate']?default('')}" />
+<#assign customerNum="${RequestParameters['customerNum']?default('')}" />
+<@CommonQueryMacro.page title="工商严重违法">
+<@CommonQueryMacro.CommonQuery id="TDataGsxtIcIllegal" init="false" submitMode="selected" navigate="false">
+
+<table align="left" width="100%">
+	<tr>
+		<td>
+			<@CommonQueryMacro.DataTable id ="datatable1" fieldStr="companyName,registorNo,legalName,certNo,fdInIllegalReson,fdInIllegalDate,fdOutIllegalReson,fdOutIllegalDate,fdDecisionOrg,enterStatus,busstartDate,busendDate,busscope,registorAmt,enterOrg,address,checkDate,shareHolder"  readonly="true" width="100%"/></br>
+		</td>
+	</tr>
+</table>
+</@CommonQueryMacro.CommonQuery>
+<script language="JavaScript">
+var customerNum='${customerNum}';
+function initCallGetter_post(){
+	var typeId='${typeId}';
+	var fdDate='${fdDate}';
+	TDataGsxtIcIllegal_dataset.setParameter("typeid",typeId);
+	TDataGsxtIcIllegal_dataset.setParameter("data",fdDate);
+	TDataGsxtIcIllegal_dataset.setParameter("relaId",customerNum);
+	TDataGsxtIcIllegal_dataset.flushData();
+}
+</script>
+</@CommonQueryMacro.page>

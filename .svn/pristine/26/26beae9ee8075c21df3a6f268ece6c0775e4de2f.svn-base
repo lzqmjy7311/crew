@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="操作员密码修改" navigate="主页 &gt; 操作员密码修改 &gt; 操作员密码重置"
+	type="call" interface="false" pagesize="5" async="true"
+	databusid="DEMO" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.management.getter.ChangePwdGetter">
+	<Include id="BankParam" />
+
+	<Fields>
+
+		<Field id="tlrno" desc="操作员号" status="F" method="None" colspan="4" width="150"
+			require="true" primary="true" type="String" size="8" default="" xpath=""
+			tip="操作员号" />
+
+<!--		<Field id="newpwd" desc="新密码" status="F" method="None" colspan="2" edittype="password"-->
+<!--			primary="true" type="String" size="6" default="" xpath="/newpwd"-->
+<!--			tip="新密码" />-->
+
+<!--		<Field id="newpwdc" desc="确认新密码" status="F" method="None" colspan="2" edittype="password"-->
+<!--			primary="true" type="String" size="6" default="" xpath="/newpwdc"-->
+<!--			tip="确认新密码" />-->
+	</Fields>
+
+	<Where>
+
+	</Where>
+	<Operations>
+		<!-- operation( addrecord:delrecord:syncsubmit:asyncqrysubmit:asyncupadasubmit ) -->
+<!--		<Button id="btSave" name="btSave" desc="确定"-->
+<!--			operation="asysubmit" updateClass="com.huateng.ebank.business.parammng.update.ChgPwdAdmin1Update" url="" txn="" />-->
+
+		<Button id="btUpd" name="btUpd" desc="重置为默认密码"
+			operation="asysubmit" updateClass="com.huateng.ebank.business.management.updater.PasswordResetUpdate"
+			url="/common/success.jsp" txn="" />
+	</Operations>
+	<Sql></Sql>
+</CommQry>

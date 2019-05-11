@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "/WEB-INF/dtd/spring-beans-2.0.dtd">
+
+<beans>
+
+	<bean id="GetSeqnoGenerator"
+		class="com.huateng.ebank.business.common.generator.GetSeqnoGenerator">
+		<property name="id">
+			<value>GetSeqnoGenerator</value>
+		</property>
+		<property name="desc">
+			<value>序号生成器</value>
+		</property>
+	</bean>
+	<bean id="GetBrcodeIDGenerator"
+		class="com.huateng.ebank.business.common.generator.GetBrcodeIDGenerator">
+		<property name="id">
+			<value>GetBrcodeIDGenerator</value>
+		</property>
+		<property name="desc">
+			<value>生成机构编号</value>
+		</property>
+	</bean>
+
+		<bean id="GetCustcdGenerator"
+		class="com.huateng.ebank.business.common.generator.GetCustcdGenerator">
+		<property name="id">
+			<value>GetCustcdGenerator</value>
+		</property>
+		<property name="desc">
+			<value>生成法人客户内部编码</value>
+		</property>
+	</bean>
+
+	<bean id="GetCustomerInfractIdGenerator"
+		class="com.huateng.ebank.business.common.generator.GetCustomerInfractIdGenerator">
+		<property name="id">
+			<value>GetCustomerInfractIdGenerator</value>
+		</property>
+		<property name="desc">
+			<value>生成客户不良信息序号</value>
+		</property>
+	</bean>
+
+	<bean id="GetAppnoGenerator"
+		class="com.huateng.ebank.business.common.generator.GetAppnoGenerator">
+		<property name="id">
+			<value>GetAppnoGenerator</value>
+		</property>
+		<property name="desc">
+			<value>生成申请编号</value>
+		</property>
+	</bean>
+
+	<bean id="GetSysTaskNoGentator"
+		class="com.huateng.report.common.generator.GetSysTaskNoGentator">
+		<property name="id">
+			<value>GetSysTaskNoGentator</value>
+		</property>
+		<property name="desc">
+			<value>生成复核任务表序号</value>
+		</property>
+	</bean>
+
+	<bean id="GetDataSeqGenerator" class="com.huateng.hibernate.dialect.seq.HTCommonDialectSeq">
+		<property name="id">
+			<value>GetDataSeqGenerator</value>
+		</property>
+		<property name="desc">
+			<value>数据库序号生成器</value>
+		</property>
+		<property name="sequenceList">
+			<list>
+				<value>SEQ_BIZ_LOG_TLSRNO</value>
+			</list>
+		</property>
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+</beans>

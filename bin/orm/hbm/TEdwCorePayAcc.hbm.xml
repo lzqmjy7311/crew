@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-1-22 9:51:18 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.view.accountpage.entity.TEdwCorePayAcc" table="T_EDW_CORE_PAY_ACC" schema="ECUSER">
+        <comment>核心存款账户表</comment>
+            <id name="membCustAc" type="string">
+                <column name="MEMB_CUST_AC" length="30" />
+            </id>
+            <property name="oldAcctNo" type="string">
+                <column name="OLD_ACCT_NO" length="16" />
+            </property>
+            <property name="branchNo" type="string">
+                <column name="BRANCH_NO" length="5" />
+            </property>
+            <property name="currStatus" type="string">
+                <column name="CURR_STATUS" length="2" />
+            </property>
+            <property name="acctType" type="string">
+                <column name="ACCT_TYPE" length="4" />
+            </property>
+            <property name="intCat" type="string">
+                <column name="INT_CAT" length="4" />
+            </property>
+            <property name="customerNo" type="string">
+                <column name="CUSTOMER_NO" length="16" />
+            </property>
+            <property name="customerName" type="string">
+                <column name="CUSTOMER_NAME" length="60" />
+            </property>
+            <property name="currBal" type="big_decimal">
+                <column name="CURR_BAL" precision="17" scale="3" />
+            </property>
+            <property name="holdVal" type="big_decimal">
+                <column name="HOLD_VAL" precision="17" scale="3" />
+            </property>
+            <property name="lstMntDt" type="date">
+                <column name="LST_MNT_DT" length="10" />
+            </property>
+            <property name="acctOpenDt" type="date">
+                <column name="ACCT_OPEN_DT" length="10" />
+            </property>
+            <property name="subjectstore" type="string">
+                <column name="SUBJECTSTORE" length="1" />
+            </property>
+    </class>
+</hibernate-mapping>

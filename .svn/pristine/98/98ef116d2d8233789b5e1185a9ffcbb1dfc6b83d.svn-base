@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-2-19 17:27:59 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.personCommon.entity.TPlTaskRoutineMoni" table="T_PL_TASK_ROUTINE_MONI" schema="ECUSER">
+        <comment>账户定期监控报告跟踪表</comment>
+        <id name="accId" type="string">
+            <column name="FD_ACC_ID" length="60" />
+            <generator class="assigned" />
+        </id>
+        <property name="riskFlag" type="string">
+            <column name="FD_RISK_FLAG" length="10" />
+        </property>
+        <property name="openDate" type="date">
+            <column name="FD_OPEN_DATE" length="10" />
+        </property>
+        <property name="settleFlag" type="string">
+            <column name="FD_SETTLE_FLAG" length="10" />
+        </property>
+        <property name="productCode" type="string">
+            <column name="FD_PRODUCT_CODE" length="30" />
+        </property>
+        <property name="rankPrev" type="java.lang.Integer">
+            <column name="FD_RANK_PREV" />
+        </property>
+        <property name="rank" type="java.lang.Integer">
+            <column name="FD_RANK" />
+        </property>
+        <property name="trigRate" type="java.lang.Double">
+            <column name="FD_TRIG_RATE" precision="53" scale="0" />
+        </property>
+        <property name="trigRateAdjust" type="java.lang.Double">
+            <column name="FD_TRIG_RATE_ADJUST" precision="53" scale="0" />
+        </property>
+        <property name="trigDatePrev" type="date">
+            <column name="FD_TRIG_DATE_PREV" length="10" />
+        </property>
+        <property name="trigDateNext" type="date">
+            <column name="FD_TRIG_DATE_NEXT" length="10" />
+        </property>
+        <property name="observStart" type="date">
+            <column name="FD_OBSERV_START" length="10" />
+        </property>
+        <property name="processDate" type="date">
+            <column name="FD_PROCESS_DATE" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

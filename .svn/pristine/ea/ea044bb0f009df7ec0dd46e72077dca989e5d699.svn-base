@@ -1,0 +1,21 @@
+<CommQry title="TbCsmFinanceIndexCd" navigate="TbCsmFinanceIndexCd" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.financial.analysis.getter.TCmFinanceIndexCdGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+        <Field id="indexCd" desc="指标代码" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/indexCd" />
+        <Field id="indexName" desc="指标名称" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/indexName" />
+        <Field id="indexType" desc="指标分类代码（字典）" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/indexType" />
+        <Field id="reportClass" desc="财务报表类别代码（字典 企业、事业、农）" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2"
+        default="" xpath="/reportClass" />
+        <Field id="idCertificate" desc="是否属于财务诊断书" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/idCertificate" />
+        <Field id="remarks" desc="指标描述" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/remarks" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="基础信息管理  &gt;  我的客户title" navigate="基础信息管理    &gt; 我的客户" type="call"
+	interface="false" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.person.great.getter.TEdwPlsCustGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<Field id="custid" desc="客户编号" edittype="text" datatype="string" readonly="true"
+        xpath="/custid" />
+        <Field id="custname" desc="客户名称" edittype="text" datatype="string" readonly="true"
+        xpath="/custname" />
+        <Field id="paperkind" desc="证件类型" xpath="/paperkind" edittype="select" translated="DATA_DIC.21" size="50" readOnly="true" width="250" />
+        <Field id="paperid" desc="证件号码" edittype="text" datatype="string" readonly="true"
+        xpath="/paperid" />
+        <Field id="birtdate" desc="出生日期" edittype="text" datatype="date" readonly="true"
+        xpath="/birtdate" />
+        <Field id="sexsign" desc="性别" edittype="text" datatype="string" readonly="true"
+        xpath="/sexsign" />
+        <Field id="mobilecall" desc="手机号 : 对应源表中的移动电话" edittype="text" datatype="string" readonly="true"
+        xpath="/mobilecall" />
+        <Field id="workcorpid" desc="工作单位编号" edittype="text" datatype="string" readonly="true"
+        xpath="/workcorpid" />
+        <Field id="workcorp" desc="工作单位" edittype="text" datatype="string" readonly="true"
+        xpath="/workcorp" />
+        <Field id="corpaddr" desc="单位地址" edittype="text" datatype="string" readonly="true"
+        xpath="/corpaddr" />
+        <Field id="waykind" desc="所属行业" edittype="text" datatype="string" readonly="true"
+        xpath="/waykind" />
+        <Field id="yearinco" desc="年收入" edittype="text" datatype="string" readonly="true"
+        xpath="/yearinco" />
+        <Field id="balance" desc="存款余额 : 需要EDW计算" edittype="text" datatype="string" readonly="true"
+        xpath="/balance" />
+        <Field id="amSalaryLast2M" desc="上上月代发工资总额 : 需要EDW计算" edittype="text" datatype="string" readonly="true"
+        xpath="/amSalaryLast2M" />
+        <Field id="amSalaryLastM" desc="上月代发工资总额 : 需要EDW计算" edittype="text" datatype="string" readonly="true"
+        xpath="/amSalaryLastM" />
+        <Field id="amPaymentLast2M" desc="上上月代缴费用总额 : 需要EDW计算" edittype="text" datatype="string" readonly="true"
+        xpath="/amPaymentLast2M" />
+        <Field id="amPaymentLastM" desc="上月代缴费用总额 : 需要EDW计算" edittype="text" datatype="string" readonly="true"
+        xpath="/amPaymentLastM" />
+        <Field id="status" desc="风险分类 : 需要EDW计算" edittype="text" datatype="string" readonly="true"
+        xpath="/status" />
+        <Field id="statusDate" desc="风险分类认定时间 : 需要EDW计算" edittype="text" datatype="date" readonly="true"
+        xpath="/statusDate" />
+        <Field id="loanBalance" desc="贷款余额 : 需要EDW计算" edittype="text" datatype="string" readonly="true"
+        xpath="/loanBalance" />
+        <Field id="overCountMaxHis" desc="历史最高逾期期数 : 需要EDW计算" edittype="text" datatype="int" readonly="true"
+        xpath="/overCountMaxHis" />
+        <Field id="unpaidCount" desc="未结清贷款笔数 : 需要EDW计算" edittype="text" datatype="int" readonly="true"
+        xpath="/unpaidCount" />
+    </Fields>
+    <Where>
+    	<TextBox id="custid" desc="客户编号" edittype="text" datatype="string" index="0" />
+		<TextBox id="custname" desc="客户名称" edittype="text" status="F" datatype="string" index="1" />
+    </Where>
+	<Operations>
+		<Button id="btnZrrConfirm" name="btnZrrConfirm" desc="确定" icon="icon-save" />
+	</Operations>
+</CommQry>

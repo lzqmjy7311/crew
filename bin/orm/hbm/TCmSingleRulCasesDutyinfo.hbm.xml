@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-1-22 15:19:00 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.single.entity.TCmSingleRulCasesDutyinfo" table="T_CM_SINGLE_RUL_CASES_DUTYINFO" schema="ECUSER">
+        <comment>案例补录责任信息</comment>
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="casesId" type="string">
+            <column name="FD_CASES_ID" length="32" />
+        </property>
+        <property name="duty" type="string">
+            <column name="FD_DUTY" length="32" />
+        </property>
+        <property name="dutyOrg" type="string">
+            <column name="FD_DUTY_ORG" length="32" />
+        </property>
+        <property name="desc" type="string">
+            <column name="FD_DESC" length="1000" />
+        </property>
+    </class>
+</hibernate-mapping>

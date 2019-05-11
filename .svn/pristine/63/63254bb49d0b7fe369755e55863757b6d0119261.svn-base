@@ -1,0 +1,34 @@
+<CommQry title="TOutCouNoticeDetailId" navigate="TOutCouNoticeDetailId" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.financial.analysis.getter.TOutCouNoticeDetailGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+        <Field id="id" desc="ID" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/id" />
+        <Field id="courtName" desc="法院名称" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/courtName" />
+        <Field id="court2Name" desc="法庭名称" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/court2Name" />
+        <Field id="tryDate" desc="开庭日期" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/tryDate" />
+        <Field id="caseNo" desc="案号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/caseNo" />
+        <Field id="caseReason" desc="案由" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/caseReason" />
+        <Field id="mainDept" desc="承办部门" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/mainDept" />
+        <Field id="tryName" desc="审判长/主审人" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/tryName" />
+        <Field id="accuser" desc="原告/上诉人" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/accuser" />
+        <Field id="defendant" desc="被告/被上诉人" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/defendant" />
+        <Field id="sourceLink" desc="原链接" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/sourceLink" />
+        <Field id="relaId" desc="关联ID" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/relaId" />
+        <Field id="rowDate" desc="数据日期" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/rowDate" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

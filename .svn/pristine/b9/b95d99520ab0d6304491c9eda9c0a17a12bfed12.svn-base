@@ -1,0 +1,147 @@
+package com.gbicc.company.financial.analysis.entity;
+
+import java.util.Date;
+
+public class TOutCouNoticeDetail {
+    /*
+    * ID.
+    */
+    private String id;
+    /*
+    * 法院名称.
+    */
+    private String courtName;
+    /*
+    * 法庭名称.
+    */
+    private String court2Name;
+    /*
+    * 开庭日期.
+    */
+    private Date tryDate;
+    /*
+    * 案号.
+    */
+    private String caseNo;
+    /*
+    * 案由.
+    */
+    private String caseReason;
+    /*
+    * 承办部门.
+    */
+    private String mainDept;
+    /*
+    * 审判长/主审人.
+    */
+    private String tryName;
+    /*
+    * 原告/上诉人.
+    */
+    private String accuser;
+    /*
+    * 被告/被上诉人.
+    */
+    private String defendant;
+    /*
+    * 关联基本信息主键.
+    */
+    private String baseId;
+    /*
+    * 原链接.
+    */
+    private String sourceLink;
+    /*
+    * 关联ID.
+    */
+    private String relaId;
+    /*
+    * 数据日期.
+    */
+    private Date rowDate;
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	public String getCourtName() {
+		return courtName;
+	}
+	public void setCourtName(String courtName) {
+		this.courtName = courtName;
+	}
+	public String getCourt2Name() {
+		return court2Name;
+	}
+	public void setCourt2Name(String court2Name) {
+		this.court2Name = court2Name;
+	}
+	public Date getTryDate() {
+		return tryDate;
+	}
+	public void setTryDate(Date tryDate) {
+		this.tryDate = tryDate;
+	}
+	public String getCaseNo() {
+		return caseNo;
+	}
+	public void setCaseNo(String caseNo) {
+		this.caseNo = caseNo;
+	}
+	public String getCaseReason() {
+		return caseReason;
+	}
+	public void setCaseReason(String caseReason) {
+		this.caseReason = caseReason;
+	}
+	public String getMainDept() {
+		return mainDept;
+	}
+	public void setMainDept(String mainDept) {
+		this.mainDept = mainDept;
+	}
+	public String getTryName() {
+		return tryName;
+	}
+	public void setTryName(String tryName) {
+		this.tryName = tryName;
+	}
+	public String getAccuser() {
+		return accuser;
+	}
+	public void setAccuser(String accuser) {
+		this.accuser = accuser;
+	}
+	public String getDefendant() {
+		return defendant;
+	}
+	public void setDefendant(String defendant) {
+		this.defendant = defendant;
+	}
+	public String getBaseId() {
+		return baseId;
+	}
+	public void setBaseId(String baseId) {
+		this.baseId = baseId;
+	}
+	public String getSourceLink() {
+		return sourceLink;
+	}
+	public void setSourceLink(String sourceLink) {
+		this.sourceLink = sourceLink;
+	}
+	public String getRelaId() {
+		return relaId;
+	}
+	public void setRelaId(String relaId) {
+		this.relaId = relaId;
+	}
+	public Date getRowDate() {
+		return rowDate;
+	}
+	public void setRowDate(Date rowDate) {
+		this.rowDate = rowDate;
+	}
+
+}

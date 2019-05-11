@@ -1,0 +1,42 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC_CN"/>
+<title>系统信息监控</title>
+<link rel="stylesheet" type="text/css" href="../../../templets/ui/themes/blue/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../../templets/ui/themes/icon.css">
+<script type="text/javascript" src="../../../templets/ui/js/jquery-1.8.2.js"></script>
+<script type="text/javascript" src="../../../templets/ui/js/basic.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../templets/ui/js/uicore-min.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../templets/ui/js/uirender-min.js" charset="utf-8"></script>
+<script type="text/javascript" src='../../../dwr/engine.js'> </script>
+<script type="text/javascript" src='../../../dwr/util.js'> </script>  
+<script type='text/javascript' src='../../../dwr/interface/SysMonitor.js'> </script>	
+</head>
+<body>
+<table id="pg" class="easyui-propertygrid" style="" showGroup="true" scrollbarSize="0" data-options="columns: mycolumns">
+</table>
+<script>
+var mycolumns = [[
+            {field:'name',title:'参数名',width:200,sortable:true},
+               {field:'value',title:'参数值',width:300,resizable:true}
+        ]];
+//$('#pg').propertygrid('showGroup',true);
+SysMonitor.getOSProperty(function(data){        
+     var groupName = '';
+     var rows = new Array();
+     var i=0;
+     for(var property in data){ 
+        if(data[property]=='GROUP'){
+          groupName = property;
+        }else{
+     	   var row = { name:property, value:data[property], group:groupName};
+     	   rows[i]=row
+     	   i++;
+	    }
+     }
+     $('#pg').propertygrid();
+     $('#pg').propertygrid('loadData', rows);
+});
+    </script>
+</body>
+</html>

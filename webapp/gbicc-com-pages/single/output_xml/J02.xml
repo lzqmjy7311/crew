@@ -1,0 +1,145 @@
+<CommQry title="TRewJ02CustomerCId" navigate="TRewJ02CustomerCId" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.J02Getter">
+    <Include id="BankParam" />
+    <Fields>
+    	<Field id="custno" desc="核心客户号" edittype="text" datatype="string"
+        xpath="/custno" />
+    	<Field id="custname" desc="客户名称" edittype="text" datatype="string"
+        xpath="/custname" />
+        <Field id="contactCode" desc="客户类型" edittype="select" translated="DATA_DIC.2025" init="true" multiple="false" datatype="string"
+        xpath="/contactCode" />
+        <Field id="clientSubTpCd" desc="客户子类型" edittype="text" datatype="string"
+        xpath="/clientSubTpCd" />
+        <Field id="custLevelTpCd" desc="客户等级(VIP等级)" edittype="text" datatype="string"
+        xpath="/custLevelTpCd" />
+        <Field id="creditLevelTpCd" desc="信用评级" edittype="select" translated="DATA_DIC.2026" init="true" multiple="false" datatype="string"
+        xpath="/creditLevelTpCd" />
+        <Field id="industryTpCd" desc="行业类型" edittype="text" datatype="string"
+        xpath="/industryTpCd" />
+        <Field id="econatureTpCd" desc="经济类型" edittype="select" translated="DATA_DIC.2009" init="true" multiple="false" datatype="string"
+        xpath="/econatureTpCd" />
+        <Field id="businessScope" desc="经营范围" edittype="text" datatype="string"
+        xpath="/businessScope" />
+        <Field id="mainBusiness" desc="主营业务" edittype="text" datatype="string"
+        xpath="/mainBusiness" />
+        <Field id="establishedDt" desc="成立日期" edittype="text" datatype="string"
+        xpath="/establishedDt" />
+        <Field id="scaleTpCd" desc="企业规模" edittype="text" datatype="string"
+        xpath="/scaleTpCd" />
+        <Field id="conName" desc="联系人姓名" edittype="text" datatype="string"
+        xpath="/conName" />
+        <Field id="conPositionTpCd" desc="联系人职务" edittype="text" datatype="string"
+        xpath="/conPositionTpCd" />
+        <Field id="legalPersonName" desc="法人(负责人)姓名" edittype="text" datatype="string"
+        xpath="/legalPersonName" />
+        <Field id="legalPersonIdTpCd" desc="法人(负责人)证件类型" edittype="text" datatype="string"
+        xpath="/legalPersonIdTpCd" />
+        <Field id="legalPersonIdNum" desc="法人(负责人)证件号码" edittype="text" datatype="string"
+        xpath="/legalPersonIdNum" />
+        <Field id="bankStockholderInd" desc="本行股东标识" edittype="text" datatype="string"
+        xpath="/bankStockholderInd" />
+        <Field id="onlineBankInd" desc="网银客户标识" edittype="text" datatype="string"
+        xpath="/onlineBankInd" />
+        <Field id="hasExBizInd" desc="外汇业务标识" edittype="text" datatype="string"
+        xpath="/hasExBizInd" />
+        <Field id="listedCompInd" desc="上市公司标识" edittype="text" datatype="string"
+        xpath="/listedCompInd" />
+        <Field id="approvalNum" desc="上级核准号" edittype="text" datatype="string"
+        xpath="/approvalNum" />
+        <Field id="superorgTpCd" desc="上级组织代码" edittype="text" datatype="string"
+        xpath="/superorgTpCd" />
+        <Field id="headName" desc="上级法人名称" edittype="text" datatype="string"
+        xpath="/headName" />
+        <Field id="stockHolderId" desc="控股股东客户号" edittype="text" datatype="string"
+        xpath="/stockHolderId" />
+        <Field id="impowerContId" desc="授权经办人客户号" edittype="text" datatype="string"
+        xpath="/impowerContId" />
+        <Field id="hostOrg" desc="所属机构" edittype="text" datatype="string"
+        xpath="/hostOrg" />
+        
+    	<!--
+        <Field id="custno" desc="" edittype="text" datatype="string" xpath="/custno" />
+        <Field id="contactTypeCode" desc="" edittype="text" datatype="string"
+        xpath="/contactTypeCode" />
+        <Field id="organkey" desc="" edittype="text" datatype="string"
+        xpath="/organkey" />
+        <Field id="createUser" desc="" edittype="text" datatype="string"
+        xpath="/createUser" />
+        <Field id="createDt" desc="" edittype="text" datatype="string"
+        xpath="/createDt" />
+        <Field id="clientStTpCd" desc="" edittype="text" datatype="string"
+        xpath="/clientStTpCd" />
+        <Field id="clientSt2TpCd" desc="" edittype="text" datatype="string"
+        xpath="/clientSt2TpCd" />
+        <Field id="clientSt3TpCd" desc="" edittype="text" datatype="string"
+        xpath="/clientSt3TpCd" />
+        <Field id="localInd" desc="" edittype="text" datatype="string"
+        xpath="/localInd" />
+        <Field id="dwellerInd" desc="" edittype="text" datatype="string"
+        xpath="/dwellerInd" />
+        <Field id="levelTpCd" desc="" edittype="text" datatype="string"
+        xpath="/levelTpCd" />
+        <Field id="investExpTpCd" desc="" edittype="text" datatype="string"
+        xpath="/investExpTpCd" />
+        <Field id="riskLevelTpCd" desc="" edittype="text" datatype="string"
+        xpath="/riskLevelTpCd" />
+        <Field id="riskLevelExpiryDt" desc="" edittype="text" datatype="string"
+        xpath="/riskLevelExpiryDt" />
+        <Field id="langTpCd" desc="" edittype="text" datatype="string"
+        xpath="/langTpCd" />
+        <Field id="networkCheckInd" desc="" edittype="text" datatype="string"
+        xpath="/networkCheckInd" />
+        <Field id="infoOverInd" desc="" edittype="text" datatype="string"
+        xpath="/infoOverInd" />
+        <Field id="preCountryTpCd" desc="" edittype="text" datatype="string"
+        xpath="/preCountryTpCd" />
+        <Field id="recheckInd" desc="" edittype="text" datatype="string"
+        xpath="/recheckInd" />
+        <Field id="regCountryTpCd" desc="" edittype="text" datatype="string"
+        xpath="/regCountryTpCd" />
+        <Field id="orgCharacterTpCd" desc="" edittype="text" datatype="string"
+        xpath="/orgCharacterTpCd" />
+        <Field id="finaceKeeper" desc="" edittype="text" datatype="string"
+        xpath="/finaceKeeper" />
+        <Field id="legalpIdEpiryDt" desc="" edittype="text" datatype="string"
+        xpath="/legalpIdEpiryDt" />
+        <Field id="businessStTpCd" desc="" edittype="text" datatype="string"
+        xpath="/businessStTpCd" />
+        <Field id="specialTpCd" desc="" edittype="text" datatype="string"
+        xpath="/specialTpCd" />
+        <Field id="orgStatus" desc="" edittype="text" datatype="string"
+        xpath="/orgStatus" />
+        <Field id="orgStaffNum" desc="" edittype="text" datatype="string"
+        xpath="/orgStaffNum" />
+        <Field id="lifeCycle" desc="" edittype="text" datatype="string"
+        xpath="/lifeCycle" />
+        <Field id="sidelineBusiness" desc="" edittype="text" datatype="string"
+        xpath="/sidelineBusiness" />
+        <Field id="reprsesentativeId" desc="" edittype="text" datatype="string"
+        xpath="/reprsesentativeId" />
+        <Field id="blankspace1" desc="" edittype="text" datatype="string"
+        xpath="/blankspace1" />
+        <Field id="blankspace2" desc="" edittype="text" datatype="string"
+        xpath="/blankspace2" />
+        <Field id="blankspace3" desc="" edittype="text" datatype="string"
+        xpath="/blankspace3" />
+        <Field id="lastUpdateOrg" desc="" edittype="text" datatype="string"
+        xpath="/lastUpdateOrg" />
+        <Field id="lastUpdateUser" desc="" edittype="text" datatype="string"
+        xpath="/lastUpdateUser" />
+        <Field id="lastUpdateDt" desc="" edittype="text" datatype="string"
+        xpath="/lastUpdateDt" />
+        <Field id="lastUpdateTxId" desc="" edittype="text" datatype="string"
+        xpath="/lastUpdateTxId" />
+        <Field id="freeTradeAreaFlag" desc="" edittype="text" datatype="string"
+        xpath="/freeTradeAreaFlag" />
+        <Field id="nationalEconomyDepartTpCd" desc="" edittype="text" datatype="string"
+        xpath="/nationalEconomyDepartTpCd" />
+        <Field id="warnId" desc="预警表ID" edittype="text" datatype="string"
+        xpath="/warnId" />
+        <Field id="dataDt" desc="数据日期" edittype="text" datatype="date"
+        xpath="/dataDt" />-->
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

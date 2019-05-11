@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-12-15 10:28:17 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.task.entity.ActiveHisTask" table="T_ACT_ACTIVETASK_HIS_V" schema="ECUSER">
+    	<id name="procInstId" type="java.lang.String" column="PROC_INSTID"></id>
+    	
+        <property name="businessKey" type="string">
+            <column name="BUSINESS_KEY"/>
+        </property>
+        <property name="assignee" type="string">
+            <column name="ASSIGNEE" />
+        </property>
+       
+    </class>
+</hibernate-mapping>

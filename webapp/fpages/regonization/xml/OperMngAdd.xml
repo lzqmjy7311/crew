@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="操作员增加" navigate="主页 &gt; 用户管理 &gt; 操作员增加" type="call"
+	interface="true" pagesize="5" async="true" databusid="MANAGEMENTTLR"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.opermng.getter.OperMngAddGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="brcode" desc="所属机构" status="N" edittype="select" require="true"
+			translated="CQ:AllDownBrcodeSelect" fieldmap="brcode=brcode;brcodeName=brcodeTypeName"
+			viewField="brcodeTypeName" dropdowntype="dynamic" init="false"
+			primary="true" type="String" size="20" xpath="/brcode" />
+
+		<Field id="brno" desc="机构号" status="N" 
+			primary="true" type="String" size="20" xpath="/brno" />
+
+		<Field id="departmentCode" desc="部门号" status="N" readonly="true"
+			primary="true" type="String" size="20" xpath="/departmentCode" />
+
+		<Field id="departmentName" desc="部门名" status="N" readonly="true"
+			primary="true" type="String" size="20" xpath="/departmentName" />
+
+		<Field id="tlrno" desc="操作员号" status="N" require="true" rules="isTlrno" errmsg="错误的操作员号[请输入8位数字]"
+			primary="true" type="String" size="8" xpath="/tlrno" />
+
+		<Field id="tlrName" desc="操作员名称" status="N" require="true"
+			readonly="false" primary="true" type="String" size="30"
+			xpath="/tlrName" />
+
+		<Field id="defRoleid" desc="默认岗位" require="false" status="F"
+			readonly="false" edittype="select" fieldmap="" method="None"
+			translated="DATA_DIC.100"  viewField="" primary="false"
+			type="String" size="10" xpath="/defRoleid" tip="请先选择操作员岗位"/>
+
+		<Field id="status" desc="状态" status="N" readonly="true"
+			translated="DATA_DIC.309" edittype="select" 
+			primary="true" type="String" size="20" xpath="/status" />
+
+		<Field id="loginIp" desc="操作员IP" require="false" status="F"
+			readonly="false" edittype="String" datatype="String" 
+			primary="true" type="String" size="15" xpath="/loginIp" />
+
+	</Fields>
+
+	<Where>
+	</Where>
+
+	<Operations>
+		<Button id="btAddSave" name="btSave" desc="确定" operation="asysubmit"
+			updateClass="com.huateng.ebank.business.opermng.update.OperMngAddUpdate"
+			url="#" txn="" />
+		<Button id="btAddAuth" name="btAuth" desc="角色分配" operation="" url="#"
+			txn="" />
+	    <Button id="btCancel" name="btCancel" desc="返回" operation="asysubmit"
+			url="#" txn="" />
+	</Operations>
+	<Sql></Sql>
+</CommQry>

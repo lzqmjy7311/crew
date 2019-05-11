@@ -1,0 +1,23 @@
+<CommQry title="TRulDefinitionId" navigate="TRulDefinitionId" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+	transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.warnDisposal.getter.TCmWarnTRulDefinitionGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<Field id="id" desc="" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default="" xpath="/id" />
+		<Field id="ruleCode" desc="规则编号" require="false" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="20" scale="2" default=""
+			xpath="/ruleCode" />
+		<Field id="ruleName" desc="规则名称" require="false" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="50" scale="2" default=""
+			xpath="/ruleName" />
+		<Field id="ruleLevel" desc="预警信号等级" require="false" edittype="select" translated="DATA_DIC.200" datatype="string" method="None" readonly="false" type="" status="F" size="50" scale="2" default=""
+			xpath="/ruleLevel" />
+		<Field id="ruleType" desc="规则主题" require="false" edittype="select" translated="DATA_DIC.212" datatype="string" method="None" readonly="false" type="" status="F" size="50" scale="2" default=""
+			xpath="/ruleType" />
+		<Field id="opr" desc="操作" edittype="text" datatype="string" xpath="/opr" />
+	</Fields>
+	<Where>
+		<TextBox id="ruleCode" desc="规则编号" datatype="string" index="2" />
+		<TextBox id="ruleName" desc="规则名称" datatype="string" index="3" />
+	</Where>
+	<Operations>
+		<Button id="ruleAddBtn" name="ruleAddBtn" desc="确定" icon="icon-save" updateClass="#" url="#" txn="" />
+	</Operations>
+</CommQry>

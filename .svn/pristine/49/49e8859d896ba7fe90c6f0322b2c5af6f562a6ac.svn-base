@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-12-15 16:54:09 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.view.entity.TbConSubcontract" table="T_ODS_CMS_SUBCONTRACT" schema="ECUSER">
+        <comment>从合同</comment>
+            <id name="subcontractId" type="string">
+                <column name="SUBCONTRACT_ID" length="32" />
+            </id>
+            <property name="contractId" type="string">
+                <column name="CONTRACT_ID" length="32" />
+            </property>
+            <property name="contractNum" type="string">
+                <column name="CONTRACT_NUM" length="40" />
+            </property>
+            <property name="subcontractNum" type="string">
+                <column name="SUBCONTRACT_NUM" length="40" />
+            </property>
+            <property name="customerNum" type="string">
+                <column name="CUSTOMER_NUM" length="21" />
+            </property>
+            <property name="currencyCd" type="string">
+                <column name="CURRENCY_CD" length="20" />
+            </property>
+            <property name="guarantyAmt" type="big_decimal">
+                <column name="GUARANTY_AMT" precision="22" />
+            </property>
+            <property name="superTopGuarantyId" type="string">
+                <column name="SUPER_TOP_GUARANTY_ID" length="40" />
+            </property>
+            <property name="topGuarantyStartDate" type="string">
+                <column name="TOP_GUARANTY_START_DATE" length="10" />
+            </property>
+            <property name="topGuarantyExpirationDate" type="string">
+                <column name="TOP_GUARANTY_EXPIRATION_DATE" length="10" />
+            </property>
+            <property name="subContractSignDate" type="string">
+                <column name="SUB_CONTRACT_SIGN_DATE" length="10" />
+            </property>
+            <property name="subContractSignPlace" type="string">
+                <column name="SUB_CONTRACT_SIGN_PLACE" length="100" />
+            </property>
+            <property name="subcontractTypeCd" type="string">
+                <column name="SUBCONTRACT_TYPE_CD" length="20" />
+            </property>
+            <property name="startDate" type="string">
+                <column name="START_DATE" length="10" />
+            </property>
+            <property name="subcontractStatusCd" type="string">
+                <column name="SUBCONTRACT_STATUS_CD" length="20" />
+            </property>
+            <property name="expirationDate" type="string">
+                <column name="EXPIRATION_DATE" length="10" />
+            </property>
+            <property name="handlingOrgCd" type="string">
+                <column name="HANDLING_ORG_CD" length="20" />
+            </property>
+            <property name="otherPromise" type="string">
+                <column name="OTHER_PROMISE" length="512" />
+            </property>
+            <property name="handlingUserNum" type="string">
+                <column name="HANDLING_USER_NUM" length="20" />
+            </property>
+            <property name="subContractAmt" type="big_decimal">
+                <column name="SUB_CONTRACT_AMT" precision="22" />
+            </property>
+            <property name="guarantyUseAmtCount" type="big_decimal">
+                <column name="GUARANTY_USE_AMT_COUNT" precision="22" />
+            </property>
+            <property name="subContRate" type="big_decimal">
+                <column name="SUB_CONT_RATE" precision="22" scale="10" />
+            </property>
+            <property name="topGuarantyAmt" type="big_decimal">
+                <column name="TOP_GUARANTY_AMT" precision="22" />
+            </property>
+            <property name="topCumulateGuarantyAmt" type="big_decimal">
+                <column name="TOP_CUMULATE_GUARANTY_AMT" precision="22" />
+            </property>
+            <property name="guarantCustomerNum" type="string">
+                <column name="GUARANT_CUSTOMER_NUM" length="600" />
+            </property>
+            <property name="guarantyRate" type="big_decimal">
+                <column name="GUARANTY_RATE" precision="22" scale="8" />
+            </property>
+            <property name="debtCustomerNum" type="string">
+                <column name="DEBT_CUSTOMER_NUM" length="40" />
+            </property>
+            <property name="guaranteeTypeCd" type="string">
+                <column name="GUARANTEE_TYPE_CD" length="20" />
+            </property>
+            <property name="subcontractManualNum" type="string">
+                <column name="SUBCONTRACT_MANUAL_NUM" length="40" />
+            </property>
+            <property name="warrantorName" type="string">
+                <column name="WARRANTOR_NAME" length="50" />
+            </property>
+            <property name="debtPersonName" type="string">
+                <column name="DEBT_PERSON_NAME" length="100" />
+            </property>
+            <property name="topUseGuarantyAmt" type="big_decimal">
+                <column name="TOP_USE_GUARANTY_AMT" precision="22" />
+            </property>
+            <property name="ifTopGuaranty" type="string">
+                <column name="IF_TOP_GUARANTY" length="1" />
+            </property>
+            <property name="collateralTypeCd" type="string">
+                <column name="COLLATERAL_TYPE_CD" length="20" />
+            </property>
+            <property name="registerOrg" type="string">
+                <column name="REGISTER_ORG" length="100" />
+            </property>
+            <property name="collateralRemark" type="string">
+                <column name="COLLATERAL_REMARK" length="1000" />
+            </property>
+            <property name="importInd" type="string">
+                <column name="IMPORT_IND" length="1" />
+            </property>
+            <property name="printSubcontractType" type="string">
+                <column name="PRINT_SUBCONTRACT_TYPE" length="20" />
+            </property>
+    </class>
+</hibernate-mapping>

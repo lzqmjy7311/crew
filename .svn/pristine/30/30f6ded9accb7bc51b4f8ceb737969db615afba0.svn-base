@@ -1,0 +1,119 @@
+<CommQry title="TRewC12DraftLogId" navigate="TRewC12DraftLogId" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.C12Getter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="id" desc="" edittype="text" datatype="string" xpath="/id" />
+        <Field id="electricDraftId" desc="电子票据号码" edittype="text" datatype="string"
+        xpath="/electricDraftId" />
+        <Field id="msgType" desc="信息类型" edittype="text" datatype="string"
+        xpath="/msgType" />
+        <Field id="reqName" desc="请求方名称" edittype="text" datatype="string"
+        xpath="/reqName" />
+        <Field id="reqBrchCode" desc="请求方组织机构代码" edittype="text" datatype="string"
+        xpath="/reqBrchCode" />
+        <Field id="reqAccount" desc="请求方账号" edittype="text" datatype="string"
+        xpath="/reqAccount" />
+        <Field id="reqBankId" desc="请求方开户行行号" edittype="text" datatype="string"
+        xpath="/reqBankId" />
+        <Field id="rcvName" desc="接收方名称" edittype="text" datatype="string"
+        xpath="/rcvName" />
+        <Field id="rcvBrchCode" desc="接收方组织机构代码" edittype="text" datatype="string"
+        xpath="/rcvBrchCode" />
+        <Field id="rcvAccount" desc="接收方账号" edittype="text" datatype="string"
+        xpath="/rcvAccount" />
+        <Field id="rcvBankId" desc="接收方开户行行号" edittype="text" datatype="string"
+        xpath="/rcvBankId" />
+        <Field id="signDate" desc="签收日期" edittype="text" datatype="string"
+        xpath="/signDate" />
+        <Field id="onlStlmFlag" desc="线上清算标记" edittype="text" datatype="string"
+        xpath="/onlStlmFlag" />
+        <Field id="transferFlag" desc="不得转让标记" edittype="text" datatype="string"
+        xpath="/transferFlag" />
+        <Field id="rate" desc="利率" edittype="text" datatype="string" xpath="/rate" />
+        <Field id="amount" desc="金额" edittype="text" datatype="string" xpath="/amount" />
+        <Field id="discountType" desc="贴现种类" edittype="text" datatype="string"
+        xpath="/discountType" />
+        <Field id="reqDate" desc="申请日期" edittype="text" datatype="string"
+        xpath="/reqDate" />
+        <Field id="promptPayAmt" desc="提示付款金额" edittype="text" datatype="string"
+        xpath="/promptPayAmt" />
+        <Field id="rejectCode" desc="拒付代码" edittype="text" datatype="string"
+        xpath="/rejectCode" />
+        <Field id="rejectInfo" desc="拒付备注信息" edittype="text" datatype="string"
+        xpath="/rejectInfo" />
+        <Field id="overdueReason" desc="逾期原因说明" edittype="text" datatype="string"
+        xpath="/overdueReason" />
+        <Field id="lastUpdTxnOprid" desc="合同编号" edittype="text" datatype="string"
+        xpath="/lastUpdTxnOprid" />
+        
+        <!--
+        <Field id="reqType" desc="" edittype="text" datatype="string"
+        xpath="/reqType" />
+        <Field id="rcvType" desc="" edittype="text" datatype="string"
+        xpath="/rcvType" />
+        <Field id="repurchaseRate" desc="" edittype="text" datatype="string"
+        xpath="/repurchaseRate" />
+        <Field id="repurchaseAmt" desc="" edittype="text" datatype="string"
+        xpath="/repurchaseAmt" />
+        <Field id="repurchaseEndDate" desc="" edittype="text" datatype="string"
+        xpath="/repurchaseEndDate" />
+        <Field id="repurchaseBeginDate" desc="" edittype="text" datatype="string"
+        xpath="/repurchaseBeginDate" />
+        <Field id="holderType" desc="" edittype="text" datatype="string"
+        xpath="/holderType" />
+        <Field id="solutorDate" desc="" edittype="text" datatype="string"
+        xpath="/solutorDate" />
+        <Field id="txnCtrctNb" desc="" edittype="text" datatype="string"
+        xpath="/txnCtrctNb" />
+        <Field id="invoiceNb" desc="" edittype="text" datatype="string"
+        xpath="/invoiceNb" />
+        <Field id="rcrsRsnCd" desc="" edittype="text" datatype="string"
+        xpath="/rcrsRsnCd" />
+        <Field id="btchNb" desc="" edittype="text" datatype="string" xpath="/btchNb" />
+        <Field id="lastUpdTxnId" desc="" edittype="text" datatype="string"
+        xpath="/lastUpdTxnId" />
+        <Field id="recCrtTs" desc="" edittype="text" datatype="string"
+        xpath="/recCrtTs" />
+        <Field id="lastUpdTs" desc="" edittype="text" datatype="string"
+        xpath="/lastUpdTs" />
+        <Field id="reqAgencyBankId" desc="" edittype="text" datatype="string"
+        xpath="/reqAgencyBankId" />
+        <Field id="rcvAgencyBankId" desc="" edittype="text" datatype="string"
+        xpath="/rcvAgencyBankId" />
+        <Field id="guarntrAdr" desc="" edittype="text" datatype="string"
+        xpath="/guarntrAdr" />
+        <Field id="ucondlConsignMk" desc="" edittype="text" datatype="string"
+        xpath="/ucondlConsignMk" />
+        <Field id="ucondlPrmsMk" desc="" edittype="text" datatype="string"
+        xpath="/ucondlPrmsMk" />
+        <Field id="proxySign" desc="" edittype="text" datatype="string"
+        xpath="/proxySign" />
+        <Field id="proxyReq" desc="" edittype="text" datatype="string"
+        xpath="/proxyReq" />
+        <Field id="creditRate" desc="" edittype="text" datatype="string"
+        xpath="/creditRate" />
+        <Field id="creditRateAgency" desc="" edittype="text" datatype="string"
+        xpath="/creditRateAgency" />
+        <Field id="creditRateDueDate" desc="" edittype="text" datatype="string"
+        xpath="/creditRateDueDate" />
+        <Field id="reqRemark" desc="" edittype="text" datatype="string"
+        xpath="/reqRemark" />
+        <Field id="rcvRemark" desc="" edittype="text" datatype="string"
+        xpath="/rcvRemark" />
+        <Field id="addRemark" desc="" edittype="text" datatype="string"
+        xpath="/addRemark" />
+        <Field id="aoaAccount" desc="" edittype="text" datatype="string"
+        xpath="/aoaAccount" />
+        <Field id="aoaBankId" desc="" edittype="text" datatype="string"
+        xpath="/aoaBankId" />
+        <Field id="seqNo" desc="" edittype="text" datatype="int" xpath="/seqNo" />
+        <Field id="agrmtNb" desc="" edittype="text" datatype="string"
+        xpath="/agrmtNb" />
+        <Field id="warnId" desc="预警表ID" edittype="text" datatype="string"
+        xpath="/warnId" />
+        <Field id="dataDt" desc="数据日期" edittype="text" datatype="date"
+        xpath="/dataDt" />-->
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

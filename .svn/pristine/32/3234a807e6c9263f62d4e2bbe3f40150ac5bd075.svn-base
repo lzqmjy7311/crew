@@ -1,0 +1,51 @@
+<CommQry title="TPubRulIndustryValue" navigate="TPubRulIndustryValue" type="call" interface="false" pagesize="20" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.rule.getter.TPubRulIndustryValueGetter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="id" desc="主键" edittype="text" datatype="string" xpath="/id" />
+        <Field id="rulCode" desc="规则编号" edittype="text" datatype="string" 
+        xpath="/rulCode" />
+        <Field id="rulName" desc="规则名称" edittype="text" datatype="string" size="200"
+        xpath="/rulName" />
+        <Field id="industryCode" desc="行业编码" edittype="text" datatype="string" size="30"
+        xpath="/industryCode" />
+        <Field id="industryName" desc="行业名称" edittype="text" datatype="string"
+        xpath="/industryName" />
+        <Field id="valueDesc" desc="阀值描述" edittype="text" datatype="string" size="500"
+        xpath="/valueDesc" />
+        <Field id="valueCode" desc="阀值编码" edittype="text" datatype="string" size="10"
+        xpath="/valueCode" />
+        <Field id="value" desc="阀值" edittype="text" datatype="float" scale="5"
+        xpath="/value" />
+        <Field id="updateUser" desc="最后修改用户" edittype="text" datatype="string" 
+        xpath="/updateUser" />
+        <Field id="updateDt" desc="最后更新时间" edittype="text" datatype="date"
+        xpath="/updateDt" />
+        <Field id="desc" desc="说明" edittype="text" datatype="string" size="500" 
+       	xpath="/desc" />
+       	<Field id="valueType" desc="阀值类型" edittype="text" datatype="string"
+        xpath="/valueType" />
+        <Field id="addRulCode" desc="规则" xpath="/addRulCode" multiple="false" init="true" 
+            placeholder="占位符" width="400" edittype="select" translated="DATA_DIC.124"
+            datatype="string" />
+        <Field id="addIndustryCode" desc="行业编码" edittype="text" datatype="string" readonly="true"
+        xpath="/addIndustryCode" width="400"/>
+        <Field id="addIndustryName" desc="行业名称" edittype="text" datatype="string" readonly="true"
+        xpath="/addIndustryName" width="400"/>
+    </Fields>
+    <Where>
+    	<TextBox id="rulCode" desc="规则编号" edittype="text" datatype="string" index="1" />
+    	<TextBox id="rulName" desc="规则名称" edittype="text" datatype="string" index="2" />
+    	<TextBox id="industryCode" desc="行业编码" edittype="text" datatype="string" index="3" />
+    	<TextBox id="industryName" desc="行业名称" edittype="text" datatype="string" index="4" />
+    </Where>
+    <Operations>
+    	<Button id="btnAdd" name="btnAdd" desc="新增" icon="icon-add"/>
+    	<Button id="btnUpd" name="btnUpd" desc="修改" icon="icon-edit"/>
+    	<Button id="btnDel" name="btnDel" desc="删除" icon="icon-delete" operation="asysubmit" 
+			updateClass="com.gbicc.rule.update.TPubRulIndustryValueDelUpdate" />
+    	<Button id="btnRead" name="btnRead" desc="查看" icon="icon-search"/>
+    	
+    	<Button id="btnSave" name="btnSave" desc="确定" icon="icon-save"/>
+    </Operations>
+</CommQry>

@@ -1,0 +1,472 @@
+package com.gbicc.bpm.servlet;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.lang.reflect.Field;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.lang.StringUtils;
+
+import com.gbicc.common.CommonService;
+import com.gbicc.common.TemplateBuilder;
+import com.gbicc.person.monitor.entity.TPlControlmeasure;
+import com.gbicc.person.monitor.entity.TPlYjReport;
+import com.gbicc.person.monitor.entity.TPlYtReport;
+import com.gbicc.person.monitor.service.TPlDqMonitorService;
+import com.gbicc.person.monitor.service.TPlYjReportService;
+import com.gbicc.person.monitor.service.TPlYtReportService;
+import com.gbicc.person.zxrf.entity.TPlZxrfInfo;
+import com.gbicc.person.zxrf.service.TPlZxrfInfoService;
+import com.gbicc.util.DateUtils;
+import com.gbicc.warn.entity.TWarnSignal;
+import com.huateng.ebank.business.common.service.BctlService;
+import com.huateng.ebank.business.management.service.TlrInfoService;
+import com.huateng.ebank.entity.data.mng.DataDic;
+import com.huateng.ebank.entity.data.mng.TlrInfo;
+import com.huateng.ebank.framework.exceptions.CommonException;
+
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+
+public class DonloadWordServlet extends HttpServlet {
+	private static final long serialVersionUID = -6901003787476793848L;
+	private static Integer maxFileSize=0;
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		String reportType=req.getParameter("reportType");
+		String reportId=req.getParameter("reportId");
+		String businessId=req.getParameter("businessId");
+
+		ServletOutputStream outputStream=null;
+		BufferedInputStream bs=null;
+		File file=null;
+		try {
+			Map<String,Object> map=this.getMapOfReport(reportType, reportId,businessId);
+			
+			String name=DateUtils.formatYmdDate(new Date())+".doc";
+			file=this.creditDoc(map, name,(String)map.get("ftlname"));
+			//FileUpload f=ROOTDAOUtils.getROOTDAO().query(FileUpload.class, id);
+			name=new String(name.getBytes("gbk"),"iso-8859-1");
+			
+			resp.setContentType("image/png");
+			resp.addHeader("Content-Disposition","attachment;filename=" + name);
+			resp.setContentType("application/octet-stream");
+			if(!file.exists()){
+				return;
+			}
+			outputStream=resp.getOutputStream();
+			byte[]bte=new byte[1024];
+			bs=new BufferedInputStream(new FileInputStream(file));
+			while(bs.read(bte)!=-1){
+				outputStream.write(bte);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally{
+			if(bs!=null){bs.close();}
+			if(outputStream!=null){outputStream.close();}
+		}
+	
+	}
+	
+	/**
+	 * 创建DOC 且写入模板数据
+	 * @param dataMap
+	 * @param fileName
+	 * @param ftlName
+	 * @return
+	 * @throws IOException
+	 * @throws TemplateException
+	 */
+	private File creditDoc(Map<String,Object> dataMap,String fileName,String ftlName) throws IOException, TemplateException{
+		Template temp = TemplateBuilder.getInstance().getTemplate(ftlName);
+		
+		File outFile= new File(fileName);
+		Writer out = null;
+		FileOutputStream fos=null;
+		try{
+			fos=new FileOutputStream(outFile);
+			OutputStreamWriter oWriter = new OutputStreamWriter(fos, "UTF-8");
+			out=new BufferedWriter(oWriter);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		try{
+			temp.process(dataMap, out);
+			out.close();
+			fos.close();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return outFile;
+		
+	}
+	
+	/**
+	 *给map赋值
+	 * @param reportType
+	 * @param reportId
+	 * @return
+	 * @throws CommonException 
+	 */
+	private Map<String,Object> getMapOfReport(String reportType,String reportId,String businessId) throws CommonException{
+		Map<String,Object> map=new HashMap<String, Object>();
+		if("RF".equals(reportType)){
+			if(reportId==null || reportId==""){
+				return map;
+			}
+			TPlZxrfInfo info=TPlZxrfInfoService.getInstance().get(reportId);
+			if(info==null){
+				return map;
+			}
+			//模板名称  (必须)
+			if("10".equals(info.getProductType())){//个人消费类
+				map.put("ftlname", "RFB.xml");
+			}else{//经营类
+				map.put("ftlname", "RFA.xml");
+			}
+			this.setRFMapValue(map, info);
+		}else if("YJ".equals(reportType)){//个贷预警处置
+			TPlYjReport yjReport=TPlYjReportService.getInstance().get(reportId);
+			map.put("ftlname", "PL_YJ_REPORT.xml");
+			this.setYjMapValue(map, yjReport,businessId);
+		}else if("YTR".equals(reportType)){//用途监控报告模板
+			map.put("ftlname", "YTR.xml");
+			this.setYtMapValue(map, reportId);
+		}
+		
+		
+		return map;
+	}
+	
+	private String getStringBool(String f){
+		return "1".equals(f) ? "是":"否";
+	}
+	
+	private void setYtMapValue(Map<String,Object> map,String reportId) throws CommonException{
+		TPlYtReport plYtReport=TPlYtReportService.getInstance().get(reportId);
+		map.put("lendCode", plYtReport.getLendCode());
+		map.put("custCode", plYtReport.getCustCode());
+		map.put("custName", plYtReport.getCustName());
+		map.put("custTrade", plYtReport.getCustTrade());//所属行业
+		this.setDateDicVal("93",map,"custTrade");
+		map.put("loanAmt", plYtReport.getLoanAmt());
+		map.put("productName", plYtReport.getProductCode());
+		this.setDateDicVal("900",map,"productName");
+		map.put("loanBalance", plYtReport.getLoanBalance());
+		map.put("checkWay", plYtReport.getCheckWay());
+		this.setDateDicVal("12585",map,"checkWay");
+		map.put("checkAddress", plYtReport.getCheckAddress());
+		map.put("mainSurvPer", plYtReport.getMainSurvPer());
+		map.put("assistSurvPer", plYtReport.getAssistSurvPer());
+		map.put("surveyDate", plYtReport.getSurveyDate());
+		map.put("operResult", getStringBool(plYtReport.getOperResult()));
+		map.put("buesResult", getStringBool(plYtReport.getBuesResult()));
+		map.put("guarResult", getStringBool(plYtReport.getGuarResult()));
+		map.put("earnResult", getStringBool(plYtReport.getEarnResult()));
+		map.put("hasCert", getStringBool(plYtReport.getHasCert()));
+		map.put("loanResult", getStringBool(plYtReport.getLoanResult()));
+		map.put("applyOpin", plYtReport.getApplyOpin());
+		//预警信息
+		List<TWarnSignal> warnList=(List<TWarnSignal>)CommonService.getInstance().queryListHQL("from TWarnSignal t where 1=1 and reportId='"+reportId+"' ");
+		if(warnList!=null && !warnList.isEmpty()){
+			TWarnSignal t=warnList.get(0);
+			map.put("warncode", t.getWarnCode());
+			map.put("warnpoint", t.getWarnLEvel());
+			map.put("chazhengqk", t.getCheckStatus());
+			map.put("chazhengsh", t.getCheckDesc());
+		}
+		//控制措施
+	}
+	
+	
+	
+	/**
+	 * 中小融辅 赋值
+	 * @param map
+	 * @param info
+	 * @throws CommonException 
+	 */
+	private void setRFMapValue(Map<String,Object> map,TPlZxrfInfo info) throws CommonException{
+		CommonService comService =  CommonService.getInstance();
+		//TPlTask task=(TPlTask)comService.queryOneHQL("from TPlTask where 1=1 and t.id=(select reportId from TPlReportRelation where reportId='"+info.getId()+"')");
+		
+		Field[] fieldList=info.getClass().getDeclaredFields();
+		String[] yesOrNo={"contactDiff","loanperMeet","loanperCooperate","loanperEnforce","perPostchange","perNewjob","perHavework","perOverwages","perComover","perOthfamloan","perChangeadd","perHaveguarantor","perHralthstatus","perSpouseinvite","perIllegal","guaContactch","guaBadaccount","opsChangeper","opsAddstaff","opsAddsupp","opsAdddeal","opsComstop","finNeedmoney","finChangebank","finOthloan","finOthbankloan","finStock"};
+		for (Field field : fieldList) {
+			field.setAccessible(true);
+			try{
+				if(field.get(info)==null){
+					map.put(field.getName(), " ");
+				}else{
+					map.put(field.getName(), field.get(info));
+				}
+				for (int i = 0; i < yesOrNo.length; i++) {
+					if(yesOrNo[i].equals(field.getName())){
+						if("1".equals(field.get(info))){
+							map.put(field.getName(), "是");
+						}else if("0".equals(field.get(info))){
+							map.put(field.getName(), "否");
+						}else{
+							map.put(field.getName(), "--");
+						}
+						break;
+					}
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+				continue;
+			}
+		}
+		StringBuffer warnSignalStr=new StringBuffer(" ");
+		List<TWarnSignal> warnList=(List<TWarnSignal>)comService.queryListHQL("from TWarnSignal t where 1=1 and reportId='"+info.getId()+"' ");
+		for (TWarnSignal tWarnSignal : warnList) {
+			warnSignalStr.append("预警信号："+tWarnSignal.getWarnCode()+",");
+			warnSignalStr.append("预警名称："+tWarnSignal.getAffPerDesc()+",");
+			if("0".equals(tWarnSignal.getWarnLEvel())){
+				warnSignalStr.append("预警级别：绿,");
+			}else if("".equals(tWarnSignal.getWarnLEvel())){
+				warnSignalStr.append("预警级别：黄,");
+			}else if("".equals(tWarnSignal.getWarnLEvel())){
+				warnSignalStr.append("预警级别：橙,");
+			}else if("".equals(tWarnSignal.getWarnLEvel())){
+				warnSignalStr.append("预警级别：红,");
+			}else{
+				warnSignalStr.append("预警级别：无,");
+			}
+			if("1".equals(tWarnSignal.getCheckStatus())){
+				warnSignalStr.append("查证情况：情况属实,");
+			}else{
+				warnSignalStr.append("查证情况：其他说明,");
+			}
+			warnSignalStr.append("；     ");
+		}
+		map.put("warnSignalStr", warnSignalStr.toString());
+		//有无随行人
+		this.setDateDicVal("12589", map, "havePer");
+		//查访方式
+		this.setDateDicVal("12585", map, "visitway");
+		//调查方式
+		this.setDateDicVal("12583", map, "surveyType");
+		//调查地点
+		this.setDateDicVal("12586", map, "surveyAdd");
+		this.setDateDicVal("12587", map, "perWorkstatus");
+		this.setDateDicVal("12591", map, "finMobthreport");
+		this.setDateDicVal("12586", map, "surveyAdd");
+		
+		if(info.getOperator()!=null){
+			TlrInfo tlrInfo = TlrInfoService.getInstance().getTlrInfoByTlrno(info.getOperator());
+			if(tlrInfo!=null){
+				info.setOperatorNam(tlrInfo.getTlrName());
+				map.put("operator", tlrInfo.getTlrName());
+			}
+		}
+		if(info.getOperBank()!=null){
+			String brname = BctlService.getInstance().getBranchName(info.getOperBank());
+			if(brname!=null){
+				info.setOperBankNam(brname);
+				map.put("operBank", brname);
+			}
+		}
+		
+	}
+	/**
+	 * 设置预警处置 报告的映射内容（取保存在报告实体表中的内容）
+	 * @param map
+	 * @param info
+	 */
+	private void setYjMapValue(Map<String,Object> map,TPlYjReport info,String businessId){
+		CommonService comService =  CommonService.getInstance();
+		
+		Field[] fieldList=info.getClass().getDeclaredFields();
+		String[] yesOrNo={"contactDiff","loanperMeet"};//需要 是否翻译字段
+		for (Field field : fieldList) {
+			field.setAccessible(true);
+			try{
+				if(field.get(info)==null){
+					map.put(field.getName(), " ");
+				}else{
+					map.put(field.getName(), field.get(info));
+				}
+				for (int i = 0; i < yesOrNo.length; i++) {
+					if(yesOrNo[i].equals(field.getName())){
+						if("1".equals(field.get(info))){
+							map.put(field.getName(), "是");
+						}else if("0".equals(field.get(info))){
+							map.put(field.getName(), "否");
+						}else{
+							map.put(field.getName(), "--");
+						}
+						break;
+					}
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+				continue;
+			}
+		}
+		StringBuffer warnSignalStr=new StringBuffer(" ");
+		List<TWarnSignal> warnList=(List<TWarnSignal>)comService.queryListHQL("from TWarnSignal t where 1=1 and reportId='"+info.getFdId()+"' ");
+		//------预警信号处理
+		for (TWarnSignal tWarnSignal : warnList) {
+			map.put("warnCode", tWarnSignal.getWarnCode());//预警信号编号
+			map.put("affPerDesc", tWarnSignal.getAffPerDesc());//预警名称
+			map.put("checkDesc", tWarnSignal.getCheckDesc());//查证说明
+			map.put("warnLEvel", tWarnSignal.getWarnLEvel());//预警等级
+			
+			if("1".equals(tWarnSignal.getCheckStatus())){
+				map.put("checkStatus", "情况属实");//查证情况
+			}else{			
+				map.put("checkStatus", "其他说明");//查证情况
+			}
+			
+		}
+		//-----控制措施处理
+		String apdCtrl="";
+		List<TPlControlmeasure> controlmeasures=(List<TPlControlmeasure>)comService.queryListHQL("from TPlControlmeasure where taskId='"+businessId+"' ");
+		for(TPlControlmeasure contro:controlmeasures){
+			if(contro.getCtrlType().equals("1")){
+				map.put("fdCreLimconMeasures",contro.getConmeasCode());
+			}else if(contro.getCtrlType().equals("2")){
+				map.put("fdOtherConMeasures",contro.getConmeasCode());
+				map.put("fdOtherConMeasuresDesc",contro.getOtherCtrlDesc());
+			
+			}else if(contro.getCtrlType().equals("3")){
+				apdCtrl=apdCtrl+getDataNameBy("115",contro.getConmeasCode()) +",";
+			}
+			
+		}
+		map.put("fdAddConMeasures",apdCtrl);
+
+		
+		//预警等级
+		this.setDateDicVal("200", map, "warnLEvel");
+		//查访方式
+		this.setDateDicVal("12585", map, "fdVisitWay");
+		//行业
+		this.setDateDicVal("93", map, "fdIndustry");
+		//风险分类
+		this.setDateDicVal("122", map, "fdRiskClass");
+		//担保方式
+		this.setDateDicVal("123", map, "fdGuarWay");
+		//账号状态
+		this.setDateDicVal("120", map, "fdAcctStatus");
+		
+		//收信额度
+		this.setDateDicVal("113", map, "fdCreLimconMeasures");
+		//其他控制措施
+		this.setDateDicVal("114", map, "fdOtherConMeasures");
+		
+		
+	}
+	
+	
+
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		FileItemFactory diskFileItemFactory=new DiskFileItemFactory();
+		ServletFileUpload diskFileUpload=new ServletFileUpload(diskFileItemFactory);
+		diskFileUpload.setSizeMax(maxFileSize);
+	
+	}
+	
+	
+	
+	/**
+	 * 根据字典码 与值 找到名称
+	 * @param dataTypeNo
+	 * @param dataNo
+	 * @return
+	 */
+	private void setDateDicVal(String dataTypeNo,Map<String,Object> dataMap,String praName){
+		
+		String dataNo=(String)dataMap.get(praName);
+		if(StringUtils.isBlank(dataTypeNo)||StringUtils.isBlank(dataNo) || " ".equals(dataNo)){
+			dataMap.put(praName, " ");
+		}
+		CommonService comService =  CommonService.getInstance();
+		List<DataDic> list = (List<DataDic>)comService.queryListHQL("from DataDic t where dataTypeNo="+dataTypeNo+" and dataNo='"+dataNo+"' ");
+		if(list!=null&&list.size()>0){
+			DataDic dic=list.get(0);
+			if(StringUtils.isNotBlank(dic.getDataName())){
+				dataMap.put(praName, dic.getDataName());
+			}else{
+				dataMap.put(praName, " ");
+			}
+		}else{
+			dataMap.put(praName, " ");
+		}
+	}
+	/**
+	 * 根据字典码 与值 找到名称
+	 * @param dataTypeNo
+	 * @param dataNo
+	 * @return
+	 */
+	private String getDataNameBy(String dataTypeNo,String dataNo){
+		
+		String dataName="";
+		CommonService comService =  CommonService.getInstance();
+		List<DataDic> list = (List<DataDic>)comService.queryListHQL("from DataDic t where dataTypeNo="+dataTypeNo+" and dataNo='"+dataNo+"' ");
+		if(list!=null&&list.size()>0){
+			DataDic dic=list.get(0);
+			if(StringUtils.isNotBlank(dic.getDataName())){
+				 dic.getDataName();
+			}
+		}
+		return dataName;
+	}
+	
+	
+	public static void main(String[] args) {
+		Map<String,Object> map=new HashMap<String, Object>();
+		TPlZxrfInfo info=new TPlZxrfInfo();
+		info.setId("111");
+		Class cla=info.getClass();
+		
+		Field[] fieldList=info.getClass().getDeclaredFields();
+		
+		for (Field field : fieldList) {
+			field.setAccessible(true);
+			try{
+				
+				map.put(field.getName(), field.get(info));
+			}catch(Exception e){
+				e.printStackTrace();
+				continue;
+			}
+		}
+		
+		for (Entry<String, Object> mapEn : map.entrySet()) {
+			
+			System.out.println(mapEn.getKey()+"----------"+mapEn.getValue());
+		}
+		
+	}
+
+}

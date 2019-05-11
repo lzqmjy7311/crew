@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="100" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.person.customer.getter.TPlCustGreatEventDtlGetter">
+	<Include id="BankParam" />
+	
+	<Fields>
+        <Field id="lawsuit" xpath="/lawsuit" desc="借款人是否涉及或者即将涉及重大债权债务纠纷、法律诉讼(诉讼)" edittype="radio" 
+            translated="DATA_DIC.8000" datatype="string"  width="500" />
+        <Field id="lawsuitDesc" xpath="/lawsuitDesc" desc="若有，请予以说明" edittype="textarea" 
+        	height="50" width="500"  />
+        <Field id="debt" xpath="/debt" desc="借款人是否存在恶意逃废银行债务行为(逃废债)" edittype="radio" 
+            translated="DATA_DIC.8000" datatype="string"  width="500" />
+        <Field id="debtDesc" xpath="/debtDesc" desc="若有，请予以说明" edittype="textarea" 
+        	height="50" width="500"  />
+        <Field id="cooperation" xpath="/cooperation" desc="借款人是否存在对银行的态度发生变化，尤其是缺乏合作态度，不主动提供财务及经营情况资料(合作)" edittype="radio" 
+            translated="DATA_DIC.8000" datatype="string"  width="500" />
+        <Field id="cooperationDesc" xpath="/cooperationDesc" desc="若有，请予以说明" edittype="textarea" 
+        	height="50" width="500"  />
+        <Field id="falseData" xpath="/falseData" desc="借款人是否存在提供虚假资料行为(虚假资料)" edittype="radio" 
+            translated="DATA_DIC.8000" datatype="string"  width="500" />
+        <Field id="falseDataDesc" xpath="/falseDataDesc" desc="若有，请予以说明" edittype="textarea" 
+        	height="50" width="500"  />
+        <Field id="worsen" xpath="/worsen" desc="借款人是否存在财务恶化，需要进行消极重组及信贷相关策略的调整(恶化)" edittype="radio" 
+            translated="DATA_DIC.8000" datatype="string"  width="500" />
+        <Field id="worsenDesc" xpath="/worsenDesc" desc="若有，请予以说明" edittype="textarea" 
+        	height="50" width="500"  />
+        <Field id="divertProperty" xpath="/divertProperty" desc="借款人是否存在转移资产行为(转移资产)" edittype="radio" 
+            translated="DATA_DIC.8000" datatype="string"  width="500" />
+        <Field id="divertPropertyDesc" xpath="/divertPropertyDesc" desc="若有，请予以说明" edittype="textarea" 
+        	height="50" width="500"  />
+        <Field id="gaiZhi" xpath="/gaiZhi" desc="借款人是否存在承包、租赁、联营、合并、合作、分立、产权有偿转让、重组、改制行为" edittype="radio" 
+            translated="DATA_DIC.8000" datatype="string"  width="500" />
+        <Field id="gaiZhiDesc" xpath="/gaiZhiDesc" desc="若有，请予以说明" edittype="textarea" 
+        	height="50" width="500"  />
+		<Field id="revokeCert" xpath="/revokeCert" desc="借款人是否存在重要资质证书被国家相关部门吊销(勒令关闭)" edittype="radio" 
+            translated="DATA_DIC.8000" datatype="string"  width="500" />
+        <Field id="revokeCertDesc" xpath="/revokeCertDesc" desc="若有，请予以说明" edittype="textarea" 
+        	height="50" width="500"  />
+        <Field id="stopProd" xpath="/stopProd" desc="借款人是否处于停产或半停产状态，或向我行申请贷款的固定资产项目处于停建或缓建状态(停产)" edittype="radio" 
+            translated="DATA_DIC.8000" datatype="string"  width="500" />
+        <Field id="stopProdDesc" xpath="/stopProdDesc" desc="若有，请予以说明" edittype="textarea" 
+        	height="50" width="500"  />
+        <Field id="bankruptcy" xpath="/bankruptcy" desc="借款人是否处于申请破产或已破产状况(破产)" edittype="radio" 
+            translated="DATA_DIC.8000" datatype="string"  width="500" />
+        <Field id="bankruptcyDesc" xpath="/bankruptcyDesc" desc="若有，请予以说明" edittype="textarea" 
+        	height="50" width="500"  />
+        <Field id="negaInfluence" xpath="/negaInfluence" desc="借款人是否在公共媒体上出现负面报道、产生负面影响(负面影响)" edittype="radio" 
+            translated="DATA_DIC.8000" datatype="string"  width="500" />
+        <Field id="negaInfluenceDesc" xpath="/negaInfluenceDesc" desc="若有，请予以说明" edittype="textarea" 
+        	height="50" width="500"  />
+        <Field id="greatDisaster" xpath="/greatDisaster" desc="借款人是否出现重大灾害(如：自然灾害、重大疾病、重大安全事故等)" edittype="radio" 
+            translated="DATA_DIC.8000" datatype="string"  width="500" />
+        <Field id="greatDisasterDesc" xpath="/greatDisasterDesc" desc="若有，请予以说明" edittype="textarea" 
+        	height="50" width="500"  />
+        <Field id="invest" xpath="/invest" desc="借款人是否投资于不熟悉的新业务、新产品及新市场(投资)" edittype="radio" 
+            translated="DATA_DIC.8000" datatype="string"  width="500" />
+        <Field id="investDesc" xpath="/investDesc" desc="若有，请予以说明" edittype="textarea" 
+        	height="50" width="500"  />
+        <Field id="otherGreatEvent" xpath="/otherGreatEvent" desc="借款人是否有需要说明的其他重大事项(其他)" edittype="radio" 
+            translated="DATA_DIC.8000" datatype="string"  width="500" />
+        <Field id="otherGreatEventDesc" xpath="/otherGreatEventDesc" desc="若有，请予以说明" edittype="textarea" 
+        	height="50" width="500"  />
+	</Fields>
+	<Operations>
+		<Button id="btnSave" name="btnSave" desc="保存" icon="icon-save" operation="asysubmit" 
+			updateClass="com.gbicc.person.customer.update.TPlCustGreatEventDtlUpdate" url="#" txn="" />
+	</Operations>
+</CommQry>

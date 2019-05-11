@@ -1,0 +1,190 @@
+package com.gbicc.person.monitor.operation;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.gbicc.bpm.BpmDescUtil;
+import com.gbicc.bpm.service.ProcessManagerService;
+import com.gbicc.common.CommonService;
+import com.gbicc.person.monitor.entity.TPlControlmeasure;
+import com.gbicc.person.monitor.entity.TPlDqReportAj;
+import com.gbicc.person.monitor.entity.TPlReportRelation;
+import com.gbicc.person.monitor.entity.TPlTask;
+import com.gbicc.person.monitor.service.TPlControlmeasureService;
+import com.gbicc.person.monitor.service.TPlDqReportAjService;
+import com.gbicc.person.monitor.service.TPlTaskService;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.framework.exceptions.CommonException;
+import com.huateng.ebank.framework.operation.BaseOperation;
+import com.huateng.ebank.framework.operation.OperationContext;
+
+
+/**
+ * @author likm
+ * @time   2015年11月6日09:59:58
+ * @desc   按揭监控报告操作类
+ */
+public class TPlDqReportAjOperation extends BaseOperation {
+	public static final String ID = "TPlDqReportAjOperation";
+	public static final String CMD = "CMD";
+	public static final String CMD_QUERY = "CMD_QUERY";
+	public static final String CMD_INSERT = "CMD_INSERT";
+	public static final String CMD_UPDATE = "CMD_UPDATE";
+	public static final String CMD_DELETE = "CMD_DELETE";
+	public static final String IN_PARAM = "IN_PARAM";
+	public static final String BUSINESS_ID = "BUSINESS_ID";
+	public static final String AJ = "AJ";
+	public static final String LOAN_PERSION_LIST = "LOAN_PERSION_LIST";
+	public static final String GUAR_LIST = "GUAR_LIST";
+	public static final String WAIT_HZ_APPROVE_STATUS="2";//待行长审核状态
+	public static final String OPINION="OPINION";//意见
+	
+	@Override
+	public void afterProc(OperationContext context) throws CommonException {
+	}
+
+	@Override
+	public void beforeProc(OperationContext context) throws CommonException {
+	}
+
+	@Override
+	public void execute(OperationContext context) throws CommonException {
+		String cmd = (String) context.getAttribute(CMD);
+		String op = (String) context.getAttribute("op");
+		String opinion = (String) context.getAttribute(OPINION);
+		String businessId = (String) context.getAttribute(BUSINESS_ID);
+		TPlDqReportAj ajReport = (TPlDqReportAj) context.getAttribute(IN_PARAM);
+		TPlDqReportAjService service = TPlDqReportAjService.getInstance();
+		try {
+			if (CMD_QUERY.equals(cmd)) {
+			} else if (CMD_INSERT.equals(cmd)) {
+				service.save(ajReport);
+				
+				TPlReportRelation relation=new TPlReportRelation();
+				relation.setBusinessId(businessId);
+				relation.setReportId(ajReport.getId());
+				relation.setReportType(AJ);
+				
+				ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+				rootdao.getHibernateTemplate().save(relation);
+				saveCtrl(ajReport,businessId);
+			} else if (CMD_UPDATE.equals(cmd)) {
+				service.update(ajReport);
+				saveCtrl(ajReport,businessId);
+			} else if (CMD_DELETE.equals(cmd)) {
+				service.delete(ajReport);
+			}
+			if(StringUtils.isNotEmpty(op)){
+				taskComplete(businessId,op,ajReport,opinion);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+	
+	//保存控制措施
+	public void saveCtrl(TPlDqReportAj ajReport,String businessId) throws CommonException{
+		CommonService.getInstance().executeHQL("delete from TPlControlmeasure where taskId='"+businessId+"' ");
+		if(StringUtils.isNotEmpty(ajReport.getLmtCtrl())){
+			setCtrl(ajReport,ajReport.getLmtCtrl(),TPlDqReportXfOperation.CTRL_TYPE_LMT,businessId);
+		}
+		if(StringUtils.isNotEmpty(ajReport.getRiskCtrl())){
+			setCtrl(ajReport,ajReport.getRiskCtrl(),TPlDqReportXfOperation.CTRL_TYPE_OTH,businessId);
+		}
+		if(StringUtils.isNotEmpty(ajReport.getAppendCtrl())){
+			List<String> apdList=new ArrayList<String>();
+			if(ajReport.getAppendCtrl().indexOf(",")>-1){
+				String[] str=ajReport.getAppendCtrl().split(",");
+				apdList=Arrays.asList(str);
+			}else{
+				apdList.add(ajReport.getAppendCtrl());
+			}
+			for(String apd:apdList){
+				setCtrl(ajReport,apd,TPlDqReportXfOperation.CTRL_TYPE_APD,businessId);
+			}
+		}
+	}
+		
+	//设置控制措施并保存
+	public void setCtrl(TPlDqReportAj ajReport,String code,String type,String businessId) throws CommonException{
+		TPlControlmeasureService ctrlService=TPlControlmeasureService.getInstance();
+		TPlControlmeasure ctrl=new TPlControlmeasure();
+		ctrl.setConmeasCode(code);
+		ctrl.setCredited(new Date());
+		TPlTaskService taskService=TPlTaskService.getInstance();
+		TPlTask task=taskService.get(businessId);
+		if(task!=null){
+			ctrl.setOrgCode(task.getHandler().getBrcode());
+		}
+		ctrl.setCtrlType(type);
+		ctrl.setTaskId(businessId);
+		ctrl.setTaskType("AJBG");
+		if(type.equals(TPlDqReportXfOperation.CTRL_TYPE_OTH) && code.equals(TPlDqReportXfOperation.RISK_CTRL_OTHER)){
+			ctrl.setOtherCtrlDesc(ajReport.getOtherCtrlDesc());
+		}
+		ctrlService.save(ctrl);
+	}
+	
+	/**
+	 * 客户经理填报完成
+	 * @param businessId
+	 * @throws Exception 
+	 */
+	public void taskComplete(String businessId,String op,TPlDqReportAj ajReport,String opinion) throws Exception{
+		GlobalInfo info=GlobalInfo.getCurrentInstance();
+		String userId=info.getTlrno();
+		ProcessManagerService processManagerService=ProcessManagerService.getInstace();
+		String taskId=processManagerService.findTaskId(businessId, userId);
+		TPlTaskService taskService=TPlTaskService.getInstance();
+		TPlTask task=taskService.get(businessId);
+		Map<String,String> variables=processManagerService.findTaskVariable(businessId);
+		Map<String, Object> map=new HashMap<String, Object>();
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		if(op.equals("submit") && variables.get("status").equals(WAIT_HZ_APPROVE_STATUS)){
+			map.put("operation","提交");
+			if(StringUtils.isNotEmpty(ajReport.getRiskCtrl())){
+				map.put("path", "next");
+				if(StringUtils.isNotEmpty(variables.get("nextRole"))){
+					List<String> assigneeList=processManagerService.findUserId(variables.get("nextRole"));
+					map.put("assigneeList",assigneeList);
+				}else if(StringUtils.isNotEmpty(variables.get("nextAssignee"))){
+					map.put("assignee",task.getHandler().getTlrno());
+				}
+			}else{
+				map.put("path","end");
+			}
+		}else if(op.equals("back")){
+			map.put("operation","退回");
+			map.put("path","back");
+			map.put("assignee",task.getHandler().getTlrno());
+		}else if(op.equals("submit")){
+			map.put("operation","提交");
+			map.put("path","next");
+			if(StringUtils.isNotEmpty(variables.get("nextRole"))){
+				List<String> assigneeList=processManagerService.findUserId(variables.get("nextRole"));
+				map.put("assigneeList",assigneeList);
+			}else if(StringUtils.isNotEmpty(variables.get("nextAssignee"))){
+				map.put("assignee",task.getHandler().getTlrno());
+			}
+		}
+		map.put("desc",BpmDescUtil.getDesc(ajReport.getId(),ajReport.getCustCode(),ajReport.getCustName()));
+		map.put("opinion",opinion);
+		processManagerService.taskComplete(map, taskId);
+		
+		Map<String,String> newVar=processManagerService.findTaskVariable(businessId);
+		if(null!=newVar && newVar.size()>0){
+			String status=newVar.get("status");
+			//更改业务状态
+			rootdao.executeSql("UPDATE ECUSER.T_PL_TASK SET RPT_STATUS='"+status+"' WHERE FD_ID='"+businessId+"' ");
+		}
+	}
+}

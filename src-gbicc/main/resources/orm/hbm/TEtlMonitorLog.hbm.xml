@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-3-17 12:35:44 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+	<class name="com.gbicc.job.entity.TEtlMonitorLog" table="T_ETL_MONITOR_LOG" schema="ECUSER">
+		<comment>监控日志表</comment>		
+		<id name="monitorLogID" type="string">
+			<column name="MONITOR_LOG_ID" length="32" />
+			<generator class="assigned" />
+		</id>
+		
+		<property name="hostName" type="string">
+			<column name="HOSTNAME" length="100" />
+		</property>
+		
+		<property name="etlID" type="string">
+			<column name="ETL_ID" length="32" />
+		</property>
+		<property name="etlName" type="string">
+			<column name="ETL_NAME" length="100" />
+		</property>
+		<property name="dateTime" type="string">
+			<column name="DATE_TIME" length="19" />
+		</property>
+		
+		<property name="result" type="string">
+			<column name="RESULT" length="1" />
+		</property>
+       <property name="businessDate" type="string">
+			<column name="BUSINESS_DATE" length="10" />
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.huateng.ebank.entity.data.mng">
+	<class
+		name="TblCronTaskJobLog"
+		table="TBL_CRON_TASK_JOB_LOG"
+	>
+		<id
+			name="id"
+			type="string"
+			column="ID"
+		>
+		  <generator class="uuid" />  
+		</id>
+
+		<property
+			name="jobno"
+			column="JOBNO"
+			type="integer"
+			not-null="true"
+			length="10"
+		/>
+		<property
+			name="subProceFunction"
+			column="SUB_PROCE_FUNCTION"
+			type="string"
+			not-null="true"
+			length="256"
+		/>
+		<property
+			name="excuteTime"
+			column="EXCUTE_TIME"
+			type="string"
+			not-null="false"
+			length="14"
+		/>
+		<property
+			name="excuteResult"
+			column="EXCUTE_RESULT"
+			type="string"
+			not-null="false"
+			length="1"
+		/>
+		<property
+			name="excuteOwn"
+			column="EXCUTE_OWN"
+			type="string"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="failFlag"
+			column="FAIL_FLAG"
+			type="string"
+			not-null="false"
+			length="1"
+		/>
+		<property
+			name="sucFlag"
+			column="SUC_FLAG"
+			type="string"
+			not-null="false"
+			length="1"
+		/>
+		<property
+			name="exceptionMsg"
+			column="EXCEPTION_MSG"
+			type="string"
+			not-null="false"
+			length="512"
+		/>
+		<property
+			name="endExcuteFlag"
+			column="END_EXCUTE_FLAG"
+			type="string"
+			not-null="false"
+			length="1"
+		/>
+
+
+	</class>
+</hibernate-mapping>

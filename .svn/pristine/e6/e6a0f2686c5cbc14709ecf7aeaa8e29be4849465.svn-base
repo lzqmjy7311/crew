@@ -1,0 +1,45 @@
+##########\u5185\u90e8\u4f7f\u7528####################
+# \u9002\u7528\u8303\u56f4:\u5185\u90e8\u4f7f\u7528
+####################################
+btQuery=query
+#CSV|XLS\u5bfc\u51fa
+PageQryExp.start=start
+PageQryExp.end=end
+PageQryExp.all=all
+PageQryExp.batch=batch
+PageQryExp.zip=zip
+PageQryExp.columSelected=selected columns
+PageQryExp.columExported=columns
+PageQryExp.btExport=download
+PageQryExp.tip=TIP:
+PageQryExp.tip.1=1.online download must set start and end:
+PageQryExp.tip.2=2.batch download can set start and end , or all columns!
+
+##########\u529f\u80fd\u83dc\u5355####################
+# \u9002\u7528\u8303\u56f4:\u529f\u80fd\u83dc\u5355
+# \u5b9a\u4e49\u89c4\u5219: 'FUN.' + function id
+####################################
+FUN.1=Permission Management
+FUN.2=Branch Management
+FUN.3=User Management
+FUN.4=Integrated information management
+
+##########\u9875\u9762UI####################
+# \u9002\u7528\u8303\u56f4:\u9875\u9762UI
+# \u5b9a\u4e49\u89c4\u5219: CQID + \u2018.' + title'
+#                CQID + '.' + 'field.' + fieldId
+#                CQID + '.' + 'element.' + elementid
+#                CQID + '.' + 'button.' + buttonID
+#                CQID + '.' + 'group.' + gourpID + '.' + 'label'
+#                CQID + '.' + 'datatable.' + datatableID + '.' + 'label'              
+####################################
+#\u6570\u636e\u5b57\u5178\u7ba1\u7406
+DataDicEntry.title=Data Dicationary Management
+DataDicEntry.interface.interface.label=Please enter query
+DataDicEntry.field.dataTypeNo=Data Dicationary No
+DataDicEntry.button.btNew=add
+DataDicEntry.button.btCopyNew=copy
+DataDicEntry.button.btDel=delete
+DataDicEntry.button.btMod=update
+#\u767b\u9646
+login.title=PORTAL

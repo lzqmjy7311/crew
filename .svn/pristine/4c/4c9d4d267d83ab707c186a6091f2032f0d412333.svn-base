@@ -1,0 +1,29 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+
+<@CommonQueryMacro.page title="用途监控">
+	<@CommonQueryMacro.CommonQuery id="YtMonitorAcctView" init="true" submitMode="current">
+		<@CommonQueryMacro.Interface id="interface1" label="请输入查询条件" colNm=6 />
+		<@CommonQueryMacro.DataTable id="datatable" height="360"  paginationbar="BtnAdd"  readonly="false"  fieldStr="duebillno,begindate,contno,loanacno,custid,custname,tcapi,tterm,busitype,operid" />
+		<div style="display:none;">
+	  		<@CommonQueryMacro.Button id="BtnSave"/>
+		</div>
+	</@CommonQueryMacro.CommonQuery>
+	
+	<script>
+		function BtnSave_postSubmit(){
+			alert('提交成功');
+		}
+		
+		function BtnAdd_onClick(){
+			var record=(YtMonitorAcctView_dataset.record);
+			if(record){
+				top.easyMsg.confirm("发起用户监控报告流程，是否确认?", function(){
+					YtMonitorAcctView_dataset.setParameter("duebillno",record.getValue("duebillno"));
+					BtnSave.click();
+                }, function(){
+                } );
+			}
+		}
+	</script>
+</@CommonQueryMacro.page>

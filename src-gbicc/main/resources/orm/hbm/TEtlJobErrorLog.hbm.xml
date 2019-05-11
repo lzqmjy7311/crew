@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-3-17 12:35:44 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+	<class name="com.gbicc.job.entity.TEtlJobErrorLog" table="T_ETL_JOB_ERROR_LOG" schema="ECUSER">
+		<comment>工作错误日志表</comment>		
+		<id name="etlErrorLogID" type="string">
+			<column name="ETL_ERROR_LOG_ID" length="32" />
+			<generator class="assigned" />
+		</id>
+		
+		<property name="etlScheduleID" type="string">
+			<column name="ETL_SCHEDULE_ID" length="32" />
+		</property>
+		
+		<property name="jobName" type="string">
+			<column name="JOB_NAME" length="100" />
+		</property>
+		<property name="errMsg" type="string">
+			<column name="ERR_MSG" length="1024" />
+		</property>
+		<property name="errSql" type="string">
+			<column name="ERR_SQL" length="19" />
+		</property>
+		
+		<property name="errTimestamp" type="string">
+			<column name="ERR_TIMESTAMP" length="19" />
+		</property>
+       
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.company.view.getter.TbCsmCorporationGetter">
+	<Include id="BankParam" />
+	<PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" directory="D:/templet"  perfecth="20" />
+	<Fields>
+		<Field id="customerNum" desc="客户编号" status="F" require="true"
+				method="None" readonly="false" primary="true" type="String"
+				default="" xpath="/customerNum" />
+		<Field id="chineseName" desc="客户名称"  status="F" xpath="/chineseName"/>
+		<Field id="businessLicenseNum" desc="营业执照号" xpath="/businessLicenseNum"/>
+        <Field id="orgnNum" desc="组织机构代码" xpath="/orgnNum"/>
+		<Field id="registeredCapital" desc="注册资本" xpath="/registeredCapital"/>
+		<Field id="customerSizeCd" desc="企业规模"  xpath="/customerSizeCd" edittype="select" translated="DATA_DIC.711"/>
+		<Field id="industryLevelTwoCd" desc="行业分类" edittype="select" method="com.gbicc.common.CQMethod.getindustryLevelTwoCdBytypeCd" xpath="/industryLevelTwoCd"/>
+		<Field id="deptCd" desc="所属机构" status="F" edittype="select" translated="CQ:branchTree" 
+			fieldmap="deptCd=id;deptName=name" viewField="name" dropdowntype="dynamictree" xpath="/deptCd" />
+		<Field id="customerManager" desc="客户经理" edittype="select" translated="CQ:TlrInfo" fieldmap="customerManagerName=tlrName;customerManager=tlrno" xpath="/customerManager"/>
+		<Field id="deptName" desc="所属机构" edittype="select" method="com.gbicc.common.CQMethod.getOrgNameByCode" xpath="/deptCd"/>
+		<Field id="isBlackName" desc="是否黑名单" status="F" datatype="string" xpath="/isBlackName"/>
+		<Field id="loanBalance" desc="贷款余额" status="F" edittype="text" datatype="currency" xpath="/loanBalance"/>
+		<Field id="customerManagerName" desc="客户经理" status="F" edittype="select" method="com.gbicc.common.CQMethod.getUserNameByCode" xpath="/customerManager"/>
+		<Field id="loanCardNum" desc="贷款卡号码" edittype="text" xpath="/loanCardNum"/>
+		<Field id="industryCd" desc="种类" edittype="text" xpath="/industryCd"/>
+		<Field id="warnYlevel" desc="客户风险预警等级" status="F" edittype="select" translated="DATA_DIC.12606"  xpath="/warnYlevel"/>
+	</Fields>
+	<Where>
+		<TextBox id="customerNum" desc="客户编号" status="F" require=""
+				method="None" readonly="false" primary="true" type="String"
+				default="" xpath="/customerNum" />
+		<TextBox id="chineseName" desc="客户名称" />
+		<Option  id="deptName" desc="所属机构" status="N" 
+            multiple="false" translated="CQ:branchTree" placeholder="占位符"
+            fieldmap="deptCd=id;deptName=name"
+            viewField="name" edittype="select" dropdowntype="dynamictree"
+            primary="true" init="false" size="3" default="2"  />
+		<Option id="deptCd" desc="所属机构" status="N" 
+            multiple="false" translated="CQ:Bctl" placeholder="占位符"
+            fieldmap="deptCd=id;deptName=name"
+            viewField="name" edittype="select" dropdowntype="dynamictree"
+            primary="true" init="false" size="3" default="2"/>
+		<Option id="customerManager" desc="客户经理" viewField="customerManager"   require=""  translated="CQ:TlrInfo" fieldmap="customerManager=tlrName;customerManager=tlrno"/>
+		<Option id="customerManagerName" desc="客户经理" viewField="tlrName"   require=""  translated="CQ:TlrInfo" fieldmap="customerManagerName=tlrName;customerManager=tlrno"/>
+		<Option id="isBlackName" desc="是否黑名单" edittype="select" translated="LIST:1,是;0,否" />
+		<Option id="warnYlevel" desc="客户风险预警等级" edittype="select" translated="DATA_DIC.12606"  xpath="/warnYlevel"/>
+	</Where>
+	<Operations>
+	<Button id="btHandle" name="btHandle" desc="风险视图" icon="icon-add" updateClass="#" url="" txn="" />
+	<Button id="btZjlx" name="btZjlx" desc="资金流向监控" icon="icon-add" updateClass="#" url="" txn="" />
+	<Button id="btCwfx" name="btCwfx" desc="财务分析" icon="icon-add" updateClass="#" url="" txn="" />
+	<Button id="btCwcxd" name="btCwcxd" desc="财务诚信度" icon="icon-add" updateClass="#" url="" txn="" />
+	<Button id="btQxz" name="btQxz" desc="企业全景查询" icon="icon-search" updateClass="#" url="" txn="" />
+	<Button id="btRest" name="btRest" desc="重置" icon="icon-remove" updateClass="#" url="" txn="" />
+	<Button id="btQuery" name="btQuery" desc="查询" icon="icon-search" updateClass="#" url="" txn="" />
+	</Operations>
+</CommQry>

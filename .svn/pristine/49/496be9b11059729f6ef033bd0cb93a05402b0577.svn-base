@@ -1,0 +1,25 @@
+<CommQry title="TRewL13PersonImportpublicTableId" navigate="TRewL13PersonImportpublicTableId" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.L13Getter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="fdId" desc="" edittype="text" datatype="string" xpath="/id" />
+        <Field id="fdBankcode" desc="本行业务分支行机构代码" edittype="text" datatype="string"
+        xpath="/fdBankcode" />
+        <Field id="fdMiddleSigncode" desc="中征码" edittype="text" datatype="string"
+        xpath="/fdMiddleSigncode" />
+        <Field id="fdOrganizationCode" desc="组织机构代码" edittype="text" datatype="string"
+        xpath="/fdOrganizationCode" />
+        <Field id="fdInformationCode" desc="信息代码" edittype="text" datatype="string"
+        xpath="/fdInformationCode" />
+        <Field id="fdCreattime" desc="提示信息生成时间" edittype="text" datatype="date"
+        xpath="/fdCreattime" />
+        <Field id="fdImporttime" desc="信息导入时间" edittype="text" datatype="date"
+        xpath="/fdImporttime" />
+        <Field id="fdWarnId" desc="预警表ID" edittype="text" datatype="string"
+        xpath="/fdWarnId" />
+        <Field id="fdDataDt" desc="数据日期" edittype="text" datatype="date"
+        xpath="/fdDataDt" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

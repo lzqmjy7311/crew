@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="riskoverview" navigate="riskoverview" type="call" interface="false" pagesize="10" databusid="" async="true" transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.gbicc.company.view.riskoverview.entity.TCmRiskViewRulWarningGetter">
+    <Include id="BankParam" />
+    <Fields>
+       	<Field id="id" desc="ID主键" require="" edittype="text" datatype="string" method="None"   status="F"   
+       	xpath="/id" />
+       	<Field id="fdDesc" desc="描述信息" require="" edittype="text" datatype="string" method="None"   status="F"   
+       	xpath="/fdDesc" />
+        <Field id="warnCode" desc="预警信号编号" require="" edittype="text" datatype="string" method="None"   status="F"  
+        xpath="/warnCode" />
+        <Field id="warnDt" desc="预警时间" require="" edittype="text" datatype="date" method="None"   status="F"  
+        xpath="/warnDt" />
+        <Field id="warnLevel" desc="预警等级" require="" edittype="text" datatype="string" method="None"   status="F"  
+        xpath="/warnLevel" />
+        <Field id="warnStatus" desc="处理状态" xpath="/warnStatus" multiple="false" init="true" require="" 
+            placeholder="占位符" edittype="select" translated="LIST:0,是;1,否"
+            datatype="string" size="50" />
+        <Field id="warnDesc" desc="预警描述" require="" edittype="textarea" datatype="string" method="None"   status="F"  
+        xpath="/warnDesc" colspan="4" height="100" />
+        <Field id="rulCode" desc="规则编号" require="" edittype="text" datatype="string" method="None"   status="F"  
+        xpath="/rulCode" />
+        <Field id="rulName" desc="规则名称" require="" edittype="text" datatype="string" method="None"   status="F"  
+        xpath="/rulName" />
+        <Field id="rulType" desc="规则类型" require="" edittype="text" datatype="string" method="None"   status="F"  
+        xpath="/rulType" />
+        <Field id="eliminateFlag" desc="是否排除" require="" edittype="select" translated="LIST:Y,是;N,否"    status="F"  
+        xpath="/eliminateFlag" />
+        <Field id="eliminateDesc" desc="排除说明" require="" edittype="textarea" datatype="string" method="None" readonly="false"  status="F"  
+        xpath="/eliminateDesc" colspan="4" height="100" />
+        <Field id="eliminateDt" desc="排除时间" require="" edittype="text" datatype="date" method="None"   status="F"  
+        xpath="/eliminateDt" colspan="4" height="100" />
+        <Field id="mainOrgId" desc="主责机构" require="" edittype="text" datatype="string" method="None"   status="F"  
+        xpath="/mainOrg/brcode" />
+        <Field id="mainOrg" desc="主责机构" require="" edittype="text" datatype="string" method="None"   status="F"  
+        xpath="/mainOrg/brname" />
+        <Field id="casesId" desc="案例ID" require="" edittype="text" datatype="string" method="None"   status="F"  
+        xpath="/casesId" />
+        <Field id="handleOrgFlag" desc="处理机构标识" require="" edittype="text" datatype="string" method="None"   status="F"  
+        xpath="/handleOrgFlag" />
+        <Field id="rulDesc" desc="规则描述" require="" edittype="text" datatype="string" method="None"   status="F"  
+        xpath="/rulDesc" />
+        <Field id="opinion" desc="审核意见" xpath="/opinion" size="500" edittype="textarea" 
+        colspan="4" height="100"  />
+        
+       <Field id="warningRelieveDt" desc="解除时间" require="" edittype="text" datatype="date" method="None"  status="F"  
+        xpath="/warningRelieveDt" colspan="4" height="100" />
+        <Field id="removeFlag" desc="是否解除" require="" edittype="select" translated="LIST:Y,是;N,否" datatype="string" method="None"   status="F" 
+        xpath="/removeFlag" />        
+        <Field id="handler" desc="当前经办人" require="" edittype="text" datatype="string" method="None"   status="F"  
+        xpath="/handler" />
+       <Field id="warningtype" desc="预警类型" require="" edittype="select" translated="LIST:0,自动;1,手工" datatype="string" method="None"   status="F" 
+        xpath="/warningtype" />
+       <Field id="rulThemeCd" desc="规则主题" require="" edittype="text" datatype="string" method="None"   status="F"  xpath="/rulThemeCd" />
+       <Field id="endwarnDt" desc="预警结束时间" require="" edittype="text" datatype="date" method="None"  status="F"  /> \
+       <Field id="sixyjcore" desc="六要素预警得分" require="" edittype="text"  status="F"  xpath="/flag" />
+       <Field id="blacknameflag" desc="是否触发黑名单" require="" edittype="text"  status="F"  xpath="/flag" />
+       <Field id="datastatic" desc="数据验真情况" require="" edittype="text"  status="F"  xpath="/flag" />
+       <Field id="customrisklevel" desc="客户综合风险等级" require="" edittype="text"  status="F"  xpath="/flag" />
+       <Field id="bz" desc="备注" require="" edittype="text"  status="F"  xpath="/flag" />
+       
+    </Fields>
+    <Where>
+    	<Option id="warningtype" desc="预警类型" edittype="select" translated="LIST:0,自动;1,手工"/>\
+    	<TextBox id="warnCode" desc="预警信号编号"  edittype="text" datatype="string"  status="F" />\
+        <TextBox id="rulName" desc="规则名称"  edittype="text" datatype="string"  status="F"  />\
+       <TextBox id="rulTheme" desc="规则主题"  edittype="text" datatype="string"    status="F" readonly="" />\
+         <DateTextBox id="warnDt" desc="预警开始时间"   method="None"  status="F"  /> \
+         <DateTextBox id="endwarnDt" desc="预警结束时间"   method="None"  status="F" /> \
+        <Option id="warnStatus" desc="预警信号处理状态" placeholder="占位符" edittype="select" translated="LIST:0,待处理;1,处理中;2,待处置;3,预警排除;4,预警解除;5,预警未解除" datatype="string" />\                 
+    </Where>
+    <Operations>
+    	<Button id="btHandle" name="btHandle" desc="处理" icon="icon-add" updateClass="#" url="" txn="" />
+    	<Button id="btQuery" name="btQuery" desc="查询" icon="icon-search" updateClass="#" url="" txn="" />
+    	<Button id="btReset" name="btReset" desc="重置" icon="icon-remove" updateClass="#" url="" txn="" />
+
+    </Operations>
+</CommQry>

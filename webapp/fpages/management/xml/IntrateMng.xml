@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="核算管理" navigate="主页 &gt; 利率管理 &gt; 利率维护" type="call"
+	interface="true"
+	pagesize="10"
+	async="true"
+	databusid="ACESUBJ_DB"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.management.getter.IntranteQueryGetter">
+
+	<Include id="BankParam" />
+
+	<ResultViewParam>
+		/fpages/management/ftl/IntrateMng.ftl
+	</ResultViewParam>
+	<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+	<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+	<Fields>
+
+		<Field id="id" desc="" status="F" edittype="text" require="false"
+			method="None" readOnly="false" primary="true" type="String"
+			default="" tip="" xpath="/bean/id" width="" />
+
+		<Field id="curcd" desc="币种" status="F" require="true"
+		 	translated="DATA_DIC.202" edittype="select" method="None" 
+			readOnly="false" primary="true" type="String" size="20"
+			default="" tip="币种" xpath="/bean/curcd" width="100" />
+
+		<Field id="intratecd" desc="贷款利率种类" status="F" 
+			translated="CQ:QueryIntrateType" edittype="select" require="true"
+			fieldmap="intratecd=intratecd;intratecdName=intratecdName" viewField="intratecdName"
+			method="None" readOnly="false" primary="true" type="String" dropdowntype="dynamic" init="false"
+			default="" tip="贷款利率种类" xpath="/bean/intratecd" width="180" />
+
+		<Field id="intratecdName" desc="贷款利率种类" status="F" edittype="text"
+			method="None" readOnly="true" primary="true" type="String"
+			default="" tip="贷款利率种类" xpath="/intratecdName" width="200" />
+            
+            <!-- 
+		<Field id="intType" desc="贷款利率种类" status="F" edittype="select" require="true" translated="LIST:0,0-基准利率;1,1-贷款利率;2,2-罚息率;3,3-国际市场利率" 
+			method="None" readOnly="false" primary="true" type="String"
+			default="" tip="贷款利率种类" xpath="/intType" width="120" />
+            
+            -->
+
+		<Field id="brcode" desc="机构代码" status="F" primary="false"
+			method="None" readonly="false" type="String" size="20" default="" width="150" 
+			edittype="select" translated="CQ:AllBranchSelect"
+			fieldmap="brcode=brcode;brcodeName=brcodeTypeName"
+			viewField="brcodeTypeName" xpath="/bean/brcode" require="true"
+			tip="机构代码" />
+
+		<Field id="brcodeName" desc="机构名称" status="F" edittype="text"
+			method="None" readOnly="true" primary="true" type="String"
+			default="" tip="机构名称" xpath="/brcodeName" width="150" />
+
+		<Field id="effectDate" desc="生效日期" status="F" dataType="date" require="true"
+			method="None" readOnly="true" primary="true" type="String" 
+			default="" tip="生效日期" xpath="/bean/effectDate" width="80" />
+			
+		<Field id="currDate" desc="当前日期" status="F" dataType="date"
+			method="None" readOnly="true" primary="true" type="String" 
+			default="" tip="生效日期" xpath="/currDate" width="" />
+
+		<Field id="intrate" desc="年利率(%)" status="F" edittype="text"
+			method="None" readOnly="false" primary="true" type="String" 
+			default="" tip="年利率(%)" xpath="/bean/intrate" width="80" require="true" />
+
+	</Fields>
+	<Where>
+
+	<Option id="curcd_q" tablename="Intrate" fieldname="curcd"
+		operation="EQ" size="" desc="货币代码" tip="货币代码" type="string"
+		translated="DATA_DIC.202" edittype="select" require="false" readOnly="" />
+<!-- 
+    	<DateTextBox id="effectDateStart" tablename="Intrate" fieldname="effectDateStart"
+    		type="String" dataType="date" operation="EQ" size="10" desc="最小生效日"
+    		tip="最小生效日" method="" index="6" function="" width="" default="" scale=""
+    		require="" readOnly="" rules="" errmsg="" />
+ -->
+
+
+<!--	<DateTextBox id="expireDate" tablename="Intrate" fieldname="expireDate"-->
+<!--		type="String" dataType="date" operation="EQ" size="10" desc="失效日期"-->
+<!--		tip="失效日期" method="" index="6" function="" width="" default="" scale=""-->
+<!--		require="" readOnly="" rules="" errmsg="" />-->
+
+<!--		<Hidden id="flag" default="1"/>-->
+	</Where>
+	<Operations>
+		<Button id="btNew" name="btNew" desc="新增"
+			operation="addRecord" updateClass=""
+			url="" show="" group="" txn="" />
+		<Button id="btDel" name="btDel" desc="删除"
+			operation="delrecord"
+			url="" show="" group="" txn="" />
+		<Button id="btSave" name="btSave" desc="保存"
+			operation="asysubmit" updateClass="com.huateng.ebank.business.management.updater.IntrateMngUpdate"
+			url="#" show="" group="" txn="" />
+			
+	</Operations>
+
+</CommQry>

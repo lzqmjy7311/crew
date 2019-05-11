@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.company.view.getter.TbConContractGetter">
+	<Include id="BankParam" />
+	
+	<Fields>
+		<Field id="contractNum" desc="合同编号" xpath="/contractNum"/>
+		<Field id="creditProductCd" desc="授信品种" xpath="/creditProductCd"/>
+		<Field id="guarantyNote" desc="担保方式" xpath="/guarantyNote"/>
+		<Field id="contractTotalAmt" desc="合同金额" datatype="string" xpath="/contractTotalAmt" />
+        <Field id="comprBizContractInd" desc="是否最高融资合同"  xpath="/comprBizContractInd"/>
+        <Field id="contractStatusCd" desc="合同状态"  xpath="/contractStatusCd"/>
+        <Field id="contractSignDate" desc="签订日期"  xpath="/contractSignDate"/>
+        <Field id="expirationDate" desc="到期日期"  xpath="/expirationDate"/>
+        <Field id="loanTypeInstructionCd" desc="货款投向"  xpath="/loanTypeInstructionCd"/>
+        <Field id="classificationResult" desc="五级分类"  xpath="/classificationResult"/>   
+        <Field id="customerNum" desc="客户编号"  xpath="/customerNum"/> 
+	</Fields>
+	
+	<Operations>
+
+	</Operations>
+</CommQry>

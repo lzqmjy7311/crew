@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="追索人查询下拉菜单" navigate="追索人查询下拉菜单" type="call"
+	interface="true" pagesize="10" async="true"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.ebank.getter.EbankRecoursePeopleSelectGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+
+		<Field id="stdrcvgnme" desc="名称" status="F" method="None"
+			readOnly="true" xpath="/stdrcvgnme" primary="true" type="string"
+			size="60" default="" tip="名称" width="150" />
+
+		<Field id="stdrcvgacc" desc="账号" status="F" method="None"
+			readOnly="true" xpath="/stdrcvgacc" primary="true" type="string"
+			size="30" default="" tip="账号" width="150" />
+
+		<Field id="stdrcvgbnm" desc="开户行行号" status="F" method="None"
+			readOnly="true" xpath="/stdrcvgbnm" primary="true" type="string"
+			size="30" default="" tip="开户行行号" width="150" />
+		<Field id="rcvRecoureBankNm" desc="开户行行名" status="F"
+			method="com.huateng.ebank.business.common.CQMethod.getUbankNamebyNo"
+			readOnly="true" xpath="/stdrcvgbnm" primary="true" type="string"
+			size="30" default="" tip="开户行行号" width="150" />
+		<Field id="stdrecrcod" desc="组织机构代码" status="F" method="None"
+			readOnly="true" xpath="/stdrecrcod" primary="true" type="string"
+			size="30" default="" tip="组织机构代码" width="150" />
+		<Field id="stdrcvgtyp" desc="被追索人类别" status="F" method="None"
+			readOnly="true" xpath="/stdrcvgtyp" primary="true" type="string"
+			size="30" default="" tip="被追索人类别" width="20" />
+
+	</Fields>
+	<Parameters></Parameters>
+	<Where></Where>
+	<Operations></Operations>
+</CommQry>

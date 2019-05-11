@@ -1,0 +1,15 @@
+var REPORT_STATUS={
+		wait_fill_report:'1',//代填报告
+		wait_hz_approve:'2',//待行长审核
+		wait_examine:'3',//待审查
+		wait_dhzg_approve:'4',//待审查
+		approve_pass:'5',//审核通过
+		back:'6'//退回
+}
+var TASK_TYPE={
+		DQ:'DQ',//定期类
+		YT:'YT',//用途
+		YJ:'YJ',//预警
+		RF:'RF'//中小融辅
+		
+};

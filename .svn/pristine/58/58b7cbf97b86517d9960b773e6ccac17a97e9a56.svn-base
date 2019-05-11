@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.warn.getter.TWarnSignalGetter">
+	<Include id="BankParam" />
+	
+	<Fields>
+		<Field id="id" desc="编号" xpath="/id"/>
+		<Field id="warnCode" desc="预警信号" colspan="4" readOnly="true" xpath="/warnCode"/>
+		<Field id="affPerDesc" desc="预警名称" colspan="4" readOnly="true" xpath="/affPerDesc"/>
+		<Field id="warnLEvel" desc="预警级别" colspan="4" edittype="select" datatype="string" translated="DATA_DIC.200" readOnly="true" xpath="/warnLEvel"/>
+		<Field id="reportId" desc="报告ID" xpath="/reportId"/>
+		<Field id="loanAccount" desc="账户ID" xpath="/loanAccount"/>
+		<Field id="checkStatus" desc="查证情况" colspan="4" edittype="select" translated="LIST:1,情况属实;2,其他说明"
+            datatype="string" xpath="/checkStatus" />
+        <Field id="checkDesc" desc="查证说明" colspan="4" edittype="textarea" xpath="/checkDesc"
+            height="100" width="300" size="128"/>
+        <Field id="warnDesc" desc="规则描述" colspan="4"  readOnly="true" edittype="textarea" xpath="/warnDesc"
+            height="100" width="300" size="1028"/>
+        <Field id="dddd" desc="" require="" edittype="radio" translated="" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/dddd" />
+	</Fields>
+	
+	<Operations>
+		<Button id="warnSignalUpd" name="warnSignalUpd" desc="查证" icon="icon-add" updateClass="#" url="#" txn="" />
+		<Button id="warnSignalDel" name="warnSignalDel" desc="删除" icon="icon-delete" operation="delrecord" updateClass="#" url="" />
+		<Button id="warnSignalConfirm" name="warnSignalConfirm" desc="确定" icon="icon-save" updateClass="#" url="#" txn="" />
+	</Operations>
+</CommQry>

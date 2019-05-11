@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-3-3 15:11:20 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.log.entity.TEtlErrorLog" table="T_ETL_ERROR_LOG" schema="ECUSER">
+            <id name="etlErrorLogId" type="string">
+                <column name="ETL_ERROR_LOG_ID" length="32" />
+                <generator class="uuid.hex" />
+            </id>
+            <property name="procName" type="string">
+                <column name="PROC_NAME" length="100" />
+            </property>
+            <property name="errMsg" type="string">
+                <column name="ERR_MSG" length="1024" />
+            </property>
+            <property name="errSql" type="string">
+                <column name="ERR_SQL" length="1024" />
+            </property>
+            <property name="errTimestamp" type="string">
+                <column name="ERR_TIMESTAMP" length="19" />
+            </property>
+    </class>
+</hibernate-mapping>

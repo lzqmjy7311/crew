@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="单客户预警处置  &gt;  预警处置" navigate="预警处置    &gt; 预警处置" type="call" interface="false" pagesize="10" async="true" databusid="" transdataactionurl="/trans/TransDataAction.do" txnlogflag="true" getterclassname="com.gbicc.company.warnDisposal.getter.TCmCustomerGetter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="id" desc="" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default="" xpath="/id" />
+        <Field id="custcode" desc="客户编号" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/custcode" />
+        <Field id="custname" desc="客户名称" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/custname" />
+        <Field id="custWarnLevel" desc="客户预警等级" require="" edittype="select" translated="DATA_DIC.12607" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/custWarnLevel" />
+        <Field id="operBank" desc="客户所属机构" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/operBank" />
+        <Field id="operator" desc="客户经理" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/operator" />
+        <Field id="loanAmount" desc="贷款金额" require="" edittype="text" datatype="double" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/loanAmount" />
+        <Field id="loanBalance" desc="贷款余额" require="" edittype="text" datatype="double" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/loanBalance" />
+        <Field id="loanAccount" desc="借款账号" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/loanAccount" />
+        <Field id="credited" desc="创建日期" require="" edittype="text" datatype="date" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/credited" />
+        <Field id="businessCode" desc="营业执照编号" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/businessCode" />
+        <Field id="legalRep" desc="法人代表" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/legalRep" />
+        <Field id="taskCode" desc="任务编号" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/taskCode" />
+    </Fields>
+    <Where>
+    	<TextBox id="custcode" desc="客户编号" edittype="text" datatype="string" size="50" require="" index="0" />
+		<TextBox id="custname" desc="客户名称" edittype="text" status="F" datatype="string" size="50" index="1" />\
+    </Where>
+    <Operations>
+    	<Button id="selectTheCust" name="selectTheCust" desc="确定" icon="icon-save" updateClass="#" url="#" txn="" />
+    </Operations>
+</CommQry>

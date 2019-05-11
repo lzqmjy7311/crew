@@ -1,0 +1,51 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+<@CommonQueryMacro.page title="任务管理  &gt; 监控任务查询">
+	<@CommonQueryMacro.CommonQuery id="WarningEntry" init="true" submitMode="current">
+		<@CommonQueryMacro.Interface id="interface1" label="请输入查询条件" colNm=6 />
+		<@CommonQueryMacro.DataTable id="taskTable"  paginationbar="btShow"  fieldStr="custCode,ruleLevel,ruleDesc[150],custName,loanAccount[150],productName[150],loanPeriod,operator,operBank[150],createDate,staChangeDate,isNewCustomer" width="100%" hasFrame="true"/>
+	</@CommonQueryMacro.CommonQuery>
+
+<script>
+	function btShow_onClick(button) {
+		var loanAccount = WarningEntry_dataset.getValue("loanAccount");
+		var ruleId = WarningEntry_dataset.getValue("ruleId");
+		var createDate = WarningEntry_dataset.getValue("createDate");
+	
+		if (loanAccount == null || loanAccount == ""){
+			return false;
+		}
+		var year = createDate.getYear() + 1900;
+		var month = createDate.getMonth() + 1;
+		if (month < 10) {
+			month = "0" + month;
+		}
+		var day = createDate.getDate();
+		var date = year + "-" + month + "-" + day;
+
+		var path = "/gbicc-pages/warn/ftl/warn_table.ftl";
+		openSubWin("page", "", path + "?loanAccount=" + loanAccount
+				+ "&ruleId=" + ruleId + "&date=" + date);
+	}
+
+	function btnSave_postSubmit(button) {
+		button.url = "#";
+		top.easyMsg.info("保存成功！");
+		flushCurrentPage();
+	}
+	//删除确认
+	function btDel_onClickCheck(button) {
+		return confirm("确认删除该条记录？");
+	}
+	//删除后刷新当前页
+	function btDel_postSubmit(button) {
+		button.url = "#";
+		top.easyMsg.info("删除成功！");
+		flushCurrentPage();
+	}
+	//刷新当前页
+	function flushCurrentPage() {
+		WarningEntry_dataset.flushData(WarningEntry_dataset.pageIndex);
+	}
+</script>
+</@CommonQueryMacro.page>

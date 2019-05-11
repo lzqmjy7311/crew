@@ -1,0 +1,307 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+
+
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+<#assign businessId=RequestParameters["businessId"]?default("")>
+<#assign rptStatus=RequestParameters["rptStatus"]?default("")>
+<@CommonQueryMacro.page title="个人预警处置监控报告">
+<script type="text/javascript" src="${contextPath}/gbicc-pages/regular/comm/common.js"></script>
+
+
+	<table>
+		<tr>
+			<td>
+				<@CommonQueryMacro.CommonQuery id="YjMonitorReportWin" init="true" submitMode="current">
+					<@CommonQueryMacro.GroupBox id="box1" label="客户基本信息">
+						<@CommonQueryMacro.Group id="group1" label="" colNm=4
+						fieldStr="fdLoanAccount,fdCustCode,fdCustName,fdIndustry,fdProductName,fdLoanAmt,fdLoanBalance,fdGuarWay,fdSlidingScales,fdAcctStatus,fdRiskClass,fdVisitWay,fdVisitAdd,fdLeadInvestigator,fdAssInvestigator,fdSurveyDate"/>
+					</@CommonQueryMacro.GroupBox>
+				</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<@CommonQueryMacro.CommonQuery id="plWarnSignal" init="true" submitMode="all">	
+
+					<@CommonQueryMacro.GroupBox id="box2" label="预警信号情况">
+			
+						<@CommonQueryMacro.DataTable id="warnSignalTable" paginationbar="warnSignalUpd" pagination="true" 
+			             fieldStr="warnCode,affPerDesc,warnLEvel,checkStatus,checkDesc" width="100%" hasFrame="true"/>
+							<@CommonQueryMacro.FloatWindow id="warnSignalFW" modal="true" label="预警情况"  position="top"
+							resize="true" minimize="false" maximize="true" closure="true" show="false" defaultZoom="normal">
+								<@CommonQueryMacro.Group id="group2" label="" colNm=2
+								fieldStr="warnCode,affPerDesc,warnLEvel,checkStatus,checkDesc"/>
+								<center>
+								<@CommonQueryMacro.Button id="warnSignalConfirm" />
+								</center>
+					       </@CommonQueryMacro.FloatWindow>	
+									
+		           </@CommonQueryMacro.GroupBox>
+</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+
+		<tr>
+			<td>
+			<@CommonQueryMacro.CommonQuery id="YjMonitorReportWin" init="true" submitMode="current">		
+				<@CommonQueryMacro.GroupBox id="box3" label="控制措施">
+				<@CommonQueryMacro.Group id="group3_1" label="风险控制措施" colNm=2
+						fieldStr="fdCreLimconMeasures,fdOtherConMeasures,fdOtherConMeasuresDesc"/>
+				<@CommonQueryMacro.Group id="group3_2" label="" colNm=2
+						fieldStr="fdAddConMeasures"/>						
+				</@CommonQueryMacro.GroupBox>
+			</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<@CommonQueryMacro.CommonQuery id="YjMonitorReportWin" init="true" submitMode="current">		
+				<@CommonQueryMacro.GroupBox id="box3_1" label="审核结论及意见">
+				
+				<@CommonQueryMacro.Group id="group3_1_1" label="" colNm=2
+						fieldStr="fdApplyOpin"/>						
+				</@CommonQueryMacro.GroupBox>
+			</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+		<tr>
+			<td><@CommonQueryMacro.CommonQuery id="YjMonitorReportWin" init="true" submitMode="current">	
+					
+					<@CommonQueryMacro.GroupBox id="box5" label="控制措施完成时间">
+							<@CommonQueryMacro.Group id="group5" label="" colNm=2
+							fieldStr="fdCompleteDate"/>
+					</@CommonQueryMacro.GroupBox>
+
+				</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+	<tr>
+			<td>
+				<@CommonQueryMacro.CommonQuery id="TaskApprovalHistory" init="true" submitMode="all">
+					<@CommonQueryMacro.GroupBox id="taskApprovalHistoryBox" label="审批历史">
+						<@CommonQueryMacro.DataTable id="taskApprovalHistoryTable" paginationbar="btnOpinion"
+						fieldStr="taskName,assignee,startTime,endTime,operation,opinionGrid" width="100%" hasFrame="true"/>
+						<@CommonQueryMacro.FloatWindow id="taskApprovalHistoryFW" modal="true" label="查看意见" position="top" 
+							closure="true" show="false" defaultZoom="normal">
+							<@CommonQueryMacro.Group id="taskApprovalHistoryGroup" label="" colNm=4 fieldStr="opinion"/>
+						</@CommonQueryMacro.FloatWindow>
+					</@CommonQueryMacro.GroupBox>
+				</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>	
+		<tr>
+		<td><@CommonQueryMacro.CommonQuery id="YjMonitorReportWin" init="true" submitMode="current">	
+				
+			<center>
+			<@CommonQueryMacro.Button id="yjReportUpd" />	
+			<@CommonQueryMacro.Button id="yjReportSubmit" />	
+			<@CommonQueryMacro.Button id="yjReportBack" />	
+			<@CommonQueryMacro.Button id= "contractBtn" />
+			</center>
+			</@CommonQueryMacro.CommonQuery>
+		</td>
+	</tr>
+	</table>
+<script>
+    //页面初始化
+	function initCallGetter_post(){
+	
+		var businessId='${businessId}';
+		var rptStatus='${rptStatus}';
+	
+		YjMonitorReportWin_dataset.setParameter("businessId",businessId);
+		plWarnSignal_dataset.setParameter("businessId",businessId);
+		TaskApprovalHistory_dataset.setParameter("businessId",businessId);
+		
+		
+		TaskVariable.findTaskVariable(businessId,function(y){
+		  if(y.pageReadOnly!=null&&y.pageReadOnly=="true"){
+			//设置页面只读
+			setPageReadOnlyFun();			
+		  }
+		   if(y.backBtn!=null&&y.backBtn=="hide"){
+		    $("a[id=yjReportBack]").hide();	//隐藏退回按钮	  		      
+		  }
+		  if(y.ctrlMeas!=null&&y.ctrlMeas=="hide"){
+		  $("fieldset[name=box3]").hide();//隐藏控制措施GroupBox
+		  }
+		  if(y.ctrlMeasReadOnly!=null&&y.ctrlMeasReadOnly=="false"){//控制措施可写
+		    var editFields=["fdCreLimconMeasures","fdOtherConMeasures","fdOtherConMeasuresDesc","fdAddConMeasures"];
+		    setPageCanWriteFun(editFields);		  
+		  }
+		   if(y.ctrlOpinion!=null&&y.ctrlOpinion=="hide"){
+		    $("fieldset[name=box3_1]").hide(); //隐藏审核意见		      		   
+		  }
+		   if(y.ctrlOpinReadOnly!=null&&y.ctrlOpinReadOnly=="false"){
+		    var editFields=["fdApplyOpin"];
+		    setPageCanWriteFun(editFields);	
+		  }
+		  
+		  if(y.measDate==null||y.measDate=="hide"){
+		    $("fieldset[name=box5]").hide();//隐藏 措施完成措施
+		  }else {
+		     var editFields=["fdCompleteDate"];
+		    setPageCanWriteFun(editFields);	
+		  }
+		   
+		
+		});
+		
+		
+		//查询 控制措施
+				MonitorReportCtrl.dwrFindCtrl(businessId,function(y){
+									if(y && y.length>0){
+										var apdCtrl="";
+										for(var i=0;i<y.length;i++){
+											var obj=eval("("+y[i]+")");
+											if(obj.ctrlType=="1"){
+												YjMonitorReportWin_dataset.setValue("fdCreLimconMeasures",obj.conmeasCode);
+											}else if(obj.ctrlType=="2"){
+												YjMonitorReportWin_dataset.setValue("fdOtherConMeasures",obj.conmeasCode);
+												YjMonitorReportWin_dataset.setValue("fdOtherConMeasuresDesc",obj.otherCtrlDesc);
+											}else if(obj.ctrlType=="3"){
+												apdCtrl=apdCtrl+obj.conmeasCode+",";
+											}
+										}
+										if(apdCtrl!=""){
+											apdCtrl=apdCtrl.substring(0,apdCtrl.length-1);
+										}
+										YjMonitorReportWin_dataset.setValue("fdAddConMeasures",apdCtrl);
+									}
+								});
+		
+		
+		
+		
+	}
+	
+	
+	//设置页面所有字段只读
+	function setPageReadOnlyFun(){
+		 warnSignalUpd.disable(true);
+		 //warnSignalDel.disable(true);
+		var fieldName="";
+		for(var i=0;i<YjMonitorReportWin_dataset.fields.length;i++){
+			fieldName=YjMonitorReportWin_dataset.fields[i].name;
+			if(fieldName.substring(0,1)!="_"){
+				YjMonitorReportWin_dataset.setFieldReadOnly(fieldName,true);
+			}
+		}
+	}
+	//设置页面字段可写
+	function setPageCanWriteFun(editFields){
+		for(var i=0;i<editFields.length;i++){
+			YjMonitorReportWin_dataset.setFieldReadOnly(editFields[i],false);
+		}
+	}
+	
+	
+		//提交按钮提交检查事件
+	function yjReportSubmit_onClickCheck(button){
+		var rptStatus='${rptStatus}';
+		var op="submit";
+		var fdOtherConMeasures;
+		var fdOtherConMeasuresDesc;
+		//关联验证
+		//submitCheck();
+		
+		
+		
+		YjMonitorReportWin_dataset.setParameter("op",op);
+	}
+	//退回按钮提交检查事件
+	function yjReportBack_onClickCheck(button){
+		var rptStatus='${rptStatus}';
+		var op="back";	
+		YjMonitorReportWin_dataset.setParameter("op",op);
+	}
+	
+
+	
+	//function warnSignalAdd_onClick(button) {
+	//	plWarnSignal_dataset.insertRecord("end");
+	//	subwindow_warnSignalFW.show();
+	//}
+	function warnSignalUpd_onClick(button){
+		subwindow_warnSignalFW.show();
+	}
+	function warnSignalConfirm_onClick(button){
+		subwindow_warnSignalFW.close();
+	}
+	
+	
+	//保存后关闭页面，刷新表格
+	function yjReportUpd_postSubmit(button) {
+		button.url="#";
+		top.easyMsg.info("保存成功！");
+		
+		if(parent.parent.GTab)
+		 {parent.parent.GTab.closeTab();}
+		window.parent.ajMonitorReportWin_close();
+	}
+	//提交后关闭页面，刷新表格
+	function yjReportSubmit_postSubmit(button) {
+		button.url="#";
+		top.easyMsg.info("操作成功！");
+		
+		if(parent.parent.GTab)
+		 {parent.parent.GTab.closeTab();}
+		window.parent.ajMonitorReportWin_close();
+	}
+	//退回后关闭页面，刷新表格
+	function yjReportBack_postSubmit(button) {
+		button.url="#";
+		top.easyMsg.info("操作成功！");
+		
+		if(parent.parent.GTab)
+		 {parent.parent.GTab.closeTab();}
+		window.parent.ajMonitorReportWin_close();
+	}
+	
+	//提交验证
+	function submitCheck(){
+	      var fdIsZdzqzwjfflss; 
+	      var  fdIsZdzqzwjfflssDesc;  
+	     
+      
+      
+      
+         fdIsZdzqzwjfflss=YjMonitorReportWin_dataset.getValue("fdIsZdzqzwjfflss"); //借款人是否涉及或者即将涉及重大债权债务纠纷、法律诉讼:（诉讼）
+		    
+		    fdIsZdzqzwjfflssDesc=YjMonitorReportWin_dataset.getValue("fdIsZdzqzwjfflssDesc");
+		  
+	        if(fdIsZdzqzwjfflss!=""&&fdIsZdzqzwjfflssDesc==""){
+	         $('#fdIsZdzqzwjfflssDesc').focus();
+			       top.easyMsg.warn("选择其他控制措施，必须填写借款人是否涉及或者即将涉及重大债权债务纠纷、法律诉讼说明！");
+			       return false;
+			    }
+		    if(fdIsZdzqzwjfflss==""&&fdIsZdzqzwjfflssDesc!=""){
+		    $('#fdIsZdzqzwjfflss').focus();
+		       top.easyMsg.warn("填写借款人是否涉及或者即将涉及重大债权债务纠纷、法律诉讼说明，必须选择该选项！");
+		       return false;
+		    }
+        
+	}
+	//打印
+	function contractBtn_onClickCheck(button){
+		
+		var reportId=YjMonitorReportWin_dataset.getValue("fdId");
+		window.open("${contextPath}/common/donloadWord?reportType=YJ&reportId="+reportId);
+		/*
+		
+		$('#uploadForm').ajaxSubmit({
+			type:"post", 
+			success:function(data){
+			}
+		});
+		*/
+	}
+	
+	//查看意见
+	function btnOpinion_onClick(button){
+		subwindow_taskApprovalHistoryFW.show();
+	}
+</script>
+<script type='text/javascript' src='${contextPath}/dwr/interface/MonitorReportCtrl.js'> </script>
+<script type='text/javascript' src='${contextPath}/dwr/interface/TaskVariable.js'> </script>
+</@CommonQueryMacro.page>

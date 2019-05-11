@@ -1,0 +1,19 @@
+<CommQry title="TEtlJobDefine" navigate="TEtlJobDefine" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.job.getter.TOdsCmsCustomerRelationGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+    	<Field id="customerNum" desc="客户号" datatype="string" xpath="/CUSTOMER_NUM" />
+    	<Field id="chineseName" desc="客户名" datatype="string" xpath="/CHINESE_NAME" />
+    	<Field id="custNo" desc="核心客户号" datatype="string" xpath="/CUSTNO" />
+    	<Field id="custName"  desc="核心客户名" datatype="string" xpath="/CUSTNAME" />
+    </Fields>
+    <Where>
+    	<TextBox id="customerNum" desc="客户号" edittype="text"   datatype="string"  />
+		<TextBox id="chineseName" desc="客户名" edittype="text"    datatype="string"  />
+    	<TextBox id="custNo" desc="核心客户号" edittype="text"  datatype="string"  />
+    	<TextBox id="custName"  desc="核心客户名"  edittype="text"  datatype="string"  />
+    </Where>
+    <Operations>
+    </Operations>
+</CommQry>

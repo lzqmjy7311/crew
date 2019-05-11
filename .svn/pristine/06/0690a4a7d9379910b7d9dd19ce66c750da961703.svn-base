@@ -1,0 +1,82 @@
+<CommQry title="TCmSingleRulInvestigation" navigate="TCmSingleRulInvestigation" type="call" interface="false" pagesize="20" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.getter.TCmSingleRulInvestigationQueryGetter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="id" desc="ID主键" edittype="text" datatype="string" readonly="true"  xpath="/id" />
+        <Field id="inveCode" desc="协查任务编号" edittype="text" datatype="string" readonly="true" 
+        xpath="/inveCode" width="250"/>
+        <Field id="inveName" desc="协查任务名称" edittype="text" datatype="string" readonly="true" 
+        xpath="/inveName" width="250"/>
+        <Field id="matureDt" desc="任务到期日" edittype="text" datatype="date" readonly="true" 
+        xpath="/matureDt" width="250"/>
+        
+        <Field id="inveOrg" desc="协查机构" status="N" require="true"
+            multiple="false" translated="CQ:branchTree" placeholder="占位符"
+            fieldmap="inveOrg=id;inveOrgName=name"
+            viewField="name" edittype="select" dropdowntype="dynamictree"
+            primary="true" init="false" default="2" xpath="/inveOrg/brcode" 
+            width="250"/>
+		<Field id="inveOrgName" desc="协查机构" edittype="text" datatype="string" readonly="true" 
+        xpath="/inveOrg/brname" />
+            
+        <Field id="inveCont" desc="协查内容" edittype="textarea" datatype="string" readonly="true" 
+        xpath="/inveCont" colspan="4" height="100" width="722" />
+        
+        <Field id="status" desc="协查任务状态" xpath="/status" multiple="false" init="true" readonly="true"
+		placeholder="占位符" edittype="select" translated="DATA_DIC.107"
+		datatype="string" size="50" width="250"/>
+        
+        <Field id="casesId" desc="案例表ID" edittype="text" datatype="string" readonly="true" 
+        xpath="/casesId" />
+        <Field id="checkEmph" desc="核查重点" edittype="text" datatype="string" readonly="true" 
+        xpath="/checkEmph" width="250"/>
+        
+         <Field id="inveWay" desc="协查方式" xpath="/inveWay" multiple="false" init="true" readonly="true"
+		placeholder="占位符" edittype="select" translated="DATA_DIC.108"
+		datatype="string" size="50" width="250"/>
+		
+        <Field id="inveConc" desc="协查结论" edittype="textarea" datatype="string" readonly="true" 
+        xpath="/inveConc" colspan="4" height="100" width="722"/>
+        <Field id="inveFeedDt" desc="协查反馈时间" edittype="text" datatype="date" readonly="true" 
+        xpath="/inveFeedDt" width="250"/>
+        <Field id="inveOpin" desc="协查意见" edittype="text" datatype="string" readonly="true" 
+        xpath="/inveOpin" />
+        <Field id="createDt" desc="创建时间" edittype="text" datatype="date" readonly="true" 
+        xpath="/createDt" />
+        <Field id="createOrgId" desc="创建机构Id" edittype="text" datatype="string" readonly="true" 
+        xpath="/createOrg/brcode" />
+        <Field id="createOrg" desc="创建机构" edittype="text" datatype="string" readonly="true" 
+        xpath="/createOrg/brname" />
+        <Field id="createUserId" desc="创建人Id" edittype="text" datatype="string" readonly="true" 
+        xpath="/createUser/tlrno" />
+        <Field id="createUser" desc="创建人" edittype="text" datatype="string" readonly="true" 
+        xpath="/createUser/tlrName" />
+        <Field id="inveUserId" desc="协查人员编号" edittype="text" datatype="string" readonly="true" 
+        xpath="/inveUser/tlrno" width="250"/>
+        <Field id="inveUser" desc="协查人员名称" edittype="text" datatype="string" readonly="true" 
+        xpath="/inveUser/tlrName" width="250"/>
+        
+        <Field id="partUser" desc="参与协查人员" xpath="/partUser" translated="CQ:subAutoUserTree" readonly="true" 
+			fieldmap="partUser=tlrno;partUserName=tlrName" viewField="tlrName"
+			edittype="select" dropdowntype="dynamic" primaty="true" init="true" size="10" 
+			editable="true" width="250"/>
+			
+        <Field id="inveNumb" desc="协查次数" xpath="/inveNumb" edittype="text" datatype="int" size="20" />
+    </Fields>
+    <Where>
+    	<TextBox id="inveFeedDtStart" desc="协查反馈时间" edittype="text" datatype="date" index="0" />
+    	<TextBox id="inveFeedDtEnd" desc="至" edittype="text" datatype="date" index="1" />
+    	<TextBox id="inveCode" desc="协查任务编号" edittype="text" datatype="string" index="2" />
+    	<TextBox id="inveName" desc="协查任务名称" edittype="text" datatype="string" index="3" />
+    	<Option id="inveOrg" desc="协查机构" translated="CQ:branchTree" placeholder="占位符"
+			fieldmap="inveOrg=id;inveOrgName=name" viewField="name" dropdowntype="dynamictree"
+            primary="true" init="false" size="3" index="4"/>
+		<TextBox id="inveUserId" desc="协查人员编号" edittype="text" datatype="string" index="5" />
+    	<TextBox id="inveUserName" desc="协查人员名称" edittype="text" datatype="string" index="6" />
+    	<Option id="status" desc="协查任务状态" init="true" placeholder="占位符" 
+    		translated="DATA_DIC.107" datatype="string" index="7"/>
+    </Where>
+    <Operations>
+    	<Button id="btn_Read" name="btn_Read" desc="查看" icon="icon-search" />
+    </Operations>
+</CommQry>

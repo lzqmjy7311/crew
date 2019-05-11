@@ -1,0 +1,71 @@
+<CommQry title="TTaskDivert" navigate="TTaskDivert" type="call" interface="false" pagesize="20" databusid="ELCDISC_DB" async="true" transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.gbicc.company.single.getter.TCmWarningQueryGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="预警信号信息" perfetch="15"  directory="D:/templet" />
+    <Fields>
+    	<Field id="fd_id" desc="" edittype="text" datatype="string" readonly="true"
+        xpath="/fd_id" status="N"/>
+       	<Field id="fd_warn_code" desc="预警信号编号" edittype="text" datatype="string"  readonly="true"
+       	xpath="/fd_warn_code" status="F"/>
+        <Field id="fd_warn_level" desc="预警信号等级" edittype="select" translated="DATA_DIC.12606" datatype="string" readonly="true"
+        xpath="/fd_warn_level" status="F"/>
+        <Field id="task_type" desc="预警信号类型" edittype="text" datatype="string" readonly="true"
+        xpath="/task_type" status="F"/>
+        <Field id="fd_rul_theme_cd" desc="规则主题" edittype="select" translated="DATA_DIC.212" datatype="string" readonly="true"
+        xpath="/fd_rul_theme_cd" status="F"/>
+        <Field id="fd_rul_name" desc="规则名称" edittype="text" datatype="string" readonly="true"
+        xpath="/fd_rul_name" status="F"/>
+         <Field id="fd_warn_dt" desc="预警时间" edittype="text" datatype="date" readonly="true"
+        xpath="/fd_warn_dt" status="F"/>
+        <Field id="fd_warn_status" desc="预警处理状态" xpath="/fd_warn_status" multiple="false" init="true" readonly="true"
+            placeholder="占位符" edittype="select" translated="DATA_DIC.155"
+            datatype="string" size="50" status="F"/>
+        <Field id="fd_eliminate_dt" desc="预警排除时间" edittype="text" datatype="date" readonly="true"
+        xpath="/fd_eliminate_dt" status="N"/>
+        <Field id="fd_warning_relieve_dt" desc="预警解除时间" edittype="text" datatype="date" readonly="true"
+        xpath="/fd_warning_relieve_dt" status="N"/>
+        <Field id="FD_CASES_NAME" desc="所属案例" edittype="text" datatype="string" readonly="true"
+        xpath="/FD_CASES_NAME" status="N"/>
+        
+        <Field id="FD_FCETTYPECODE" desc="客户ID" edittype="text" datatype="string"  readonly="true"
+       	xpath="/FD_FCETTYPECODE" status="N"/>
+        <Field id="CUSTOMER_NAME" desc="客户名称" edittype="text" datatype="string"  readonly="true"
+       	xpath="/CUSTOMER_NAME" status="F"/>
+       	<Field id="CUSTOMER_NUM" desc="客户编号" edittype="text" datatype="string"  readonly="true"
+       	xpath="/CUSTOMER_NUM" status="F"/>
+       	<Field id="HANDLING_ORG_CD" desc="归属行" edittype="text" datatype="string"  readonly="true"
+       	xpath="/HANDLING_ORG_CD" status="N"/>
+       	<Field id="CUST_MANAGER_ID" desc="客户经理" edittype="text" datatype="string"  readonly="true"
+       	xpath="/CUST_MANAGER_ID" status="N"/>
+       	<Field id="HANDLING_ORG_CD" desc="经办行" edittype="text" datatype="string"  readonly="true"
+       	xpath="/HANDLING_ORG_CD" status="N"/>
+       	<Field id="BRNAME" desc="经办行" edittype="text" datatype="string"  readonly="true"
+       	xpath="/BRNAME" status="N"/>
+       	<Field id="CUST_MANAGER_ID" desc="客户经理" edittype="text" datatype="string"  readonly="true"
+       	xpath="/CUST_MANAGER_ID" status="N"/>
+       	<Field id="ASSIGNEE_" desc="预警信号当前处理人" edittype="text" datatype="string"  readonly="true"
+       	xpath="/ASSIGNEE_" status="F"/>
+       	<Field id="FD_TASK_CODE" desc="任务编号" edittype="text" datatype="string"  
+        xpath="/FD_TASK_CODE" width="100" readonly="true"/>
+    </Fields>
+    <Where>
+    	<Option id="warnType" desc="预警类型" init="true" placeholder="占位符" 
+    		translated="LIST:CUST,单客户;SINGLE,单规则" datatype="string" index="0"/>
+    	<TextBox id="warnCode" desc="预警信号编号" edittype="text" datatype="string" index="1" />
+    	<TextBox id="rulName" desc="规则名称" edittype="text" datatype="string" index="2" />
+    	<Option id="rulTheme" desc="规则主题" translated="DATA_DIC.212" multiple="false" edittype="select" datatype="string" size="50" index="3"/>\
+    	<TextBox id="warnDtStart" desc="预警时间" edittype="text" datatype="date" index="6" />
+    	<TextBox id="warnDtEnd" desc="至" edittype="text" datatype="date" index="7" />
+    	<TextBox id="customerNum" desc="客户编号" edittype="text" datatype="string" index="8" />
+    	<TextBox id="customerName" desc="客户名称" edittype="text" datatype="string" index="9" />
+    	<Option id="warnLevel" desc="预警信号等级" edittype="select" translated="DATA_DIC.12606" datatype="string" index="10" />
+    	<TextBox id="assignee" desc="当前处理人" edittype="text" datatype="string" index="11" />
+    	<Option id="handlingOrgCd" desc="经办行" translated="CQ:branchTree" placeholder="占位符"
+			fieldmap="handlingOrgCd=id;handlingOrgCdName=name" viewField="name" dropdowntype="dynamictree"
+            primary="true" init="false" width="200" index="12"/>
+        <TextBox id="taskCode" desc="任务编号" edittype="text" datatype="string" index="13" />
+    </Where>
+    <Operations>
+    	<Button id="btnRead" name="btnRead" desc="查看" icon="icon-search" />
+    </Operations>
+</CommQry>

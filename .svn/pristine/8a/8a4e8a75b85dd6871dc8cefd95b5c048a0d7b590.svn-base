@@ -1,0 +1,63 @@
+<CommQry title="TCmSingleRulCases" navigate="TCmSingleRulCases" type="call" interface="false" pagesize="20" databusid="ELCDISC_DB" async="true"
+	transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.getter.TCmSingleRulCasesQueryGetter">
+	<Include id="BankParam" />
+	<PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="案例信息" perfetch="15"  directory="D:/templet" />
+	<Fields>
+		<Field id="id" desc="ID主键" edittype="text" datatype="string" readonly="true" xpath="/id" status="N"/>
+		<Field id="casesCode" desc="案例编号" edittype="text" datatype="string" readonly="true"
+			xpath="/casesCode" width="250" status="F"/>
+		<Field id="casesName" desc="案例名称" edittype="text" datatype="string" readonly="true"
+			xpath="/casesName" width="250" status="F"/>
+		<Field id="casesStatus" desc="案例状态" xpath="/casesStatus" multiple="false" init="true" readonly="true"
+			placeholder="占位符" edittype="select" translated="DATA_DIC.106"
+			datatype="string" size="50" status="F"/>
+		<Field id="casesDesc" desc="案例描述" edittype="textarea" datatype="string" readonly="true"
+			xpath="/casesDesc" colspan="4" height="50" width="722" status="N"/>
+		<Field id="casesConclusion" desc="案例处置结论" edittype="textarea" datatype="string" readonly="true"
+			xpath="/casesConclusion" colspan="4" height="50" width="722" status="N"/>
+		<Field id="createDt" desc="创建日期" edittype="text" datatype="date" readonly="true"
+			xpath="/createDt" width="250" status="F"/>
+		<Field id="createOrgId" desc="创建机构Id" edittype="text" datatype="string" readonly="true"
+			xpath="/createOrg/brcode" status="N"/>
+		<Field id="createOrg" desc="创建机构" edittype="text" datatype="string" readonly="true"
+			xpath="/createOrg/brname" width="250" status="N"/>
+		<Field id="createUserId" desc="创建人编号" edittype="text" datatype="string" readonly="true"
+			xpath="/createUser/tlrno" status="F"/>
+		<Field id="createUser" desc="创建人名称" edittype="text" datatype="string" readonly="true"
+			xpath="/createUser/tlrName" status="F"/>
+		<Field id="handleOrgFlag" desc="案例性质" edittype="text" datatype="string" readonly="true"
+			xpath="/handleOrgFlag" status="N"/>
+		<Field id="warnCount" desc="预警信息条数" xpath="/warnCount" edittype="text" datatype="int" 
+			status="F"/>
+		<Field id="inveCount" desc="发起协查任务数" xpath="/inveCount" edittype="text" datatype="int" 
+			status="F"/>
+		<Field id="alreInveCount" desc="已完成协查任务数" xpath="/alreInveCount" edittype="text" datatype="int" 
+			status="F"/>
+		<Field id="opinion" desc="审核意见" xpath="/opinion" size="500" edittype="textarea" 
+			colspan="4" height="100" width="722" status="N"/>
+		<Field id="casesNature" desc="案例性质" xpath="/casesNature" multiple="false" init="true" readonly="true"
+			placeholder="占位符" edittype="select" translated="DATA_DIC.109"
+			datatype="string" size="50" width="250" status="N"/>
+		<Field id="followupFlag" desc="是否后续/重点关注" xpath="/followupFlag" multiple="false" init="true" readonly="true"
+			placeholder="占位符" edittype="select" translated="DATA_DIC.8000"
+			datatype="string" size="50" width="250" status="N"/>
+	</Fields>
+	<Where>
+		<TextBox id="createDtStart" desc="创建日期" edittype="text" datatype="date" index="0" />
+		<TextBox id="createDtEnd" desc="至" edittype="text" datatype="date" index="1" />
+		<TextBox id="casesCode" desc="案例编号" edittype="text" datatype="string" index="2" />
+		<TextBox id="casesName" desc="案例名称" edittype="text" datatype="string" index="3" />
+		<TextBox id="createUserId" desc="创建人编号" edittype="text" datatype="string" index="4" />
+		<TextBox id="createUserName" desc="创建人名称" edittype="text" datatype="string" index="5" />
+		<Option id="casesStatus" desc="案例状态" init="true" placeholder="占位符" 
+			translated="DATA_DIC.106" datatype="string" index="6"/>
+		<Option id="casesNature" desc="案例性质" init="true" placeholder="占位符" 
+			translated="DATA_DIC.109" datatype="string" index="7"/>
+	</Where>
+	<Operations>
+    	<Button id="btnShow" name="btnShow" desc="查看" icon="icon-tip"/>
+		<Button id="btn_Read" name="btn_Read" desc="查看" icon="icon-search" />
+		<Button id="btnReplenish" name="btnReplenish" desc="案例信息补录" icon="icon-add" />
+    	
+	</Operations>
+</CommQry>

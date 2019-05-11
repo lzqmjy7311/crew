@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="审批权限设置" navigate="主页 &gt; 系统管理 &gt; 权限管理 &gt; 操作员审批权限设置" type="call"
+	interface="false" pagesize="10" async="true" databusid="CUSTINFO_DB"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.parammng.cqGetter.AurhoritySetCallGetter">
+	<Include id="BankParam" />
+	<ResultViewParam>
+		/fpages/parammng/ftl/AuthoritySet3.ftl
+	</ResultViewParam>
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+
+
+		<Field id="brcode" fieldname="brcode" type="String" dataType=""
+			edittype="select" size="20" desc="机构号" tip="机构号" method="None"
+			index="0" function="" width="" default=""
+			translated="CQ:AllBranchSelect"
+			fieldmap="brcode=brcode;brcodeName=brcodeTypeName"
+			viewField="brcodeTypeName" scale="" require="" readOnly="" rules=""
+			errmsg="" dropdowntype="dynamic" init="false" />
+
+
+
+		<Field id="tlrno" tablename="lp" fieldname="tlrno" type="String"
+			dataType="" size="20" desc="操作员号" tip="操作员号" method="None" index="2"
+			function="" width="" default="" scale="" require="" readOnly=""
+			rules="" errmsg="" />
+
+
+		<!-- mod by abudula at 20101119 start-->
+		<Field id="bussType" desc="流程" status="N" method="None" xpath="/bussType" translated="DATA_DIC.8800" edittype="select"
+			primary="true" type="bussType" size="4" default="" tip="流程" />
+
+		<Field id="bizType" desc="业务品种" status="N" method="None" xpath="/bizType" edittype="text"
+			primary="true" type="bussType" size="4" default="" tip="业务品种" />
+
+		<Field id="bizTypeName" desc="业务品种" status="N"  xpath="/bizType"  tip="业务品种" />
+		<!-- mod by abudula at 20101119 end-->
+
+	</Fields>
+
+	<Where>
+
+
+	</Where>
+
+	<Operations>
+		<Button id="btSave" name="btSave" desc="查询"
+			operation="submitform" url="/fpages/parammng/ftl/AuthoritySet3.ftl"
+			txn="" />
+	</Operations>
+
+</CommQry>

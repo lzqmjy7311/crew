@@ -1,0 +1,34 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro> 
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"]/>
+
+<#assign loanAccount=RequestParameters["loanAccount"]?default("")>
+<#assign ruleId=RequestParameters["ruleId"]?default("")>
+<#assign date=RequestParameters["date"]?default("")>
+
+<@CommonQueryMacro.page title="任务管理  &gt; 预警清单工作台">
+
+<#assign isPorECustMgr=statics["com.gbicc.warn.getter.TWarnTableGetter"].get(loanAccount,"","")>
+
+<table style="margin: 0 auto; width: 100%; border-collapse: collapse; border: 1px solid #FFCC00;">
+	<thead>
+		<#list isPorECustMgr as x>
+		<#if x_index == 0>
+		<tr bgcolor="#CCCCCC" height="34">
+			<#list x as a>
+			<td style="font-size: 20px;">${a}</td> </#list>
+		</tr>
+	</thead>
+
+	<tbody>
+		<#else>
+		<tr style="font-size: 14px;" height="25">
+			<#list x as a>
+				<td>${a}</td>
+			</#list>
+		</tr>
+		</#if>
+	</tbody>
+	</#list>
+</table>
+
+</@CommonQueryMacro.page>

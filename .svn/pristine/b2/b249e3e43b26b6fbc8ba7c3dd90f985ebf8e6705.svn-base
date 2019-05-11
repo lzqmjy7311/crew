@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="TCmFinanceIndexHyFw" navigate="TCmFinanceIndexHyFw" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.view.getter.TCmFinanceIndexHyFwGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+        <Field id="id" desc="ID" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/id" />
+        <Field id="indexCd" desc="指标代码" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/indexCd" />
+        <Field id="upValue" desc="上限值" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/upValue" />
+        <Field id="downValue" desc="下线值" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/downValue" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

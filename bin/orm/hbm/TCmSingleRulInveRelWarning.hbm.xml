@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-12-2 15:44:32 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.single.entity.TCmSingleRulInveRelWarning" table="T_CM_SINGLE_RUL_INVE_REL_WARNING" schema="ECUSER">
+        <comment>单规则协查任务关联预警信息表</comment>
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="inveId" type="string">
+            <column name="FD_INVE_ID" length="32" />
+        </property>
+        <property name="warningId" type="string">
+            <column name="FD_WARNING_ID" length="32" />
+        </property>
+    </class>
+</hibernate-mapping>

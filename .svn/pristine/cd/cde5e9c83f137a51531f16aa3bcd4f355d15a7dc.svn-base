@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.warn.getter.TWarnSignalGetter">
+	<Include id="BankParam" />
+	
+	<Fields>
+		<Field id="warnCode" desc="预警信号" xpath="/warnCode"/>
+		<Field id="affPerDesc" desc="预警名称" xpath="/affPerDesc"/>
+		<Field id="warnLEvel" desc="预警级别" xpath="/warnLEvel" edittype="select" translated="DATA_DIC.200"/>
+		<Field id="checkStatus" desc="查证情况" edittype="select" translated="DATA_DIC.211"
+            datatype="string" xpath="/checkStatus" />
+        <Field id="checkDesc" desc="查证说明" edittype="textarea" xpath="/checkDesc"
+            height="100" width="300" size="128"/>
+        
+	</Fields>
+	
+	<Operations>
+		<Button id="warnSignalAdd" name="warnSignalAdd" desc="其他" icon="icon-add" updateClass="#" url="#" txn="" />
+		<Button id="warnSignalUpd" name="warnSignalUpd" desc="查看" icon="icon-add" updateClass="#" url="#" txn="" />
+		<Button id="warnSignalDel" name="warnSignalDel" desc="删除" icon="icon-delete" operation="delrecord" updateClass="#" url="" />
+		<Button id="warnSignalConfirm" name="warnSignalConfirm" desc="确定" icon="icon-save" updateClass="#" url="#" txn="" />
+	</Operations>
+</CommQry>

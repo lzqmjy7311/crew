@@ -1,0 +1,99 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+
+<#assign casesId=RequestParameters["casesId"]?default("")>
+<#assign warningIds=RequestParameters["warningIds"]?default("")>
+<#assign inveId=RequestParameters["inveId"]?default("")>
+
+<@CommonQueryMacro.page title="单规则预警处置-发起协查">
+<table>
+	<tr>
+		<td>
+			<@CommonQueryMacro.GroupBox id="SingleRulWarningSelectBox" label="已选择的预警信号" expand="true">
+				<@CommonQueryMacro.CommonQuery id="SingleRulWarningSelect" init="false" submitMode="current">
+					<@CommonQueryMacro.DataTable id="SingleRulWarningSelectTable" readonly="true" paginationbar="" 
+					fieldStr="warnCode[80],rulType[100],rulName[150],rulDesc[150],warnStatus[100],warnDt[100],mainOrg[100]" width="100%" hasFrame="true"/>
+				</@CommonQueryMacro.CommonQuery>
+			</@CommonQueryMacro.GroupBox>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<@CommonQueryMacro.CommonQuery id="SingleRulInvestigation" init="false" submitMode="current">
+				<@CommonQueryMacro.Group id="SingleRulInvestigationGroup" label="" colNm=4 labelwidth="150"
+				fieldStr="inveCode,inveName,matureDt,inveOrg,inveCont"/>
+				协查任务说明：<a id="fupload" href="javascript:void()">浏览</a>
+				<br/><center>
+					<@CommonQueryMacro.Button id="btnSave" />
+					<@CommonQueryMacro.Button id="btnSubmit" />
+					<@CommonQueryMacro.Button id="btCancel" />
+				</center>
+			</@CommonQueryMacro.CommonQuery>
+		</td>
+	</tr>
+</table>
+<script>
+	var readOnly="0";//默认可文件 上传
+	$("#fupload").linkbutton({"iconCls":"icon-upload"}).click(openUploadWin);
+	function openUploadWin(){
+		var businessId=SingleRulInvestigation_dataset.getValue("id");
+		if(businessId){
+			openSubWin("uploadFile", "附件管理","/gbicc-pages/upload/commonupload.ftl?relaID="+businessId+"&relaType=11&readOnly="+readOnly,null,400);
+		}else{
+			top.easyMsg.info("请保存基本信息后再上传附件！");
+			return;
+		}
+	}
+	//页面初始化
+	function initCallGetter_post(){
+		var warningIds='${warningIds}';
+		var inveId='${inveId}';
+		SingleRulWarningSelect_dataset.setParameter("warningIds",warningIds);
+		SingleRulWarningSelect_dataset.flushData(SingleRulWarningSelect_dataset.pageIndex);
+		if(inveId!=""){
+			SingleRulInvestigation_dataset.setParameter("id",inveId);
+			SingleRulInvestigation_dataset.flushData(1);
+		}
+		var taskCheckFields=["checkEmph","inveWay","partUser","inveFeedDt","inveConc"];
+		setPageRequiredFieldsFun(taskCheckFields,false);
+	}
+	//设置页面字段必填
+	function setPageRequiredFieldsFun(fields,bool){
+		for(var i=0;i<fields.length;i++){
+			SingleRulInvestigation_dataset.setFieldRequired(fields[i],bool);
+		}
+	}
+	//保存
+	function btnSave_onClickCheck(){
+		var casesId='${casesId}';
+		var warningIds='${warningIds}';
+		SingleRulInvestigation_dataset.setParameter("casesId",casesId);
+		SingleRulInvestigation_dataset.setParameter("warningIds",warningIds);
+		SingleRulInvestigation_dataset.setParameter("op","saveInve");
+	}
+	function btnSave_postSubmit(button){
+		top.easyMsg.info("保存成功！");
+		var id = button.returnParam.id;
+		SingleRulInvestigation_dataset.setParameter("id",id);
+		SingleRulInvestigation_dataset.flushData(1);
+		window.parent.singleRulInvestigation_flush_data();
+	}
+	//提交
+	function btnSubmit_onClickCheck(){
+		var casesId='${casesId}';
+		var warningIds='${warningIds}';
+		SingleRulInvestigation_dataset.setParameter("casesId",casesId);
+		SingleRulInvestigation_dataset.setParameter("warningIds",warningIds);
+		SingleRulInvestigation_dataset.setParameter("op","submitInve");
+	}
+	function btnSubmit_postSubmit(button){
+		window.parent.investigationWin_and_parWin_close();
+	}
+	//取消
+	function btCancel_onClick(){
+		window.parent.investigationWin_close();
+	}
+</script>
+<script type='text/javascript' src='${contextPath}/dwr/interface/TaskVariable.js'> </script>
+<script type="text/javascript" src="${contextPath}/gbicc-pages/jquery-form.js"></script>
+</@CommonQueryMacro.page>

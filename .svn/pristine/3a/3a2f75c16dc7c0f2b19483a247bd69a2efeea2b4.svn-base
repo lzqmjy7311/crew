@@ -1,0 +1,204 @@
+package com.gbicc.bpm.operation;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import com.gbicc.bpm.entity.TLoanAccountDutyDistribute;
+import com.gbicc.bpm.entity.TLoanAccountRelDistribute;
+import com.gbicc.bpm.entity.TLoanAccountRelDuty;
+import com.gbicc.bpm.service.TLoanAccountDutyDistributeService;
+import com.gbicc.bpm.service.TLoanAccountRelDutyService;
+import com.huateng.ebank.business.management.service.TlrInfoService;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.framework.exceptions.CommonException;
+import com.huateng.ebank.framework.operation.BaseOperation;
+import com.huateng.ebank.framework.operation.OperationContext;
+
+import edu.emory.mathcs.backport.java.util.Arrays;
+
+public class AccountDutyDistributeProcessEndOperation extends BaseOperation {
+
+	public static final String ID = AccountDutyDistributeProcessEndOperation.class.getSimpleName();
+	public static final String CMD = "CMD";
+	public static final String CMD_QUERY = "CMD_QUERY";
+	public static final String CMD_INSERT = "CMD_INSERT";
+	public static final String CMD_UPDATE = "CMD_UPDATE";
+	public static final String CMD_DELETE = "CMD_DELETE";
+	public static final String IN_PARAM = "IN_PARAM";
+	
+	public static final String DIST_PRINCIPLE_1="1";//分派原则-本次分派总量平均原则
+	public static final String DIST_PRINCIPLE_2="2";//分派原则-分派后工作总量平均原则
+	
+	@Override
+	public void afterProc(OperationContext context) throws CommonException {
+	}
+
+	@Override
+	public void beforeProc(OperationContext context) throws CommonException {
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	public void execute(OperationContext context) throws CommonException {
+		String businessid = (String) context.getAttribute("businessid");
+		String businStatus = (String) context.getAttribute("businStatus");
+		TLoanAccountDutyDistributeService distributeService=TLoanAccountDutyDistributeService.getInstance();
+		TLoanAccountDutyDistribute dutyDistribute=distributeService.get(businessid);
+		dutyDistribute.setStatus(businStatus);
+		distributeService.update(dutyDistribute);
+		if(businStatus.equals(TLoanAccountDutyDistributeOperation.STATUS_APL_PASS)){
+			String type=dutyDistribute.getDistType();//分派类型
+			TLoanAccountRelDutyService relDutyService=TLoanAccountRelDutyService.getInstance();
+			if(dutyDistribute.getDistFlag().equals(TLoanAccountDutyDistributeOperation.DIST_FLAG_SINGLE)){//单帐户分派
+				TLoanAccountRelDuty relDuty=relDutyService.get(dutyDistribute.getLoanacno().getLoanacno());
+				saveRelDuty(relDuty,dutyDistribute.getCheckUser(),type,dutyDistribute.getLoanacno().getLoanacno(),dutyDistribute.getOldCheckUser());
+			}else{//批量分派
+				ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+				List relDistList=rootdao.queryByCondition("from TLoanAccountRelDistribute where distId='"+dutyDistribute.getId()+"' ");
+				String checkUser=dutyDistribute.getCheckUser();
+				Integer distQuantity=relDistList.size();//本次分派数量
+				Integer checkUserQuantity=0;//检查人数量
+				List<String> list=new ArrayList<String>();
+				if(checkUser.indexOf(",")>-1){
+					String[] str=checkUser.split(",");
+					list=Arrays.asList(str);
+					checkUserQuantity=list.size();
+				}else{
+					checkUserQuantity=1;
+				}
+				if(checkUserQuantity>1){
+					if(dutyDistribute.getDistPrinciple().equals(DIST_PRINCIPLE_1)){
+						//本次分派总量平均--循环给检查人列表分派检查任务便是平均分派。
+						Iterator items= relDistList.iterator();
+						while(items.hasNext()){
+							for(int i=0;i<list.size();i++){
+								if(items.hasNext()){
+									TLoanAccountRelDistribute relDist= (TLoanAccountRelDistribute)items.next();
+									TLoanAccountRelDuty relDuty=relDutyService.get(relDist.getLoanacno());
+									saveRelDuty(relDuty,list.get(i),type,relDist.getLoanacno(),dutyDistribute.getOldCheckUser());
+									items.remove();
+								}
+							}
+						}
+					}else{
+						//分派后工作总量平均
+						Map<String,Integer> map=new HashMap<String, Integer>();
+						Integer checkUserTaskQuantity=0;//检查人已有任务数量
+						Integer totalQuantity=0;//总任务数=本次分派任务数+检查人已有任务数
+						for(int i=0;i<list.size();i++){
+							String hql="select count(loanacno) from TLoanAccountRelDuty where dutyid='"+list.get(i)+"' ";
+							Integer count=rootdao.queryByHqlToCount(hql);
+							map.put(list.get(i),count);
+							checkUserTaskQuantity=checkUserTaskQuantity+count;
+						}
+						totalQuantity=checkUserTaskQuantity+distQuantity;
+						Integer avgQuantity=totalQuantity/checkUserQuantity;//本次分派平均数
+						Integer checkTotalTaskQuantity=0;//排除掉已有任务数>本次分派平均数的检查人的已有任务总数;
+						Set<Entry<String, Integer>> set=map.entrySet();
+						Iterator<Entry<String, Integer>> it=set.iterator();
+						while(it.hasNext()){
+							Entry<String, Integer> entry=it.next();
+							if(entry.getValue()>=avgQuantity){
+								it.remove();
+							}else{
+								checkTotalTaskQuantity=checkTotalTaskQuantity+entry.getValue();
+							}
+						}
+						
+						Integer realityTotal=checkTotalTaskQuantity+distQuantity;//实际分派总数=需要分派检查人的已有任务总数+本次分派数量
+						Integer realityAvg=realityTotal/map.size();//实际分派平均数=实际分派总数/实际分派人数
+						Set<Entry<String, Integer>> realitySet=map.entrySet();
+						Iterator<Entry<String, Integer>> realityIt=realitySet.iterator();
+						int start=0;
+						int end=0;
+						List<String> tempUserList=new ArrayList<String>();
+						while(realityIt.hasNext()){
+							Entry<String, Integer> entry=realityIt.next();
+							tempUserList.add(entry.getKey());
+							Integer currentDistQuantity=realityAvg-entry.getValue();//当前检查人需要分派的任务数
+							end=start+currentDistQuantity;
+							for(int i=start;i<end;i++){
+								TLoanAccountRelDistribute relDist= (TLoanAccountRelDistribute) relDistList.get(i);
+								TLoanAccountRelDuty relDuty=relDutyService.get(relDist.getLoanacno());
+								saveRelDuty(relDuty,entry.getKey(),type,relDist.getLoanacno(),dutyDistribute.getOldCheckUser());
+								start=i+1;
+							}
+						}
+						//分派完成后处理剩余无法平均分派的任务
+						List<TLoanAccountRelDistribute> tempList=new ArrayList<TLoanAccountRelDistribute>();
+						for(int i=start;i<relDistList.size();i++){
+							TLoanAccountRelDistribute temp=(TLoanAccountRelDistribute) relDistList.get(i);
+							tempList.add(temp);
+						}
+						Iterator<TLoanAccountRelDistribute> tempIt=tempList.iterator();
+						while(tempIt.hasNext()){
+							for(int i=0;i<tempUserList.size();i++){
+								if(tempIt.hasNext()){
+									TLoanAccountRelDistribute temp=tempIt.next();
+									TLoanAccountRelDuty relDuty=relDutyService.get(temp.getLoanacno());
+									saveRelDuty(relDuty,tempUserList.get(i),type,temp.getLoanacno(),dutyDistribute.getOldCheckUser());
+									tempIt.remove();
+									start=start+1;
+								}
+							}
+						}
+					}
+				}else{
+					//分派后检查人只有一个
+					for(int i=0;i<relDistList.size();i++){
+						TLoanAccountRelDistribute relDist= (TLoanAccountRelDistribute) relDistList.get(i);
+						TLoanAccountRelDuty relDuty=relDutyService.get(relDist.getLoanacno());
+						saveRelDuty(relDuty,dutyDistribute.getCheckUser(),type,relDist.getLoanacno(),dutyDistribute.getOldCheckUser());
+					}
+				}
+			}
+		}
+	}
+	
+	public void saveRelDuty(TLoanAccountRelDuty relDuty,String user,String type,String actno,String oldCheckUser) throws CommonException{
+		TLoanAccountRelDutyService relDutyService=TLoanAccountRelDutyService.getInstance();
+		String orgId="";
+		if(oldCheckUser.indexOf(";")>-1){
+			String[] str=oldCheckUser.split(";");
+			String[] info=str[0].split(",");
+			orgId=info[0];
+		}else{
+			String[] info=oldCheckUser.split(",");
+			orgId=info[0];
+		}
+		if(relDuty!=null){
+			if(type.equals(TLoanAccountDutyDistributeOperation.DIST_TYPE_DUTY)){
+				relDuty.setDutyid(user);
+				relDuty.setDutyname(TlrInfoService.getInstance().getTlrInfoByTlrno(user).getTlrName());
+				relDuty.setDutyorg(orgId);
+				relDutyService.update(relDuty);
+			}else if(type.equals(TLoanAccountDutyDistributeOperation.DIST_TYPE_COLL)){
+				relDuty.setCollid(user);
+				relDuty.setCollname(TlrInfoService.getInstance().getTlrInfoByTlrno(user).getTlrName());
+				relDuty.setCollorg(orgId);
+				relDutyService.update(relDuty);
+			}
+		}else{
+			relDuty=new TLoanAccountRelDuty();
+			if(type.equals(TLoanAccountDutyDistributeOperation.DIST_TYPE_DUTY)){
+				relDuty.setLoanacno(actno);
+				relDuty.setDutyid(user);
+				relDuty.setDutyname(TlrInfoService.getInstance().getTlrInfoByTlrno(user).getTlrName());
+				relDuty.setDutyorg(orgId);
+				relDutyService.save(relDuty);
+			}else if(type.equals(TLoanAccountDutyDistributeOperation.DIST_TYPE_COLL)){
+				relDuty.setLoanacno(actno);
+				relDuty.setCollid(user);
+				relDuty.setCollname(TlrInfoService.getInstance().getTlrInfoByTlrno(user).getTlrName());
+				relDuty.setCollorg(orgId);
+				relDutyService.save(relDuty);
+			}
+		}
+	}
+}

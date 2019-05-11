@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="信贷备忘录  &gt;  信贷备忘录" navigate="催收管理    &gt; 催收2" type="call"
+	interface="false" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.person.creditMemo.getter.OrderGetter">
+	
+	<Include id="BankParam" />
+	<PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="批量下载" />
+    <Fields>
+        <Field id="orderId" desc="订单编号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="50" scale="2" default="" xpath="/orderId" />
+        <Field id="createTime" desc="创建日期" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/createTime" />
+        <Field id="receiver" desc="收货人" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/receiver" />
+        <Field id="receiverMobile" desc="移动电话" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/receiverMobile" />
+        <Field id="shippingName" desc="物流名称" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/shippingName" />
+        <Field id="shippingCode" desc="物流单号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/shippingCode" />
+        <Field id="receiverAddress" desc="收货地址" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/receiverAddress" />
+        <Field id="receiverZip" desc="邮政编码" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/receiverZip" />
+        <Field id="invoiceType" desc="发票类型" require="" edittype="text" datatype="int" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/invoiceType" />
+        <Field id="sourceType" desc="订单来源" require="" edittype="text" datatype="int" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/sourceType" />
+    </Fields>
+    
+     <Where>
+		<TextBox id="receiver" desc="用户名称" edittype="text" readonly="false" status="F" datatype="string" size="10" index="1" />\
+		<TextBox id="userId" desc="用户账号" edittype="text" readonly="false" status="F" datatype="string" size="10" index="2" />\
+		<TextBox id="orderId" desc="订单编号" edittype="text" readonly="false" status="F" datatype="string" size="10" index="3" />\
+		<TextBox id="shippingName" desc="物流名称" edittype="text" readonly="false" status="F" datatype="string" size="10" index="4" />\
+		<TextBox id="shippingCode" desc="物流单号" edittype="text" readonly="false" status="F" datatype="string" size="10" index="5" />\				
+		<TextBox id="receiverMobile" desc="电话号码" edittype="text" readonly="false" status="F" datatype="string" size="10" index="6" />\
+		<TextBox id="startSdate" desc="发生日期，起："  edittype="text" readonly="false" status="F" datatype="date" size="10" index="7" />\
+		<TextBox id="startEdate" desc="发生日期，至："  edittype="text" readonly="false" status="F" datatype="date" size="10" index="8" />\
+	</Where>
+    <Operations></Operations>
+</CommQry>

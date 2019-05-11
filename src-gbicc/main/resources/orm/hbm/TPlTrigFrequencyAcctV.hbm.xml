@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-1-20 10:30:00 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.person.frequency.entity.TPlTrigFrequencyAcctV" table="T_PL_TRIG_FREQUENCY_ACCT_V" schema="ECUSER">
+        
+            <id name="loanAccount" type="string">
+                <column name="LOAN_ACCOUNT" length="30" />
+            </id>
+            <property name="productCode" type="string">
+                <column name="PRODUCT_CODE" length="80" />
+            </property>
+        
+            <property name="custcode" type="string">
+                <column name="CUSTCODE" length="35" />
+            </property>
+            <property name="custname" type="string">
+                <column name="CUSTNAME" length="60" />
+            </property>
+            <property name="loanAmount" type="big_decimal">
+                <column name="LOAN_AMOUNT" precision="12" />
+            </property>
+            <property name="loanBalance" type="big_decimal">
+                <column name="LOAN_BALANCE" precision="12" />
+            </property>
+            <property name="floatinterate" type="big_decimal">
+                <column name="FLOATINTERATE" precision="6" />
+            </property>
+            <property name="loanPeriod" type="java.lang.Integer">
+                <column name="LOAN_PERIOD" />
+            </property>
+            <property name="operator" type="string">
+                <column name="OPERATOR" length="60" />
+            </property>
+            <property name="operBank" type="string">
+                <column name="OPER_BANK" length="60" />
+            </property>
+            <property name="trigRate" type="java.lang.Double">
+                <column name="FD_TRIG_RATE" precision="53" scale="0" />
+            </property>
+            <property name="rankFinal" type="java.lang.Integer">
+                <column name="FD_RANK_FINAL" />
+            </property>
+       
+    </class>
+</hibernate-mapping>

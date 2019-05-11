@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.huateng.ebank.monitor.scheduler.bean">
+	<class
+		name="BiQuartzJobLog"
+		table="BI_QUARTZ_JOB_LOG"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="id"
+			type="string"
+			column="LOG_ID"
+		>
+		</id>
+
+		<property
+			name="quartzId"
+			column="QUARTZ_ID"
+			type="string"
+			not-null="false"
+			length="32"
+		/>
+		<property
+			name="execTm"
+			column="EXEC_TM"
+			type="java.util.Date"
+			not-null="false"
+			length="7"
+		/>
+		<property
+			name="endTm"
+			column="END_TM"
+			type="java.util.Date"
+			not-null="false"
+			length="7"
+		/>
+		<property
+			name="quartzName"
+			column="QUARTZ_NAME"
+			type="string"
+			not-null="false"
+			length="128"
+		/>
+		<property
+			name="quartzResult"
+			column="QUARTZ_RESULT"
+			type="string"
+			not-null="false"
+			length="2"
+		/>
+		<property
+			name="remark"
+			column="REMARK"
+			type="string"
+			not-null="false"
+			length="1024"
+		/>
+
+
+	</class>
+</hibernate-mapping>

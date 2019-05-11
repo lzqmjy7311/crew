@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "/WEB-INF/dtd/spring-beans-2.0.dtd">
+<beans>
+	<bean id="JdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource">
+			<ref bean="defaultDataSource" />
+		</property>
+	</bean>
+	
+	<!-- 客户dao -->
+	<bean id="TCustomerDAO" class="com.gbicc.person.customer.dao.TCustomerDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+	<bean id="ProductDAO"
+		class="com.gbicc.person.product.dao.ProductDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+	<!--预警报告-->
+	<bean id="TWarnDisposalRepDAO"
+		class="com.gbicc.warn.dao.TWarnDisposalRepDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+	<!--阈值管理-->
+	<bean id="TCwThresholdversionDAO"
+		class="com.gbicc.warn.ComninationWarn.dao.TCwThresholdversionDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+	<!-- 定期监控报告dao -->
+	<bean id="TPlDqMonitorDAO"
+		class="com.gbicc.person.monitor.dao.TPlDqMonitorDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+	<bean id="TPlDqReportAjDAO"
+		class="com.gbicc.person.monitor.dao.TPlDqReportAjDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+	<!-- 预警处置业务dao -->
+	<bean id="TPlYjMonitorDAO"
+		class="com.gbicc.person.monitor.dao.TPlYjMonitorDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+	<bean id="TPlYjReportDAO"
+		class="com.gbicc.person.monitor.dao.TPlYjReportDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+	
+	<!--催收管理-->
+	<bean id="TCollectionInfoDAO" class="com.gbicc.person.collection.dao.TCollectionInfoDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+	<!--质量监督参数管理-->
+	<bean id="QualitysuParDao" class="com.gbicc.person.supervision.dao.QualitysuParDao">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>	
+	<!--中小融辅贷后报告-->
+	<bean id="TPlZxrfInfoDAO" class="com.gbicc.person.zxrf.dao.TPlZxrfInfoDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+	<!--调整监控频率-->
+	<bean id="TPlZxrfMonitorDAO"
+		class="com.gbicc.person.monitor.dao.TPlZxrfMonitorDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+	<!--导入TXT-->
+	<bean id="ImporttextDao" class="com.gbicc.person.importtext.ImporttextDao">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>	
+	<bean id="ImportpersontextDao" class="com.gbicc.person.importtext.ImportpersontextDao">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>	
+	
+	<bean id="TModifiedRoleidDao" class="com.gbicc.user.dao.TModifiedRoleidDao">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>	
+	
+	
+</beans>

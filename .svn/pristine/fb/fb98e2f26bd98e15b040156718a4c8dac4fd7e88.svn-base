@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 用于直接生成SQL语句，支持同步和异步提交 -->
+<!-- title:标题 navigate:导航信息 type:方式（sql|call) interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号 transdataactionurl:数据整理URL txnlogflag:true记录日志 async:异步提交标志
+	pagesize:页面显示记录数(缺省为10) -->
+<CommQry title="UndoConfirm.title" navigate="系统维护 &gt; 主管确认 &gt; 已办事项"
+	type="call" interface="true" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do" txnlogflag="true"
+	getterclassname="com.huateng.ebank.business.approve.getter.ApproveLogGetter">
+	<Include id="BankParam" />
+	<!-- <PageQryExp type="CSV" limit="true" encoding="GBK" url="/trans/qryExp.do"
+		directory="F:/upload"/> -->
+	<PageQryExp type="XLS" limit="true" encoding="GBK"
+		url="/trans/qryExp.do" desc="批量下载-已办事项" />
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示 -->
+		<Field id="select" desc="选择" require="false" method="None"
+			readonly="false" size="20" default="" xpath="" type="select"
+			edittype="checkbox" />
+		<Field id="id" desc="任务编号" status="F" size="14"
+			require="false" readonly="false" edittype="text" datatype="string"
+			tip="任务编号" xpath="/id" />
+		<Field id="intOperId" desc="创建人员" status="F"
+			size="20" require="false" readonly="false" edittype="text" datatype="string"
+			tip="创建人员" xpath="/intOperId" />
+		<Field id="insCd" desc="创建机构" status="F" method="com.huateng.ebank.business.common.CQMethod.getBrhName"
+			size="20" require="false" readonly="false" edittype="text" datatype="string"
+			tip="创建机构" xpath="/insCd" />
+		<Field id="intInsId" desc="记录类型" status="F"
+			size="10" require="false" readonly="false" edittype="select"
+			datatype="string" tip="记录类型" xpath="/intInsId" translated="DATA_DIC.300001" />
+		<Field id="adtRcdPk" desc="原纪录主键" status="F"
+			size="32" require="false" readonly="false" edittype="text" datatype="string"
+			tip="原纪录主键" xpath="/adtRcdPk" />
+		<Field id="updTransCd" desc="操作说明"
+			status="F" size="2" require="false" readonly="false" edittype="select"
+			datatype="string" tip="操作说明" xpath="/updTransCd"
+			translated="DATA_DIC.311" />
+		<Field id="crtDt" desc="创建日期" status="F"
+			size="8" require="false" readonly="false" edittype="text" datatype="date"
+			tip="创建日期" xpath="/crtDt" />
+		<Field id="lastUpdOper" desc="最后更新人"
+			status="F" size="20" require="false" readonly="false" edittype="text"
+			datatype="string" tip="最后更新人" xpath="/lastUpdOper" />
+		<Field id="lastUpdTms" desc="最后更新时间"
+			status="F" size="14" require="false" readonly="false" edittype="text"
+			datatype="string" tip="最后更新时间" xpath="/lastUpdTms" />
+			<Field id="approveRemark" desc="备注" status="F" require="false" edittype="textarea"
+			datatype="string" method="None" readonly="false"
+			size="100" default="" xpath="/approveRemark" tip="" width="200"/>
+
+		<Field id="approveResult" desc="审批结果" status="F" require="true" edittype="select" width="200"
+			datatype="string" method="None" readonly="false"   translated="LIST:01,01-通过;02,02-拒绝"
+			size="" default="" xpath="/approveResult" tip="" />
+
+	</Fields>
+	<Where>
+
+		<TextBox id="id" dataType="String" size="14" desc="任务编号"
+			tip="任务编号" index="0" default="" scale="" require="" readOnly=""
+			rules="" errmsg="" />
+
+		<Option id="insCd" fieldname="brcode1"  size=""
+			desc="创建机构" tip="机构号" type="string" translated="CQ:BctlAllSelect"
+			fieldmap="insCd=brcode;insCdName=brcodeTypeName"
+			viewField="brcodeTypeName" dropdowntype="dynamic" init="true"
+			require="false" readOnly="" />
+		<Option id="intInsId" dataType="String" size="" desc="记录类型"
+			tip="记录类型" index="2" default="" scale="" require="" readOnly=""
+			rules="" errmsg="" translated="DATA_DIC.300001" />
+		<Option id="updTransCd" dataType="String" size="" desc="操作类型"
+			tip="操作类型" index="3" default="" scale="" require="" readOnly=""
+			rules="" errmsg="" translated="DATA_DIC.311"/>
+		<TextBox id="ctdate1" dataType="date" desc="任务创建开始日期"
+			tip="日期" index="4" />
+		<TextBox id="ctdate2" dataType="date" desc="任务创建结束日期"
+			tip="日期" index="5" />
+	</Where>
+	<Operations>
+		<Button id="btSee" desc="返回待办事项" operation="href"
+			url="/fpages/system/ftl/DirectorConfirm.ftl" />
+	</Operations>
+
+
+</CommQry>

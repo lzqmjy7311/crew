@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CommQry title="日志查询" navigate="主页 &gt; 数据查询&gt; 用户登录日志查询" type="call"
+	interface="true" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.dataquery.getter.TlrLoginLogQueryGetter">
+	<Include id="BankParam" />
+	<PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="批量下载-用户日志查询"/>
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<!-- 日志信息 -->
+		<Field id="id" desc="记录主键" require="" edittype="text" datatype="string" method="None"
+	 	  readonly="false" size="32" status="N" default="" primary="true" xpath="/id" />
+
+		<Field id="tlrNo" desc="操作员编号" require="" edittype="text" datatype="string" method="None"
+	 	  readonly="false" size="20" status="F" default="" xpath="/tlrNo" />
+
+		<Field id="brNo" desc="机构编号" require="" edittype="text" datatype="string" method="None"
+	 	  readonly="false" size="20" status="F" default="" xpath="/brNo" />
+
+		<Field id="loginSucTm" desc="成功登录时间" require="" edittype="text" datatype="timestamp" method="None"
+	 	  readonly="false" size="32" status="F" default="" xpath="/loginSucTm" />
+
+		<Field id="loginOutTm" desc="退出系统时间" require="" edittype="text" datatype="timestamp" method="None"
+	 	  readonly="false" size="32" status="F" default="" xpath="/loginOutTm" />
+
+		<Field id="loginFailTm" desc="登录失败时间" require="" edittype="text" datatype="timestamp" method="None"
+	 	  readonly="false" size="32" status="F" default="" xpath="/loginFailTm" />
+
+		<Field id="loginAddr" desc="操作员IP地址" require="" edittype="text" datatype="string" method="None"
+	 	  readonly="false" size="32" status="F" default="" xpath="/loginAddr" />
+
+		<Field id="loginRemark" desc="登录描述" require="" edittype="textarea" datatype="string" method="None"
+	 	  readonly="false" size="256" status="F" default="" xpath="/loginRemark" />
+
+		<Field id="sessionId" desc="会话id" require="" edittype="text" datatype="string" method="None"
+	 	  readonly="false" size="32" status="F" default="" xpath="/sessionId" />
+
+		<Field id="crtTm" desc="创建时间" require="" edittype="text" datatype="timestamp" method="None"
+	 	  readonly="false" size="32" status="F" default="" xpath="/crtTm" />
+	</Fields>
+	<Where>
+		<TextBox id="qtlrNo" type="String" operation="EQ" size="8"
+			desc="操作员编号" tip="操作员编号" index="0" />
+		<Option id="qbrNo" operation="EQ" size=""
+			desc="所属机构" tip="机构号" type="string" translated="CQ:BctlAllSelect"
+			fieldmap="qbrNo=brno;qbrNoName=brcodeTypeName"
+			viewField="brcodeTypeName" dropdowntype="dynamic" init="true"
+			require="false" readOnly="" index="1"/>
+	
+		<DateTextBox id="startDate" desc="开始日期" tip="开始日期"
+			require="false" status="F" datatype="date" method="None" size="150"
+			width="" primary="false" index="2" type="String" />
+		<DateTextBox id="endDate" desc="结束日期" tip="结束日期" require="false"
+			status="F" datatype="date" method="None" size="150" width="" primary="false"
+			index="3" type="String" />
+		<TextBox id="qloginAddr" type="String" operation="EQ" size="30"
+			desc="操作员IP" tip="操作员IP" index="4"/>
+	</Where>
+	<Operations>
+
+
+	</Operations>
+</CommQry>

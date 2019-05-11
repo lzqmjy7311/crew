@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="导入系统" navigate="环评违法企业导入" type="call"
+	interface="false" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.person.importtext.getter.TOdsOutEiaIllInfoGetter">
+	<Include id="BankParam" />
+	<Fields>
+        <Field id="id" desc="编号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/id" />
+        <Field id="custName" desc="被处罚单位名称" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/custName" />
+        <Field id="lawType" desc="违法行为类别" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/lawType" />
+        <Field id="dealResult" desc="处罚措施" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/dealResult" />
+        <Field id="dealOrg" desc="作出处罚单位名称" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/dealOrg" />
+        <Field id="dealDate" desc="处罚决定作出时间" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/dealDate" />
+        <Field id="custOrgCode" desc="组织机构代码" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/custOrgCode" />
+        <Field id="custAddress" desc="地址" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/custAddress" />
+        <Field id="lawContent" desc="处罚依据" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/lawContent" />
+	</Fields>
+    <Operations>		
+		<Button id="btCancel" name="btCancel" desc="返回" operation="href" url="" />
+		<Button id="btImport" name="btImport" desc="导入" operation="" url="#" show="" group="" txn="" icon="icon-add"/>
+		<Button id="btModify" name="btModify" desc="修改" operation="" url="#" show="" group="" txn="" icon="icon-edit"/>
+		<Button id="btUpload" name="btUpload" desc="上传" operation="" url="#" show="" group="" txn="" icon="icon-add"/>		
+	</Operations>
+</CommQry>

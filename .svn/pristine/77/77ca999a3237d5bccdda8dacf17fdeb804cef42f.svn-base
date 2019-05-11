@@ -1,0 +1,131 @@
+<%@page import="com.huateng.ebank.business.common.service.BctlService"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@page import="java.util.*"%>
+<%@page import="com.huateng.ebank.business.common.GlobalInfo"%>
+<%@page import="com.huateng.ebank.business.common.bean.TreeNode"%>
+<%@page import="com.huateng.ebank.business.common.bean.MenuItem"%>
+<%@page import="com.huateng.ebank.entity.data.mng.FunctionInfo"%>
+<%@page import="com.gbicc.common.FileUpDownProperties"%>
+<%@page import="com.huateng.ebank.business.management.service.UserMgrService"%>
+<%@page import="com.huateng.ebank.framework.exceptions.CommonException"%>
+<%@page import="com.huateng.ebank.business.common.DAOUtils"%>
+<%@page import="com.huateng.ebank.framework.report.common.ReportConstant"%>
+<%
+	GlobalInfo globalInfo = (GlobalInfo) session.getAttribute(GlobalInfo.KEY_GLOBAL_INFO);
+	GlobalInfo.setCurrentInstance(globalInfo);
+    List<FunctionInfo> funcList = UserMgrService.getInstance().getUserFunctions(globalInfo.getTlrno());
+    Map<String,MenuItem> functions = new HashMap<String,MenuItem>();
+    MenuItem menu = null;
+    for (FunctionInfo f : funcList) {
+    	if(2!=f.getLocation()) continue;
+    	menu = new MenuItem();
+    	menu.setId(f.getId());
+    	menu.setHref(f.getPagepath());
+    	menu.setText(f.getFuncname());
+    	if(f.getIconCls()!=null&&!"".equals(f.getIconCls())){
+    	  menu.setIconCls(f.getIconCls());
+    	}else{
+    	  menu.setIconCls("");
+    	}
+        functions.put(f.getId(), menu);
+    }
+
+    List<MenuItem> menus = new ArrayList<MenuItem>();
+    MenuItem parent = null;
+    for (FunctionInfo f : funcList) {
+    	if(2!=f.getLocation()) continue;
+    	if(ReportConstant.APPROVE_FUNC_ID.equals(f.getLastdirectory())) continue;
+    	if(functions.containsKey(f.getLastdirectory())) {
+    		parent = functions.get(f.getLastdirectory());
+    		parent.addChild(functions.get(f.getId()));
+    	} else {
+    		if("0".equals(f.getLastdirectory()))menus.add(functions.get(f.getId()));
+    	}
+    }
+    int width = 170;
+    String appendP=BctlService.getInstance().getCurrentReportOrgParams();
+    String _appendP=null;
+    StringBuffer menuBar = new StringBuffer();
+    for(MenuItem m : menus) {
+    	  if(m.getText().contains("报表查询")||m.getText().contains("统计分析")){
+    		width = 260;
+    		_appendP=appendP;
+    	  }
+		  menuBar.append("<a id='mb" + m.getId() + "' href='javascript:void(0)' menu='#mm" + m.getId()
+		              + "' class='easyui-menubutton' iconCls='" + m.getIconCls() + "' duration='0'>" + m.getText() + "</a>");
+		  menuBar.append("<div id='mm" + m.getId() + "' MENU_ITEM style='width:"+width+"px;' iconCls='" + m.getIconCls() + "'>");
+    	  try{
+    		  for (TreeNode f2 : m.getChildren()) {
+              	  MenuItem m2= (MenuItem)f2;
+    			  menuBar.append(getSubDiv(m2,width,_appendP));
+              }
+          } catch(Exception e) {
+              e.printStackTrace();
+          }
+    	  menuBar.append("</div>");
+    	  width=170;
+    	  _appendP=null;
+    }
+%><%!StringBuffer getSubDiv(MenuItem item,int width,String _appendP) throws CommonException {
+        StringBuffer menuDiv = new StringBuffer();
+        String clickEvent = "";
+        if(item.getHref() != null && !"".equals(item.getHref())) {
+        	String href=item.getHref();
+        	if(_appendP!=null ){
+        		if(href.contains("b_action")){
+        			href=FileUpDownProperties.readValue("cognos.webpath")+"?cv.header=false&"+href;
+        		}
+        		if(href.contains("?")){
+        			href=href+"&"+_appendP;
+        		}else{
+        			href=href+"?"+_appendP;
+        		}
+        	}
+            clickEvent += "onclick=\"doWork('"+ item.getId() +"','" + item.getText() + "','" + href+ "','" + item.getId() + "');\"";
+        }
+     //   menuDiv.append("<div iconCls='" + item.getIconCls() + "' title='" + item.getText() + "' " + clickEvent + ">");
+     //去掉提示
+          menuDiv.append("<div iconCls='" + item.getIconCls() + "' " + clickEvent + ">");
+        if (item.isHasChild()) {
+            StringBuffer subDiv = new StringBuffer();
+            for (TreeNode fi2 : item.getChildren()) {
+            	MenuItem m = (MenuItem)fi2;
+                subDiv.append(getSubDiv(m,width,_appendP));
+            }
+            if (subDiv.length() == 0) {
+                menuDiv.append(item.getText());
+            } else {
+                menuDiv.append("<span>" + item.getText() + "</span>");
+                menuDiv.append("<div style='width:"+width+"px;'>");
+                menuDiv.append(subDiv);
+                menuDiv.append("</div>");
+            }
+        } else {
+            menuDiv.append(item.getText());
+        }
+        menuDiv.append("</div>");
+
+        return menuDiv;
+    }%>
+<div id="_MenuBar" style="display: none">
+	<%=menuBar.toString()%>
+</div>
+<script>
+	$(function() {
+		$('.easyui-menubutton').menubutton();
+		$("#_MenuBar").show();
+		var w = 500;
+		$("div[MENU_ITEM]").each(
+			function() {
+				if ($(this).height() > w) {
+					$(this).height(w);
+					$(this).wrapInner(
+						function() {
+							return '<div style="width:'
+								+ ($(this).width() + 19)
+								+ 'px;height:' + w
+								+ 'px;overflow-y:auto" />';
+						});
+				}
+			});
+	});
+</script>

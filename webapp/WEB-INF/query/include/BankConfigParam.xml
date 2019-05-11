@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConfigParam>
+	<DataAccessObjects>BankCommQueryDAO</DataAccessObjects>
+	<ViewAdapter>
+		com.huateng.commquery.config.adapter.PageViewAdapter
+	</ViewAdapter>
+	<InterfaceViewParam>
+		/templets/commonQuery/CommonQueryTagFace.ftl
+	</InterfaceViewParam>
+	<ResultViewParam>
+		/templets/commonQuery/CommonQueryTagResult.ftl
+	</ResultViewParam>
+	<EmptyResultViewParam>
+		/templets/commonQuery/BankCommonQueryEmptyResult.ftl
+	</EmptyResultViewParam>
+	<ResultProcess>
+		com.huateng.commquery.process.BankResultProcess
+	</ResultProcess>
+	<InterfaceProcess>
+		com.huateng.commquery.process.InterfaceProcess
+	</InterfaceProcess>
+
+	<InterfaceViewURL>
+		/trans/CommQueryInterfaceServlet
+	</InterfaceViewURL>
+	<ResultViewURL>
+		/trans/CommQueryResultServlet
+	</ResultViewURL>
+	<!--
+	<InterfaceViewURL>
+		/templets/commonQuery/CommonQueryTagFace.ftl
+	</InterfaceViewURL>
+	<ResultViewURL>
+		/templets/commonQuery/CommonQueryTagResult.ftl
+	</ResultViewURL>
+	-->
+	<!-- 查询结果导出 公共参数配置
+		type   必填项，文件类型不能重复，值可以为CSV,XLS,PDF等
+		class 必填项，导出的实现类工程，用于产生生成不同类型文件对象的工厂类
+		poolXmx 必填项，缓冲池最大数量
+		poolXms 必填项，缓冲池初始数量
+		poolXmn 必填项，缓冲池最小数量
+		limit   选填项，下载页数显示，默认值为P1000；P1000 表示最大下载一千页
+		image   选填项，下载按钮对应的图片
+	-->
+	<QueryExport>
+		<Exporter type="CSV" class="com.huateng.commquery.result.qryExp.csv.ExpCsvPoolObjectFactory"
+		 poolXmx="10" poolXms="2"  poolXmn="2" limit="P10" image="/images/csv_image_export.gif"/>
+		<Exporter type="XLS" class="com.huateng.commquery.result.qryExp.xls.ExpXlsPoolObjectFactory"
+		 poolXmx="10" poolXms="2"  poolXmn="2" limit="P10" image="/images/xls_image_export.gif"/>
+	</QueryExport>
+
+	<WhereElementParser>
+		<Param id="TextBox"
+			class="com.huateng.commquery.config.parser.TextBoxElementParser" />
+		<Param id="Option"
+			class="com.huateng.commquery.config.parser.OptionElementParser" />
+		<Param id="DateTextBox"
+			class="com.huateng.commquery.config.parser.DateTextBoxElementParser" />
+		<Param id="Hidden"
+			class="com.huateng.commquery.config.parser.HiddenElementParser" />
+		<Param id="Reserve"
+			class="com.huateng.commquery.config.parser.ReserveElementParser" />
+		<Param id="HiddenOrder"
+			class="com.huateng.commquery.config.parser.HiddenOrderElementParser" />
+		<Param id="OptionOrder"
+			class="com.huateng.commquery.config.parser.OptionOrderElementParser" />
+		<Param id="CheckBoxGroup"
+			class="com.huateng.commquery.config.parser.CheckBoxGroupElementParser" />
+		<Param id="HiddenGroup"
+			class="com.huateng.commquery.config.parser.HiddenGroupElementParser" />
+		<Param id="DataLabel"
+			class="com.huateng.commquery.config.parser.DataLabelElementParser" />
+	</WhereElementParser>
+	<OperationsParser>
+		<Param id="Button"
+			class="com.huateng.commquery.config.parser.ButtonOperationParser" />
+			<!--
+		<Param id="PriButton"
+			class="com.huateng.commquery.config.parser.PriButtonOperationParser" />
+			-->
+	</OperationsParser>
+</ConfigParam>

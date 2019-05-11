@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="abc2" navigate="abc2" type="call" interface="false" pagesize="30" databusid="" async="true" transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.gbicc.company.view.riskoverview.getter.TRiskoverViewGetter">
+    <Include id="BankParam" />
+    <Fields>
+       <Field id="fiveCore" desc="五要素预警得分" require="" edittype="text"  status="F"  xpath="/fiveCore" readonly="true"/>
+       <Field id="importChange" desc="重大事项调整" require="" edittype="text"  status="F"  xpath="/importChange" readonly="true"/>
+       <Field id="dataCheck" desc="数据验真情况" require="" edittype="text"  status="F"  xpath="/dataCheck" readonly="true"/>
+       <Field id="riskLevel" desc="客户风险预警等级" require="" edittype="select" translated="DATA_DIC.12606"  status="F"  xpath="/riskLevel" readonly="true"/>
+       <Field id="bz" desc="备注" require="" edittype="textarea" width="200" status="F"  xpath="/bz" readonly="true"/>
+       
+    </Fields>
+    <Where>
+   	<Option  id="deptName" desc="所属机构" status="N" 
+            multiple="false" translated="CQ:branchTree" placeholder="占位符"
+            fieldmap="deptCd=id;deptName=name"
+            viewField="name" edittype="select" dropdowntype="dynamictree"
+            primary="true" init="false" size="3" default="2"  />
+		<Option id="deptCd" desc="所属机构" status="N" 
+            multiple="false" translated="CQ:Bctl" placeholder="占位符"
+            fieldmap="deptCd=id;deptName=name"
+            viewField="name" edittype="select" dropdowntype="dynamictree"
+            primary="true" init="false" size="3" default="2"/>
+  		<Option id="startDt" desc="开始时间" placeholder="yyyyMM" edittype="select" dropdowntype="custom" url="/templets/lib/yyyyMM.ftl" require="false" fieldmap="startDt=yyyyMM" viewField="yyyyMM" />
+  		<Option id="endDt" desc="结束时间"  placeholder="yyyyMM" edittype="select" dropdowntype="custom" url="/templets/lib/yyyyMM.ftl" require="false" fieldmap="endDt=yyyyMM" viewField="yyyyMM"  /> 
+  		<Option id="rulTheme" desc="规则主题" translated="DATA_DIC.727" multiple="true" edittype="select" datatype="string" size="50" index="3"/>\
+  		  		<Option id="customerManager" desc="客户经理" viewField="customerManager"   require=""  translated="CQ:TlrInfo" fieldmap="customerManager=tlrName;customerManager=tlrno"/>
+		<Option id="customerManagerName" desc="客户经理" viewField="tlrName"   require=""  translated="CQ:TlrInfo" fieldmap="customerManagerName=tlrName;customerManager=tlrno"/>             
+    </Where>
+    <Operations>
+    	<Button id="btQuery" name="btQuery" desc="查询" icon="icon-search" updateClass="#" url="" txn="" />
+    	<Button id="btRest" name="btRest" desc="重置" icon="icon-remove" updateClass="#" url="" txn="" />
+    </Operations>
+</CommQry>

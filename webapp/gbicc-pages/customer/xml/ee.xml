@@ -1,0 +1,20 @@
+<CommQry title="TTaskDivert" navigate="TTaskDivert" type="call" interface="false" pagesize="20" databusid="ELCDISC_DB" async="true" transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.gbicc.company.single.getter.EeQueryGetter">
+    <Include id="BankParam" />
+    <Fields>
+    	<Field id="ID" desc="ID" edittype="text" datatype="string" readonly="true"
+        xpath="/id" status="F"/>
+       	<Field id="NAME" desc="名称" edittype="text" datatype="string" readonly="true"
+        xpath="/name" status="F"/>
+        <Field id="SEX" desc="性别" edittype="text" datatype="string" readonly="true"
+        xpath="/sex" status="F"/>
+    </Fields>
+    <Where>
+    	<TextBox id="Id" desc="用户编号" edittype="text" datatype="string" index="1" />
+    	<TextBox id="Name" desc="用户姓名" edittype="text" datatype="string" index="1" />
+    	<TextBox id="Sex" desc="用户性别" edittype="radio" translated="LIST:yes,男;no,女" datatype="String" index="2" />
+    </Where>
+    <Operations>
+    	<Button id="btnRead" name="btnRead" desc="查看" icon="icon-search" />
+    </Operations>
+</CommQry>

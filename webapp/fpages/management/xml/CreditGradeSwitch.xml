@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="授信评级开关" navigate="主页 &gt; 业务参数管理 &gt; 授信评分设置" type="call"
+	interface="true"
+	pagesize="100"
+	async="true"
+	databusid="ACEENTRY_DB"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.management.getter.CreditGradeSwitchGetter">
+
+	<Include id="BankParam" />
+
+	<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+	<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+	<Fields>
+
+	 <Field id="switch" desc="授信评级控制开关" primary="false" status="F"
+	    method="None" require="true" xpath="/switch" type="String"
+	     datatype=""  edittype="radio" readonly="" size="20"  default="" tip="授信评级控制开关"
+	     translated="LIST:1,开;0,关" radioRowLen=""/>
+
+	</Fields>
+
+	<Operations>
+	</Operations>
+
+</CommQry>

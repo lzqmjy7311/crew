@@ -1,0 +1,198 @@
+package com.gbicc.company.financial.analysis.getter;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.RandomStringUtils;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.util.StringUtils;
+
+import com.gbicc.bpm.pojo.ExtProcessDefinition;
+import com.gbicc.company.financial.analysis.entity.FinanceIndexData;
+import com.gbicc.util.DateUtils;
+import com.huateng.common.err.Module;
+import com.huateng.common.err.Rescode;
+import com.huateng.commquery.result.Result;
+import com.huateng.commquery.result.ResultMng;
+import com.huateng.ebank.business.common.PageQueryCondition;
+import com.huateng.ebank.business.common.PageQueryResult;
+import com.huateng.ebank.business.common.bean.TreeNode;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.framework.util.ApplicationContextUtils;
+import com.huateng.ebank.framework.web.commQuery.BaseGetter;
+import com.huateng.exception.AppException;
+import com.huateng.fp.demo.bean.TreeField;
+
+@SuppressWarnings("unchecked")
+public class TCmFinanceIndexDataGetter extends BaseGetter {
+
+	@Override
+	public Result call() throws AppException {
+		try {
+			PageQueryResult pageResult = getData();
+			ResultMng.fillResultByList(getCommonQueryBean(),
+					getCommQueryServletRequest(), pageResult.getQueryResult(),
+					getResult());
+			result.setContent(pageResult.getQueryResult());
+			result.getPage().setTotalPage(
+					pageResult.getPageCount(getResult().getPage()
+							.getEveryPage()));
+			result.init();
+			return result;
+		} catch (AppException appEx) {
+			throw appEx;
+		} catch (Exception ex) {
+			throw new AppException(Module.SYSTEM_MODULE,
+					Rescode.DEFAULT_RESCODE, ex.getMessage(), ex);
+		}
+	}
+
+	protected PageQueryResult getData() throws Exception {
+//		 String id = (String) getCommQueryServletRequest().getParameterMap().get("id");
+	     String pck = getCommQueryServletRequest().getParameter("paramChk");
+	     String id = getCommQueryServletRequest().getParameter("_id");
+		DateUtils dataUtils=new DateUtils();
+		String sjzyear = (String) getCommQueryServletRequest().getParameterMap().get("jzyear");
+		int    jzYear=0;
+		if(org.apache.commons.lang3.StringUtils.isNotEmpty(sjzyear)||!"".equals(sjzyear)){
+			jzYear=Integer.valueOf(sjzyear);
+		}
+				
+		String caliber = (String) getCommQueryServletRequest().getParameterMap().get("caliber");
+		String srepno = (String) getCommQueryServletRequest().getParameterMap().get("repno");
+		int repno=0;
+				
+		if(org.apache.commons.lang3.StringUtils.isNotEmpty(srepno)||!"".equals(srepno)){
+			repno=Integer.valueOf(srepno);
+		}		
+		String customerNum = (String) getCommQueryServletRequest().getParameterMap().get("customerNum");
+		customerNum="000008203631";
+		ROOTDAO rootdao=ROOTDAOUtils.getROOTDAO();
+		Date firstDeadline=new Date();
+		Date secondDeadline=new Date();
+		Date threeDeadline=new Date();
+		firstDeadline=dataUtils.getFirstDeadline(jzYear, caliber, repno);//本期
+		secondDeadline=dataUtils.getSecondDeadline(jzYear, caliber, repno);//上期
+		threeDeadline=dataUtils.getThreeDeadline(jzYear, caliber, repno);//上上期
+		
+		SimpleDateFormat simple=new SimpleDateFormat("yyyyMMdd ");
+		String  firstDeadlines=simple.format(firstDeadline);
+		String  secondDeadlines=simple.format(secondDeadline);
+		String  threeDeadlines=simple.format(threeDeadline);
+		String sql=null;
+		boolean isP=false;//是否为父节点
+		String groupSql="SELECT   INDEX_TYPE_NAME indexTypeName ,V.INDEX_TYPE indexType  FROM FIN_INDEX_V V WHERE V.CUSTOMER_NUM='"+customerNum+"'  GROUP BY V.INDEX_TYPE_NAME ,V.INDEX_TYPE";
+
+		
+		String psql= " SELECT   DISTINCT V1.INDEX_CD INDEX_CD,  V1.INDEX_NAME indexName,                                   "
+				+"   V1.INDEX_CD indexCd, V1.INDEX_TYPE_NAME  indexTypeName,V1.INDEX_TYPE indexType ,V1.REMARKS  indexDisp,                                                  "
+				+"     V1.INDEX_VALUE_DATA_TYPE as stringType ,                                    "
+				+" V2.INDEX_VALUE_DATA_TYPE as sStringType,                                        "
+				+" V3.INDEX_VALUE_DATA_TYPE as ssStringType,                                        "
+				+" (V2.INDEX_VALUE_DATA_TYPE+V3.INDEX_VALUE_DATA_TYPE)/2 avgStringType,            "
+				+" CASE WHEN V1.INDEX_VALUE_DATA_TYPE>MAX(V2.INDEX_VALUE_DATA_TYPE,V3.INDEX_VALUE_DATA_TYPE) THEN 'S'  "
+                +" WHEN V1.INDEX_VALUE_DATA_TYPE<MIN(V2.INDEX_VALUE_DATA_TYPE,V3.INDEX_VALUE_DATA_TYPE) THEN 'J'        "
+	            +" ELSE 'J' "
+                 +"  END AS upDown                                                                  "
+				+" FROM                                                                   "
+				+" 	FIN_INDEX_V V1 ,                                                      "
+				+" 	FIN_INDEX_V V2 ,                                                      "
+				+" 	FIN_INDEX_V V3                                                        "
+				+" WHERE                                                                  "
+				+" 	V1.INDEX_CD=V2.INDEX_CD AND                                           "
+				+" 	V1.INDEX_CD=V3.INDEX_CD AND   V1.INDEX_TYPE='"+id+"'       AND      V1.INDEX_TYPE=V2.INDEX_TYPE AND V1.INDEX_TYPE=V3.INDEX_TYPE AND                           "
+				+" 	V1.CUSTOMER_NUM=V2.CUSTOMER_NUM AND                                   "
+				+" 	V1.CUSTOMER_NUM=V3.CUSTOMER_NUM AND                                   "
+				+"     V1.CALIBER_CD=V2.CALIBER_CD AND                                    "
+				+"     V2.CALIBER_CD=V3.CALIBER_CD AND                                    "
+				+" 	V1.CUSTOMER_NUM='"+customerNum+"' AND                                    "
+				+" 	V1.DEADLINE='"+firstDeadlines+"' AND                                            "
+				+" 	V2.DEADLINE='"+secondDeadlines+"' AND                                            "
+				+" 	V3.DEADLINE='"+threeDeadlines+"'                                                "
+				+" ORDER BY                                                               "
+				+" 	V1.INDEX_CD	                                                          "; 
+		
+	
+
+         
+		 if(org.apache.commons.lang3.StringUtils.isEmpty(id)||"".equals(id)){
+			 sql=groupSql;
+			 isP=true;
+		 }else{
+			 sql=psql;
+		 }			
+		
+		 JdbcTemplate jdbcTemplate=(JdbcTemplate) ApplicationContextUtils.getBean("JdbcTemplate");
+		 List<FinanceIndexData> listT=jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(FinanceIndexData.class));
+		 List<FinanceIndexData> list=createNodes(listT,isP);
+		
+		int pageSize  = getResult().getPage().getEveryPage();// 分页大小
+		int pageIndex = getResult().getPage().getCurrentPage();// 页码
+		 PageQueryResult pageQueryResult = new PageQueryResult();
+		 pageQueryResult.setQueryResult(list);
+		 pageQueryResult.setTotalCount(listT.size());
+		 
+		
+		
+
+		return pageQueryResult;
+	}
+	
+	
+	
+    
+
+	private List<FinanceIndexData> createNodes(List<FinanceIndexData> list1,boolean isP) {
+		List<FinanceIndexData> list = new ArrayList<FinanceIndexData>();
+		FinanceIndexData node = null;
+		if(isP){//父节点
+			for(FinanceIndexData financeIndexData:list1){
+
+				node = new FinanceIndexData();
+				node.setId(financeIndexData.getIndexType());
+				node.setText(financeIndexData.getIndexTypeName());
+				node.setHasChild(true);
+//				node.setPid(financeIndexData.getIndexType());
+				node.setAvgStringType(financeIndexData.getAvgStringType());
+				node.setIndexDisp(financeIndexData.getIndexDisp());
+				node.setIndexName(financeIndexData.getIndexName());
+				node.setSsStringType(financeIndexData.getSsStringType());
+				node.setsStringType(financeIndexData.getsStringType());
+				node.setStringType(financeIndexData.getStringType());
+				node.setUpDown(financeIndexData.getUpDown());
+				list.add(node);
+				}
+			
+		}else{//子节点
+			for(FinanceIndexData financeIndexData:list1){
+
+				node = new FinanceIndexData();
+				node.setId(financeIndexData.getIndexCd());
+//				node.setText(financeIndexData.getIndexTypeName());
+				node.setHasChild(false);
+				node.setPid(financeIndexData.getIndexType());
+				node.setAvgStringType(financeIndexData.getAvgStringType());
+				node.setIndexDisp(financeIndexData.getIndexDisp());
+				node.setIndexName(financeIndexData.getIndexName());
+				node.setSsStringType(financeIndexData.getSsStringType());
+				node.setsStringType(financeIndexData.getsStringType());
+				node.setStringType(financeIndexData.getStringType());
+				node.setUpDown(financeIndexData.getUpDown());
+				list.add(node);
+				}
+			
+		}
+		
+		
+			
+
+		return list;
+	}
+	
+}

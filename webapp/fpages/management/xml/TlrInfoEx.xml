@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="操作员管理" navigate="主页 &gt; 系统管理 &gt; 操作员管理" type="call"
+	interface="true" pagesize="60" async="true" databusid="MANAGEMENTTLR"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.management.getter.TlrInfoExGetter">
+	<Include id="BankParam" />
+	<ResultViewParam>
+		/fpages/management/ftl/TlrInfoEx.ftl
+	</ResultViewParam>
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="brcode" desc="内部机构号" status="N" readonly="true"
+			primary="true" type="String" size="4" xpath="/brcode" width="90" />
+
+		<Field id="brno" desc="机构号" status="N" readonly="true"
+			primary="true" type="String" size="6" xpath="/brno" width="60" />
+
+		<Field id="brname" desc="机构名称" status="N" readonly="true"
+			primary="true" type="String" size="20" xpath="/brname" width="130" />
+
+		<Field id="departmentCode" desc="部门号" status="N" readonly="true"
+			primary="true" type="String" size="20" xpath="/departmentCode" width="130" />
+
+		<Field id="departmentName" desc="部门名称" status="N" readonly="true"
+			primary="true" type="String" size="20" xpath="/departmentName" width="130" />
+
+		<Field id="tlrno" desc="操作员号" status="N" readonly="true"
+			width="90" primary="true" type="String" size="20" xpath="/tlrno" />
+
+		<Field id="tlrName" desc="操作员名" status="N" width="160"
+			readonly="false" primary="true" type="String" size="30"
+			xpath="/tlrName" />
+
+		<Field id="defRoleid" desc="默认岗位" require="true" status="F"
+			readonly="false" edittype="select" fieldmap="" method="None"
+			translated="LIST:" width="130" viewField="" primary="false"
+			type="String" size="10" xpath="/defRoleid" tip="请先选择操作员岗位" />
+
+		<Field id="flag" desc="有效状态" status="N" readonly="true"
+			translated="DATA_DIC.840" edittype="select" width="50"
+			primary="true" type="String" size="20" xpath="/flag" />
+
+		<Field id="status" desc="签到状态" status="N" readonly="true"
+			translated="LIST:0,0-签退;1,1-签到;2-离职" edittype="select" width="50"
+			primary="true" type="String" size="20" xpath="/status" />
+
+		<Field id="loginIp" desc="操作员IP" require="false" status="F"
+			readonly="true" edittype="String" datatype="String" width="130"
+			primary="true" type="String" size="15" xpath="/loginIp" />
+
+		<Field id="creatDate" desc="创建时间" edittype="date"
+			width="90" datatype="date" status="F" primary="true" type="String"
+			readonly="true" xpath="/creatDate" />
+
+		<Field id="latelyLoginTime" desc="最近登陆时间" edittype="date"
+			width="160" datatype="Timestamp" status="F" primary="true" type="String"
+			readonly="true" xpath="/latelyLoginTime" />
+
+		<Field id="latelyLogoutTime" desc="最近签退时间" edittype="date"
+			width="160" datatype="Timestamp" status="F" primary="true" type="String"
+			readonly="true" xpath="/latelyLogoutTime" />
+
+	</Fields>
+
+	<Where>
+		<!-- 内部机构号 -->
+		<Option id="sqlBrcode" tablename="bctl" dataType="String"
+			fieldname="sqlBrcode" edittype="String" size="20" desc="机构号"
+			tip="机构号" translated="CQ:AllDownBrcodeSelect" operation="EQ"
+			fieldmap="sqlBrcode=brcode;sqlBrcodeName=brcodeTypeName"
+			viewField="brcodeTypeName" dropdowntype="dynamic" init="false"
+			method="None" index="0" width="150" height="400" require="true" readOnly="false" />
+
+		<Hidden id="brname" desc="机构名称" status="F"
+			require="false" readonly="true" method="None" width="100"
+			primary="false" type="String" size="" xpath="/brcodeTypeName" />
+
+		<TextBox id="tlrno" fieldname="tlrno" dataType="String"
+			type="tlrno" readyonly="false" operation="EQ" size="8" desc="操作员号"
+			tip="操作员号" index="1" />
+	</Where>
+
+	<Operations>
+		<!-- operation( addrecord:delrecord:syncsubmit:asyncqrysubmit:asyncupadasubmit ) -->
+		<Button id="btn" name="btn" desc="确定" operation="asysubmit"
+			updateClass="com.huateng.ebank.business.management.updater.TlrInfoExtoUpdate"
+			url="/fpages/management/ftl/TlrManagement.ftl" txn="" />
+
+		<Button id="btSave" name="btSave" desc="确定"
+			operation="asysubmit"
+			updateClass="com.huateng.ebank.business.management.updater.TlrInfoExUpdate"
+			url="/common/success.jsp" txn="" />
+
+		<Button id="btDel" name="btdel" desc="删除，慎点！"
+			operation="asysubmit"
+			updateClass="com.huateng.ebank.business.management.updater.TlrInfoExDelete"
+			url="/common/success.jsp" txn="" />
+
+		<Button id="btActivation" name="" desc="激活"
+			operation="asysubmit"
+			updateClass="com.huateng.ebank.business.management.updater.TlrInfoExActivation"
+			url="/common/success.jsp" txn="" />
+
+		<Button id="btBeForceExit" name="" desc="强行签退"
+			operation="asysubmit"
+			updateClass="com.huateng.ebank.business.management.updater.TlrBeForceExit"
+			url="/common/success.jsp" txn="" />
+	</Operations>
+	<Sql></Sql>
+</CommQry>

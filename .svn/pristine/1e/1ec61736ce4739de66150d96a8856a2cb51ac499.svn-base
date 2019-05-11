@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="数据字典管理" navigate="数据字典" type="call"
+	interface="false" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.common.commonSelectCQ.getter.SelectDicDataCQTreeGetter">
+	<Include id="BankParam" />
+
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+
+		<Field id="id" desc="" edittype="text" datatype="string" size="32" xpath="/id" />
+		<Field id="dataTypeNo" desc="字典类型编号" edittype="text" datatype="int" require="true" size="10" xpath="/dataTypeNo" />
+		<Field id="dataTypeName" desc="字典类型名称" edittype="text" datatype="string" require="true" size="60" xpath="/dataTypeName" />
+		<Field id="dataNo" desc="字典码" edittype="text" datatype="string" size="20" require="true" xpath="/dataNo" />
+		<Field id="dataNoLen" desc="字典长度" edittype="text" datatype="int" size="1" require="true" xpath="/dataNoLen" />
+		<Field id="dataName" desc="数据名称" edittype="text" datatype="string" size="500" require="true" xpath="/dataName" />
+		<Field id="limitFlag" desc="限制标志" edittype="text" datatype="string" size="1" xpath="/limitFlag" />
+		<Field id="highLimit" desc="字典上限" edittype="text" datatype="string" size="20" xpath="/highLimit" />
+		<Field id="lowLimit" desc="字典下限" edittype="text" datatype="string" size="20" xpath="/lowLimit" />
+		<Field id="effectDate" desc="生效日期" edittype="text" datatype="date" xpath="" />
+		<Field id="expireDate" desc="失效日期" edittype="text" datatype="date" xpath="" />
+		<Field id="timestamps" desc="创建时间" edittype="text" datatype="timestamp" xpath="" />
+		<Field id="testSelect" desc="下拉测试" status="N" method="com.huateng.ebank.business.common.CQMethod.getBrhName" xpath="/dataNo" readonly=""
+		 	translated="CQ:BranchInfoSelect" fieldmap="dataName=brcodeTypeName;dataNo=brcode;testSelectName=brcodeTypeName"
+			viewField="brcodeTypeName" edittype="select" dropdowntype="dynamic"
+			primary="true" size="20" default=""  require=""/>
+		
+		<Field id="opr" desc="操作" edittype="text" datatype="string" xpath="/id" />
+		
+       </Fields>
+
+	<Parameters></Parameters>
+	<Where>
+	</Where>
+
+	<Operations>
+	</Operations>
+
+	<Script></Script>
+
+</CommQry>

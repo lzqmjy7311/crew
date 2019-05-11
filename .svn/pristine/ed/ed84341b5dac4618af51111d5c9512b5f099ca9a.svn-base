@@ -1,0 +1,291 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-11-26 13:49:05 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.person.monitor.entity.TPlDqReportJy" table="T_PL_DQ_REPORT_JY" schema="ECUSER">
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="custName" type="string">
+            <column name="FD_CUST_NAME" length="100" />
+        </property>
+        <property name="custCode" type="string">
+            <column name="FD_CUST_CODE" length="50" />
+        </property>
+        <property name="loanAcct" type="string">
+            <column name="FD_LOAN_ACCT" length="100" />
+        </property>
+        <property name="prodName" type="string">
+            <column name="FD_PROD_NAME" length="200" />
+        </property>
+        <property name="loanAmt" type="java.lang.Double">
+            <column name="FD_LOAN_AMT" precision="53" scale="0" />
+        </property>
+        <property name="loanBalance" type="java.lang.Double">
+            <column name="FD_LOAN_BALANCE" precision="53" scale="0" />
+        </property>
+        <property name="guarWay" type="string">
+            <column name="FD_GUAR_WAY" length="50" />
+        </property>
+        <property name="rateFloPct" type="java.lang.Double">
+            <column name="FD_RATE_FLO_PCT" precision="53" scale="0" />
+        </property>
+        <property name="acctStatus" type="string">
+            <column name="FD_ACCT_STATUS" length="50" />
+        </property>
+        <property name="riskType" type="string">
+            <column name="FD_RISK_TYPE" length="50" />
+        </property>
+        <property name="surveyDate" type="date">
+            <column name="FD_SURVEY_DATE" length="10" />
+        </property>
+        <property name="mainSurvPer" type="string">
+            <column name="FD_MAIN_SURV_PER" length="50" />
+        </property>
+        <property name="assistSurvPer" type="string">
+            <column name="FD_ASSIST_SURV_PER" length="50" />
+        </property>
+        <property name="estaDate" type="date">
+            <column name="FD_ESTA_DATE" length="10" />
+        </property>
+        <property name="regiAddr" type="string">
+            <column name="FD_REGI_ADDR" length="200" />
+        </property>
+        <property name="finaDeptAddr" type="string">
+            <column name="FD_FINA_DEPT_ADDR" length="200" />
+        </property>
+        <property name="operAddr" type="string">
+            <column name="FD_OPER_ADDR" length="200" />
+        </property>
+        <property name="operStartDate" type="date">
+            <column name="FD_OPER_START_DATE" length="10" />
+        </property>
+        <property name="operEndDate" type="date">
+            <column name="FD_OPER_END_DATE" length="10" />
+        </property>
+        <property name="enteProp" type="string">
+            <column name="FD_ENTE_PROP" length="50" />
+        </property>
+        <property name="induClass" type="string">
+            <column name="FD_INDU_CLASS" length="50" />
+        </property>
+        <property name="staffQuan" type="java.lang.Integer">
+            <column name="FD_STAFF_QUAN" />
+        </property>
+        <property name="regiCapi" type="java.lang.Double">
+            <column name="FD_REGI_CAPI" length="50" />
+        </property>
+        <property name="rcvCapi" type="java.lang.Double">
+            <column name="FD_RCV_CAPI" length="50" />
+        </property>
+        <property name="operScope" type="string">
+            <column name="FD_OPER_SCOPE" length="50" />
+        </property>
+        <property name="enteScale" type="string">
+            <column name="FD_ENTE_SCALE" length="50" />
+        </property>
+        <property name="enteGrade" type="string">
+            <column name="FD_ENTE_GRADE" length="50" />
+        </property>
+        <property name="juirPerDelegate" type="string">
+            <column name="FD_JUIR_PER_DELEGATE" length="50" />
+        </property>
+        <property name="juirPerIdentCode" type="string">
+            <column name="FD_JUIR_PER_IDENT_CODE" length="50" />
+        </property>
+        <property name="realCtrlPer" type="string">
+            <column name="FD_REAL_CTRL_PER" length="50" />
+        </property>
+        <property name="realCtrlPerIdentCode" type="string">
+            <column name="FD_REAL_CTRL_PER_IDENT_CODE" length="50" />
+        </property>
+        <property name="busiLice" type="string">
+            <column name="FD_BUSI_LICE" length="100" />
+        </property>
+        <property name="zhongZhengMa" type="string">
+            <column name="FD_ZHONG_ZHENG_MA" length="100" />
+        </property>
+        <property name="orgCode" type="string">
+            <column name="FD_ORG_CODE" length="50" />
+        </property>
+        <property name="taxRegiCode" type="string">
+            <column name="FD_TAX_REGI_CODE" length="100" />
+        </property>
+        <property name="enviFlag" type="string">
+            <column name="FD_ENVI_FLAG" length="100" />
+        </property>
+        <property name="specOperCode" type="string">
+            <column name="FD_SPEC_OPER_CODE" length="100" />
+        </property>
+        <property name="regiCapiChange" type="string">
+            <column name="FD_REGI_CAPI_CHANGE" length="10" />
+        </property>
+        <property name="ifHaveCapiRpt" type="string">
+            <column name="FD_IF_HAVE_CAPI_RPT" length="10" />
+        </property>
+        <property name="regiCapiChangeDesc" type="string">
+            <column name="FD_REGI_CAPI_CHANGE_DESC" length="500" />
+        </property>
+        <property name="enteNameIfChange" type="string">
+            <column name="FD_ENTE_NAME_IF_CHANGE" length="10" />
+        </property>
+        <property name="orgCodeIfChange" type="string">
+            <column name="FD_ORG_CODE_IF_CHANGE" length="10" />
+        </property>
+        <property name="busiLiceIfChange" type="string">
+            <column name="FD_BUSI_LICE_IF_CHANGE" length="10" />
+        </property>
+        <property name="taxRegiCodeIfChange" type="string">
+            <column name="FD_TAX_REGI_CODE_IF_CHANGE" length="10" />
+        </property>
+        <property name="loanCardIfChange" type="string">
+            <column name="FD_LOAN_CARD_IF_CHANGE" length="10" />
+        </property>
+        <property name="specOperCodeIfChange" type="string">
+            <column name="FD_SPEC_OPER_CODE_IF_CHANGE" length="10" />
+        </property>
+        <property name="induClassIfChange" type="string">
+            <column name="FD_INDU_CLASS_IF_CHANGE" length="10" />
+        </property>
+        <property name="enteIdentIfLose" type="string">
+            <column name="FD_ENTE_IDENT_IF_LOSE" length="10" />
+        </property>
+        <property name="enteInfoChangeDesc" type="string">
+            <column name="FD_ENTE_INFO_CHANGE_DESC" length="500" />
+        </property>
+        <property name="finaRptIfCredible" type="string">
+            <column name="FD_FINA_RPT_IF_CREDIBLE" length="10" />
+        </property>
+        <property name="enteAmtIfChange" type="string">
+            <column name="FD_ENTE_AMT_IF_CHANGE" length="10" />
+        </property>
+        <property name="predRepmtSrc" type="string">
+            <column name="FD_PRED_REPMT_SRC" length="10" />
+        </property>
+        <property name="loanPerFinaCond" type="string">
+            <column name="FD_LOAN_PER_FINA_COND" length="10" />
+        </property>
+        <property name="finaAnalEval" type="string">
+            <column name="FD_FINA_ANAL_EVAL" length="500" />
+        </property>
+        <property name="guarantorName" type="string">
+            <column name="FD_GUARANTOR_NAME" length="50" />
+        </property>
+        <property name="ourbankGuarTotAmt" type="java.lang.Double">
+            <column name="FD_OURBANK_GUAR_TOT_AMT" precision="53" scale="0" />
+        </property>
+        <property name="othbankGuarTotAmt" type="java.lang.Double">
+            <column name="FD_OTHBANK_GUAR_TOT_AMT" precision="53" scale="0" />
+        </property>
+        <property name="ourbankLoanBal" type="java.lang.Double">
+            <column name="FD_OURBANK_LOAN_BAL" precision="53" scale="0" />
+        </property>
+        <property name="othbankLoanBal" type="java.lang.Double">
+            <column name="FD_OTHBANK_LOAN_BAL" precision="53" scale="0" />
+        </property>
+        <property name="relaPer" type="string">
+            <column name="FD_RELA_PER" length="10" />
+        </property>
+        <property name="othRelaPer" type="string">
+            <column name="FD_OTH_RELA_PER" length="100" />
+        </property>
+        <property name="guarantorWorkChange" type="string">
+            <column name="FD_GUARANTOR_WORK_CHANGE" length="10" />
+        </property>
+        <property name="newCompName" type="string">
+            <column name="FD_NEW_COMP_NAME" length="100" />
+        </property>
+        <property name="guarantorPhoneChange" type="string">
+            <column name="FD_GUARANTOR_PHONE_CHANGE" length="10" />
+        </property>
+        <property name="guarantorNewPhone" type="string">
+            <column name="FD_GUARANTOR_NEW_PHONE" length="50" />
+        </property>
+        <property name="guarantorAddrChange" type="string">
+            <column name="FD_GUARANTOR_ADDR_CHANGE" length="10" />
+        </property>
+        <property name="guarantorNewAddr" type="string">
+            <column name="FD_GUARANTOR_NEW_ADDR" length="200" />
+        </property>
+        <property name="guarantorIncomeChange" type="string">
+            <column name="FD_GUARANTOR_INCOME_CHANGE" length="10" />
+        </property>
+        <property name="guarantorPosiChange" type="string">
+            <column name="FD_GUARANTOR_POSI_CHANGE" length="10" />
+        </property>
+        <property name="guarantorNewPosi" type="string">
+            <column name="FD_GUARANTOR_NEW_POSI" length="50" />
+        </property>
+        <property name="guarantorOperChange" type="string">
+            <column name="FD_GUARANTOR_OPER_CHANGE" length="10" />
+        </property>
+        <property name="guarantorInfoChangeDesc" type="string">
+            <column name="FD_GUARANTOR_INFO_CHANGE_DESC" length="500" />
+        </property>
+        <property name="guarantorWishChange" type="string">
+            <column name="FD_GUARANTOR_WISH_CHANGE" length="10" />
+        </property>
+        <property name="guarantorWishChangeDesc" type="string">
+            <column name="FD_GUARANTOR_WISH_CHANGE_DESC" length="200" />
+        </property>
+        <property name="guarantorGuarStre" type="string">
+            <column name="FD_GUARANTOR_GUAR_STRE" length="10" />
+        </property>
+        <property name="guarantorGuarStreDesc" type="string">
+            <column name="FD_GUARANTOR_GUAR_STRE_DESC" length="200" />
+        </property>
+        <property name="loanPerIfInvoLawsuit" type="string">
+            <column name="FD_LOAN_PER_IF_INVO_LAWSUIT" length="10" />
+        </property>
+        <property name="loanPerIfInvoLawsuitDesc" type="string">
+            <column name="FD_LOAN_PER_IF_INVO_LAWSUIT_DESC" length="500" />
+        </property>
+        <property name="applyOpin" type="string">
+            <column name="FD_APPLY_OPIN" length="500" />
+        </property>
+        <property name="measCompleteDate" type="date">
+            <column name="FD_MEAS_COMPLETE_DATE" length="10" />
+        </property>
+        <property name="sharStruIfChange" type="string">
+            <column name="FD_SHAR_STRU_IF_CHANGE" length="10" />
+        </property>
+        <property name="realCtrlPerIfChange" type="string">
+            <column name="FD_REAL_CTRL_PER_IF_CHANGE" length="10" />
+        </property>
+        <property name="stockStruChangeDesc" type="string">
+            <column name="FD_STOCK_STRU_CHANGE_DESC" length="500" />
+        </property>
+        <property name="mortCond" type="string">
+            <column name="FD_MORT_COND" length="10" />
+        </property>
+        <property name="mortIfDevalue" type="string">
+            <column name="FD_MORT_IF_DEVALUE" length="10" />
+        </property>
+        <property name="mortAsseInsuIfExpire" type="string">
+            <column name="FD_MORT_ASSE_INSU_IF_EXPIRE" length="10" />
+        </property>
+        <property name="mortIssueAndDesc" type="string">
+            <column name="FD_MORT_ISSUE_AND_DESC" length="500" />
+        </property>
+        <property name="collatCond" type="string">
+            <column name="FD_COLLAT_COND" length="10" />
+        </property>
+        <property name="collatCondDesc" type="string">
+            <column name="FD_COLLAT_COND_DESC" length="500" />
+        </property>
+        <property name="collatIfDevalue" type="string">
+            <column name="FD_COLLAT_IF_DEVALUE" length="10" />
+        </property>
+        <property name="collatImelIfExpire" type="string">
+            <column name="FD_COLLAT_IMEL_IF_EXPIRE" length="10" />
+        </property>
+        <property name="collatIfLoseLawPote" type="string">
+            <column name="FD_COLLAT_IF_LOSE_LAW_POTE" length="10" />
+        </property>
+        <property name="collatIssueAndDesc" type="string">
+            <column name="FD_COLLAT_ISSUE_AND_DESC" length="500" />
+        </property>
+    </class>
+</hibernate-mapping>

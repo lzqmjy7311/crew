@@ -1,0 +1,31 @@
+<CommQry title="TRewL17CompanyCreditBankacceptanceId" navigate="TRewL17CompanyCreditBankacceptanceId" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB"
+async="true" transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.L17Getter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="F_ID" desc="" edittype="text" datatype="string" xpath="/F_ID" />
+        <Field id="F_FINANCECODE" desc="授信机构" edittype="text" datatype="string"
+        xpath="/F_FINANCECODE" />
+        <Field id="F_CONTRACTCODE" desc="业务编号" edittype="text" datatype="string"
+        xpath="/F_CONTRACTCODE" />
+        <Field id="F_NUM" desc="业务笔数" edittype="text" datatype="string"
+        xpath="/F_NUM" />
+        <Field id="F_DAY30" desc="到期日30天内汇总余额" edittype="text" datatype="currency" 
+		xpath="/F_DAY30" />
+        <Field id="F_DAY60" desc="到期日60天内汇总余额" edittype="text" datatype="currency"
+        xpath="/F_DAY60" />
+        <Field id="F_DAY90" desc="到期日90天内汇总余额" edittype="text" datatype="currency"
+        xpath="/F_DAY90" />
+        <Field id="F_DAY91" desc="到期日大于90天汇总余额" edittype="text" datatype="currency"
+        xpath="/F_DAY91" />
+        <Field id="F_TOTAL" desc="汇总余额" edittype="text" datatype="currency"
+        xpath="/F_TOTAL" />
+        <Field id="FD_INDEX_ID" desc="FD_INDEX_ID" edittype="text" datatype="string"
+        xpath="/FD_INDEX_ID" />
+        <Field id="FD_ISBAD" desc="是否正常" edittype="text" datatype="string"
+        xpath="/FD_ISBAD" />
+        <Field id="FD_WARN_ID" desc="FD_WARN_ID" edittype="text" datatype="string"
+        xpath="/FD_WARN_ID" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

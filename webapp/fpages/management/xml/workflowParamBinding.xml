@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CommQry title="工作流参数配置" navigate="主页 > 工作流审批路线配置 > 工作流参数配置 "
+	type="call" interface="true" pagesize="20" async="true"
+	databusid="__NULL__" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.management.getter.WorkflowParamBindingQueryGetter">
+	<Include id="BankParam" />
+
+	<Fields>
+		<!--
+			<Field id="procName" desc="审批结果" status="F" method="None" translated="LIST:Agree,同意;Refuse,不同意;GoBack,退回"
+			readOnly="false" primary="true" type="String" size="20" default="" edittype="select"
+			tip="审批结果" xpath="/procName" width="" />
+		-->
+
+		<Field id="id" desc="序号" status="N" method="None" xpath="/id"
+			datatype="int" primary="true" type="maxAmt" size="13" scale="2"
+			default="" tip="最高适用金额" require="false" />
+		<Field id="processTemplate" desc="流程名" status="F" method="None"
+			xpath="/processTemplate" datatype="string" readonly="true"
+			edittype="text" primary="true" type="string" size="50" default=""
+			tip="流程名" />
+
+		<Field id="taskName" desc="节点名" status="N" method="None"
+			xpath="/taskName" datatype="string" readonly="true" edittype="text"
+			primary="true" type="string" size="30" default="" tip="节点名"
+			require="false" />
+
+		<Field id="typeClassName" desc="业务品种" status="N"
+			xpath="/bizClass" translated="LIST:"
+			method="com.huateng.ebank.business.common.CQMethod.getBizNameByCode"
+			edittype="select" primary="false" type="string" size="4" default=""
+			tip="业务品种" require="true" />
+
+
+		<Field id="maxAmt" desc="最高适用金额" status="N" method="None"
+			xpath="/maxAmt" datatype="currency" primary="true" type="maxAmt"
+			size="13" scale="2" default="" tip="最高适用金额" require="true" />
+
+		<Field id="startBrhName" desc="发起行" status="N"
+			method="com.huateng.ebank.business.common.CQMethod.getBrhName"
+			xpath="/startBrhid" translated="CQ:AllBranchSelect" operation="EQ"
+			fieldmap="startBrhid=brcode;startBrhName=brcodeTypeName;startBrhNameName=brcodeTypeName"
+			viewField="brcodeTypeName" dropdowntype="dynamic" edittype="select"
+			primary="true" type="startBrhno" size="20" default="" tip="发起行"
+			require="true" />
+		<Field id="startBrhid" desc="发起行" status="N" method="None"
+			xpath="/startBrhid" edittype="text" datatype="string" primary="true"
+			type="String" size="20" default="" tip="发起行" require="true" />
+		<!-- modify by shen-antonio jira:BMS-2334 end -->
+
+		<Field id="startBrhidName" desc="发起行" status="N" method="None"
+			xpath="/startBrhid" edittype="text" datatype="string" primary="true"
+			type="String" size="60" default="" tip="发起行" require="false" />
+
+		<Field id="startBrhLevel" desc="发起行" status="N" method="None"
+			xpath="/startBrhid" translated="DATA_DIC.8805" edittype="select"
+			primary="true" type="startBrhno" size="20" default="" tip="发起行"
+			require="true" />
+
+		<Field id="startLevelName" desc="发起行" status="N"
+			method="com.huateng.ebank.business.common.CQMethod.getBrclassOnlyByBrhLevel"
+			xpath="/startBrhid" edittype="text" primary="true" type="startBrhno"
+			size="60" default="" tip="发起行" require="false" />
+
+		<Field id="brhClass" desc="机构级别" status="N" method="None"
+			xpath="/brhClass" translated="DATA_DIC.8803" edittype="select"
+			datatype="string" primary="true" type="string" size="20" default=""
+			tip="机构级别" require="true" />
+
+
+		<Field id="workflowRoleName" desc="角色" status="N"
+			xpath="/roleId" translated="CQ:RoleSelect"
+			method="com.huateng.ebank.business.common.CQMethod.getRoleName"
+			edittype="select"
+			fieldmap="roleId=roleid;workflowRoleName=roleid;workflowRoleNameName=rolename"
+			viewField="rolename" primary="true" type="roleId" size="20"
+			default="" tip="角色" require="true" />
+
+		<Field id="roleId" desc="角色" status="N" xpath="/roleId"
+			primary="true" type="roleName" size="20" default="" tip="角色" />
+
+	</Fields>
+
+	<Where>
+
+
+	</Where>
+	<Operations>
+		<Button id="btNew" name="btNew" desc="新增" operation="addrecord"
+			url="" show="" group="" txn="" />
+		<Button id="btDelete" name="btDelete" desc="删除"
+			operation="delrecord" url="" txn="" />
+		<!-- add by jornezhang 20100108 BMS-2362  增加交易流水记录 begin -->
+		<Button id="btnSave" name="btnSave" desc="保存"
+			operation="asysubmit"
+			updateClass="com.huateng.ebank.business.management.updater.SaveWorklowParamBindingUpdate"
+			url="#" />
+		<Button id="btBinding" name="btBinding" desc="匹配规则设置" url="#" />
+		<!-- add by jornezhang 20100108 BMS-2362  增加交易流水记录 end -->
+		<Button id="btBack" name="btBack" desc="返回" url="#" show=""
+			group="" txn="" />
+	</Operations>
+
+
+
+</CommQry>

@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-11-28 14:51:36 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.single.entity.TCmSingleRulCases" table="T_CM_SINGLE_RUL_CASES" schema="ECUSER">
+        <comment>对公-单规则案例表</comment>
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="casesCode" type="string">
+            <column name="FD_CASES_CODE" length="100" />
+        </property>
+        <property name="casesName" type="string">
+            <column name="FD_CASES_NAME" length="100" />
+        </property>
+        <property name="casesStatus" type="string">
+            <column name="FD_CASES_STATUS" length="50" />
+        </property>
+        <property name="casesDesc" type="string">
+            <column name="FD_CASES_DESC" length="500" />
+        </property>
+        <property name="casesNature" type="string">
+            <column name="FD_CASES_NATURE" length="50" />
+        </property>
+        <property name="casesConclusion" type="string">
+            <column name="FD_CASES_CONCLUSION" length="500" />
+        </property>
+        <property name="followupFlag" type="string">
+            <column name="FD_FOLLOWUP_FLAG" length="50" />
+        </property>
+        <property name="createDt" type="date">
+            <column name="FD_CREATE_DT" length="10" />
+        </property>
+        
+        <many-to-one 
+			name="createOrg" 
+			column="FD_CREATE_ORG"
+            class="com.huateng.ebank.entity.data.mng.Bctl" 
+			fetch="select"
+			not-null="false"
+	    />
+	    
+	    <many-to-one 
+			name="createUser" 
+			column="FD_CREATE_USER"
+            class="com.huateng.ebank.entity.data.mng.TlrInfo" 
+			fetch="select"
+			not-null="false"
+	    />
+	    
+	    <property name="handleOrgFlag" type="string">
+            <column name="FD_HANDLE_ORG_FLAG" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

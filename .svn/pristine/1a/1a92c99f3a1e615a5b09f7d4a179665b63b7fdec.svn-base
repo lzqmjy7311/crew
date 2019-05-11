@@ -1,0 +1,91 @@
+package com.gbicc.company.single.getter;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.huateng.common.err.Module;
+import com.huateng.common.err.Rescode;
+import com.huateng.commquery.result.Result;
+import com.huateng.commquery.result.ResultMng;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.business.common.PageQueryResult;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.framework.web.commQuery.BaseGetter;
+import com.huateng.exception.AppException;
+
+public class TCmSingleRulWarningQueryGetter extends BaseGetter {
+
+	@Override
+	public Result call() throws AppException {
+		try {
+			PageQueryResult pageResult = getData();
+			ResultMng.fillResultByList(getCommonQueryBean(),
+					getCommQueryServletRequest(), pageResult.getQueryResult(),
+					getResult());
+			result.setContent(pageResult.getQueryResult());
+			result.getPage().setTotalPage(
+					pageResult.getPageCount(getResult().getPage()
+							.getEveryPage()));
+			result.init();
+			return result;
+		} catch (AppException appEx) {
+			throw appEx;
+		} catch (Exception ex) {
+			throw new AppException(Module.SYSTEM_MODULE,
+					Rescode.DEFAULT_RESCODE, ex.getMessage(), ex);
+		}
+	}
+
+	protected PageQueryResult getData() throws Exception {
+		GlobalInfo info=GlobalInfo.getCurrentInstance();
+		String brcode=info.getBrcode();
+		String brclass=info.getBrClass();
+		String warnDtStart = (String) getCommQueryServletRequest().getParameterMap().get("warnDtStart");
+		String warnDtEnd = (String) getCommQueryServletRequest().getParameterMap().get("warnDtEnd");
+		String fcettypecode = (String) getCommQueryServletRequest().getParameterMap().get("fcettypecode");
+		String fcetname = (String) getCommQueryServletRequest().getParameterMap().get("fcetname");
+		String warnStatus = (String) getCommQueryServletRequest().getParameterMap().get("warnStatus");
+		String rulCode = (String) getCommQueryServletRequest().getParameterMap().get("rulCode");
+		String rulName = (String) getCommQueryServletRequest().getParameterMap().get("rulName");
+		String mainOrg = (String) getCommQueryServletRequest().getParameterMap().get("mainOrg");
+		PageQueryResult pageQueryResult = new PageQueryResult();
+		// 分页大小
+		int pageSize = getResult().getPage().getEveryPage();
+		// 页码
+		int pageIndex = getResult().getPage().getCurrentPage();
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		StringBuffer hql = new StringBuffer("from TCmSingleRulWarning t where 1=1 ");
+		if(brclass.equals("2")){//一级支行查看本行及辖属二级支行数据
+			hql.append(" and (mainOrg.brcode='"+brcode+"' or mainOrg.brcode in (select brcode from Bctl where blnUpBrcode='"+brcode+"')) ");
+		}else if(brclass.equals("3")){//二级支行只能查看本行数据
+			hql.append(" and mainOrg.brcode='"+brcode+"' ");
+		}
+		if(StringUtils.isNotEmpty(warnDtStart)){
+			hql.append(" and to_char(warnDt,'yyyyMMdd')>='"+warnDtStart+"' ");
+		}
+		if(StringUtils.isNotEmpty(warnDtEnd)){
+			hql.append(" and to_char(warnDt,'yyyyMMdd')<'"+warnDtEnd+"' ");
+		}
+		if(StringUtils.isNotEmpty(fcettypecode)){
+			hql.append(" and fcettypecode like '%"+fcettypecode+"%' ");
+		}
+		if(StringUtils.isNotEmpty(fcetname)){
+			hql.append(" and fcetname like '%"+fcetname+"%' ");
+		}
+		if(StringUtils.isNotEmpty(warnStatus)){
+			hql.append(" and warnStatus='"+warnStatus+"' ");
+		}
+		if(StringUtils.isNotEmpty(rulCode)){
+			hql.append(" and rulCode='"+rulCode+"' ");
+		}
+		if(StringUtils.isNotEmpty(rulName)){
+			hql.append(" and rulName like '%"+rulName+"%' ");
+		}
+		if(StringUtils.isNotEmpty(mainOrg)){
+			hql.append(" and mainOrg.brcode='"+mainOrg+"' ");
+		}
+		pageQueryResult = rootdao.pageQueryByHql(pageIndex, pageSize,
+				hql.toString());
+		return pageQueryResult;
+	}
+}

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+	<!--
+		title:标题 navigate:导航信息 type:方式（sql|call)
+		interface:是否显示输入条件页面(true|false) databusid:数据总线编号
+		transdataactionurl:数据整理URL async:异步提交标志 pagesize:页面显示记录数(缺省为10)
+	-->
+<CommQry title="企业岗位权限管理" navigate="主页 &gt; 权限管理 &gt; 岗位管理 &gt; 权限设置对比"
+	type="call" interface="false" pagesize="200" async="true" databusid="DEMO"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.management.getter.RoleFuncRelMngCompareGetter">
+	<Include id="BankParam" />
+	<ResultViewParam>
+		/fpages/custadmin/ftl/ebankCustRoleMng.ftl
+	</ResultViewParam>
+	<Fields>
+		<!-- 岗位信息-->
+		<Field id="id" desc="岗位编号" status="F" require="false" edittype="text"
+			datatype="string" method="None" readonly="true" primary="true" type="岗位ID"
+			size="8" default="" xpath="/id" tip="岗位ID" />
+		<Field id="idOld" desc="岗位编号" status="F" require="false" edittype="text"
+			datatype="string" method="None" readonly="true" primary="true" type="岗位ID"
+			size="8" default="" xpath="/idOld" tip="岗位ID" />
+		<Field id="roleNameOld" desc="岗位名称" status="F" require="" edittype="text"
+			datatype="string" method="None" readonly="true" primary="true" type="岗位名字"
+			size="30" default="" xpath="/roleNameOld" tip="岗位名字" />
+		<Field id="roleName" desc="岗位名称" status="F" require="" edittype="text"
+			datatype="string" method="None" readonly="true" primary="true" type="岗位名字"
+			size="30" default="" xpath="/roleName" tip="岗位名字" />
+		<Field id="funcListNew" desc="" status="N" method="None"  readonly="true"
+			edittype="text" primary="true" type="funcList" size="30000" default="" tip="" require=""/>
+		<Field id="funcList" desc="比对后的LIST" status="N" method="None" xpath="/funcList" readonly="true"
+			edittype="text" primary="true" type="funcList" size="20000" default="" tip="" require=""/>
+		<Field id="statusOld" desc="有效标志" status="F" require="false" edittype="select" translated="LIST:1,1-有效;0,0-无效"
+		    datatype="string" method="None" readonly="true" primary="true" type="有效标示"
+		    size="1" default="" xpath="/statusOld" tip="有效标示"/>
+		 <Field id="status" desc="有效标志" status="F" require="false" edittype="select" translated="LIST:1,1-有效;0,0-无效"
+		    datatype="string" method="None" readonly="true" primary="true" type="有效标示"
+		    size="1" default="" xpath="/status" tip="有效标示"/>
+	</Fields>
+	<Where>
+	</Where>
+	<Operations>
+	    <!-- 岗位权限管理 -->
+		<Button id="btOpen" name="btOpen" desc="展开/合并"
+			operation="" updateClass="" url="#"  show="" group="" txn="" />
+		<Button id="btCancel" name="btCancel" desc="返回" operation="submitform"
+			url="/fpages/system/ftl/DirectorConfirm.ftl" txn="" />
+		<Button id="btBack" name="btBack" desc="返回" operation="submitform"
+			url="/fpages/regonization/ftl/RoleMngEntry.ftl" txn="" />
+	</Operations>
+</CommQry>

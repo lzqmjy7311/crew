@@ -1,0 +1,20 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+
+<#assign warningId=RequestParameters["warningId"]?default("")>
+
+<@CommonQueryMacro.page title="客户指标信息">
+<table>
+	<@CommonQueryMacro.CommonQuery id="C15" init="true" submitMode="current">
+		<@CommonQueryMacro.DataTable id="C15Table" nowrap="true" height="305" readonly="true" fitColumns="false"
+		fieldStr="customerNum,customerName,advanceAmount,advanceBalance,groupName[130],lastMSalAmount[130],lastTwoMSalAmount[130],lastThreeMSalAmount[130],lastMPubAmount[130],lastTwoMPubAmount[130],lastThreeMPubAmount[130],coreCustomerNum,creditAmount,creditBalance,normalAdvanceBal[130],mentionAdvanceBal[130],substdAdvanceBalance[130],doutfulAdvanceBal[130],lossAdvanceBal[130],custManagerId[130],overdueAdvanceBal[130],outsideGuaranteeAmount[130],outstandingAdvanceCount[130],handlingOrgCd,corporative,isOverdue,fiveLevel,classificationDate[130],coreHandlingOrgCd,depositBal,groupCustomerNum" width="100%" hasFrame="true"/>
+	</@CommonQueryMacro.CommonQuery>
+</table>
+<script>
+	//页面初始化
+	function initCallGetter_post(){
+		var warningId='${warningId}';
+		C15_dataset.setParameter("warningId",warningId);
+	}
+</script>
+</@CommonQueryMacro.page>

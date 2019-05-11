@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CommQry
+title="企业岗位维护"
+navigate="主页 &gt; 权限管理 &gt; 岗位管理"
+type="call"
+interface="true"
+pagesize="10"
+async="true"
+databusid=""
+transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.huateng.ebank.business.management.getter.EbankCustRoleMngGetter">
+	<Include id="BankParam" />
+	<ResultViewParam>
+		/fpages/management/ftl/ebankCustRoleMng.ftl
+	</ResultViewParam>
+	<Fields>
+		<!-- 岗位信息-->
+		<Field id="id" desc="岗位编号" status="F" require="" edittype="text"
+			datatype="int" method="None" readonly="" primary="true" type="岗位编号"
+			size="8" default="" xpath="/id" tip="岗位编号" />
+		<Field id="roleName" desc="岗位名称" status="F" require="true" edittype="text"
+			datatype="string" method="None" readonly="" primary="true" type="岗位名称"
+			size="30" default="" xpath="/roleName" tip="岗位名称" />
+		<Field id="status" desc="有效标志" status="F" require="true" edittype="select" translated="LIST:1,1-有效;0,0-无效"
+		    datatype="string" method="None" readonly="true" primary="true" type="有效标示"
+		    size="1" default="" xpath="/status" tip="有效标示"/>
+		<Field id="effectDate" desc="生效日期" status="F" require="" edittype="text"
+			datatype="date" method="None" readonly="" primary="true" type="生效日期"
+			size="8" default="" xpath="effectDate" tip="生效日期" />
+
+		<Field id="expireDate" desc="失效日期" status="F" require="" edittype="text"
+			datatype="date" method="None" readonly="" primary="true" type="失效日期"
+			size="8" default="" xpath="expireDate" tip="失效日期" />
+
+		<Field id="brclass" desc="所属机构级别" status="F" edittype="select" require="false"
+			method="None" readonly="true" primary="false" type="String" default=""	xpath="/brclass"
+			tip="所属机构级别" translated="DATA_DIC.401" />
+
+		<Field id="lastUpdTlr" desc="最后更新操作员号" status="F" require="false" edittype="text"
+			datatype="string" method="None" readonly="true" primary="true" type="最后更新时间"
+			size="8" default="" xpath="/lastUpdTlr" tip="最后更新操作员号" />
+
+		<Field id="lastUpdDate" desc="最后更新时间" status="F" require="false" edittype="text"
+			datatype="string" method="None" readonly="true" primary="true" type="最后更新时间"
+			size="8" default="" xpath="/lastUpdDate" tip="最后更新时间" />
+	<Field id="st" desc="记录状态" status="N" readonly="" tip="修改锁定状态"
+			translated="DATA_DIC.3001" require="" edittype="select" width="90"
+			method="None" primary="true" type="String" size="20"
+			xpath="/st" default="" />
+	<!--	<Field id="flag" desc="有效标示" status="F" require="false"  edittype="select" translated="LIST:1,1-有效;0,0-无效"
+			datatype="string" method="None" readonly="false" primary="true" type="岗位ID"
+			size="8" default="" xpath="/flag" tip="flag" />
+
+		<Field id="workflowRole" desc="工作流岗位编号" status="F" require="false" edittype="text"
+			datatype="string" method="None" readonly="false" primary="true" type="工作流岗位编号"
+			size="8" default="" xpath="/workflowRole" tip="工作流岗位编号" />
+		<Field id="roleType" desc="岗位类型" status="F" require="false" edittype="text"
+			datatype="string" method="None" readonly="false" primary="true" type="岗位类型"
+			size="8" default="" xpath="/roleTyped" tip="岗位类型" />
+		<Field id="lastUpdFunc" desc="最后更新交易号" status="F" require="false" edittype="text"
+			datatype="string" method="None" readonly="false" primary="true" type="最后更新交易号"
+			size="8" default="" xpath="/lastUpdFunc" tip="最后更新交易号" />
+		<Field id="lastUpdTlr" desc="最后更新操作员号" status="F" require="false" edittype="text"
+			datatype="string" method="None" readonly="false" primary="true" type="最后更新操作员号"
+			size="8" default="" xpath="/lastUpdTlr" tip="最后更新操作员号" />
+		<Field id="timestamps" desc="时间戳" status="F" require="false" edittype="text"
+			datatype="string" method="None" readonly="false" primary="true" type="时间戳"
+			size="8" default="" xpath="/timestamps" tip="时间戳" />
+		<Field id="miscflgs" desc="扩展标志位" status="F" require="false" edittype="text"
+			datatype="string" method="None" readonly="false" primary="true" type="扩展标志位"
+			size="8" default="" xpath="/miscflgs" tip="扩展标志位" />
+		<Field id="misc" desc="MISC" status="F" require="false" edittype="text"
+			datatype="string" method="None" readonly="false" primary="true" type="MISC"
+			size="8" default="" xpath="/misc" tip="MISC" />
+		-->
+		<!-- add by zhaozhiguo 2012/2/15 FPP-9 用户,岗位及机构的管理页面优化调整 begin -->
+		<Field id="opr" desc="操作" require="false" edittype="text"
+			datatype="string" method="None" readonly="true" primary="true" type="操作"
+			size="12" default="" xpath="" tip="操作" />
+		<!-- add by zhaozhiguo 2012/2/15 FPP-9 用户,岗位及机构的管理页面优化调整 end -->
+		<!-- add by zhiyang.he 双岗复核改造 2012-09-03 begin -->
+		<Field id="isLock" desc="锁定状态" require="false" edittype="text"
+			datatype="string" method="None" readonly="true" primary="true" type="锁定状态"
+			size="12" default="" xpath="/isLock" tip="锁定状态" />
+		<Field id="st" desc="记录状态" require="false" edittype="select"
+			datatype="string" method="None" readonly="true" primary="true" type="记录状态"
+			size="12" default="" xpath="/st" tip="记录状态" translated="DATA_DIC.3001"/>
+		<!-- add by zhiyang.he 双岗复核改造 2012-09-03 end -->
+		
+		<Field id="fucUrl" desc="首页路径" type="String" size="100" xpath="/fucUrl" width="300" />
+		<Field id="roleSysType" desc="角色类型" edittype="select" translated="DATA_DIC.901"
+            datatype="string"  size="50" xpath="/roleSysType" />
+            
+	</Fields>
+	<Where>
+	</Where>
+	<Operations>
+
+	    <Button id="btRoleAuthorityManagement" name="btRoleAuthorityManagement" desc="设置岗位功能" operation="syncsubmit"
+			url="/fpages/management/ftl/RoleFuncMng.ftl" txn="" />
+        <Button id="btButtonAuth" name="btRoleAuthorityManagement" desc="设置岗位按钮权限" operation="href"
+			url="" txn="" />
+		<Button id="btSelectRole" name="btSelectRole" desc="查询人员信息" operation="syncsubmit"
+			url="/fpages/management/ftl/ebankCustRoleMngUser.ftl" txn="" />
+
+		<Button id="btAddRole" name="btAddRole" desc="新增岗位" operation="syncsubmit"
+			url="/fpages/management/ftl/RoleFuncAdd.ftl" txn="" icon="icon-add"/>
+
+		<Button id="btDeleteRole" name="btDeleteRole" desc="删除岗位" operation="delrecord"
+			url="#" txn="" />
+		<Button id="btSave" name="btSave" desc="保存" operation="asysubmit"
+			updateClass="com.huateng.ebank.business.management.updater.CustRoleSaveUpdater"
+            url="#" txn="" />
+        <!-- add by zhaozhiguo 2012/2/15 begin FPP-9 用户,岗位及机构的管理页面优化调整 -->
+		<Button id="btStatus" name="btUnlockRole" desc="有效/无效" operation="asysubmit"
+			updateClass="com.huateng.ebank.business.rolemng.update.RoleStatusChgUpdate"
+			url="#" txn="" icon="icon-set"/>
+		<!-- add by zhaozhiguo 2012/2/15 end FPP-9 用户,岗位及机构的管理页面优化调整 -->
+		<!-- add by zhiyang.he 双岗复核改造 2012-09-03 begin -->
+		<Button id="btQuery" name="btQuery" desc="查看对比信息" operation="syncsubmit"
+			url="" txn="" />
+		<Button id="btSee" name="btSee" desc="查看信息" operation="syncsubmit"
+			url="" txn="" />
+		<!-- add by zhiyang.he 双岗复核改造 2012-09-03 end -->
+		<Button id="btnViewOper" name="btnViewOper" desc="人员查看" operation="" url="" txn="" />
+	</Operations>
+</CommQry>

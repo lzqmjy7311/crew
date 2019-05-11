@@ -1,0 +1,20 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+
+<#assign warningId=RequestParameters["warningId"]?default("")>
+
+<@CommonQueryMacro.page title="票据信息">
+<table>
+	<@CommonQueryMacro.CommonQuery id="C09" init="true" submitMode="current">
+		<@CommonQueryMacro.DataTable id="C09Table" nowrap="true" height="305" readonly="true" fitColumns="false"
+		fieldStr="draftNumber,voucherNo,draftClass,draftTerm,dfclsCtl,srcType,buyContractId,endOrSementMk,draftAttr,draftType,remitDate,maturityDate,remitterId,remitterRole,remitterCmonid,remitterName,remitterAccount,remitterBankId,remitterBankName,dfDrwrCdtratgs,dfDrwrCdtratgsagcy,dfDrwrCdtratgduedt,acceptorRole,acceptor,acceptorBankId,acceptorActno,acceptorBankName,payeeName,payeeAccount,payeeBankId,payeeBankName,payeeId,payeeOrganCode,faceAmount,drftRemark,drawerBankFlag,belongBranchId,storeStatus,status,tmpStatus,collztnStatus,collztnId,lossStatus,rplossId,debitOrder,misc,lastUpdOperId,lastUpdTime" width="100%" hasFrame="true"/>
+	</@CommonQueryMacro.CommonQuery>
+</table>
+<script>
+	//页面初始化
+	function initCallGetter_post(){
+		var warningId='${warningId}';
+		C09_dataset.setParameter("warningId",warningId);
+	}
+</script>
+</@CommonQueryMacro.page>

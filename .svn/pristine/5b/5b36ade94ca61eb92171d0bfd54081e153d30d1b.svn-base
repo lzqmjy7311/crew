@@ -1,0 +1,1165 @@
+package com.huateng.ebank.business.common.service;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.hibernate.Hibernate;
+import org.hibernate.type.Type;
+
+import com.gbicc.common.FileUpDownProperties;
+import com.huateng.ebank.business.common.BaseDAOUtils;
+import com.huateng.ebank.business.common.DAOUtils;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.entity.dao.mng.BctlDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.entity.data.mng.Bctl;
+import com.huateng.ebank.framework.exceptions.CommonException;
+import com.huateng.ebank.framework.util.ApplicationContextUtils;
+import com.huateng.ebank.framework.util.DataFormat;
+import com.huateng.ebank.framework.util.DateUtil;
+import com.huateng.ebank.framework.util.ExceptionUtil;
+
+public class BctlService {
+	private static final Logger logger = Logger.getLogger(BctlService.class);
+
+	private Bctl headBranch = null;
+
+	private Object headBranchLocker = new Object();
+
+	public static synchronized BctlService getInstance() {
+		return (BctlService) ApplicationContextUtils.getBean(BctlService.class
+				.getName());
+	}
+
+	public Bctl getBctlByBrcode(String brcode) throws CommonException {
+		if (StringUtils.isEmpty(brcode)) {
+			ExceptionUtil.throwCommonException("GD1175", "机构号为空");
+
+			return null;
+		}
+		BctlDAO dao = BaseDAOUtils.getBctlDAO();
+		Bctl bctl = dao.query(brcode);
+		if (bctl == null) {
+			ExceptionUtil.throwCommonException("GD1175", "机构号[" + brcode
+					+ "] 不存在");
+
+			return null;
+		}
+		return bctl;
+	}
+
+	public Bctl getBctlByBrno(String brno) throws CommonException {
+		if (StringUtils.isEmpty(brno)) {
+			ExceptionUtil.throwCommonException("GD1175", "机构号为空");
+
+			return null;
+		}
+		BctlDAO dao = BaseDAOUtils.getBctlDAO();
+		List list = dao.queryByCondition("po.brno = ?", new Object[] { brno },
+				null);
+
+		if (list.size() != 1) {
+			ExceptionUtil.throwCommonException("GD1175", "机构号[" + brno
+					+ "] 不存在，或者有多个");
+
+			return null;
+		}
+		return (Bctl) list.get(0);
+	}
+
+	public boolean isHeadBrcode(String brcode) throws CommonException {
+		if (!StringUtils.isEmpty(brcode)) {
+			return brcode.equals(getHeadBranch());
+		}
+		return false;
+	}
+
+	// 不对外开放
+	public boolean isHead(String brcode) throws CommonException {
+		Bctl po = null;
+		BctlDAO dao = DAOUtils.getBctlDAO();
+		po = dao.query(brcode);
+		String brclass = DataFormat.trim(po.getBrclass());
+		if (po != null) {
+			return (brclass.equals("A")) || (brclass.equals("1"));
+		}
+
+		return false;
+	}
+
+	public String getHeadBranch() throws CommonException {
+		synchronized (this.headBranchLocker) {
+			if (null == this.headBranch) {
+				BctlDAO dao = BaseDAOUtils.getBctlDAO();
+				this.headBranch = dao.getHeadBranch();
+			}
+		}
+		return this.headBranch.getBrcode().trim();
+	}
+
+	public boolean isBranch(String brcode) throws CommonException {
+		Bctl po = null;
+		BctlDAO dao = BaseDAOUtils.getBctlDAO();
+		po = dao.query(brcode);
+		if (po != null) {
+			boolean returnboolean = po.getBrclass().trim().equals("2");
+
+			return returnboolean;
+		}
+
+		return false;
+	}
+
+	public boolean isFirstSubBrcode(String brcode) throws CommonException {
+		BctlDAO dao = BaseDAOUtils.getBctlDAO();
+		Bctl po = dao.query(brcode);
+		return po.getBrclass().trim().equals("3");
+	}
+
+	public boolean isSecondSubBrcode(String brcode) throws CommonException {
+		BctlDAO dao = BaseDAOUtils.getBctlDAO();
+		Bctl po = dao.query(brcode);
+		return po.getBrclass().trim().equals("4");
+	}
+
+	public String getBranchName(String brcode) throws CommonException {
+		String brname = "";
+		String brno = "";
+		try {
+			Bctl bctl = BaseDAOUtils.getBctlDAO().query(brcode);
+			brname = bctl.getBrname();
+			brno = bctl.getBrno();
+		} catch (Exception e) {
+		}
+		if ((DataFormat.isEmpty(brname)) || (DataFormat.isEmpty(brno))) {
+			ExceptionUtil.throwCommonException("GD1175");
+		}
+
+		return brname;
+	}
+
+	public String getBrclass(String brcode) throws CommonException {
+		return BaseDAOUtils.getBctlDAO().query(brcode).getBrclass();
+	}
+
+	public List getBranchList() throws CommonException {
+		return BaseDAOUtils
+				.getBctlDAO()
+				.queryByCondition(
+						"po.brclass = '2' and po.status = '1' and po.lock ='F' and po.del = 'F' ");
+	}
+
+	public List getFirstSubBranchList() throws CommonException {
+		return BaseDAOUtils
+				.getBctlDAO()
+				.queryByCondition(
+						"po.brclass = '3' and po.status = '1' and po.lock ='F' and po.del = 'F' ");
+	}
+
+	public List getSecondSubBranchList() throws CommonException {
+		return BaseDAOUtils
+				.getBctlDAO()
+				.queryByCondition(
+						"po.brclass = '4' and po.status = '1' and po.lock ='F' and po.del = 'F' ");
+	}
+
+	public List getNextSubList(String brcode) throws CommonException {
+		BctlDAO bctlDAO = BaseDAOUtils.getBctlDAO();
+		List list = bctlDAO
+				.queryByCondition(
+						" po.blnUpBrcode = ?  and po.status = '1' and po.lock ='F' and po.del = 'F' ",
+						new Object[] { brcode }, null);
+		return list;
+	}
+
+	public String getNextSubListStr(String brcode) throws CommonException {
+		List list = getNextSubList(brcode);
+		if (list.size() == 0) {
+			return "''";
+		}
+		StringBuffer buffer = new StringBuffer();
+		for (int i = 0; i < list.size(); i++) {
+			String brcodei = DataFormat.trim(((Bctl) list.get(i)).getBrcode());
+			if (i == 0)
+				buffer.append("'").append(brcodei).append("'");
+			else {
+				buffer.append(", '").append(brcodei).append("'");
+			}
+		}
+		return buffer.toString();
+	}
+
+	public int getNextSubCount(String brcode) throws CommonException {
+		ROOTDAO dao = ROOTDAOUtils.getROOTDAO();
+		int count = dao
+				.queryByHqlToCount("select count(po) from Bctl po where po.blnUpBrcode = '"
+						+ brcode
+						+ "'  and po.status = '1' and po.lock ='F' and po.del = 'F'");
+		return count;
+	}
+
+	public List getAllSubList(String brcode) throws CommonException {
+		BctlDAO bctlDAO = BaseDAOUtils.getBctlDAO();
+		Bctl bctl = bctlDAO.query(brcode);
+		List result = new ArrayList();
+		result.add(bctl);
+		if (bctl.getBrclass().equals("1")) {
+			List list = bctlDAO
+					.queryByCondition(
+							" po.brcode <> ?  and po.status = '1' and po.lock ='F' and po.del = 'F' ",
+							new Object[] { brcode }, null);
+			result.addAll(list);
+			return result;
+		} else if (bctl.getBrclass().equals("4")) {
+			return result;
+		} else if (bctl.getBrclass().equals("2")) {
+			// 取得一级支行列表
+			List list = getNextSubList(bctl.getBrcode());
+			int size = list.size();
+			for (int i = 0; i < size; i++) {
+				Bctl bc = (Bctl) list.get(i);
+				result.add(bc);
+				// 取得二级支行列表
+				List list1 = getNextSubList(bc.getBrcode());
+				result.addAll(list1);
+			}
+		} else if (bctl.getBrclass().equals("3")) {
+			List list = getNextSubList(bctl.getBrcode());
+			result.addAll(list);
+		} else
+			ExceptionUtil.throwCommonException("GD1175", "机构号[" + brcode
+					+ "] 机构级别错误");
+
+		return result;
+	}
+
+	public String getAllSubListStr(String brcode) throws CommonException {
+		List list = getAllSubList(brcode);
+		if (list.size() == 0) {
+			return "''";
+		}
+		StringBuffer buffer = new StringBuffer();
+		for (int i = 0; i < list.size(); i++) {
+			String brcodei = DataFormat.trim(((Bctl) list.get(i)).getBrcode());
+			if (i == 0)
+				buffer.append("'").append(brcodei).append("'");
+			else {
+				buffer.append(", '").append(brcodei).append("'");
+			}
+		}
+		return buffer.toString();
+	}
+
+	public List getESAllSubList(String brcode) throws CommonException {
+		BctlDAO bctlDAO = BaseDAOUtils.getBctlDAO();
+		Bctl bctl = bctlDAO.query(brcode);
+		List result = new ArrayList();
+		if (bctl.getBrclass().equals("1")) {
+			List list = bctlDAO
+					.queryByCondition(
+							" po.brcode <> ?  and po.status = '1' and po.lock ='F' and po.del = 'F' ",
+							new Object[] { brcode }, null);
+			result.addAll(list);
+			return result;
+		} else if (bctl.getBrclass().equals("4")) {
+			return result;
+		} else if (bctl.getBrclass().equals("2")) {
+			// 取得一级支行列表
+			List list = getNextSubList(bctl.getBrcode());
+			int size = list.size();
+			for (int i = 0; i < size; i++) {
+				Bctl bc = (Bctl) list.get(i);
+				result.add(bc);
+				// 取得二级支行列表
+				List list1 = getNextSubList(bc.getBrcode());
+				result.addAll(list1);
+			}
+		} else if (bctl.getBrclass().equals("3")) {
+			List list = getNextSubList(bctl.getBrcode());
+			result.addAll(list);
+		} else
+			ExceptionUtil.throwCommonException("GD1175", "机构号[" + brcode
+					+ "] 机构级别错误");
+
+		return result;
+	}
+
+	public String getESAllSubListStr(String brcode) throws CommonException {
+		List list = getESAllSubList(brcode);
+		if (list.size() == 0) {
+			return "''";
+		}
+		StringBuffer buffer = new StringBuffer();
+		for (int i = 0; i < list.size(); i++) {
+			String brcodei = DataFormat.trim(((Bctl) list.get(i)).getBrcode());
+			if (i == 0)
+				buffer.append("'").append(brcodei).append("'");
+			else {
+				buffer.append(", '").append(brcodei).append("'");
+			}
+		}
+		return buffer.toString();
+	}
+
+	/**
+	 * 保存登入日志
+	 * 
+	 * 判断superBrcode所辖的所有下级机构中是否存在brcode
+	 * 
+	 * @Title: isSuperOrg
+	 * @param brcode
+	 *            superBrcode
+	 * @date 2014-7-10 上午09:43:32
+	 * @return boolean
+	 * @throws CommonException
+	 */
+	public boolean isSuperOrg(String brcode, String superBrcode)
+			throws CommonException {
+		if ((null == brcode || "".equals(brcode))
+				|| (null == superBrcode || "".equals(superBrcode))) {
+			throw new CommonException("参数不能为空！");
+		}
+		String brcodeStr = getAllSubListStr(superBrcode);
+		int ind = brcodeStr.indexOf(brcode);
+		boolean isBelong = false;
+
+		if (ind > 0) {
+			isBelong = true;
+		}
+
+		return isBelong;
+	}
+
+	public void bctlInfo(List insertList, List updateList, List delList)
+			throws CommonException {
+		BctlDAO dao = BaseDAOUtils.getBctlDAO();
+		CommonService commonService = CommonService.getInstance();
+
+		for (Iterator it = delList.iterator(); it.hasNext();) {
+			Bctl bean = (Bctl) it.next();
+			Bctl bctlDel = dao.query(bean.getBrcode());
+
+			if (null != bctlDel) {
+				if ("1".equals(bean.getBrclass())) {
+					ExceptionUtil.throwCommonException("不能删除总行", "GD1174");
+				}
+				bctlDel.setStatus("0");
+				bctlDel.setLastUpdTlr(GlobalInfo.getCurrentInstance()
+						.getTlrno());
+				bctlDel.setLastUpdDate(DateUtil.dateToNumber(GlobalInfo
+						.getCurrentInstance().getTxnDate()));
+				dao.update(bctlDel);
+			}
+
+		}
+
+		for (Iterator it = updateList.iterator(); it.hasNext();) {
+			Bctl bean = (Bctl) it.next();
+			Bctl bctlModify = dao.query(bean.getBrcode());
+
+			if (null != bctlModify) {
+				if (("1".equals(bctlModify.getBrclass()))
+						&& (!"1".equals(bean.getBrclass()))) {
+					ExceptionUtil.throwCommonException("不能修改总行的级别", "GD1174");
+				}
+
+				if ((DataFormat.isEmpty(bean.getBlnUpBrcode()))
+						&& (!"1".equals(bctlModify.getBrclass()))) {
+					ExceptionUtil.throwCommonException(
+							"[机构代码]为" + bean.getBrno() + "的记录，字段[上级机构]不应为空.",
+							"GD5549");
+				}
+
+				if (DataFormat.isEmpty(bean.getBrclass())) {
+					ExceptionUtil.throwCommonException(
+							"[机构代码]为" + bean.getBrno() + "的记录，字段[机构级别]不应为空.",
+							"GD5549");
+				}
+
+				bctlModify.setBrname(bean.getBrname());
+
+				bctlModify.setAddress(bean.getAddress());
+				bctlModify.setPostno(bean.getPostno());
+				bctlModify.setTeleno(bean.getTeleno());
+				bctlModify.setBrclass(bean.getBrclass());
+				bctlModify.setBlnBranchBrcode(bean.getBlnBranchBrcode());
+				bctlModify.setBlnManageBrcode(bean.getBlnManageBrcode());
+				bctlModify.setBlnUpBrcode(bean.getBlnUpBrcode());
+				bctlModify.setTxnBrcode(bean.getTxnBrcode());
+				bctlModify.setBrattr(bean.getBrattr());
+				bctlModify.setOtherAreaFlag(bean.getOtherAreaFlag());
+				bctlModify.setLastUpdTlr(GlobalInfo.getCurrentInstance()
+						.getTlrno());
+				bctlModify.setLastUpdDate(DateUtil.dateToNumber(GlobalInfo
+						.getCurrentInstance().getTxnDate()));
+
+				bctlModify.setStatus(bean.getStatus());
+
+				dao.update(bctlModify);
+			}
+
+		}
+
+		for (Iterator it = insertList.iterator(); it.hasNext();) {
+			Bctl bean = (Bctl) it.next();
+			List list = dao.queryByCondition("po.brno = '" + bean.getBrno()
+					+ "'" + " and po.status = " + "1");
+
+			if (list.size() > 0) {
+				ExceptionUtil.throwCommonException("机构代码重复", "GD1174");
+			} else {
+				bean.setBrcode(commonService.getBrcodeID());
+				bean.setStatus("1");
+				bean.setLastUpdTlr(GlobalInfo.getCurrentInstance().getTlrno());
+				bean.setLastUpdDate(DateUtil.dateToNumber(GlobalInfo
+						.getCurrentInstance().getTxnDate()));
+				dao.insert(bean);
+			}
+		}
+	}
+
+	/* 以下代码暂无用处 */
+	public List getAllDownBrcodeList(String brcode, String downBrno)
+			throws CommonException {
+		BctlDAO bctlDAO = BaseDAOUtils.getBctlDAO();
+		Bctl bctl = bctlDAO.query(brcode);
+		List result = new ArrayList();
+		result.add(bctl);
+		if (bctl.getBrclass().equals("1")) {
+			List list = bctlDAO
+					.queryByCondition(
+							" po.brclass = ? and (brtype IS NULL or po.brtype <> ?) and po.brno LIKE ? ",
+							new Object[] { "2", "2", downBrno }, null);
+
+			return list;
+		}
+		if (bctl.getBrclass().equals("5"))
+			return result;
+		if (bctl.getBrclass().equals("2")) {
+			if ((bctl.getBlnBranchClass().equals("1"))
+					|| (bctl.getBlnBranchClass().equals("2"))) {
+				List list = bctlDAO
+						.queryByCondition(
+								" po.blnManageBrcode = ? and (brtype IS NULL or po.brtype <> ?) and po.brno LIKE ? order by po.brclass",
+								new Object[] { brcode, "2", downBrno }, null);
+
+				result = list;
+			} else {
+				List list = bctlDAO
+						.queryByCondition(
+								" po.blnBranchBrcode = ? and po.brclass = ? and po.brno LIKE ?  ",
+								new Object[] { brcode, "5", downBrno }, null);
+
+				result.addAll(list);
+			}
+		} else
+			ExceptionUtil.throwCommonException("GD1175", "机构号[" + brcode
+					+ "] 机构级别错误");
+
+		return result;
+	}
+
+	public List getAllBrnListForCDSH() throws CommonException {
+		BctlDAO bctlDAO = BaseDAOUtils.getBctlDAO();
+		List list = bctlDAO
+				.queryByCondition("1=1 order by po.brclass");
+
+		for (int i = 0; i < list.size(); i++) {
+			Bctl bctl = (Bctl) list.get(i);
+			list.set(i, bctl);
+		}
+		return list;
+	}
+
+	public List getAllEnableBctl() throws CommonException {
+		BctlDAO bctlDAO = BaseDAOUtils.getBctlDAO();
+		List list = bctlDAO
+				.queryByCondition("po.status='1' and po.lock = 'F' and po.del = 'F' order by po.brclass");
+
+		return list;
+	}
+
+	public String getExtBrno(String brcode) throws CommonException {
+		BctlDAO bctlDAO = BaseDAOUtils.getBctlDAO();
+		Bctl bctl = bctlDAO.query(brcode);
+		if (null != bctl) {
+			return bctl.getBrno();
+		}
+		return null;
+	}
+
+	public String getInBrno(String brno) throws CommonException {
+		BctlDAO bctlDAO = BaseDAOUtils.getBctlDAO();
+		List list = bctlDAO.queryByCondition("po.brno = '" + brno + "'");
+		String brcode = "";
+		if (list.size() != 0) {
+			Bctl bctl = (Bctl) list.get(0);
+			brcode = bctl.getBrcode();
+			return brcode;
+		}
+		ExceptionUtil.throwCommonException("GD1175", "没有该机构");
+
+		return brcode;
+	}
+
+	public List getSubBrcodeList(String brcode) throws CommonException {
+		BctlDAO bctlDAO = BaseDAOUtils.getBctlDAO();
+		if (isSubBrcode(brcode)) {
+			List list = new ArrayList();
+			list.add(bctlDAO.query(brcode));
+			return list;
+		}
+		return bctlDAO.queryByCondition("po.blnUpBrcode = '" + brcode
+				+ "' and po.brclass = '" + "5" + "' ");
+	}
+
+	public boolean isSubBrcode(String brcode) throws CommonException {
+		BctlDAO dao = BaseDAOUtils.getBctlDAO();
+		Bctl po = dao.query(brcode);
+		return po.getBrclass().trim().equals("5");
+	}
+
+	public List getAllSubBrcodeList(String brcode) throws CommonException {
+		BctlDAO bctlDAO = BaseDAOUtils.getBctlDAO();
+		List result = new ArrayList();
+		if (isSubBrcode(brcode)) {
+			result.add(bctlDAO.query(brcode));
+		} else {
+			List list = bctlDAO.queryByCondition("po.blnUpBrcode = '" + brcode
+					+ "' ");
+
+			for (int i = 0; i < list.size(); i++) {
+				Bctl bctl = (Bctl) list.get(i);
+				if (bctl.getBrclass().equals("5")) {
+					result.add(bctl);
+				} else {
+					if (bctl.getBrclass().equals("1")) {
+						continue;
+					}
+					result.addAll(getAllSubBrcodeList(bctl.getBrcode()));
+				}
+			}
+		}
+
+		return result;
+	}
+
+	public String getAllSubBrcodeStr(String brcode) throws CommonException {
+		List list = getAllSubBrcodeList(brcode);
+		if (list.size() == 0) {
+			return "''";
+		}
+		StringBuffer buffer = new StringBuffer();
+		for (int i = 0; i < list.size(); i++) {
+			String brcodei = DataFormat.trim(((Bctl) list.get(i)).getBrcode());
+			if (i == 0)
+				buffer.append("'").append(brcodei).append("'");
+			else {
+				buffer.append(", '").append(brcodei).append("'");
+			}
+		}
+		return buffer.toString();
+	}
+
+	public String getInqSubBrcodeStr(String brcode) throws CommonException {
+		if (isSubBrcode(brcode)) {
+			return getAllSubBrcodeStr(BaseDAOUtils.getBctlDAO().query(brcode)
+					.getBlnUpBrcode());
+		}
+
+		return getAllSubBrcodeStr(brcode);
+	}
+
+	public String getAllBlnBrcodeStr(String brcode) throws CommonException {
+		List list = getAllSubList(brcode);
+		if (list.size() == 0) {
+			return "''";
+		}
+		StringBuffer buffer = new StringBuffer();
+		for (int i = 0; i < list.size(); i++) {
+			String brcodei = DataFormat.trim(((Bctl) list.get(i)).getBrcode());
+			if (i == 0)
+				buffer.append("'").append(brcodei).append("'");
+			else {
+				buffer.append(", '").append(brcodei).append("'");
+			}
+		}
+		return buffer.toString();
+	}
+
+	public Bctl queryByBrcode(String Brcode) throws CommonException {
+		Bctl Bctl = null;
+		BctlDAO dao = BaseDAOUtils.getBctlDAO();
+		Bctl = dao.query(Brcode);
+		return Bctl;
+	}
+
+	public Bctl queryByBrno(String brno) throws CommonException {
+		Bctl Bctl = null;
+		BctlDAO dao = BaseDAOUtils.getBctlDAO();
+		List bctlList = dao.queryByCondition("po.brno=?",
+				new Object[] { brno }, new Type[] { Hibernate.STRING });
+
+		if (bctlList.size() == 0) {
+			return Bctl;
+		}
+		return (Bctl) bctlList.get(0);
+	}
+
+	public String getRegId(String brcode) throws CommonException {
+		if (isHeadBrcode(brcode))
+			return "000";
+		Bctl bctl = queryByBrcode(brcode);
+		return bctl.getRegionalism();
+	}
+
+	public String getBrnoByBrcode(String brcode) {
+		BctlDAO bctlDAO = BaseDAOUtils.getBctlDAO();
+		Bctl bctl = null;
+		String brno = "";
+		try {
+			bctl = bctlDAO.query(brcode);
+			brno = bctl.getBrno();
+		} catch (CommonException e) {
+			e.printStackTrace();
+			return brno;
+		}
+		return brno;
+	}
+
+	public String getBranchBrcode(String brcode) throws CommonException {
+		Bctl bctl = getBlnBranchBrcode(brcode);
+		if (bctl == null) {
+			return brcode;
+		}
+		return bctl.getBrcode();
+	}
+
+	public String getBranchManageBrcode(String brcode) throws CommonException {
+		Bctl bctl = getMngBranchBrcode(brcode);
+		if (bctl == null) {
+			return brcode;
+		}
+		return bctl.getBrcode();
+	}
+
+	public Bctl getBlnBranchBrcode(String subBrcode) throws CommonException {
+		Bctl bctl = getBctlByBrcode(subBrcode);
+		if (isHeadBrcode(subBrcode)) {
+			return null;
+		}
+		Bctl blnBrh = getBctlByBrcode(bctl.getBlnBranchBrcode());
+		return blnBrh;
+	}
+
+	public Bctl getMngBranchBrcode(String subBrcode) throws CommonException {
+		Bctl bctl = getBctlByBrcode(subBrcode);
+		if (isHeadBrcode(subBrcode)) {
+			return null;
+		}
+		Bctl mngBrh = getBctlByBrcode(bctl.getBlnManageBrcode());
+		return mngBrh;
+	}
+
+	/** @deprecated */
+	public Bctl getLoanCenterBrcode(String brcode) throws CommonException {
+		if (isHeadBrcode(brcode)) {
+			return null;
+		}
+
+		Bctl bctl = getBctlByBrcode(brcode);
+		Bctl blnBrh = getBctlByBrcode(bctl.getBlnBranchBrcode());
+		String brno = blnBrh.getBrno().replaceAll("999", "951");
+		Bctl lc = getBctlByBrno(brno);
+		return lc;
+	}
+
+	public List getAttachBranch(String brcode) throws CommonException {
+		BctlDAO dao = BaseDAOUtils.getBctlDAO();
+		List returnList = dao.queryByCondition(
+				"po.blnManageBrcode=? and po.blnBranchClass in (?,?)",
+				new Object[] { brcode, "1", "2" }, null);
+
+		if (returnList.isEmpty()) {
+			return null;
+		}
+		return returnList;
+	}
+
+	public List getsubbranchAttachProbranch(String brcode)
+			throws CommonException {
+		List allSubbranchList = new ArrayList();
+		List branchList = getAttachBranch(brcode);
+		if (branchList == null) {
+			ExceptionUtil.throwCommonException(
+					"机构号[" + brcode + "]不是省分行或者直属分行", "GD1175");
+
+			return null;
+		}
+		BctlDAO dao = BaseDAOUtils.getBctlDAO();
+		List subbranchList = dao.queryByCondition(
+				"po.blnManageBrcode=? and po.brclass=?", new Object[] { brcode,
+						"5" }, null);
+
+		allSubbranchList.addAll(subbranchList);
+		return allSubbranchList;
+	}
+
+	public int returnTlrAttachBr(String brcode) throws CommonException {
+		Bctl bctl = getBctlByBrcode(brcode);
+		if (bctl == null) {
+			logger.error("机构号[" + brcode + "]不存在");
+			ExceptionUtil.throwCommonException("机构号[" + brcode + "]不存在",
+					"GD1175");
+		} else {
+			if (bctl.getBrclass().equals("1"))
+				return 0;
+			if (bctl.getBrclass().equals("2")) {
+				if ((bctl.getBlnBranchClass().equals("1"))
+						|| (bctl.getBlnBranchClass().equals("2"))) {
+					return 1;
+				}
+				return 2;
+			}
+			if (bctl.getBrclass().equals("5")) {
+				return 3;
+			}
+			logger.error("机构号[" + brcode + "]机构级别错误");
+			ExceptionUtil.throwCommonException("机构号[" + brcode + "]机构级别错误",
+					"GD1175");
+		}
+
+		return 0;
+	}
+
+	public List getAllDownBrcodeListWithoutSubBranch(String brcode)
+			throws CommonException {
+		BctlDAO bctlDAO = BaseDAOUtils.getBctlDAO();
+		List result = new ArrayList();
+
+		result.add(bctlDAO.query(brcode));
+
+		List list = bctlDAO.queryByCondition("po.blnUpBrcode = '" + brcode
+				+ "' and po.status = '" + "1" + "' and po.brclass <> '" + "5"
+				+ "' ");
+
+		for (int i = 0; i < list.size(); i++) {
+			Bctl bctl = (Bctl) list.get(i);
+			result.addAll(getAllDownBrcodeListWithoutSubBranch(bctl.getBrcode()));
+		}
+		return result;
+	}
+
+	public List getAllDownBrcodeList(String brcode) throws CommonException {
+		try {
+			BctlDAO bctlDAO = BaseDAOUtils.getBctlDAO();
+
+			List result = new ArrayList();
+			Bctl b = bctlDAO.query(brcode.trim());
+			if (b == null) {
+				return result;
+			}
+
+			result.add(b);
+
+			List list = bctlDAO.queryByCondition("po.blnUpBrcode = '" + brcode
+					+ "' and po.status = '" + "1" + "' and po.brclass <> '"
+					+ "1" + " ");
+
+			for (int i = 0; i < list.size(); i++) {
+				Bctl bctl = (Bctl) list.get(i);
+				result.addAll(getAllDownBrcodeList(bctl.getBrcode()));
+			}
+			return result;
+		} catch (Exception e) {
+			logger.info(e.getMessage());
+			throw new CommonException(e.getMessage(), e);
+		}
+
+	}
+
+	public List getAllDownPLCenterList(String brcode) throws CommonException {
+		BctlDAO bctlDAO = BaseDAOUtils.getBctlDAO();
+		List result = bctlDAO.queryByCondition("po.blnUpBrcode = '" + brcode
+				+ "' and po.status = '" + "1" + "' and po.brclass = '" + "3"
+				+ "' ");
+
+		return result;
+	}
+
+	public List getAllPLCenterList() throws CommonException {
+		BctlDAO bctlDAO = BaseDAOUtils.getBctlDAO();
+		List result = bctlDAO
+				.queryByCondition(" po.status = '1' and po.brclass = '3' ");
+
+		return result;
+	}
+
+	// public String getQueryBranchCondition(String param, String type,
+	// String brcode) throws CommonException {
+	// StringBuffer buffer = new StringBuffer();
+	// if (isHeadBrcode(brcode)) {
+	// buffer.append(" and 1=1 ");
+	// return buffer.toString();
+	// }
+	// if (type.equals("1")) {
+	// String subBrcodeList = getInqSubBrcodeStr(brcode);
+	// buffer.append(" and ").append(param).append(" in (")
+	// .append(subBrcodeList).append(") ");
+	// return buffer.toString();
+	// }
+	// if (type.equals("2")) {
+	// String brcodeList = getAllBlnBrcodeStr(brcode);
+	// buffer.append(" and ").append(param).append(" in (")
+	// .append(brcodeList).append(") ");
+	// return buffer.toString();
+	// }
+	// return "";
+	// }
+
+	public String getUpBrcode(String brclass, String brcode)
+			throws CommonException {
+		String upBrcode = "";
+		String brcodeTmp = "";
+		String bctlBrclass = "";
+		List listini = new ArrayList();
+
+		BctlDAO bctlDAO = BaseDAOUtils.getBctlDAO();
+		listini = bctlDAO.queryByCondition("po.brcode='" + brcode + "'");
+		Bctl bctl = (Bctl) listini.get(0);
+		upBrcode = DataFormat.trim(bctl.getBlnUpBrcode());
+		bctlBrclass = DataFormat.trim(bctl.getBrclass());
+		if (brclass.equals(bctlBrclass)) {
+			return brcode;
+		}
+		while (!brclass.equals(bctlBrclass)) {
+			List list = new ArrayList();
+			list = bctlDAO.queryByCondition("po.brcode='" + upBrcode + "'");
+			Bctl bctl0 = (Bctl) list.get(0);
+			upBrcode = DataFormat.trim(bctl0.getBlnUpBrcode());
+			brcodeTmp = DataFormat.trim(bctl0.getBrcode());
+			bctlBrclass = DataFormat.trim(bctl0.getBrclass());
+		}
+		return brcodeTmp;
+	}
+
+	public String getAllPLCenterStr(String brcode) throws CommonException {
+		List list = getAllPLCenterList(brcode);
+		if (list.size() == 0) {
+			return "''";
+		}
+		StringBuffer buffer = new StringBuffer();
+		for (int i = 0; i < list.size(); i++) {
+			String brcodei = DataFormat.trim(((Bctl) list.get(i)).getBrcode());
+			if (i == 0)
+				buffer.append("'").append(brcodei).append("'");
+			else {
+				buffer.append(", '").append(brcodei).append("'");
+			}
+		}
+		return buffer.toString();
+	}
+
+	public List getAllPLCenterList(String brcode) throws CommonException {
+		BctlDAO bctlDAO = BaseDAOUtils.getBctlDAO();
+		List result = new ArrayList();
+
+		List list = bctlDAO.queryByCondition("po.blnUpBrcode = '" + brcode
+				+ "' and po.status = '" + "1" + "' and po.brclass <> '" + "2"
+				+ "' ");
+
+		for (int i = 0; i < list.size(); i++) {
+			Bctl bctl = (Bctl) list.get(i);
+			result.add(bctl);
+			if (bctl.getBrclass().equals("3")) {
+				result.addAll(getAllPLCenterList(bctl.getBrcode()));
+			}
+		}
+
+		return result;
+	}
+
+	public String getAllBlanchBrcodeList(String brcode) throws CommonException {
+		BctlDAO bctlDAO = BaseDAOUtils.getBctlDAO();
+		Bctl bctl = bctlDAO.query(brcode);
+
+		StringBuffer buffer = new StringBuffer();
+		if (bctl.getBrclass().equals("5")) {
+			buffer.append("'").append(bctl.getBrcode()).append("'");
+		}
+		List list = bctlDAO.queryByCondition("po.plBrcode = '" + brcode
+				+ "' and po.status = '" + "1" + "' and po.brclass = '" + "2"
+				+ "' ");
+
+		if (list.size() != 0) {
+			for (int j = 0; j < list.size(); j++) {
+				String brcodei = DataFormat.trim(((Bctl) list.get(j))
+						.getBrcode());
+
+				buffer.append(", '").append(brcodei).append("'");
+			}
+			return buffer.toString();
+		}
+		return buffer.toString();
+	}
+
+	public boolean isCenterBrcode(String brcode) throws CommonException {
+		Bctl po = null;
+		BctlDAO dao = DAOUtils.getBctlDAO();
+		po = dao.query(brcode);
+		String brclass = DataFormat.trim(po.getBrclass());
+		if (po != null) {
+			return (brclass.equals("A")) || (brclass.equals("B"))
+					|| (brclass.equals("3")) || (brclass.equals("5"));
+		}
+
+		return false;
+	}
+
+	public List getAllActBrcodeInBlanch(String brcode) throws CommonException {
+		brcode = brcode.trim();
+		BctlDAO bctlDAO = DAOUtils.getBctlDAO();
+		String blanchBrcode = getInstance().getBranchBrcode(brcode);
+
+		List list = bctlDAO.queryByCondition("po.blnBranchBrcode = '"
+				+ blanchBrcode + "' and po.brattr = '" + "1"
+				+ "' and po.status = '" + "1" + "' ");
+
+		return list;
+	}
+
+	public boolean isExistBrno(String brno) throws CommonException {
+		if (brno == null)
+			return false;
+		if (DataFormat.isEmpty(brno)) {
+			return false;
+		}
+		return queryByBrno(brno) != null;
+	}
+
+	public String getAllSubAndNetBrcodeStr(String brcode)
+			throws CommonException {
+		List list = new ArrayList();
+		if (isCenterBrcode(brcode)) {
+			Bctl bctl = DAOUtils.getBctlDAO().query(brcode);
+
+			if (bctl.getBrclass().equals("B")) {
+				List branchList = DAOUtils.getBctlDAO().queryByCondition(
+						"po.blnAreaBrcode = '" + brcode + "'");
+
+				Bctl branchBctl = null;
+				if ((branchList != null) && (branchList.size() > 0)) {
+					for (int i = 0; i < branchList.size(); i++) {
+						branchBctl = (Bctl) branchList.get(i);
+						if (!branchBctl.getBrclass().equals("2"))
+							continue;
+						list.addAll(getAllSubAndNetBrcodeList(branchBctl
+								.getBrcode()));
+					}
+
+				}
+
+			} else {
+				list = getAllSubAndNetBrcodeList(bctl.getBlnUpBrcode());
+			}
+			list.add(bctl);
+		} else {
+			list = getAllSubAndNetBrcodeList(brcode);
+		}
+		if (list.size() == 0) {
+			return "' '";
+		}
+		StringBuffer buffer = new StringBuffer();
+		for (int i = 0; i < list.size(); i++) {
+			String brcodei = DataFormat.trim(((Bctl) list.get(i)).getBrcode());
+			if (i == 0)
+				buffer.append("'").append(brcodei).append("'");
+			else {
+				buffer.append(", '").append(brcodei).append("'");
+			}
+		}
+		return buffer.toString();
+	}
+
+	public List getAllSubAndNetBrcodeList(String brcode) throws CommonException {
+		BctlDAO bctlDAO = DAOUtils.getBctlDAO();
+		Bctl bctl1 = bctlDAO.query(brcode);
+		List result = new ArrayList();
+
+		if (bctl1.getBrclass().equals("2")) {
+			List list = bctlDAO.queryByCondition("po.blnBranchBrcode = '"
+					+ brcode + "' and po.status = '" + "1"
+					+ "' and ( po.brclass = '" + "5" + "' or  po.brclass = '"
+					+ "3" + "' )  ");
+
+			result.addAll(list);
+			return result;
+		}
+		if (bctl1.getBrclass().equals("5")) {
+			result.add(bctl1);
+		}
+		List list = bctlDAO.queryByCondition("po.blnUpBrcode = '" + brcode
+				+ "' and po.status = '" + "1" + "' ");
+
+		if ((list != null) && (list.size() > 0)) {
+			for (int i = 0; i < list.size(); i++) {
+				Bctl bctl = (Bctl) list.get(i);
+				if (bctl.getBrclass().equals("3")) {
+					result.add(bctl);
+				}
+				if (bctl.getBrclass().equals("5")) {
+					result.addAll(getAllSubAndNetBrcodeList(bctl.getBrcode()));
+				} else {
+					result.addAll(getAllSubAndNetBrcodeList(bctl.getBrcode()));
+				}
+
+			}
+
+		}
+
+		return result;
+	}
+
+	public boolean isBlnBrcode(String blnBrcode, String upBrcode)
+			throws CommonException {
+		if (upBrcode.equals(blnBrcode)) {
+			return true;
+		}
+		String headBranch = getHeadBranch();
+		if (upBrcode.equals(headBranch)) {
+			return true;
+		}
+		if (blnBrcode.equals(headBranch)) {
+			return upBrcode.equals(headBranch);
+		}
+
+		String tempUpBrcode = BaseDAOUtils.getBctlDAO().query(blnBrcode)
+				.getBlnUpBrcode();
+
+		if (tempUpBrcode.equals(upBrcode))
+			return true;
+		if (tempUpBrcode.equals(headBranch)) {
+			return false;
+		}
+		return isBlnBrcode(tempUpBrcode, upBrcode);
+	}
+	
+	/**
+	 * 找机构上级机构
+	 */
+	public Bctl findParent(String orgno) throws CommonException{
+		BctlDAO bctlDAO = BaseDAOUtils.getBctlDAO();
+		List<Bctl> list=bctlDAO.queryByCondition(" blnUpBrcode ='"+orgno+"' ");
+		if(list.isEmpty()){
+			return null;
+		}
+		return list.get(0);
+	}
+	
+	/**
+	 * 找机构所有的上级机构
+	 * @param orgno
+	 * @return
+	 * @throws CommonException
+	 */
+	public List<Bctl> findParentOrgIDs(String orgno) throws CommonException{
+		BctlDAO bctlDAO = BaseDAOUtils.getBctlDAO();
+		Bctl now=bctlDAO.queryById(orgno);
+		Bctl t=null;
+		List<Bctl> lists=new ArrayList<Bctl>();
+		if("1".equals(now.getBrclass())){//总
+			lists.add(now);
+		}else if("2".equals(now.getBrclass())){//一分
+			lists.add(now);
+			lists.add(bctlDAO.query(now.getBlnUpBrcode()));
+		}else if("3".equals(now.getBrclass())){//二分
+			lists.add(now);
+			t=bctlDAO.query(now.getBlnUpBrcode());
+			lists.add(t);
+			t=bctlDAO.query(t.getBlnUpBrcode());
+			lists.add(t);
+		}
+		return lists;
+	}
+	
+	
+	public String findParentOrgIDsTree(String orgno) throws CommonException{
+		StringBuilder sbf=new StringBuilder();
+		String sql="select t1.BRCODE from bctl t1 where t1.BLN_UP_BRCODE='"+orgno+"' or t1.BRCODE in ('"+orgno+"','00001') "+
+			"union  "+
+			"select  t1.BRCODE  from bctl t1 where t1.BLN_UP_BRCODE in ( "+
+			"select t1.BLN_UP_BRCODE from bctl t1 where t1.BRCODE='"+orgno+"' and t1.BRCLASS='2') "+
+			"union select t1.BLN_UP_BRCODE from bctl t1 where t1.BRCODE='"+orgno+"' "+
+			"";
+		List<String> list=com.gbicc.common.CommonService
+				.getInstance().findSqlSimpleListBySpringJdbc(sql, String.class);
+		for(String s:list){
+			sbf.append(" '").append(s).append("',");
+		}
+		if(sbf.indexOf(",")>-1){
+			return sbf.substring(0, sbf.lastIndexOf(","));
+		}
+		return sbf.toString();
+	}
+	
+	public String findChildOrgs(String orgno) throws CommonException{
+		StringBuilder sbf=new StringBuilder();
+		String sql="select t1.BRCODE from bctl t1 where t1.BRCODE='"+orgno+"'  "+
+			"union  "+
+			"select  t1.BRCODE  from bctl t1 where t1.BLN_UP_BRCODE in ( "+
+			"select t1.BRCODE from bctl t1 where t1.BRCODE='"+orgno+"' and t1.BRCLASS='2') "+
+			"";
+		List<String> list=com.gbicc.common.CommonService
+				.getInstance().findSqlSimpleListBySpringJdbc(sql, String.class);
+		for(String s:list){
+			sbf.append(" '").append(s).append("',");
+		}
+		if(sbf.indexOf(",")>-1){
+			return sbf.substring(0, sbf.lastIndexOf(","));
+		}
+		return sbf.toString();
+	}
+	
+	public String getCurrentReportOrgParams(){
+		StringBuilder builder=new StringBuilder();
+		try {
+			String orgno=GlobalInfo.getCurrentInstance().getBrcode();//取当前有登录机构
+			String _userno=GlobalInfo.getCurrentInstance().getTlrno();
+			String _roleId=GlobalInfo.getCurrentInstance().getWorkflowRoleId();//当前使用用户角色
+			
+			if(_userno!=null){
+				if(_roleId!=null){
+					//当为客户经理时不传p_p_user_id参数.
+					if(_roleId.equals("222")||_roleId.equals("602")){
+						builder.append("&p_p_tlr_id=").append(_userno);
+					}
+				}
+			}
+			builder.append("&p_p_user_id=").append(_userno);
+			List<Bctl> bts=this.findParentOrgIDs(orgno);
+			if(bts.size()==1){
+				builder.append("&p_p_org_id=").append(bts.get(0).getBrno());
+			}
+			if(bts.size()==2){
+				builder.append("&p_p_org_id=").append(bts.get(1).getBrno());
+				builder.append("&p_p_first_org_id=").append(bts.get(0).getBrno());
+			}
+			if(bts.size()==3){
+				builder.append("&p_p_org_id=").append(bts.get(2).getBrno());
+				builder.append("&p_p_first_org_id=").append(bts.get(1).getBrno());
+				builder.append("&p_p_second_org_id=").append(bts.get(0).getBrno());
+			}
+			//String account=FileUpDownProperties.readValue("cognos.account");
+			//String password=FileUpDownProperties.readValue("cognos.password");
+			//builder.append("&CAMUsername=").append(account);
+			//builder.append("&CAMPassword=").append(password);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return builder.toString();
+	}
+}

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<META>
+	<!-- 工作流 模板 申请类型 下拉框选择  -->
+	<Query id="WfpappTypeSelect" path="/fpages/common/xml/WfpappTypeSelect.xml" />
+	<!-- 工作流 模板下拉框选择  -->
+	<Query id="WfpTemplateSelect" path="/fpages/common/xml/WfpTemplateSelect.xml" />
+	<!-- 工作流 模板任务节点下拉框选择  -->
+	<Query id="WfpTaskSelect" path="/fpages/common/xml/WfpTaskSelect.xml" />
+	<!-- 工作流名称查询 -->
+	<Query id="WfpProcNameSelect" path="/fpages/common/xml/WfpProcNameSelect.xml" txn="" desc="工作流查询"/>
+	<Query id="CssjQuery" path="/gbicc-pages/customer/xml/ee.xml"/>
+    <!-- 得到所有机构的下拉选项 -->
+    <Query id="AllBranchSelect" path="/fpages/management/dropdownxml/AllBranchSelect.xml" />
+    <!-- 得到总行和所有分行的下拉选项 -->
+    <Query id="HeadBranch" path="/fpages/management/dropdownxml/HeadBranch.xml" />
+    <!-- 得到所有下属个贷中心 -->
+    <Query id="PlCenterBrcodeSelect" path="/fpages/management/dropdownxml/PlCenterBrcode.xml" />
+    <!-- 得到总行或者当前分行的所有下属机构列表(包含自己),但是不包括其下属支行,即可能包括的机构为:总行,分行,个贷中心,个贷分中心 -->
+    <!-- 机构管理 ： 获取上级机构列表-->
+    <Query id="CenterBrcodeSelect" path="/fpages/management/dropdownxml/DownBrcode.xml" />
+    <!-- 机构管理 ： 获取财务机构列表 -->
+    <Query id="CenterBrcodeSelect2" path="/fpages/management/dropdownxml/DownBrcode.xml" />
+
+    <!-- 机构权限设置 ： 所有有效机构查询，支持模糊查询-->
+    <Query id="BranchInfoSelect" path="/fpages/management/dropdownxml/BranchInfoSelect.xml" />
+    <!-- 操作员增加 ： 所有有效机构查询,不设查询条件-->
+    <Query id="AllDownBrcodeSelect" path="/fpages/management/dropdownxml/AllDownBrcode.xml" />
+    <!-- 操作员增加 ： 所有有效部门查询,不设查询条件-->
+    <Query id="AllDownDepartmentSelect" path="/fpages/management/dropdownxml/AllDownDepartment.xml" />
+        <!-- 操作员增加 ： 所有有效下级机构查询,根据机构号查询-->
+    <Query id="AllDownBrcodeByQuery" path="/fpages/management/dropdownxml/AllDownBrcodeByQuery.xml" />
+    
+	<!-- 工作流参数设置 : 所有有效岗位查询 -->
+	<Query id="AllRoleSelect" path="/fpages/parammng/dropdownxml/AllRoleSelect.xml" />
+
+	<!-- 工作流参数设置 : 所有有效岗位查询 -->
+	<Query id="QueryIntrateType" path="/fpages/management/dropdownxml/QueryIntrateType.xml" />
+	
+	<!-- 批量下载 - 我的下载 -->
+   <Query id="pageqryexp_mydownload" path="/fpages/pageqryexp/xml/mydownload.xml"/>
+   <!-- 页面组件组装 -->
+   <Query id="PageTree" path="/fpages/pagemodel/xml/PageTree.xml"/>
+   <Query id="PageItemMng" path="/fpages/pagemodel/xml/PageItemMng.xml"/>
+   <Query id="PageDetailMng" path="/fpages/pagemodel/xml/PageDetailMng.xml"/>
+   <Query id="PageOptDetail" path="/fpages/pagemodel/xml/PageOptDetail.xml"/>
+   <Query id="PageOptItem" path="/fpages/pagemodel/xml/PageOptItem.xml"/>
+	
+</META>

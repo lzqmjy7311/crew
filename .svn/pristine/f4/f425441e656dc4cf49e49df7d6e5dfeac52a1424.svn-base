@@ -1,0 +1,107 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.gbicc.warn.entity">
+	<class
+		name="TWarning"
+		table="T_PL_WARNING_V"
+		lazy="false"
+	>
+		<meta attribute="sync-DAO">false</meta>
+
+		<id
+			name="loanAccount"
+			column="LOAN_ACCOUNT"
+			type="string"
+		>
+		
+		</id>
+			
+		
+	
+		
+		
+		<property
+			name="custCode"
+			column="CUST_CODE"
+			type="string"
+			not-null="false"
+			length="32"
+		/>
+		
+		<property
+			name="custName"
+			column="CUST_NAME"
+			type="string"
+			not-null="false"
+			length="64"
+		/>
+		
+		
+	
+		<property
+			name="productCode"
+			column="PRODUCT_CODE"
+			type="string"
+			not-null="false"
+			length="25"
+		/>
+	   <property
+			name="loanAmount"
+			column="LOAN_AMOUNT"
+			type="double"
+		/>
+		<property
+			name="loanBalance"
+			column="LOAN_BALANCE"
+			type="double"
+		/>
+	
+		<property
+			name="operator"
+			column="OPERATOR"
+			type="string"
+		/>
+		<property
+			name="operBank"
+			column="OPER_BANK"
+			type="string"
+		/>
+		<property
+			name="ruleId"
+			column="ROLE_ID"
+			type="string"
+		/>
+		<property
+			name="ruleDesc"
+			column="RULE_DESC"
+			type="string" length="128"
+		/>
+		<property
+			name="ruleLevel"
+			column="RULE_LEVEL"
+			type="string" length="25"
+		/>
+		<property
+			name="isNewCustomer"
+			column="IS_NEW_CUST"
+			type="string"
+		/>
+		<property
+			name="staChangeDate"
+			column="STA_CHANGE_DATE"
+			type="date"
+		/>
+		<property
+			name="createDate"
+			column="CREATE_DATE"
+			type="date"
+		/>
+
+		 
+
+		
+	</class>
+</hibernate-mapping>

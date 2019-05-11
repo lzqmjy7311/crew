@@ -1,0 +1,79 @@
+@CHARSET "UTF-8";
+tr,td{
+	font-size: 12px;
+}
+.lefttab{
+}
+
+.bodycls {
+	overflow: hidden;
+	padding: 0px;
+	margin-left: 1px;
+	margin-right: 0px;
+	background-color: #ffffff;
+	margin-top: 1px;
+	margin-bottom: 1px;
+}
+
+
+
+.DivAround_focus {
+	cursor: pointer;
+	background-color: #ffffff;
+	border-bottom: solid 1px #aed0ea;
+	border-left: solid 1px #aed0ea;
+	border-top: solid 1px #aed0ea;
+	text-align: left;
+	line-height: 22px;
+	padding: 1px;
+	padding-left: 4px;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	color: #000000;
+	width:140px;
+	margin-bottom: 1px;
+	position: relative;
+	z-index: 10;
+	left:1px;
+	top:0px;
+	font-weight: bold;
+}
+
+
+.DivAround_blur {
+	cursor: pointer;
+	background-color: #deedf7;
+	border-bottom: solid 1px #aed0ea;
+	border-left: solid 1px #aed0ea;
+	border-top: solid 1px #aed0ea;
+	border-right:1px soild #fff;
+	text-align: left;
+	line-height: 22px;
+	padding: 1px;
+	padding-left: 4px;
+	overflow:hidden;
+	white-space:nowrap;
+	text-overflow:ellipsis;
+	color: #777777;
+	width:140px;
+	margin-bottom: 1px;
+	position: relative;
+	z-index: 10;
+	left:0px;
+	top:0px;
+}
+
+.DivAround_content {
+	background-color: #ffffff;
+	height: 100%;
+	width: 100%;
+	border: 1px solid #aed0ea;
+}
+
+.DivAround_contentMax {
+	background-color: #ffffff;
+	height: 100%;
+	width: 100%;
+	border: 0px solid #aed0ea;
+}

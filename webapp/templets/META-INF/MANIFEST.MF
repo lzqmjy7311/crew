@@ -1,0 +1,2 @@
+Title: FlowPower Portal Web UI
+Version: 2.6

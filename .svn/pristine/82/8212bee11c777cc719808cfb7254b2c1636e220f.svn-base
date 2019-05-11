@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	  navigate:导航信息
+	  type:方式（sql|call)
+	  interface:是否显示输入条件页面(true|false)
+	  databusid:数据总线编号
+	  transdataactionurl:数据整理URL
+	  async:异步提交标志
+	  pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry
+title=""
+navigate=""
+type="call"
+interface="false"
+pagesize="10"
+async="true"
+databusid=""
+transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.huateng.ebank.business.datadic.getter.DataDicTreeSelectGetter">
+	<Include id="BankParam"/>
+	<Fields>
+		<Field id="id" desc="" edittype="text" datatype="string" size="10"
+			xpath="/attributes/dataNo" />
+		<Field id="name" desc="名称" edittype="text" datatype="string"
+			size="10" xpath="/attributes/dataName" />
+			
+		<Field id="_hasChild_" desc="是否有孩子结点" xpath="/hasChild"/>
+        <Field id="_id" desc="" xpath="/id" />
+        <Field id="_canSelected_" desc="能否选择" xpath="/canSelected"/>
+	</Fields>
+	<Parameters>
+	</Parameters>
+	<Where>
+	</Where>
+	<Sql>
+	</Sql>
+	<Script>
+	</Script>
+</CommQry>

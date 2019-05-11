@@ -1,0 +1,62 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+<@CommonQueryMacro.page title="规则预警任务查询列表">
+
+<@CommonQueryMacro.CommonQuery id="WarningQuery" init="true" submitMode="current">
+<table>
+	<tr>
+		<td>
+			<@CommonQueryMacro.Interface id="intface" label="请输入查询条件" showButton="false" labelwidth="100" colNm=8/>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div align="center" style="margin-bottom:5px">
+				<@CommonQueryMacro.InterfaceButton desc="查询" />
+				<@CommonQueryMacro.SimpleButton id="btnReset" desc="重置" icon="icon-reload" />
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<@CommonQueryMacro.DataTable id="WarningQueryTable" showPageList="false" nowrap="true" height="555" readonly="true" paginationbar="btnRead"  frozens="20" remoteSort="true" sortable="true" 
+			fieldStr="fd_warn_code[100],fd_warn_level[100],task_type[80],fd_rul_theme_cd[100],fd_rul_name[250],fd_warn_dt[100],fd_warn_status[100],CUSTOMER_NAME[200],CUSTOMER_NUM[100],ASSIGNEE_[100]" width="100%" hasFrame="true"/>
+		</td>
+	</tr>
+</table>
+</@CommonQueryMacro.CommonQuery>
+<script>
+	var readWin=null;
+	function WarningQueryTable_onDbClick(){
+		btnRead_onClick();
+	}
+	function btnRead_onClick(){
+		var taskType=WarningQuery_dataset.getValue("task_type");
+		var businessId=WarningQuery_dataset.getValue("fd_id");
+		var customerId=WarningQuery_dataset.getValue("FD_FCETTYPECODE");
+		if(taskType && businessId && taskType=="CUST"){
+			var path="/gbicc-com-pages/cmWarnDisposalSelect/ftl/warnDisposalWin.ftl";
+			readWin=openSubWin("readWin","单客户预警信号详细信息",path+"?taskId="+businessId+"&customerId="+customerId,"1000","700");
+		}else if(taskType && taskType=="SINGLE"){
+			readWin=openSubWin("readWin","单规则预警信号详细信息","/gbicc-com-pages/single/query_ftl/single_rul_warning_read_win.ftl?businessId="+businessId,"1200","700");
+		}
+	}
+	//协查任务列表刷新触发
+	function WarningQueryTable_task_type_onRefresh(cell,value,record) {
+		if (record) {//当存在记录时
+			if(record.getValue("task_type")=="CUST"){
+				cell.innerHTML="单客户";
+			}else{
+				cell.innerHTML="单规则";
+			}
+		} 
+	}
+	//页面初始化
+	function initCallGetter_post(){
+		
+	}
+	function btnReset_onClick(){
+		WarningQuery_interface_dataset.clearData();
+	}
+</script>
+</@CommonQueryMacro.page>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	txnlogflag:true记录日志
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="SysParamsEntry.title" navigate="系统维护  &gt; 系统参数设置" type="call"
+	interface="true" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.huateng.ebank.business.approve.getter.SysParamsEntryGetter">
+	<Include id="BankParam" />
+	<!--
+	<PageQryExp type="CSV" limit="true" encoding="GBK" url="/trans/qryExp.do" directory="F:/upload"/>
+	-->
+	<PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="系统参数" perfetch="100" />
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+
+		<Field id="paramgroupId" desc="参数段编号" edittype="text" datatype="string" status="F"  size="10" xpath="/id/paramgroupId"  />
+		<Field id="paramId" desc="参数编号" edittype="text" status="F" datatype="string" size="10" xpath="/id/paramId" valueProtected="true"/>
+		<Field id="paramName" desc="参数说明" edittype="text" status="F" datatype="string" size="50" xpath="/paramName" />
+		<Field id="paramVal" desc="参数值" edittype="text" datatype="string" status="F" size="100" xpath="/paramVal" />
+		<Field id="memo" desc="备注" edittype="text" datatype="string" size="200" xpath="/memo" />
+
+			<Field id="st" desc="记录状态" status="N" require="false" edittype="select"
+			datatype="string" method="None" readonly="true" primary="true" type="st"
+			translated="DATA_DIC.3001" size="30" default="" xpath="/st" tip="" />
+		<Field id="lock" desc="是否锁定" edittype="text" datatype="string" status="N" size="1" xpath="/lock"/>
+		<Field id="del" desc="是否已删除" edittype="text" datatype="string" status="N" size="1" xpath="/del"/>
+		<Field id="crtDt" desc="创建日期" edittype="text" datatype="string" status="N" size="8" xpath="/crtDt"/>
+		<Field id="lastUpdTms" desc="最后更新时间" edittype="text" datatype="string" status="F" size="14" xpath="/lastUpdTms"/>
+		<Field id="lastUpdOper" desc="最后操作人" edittype="text" datatype="string" status="N" size="20" xpath="/lastUpdOper"/>
+		<Field id="operation" desc="操作" />
+    </Fields>
+	<Where>
+ 		<Option id="paramgroupIdSelect" desc="参数段编号" datatype="string" edittype="select" translated="CQ:paramgroupIdSelectGetter"
+		viewfield="paramgroupId" xpath="/id/paramgroupId" fieldmap="paramgroupIdSelectName=paramgroupId;paramgroupIdSelect=paramgroupId" dropdowntype="dynamic" init="true" index="0" size="3"/>
+		<Option id="st"  default="" desc="记录状态" type="st" tip="" method="None" index="2" translated="DATA_DIC.3001"/>
+	</Where>
+
+	<Operations>
+		<Button id="btMod" name="btMod" desc="确认修改" operation="asysubmit"
+			updateClass="com.huateng.ebank.business.approve.updater.SysParamsModUpdate"
+			url="#" txn="" />
+		<Button id="btCancel" name="btCancel" desc="取消" operation="href" url="" />
+	</Operations>
+</CommQry>

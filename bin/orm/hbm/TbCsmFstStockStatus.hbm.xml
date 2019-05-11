@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-11-30 17:00:33 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.view.entity.TbCsmFstStockStatus" table="T_ODS_CMS_CORP_STOCK_STATUS" schema="ECUSER">
+            <id name="firstCustomerStockId" type="string">
+	            <column name="FIRST_CUSTOMER_STOCK_ID" length="32" />
+	        </id>
+            <property name="customerNum" type="string">
+                <column name="CUSTOMER_NUM" length="15" />
+            </property>
+            <property name="stockholderName" type="string">
+                <column name="STOCKHOLDER_NAME" length="100" />
+            </property>
+            <property name="totalInvest" type="big_decimal">
+                <column name="TOTAL_INVEST" precision="22" />
+            </property>
+            <property name="certificateTypeCd" type="string">
+                <column name="CERTIFICATE_TYPE_CD" length="20" />
+            </property>
+            <property name="holdingStockRate" type="big_decimal">
+                <column name="HOLDING_STOCK_RATE" precision="22" scale="8" />
+            </property>
+            <property name="firstCustomerId" type="string">
+                <column name="FIRST_CUSTOMER_ID" length="32" />
+            </property>
+            <property name="certificateNum" type="string">
+                <column name="CERTIFICATE_NUM" length="30" />
+            </property>
+            <property name="currencyCd" type="string">
+                <column name="CURRENCY_CD" length="20" />
+            </property>
+    </class>
+</hibernate-mapping>

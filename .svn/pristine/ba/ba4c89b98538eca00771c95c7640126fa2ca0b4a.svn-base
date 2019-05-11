@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2011-11-6 21:23:13 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.person.monitor.entity.TPlTask" table="T_PL_TASK" schema="ECUSER">
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />  
+        </id>
+        <property name="warnLevel" type="string">
+            <column name="WARN_LEVEL" length="50" />
+        </property>
+        <property name="loanAcct" type="string">
+            <column name="LOAN_ACCT" length="100" />
+        </property>
+        <property name="custName" type="string">
+            <column name="CUST_NAME" length="100" />
+        </property>
+        <property name="custCode" type="string">
+            <column name="CUST_CODE" length="50" />
+        </property>
+        <property name="loanVariety" type="string">
+            <column name="LOAN_VARIETY" length="50" />
+        </property>
+        <property name="loanAmt" type="java.lang.Double">
+            <column name="LOAN_AMT" precision="53" scale="0" />
+        </property>
+        <property name="loanBalance" type="java.lang.Double">
+            <column name="LOAN_BALANCE" precision="53" scale="0" />
+        </property>
+        <property name="loanTerm" type="string">
+            <column name="LOAN_TERM" length="50" />
+        </property>
+        <property name="rptStatus" type="string">
+            <column name="RPT_STATUS" length="10" />
+        </property>
+        <property name="taskCreatDate" type="date">
+            <column name="TASK_CREAT_DATE" length="10" />
+        </property>
+        <property name="completeDate" type="date">
+            <column name="COMPLETE_DATE" length="10" />
+        </property>
+        <property name="taskMatureDate" type="date">
+            <column name="TASK_MATURE_DATE" length="10" />
+        </property>
+         <property name="taskSourceType" type="string">
+            <column name="TASK_SOURCE_TYPE" length="10" />
+        </property>
+        <many-to-one 
+			name="handler"
+			column="HANDLER"
+            class="com.huateng.ebank.entity.data.mng.TlrInfo" 
+			fetch="select"
+			not-null="false"
+		/>
+        <property name="reportId" type="string">
+            <column name="REPORT_ID" length="32" />
+        </property>
+        <property name="reportUrl" type="string">
+            <column name="REPORT_URL" length="100" />
+        </property>
+        <property name="taskType" type="string">
+            <column name="TASK_TYPE" length="50" />
+        </property>
+        <property name="bankId" type="string">
+            <column name="BANK_ID" length="50" />
+        </property>
+        
+        <joined-subclass name="com.gbicc.person.monitor.entity.TPlDqMonitor" table="T_PL_DQ_MONITOR">
+        	<key column="FD_ID"></key>
+        </joined-subclass>
+        
+        <joined-subclass name="com.gbicc.person.monitor.entity.TPlYjMonitor" table="T_PL_YJ_MONITOR">
+        	<key column="FD_ID"></key>
+        	<property name="ruleId" type="string">
+                <column name="FD_RULE_ID" length="50" />
+            </property>
+        	<property name="ruleCode" type="string">
+                <column name="FD_RULE_CODE" length="50" />
+            </property>
+        	<property name="ruleName" type="string">
+                <column name="FD_RULE_Name" length="255" />
+            </property>
+        	<property name="ruleDesc" type="string">
+                <column name="FD_RULE_DESC" length="500" />
+            </property>
+        	<property name="waykind" type="string">
+                <column name="WAYKIND" length="50" />
+            </property>
+        	
+        	<property name="assukind" type="string">
+                <column name="ASSUKIND" length="50" />
+            </property>
+        	<property name="floatinterate" type="double">
+                <column name="FLOATINTERATE"  />
+            </property>
+        	<property name="acflag" type="string">
+                <column name="ACFLAG"  />
+            </property>
+        	<property name="riskflag" type="string">
+                <column name="RISKFLAG"  />
+            </property>
+            <property name="prodname" type="string">
+                <column name="PRODNAME" length="255" />
+            </property>
+        </joined-subclass>
+        
+        <joined-subclass name="com.gbicc.person.monitor.entity.TPlYtMonitor" table="T_PL_YT_MONITOR">
+        	<key column="FD_ID"></key>
+        </joined-subclass>
+        
+        <joined-subclass name="com.gbicc.person.monitor.entity.TPlZxrfMonitor" table="T_PL_ZXRF_MONITOR">
+        	<key column="FD_ID"></key>
+        </joined-subclass>
+    </class>
+</hibernate-mapping>

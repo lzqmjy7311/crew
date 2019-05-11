@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Channels>
+<!-- 定义作为服务方的通道信息，impClass为作为服务方的通讯相关组件，由技术统一实现 -->
+	<Channel id="SocketTcpFront" desc="Socket同步半双工短连接通讯接入" impClass="com.huateng.flowswitch.micro.model.channel.SocketServerChannel">
+		<attrs>
+			<attr id="ip" value="*" desc="ip,默认值为*,代表不绑定IP"></attr>
+			<attr id="port" value="8989" desc="端口,无默认值"></attr>
+			<attr id="timeout" value="60" desc="超时时(秒),默认60"></attr>
+			<attr id="msglength" value="5" desc="报文长度字段长度,默认值5"></attr>
+			<attr id="threadpoolsize" value="4" desc="读写线程池大小,默认值4"></attr>
+			<attr id="auto" value="true" desc="是否默认自动启动,默认值true"></attr>
+			<attr id="ishead" value="true" desc="报文长度是否包含定义长度,默认值false"></attr>
+		</attrs>
+		<Format id="StringFormat" desc="定长字符串报文处理" impClass="com.huateng.flowswitch.micro.model.channel.StringFormat">
+				<attrs>
+						<attr id="txncode" value="21,2" desc="交易码起始位置,长度,无默认"></attr>
+						<attr id="txnlog" value="23,1" desc="流水号起始位置，长度,无默认"></attr>
+						<attr id="encoding" value="utf-8" desc="编码，默认值UIF-8"></attr>
+						<attr id="failbuffer" value="Error" desc="失败报文定义"></attr>
+						<attr id="defaultRspCodeLocation" value="rspcode" desc="默认应答码定位,无默认值"></attr>
+						<attr id="defaultRspMsgLocation" value="rspmsg" desc="默认应答消息定位,无默认值"></attr>
+						<attr id="defaultRspCode" value="999999" desc="默认失败应答码,默认9999"></attr>
+				</attrs>
+		</Format>
+		<ChannelInterceptors>
+		<!-- 定义通道阻拦器信息，基本阻拦器有技术实现，阻拦器包括doRequest,doResponse,doFail三个实现方法，针对通道服务中不同类型报文协议和自定义信息设计，可支持多个-->
+		<!-- 
+			<ChannelInterceptor id="ServerChannelInterceptor" desc="广农特殊报文头拦截器" impClass="test.com.huateng.flowswitch.micro.channel.ServerChannelInterceptor"/> 
+			-->
+		</ChannelInterceptors>
+		<!-- 接入点映射关系配置，一般以交易码作为key，uri为具体服务名和方法，中间以冒号分隔-->
+		<EndpointMappings>
+		 	<mapping key="10" uri="TestService::test"/>	
+		</EndpointMappings>
+	</Channel>
+	
+	<Channel id="SocketXMLTcpFront" desc="Socket同步半双工短连接通讯接入" impClass="com.huateng.flowswitch.micro.model.channel.SocketServerChannel">
+		<attrs>
+			<attr id="ip" value="*" desc="ip,默认值为*,代表不绑定IP"></attr>
+			<attr id="port" value="9898" desc="端口,无默认值"></attr>
+			<attr id="timeout" value="60" desc="超时时(秒),默认60"></attr>
+			<attr id="msglength" value="5" desc="报文长度字段长度,默认值5"></attr>
+			<attr id="threadpoolsize" value="4" desc="读写线程池大小,默认值4"></attr>
+			<attr id="auto" value="true" desc="是否默认自动启动,默认值true"></attr>
+			<attr id="ishead" value="true" desc="报文长度是否包含定义长度,默认值false"></attr>
+		</attrs>
+		<Format id="XMLFormat" desc="xml报文处理" impClass="com.huateng.flowswitch.micro.model.channel.XMLFormat">
+				<attrs>
+						<attr id="txncode" value="xtype" desc="交易码,通过报文头获取，这处填写为空"></attr>
+						<!-- 
+						<attr id="txncode" value="xtype[xtype]" desc="交易码,通过报文头获取，这处填写为空"></attr> 
+						支持从属性读取
+						-->
+						<attr id="txnlog" value="xclass" desc="流水号起始位置，长度,无默认"></attr>
+						<attr id="encoding" value="utf-8" desc="编码，默认值UIF-8"></attr>
+						<attr id="failbuffer" value="Error" desc="失败报文定义"></attr>
+						<attr id="defaultRspCodeLocation" value="rspcode" desc="默认应答码定位,无默认值"></attr>
+						<attr id="defaultRspMsgLocation" value="rspmsg" desc="默认应答消息定位,无默认值"></attr>
+						<attr id="defaultRspCode" value="999999" desc="默认失败应答码,默认9999"></attr>
+				</attrs>
+		</Format>
+		<ChannelInterceptors>
+		<!-- 定义通道阻拦器信息，基本阻拦器有技术实现，阻拦器包括doRequest,doResponse,doFail三个实现方法，针对通道服务中不同类型报文协议和自定义信息设计，可支持多个-->
+			<ChannelInterceptor id="ServerChannelInterceptor" desc="报文处理拦截器" impClass="com.huateng.fs.micro.demo.channel.ServerChannelInterceptor"/> 
+		</ChannelInterceptors>
+		<!-- 接入点映射关系配置，一般以交易码作为key，uri为具体服务名和方法，中间以冒号分隔-->
+		<EndpointMappings>
+		 	<mapping key="1001" uri="TestService::testAdd"/>	<!-- 测试添加 -->
+		 	<mapping key="1002" uri="TestService::testQuery"/>	<!-- 测试查询 -->
+		</EndpointMappings>
+	</Channel>
+	
+	
+	<Channel id="SocketXMLTcpFrontTest" desc="Socket同步半双工短连接通讯接入" impClass="com.huateng.flowswitch.micro.model.channel.SocketServerChannel">
+		<attrs>
+			<attr id="ip" value="*" desc="ip,默认值为*,代表不绑定IP"></attr>
+			<attr id="port" value="9899" desc="端口,无默认值"></attr>
+			<attr id="timeout" value="60" desc="超时时(秒),默认60"></attr>
+			<attr id="msglength" value="5" desc="报文长度字段长度,默认值5"></attr>
+			<attr id="threadpoolsize" value="4" desc="读写线程池大小,默认值4"></attr>
+			<attr id="auto" value="true" desc="是否默认自动启动,默认值true"></attr>
+			<attr id="ishead" value="true" desc="报文长度是否包含定义长度,默认值false"></attr>
+		</attrs>
+		<Format id="XMLFormat" desc="定长字符串报文处理" impClass="com.huateng.flowswitch.micro.model.channel.XMLFormat">
+				<attrs>
+						<attr id="txncode" value="xtype" desc="交易码,通过报文头获取，这处填写为空"></attr>
+						<attr id="txnlog" value="xclass" desc="流水号起始位置，长度,无默认"></attr>
+						<attr id="encoding" value="utf-8" desc="编码，默认值UIF-8"></attr>
+						<attr id="failbuffer" value="Error" desc="失败报文定义"></attr>
+						<attr id="defaultRspCodeLocation" value="rspcode" desc="默认应答码定位,无默认值"></attr>
+						<attr id="defaultRspMsgLocation" value="rspmsg" desc="默认应答消息定位,无默认值"></attr>
+						<attr id="defaultRspCode" value="999999" desc="默认失败应答码,默认9999"></attr>
+				</attrs>
+		</Format>
+		<ChannelInterceptors>
+		<!-- 定义通道阻拦器信息，基本阻拦器有技术实现，阻拦器包括doRequest,doResponse,doFail三个实现方法，针对通道服务中不同类型报文协议和自定义信息设计，可支持多个-->
+			<!-- <ChannelInterceptor id="ServerChannelInterceptor" desc="广农特殊报文头拦截器" impClass="test.com.huateng.flowswitch.micro.channel.ServerChannelInterceptor"/> 
+			 -->
+		</ChannelInterceptors>
+		<!-- 接入点映射关系配置，一般以交易码作为key，uri为具体服务名和方法，中间以冒号分隔-->
+		<EndpointMappings>
+		 	<mapping key="10" uri="TestService::test"/><!-- 带返回值 -->
+		 	<mapping key="20" uri="TestService::testNoRet"/>	<!-- 不带返回 -->
+		 	<mapping key="30" uri="TestService::testNoDeal"/>	<!-- 带返回值,客户端不处理 -->	
+		</EndpointMappings>
+	</Channel>
+	
+	
+	<Channel id="ApiServerChannel" desc="Socket同步半双工短连接通讯接入" impClass="com.huateng.flowswitch.micro.model.channel.ApiServerChannel">
+		<attrs>
+		</attrs>
+		<Format id="XMLFormat" desc="定长字符串报文处理" impClass="com.huateng.flowswitch.micro.model.channel.XMLFormat">
+				<attrs>
+						<attr id="txncode" value="xtype" desc="交易码,通过报文头获取，这处填写为空"></attr>
+						<attr id="txnlog" value="xclass" desc="流水号起始位置，长度,无默认"></attr>
+						<attr id="encoding" value="utf-8" desc="编码，默认值UIF-8"></attr>
+						<attr id="failbuffer" value="Error" desc="失败报文定义"></attr>
+						<attr id="defaultRspCodeLocation" value="rspcode" desc="默认应答码定位,无默认值"></attr>
+						<attr id="defaultRspMsgLocation" value="rspmsg" desc="默认应答消息定位,无默认值"></attr>
+						<attr id="defaultRspCode" value="999999" desc="默认失败应答码,默认9999"></attr>
+				</attrs>
+		</Format>
+		<ChannelInterceptors>
+		<!-- 定义通道阻拦器信息，基本阻拦器有技术实现，阻拦器包括doRequest,doResponse,doFail三个实现方法，针对通道服务中不同类型报文协议和自定义信息设计，可支持多个-->
+		</ChannelInterceptors>
+		<!-- 接入点映射关系配置，一般以交易码作为key，uri为具体服务名和方法，中间以冒号分隔-->
+		<EndpointMappings>
+		 	<mapping key="10" uri="TestService::test"/><!-- 带返回值 -->
+		 	<mapping key="20" uri="TestService::testNoRet"/>	<!-- 不带返回 -->
+		</EndpointMappings>
+	</Channel>
+</Channels>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="节假日维护" navigate="主页 &gt; 系统管理 &gt; 节假日维护" type="call"
+	interface="true"
+	pagesize="10"
+	async="true"
+	databusid="ACEENTRY_DB"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.management.getter.HolidayGetter">
+	<Include id="BankParam" />
+	<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+	<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+	<Fields>
+		<Field id="year" desc="年份" require="true" status="F" colspan="2"
+			edittype="text" method="None" readOnly="" width="" primary="true"
+			type="String" size="4" default="" tip="year" datatype="" xpath="/year" />
+	   <Field id="sunWorkDay" desc="总工作日" require="false" status="F" colspan="2"
+			edittype="text" method="None" readOnly="" width="" primary="true"
+			type="String" size="3" default="" tip="总工作日" datatype="int"
+			xpath="/sunWorkDay" />
+	   <Field id="sunHoliDay" desc="总休假日" require="false" status="F" colspan="2"
+			edittype="text" method="None" readOnly="" width="" primary="true"
+			type="String" size="3" default="" tip="总休假日" datatype="int"
+			xpath="/sunHoliDay" />
+	</Fields>
+	<Operations>
+		<Button id="btAddHoliday" name="btAddHoliday" desc="新增"
+			operation="" url="#"  show="" group="" txn="" />
+		<Button id="btDetail" name="btDetail" desc="详细信息"
+			operation="" url="#"  show="" group="" txn="" />
+	</Operations>
+
+</CommQry>

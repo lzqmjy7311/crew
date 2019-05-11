@@ -1,0 +1,332 @@
+package com.gbicc.person.monitor.service;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.gbicc.common.CommonService;
+import com.gbicc.person.monitor.entity.TPlTask;
+import com.gbicc.person.monitor.entity.TPlYjMonitor;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.business.common.service.BctlService;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.framework.exceptions.CommonException;
+import com.huateng.ebank.framework.util.ApplicationContextUtils;
+
+/**
+ * 
+ * @author tangdu
+ * @time 2015年11月9日14:51:03
+ * @desc 监控任务服务类
+ */
+public class TPlTaskService {
+	private static final String ZHANGROLES = "557,558";// 总行角色
+	private static final Logger logger = LoggerFactory.getLogger(TPlTaskService.class);
+
+	protected TPlTaskService() {
+	}
+
+	public synchronized static TPlTaskService getInstance() {
+		return (TPlTaskService) ApplicationContextUtils
+				.getBean(TPlTaskService.class.getName());
+	}
+
+	public ROOTDAO dao(){
+		return ROOTDAOUtils.getROOTDAO();
+	}
+	
+	public TPlTask get(String id) throws CommonException {
+		return dao().query(TPlTask.class, id);
+	}
+
+	public TPlYjMonitor getTPlYjMonitor(String id) throws CommonException {
+		return dao().query(TPlYjMonitor.class, id);
+	}
+
+	public StringBuffer getQueryStr(String userId,String roleId){
+		StringBuffer sql=new StringBuffer("select t3.*,t2.CREATE_TIME_ ,t4.TLR_NAME HANDLER_NAME,t3.HANDLER HANDLER_NO,t5.BRCODE HANDLERORGNO,t5.BRNAME HANDLERORGNAME from act_ru_execution t1 join act_ru_task t2 on t1.PROC_INST_ID_=t2.PROC_INST_ID_ ");
+    	sql.append(" and  t2.ASSIGNEE_='"+userId+"' and t1.BUSINESS_KEY_ is not null");
+    	//sql.append(" and  instr(t2.TASK_DEF_KEY_,'usertask1')>0");//角色名称
+    	sql.append(" and  instr(t2.PROC_DEF_ID_,'PL')>0 ");//对公或对私
+        sql.append(" join T_PL_TASK t3 on t3.FD_ID=t1.BUSINESS_KEY_ ");
+        sql.append(" JOIN  TLR_INFO t4 on t3.HANDLER=t4.TLRNO ");
+        sql.append(" JOIN  BCTL t5 on t5.BRCODE=t4.BRCODE ");
+        sql.append(" where 1=1 ");
+        return sql;
+	}
+	
+	public StringBuffer getQueryAllStr(String userId,String roleId){
+		StringBuffer sql=new StringBuffer("select t3.*,row_number() over(PARTITION by t1.PROC_INST_ID_ order by t2.START_TIME_ desc) rk, t2.START_TIME_ as CREATE_TIME_,t2.ASSIGNEE_ currentUser, t6.TLR_NAME currentUserName,case when t2.ASSIGNEE_='"+userId+"' then '1' else  '0' end pageReadOnly, t4.TLR_NAME HANDLER_NAME,t3.HANDLER HANDLER_NO,t5.BRCODE HANDLERORGNO,t5.BRNAME HANDLERORGNAME ");
+		sql.append( "from ACT_HI_PROCINST t1 join ACT_HI_TASKINST t2 on t1.PROC_INST_ID_=t2.PROC_INST_ID_ ");
+    	//sql.append(" and  t2.ASSIGNEE_='"+userId+"' and t1.BUSINESS_KEY_ is not null");
+    	sql.append(" and  t1.BUSINESS_KEY_ is not null");
+    	
+    	//sql.append(" and  instr(t2.TASK_DEF_KEY_,'usertask1')>0");//角色名称
+    	sql.append(" and   instr(t2.PROC_DEF_ID_,'PL')>0 ");//对公或对私
+        sql.append(" JOIN  T_PL_TASK t3 on t3.FD_ID=t1.BUSINESS_KEY_ ");
+        sql.append(" JOIN  TLR_INFO t4 on t3.HANDLER=t4.TLRNO ");
+        sql.append(" JOIN  BCTL t5 on t5.BRCODE=t4.BRCODE ");
+        sql.append(" JOIN  TLR_INFO t6 on t6.TLRNO=t2.ASSIGNEE_ ");
+        sql.append(" where   exists (");
+        sql.append(" select 1 from ACT_HI_TASKINST  t00 where "
+        		+ "	 t00.PROC_INST_ID_=t1.PROC_INST_ID_ and t00.ASSIGNEE_='"+userId+"' and nvl(t00.DELETE_REASON_,'') <>'deleteAdmin'");
+        sql.append(" ) ");
+        StringBuffer sqlall=new StringBuffer("select * from (");
+        sqlall.append(sql);
+        sqlall.append(" ) where rk=1");
+        return sqlall;
+	}
+	
+	
+	public Integer getCount(String task) {
+		try {
+			GlobalInfo info = GlobalInfo.getCurrentInstance();
+			String userId = info.getTlrno();
+			String roleId = info.getWorkflowRoleId();
+			return getCount(userId, roleId, TaskType.getTaskType(task));
+		} catch (Exception e) {
+			logger.error("",e);
+		}
+		return 0;
+	}
+	
+	public Integer getCount(TaskType task) {
+		try {
+			GlobalInfo info=GlobalInfo.getCurrentInstance();
+			String userId=info.getTlrno();
+			String roleId=info.getWorkflowRoleId();
+			return getCount(userId,roleId,task);
+		} catch (Exception e) {
+			logger.error("",e);
+		}
+		return 0;
+	}
+	
+	public Integer getCount(String userId,String roleId,TaskType task) {
+		try {
+			StringBuffer sqll=new StringBuffer("select count(1) from ( ");
+			sqll.append(getQueryAllStr(userId,roleId));
+			sqll.append(getQueryStr(task));
+			if(task.equals(TaskType.TODOTASK)||
+					task.equals(TaskType.NEWTASK)||
+					task.equals(TaskType.OVERTASK)||
+					task.equals(TaskType.BACKTASK)){
+				sqll.append(" and currentUser ='").append(userId).append("'");
+			}
+			GlobalInfo info = GlobalInfo.getCurrentInstance();
+			String orgs=BctlService.getInstance().findParentOrgIDsTree(info.getBrcode());
+			//////////TODO 根据用户当前机构过滤//////////////
+			if(orgs.length()>0){
+				sqll.append(" and bank_id in ("+orgs+") ");
+			}else {
+				sqll.append(" and 1=0 ");
+			}
+			
+			sqll.append(" )");
+			return (Integer)dao().querySqlOne(sqll.toString());
+		} catch (Exception e) {
+			logger.error("",e);
+		}
+		return 0;
+	}
+	
+	public String getQueryStr(TaskType task) {
+		StringBuffer buffer = new StringBuffer();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		String ntime = dateFormat.format(new Date());
+		switch (task) {
+		case OVERTASK:
+			buffer.append(" AND RPT_STATUS  not in ('7') AND to_char(TASK_MATURE_DATE,'yyyyMMdd')<'"
+					+ ntime + "'  ");
+			break;
+		case NEWTASK:
+			buffer.append(" AND RPT_STATUS   not in ('7') AND to_char(TASK_CREAT_DATE,'yyyyMMdd')='"
+					+ ntime + "'  ");
+			break;
+		case TODOTASK:
+			buffer.append(" AND RPT_STATUS   not in ('7') ");
+			break;
+		case EJHZCHECKTASK:
+			buffer.append(" AND RPT_STATUS in ('2','3','4','5') ");
+			break;
+		case EJHZPASSTASK://二级行长审核通过
+			buffer.append(" AND RPT_STATUS ='7' ");
+			break;
+		case EJHZBACKTASK:
+			buffer.append(" AND RPT_STATUS='6' ");
+			break;
+		case YJDHSCHECKTASK:
+			buffer.append(" AND RPT_STATUS in ('2','3','4','5') ");
+			break;
+		case YJDHSPASSTASK:
+			buffer.append(" AND RPT_STATUS ='7' ");
+			break;
+		case YJDHGCHECKTASK:
+			buffer.append(" AND RPT_STATUS in ('2','3','4','5') ");
+			break;
+		case YJDHGPASSTASK:
+			buffer.append(" AND RPT_STATUS ='7' ");
+			break;
+		case CHECKTASK:
+			buffer.append(" AND RPT_STATUS in ('2','3','4','5') ");
+			break;
+		case PASSTASK:
+			buffer.append(" AND RPT_STATUS ='7' ");
+			break;
+		case BACKTASK:
+			buffer.append(" AND RPT_STATUS='6' ");
+			break;
+		default:
+			buffer.append(" AND 1=0 ");
+			logger.error("错误的任务类型:" + task.getTask());
+			break;
+		}
+		return buffer.toString();
+	}
+
+	/**
+	 * 根据机构 字符串 查询 机构下所有用户
+	 * 
+	 * @param brcodes
+	 * @return
+	 */
+	public String getUserIdsByBrcodes(String brcodes) {
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		String userIds = "";
+		String sql = "select TLRNO from TLR_INFO  T WHERE  BRCODE IN ("
+				+ brcodes + ")";
+		Iterator it1;
+		try {
+			it1 = rootdao.queryBySQL(sql);
+			Object ob = new Object();
+			while (it1.hasNext()) {
+				ob = (Object) it1.next();
+				userIds += "'" + ob.toString() + "',";
+			}
+			if (StringUtils.isNoneEmpty(userIds)) {
+				userIds = userIds.substring(0, userIds.length() - 1);
+			}
+		} catch (CommonException e) {
+			logger.error("", e);
+		}
+
+		return userIds;
+	}
+
+	/**
+	 * 根据用户id 查询角色
+	 * 
+	 * @param roleId
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("rawtypes")
+	public List<Integer> findRoleIdByUserId(String tlrno) throws Exception {
+		String sql = "select  ROLE_ID from tlr_role_rel where tlrno='" + tlrno
+				+ "'";
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		Iterator it = rootdao.queryBySQL(sql);
+		List<Integer> list = new ArrayList<Integer>();
+		while (it.hasNext()) {
+			Integer tlrNo = (Integer) it.next();
+			list.add(tlrNo);
+		}
+		return list;
+	}
+	
+	public boolean isZhRole(String tlrno) throws Exception {
+		Boolean isTrue = false;
+		String sql = "select role_id from tlr_role_rel where role_id in ("
+				+ ZHANGROLES + ") and TLRNO='" + tlrno + "'";
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		Iterator it = rootdao.queryBySQL(sql);
+		if (it.hasNext()) {
+			isTrue = true;
+		}
+		return isTrue;
+	}
+
+	public static final String _RULE_TYPE_TODO="RULE_TYPE_TODO";
+	public static final String _RULE_TYPE_OVER="RULE_TYPE_OVER";
+	public static final String _CUST_TYPE_TODO="CUST_TYPE_TODO";
+	public static final String _CUST_TYPE_OVER="CUST_TYPE_OVER";
+	public static final String _XIECHA_TYPE_TODO="XIECHA_TYPE_TODO";
+	public static final String _XIECHA_TYPE_OVER="XIECHA_TYPE_OVER";
+	public Map<String,Integer> sumCmTask(){
+		Map<String, Integer> sums=new HashMap<String, Integer>();
+		StringBuilder builder=new StringBuilder();
+		GlobalInfo info=null;
+		try {
+			info = GlobalInfo.getCurrentInstance();
+			String tlrno=info.getTlrno();
+			builder.append(//"--查询规则预警待办任务"+
+			"SELECT TO_CHAR('RULE_TYPE_TODO') as KY , COUNT(1) VL FROM T_CM_SINGLE_RUL_WARNING T1 "+
+			" JOIN ACT_RU_EXECUTION T2 ON T1.FD_ID=T2.BUSINESS_KEY_"+
+			" WHERE T2.PROC_INST_ID_ IN ("+
+			"   SELECT PROC_INST_ID_ FROM ACT_RU_TASK WHERE ASSIGNEE_='"+tlrno+"'"+
+			" )"+
+			" AND T2.BUSINESS_KEY_ IS NOT NULL"+
+			" UNION "+
+			//"--查询规则预警超时任务"+
+			" SELECT TO_CHAR('RULE_TYPE_OVER') as KY , COUNT(1) VL FROM T_CM_SINGLE_RUL_WARNING T1 "+
+			" JOIN ACT_RU_EXECUTION T2 ON T1.FD_ID=T2.BUSINESS_KEY_"+
+			" WHERE T2.PROC_INST_ID_ IN ("+
+			   "SELECT PROC_INST_ID_ FROM ACT_RU_TASK WHERE ASSIGNEE_='"+tlrno+"'"+
+			" )"+
+			" AND T2.BUSINESS_KEY_ IS NOT NULL"+
+			" AND TO_CHAR(T1.FD_TASK_MATURE_DT,'YYYYMMDD')<TO_CHAR(CURRENT DATE,'YYYYMMDD')"+
+			" UNION "+
+			//"--查询客户预警待办任务"+
+			" SELECT TO_CHAR('CUST_TYPE_TODO') as KY , COUNT(1) VL FROM T_CM_WARN_TASK T1 "+
+			" JOIN ACT_RU_EXECUTION T2 ON T1.FD_ID=T2.BUSINESS_KEY_"+
+			" WHERE T2.PROC_INST_ID_ IN ("+
+			   "SELECT PROC_INST_ID_ FROM ACT_RU_TASK WHERE ASSIGNEE_='"+tlrno+"'"+
+			" )"+
+			" AND T2.BUSINESS_KEY_ IS NOT NULL"+
+			" UNION "+
+			//"--查询客户预警超时任务"+
+			" SELECT TO_CHAR('CUST_TYPE_OVER') as KY , COUNT(1) VL FROM T_CM_WARN_TASK T1 "+
+			" JOIN ACT_RU_EXECUTION T2 ON T1.FD_ID=T2.BUSINESS_KEY_"+
+			" WHERE T2.PROC_INST_ID_ IN ("+
+			   "SELECT PROC_INST_ID_ FROM ACT_RU_TASK WHERE ASSIGNEE_='"+tlrno+"'"+
+			" )"+
+			" AND T2.BUSINESS_KEY_ IS NOT NULL"+
+			" AND TO_CHAR(T1.TASK_MATURE_DATE,'YYYYMMDD')<TO_CHAR(CURRENT DATE,'YYYYMMDD')"+
+			" UNION"+
+			//"--查询协查任务待办任务"+
+			" SELECT TO_CHAR('XIECHA_TYPE_TODO') as KY , COUNT(1) VL FROM T_CM_SINGLE_RUL_INVESTIGATION T1 "+
+			" JOIN ACT_RU_EXECUTION T2 ON T1.FD_ID=T2.BUSINESS_KEY_"+
+			" WHERE T2.PROC_INST_ID_ IN ("+
+			 "  SELECT PROC_INST_ID_ FROM ACT_RU_TASK WHERE ASSIGNEE_='"+tlrno+"'"+
+			" )"+
+			" AND T2.BUSINESS_KEY_ IS NOT NULL"+
+			" UNION "+
+			//"--查询协查任务超时任务"+
+			" SELECT TO_CHAR('XIECHA_TYPE_OVER') as KY , COUNT(1) VL FROM T_CM_SINGLE_RUL_INVESTIGATION T1 "+
+			" JOIN ACT_RU_EXECUTION T2 ON T1.FD_ID=T2.BUSINESS_KEY_"+
+			" WHERE T2.PROC_INST_ID_ IN ("+
+			   "SELECT PROC_INST_ID_ FROM ACT_RU_TASK WHERE ASSIGNEE_='"+tlrno+"'"+
+			" )"+
+			" AND T2.BUSINESS_KEY_ IS NOT NULL"+
+			" AND TO_CHAR(T1.FD_MATURE_DT,'YYYYMMDD')<TO_CHAR(CURRENT DATE,'YYYYMMDD')");
+			List<Map<String,Object>> list=CommonService.getInstance()
+				.getJdbcTempldate().queryForList(builder.toString());
+			for(Map<String,Object> map :list){
+				sums.put(map.get("KY").toString(), 
+						Integer.valueOf(map.get("VL").toString()));
+			}
+		} catch (CommonException e) {
+			e.printStackTrace();
+		}
+		return sums;
+	}
+}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.person.monitor.getter.TPlDqReportJyMortgageGetter">
+	<Include id="BankParam" />
+	
+	<Fields>
+		<Field id="id" desc="" xpath="/id" />
+		<Field id="assusort" desc="抵押类型" xpath="/assusort" />
+        <Field id="assuname" desc="抵押物名称" xpath="/assuname" />
+        <Field id="impatype" desc="类型" xpath="/impatype" />
+        <Field id="oldowner" desc="原权属人" xpath="/oldowner" />
+        <Field id="orgivalue" desc="购买价(万元)" xpath="/orgivalue" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" default="0" />
+		<Field id="evalvalue" desc="评估总价(万元)" xpath="/evalvalue" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" default="0" />
+		<Field id="confvalue" desc="我行确认价值(万元)"  xpath="/confvalue" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" default="0" />
+		<Field id="validdate" desc="有效期限"  xpath="/validdate" edittype="date"
+            datatype="date" />
+		<Field id="impanum" desc="数量" xpath="/impanum" />
+		<Field id="assurate2" desc="抵押率" xpath="/assurate2" />
+		<Field id="addr" desc="抵押物位置/存放地点" xpath="/addr" />
+	</Fields>
+</CommQry>

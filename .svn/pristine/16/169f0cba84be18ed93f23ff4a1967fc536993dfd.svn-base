@@ -1,0 +1,480 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+<#assign taskId=RequestParameters["taskId"]?default("")>
+<#assign customerId=RequestParameters["customerId"]?default("")>
+<@CommonQueryMacro.page title="预警处置  &gt;  我的任务">
+<script type="text/javascript" src="${contextPath}/gbicc-pages/regular/comm/common.js"></script>
+<script type='text/javascript' src='${contextPath}/dwr/interface/TaskVariable.js'> </script>
+<script type='text/javascript' src='${contextPath}/dwr/interface/TCmWarnDisposalAjax.js'> </script>
+<script type='text/javascript' src='${contextPath}/dwr/interface/TCmWarnTaskRelAjax.js'> </script>
+
+	<table style="width: 100%">
+		<tr>
+			<td>
+			<center>
+				<span style="padding:7px 0 0  0;">
+					<a id="readFinaAnal" onclick="readFinaAnal_onClick()"  href="javascript:void(0)">查看风险视图</a>
+					<a id="readFinaInte" onclick="readFinaInte_onClick()" href="javascript:void(0)">查看财务分析</a>
+					<a id="readFundMoni" onclick="readFundMoni_onClick()" href="javascript:void(0)">查看财务诚信度</a>
+					<a id="readZHReport" onclick="readZHReport_onClick()" href="javascript:void(0)">总行视图</a>
+				</span>
+				</center>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<@CommonQueryMacro.CommonQuery id="TCmCustomer" init="true" submitMode="current">
+				<@CommonQueryMacro.Group id="group2" label="基本信息" colNm=4
+					fieldStr="taskCode,custWarnLevel,custcode,custname,loanAmount,loanBalance,businessCode,legalRep,operBank,operator"/>
+			</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<@CommonQueryMacro.CommonQuery id="TCmWarnTaskRel" init="true" submitMode="all">	
+					<@CommonQueryMacro.GroupBox id="box1" label="预警信息">
+						<@CommonQueryMacro.DataTable id="warnSignalTabled" paginationbar="addWarnBtn,delDisposalBtn,lookBtn" pagination="true" 
+			             fieldStr="warnCode,warnLevel,warnSubject,warnName,warnStatus,warnDate,riskDesc" width="100%" hasFrame="true"/>
+		           <@CommonQueryMacro.FloatWindow id="warnSignalFW" modal="true" label="预警情况"  position="center"
+							resize="true" minimize="false" maximize="true" closure="true" show="false" defaultZoom="normal">
+								<table style="width: 100%"><tr><td>
+								<@CommonQueryMacro.Group id="group3" label="" colNm=4
+								fieldStr="warnCode,warnLevel,warnSubject,warnName,warnDate,riskDesc,dddd,dddd"/>
+							<center>
+							<@CommonQueryMacro.Button id="warnSignalConfirm" />
+							</center>
+							</td></tr></table>
+					    </@CommonQueryMacro.FloatWindow>
+		           </@CommonQueryMacro.GroupBox>
+				</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<@CommonQueryMacro.CommonQuery id="TRulDefinitionList" init="true" submitMode="all">	
+						<@CommonQueryMacro.FloatWindow id="TRulDefinitionWin" modal="true" label="定性规则选择"  position="center"
+							resize="true" minimize="false" maximize="true" closure="true" show="false" defaultZoom="normal">
+							<table style="width: 100%"><tr><td>
+							<@CommonQueryMacro.Interface id="interface" label="请输入查询条件" />
+					<@CommonQueryMacro.DataTable id="TRulDefinitionTable" paginationbar="ruleAddBtn" pagination="true" 
+			             fieldStr="ruleCode,ruleName" width="100%" hasFrame="true"/>
+					    </@CommonQueryMacro.FloatWindow>	
+							</td></tr></table>
+					
+				</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<@CommonQueryMacro.CommonQuery id="TCmWarnTask" init="true" submitMode="current">
+				<@CommonQueryMacro.Group id="group4" label="预警核查信息" colNm=4 fieldStr="inspectors,inspeCitDate,inspeMethod,inspeDate,inspeInfo,contMeasure,contOth,contDesc"/>
+			</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<@CommonQueryMacro.CommonQuery id="TCmWarnTask" init="true" submitMode="current">
+				<@CommonQueryMacro.Group id="group5" label="预警处置信息" colNm=4 fieldStr="disposalPer,disposalDate,dispoCitDate,disposalInfo"/>
+			</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<@CommonQueryMacro.CommonQuery id="TCmWarnTask" init="true" submitMode="current">
+					<@CommonQueryMacro.Group id="group6" label="其他信息" colNm=4 fieldStr="isContinue,overRc,dddd,dddd"/>
+			</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<@CommonQueryMacro.CommonQuery id="TCmWarnTask" init="true" submitMode="current">
+					<@CommonQueryMacro.Group id="group7" label="流程退回/提交" colNm=4 fieldStr="opinionResult,backPerson,isSubmitNext,opinion,dddd,dddd"/>
+			</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<div name="group9" class="group" noextra="true">
+				<h5 noextra="true">附件</h5>
+				<center style="padding-top: 5px;padding-bottom: 10px;">
+					<a id="fupload" href="javascript:void()">上传/下载</a>
+				</center>
+			</div>
+			</td>
+		<tr>
+			<td>
+				<@CommonQueryMacro.CommonQuery id="TCmWarnTask" init="true" submitMode="current">
+				<center>
+					<@CommonQueryMacro.Button id= "warnTaskSubmit" />
+					<@CommonQueryMacro.Button id= "warnTaskSave" />
+					<span name="warnTaskEnd">
+					<@CommonQueryMacro.Button id= "warnTaskEnd" />
+					</span>
+				</center>
+				</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<@CommonQueryMacro.CommonQuery id="TaskApprovalHistory" init="true" submitMode="all">
+					<@CommonQueryMacro.GroupBox id="box2" label="审批历史">
+						<@CommonQueryMacro.DataTable id="taskApprovalHistoryTable" paginationbar="btnOpinion"
+						fieldStr="taskName,assignee,startTime,endTime,operation,opinionGrid" width="100%" hasFrame="true"/>
+						<@CommonQueryMacro.FloatWindow id="taskApprovalHistoryFW" modal="true" label="查看意见" position="center" 
+							closure="true" show="false" defaultZoom="normal">
+							<table style="width: 100%"><tr><td>
+							<@CommonQueryMacro.Group id="taskApprovalHistoryGroup" label="" colNm=4 fieldStr="opinion"/>
+							</td></tr></table>
+						</@CommonQueryMacro.FloatWindow>
+					</@CommonQueryMacro.GroupBox>
+				</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+		
+	</table>
+
+<script language="JavaScript">
+var roleName="aa";
+var readOnly="1";//默认不可文件 上传
+var isShowSubmitNext=false;
+function initCallGetter_post(dataset) {
+    var businessId='${taskId}';
+  //根据角色，显示或者隐藏按钮
+	TaskVariable.findTaskVariable(businessId,function(y){
+		var taskType=TCmWarnTask_dataset.getValue("taskType");
+		roleName=y.nowRole;
+		if(roleName=="khjl"){//客户经理
+			readOnly="0";//默认不可文件 上传
+			setAllReadOnlyFun()
+			if(taskType){
+				if(taskType=="RC"){
+					setPageReadOnlyFun();
+					TCmWarnTask_dataset.setFieldHidden("isContinue",true);
+					TCmWarnTask_dataset.setFieldReadOnly("overRc",false);
+				}else{
+					$("div[name=group6]").hide();
+					$("div[name=group5]").hide();
+				}
+			}else{
+				$("div[name=group6]").hide();
+			}
+			$("span[name=warnTaskEnd]").hide();
+			$("div[name=group7]").hide();
+		}else{
+			setPageReadOnlyFun();
+			if(taskType=="RC"){
+				TCmWarnTask_dataset.setFieldHidden("isContinue",true);
+				$("span[name=warnTaskEnd]").hide();
+			}else{
+				TCmWarnTask_dataset.setFieldHidden("overRc",true);
+				$("div[name=group5]").hide();
+			}
+		}
+		if(taskType=="DC"){
+			if(y.canAddProcess=="false"){
+				TCmWarnTask_dataset.setFieldReadOnly("isContinue",true);
+			}else{
+				TCmWarnTask_dataset.setFieldReadOnly("isContinue",false);
+			}
+			if(y.showAP=="false"){
+				$("div[name=group6]").hide();
+			}
+			if(roleName=="fhfxjczg"){
+				TCmWarnDisposalAjax.isSubmitNext(businessId,function(re){
+					 if(re.showSubmitNext=="true"){//
+						 isShowSubmitNext=true;
+						 TCmWarnTask_dataset.setFieldHidden("isSubmitNext",false);
+						 TCmWarnTask_dataset.setFieldReadOnly("isSubmitNext",false);
+					 }else{
+						 TCmWarnTask_dataset.setFieldHidden("isSubmitNext",true);
+					 }
+				});
+			}else{
+				TCmWarnTask_dataset.setFieldHidden("isSubmitNext",true);
+			}
+		}else{
+			TCmWarnTask_dataset.setFieldHidden("isContinue",true);
+			TCmWarnTask_dataset.setFieldHidden("isSubmitNext",true);
+		}
+		
+		if(roleName=="khjlqr"){//客户经理确认
+			$("div[name=group7]").hide();
+			$("span[name=warnTaskEnd]").hide();
+			$(warnTaskSubmit).context.innerHTML="<span class=\"l-btn-left\"><span class=\"l-btn-text icon-ok\" style=\"padding-left:20px\">确认完成</span></span>";
+			warnTaskSave.disable(true);
+		}
+		if(roleName!="zhfxjc"&&roleName!="zhfxjczg"){
+		  	$("a[id=readZHReport]").hide();
+	  	}
+	});
+	
+	var contMeasure=TCmWarnTask_dataset.getValue("contMeasure");
+	if(contMeasure){
+		if(contMeasure.indexOf("SS")>-1){
+			TCmWarnTask_dataset.setFieldHidden("contOth",false);
+		}else{
+			TCmWarnTask_dataset.setFieldHidden("contOth",true);
+		}
+	}else{
+		TCmWarnTask_dataset.setFieldHidden("contOth",true);
+	}
+	
+	TCmWarnTask_dataset.setFieldHidden("backperson",true);
+	
+}
+function setAllReadOnlyFun(){
+	var fieldName="";
+	TCmWarnTask_dataset.setFieldReadOnly("taskCode",true);
+	TCmWarnTask_dataset.setFieldReadOnly("warnLevel",true);
+	TCmWarnTask_dataset.setFieldReadOnly("inspectors",true);
+	TCmWarnTask_dataset.setFieldReadOnly("inspeCitDate",true);
+	//禁用客户管理
+	for(var i=0;i<TCmCustomer_dataset.fields.length;i++){
+		fieldName=TCmCustomer_dataset.fields[i].name;
+		if(fieldName.substring(0,1)!="_"){
+			TCmCustomer_dataset.setFieldReadOnly(fieldName,true);
+		}
+	}
+}
+//设置页面所有字段只读
+function setPageReadOnlyFun(){
+	var fieldName="";
+	for(var i=0;i<TCmWarnTask_dataset.fields.length;i++){
+		fieldName=TCmWarnTask_dataset.fields[i].name;
+		if(fieldName.substring(0,1)!="_"){
+			TCmWarnTask_dataset.setFieldReadOnly(fieldName,true);
+		}
+	}
+	//禁用客户管理
+	for(var i=0;i<TCmCustomer_dataset.fields.length;i++){
+		fieldName=TCmCustomer_dataset.fields[i].name;
+		if(fieldName.substring(0,1)!="_"){
+			TCmCustomer_dataset.setFieldReadOnly(fieldName,true);
+		}
+	}
+	//禁用预警信息
+	for(var i=0;i<TCmWarnTaskRel_dataset.fields.length;i++){
+		fieldName=TCmWarnTaskRel_dataset.fields[i].name;
+		if(fieldName.substring(0,1)!="_"){
+			TCmWarnTaskRel_dataset.setFieldReadOnly(fieldName,true);
+		}
+	}
+	//隐藏按钮
+	addWarnBtn.disable(true);
+	disposalBtn.disable(true);
+	delDisposalBtn.disable(true);
+	TCmWarnTask_dataset.setFieldReadOnly("opinionResult",false);
+	TCmWarnTask_dataset.setFieldReadOnly("backPerson",false);
+	TCmWarnTask_dataset.setFieldReadOnly("opinion",false);
+}
+function initSel(val,selId){
+    if(val!=null && val.length>0){
+        var obj = document.getElementById(selId);
+        var vals = val.split(";");
+        for(var i=0;i<vals.length;i++){
+            var tmp = vals[i];
+            if(tmp!=null && tmp.length>0){
+                var tmps = tmp.split("=");
+                var opt = null;
+                if(tmps.length>1){
+                    opt = new Option(tmps[1],tmps[0]);
+                }else{
+                    opt = new Option(tmps[0],tmps[0]);
+                }
+                obj.options.add(opt);
+            }
+        }
+    }
+}
+function moveOption(obj1, obj2){
+	for(var i = obj1.options.length - 1 ; i >= 0 ; i--){
+		if(obj1.options[i].selected){
+			var opt = new Option(obj1.options[i].text,obj1.options[i].value);
+			obj2.options.add(opt);
+			obj1.remove(i);
+		}
+	}
+}
+
+function TCmWarnTask_dataset_onSetValue(ds,curretField,val){
+	if((curretField.name=="contmeasure"||curretField.name=="contmeasurename")){
+		if(val.indexOf("SS")>-1){
+			TCmWarnTask_dataset.setFieldHidden("contOth",false);
+		}else{
+			TCmWarnTask_dataset.setFieldHidden("contOth",true);
+		}
+	}else if(curretField.name=="opinionresult"){
+		if(val=="0"){
+			TCmWarnTask_dataset.setFieldHidden("backperson",false);
+			TCmWarnTask_dataset.setFieldHidden("isSubmitNext",true);
+		}else{
+			TCmWarnTask_dataset.setFieldHidden("backperson",true);
+			if(isShowSubmitNext){
+				TCmWarnTask_dataset.setFieldHidden("isSubmitNext",false);
+			}
+		}
+	}
+	return val;
+}
+//提交_参数
+function warnTaskSubmit_onClickCheck(button){
+	var op="submit";	
+	if("khjl"==roleName||"khjlqr"==roleName){//客户经理时，都隐藏，无需判断
+		if(TCmWarnTaskRel_dataset.length<1){
+			top.easyMsg.info("请至少选择一条预警信息！");
+			return false;
+		}
+	}else{
+		var opinionResult = TCmWarnTask_dataset.getValue("opinionResult");
+		if(opinionResult){
+			if(opinionResult=="0"){//退回
+				if("khjlzg"==roleName){
+					var op="backStart";
+				}else{
+					var backPerson = TCmWarnTask_dataset.getValue("backPerson");
+					if(backPerson){
+						if(backPerson=="0"){
+							var op="backStart";
+						}else{
+							var op="backUp";
+						}
+					}else{
+						top.easyMsg.info("请选择退回节点！");
+						return false;
+					}
+				}
+			}else{
+				if(isShowSubmitNext){
+					TCmWarnTask_dataset.setFieldHidden("isSubmitNext",false);
+				}
+			}
+		}else{
+			top.easyMsg.info("请填写审核结果！");
+			return false;
+		}
+	}
+	var opinion=TCmWarnTask_dataset.getValue("opinion");
+	TCmWarnTask_dataset.setParameter("opinion",opinion);
+	TCmWarnTask_dataset.setParameter("op",op);
+}
+function warnTaskEnd_onClickCheck(button){
+	var op="end";	
+	var opinion=TCmWarnTask_dataset.getValue("opinion");
+	TCmWarnTask_dataset.setParameter("opinion",opinion);
+	TCmWarnTask_dataset.setParameter("op",op);
+}
+//提交成功
+function warnTaskEnd_postSubmit(button) {
+	button.url="#";
+	top.easyMsg.info("提交成功！");
+	if(parent.parent.GTab){parent.parent.GTab.closeTab('warnDisposalWin');}
+	window.parent.warnDisposalWin_close();
+}
+//提交成功
+function warnTaskSubmit_postSubmit(button) {
+	button.url="#";
+	top.easyMsg.info("提交成功！");
+	if(parent.parent.GTab){parent.parent.GTab.closeTab('warnDisposalWin');}
+	window.parent.warnDisposalWin_close();
+}
+//保存成功
+function warnTaskSave_postSubmit(button) {
+	button.url="#";
+	top.easyMsg.info("保存成功！");
+	if(parent.parent.GTab){parent.parent.GTab.closeTab('warnDisposalWin');}
+	window.parent.warnDisposalWin_close();
+}
+//查看意见
+function btnOpinion_onClick(button){
+	subwindow_taskApprovalHistoryFW.show();
+}
+var selectWarnWin;
+function selectCustomerWin_close(){
+	selectWarnWin.close();
+}
+function addWarnBtn_onClick(button) {
+	var businessId='${taskId}';
+	selectWarnWin=openSubWin("selectWarnWin","人工发起预警》定性规则","/gbicc-com-pages/cmWarnDisposal/ftl/TCmRulDefinitionWin.ftl?businessId="+businessId,"800","400");
+}
+function delDisposalBtn_onClick(button) {
+	var warnId = TCmWarnTaskRel_dataset.getValue("id");
+	if(warnId){
+		
+	}else{
+		top.easyMsg.info("请选择一条记录！");
+		return;
+	}
+	top.easyMsg.confirm("是否确认删除该预警?", function(){
+		TCmWarnTaskRelAjax.removeTCmWarnTaskRel(warnId,function(f){
+			if(f.success=="true"){
+				TCmWarnTaskRel_dataset.flushData(TCmWarnTaskRel_dataset.pageIndex);
+			}else{
+				top.easyMsg.info(f.message);
+			}
+		});
+	}, function(){
+	    top.easyMsg.info("取消");
+	} );
+}
+function ruleAddBtn_onClick(button) {
+	var record=TRulDefinitionList_dataset.firstUnit;
+	while(record){
+		if(record.getValue("select")=="true"){
+			TCmWarnControlmeasure_dataset.insertRecord("end");
+			TCmWarnControlmeasure_dataset.setValue("conmeasDesc",record.getValue("dataNo"));
+			TCmWarnControlmeasure_dataset.setValue("conmeasName",record.getValue("dataName"));
+		}
+		record=record.nextUnit;
+	}
+}
+
+function disposalBtn_onClick(button){
+	var fieldName="";
+	//禁用预警信息
+	for(var i=0;i<TCmWarnTaskRel_dataset.fields.length;i++){
+		fieldName=TCmWarnTaskRel_dataset.fields[i].name;
+		if(fieldName.substring(0,1)!="_"){
+			TCmWarnTaskRel_dataset.setFieldReadOnly(fieldName,true);
+		}
+	}
+	TCmWarnTaskRel_dataset.setFieldReadOnly("riskDesc",false);
+	subwindow_warnSignalFW.show();
+}
+function lookBtn_onClick(button){
+	var fieldName="";
+	//禁用预警信息
+	for(var i=0;i<TCmWarnTaskRel_dataset.fields.length;i++){
+		fieldName=TCmWarnTaskRel_dataset.fields[i].name;
+		if(fieldName.substring(0,1)!="_"){
+			TCmWarnTaskRel_dataset.setFieldReadOnly(fieldName,true);
+		}
+	}
+	subwindow_warnSignalFW.show();
+}
+function warnSignalConfirm_onClick(button){
+	subwindow_warnSignalFW.close();
+}
+
+
+function openUploadWin(){
+	openSubWin("uploadFile", "附件管理", 
+		"/gbicc-pages/upload/commonupload.ftl?relaID=${taskId}&relaType=11&readOnly="+readOnly,
+	null,400);
+}
+$("#fupload").linkbutton({"iconCls":"icon-upload"}).click(openUploadWin);
+var windows;
+function readFinaAnal_onClick(){
+	var customerNum =TCmCustomer_dataset.getValue("custcode");
+	var chineseName =TCmCustomer_dataset.getValue("custname");
+	var loanCardNum =TCmCustomer_dataset.getValue("loanAccount");
+	var paramMap=new Map();
+	paramMap.put("customerNum",customerNum);
+	paramMap.put("chineseName",chineseName);
+	windows = openSubWin("warninfoWin", "客户风险视图\t&nbsp;&nbsp;&nbsp;客户编号："+customerNum+"   客户名称："+chineseName, "/gbicc-com-pages/riskview/ftl/riskView.ftl?customerNum="+customerNum+"&chineseName="+encodeURI(encodeURI(chineseName))+"&loanCardNum="+loanCardNum,"1150","600",false,true,windows_close,true);
+	btHandle.disable(true);
+}
+function windows_close(){
+	btHandle.disable(false);
+}
+</script>
+</@CommonQueryMacro.page>

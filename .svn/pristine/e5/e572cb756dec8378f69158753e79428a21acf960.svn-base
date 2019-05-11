@@ -1,0 +1,226 @@
+<CommQry title="TRewC03ContractId" navigate="TRewC03ContractId" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.C03Getter">
+    <Include id="BankParam" />
+    <Fields>
+    	<Field id="customerNum" desc="对公客户编号" edittype="text" datatype="string" 
+        xpath="/customerNum" />
+	<!--<Field id="aa" desc="客户名" edittype="text" datatype="string" xpath="/aa" />-->
+		<Field id="contractNum" desc="主合同编号" edittype="text" datatype="string" 
+        xpath="/contractNum" />
+        <Field id="superContractNum" desc="关联最高额融资合同编号" edittype="text" datatype="string" 
+        xpath="/superContractNum" />
+        <Field id="bizNum" desc="业务编号" edittype="text" datatype="string"  xpath="/bizNum" />
+    	<Field id="creditProductCd" desc="授信品种代码" edittype="select"  translated="DATA_DIC.2000" init="true" multiple="false" datatype="string" 
+        xpath="/creditProductCd" />
+        <Field id="currencyCd" desc="币种代码" edittype="select" translated="DATA_DIC.2002" init="true" multiple="false" datatype="string" 
+        xpath="/currencyCd" />
+        <Field id="contractTotalAmt" desc="合同总金额" edittype="text" datatype="currency" 
+        xpath="/contractTotalAmt" />
+        <Field id="contractProvidePurpose" desc="贷款用途" edittype="text" datatype="string" 
+        xpath="/contractProvidePurpose" />
+        <Field id="loanTypeInstructionCd" desc="贷款投向代码" edittype="select" init="true" translated="DATA_DIC.2003" multiple="false" datatype="string" 
+        xpath="/loanTypeInstructionCd" />
+        <Field id="industryLevelTwoCd" desc="贷款投向（国标）" edittype="text" datatype="string" 
+        xpath="/industryLevelTwoCd" />
+        <Field id="restrictIndustryInd" desc="是否国家限制行业" edittype="select" init="true" translated="DATA_DIC.2020" multiple="false" datatype="string" 
+        xpath="/restrictIndustryInd" />
+        <Field id="realtyLoanType" desc="房地产贷款类型" edittype="text" datatype="string" 
+        xpath="/realtyLoanType" />
+        <Field id="realtyLoanTypeInd" desc="是否房地产类贷款" edittype="select" translated="DATA_DIC.2037" init="true" datatype="string" 
+        xpath="/realtyLoanTypeInd" />
+        <Field id="peasantLoanType" desc="涉农贷款类型" edittype="select" translated="DATA_DIC.2040" init="true" datatype="string" 
+        xpath="/peasantLoanType" />
+        <Field id="contractSignDate" desc="签约日期" edittype="text" datatype="string" 
+        xpath="/contractSignDate" />
+        <Field id="startDate" desc="起始日期" edittype="text" datatype="string" 
+        xpath="/startDate" />
+        <Field id="expirationDate" desc="到期日期" edittype="text" datatype="string" 
+        xpath="/expirationDate" />
+        <Field id="classificationResult" desc="五级分类结果" edittype="select" init="true" multiple="false" translated="DATA_DIC.717" datatype="string" 
+        xpath="/classificationResult" />
+        <Field id="lowRiskInd" desc="是否低风险" edittype="select" translated="LIST:0,否;1,是" datatype="string" 
+        xpath="/lowRiskInd" />
+        <Field id="lowRiskBizTypeCd" desc="低风险业务类别代码" edittype="text" datatype="string" 
+        xpath="/lowRiskBizTypeCd" />
+        <Field id="contractCycleInd" desc="是否循环" edittype="select" translated="LIST:0,否;1,是" datatype="string" 
+        xpath="/contractCycleInd" />
+        <Field id="reformLoanInd" desc="是否为重组贷款" edittype="select" init="true" translated="DATA_DIC.2039" datatype="string" 
+        xpath="/reformLoanInd" />
+        <Field id="debtReformTypeCd" desc="债务重组类型" edittype="select" init="true" translated="DATA_DIC.2021" multiple="false" datatype="string" 
+        xpath="/debtReformTypeCd" />
+        <Field id="postponementInd" desc="是否被展期" edittype="select" translated="LIST:0,否;1,是"  datatype="string" 
+        xpath="/postponementInd" />
+        <Field id="postPonementTypeCd" desc="展期类型代码" edittype="select" init="true" translated="DATA_DIC.2022" multiple="false" datatype="string" 
+        xpath="/postPonementTypeCd" />
+        <Field id="mainSuretyMode" desc="主要担保方式" edittype="select" translated="DATA_DIC.2023" init="treue" multiple="false" datatype="string" 
+        xpath="/mainSuretyMode" />
+        <Field id="mainSuertySubchild" desc="主要担保方式子类" edittype="text" datatype="string" 
+        xpath="/mainSuertySubchild" />
+        <Field id="guarantyRate" desc="抵质押率" edittype="text" datatype="string" 
+        xpath="/guarantyRate" />
+        <Field id="payDiscountAmt" desc="实付贴现总金额" edittype="text" datatype="currency" 
+        xpath="/payDiscountAmt" />
+        <Field id="topFinancingStartDate" desc="最高额度有效期起始日" edittype="text" datatype="string" 
+        xpath="/topFinancingStartDate" />
+        <Field id="topFinancingEndDate" desc="最高额度有效期截至日" edittype="text" datatype="string" 
+        xpath="/topFinancingEndDate" />
+        <Field id="originalContractExpDate" desc="原合同到期日" edittype="text" datatype="string" 
+        xpath="/originalContractExpDate" />
+        <Field id="originalGuarantyContractNum" desc="关联原担保纸质合同编号" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2"
+        default="" xpath="/originalGuarantyContractNum" />
+        <Field id="lcNum" desc="信用证编号" edittype="text" datatype="string"  xpath="/lcNum" />
+        <Field id="remitPSum" desc="汇票张数" edittype="text" datatype="int" 
+        xpath="/remitPSum" />
+        <Field id="noteCustomerNum" desc="出票人客户编号" edittype="text" datatype="string" 
+        xpath="/noteCustomerNum" />
+        <Field id="yhCurrencyCd" desc="押汇币种" edittype="select" translated="DATA_DIC.2002" init="true" datatype="string" 
+        xpath="/yhCurrencyCd" />
+        <Field id="handlingOrgCd" desc="经办机构代码" edittype="text" datatype="string" 
+        xpath="/handlingOrgCd" />
+        <Field id="handlingUserNum" desc="经办人用户编号" edittype="text" datatype="string" 
+        xpath="/handlingUserNum" />
+        <Field id="contractSignPlace" desc="签约地点" edittype="text" datatype="string" 
+        xpath="/contractSignPlace" />
+        <Field id="bankTeamRole" desc="我行角色" edittype="text" datatype="string" 
+        xpath="/bankTeamRole" />
+        
+    	<!--
+        <Field id="contractId" desc="" edittype="text" datatype="string" 
+        xpath="/contractId" />
+        <Field id="contractManualNum" desc="" edittype="text" datatype="string" 
+        xpath="/contractManualNum" />
+        <Field id="creditLimitNum" desc="" edittype="text" datatype="string" 
+        xpath="/creditLimitNum" />
+        <Field id="comprBizContractInd" desc="" edittype="text" datatype="string" 
+        xpath="/comprBizContractInd" />
+        <Field id="approveNum" desc="" edittype="text" datatype="string" 
+        xpath="/approveNum" />
+        <Field id="contractTerm" desc="" edittype="text" datatype="int" 
+        xpath="/contractTerm" />
+        <Field id="contractLoanCd" desc="" edittype="text" datatype="string" 
+        xpath="/contractLoanCd" />
+        <Field id="exchangeRate" desc="" edittype="text" datatype="string" 
+        xpath="/exchangeRate" />
+        <Field id="contractTypeCd" desc="" edittype="text" datatype="string" 
+        xpath="/contractTypeCd" />
+        <Field id="contractNatureCd" desc="" edittype="text" datatype="string" 
+        xpath="/contractNatureCd" />
+        <Field id="contractStatusCd" desc="" edittype="text" datatype="string" 
+        xpath="/contractStatusCd" />
+        <Field id="contractTerminationWayCd" desc="" edittype="text" datatype="string" 
+        xpath="/contractTerminationWayCd" />
+        <Field id="contractTerminationDate" desc="" edittype="text" datatype="string" 
+        xpath="/contractTerminationDate" />
+        <Field id="disbOrgCd" desc="" edittype="text" datatype="string" 
+        xpath="/disbOrgCd" />
+        <Field id="transferedToWrInd" desc="" edittype="text" datatype="string" 
+        xpath="/transferedToWrInd" />
+        <Field id="ifCorpHoustLoan" desc="" edittype="text" datatype="string" 
+        xpath="/ifCorpHoustLoan" />
+        <Field id="wrOrgCd" desc="" edittype="text" datatype="string" 
+        xpath="/wrOrgCd" />
+        <Field id="topGuarantyInd" desc="" edittype="text" datatype="string" 
+        xpath="/topGuarantyInd" />
+        <Field id="originalContractManualNum" desc="" edittype="text" datatype="string" 
+        xpath="/originalContractManualNum" />
+        <Field id="extendField" desc="" edittype="text" datatype="string" 
+        xpath="/extendField" />
+        <Field id="extendFlagField" desc="" edittype="text" datatype="string" 
+        xpath="/extendFlagField" />
+        <Field id="partyId" desc="" edittype="text" datatype="string" 
+        xpath="/partyId" />
+        <Field id="creditLimitId" desc="" edittype="text" datatype="string" 
+        xpath="/creditLimitId" />
+        <Field id="bizId" desc="" edittype="text" datatype="string"  xpath="/bizId" />
+        <Field id="freezenInd" desc="" edittype="text" datatype="string" 
+        xpath="/freezenInd" />
+        <Field id="lastMaintainDate" desc="" edittype="text" datatype="string" 
+        xpath="/lastMaintainDate" />
+        <Field id="contractOtherCondition" desc="" edittype="text" datatype="string" 
+        xpath="/contractOtherCondition" />
+        <Field id="contractSupplement" desc="" edittype="text" datatype="string" 
+        xpath="/contractSupplement" />
+        <Field id="shortOperationMatureTerm" desc="" edittype="text" datatype="int" 
+        xpath="/shortOperationMatureTerm" />
+        <Field id="firstPayStartTerm" desc="" edittype="text" datatype="string" 
+        xpath="/firstPayStartTerm" />
+        <Field id="tipFinancingAmtTerm" desc="" edittype="text" datatype="int" 
+        xpath="/tipFinancingAmtTerm" />
+        <Field id="otherBankSuertyMode" desc="" edittype="text" datatype="string" 
+        xpath="/otherBankSuertyMode" />
+        <Field id="otherBankSuertySubchild" desc="" edittype="text" datatype="string" 
+        xpath="/otherBankSuertySubchild" />
+        <Field id="suertyCd" desc="" edittype="text" datatype="string" 
+        xpath="/suertyCd" />
+        <Field id="prerequisitionComment" desc="" edittype="text" datatype="string" 
+        xpath="/prerequisitionComment" />
+        <Field id="guarantyNote" desc="" edittype="text" datatype="string" 
+        xpath="/guarantyNote" />
+        <Field id="guarantyType" desc="" edittype="text" datatype="string" 
+        xpath="/guarantyType" />
+        <Field id="reportSuertyMode" desc="" edittype="text" datatype="string" 
+        xpath="/reportSuertyMode" />
+        <Field id="reportSuertySubchild" desc="" edittype="text" datatype="string" 
+        xpath="/reportSuertySubchild" />
+        <Field id="contractChangeInd" desc="" edittype="text" datatype="string" 
+        xpath="/contractChangeInd" />
+        <Field id="widthTerm" desc="" edittype="text" datatype="int" 
+        xpath="/widthTerm" />
+        <Field id="promisesAmt" desc="" edittype="text" datatype="string" 
+        xpath="/promisesAmt" />
+        <Field id="promisesAmtCollectionType" desc="" edittype="text" datatype="string" 
+        xpath="/promisesAmtCollectionType" />
+        <Field id="termEndDate" desc="" edittype="text" datatype="string" 
+        xpath="/termEndDate" />
+        <Field id="relaBizNum" desc="" edittype="text" datatype="string" 
+        xpath="/relaBizNum" />
+        <Field id="payoutApproveLevel" desc="" edittype="text" datatype="string" 
+        xpath="/payoutApproveLevel" />
+        <Field id="gdTemp1" desc="" edittype="text" datatype="string" 
+        xpath="/gdTemp1" />
+        <Field id="gdTemp2" desc="" edittype="text" datatype="string" 
+        xpath="/gdTemp2" />
+        <Field id="oldContractDetailId" desc="" edittype="text" datatype="string" 
+        xpath="/oldContractDetailId" />
+        <Field id="oldBizDetailId" desc="" edittype="text" datatype="string" 
+        xpath="/oldBizDetailId" />
+        <Field id="payoutInd" desc="" edittype="text" datatype="string" 
+        xpath="/payoutInd" />
+        <Field id="representModalityInd" desc="" edittype="text" datatype="string" 
+        xpath="/representModalityInd" />
+        <Field id="agriForeAnimFishLoanType" desc="" edittype="text" datatype="string" 
+        xpath="/agriForeAnimFishLoanType" />
+        <Field id="govCreditType" desc="" edittype="text" datatype="string" 
+        xpath="/govCreditType" />
+        <Field id="loanLendSourceType" desc="" edittype="text" datatype="string" 
+        xpath="/loanLendSourceType" />
+        <Field id="exportPresentNum" desc="" edittype="text" datatype="string" 
+        xpath="/exportPresentNum" />
+        <Field id="assureAddAmt" desc="" edittype="text" datatype="string" 
+        xpath="/assureAddAmt" />
+        <Field id="assureEndDate" desc="" edittype="text" datatype="string" 
+        xpath="/assureEndDate" />
+        <Field id="exportCurrencyCd" desc="" edittype="text" datatype="string" 
+        xpath="/exportCurrencyCd" />
+        <Field id="exportAmt" desc="" edittype="text" datatype="string" 
+        xpath="/exportAmt" />
+        <Field id="paymentBank" desc="" edittype="text" datatype="string" 
+        xpath="/paymentBank" />
+        <Field id="ourbankBuyAmt" desc="" edittype="text" datatype="string" 
+        xpath="/ourbankBuyAmt" />
+        <Field id="forfaitingType" desc="" edittype="text" datatype="string" 
+        xpath="/forfaitingType" />
+        <Field id="assureAddAmtMod" desc="" edittype="text" datatype="string" 
+        xpath="/assureAddAmtMod" />
+        <Field id="adjustInd" desc="" edittype="text" datatype="string" 
+        xpath="/adjustInd" />
+        <Field id="custname" desc="" edittype="text" datatype="string" 
+        xpath="/custname" />
+        <Field id="warnId" desc="预警表ID" edittype="text" datatype="string" 
+        xpath="/warnId" />
+        <Field id="dataDt" desc="数据日期" edittype="text" datatype="date" 
+        xpath="/dataDt" />-->
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2011-11-5 20:30:12 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+	<class name="com.gbicc.rule.entity.TRulDefinition" table="T_PUB_RUL_DEFINITION" schema="ECUSER">
+		<comment>规则定义表</comment>
+		<id name="id" column="FD_ID"  type="string">
+			<generator class="uuid.hex" />  
+		</id>
+		<property name="ruleCode" type="string" >
+			<column name="FD_RULE_CODE" length="50" />
+		</property>
+		<property name="ruleName" type="string">
+			<column name="FD_RULE_NAME" length="100" />
+		</property>
+		<property name="ruleContent" type="string">
+			<column name="FD_RULE_CONTENT" />
+		</property>
+		<property name="ruleCreateddate" type="timestamp">
+			<column name="FD_RULE_CREATEDDATE" length="10" />
+		</property>
+		<property name="ruleUpdateddate" type="timestamp">
+			<column name="FD_RULE_UPDATEDDATE" length="10" />
+		</property>
+		<property name="ruleVersion" type="int">
+			<column name="FD_RULE_VERSION" />
+		</property>
+		<property name="categoryId" type="string">
+			<column name="FD_CATEGORY_ID" length="50" />
+		</property>
+		<property name="ruleStatus" type="string">
+			<column name="FD_RULE_STATUS" length="10" />
+		</property>
+		<property name="triggerFreq" type="string">
+			<column name="FD_TRIGGER_FREQ" length="50" />
+		</property>
+		<property name="triggerType" type="string">
+			<column name="FD_TRIGGER_TYPE" length="50" />
+		</property>
+		<property name="triggerPeriodInterval" type="int">
+			<column name="FD_TRIGGER_PERIOD_INTERVAL" />
+		</property>
+		<property name="triggerPeriodUnit" type="string">
+			<column name="FD_TRIGGER_PERIOD_UNIT" length="50" />
+		</property>
+		<property name="ruleLevel" type="string">
+			<column name="FD_RULE_LEVEL" length="20" />
+		</property>
+		<property name="ruleType" type="string">
+			<column name="FD_RULE_TYPE" length="20" />
+		</property>
+		<property name="ruleRemark" type="string">
+			<column name="FD_RULE_REMARK" length="200" />
+		</property>
+		<property name="ruleApplyobj" type="string">
+			<column name="FD_RULE_APPLYOBJ" length="20" />
+		</property>
+		<property name="approveLevel" type="string">
+			<column name="FD_APPROVELEVEL" length="20" />
+		</property>
+		<property name="enable" type="string">
+			<column name="FD_RULE_ENABLE" length="20" />
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,128 @@
+package com.gbicc.company.single.operation;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.gbicc.bpm.service.ProcessManagerService;
+import com.gbicc.common.FileUpDownProperties;
+import com.gbicc.company.single.entity.TCmSingleRulCases;
+import com.gbicc.company.single.entity.TCmSingleRulWarning;
+import com.gbicc.company.single.service.TCmSingleRulCasesService;
+import com.gbicc.company.single.service.TCmSingleRulWarningService;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.framework.exceptions.CommonException;
+import com.huateng.ebank.framework.operation.BaseOperation;
+import com.huateng.ebank.framework.operation.OperationContext;
+
+public class TCmSingleRulCasesOperation extends BaseOperation {
+
+	public static final String ID = TCmSingleRulCasesOperation.class.getSimpleName();
+	public static final String CMD = "CMD";
+	public static final String CMD_QUERY = "CMD_QUERY";
+	public static final String CMD_INSERT = "CMD_INSERT";
+	public static final String CMD_UPDATE = "CMD_UPDATE";
+	public static final String CMD_DELETE = "CMD_DELETE";
+	public static final String IN_PARAM = "IN_PARAM";
+	
+	public static final String OP_FILING="filing";//案例归档操作
+	public static final String OP_BACK="back";//案例归档退回操作
+	public static final String OP_AGREE="agree";//案例归档同意操作
+	
+	public static final String HEAD_FLAG="head";
+	
+	public static final String ROLE_HEAD_BANK_FXJCGL="head_bank_fxjcgl";//总行风险监测管理岗
+	public static final String ROLE_SUBBRANCH_FXJCGL="subbranch_fxjcgl";//分行风险监测管理岗
+	
+	public static final String STATUS_FILING_WAIT_APL="2";//案例归档待审核状态
+	public static final String STATUS_BACK="3";//案例归档退回状态
+	public static final String STATUS_ALREADY_FILING="4";//案例已归档状态
+	public static final String STATUS_WAIT_FILING="6";//案例待归档状态
+	
+	@Override
+	public void afterProc(OperationContext context) throws CommonException {
+	}
+
+	@Override
+	public void beforeProc(OperationContext context) throws CommonException {
+	}
+
+	@Override
+	public void execute(OperationContext context) throws CommonException {
+		TCmSingleRulCases cases = (TCmSingleRulCases) context.getAttribute("cases");
+		String op=(String) context.getAttribute("op");
+		String opinion=(String) context.getAttribute("opinion");
+		String warnRecords=(String) context.getAttribute("warnRecords");
+		TCmSingleRulCasesService service = TCmSingleRulCasesService.getInstance();
+		try {
+			taskComplete(op,cases,opinion);
+			
+			service.update(cases);
+			if(StringUtils.isNotEmpty(warnRecords)){
+				JSONArray arrs=JSONArray.fromObject(warnRecords);
+				for(int i=0;i<arrs.size();i++){
+					JSONObject json=JSONObject.fromObject(arrs.get(i));
+					TCmSingleRulWarning warning=TCmSingleRulWarningService.getInstance().get(json.getString("warnId"));
+					warning.setWarningRelieve(json.getString("warningRelieve"));
+					if(op.equals(OP_AGREE)){
+						if(warning.getWarningRelieve().equals("Y")){
+							warning.setWarnStatus(TCmSingleRulWarningOperation.WARNING_RELIEVE_STATUS);
+						}else if(warning.getWarningRelieve().equals("N")){
+							warning.setWarnStatus(TCmSingleRulWarningOperation.WARNING_NOT_RELIEVE_STATUS);
+						}
+					}
+					TCmSingleRulWarningService.getInstance().update(warning);
+				}
+			}
+		} catch(CommonException e){
+			e.printStackTrace();
+			throw new CommonException(e.getErrCode(),e.getMessage());
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new CommonException("系统异常",e.getMessage());
+		}
+	}
+	
+	public void taskComplete(String op,TCmSingleRulCases cases,String opinion) throws Exception{
+		GlobalInfo info=GlobalInfo.getCurrentInstance();
+		String brcode=info.getBrcode();
+		String brname=info.getBrName();
+		String userId=info.getTlrno();
+		ProcessManagerService processManagerService=ProcessManagerService.getInstace();
+		String taskId=processManagerService.findTaskId(cases.getId(),userId);
+		Map<String,Object> map=new HashMap<String, Object>();
+		map.put("desc","业务ID:"+cases.getId()+",案例编号:"+cases.getCasesCode()+",案例名称:"+cases.getCasesName());
+		map.put("opinion",opinion);
+		if(op.equals(OP_FILING)){
+			map.put("operation","申请归档");
+			List<String> assigneeList=null;
+			if(cases.getHandleOrgFlag().equals(HEAD_FLAG)){
+				assigneeList=processManagerService.findUserIdByRoleidAndCurrOrgid(FileUpDownProperties.readValue(ROLE_HEAD_BANK_FXJCGL),brcode);
+			}else{
+				assigneeList=processManagerService.findUserIdByRoleidAndCurrOrgid(FileUpDownProperties.readValue(ROLE_SUBBRANCH_FXJCGL),brcode);
+			}
+			if(assigneeList.size()==0){
+				throw new CommonException("机构下未配置审核人！","机构号："+brcode+",机构名称："+brname);
+			}
+			map.put("assigneeList",assigneeList);
+			map.put("path","apl");
+			cases.setCasesStatus(STATUS_FILING_WAIT_APL);
+		}else if(op.equals(OP_BACK)){
+			String assignee=processManagerService.findTopUserId(cases.getId());
+			map.put("operation","退回归档申请");
+			map.put("assignee",assignee);
+			map.put("path","back");
+			cases.setCasesStatus(STATUS_BACK);
+		}else if(op.equals(OP_AGREE)){
+			map.put("operation","同意归档");
+			map.put("path","next");
+			cases.setCasesStatus(STATUS_ALREADY_FILING);
+		}
+		processManagerService.taskComplete(map, taskId);
+	}
+}

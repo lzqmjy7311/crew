@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.huateng.ebank.entity.data.mng">
+	<class name="TblCSFileExportTskInf"
+		table="TBL_CS_FILE_EXPORT_TSK_INF" >
+		<meta attribute="sync-DAO">false</meta>
+		<id name="id"
+			type="string"
+			column="TSK_ID" >
+			<generator class="assigned"/>
+		</id>
+
+		<property
+			name="tskNm"
+			column="TSK_NM"
+			type="string"
+			not-null="false"
+			length="50"
+		/>
+		<property
+			name="tskStartTms"
+			column="TSK_START_TMS"
+			type="string"
+			not-null="false"
+			length="14"
+		/>
+		<property
+			name="tskStartOp"
+			column="TSK_START_OP"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="taskDesc"
+			column="TSK_DESC"
+			type="string"
+			not-null="false"
+			length="60"
+		/>
+		<property
+			name="tskParam1"
+			column="TSK_PARAM1"
+			type="string"
+			not-null="false"
+			length="2048"
+		/>
+		<property
+			name="tskParam2"
+			column="TSK_PARAM2"
+			type="string"
+			not-null="false"
+			length="2048"
+		/>
+		<property
+			name="tskOwner"
+			column="TSK_OWNER"
+			type="string"
+			not-null="false"
+			length="40"
+		/>
+		<property
+			name="tskEndTms"
+			column="TSK_END_TMS"
+			type="string"
+			not-null="false"
+			length="14"
+		/>
+		<property
+			name="tskRunClass"
+			column="TSK_RUN_CLASS"
+			type="string"
+			not-null="false"
+			length="2"
+		/>
+		<property
+			name="expFileNm"
+			column="Exp_FILE_NM"
+			type="string"
+			not-null="false"
+			length="128"
+		/>
+		<property
+			name="expRcdNum"
+			column="EXP_RCD_NUM"
+			type="long"
+			not-null="false"
+		/>
+		<property
+			name="expRcdSumNum"
+			column="EXP_RCD_SUM_NUM"
+			type="long"
+			not-null="false"
+		/>
+		<property
+			name="expFileSize"
+			column="EXP_FILE_SIZE"
+			type="long"
+			not-null="false"
+		/>
+		<property
+			name="tskStat"
+			column="TSK_STAT"
+			type="string"
+			not-null="false"
+			length="1"
+		/>
+
+	</class>	
+</hibernate-mapping>

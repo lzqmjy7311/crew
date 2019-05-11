@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-11-3 20:05:11 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.gbicc.warn.entity.TWarnSignal" table="T_PL_WARN_SIGNAL" schema="ECUSER">
+        <comment>预警信号</comment>
+            <id name="id" type="string">
+                <column name="FD_ID" length="32" />
+                <generator class="uuid.hex" /> 
+            </id>
+            <property name="warnCode" type="string">
+                <column name="FD_WARN_CODE" length="32" />
+            </property>
+            <property name="warnLEvel" type="string">
+                <column name="FD_WARN_lEVEL" length="25" />
+            </property>
+            <property name="affPerDesc" type="string">
+                <column name="FD_AFF_PER_DESC" length="128" />
+            </property>
+            <property name="checkStatus" type="string">
+                <column name="FD_CHECK_STATUS" length="25" />
+            </property>
+            <property name="checkDesc" type="string">
+                <column name="FD_CHECK_DESC" length="128" />
+            </property>
+            <property name="ruleId" type="string">
+                <column name="FD_RULE_ID" length="32" />
+            </property>
+            <property name="reportId" type="string">
+                <column name="FD_REPORT_ID" length="32" />
+            </property>
+            <property name="loanAccount" type="string">
+                <column name="FD_LOAN_ACCOUNT" length="50" />
+            </property>
+            <property name="warnDesc" type="string">
+                <column name="FD_WARN_DESC" length="2000" />
+            </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,97 @@
+import org.gradle.plugins.ide.eclipse.model.Facet
+
+apply plugin: "war"
+apply plugin: "jetty"
+apply plugin: "eclipse-wtp"
+
+version="1.0"
+sourceCompatibility=1.6
+compileJava.options.encoding = "UTF-8"
+webAppDirName="webapp"
+
+//打包时采用的发布环境
+//默认采用 test，可通过 gradle 命令行参数进行设置
+//如： gradle build -Pdeploy=product
+//排除测试：gradle build -Pdeploy=product -x test
+if(hasProperty("deploy")){
+	project.ext.deploy = project["deploy"]
+}else{
+	project.ext.deploy = "test"
+}
+
+repositories {
+	maven { url "http://116.228.4.126:9080/nexus/content/groups/public" }
+}
+
+war{
+	manifest {
+		attributes  'Implementation-Version':'2.4',
+					'Implementation-Title':'crew',
+					'Implementation-URL':'http://www.gbicc.net',
+					'Created-By':new Date()
+	}
+}
+
+sourceSets {
+	main {
+		java {
+			srcDir "src-huateng/main/java"
+			srcDir "src-gbicc/main/java"
+			srcDir "src-gbicc-engine/main/java"
+		}
+		resources {
+			srcDir "src-huateng/main/resources"
+			srcDir "src-gbicc/main/resources"
+			srcDir "src-gbicc-engine/main/resources"
+		}
+	}
+	test {
+		java {
+			srcDir "src-gbicc/test/java"
+			srcDir "src-gbicc-engine/test/java"
+		}
+		resources {
+			srcDir "src-gbicc/test/resources"
+			srcDir "src-gbicc-engine/test/resources"
+		}
+	}
+}
+
+dependencies {
+	providedCompile(
+		fileTree(dir: "lib-gbicc/provided", include: "*.jar")
+    )
+	compile(
+		fileTree(dir: "lib-gbicc/runtime", include: "*.jar"),
+		fileTree(dir: "lib-huateng", include: "*.jar",excludes :["db2jcc*.jar","javassist*.jar"])
+	)
+}
+
+eclipse {
+	wtp {
+		facet {
+			facet name: "jst.web"		, type: Facet.FacetType.fixed
+			facet name: "wst.jsdt.web"	, type: Facet.FacetType.fixed
+			facet name: "jst.java"		, type: Facet.FacetType.fixed
+			facet name: "jst.web"		, version: "2.4"
+			facet name: "jst.java"		, version: "1.6"
+			facet name: "wst.jsdt.web"	, version: "1.0"
+		}
+	}
+}
+
+task copyDeployEnvironmentResources {
+	ext.deploySourceDir = new File("deploy-environment/$deploy");
+	ext.deployTargetDir = new File("$buildDir/resources/main");
+	inputs.dir deploySourceDir
+	outputs.dir deployTargetDir
+	doLast{
+		copy() {
+			from deploySourceDir
+			into deployTargetDir
+		}
+	}
+}
+
+war.dependsOn copyDeployEnvironmentResources
+

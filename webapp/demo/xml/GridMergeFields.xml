@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CommQry title="表单项" navigate="" type="call"
+	interface="false" pagesize="10" async="false" databusid="FIVE"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.fp.demo.getter.GridMergeFieldsGetter">
+	<Include id="BankParam" />
+    
+    <PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="XLS导出" perfetch="20" maxpage="20" directory="F:/upload1"/>
+    
+	<Fields>
+		<Field id="col1" desc="列1" edittype="" xpath="/col1" status="F" default="" />
+		<Field id="col2" desc="列2" edittype="" size="110" xpath="/col2" status="F" default="" />
+		<Field id="col3" desc="列3" edittype="text" datatype="double" size="5" scale="2" xpath="/col3" status="F" default="" />
+		<Field id="col4" desc="列4" edittype="text" datatype="currency" prefix="$" size="20" scale="2" xpath="/col4" status="F" default="" />
+		<Field id="col5" desc="列5" edittype="" xpath="/col5" status="F" default="" />
+		<Field id="col6" desc="列6" edittype="" xpath="/col6" status="F" default="" />
+		<Field id="col7" desc="列7" edittype="" xpath="/col7" status="F" default="" />
+		<Field id="col8" desc="列8" edittype="date" datatype="date" xpath="/col8" status="F" default="" />
+		<Field id="col9" desc="列9" edittype="" xpath="/col9" status="F" default="" />
+		<Field id="col10" desc="列10" edittype="process" xpath="/col10" status="F" default="" />
+		 <Field id="staticComboboxDic" desc="静态下拉" multiple="false"
+            placeholder="占位符" edittype="select" translated="DATA_DIC.37"
+            datatype="int" size="10" />
+        <Field id="dynamicComboboxCQ" desc="动态下拉" status="N"
+            fieldname="dataNo" placeholder="占位符" edittype="select" dropdowntype="dynamic"
+            dataType="String" readonly="false" translated="CQ:CQDemo"
+            viewField="brname" init="true" multiple="false"
+            fieldmap="dynamicComboboxCQ=brcode;dynamicComboboxCQName=brname"
+            size="20" primary="false" type="String" />
+          <Field id="dateSelect" desc="日期下拉" edittype="date"
+            placeholder="yyyy-MM-dd" datatype="date" xpath="/dateSelect" />
+    </Fields>
+        
+    <Where>
+        <TextBox id="qCol1" desc="条件1" datatype="string" placeholder="序号或名称"/>       
+    </Where>
+    
+    <Operations>
+       	<Button id="btn1" name="btn1" desc="保存" icon="icon-save" operation="asysubmit" updateClass="#" url="#" txn="" />
+    	<Button id="btn2" name="btn2" desc="新增" icon="icon-add" operation="addrecord" updateClass="#" url="#" txn="" />
+    </Operations>
+</CommQry>

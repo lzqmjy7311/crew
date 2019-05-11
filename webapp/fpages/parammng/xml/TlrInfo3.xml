@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="操作员管理" navigate="主页 &gt; 系统管理 &gt; 操作员管理" type="call"
+	interface="false" pagesize="5" async="true" databusid="DEMO"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.parammng.cqGetter.TlrInfo3Getter">
+	<Include id="BankParam" />
+
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="brno" desc="机构号" status="N" method="None"
+			readonly="true" width="" primary="true" type="String" size="20"
+			default="" xpath="/brno" />
+		<Field id="brcode" desc="机构号" status="N" method="None"
+			readonly="true" width="" primary="true" type="String" size="20"
+			default="" xpath="/brcode" />
+		<Field id="tlrName" desc="姓名" status="N" method="None"
+			width="" readonly="" primary="true" type="String" size="20" require="true"
+			xpath="/tlrName" default="" />
+		<Field id="tlrno" desc="操作员号" status="N" method="None" width=""
+			readonly="true" primary="true" type="String" size="20" xpath="/tlrno"
+			default="" />
+		<Field id="status" desc="状态" status="N" readonly=""
+			translated="DATA_DIC.37" require="true" edittype="select" width=""
+			method="None" primary="true" type="String" size="20" xpath="/status"
+			default="" />
+
+		<Field id="effectDate" desc="生效日期" require="false" status="F"
+			edittype="date" datatype="date" method="None" width=""
+			primary="false" type="String" size="20" xpath="/effectDate"
+			default="" />
+		<Field id="expireDate" desc="失效日期" require="false" status="F"
+			edittype="date" datatype="date" method="None" width=""
+			primary="false" type="String" size="20" xpath="/expireDate"
+			default="" />
+
+
+		<Field id="email" desc="EMAIL" require="" status="F"
+			method="None" width="" primary="false" type="String" size="20"
+			xpath="/email" default="" />
+		<Field id="misc" desc="所属部门" require="" status="F" method="None"
+			width="" primary="false" type="String" size="20" xpath="/misc"
+			default="" />
+
+		<Field id="createDate" desc="建立日期" status="F" require="false"
+			method="None" width="90" primary="false" xpath="/createDate"
+			type="String" size="2" />
+		<!-- modified by junzhong.duan 20110422 begin  -->
+		<!-- /path 由defRoleid 改为roleid -->s
+		<Field id="defRoleid" desc="默认岗位" require="false" status="F"
+			readonly="false" edittype="select" fieldmap="" method="None"
+			translated="DATA_DIC.100" width="" viewField="" primary="false"
+			type="String" size="10" xpath="/roleid" tip="请先选择操作员岗位"/>
+		<!-- modified by junzhong.duan 20110422 begin  -->
+		<!-- add by zhaozhiguo 2011-6-20 BMS-3153 -->
+		<Field id="isLock" desc="锁定状态" status="F" method="None" xpath="/isLock" translated="LIST:0,未锁定;1,锁定" edittype="select" require="false"
+			primary="true" type="status" size="20" default="" tip="锁定状态" />
+	</Fields>
+
+	<Where>
+
+	</Where>
+	<Operations>
+		<!-- operation( addrecord:delrecord:syncsubmit:asyncqrysubmit:asyncupadasubmit ) -->
+		<Button id="btSave" name="btSave" desc="确定"
+			operation="asysubmit"
+			updateClass="com.huateng.ebank.business.parammng.update.TlrInfoUpdate"
+			url="#" txn="" />
+		<Button id="btdel" name="btdel" desc="删除操作员，慎点！"
+			operation="asysubmit"
+			updateClass="com.huateng.ebank.business.parammng.update.TlrInfoUpdater"
+			url="/trans/CommQueryServlet?CQId=parammng_TlrInfo1" txn="" />
+		<!-- add zhaozhiguo 2011-6-20 BMS-3153 -->
+		<Button id="unLock"  name="unLock" desc="解锁"
+			updateClass="com.huateng.ebank.business.parammng.update.TlrInfoUpdater"
+			operation="asysubmit" url="#" show="" group="" txn=""></Button>
+	</Operations>
+	<Sql></Sql>
+</CommQry>

@@ -1,0 +1,80 @@
+tempFileURL=C:\\test.txt
+SERVER_LOCATION=D:\\upload
+#\u62a5\u8868\u4e0b\u8f7d\u8def\u5f84
+batch.report.file.path=/home/loan/batch/report
+#\u62a5\u8868\u751f\u6210\u8def\u5f84
+reportGenPath=/home/loan/file/report/
+
+#\u62a5\u8868\u6a21\u7248\u3000*.jasper\u6587\u4ef6\u8def\u5f84
+reportJasperFilePath=/home/loan/jasper/
+
+
+#\u4e0a\u4f20\u6587\u4ef6\u8def\u5f84
+SCCBA_FILE_PATH=/home/loan/finfo_t/upload/sccba
+
+# zhishijie  add
+###################################################################
+# \u6587\u4ef6\u4e0a\u4f20\u914d\u7f6e #
+# \u4e0a\u4f20\u8def\u5f84
+fileupload.path=/home/loan/batch/batchfile/upload/
+# \u4e0a\u4f20\u6587\u4ef6\u5927\u5c0f\uff0c\u5355\u4f4dM
+fileupload.maxfilesize=1
+# \u4e0a\u4f20\u901f\u5ea6\u63a7\u5236\u53c2\u6570\uff0c\u6570\u503c\u8d8a\u5c0f\u901f\u5ea6\u8d8a\u5feb
+fileupload.thread.sleep.delay=3
+
+
+
+
+ace.sFtpdir=/home/loan/file/online
+ace.port=3600
+#\u9ed8\u8ba4\u67dc\u5458\u53f7
+gd.gyh=32812
+#\u9ed8\u8ba4\u5730\u533a\u53f7
+gd.dqh=67
+#\u9ed8\u8ba4\u673a\u6784\u4ee3\u53f7
+gd.jgdh=101
+#\u6838\u5fc3\u7cfb\u7edfIP
+gd.hostIp=163.1.8.17
+#168.2.62.18 neibuwangluo   163.1.8.18  12wang
+#gd.hostIp=163.68.1.1   shengchanhuanjing
+#gd.hostIp=198.2.3.233   test
+#\u6838\u5fc3\u7cfb\u7edfport
+gd.hostPort=3600
+#\u7528\u4e8e\u4e2d\u95f4Server\u8c03\u7528.o\u6587\u4ef6
+gd.socket.serverIp=163.1.8.12
+#gd.socket.serverIp=198.2.3.75  shengchanhuanjing
+#\u7528\u4e8e\u4e2d\u95f4server\u8c03\u7528\u7aef\u53e3
+gd.socket.port=12345
+
+# \u6279\u91cf\u5bf9\u8d26\u5b58\u653e\u8def\u5f84
+bath.ace.file.path=/home/gdxy/file/batch/acedata
+
+gd.core.flag=0
+
+#path for rule script file repository
+#use this in SIT environment
+rule_path=D:/rules
+#use this in develop environment
+#rule_path=E:/temp
+#date format for rule engine
+toprules.dateformat=yyyy-MM-dd
+
+#\u9ed8\u8ba4\u5bfc\u51fa\u6587\u4ef6\u540d
+PageQryExp_filename=\u65e0\u6807\u9898
+#\u6279\u91cf\u4e0b\u8f7d\u8def\u5f84
+PageQryExp_directory=/tmp
+#\u6279\u91cf\u6bcf\u9875\u8bfb\u53d6\u6761\u6570
+PageQryExp_perfetch=100
+#\u8054\u673a\u6700\u5927\u652f\u6301\u9875
+PageQryExp_maxpage=5
+#\u9ed8\u8ba4\u5bfc\u51fa\u6587\u4ef6\u7f16\u7801
+PageQryExp_encoding=UTF-8
+
+#\u53cc\u673a\u4e14\u65e0\u5171\u4eab\u78c1\u76d8\u7684\u60c5\u51b5\u4e0b,\u9700\u8981\u914d\u7f6e\u4ee5\u4e0b\u4fe1\u606f
+#\u662f\u5426\u5f00\u542fftp\u529f\u80fd:on\u5f00\u542f;off\u5173\u95ed 
+PageQryExp_FTP=off
+#\u673a\u56681 \u5bf9\u65b9\u7528\u6237\u540d:\u5bc6\u7801:IP:\u7aef\u53e3
+PageQryExp_DF1KYS2X=test1:test:127.0.0.1:21
+
+#\u673a\u56682 \u5bf9\u65b9\u7528\u6237\u540d:\u5bc6\u7801:IP:\u7aef\u53e3
+PageQryExp_DF1KYS2X=test2:test:127.0.0.1:21

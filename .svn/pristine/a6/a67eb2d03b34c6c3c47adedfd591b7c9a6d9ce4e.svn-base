@@ -1,0 +1,65 @@
+<CommQry title="TRewL12PersonCreditIndexId" navigate="TRewL12PersonCreditIndexId" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.L12Getter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="id" desc="唯一标识" edittype="text" datatype="string" xpath="/id" />
+        <Field id="fd24monMaxloanOverstatus" desc="过去24个月内贷款的最差还款状态" edittype="text" datatype="int"
+        xpath="/fd24monMaxloanOverstatus" />
+        <Field id="fdMaxloanOvernum" desc="历史贷款最高逾期期数" edittype="text" datatype="int"
+        xpath="/fdMaxloanOvernum" />
+        <Field id="fdSumloanOvercount" desc="历史贷款累计逾期次数" edittype="text" datatype="int"
+        xpath="/fdSumloanOvercount" />
+        <Field id="fdCreditCardStatus" desc="卡帐户状态" edittype="text" datatype="int"
+        xpath="/fdCreditCardStatus" />
+        <Field id="fd24monMaxcreditOverstatus" desc="过去24个月内信用卡的最差还款状态" edittype="text" datatype="int"
+        scale="2" xpath="/fd24monMaxcreditOverstatus" />
+        <Field id="fd12monMaxcreditOvernum" desc="过去12个月信用卡未还最低还款额的次数" edittype="text" datatype="int"
+        xpath="/fd12monMaxcreditOvernum" />
+        <Field id="fdCreditcardOverdraftAmt" desc="透支额度" edittype="text" datatype="string"
+        xpath="/fdCreditcardOverdraftAmt" />
+        <Field id="fdMaxscreditcardOvernum" desc="历史准贷记卡累计逾期次数" edittype="text" datatype="int"
+        xpath="/fdMaxscreditcardOvernum" />
+        <Field id="fdMaxcreditcardOvernum" desc="历史贷记卡累计逾期次数" edittype="text" datatype="int"
+        xpath="/fdMaxcreditcardOvernum" />
+        <Field id="fdMaxscreditcardOversum" desc="历史准贷记卡最大逾期期数" edittype="text" datatype="int"
+        xpath="/fdMaxscreditcardOversum" />
+        <Field id="fdMaxcreditcardOversum" desc="历史贷记卡最大逾期期数" edittype="text" datatype="int"
+        xpath="/fdMaxcreditcardOversum" />
+        <Field id="fdMaxlfjyloanOversum" desc="历史非经营性贷款最大当前逾期期数" edittype="text" datatype="int"
+        xpath="/fdMaxlfjyloanOversum" />
+        <Field id="fdMaxjyloanOversum" desc="历史个人经营性贷款最大当前逾期期数" edittype="text" datatype="int"
+        xpath="/fdMaxjyloanOversum" />
+        <Field id="fdFzamtsum" desc="负债总额" edittype="text" datatype="string"
+        xpath="/fdFzamtsum" />
+        <Field id="fdReportdate" desc="征信报告日期" edittype="text" datatype="date"
+        xpath="/fdReportdate" />
+        <Field id="fdReportid" desc="报告编号" edittype="text" datatype="string"
+        xpath="/fdReportid" />
+        <Field id="fdHascredit" desc="是否有征信记录" edittype="select" translated="LIST:0,否;1,是" datatype="string"
+        xpath="/fdHascredit" />
+        <Field id="fdRowdate" desc="数据日期" edittype="text" datatype="date"
+        xpath="/fdRowdate" />
+        <Field id="fdMaxloanstate" desc="最差贷款状态-其它机构" edittype="text" datatype="int"
+        xpath="/fdMaxloanstate" />
+        <Field id="fdCreditlevel" desc="征信等级" edittype="text" datatype="int"
+        xpath="/fdCreditlevel" />
+        <Field id="fdCustname" desc="客户名称" edittype="text" datatype="string"
+        xpath="/fdCustname" />
+        <Field id="fdCreditcard" desc="客户证件号码" edittype="text" datatype="string"
+        xpath="/fdCreditcard" />
+        <Field id="fdCreditcardtype" desc="客户证件号码类型" edittype="select" translated="DATA_DIC.2018" init="true" multiple="false" datatype="string"
+        xpath="/fdCreditcardtype" />
+        <Field id="fdValid" desc="1有效0无效" edittype="text" datatype="string"
+        xpath="/fdValid" />
+        <Field id="fd3monBadLoanoverState" desc="最近3年贷款存在不良贷款（逾期）" edittype="text" datatype="int"
+        xpath="/fd3monBadLoanoverState" />
+        <Field id="fd3yearBadLoanState" desc="最近3年贷款是否存在五级分类后三类贷款【次级、不良、损失】" edittype="text" datatype="int"
+        scale="2" xpath="/fd3yearBadLoanState" />
+        <Field id="fdWarnId" desc="预警表ID" edittype="text" datatype="string"
+        xpath="/fdWarnId" />
+        <Field id="fdDataDt" desc="数据日期" edittype="text" datatype="date"
+        xpath="/fdDataDt" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

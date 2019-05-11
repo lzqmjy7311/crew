@@ -1,0 +1,33 @@
+<CommQry title="TPubRulIndustryValue" navigate="TPubRulIndustryValue" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.rule.getter.TPubRulIndustryValueDtlGetter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="id" desc="主键" edittype="text" datatype="string" xpath="/id" />
+        <Field id="rulCode" desc="规则编号" readonly="true" edittype="text" datatype="string" 
+        xpath="/rulCode" />
+        <Field id="rulName" desc="规则名称" readonly="true" edittype="text" datatype="string" size="200"
+        xpath="/rulName" />
+        <Field id="industryCode" desc="行业编码" readonly="true" edittype="text" datatype="string" size="30"
+        xpath="/industryCode" />
+        <Field id="industryName" desc="行业名称" readonly="true" edittype="text" datatype="string"
+        xpath="/industryName" />
+        <Field id="valueDesc" desc="阀值描述" readonly="true" edittype="text" datatype="string" size="500"
+        xpath="/valueDesc" />
+        <Field id="valueDescView" desc="阀值描述" readonly="true" edittype="text" datatype="string" size="500"
+        xpath="/valueDescView" />
+        <Field id="valueCode" desc="阀值编码" readonly="true" edittype="text" datatype="string" size="10"
+        xpath="/valueCode" />
+        <Field id="value" desc="阀值" edittype="text" datatype="float" scale="5"
+        xpath="/value" />
+        <Field id="updateUser" desc="最后修改用户" readonly="true" edittype="text" datatype="string" 
+        xpath="/updateUser" />
+        <Field id="updateDt" desc="最后更新时间" readonly="true" edittype="text" datatype="date"
+        xpath="/updateDt" />
+        <Field id="desc" desc="说明" edittype="textarea" datatype="string" size="500" 
+       	xpath="/desc" />
+    </Fields>
+    <Operations>
+    	<Button id="btnSave" name="btnSave" desc="保存" icon="icon-save" operation="asysubmit" 
+			updateClass="com.gbicc.rule.update.TPubRulIndustryValueUpdate" />
+    </Operations>
+</CommQry>

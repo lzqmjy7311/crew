@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.company.view.accountpage.getter.AccountlistTreeGetter">
+	<Include id="BankParam" />
+	
+	<Fields>
+		<Field id="id" desc="节点编号" xpath="/id" readonly="false"/>
+		<Field id="name" desc="节点名称" xpath="/text" readonly="false"/>
+		<Field id="pid" desc="上级节点" xpath="/pid" readonly="false"/>
+		<!-- 必须属性,其中_text 属性为树节点上展示的名称-->
+		<Field id="_hasChild_" desc="是否有孩子节点" xpath="/hasChild" readonly="false"/>
+		<Field id="_id" xpath="/id" />
+		<Field id="_parentId" xpath="/pid" />
+		<Field id="_text" desc="" method="" xpath="/text" />
+		<Field id="acctType" desc="账户类型" method="" xpath="/attributes/acctType" readonly="false"/>
+		<!-- 扩展属性，为节点指定图标-->
+		<Field id="_icon" desc="" method="" xpath="/iconCls" />
+		
+	</Fields>
+	<Where>
+	</Where>	
+	<Operations>
+	</Operations>
+</CommQry>

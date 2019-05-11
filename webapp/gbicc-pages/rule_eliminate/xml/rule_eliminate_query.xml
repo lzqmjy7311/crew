@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="规则排除查询" navigate="规则排除查询" type="call"
+	interface="false" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.person.eliminate.getter.TPlRuleEliminateQueryGetter">
+	<Include id="BankParam" />
+	
+	
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="id" desc="" edittype="text" datatype="string" size="40" xpath="/id" />
+		<Field id="warningLevel" desc="预警优先级" edittype="select" translated="DATA_DIC.200"  datatype="string" status="F" size="10" xpath="warningLevel" />
+		<Field id="warnDesc" desc="预警描述"  edittype="text" status="F" datatype="string" size="50" xpath="/warnDesc"/>			
+		<Field id="loanAcct" desc="贷款账号"   edittype="text"  datatype="string" status="F" size="100" xpath="/loanAcct"/>
+		<Field id="custName" desc="客户名称"  edittype="text" datatype="string" status="F" size="100" xpath="/custName"/>
+		<Field id="productName" desc="产品名称"    datatype="string" status="F" size="100" xpath="/productName"/>
+		<Field id="loanAmt" desc="贷款金额(￥)" scale="2" prefix="￥" edittype="text" datatype="currency" status="F" size="100" xpath="loanAmt"/>
+		<Field id="loanBalance" desc="贷款余额(￥)" scale="2" edittype="text" prefix="￥" datatype="currency" status="F" size="100" xpath="/loanBalance"/>
+		<Field id="loanTerm" desc="贷款期限" edittype="text" datatype="string" status="F" size="100" xpath="/loanTerm"/>
+		<Field id="ruleName" desc="预警描述" edittype="text" datatype="string" status="F" size="100" xpath="/ruleName"/>
+		<Field id="rulenameEliminate" desc="排除后规则" edittype="text" datatype="string" status="F" size="100" xpath="/rulenameEliminate"/>
+		<Field id="bankname" desc="所属机构" edittype="text" datatype="string" status="F" size="100" xpath="/bankname"/>
+		<Field id="taskType" desc="任务类型" edittype="select"  translated="DATA_DIC.701" datatype="string" status="F" size="100"  xpath="/taskType" /> 
+		<Field id="qualitysupperc" desc="抽查比例%" edittype="text"   datatype="double" status="F" xpath="qualitysupperc" /> 
+		<Field id="updDate" desc="排除/恢复日期" edittype="text"   datatype="string" status="F" xpath="updDate" />
+    </Fields>
+    
+    <Where>
+    	<TextBox id="bankid" desc="机构号" edittype="text" status="F" datatype="string" size="10" index="5" />\
+ 		<TextBox id="bankname" desc="机构名称" edittype="text" status="F" datatype="string" size="50" index="5" />\
+        <TextBox id="loanAcct" desc="贷款账号" edittype="text" status="F" datatype="string" size="20"  />\
+		<TextBox id="custName" desc="客户名称" edittype="text" status="F" datatype="string" size="50"  />\
+		<DateTextBox id="startDate" desc="开始日期"  status="F" datatype="string" placeholder="yyyy-MM-dd" />
+		<DateTextBox id="endDate" desc="结束日期"  status="F" datatype="string" placeholder="yyyy-MM-dd" />
+    </Where>
+	<Operations>
+		<Button id="btRest" name="btRest" desc="重置" icon="icon-remove" updateClass="#" url="" txn="" />
+		<Button id="btModOrAdd" name="btModOrAdd" desc="保存" operation="asysubmit"
+			updateClass="com.gbicc.person.supervision.update.QualitysuParAddUpdate"
+			url="" txn="" />			
+		<Button id="btCancel" name="btCancel" desc="返回" operation="href" url="" />
+		<Button id="btQuery" name="btQuery" desc="查询" icon="icon-search" url="" />
+		<Button id="btAdd" name="btAdd" desc="新增" operation="" url="#" show="" group="" txn="" icon="icon-add"/>
+		<Button id="btModify" name="btModify" desc="修改" operation="" url="#" show="" group="" txn="" icon="icon-edit"/>		
+
+	</Operations>
+</CommQry>

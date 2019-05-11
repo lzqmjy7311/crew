@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="树形表格" navigate="树形表格" type="call" interface="false" pagesize="10" async="true" databusid="" transdataactionurl="/trans/TransDataAction.do" txnlogflag="true" getterclassname="com.huateng.fp.demo.getter.TreeNodeTestGetter">
+	<Include id="BankParam" />
+	<!-- 如果是在树形表格中，必须定义一个id字段，该字段只定义出来做内部处理 -->
+	<Fields>
+		<Field id="select" desc="选择" xpath="/checked" readonly="false" />
+		<Field id="id" desc="节点编号" xpath="/id" readonly="false" />
+		<Field id="name" desc="节点名称" xpath="/text" readonly="false" />
+		<Field id="pid" desc="上级节点" xpath="/pid" readonly="false" />
+
+
+		<!-- 做为下拉和普通树控件必须属性 -->
+		<Field id="_hasChild_" desc="是否有孩子节点" edittype="checkbox" xpath="/hasChild" readonly="true" />
+		<Field id="_id" desc="节点ID" xpath="/id" />
+		<Field id="_parentId" desc="父节点" xpath="/pid" readonly="true" />
+		<!-- 做为普通树控件必须属性 -->
+		<Field id="_text" desc="" method="" xpath="/text" />
+		<Field id="_checked" desc="" method="" xpath="/checked" />
+		<!-- 做为树控件扩展属性 -->
+		<Field id="_icon" desc="" method="" xpath="/iconCls" />
+
+
+		<Field id="good" desc="123" xpath="/attribute/good" />
+		<Field id="f0" desc="测试字段0" xpath="/fd[0]" />
+		<Field id="f1" desc="测试字段1" xpath="/fd[1]" />
+		<Field id="f2" desc="测试字段2" xpath="/fd[2]" />
+		<Field id="f3" desc="测试字段3" xpath="/fd[3]" />
+		<Field id="f4" desc="测试字段4" xpath="/fd[4]" />
+		<Field id="f5" desc="测试字段5" xpath="/fd[5]" />
+		<Field id="f6" desc="测试字段6" xpath="/fd[6]" />
+		<Field id="f7" desc="测试字段7" xpath="/fd[7]" />
+		<Field id="f8" desc="测试字段8" xpath="/fd[8]" />
+		<Field id="f9" desc="测试字段9" xpath="/fd[9]" />
+		<Field id="f10" desc="测试字段10" xpath="/fd[10]" />
+		<Field id="f11" desc="测试字段11" xpath="/fd[11]" />
+		<Field id="f12" desc="测试字段12" xpath="/fd[12]" />
+		<Field id="f13" desc="测试字段13" xpath="/fd[13]" />
+		<Field id="f14" desc="测试字段14" xpath="/fd[14]" />
+		<Field id="f15" desc="测试字段15" xpath="/fd[15]" />
+		<Field id="f16" desc="测试字段16" xpath="/fd[16]" />
+		<Field id="f17" desc="测试字段17" xpath="/fd[17]" />
+		<Field id="f18" desc="测试字段18" xpath="/fd[18]" />
+		<Field id="f19" desc="测试字段19" xpath="/fd[19]" />
+		<Field id="f20" desc="测试字段20" xpath="/fd[20]" />
+		<Field id="f21" desc="测试字段21" xpath="/fd[21]" />
+		<Field id="f22" desc="测试字段22" xpath="/fd[22]" />
+		<Field id="f23" desc="测试字段23" xpath="/fd[23]" />
+		<Field id="f24" desc="测试字段24" xpath="/fd[24]" />
+		<Field id="f25" desc="测试字段25" xpath="/fd[25]" />
+		<Field id="f26" desc="测试字段26" xpath="/fd[26]" />
+		<Field id="f27" desc="测试字段27" xpath="/fd[27]" />
+		<Field id="f28" desc="测试字段28" xpath="/fd[28]" />
+		<Field id="f29" desc="测试字段29" xpath="/fd[29]" />
+
+	</Fields>
+	<Parameters>
+		<Parameter id="id" desc="id" />
+	</Parameters>
+
+	<Operations>
+	</Operations>
+</CommQry>

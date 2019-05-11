@@ -1,0 +1,183 @@
+package com.gbicc.company.single.operation;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.gbicc.bpm.service.ProcessManagerService;
+import com.gbicc.common.FileUpDownProperties;
+import com.gbicc.company.single.entity.TCmSingleRulCases;
+import com.gbicc.company.single.entity.TCmSingleRulWarning;
+import com.gbicc.company.single.service.TCmSingleRulCasesService;
+import com.gbicc.company.single.service.TCmSingleRulWarningService;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.business.common.service.BctlService;
+import com.huateng.ebank.business.management.service.TlrInfoService;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.framework.exceptions.CommonException;
+import com.huateng.ebank.framework.operation.BaseOperation;
+import com.huateng.ebank.framework.operation.OperationContext;
+
+public class TCmSingleRulWarningOperation extends BaseOperation {
+
+	public static final String ID = TCmSingleRulWarningOperation.class.getSimpleName();
+	public static final String CMD = "CMD";
+	public static final String CMD_QUERY = "CMD_QUERY";
+	public static final String CMD_INSERT = "CMD_INSERT";
+	public static final String CMD_UPDATE = "CMD_UPDATE";
+	public static final String CMD_DELETE = "CMD_DELETE";
+	public static final String IN_PARAM = "IN_PARAM";
+	
+	public static final String OP_RISK_ELIMINATE="riskEliminate";//风险排除操作
+	public static final String OP_BACK="back";//风险排除退回操作
+	public static final String OP_AGREE="agree";//风险排除同意操作
+	public static final String OP_ADD_CASES="addCases";//新增案例操作
+	public static final String OP_JOIN_CASES="joinCases";//归入案例操作
+	
+	public static final String HEAD_FLAG="head";
+	
+	public static final String ROLE_HEAD_BANK_FXJCGL="head_bank_fxjcgl";//总行风险监测管理岗
+	public static final String ROLE_SUBBRANCH_FXJCGL="subbranch_fxjcgl";//分行风险监测管理岗
+
+	public static final String WAIT_HANDLE_STATUS="1";//待处理状态
+	public static final String HANDLE_ING_STATUS="2";//处理中状态
+	public static final String BACK_STATUS="3";//退回状态
+	public static final String WARNING_ELIM_STATUS="4";//预警排除状态
+	public static final String WARNING_RELIEVE_STATUS="5";//预警解除状态
+	public static final String WARNING_NOT_RELIEVE_STATUS="6";//预警未解除状态
+	public static final String CASES_DRAFT_STATUS="1";//案例-草稿状态
+	
+	public static final String SINGLE_RULE_CASES_PROCESS="single_rule_cases_process";//案例管理流程
+	public static final String SINGLE_RULE_CASES_PROCESS_BRANCH="single_rule_cases_process_branch";//案例管理流程(分支行)
+	
+	@Override
+	public void afterProc(OperationContext context) throws CommonException {
+	}
+
+	@Override
+	public void beforeProc(OperationContext context) throws CommonException {
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public void execute(OperationContext context) throws CommonException {
+		TCmSingleRulWarningService service = TCmSingleRulWarningService.getInstance();
+		TCmSingleRulCasesService casesService=TCmSingleRulCasesService.getInstance();
+		String op= (String) context.getAttribute("op");
+		String eliminateChecker=(String) context.getAttribute("userId");
+		TCmSingleRulWarning single=(TCmSingleRulWarning) context.getAttribute(IN_PARAM);
+		if(StringUtils.isNotEmpty(single.getId())){
+			String sql="select fd_halfresult from t_cm_single_rul_warning where fd_id='"+single.getId()+"' ";
+			ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+			Iterator it=rootdao.queryBySQL(sql);
+			while(it.hasNext()){
+				String halfresult=(String) it.next();
+				if(halfresult!=null){
+					single.setHalfresult(halfresult);
+				}
+			}
+		}
+		TCmSingleRulCases cases=(TCmSingleRulCases) context.getAttribute("cases");
+		String opinion=(String) context.getAttribute("opinion");
+		GlobalInfo info=GlobalInfo.getCurrentInstance();
+		String userId=info.getTlrno();
+		String orgId=info.getBrcode();
+		try {
+			if(StringUtils.isNotEmpty(op)){
+				taskComplete(op,single,opinion,cases,eliminateChecker);
+				if(op.equals(OP_ADD_CASES)){//新增案例，需要特殊处理
+					String sql="SELECT 'AL'||to_char(current date,'YYYYMMDD')||substr('000'||SINGLE_RUL_CASES_NO.nextval,length('000'||SINGLE_RUL_CASES_NO.nextval)-2) FROM dual";
+					ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+					Iterator it=rootdao.queryBySQL(sql);
+					while(it.hasNext()){
+						cases.setCasesCode(it.next().toString());
+					}
+					
+					cases.setCreateDt(new Date());
+					cases.setCreateOrg(BctlService.getInstance().getBctlByBrcode(orgId));
+					cases.setCreateUser(TlrInfoService.getInstance().getTlrInfoByTlrno(userId));
+					cases.setCasesStatus(CASES_DRAFT_STATUS);
+					cases.setHandleOrgFlag(single.getHandleOrgFlag());
+					casesService.save(cases);
+					
+					single.setCasesId(cases.getId());
+					//启动案例审核流程
+					String procKey=FileUpDownProperties.readValue(SINGLE_RULE_CASES_PROCESS_BRANCH);
+					if(single.getHandleOrgFlag().equals(HEAD_FLAG)){
+						procKey=FileUpDownProperties.readValue(SINGLE_RULE_CASES_PROCESS);
+					}
+					ProcessManagerService processManagerService=ProcessManagerService.getInstace();
+					Map<String,Object> map=new HashMap<String, Object>();
+					map.put("assignee",userId);
+					map.put("desc","业务ID:"+cases.getId()+",案例编号:"+cases.getCasesCode()+",案例名称:"+cases.getCasesName());
+					processManagerService.startProcess(cases.getId(),procKey, userId, map);
+				}
+				service.update(single);
+			}else{
+				service.save(single);
+			}
+		} catch(CommonException e){
+			e.printStackTrace();
+			throw new CommonException(e.getErrCode(),e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new CommonException("系统异常",e.getMessage());
+		}
+	}
+
+	//任务完成
+	public void taskComplete(String op,TCmSingleRulWarning single,String opinion,TCmSingleRulCases cases,String eliminateChecker) throws Exception{
+		GlobalInfo info=GlobalInfo.getCurrentInstance();
+		String userId=info.getTlrno();
+		String orgId=info.getBrcode();
+		ProcessManagerService processManagerService=ProcessManagerService.getInstace();
+		String taskId=processManagerService.findTaskId(single.getId(),userId);
+		Map<String,Object> map=new HashMap<String, Object>();
+		map.put("desc","业务ID:"+single.getId()+",预警编号:"+single.getWarnCode()+",规则编号:"+single.getRulCode());
+		map.put("opinion",opinion);
+		if(op.equals(OP_RISK_ELIMINATE)){//规则排除
+			single.setHandler(userId);
+			List<String> assigneeList=new ArrayList<String>();
+			/*if(single.getHandleOrgFlag().equals(HEAD_FLAG)){
+				assigneeList=processManagerService.findUserId(FileUpDownProperties.readValue(ROLE_HEAD_BANK_FXJCGL));
+			}else{
+				assigneeList=processManagerService.findUserIdByRoleidAndCurrOrgid(FileUpDownProperties.readValue(ROLE_SUBBRANCH_FXJCGL),orgId);
+			}
+			if(assigneeList==null || assigneeList.size()==0){
+				throw new CommonException("未配置审核人","根据当前机构【"+info.getBrName()+"】查找流程下一节点未找到审核人");
+			}*/
+			assigneeList.add(eliminateChecker);
+			map.put("path","next");
+			map.put("operation","提交风险排除申请");
+			map.put("assigneeList",assigneeList);
+			single.setWarnStatus(HANDLE_ING_STATUS);
+		}else if(op.equals(OP_BACK)){//退回规则排除
+			String assignee=processManagerService.findTopUserId(single.getId());
+			map.put("assignee",assignee);
+			map.put("path","back");
+			map.put("operation","退回风险排除申请");
+			single.setWarnStatus(BACK_STATUS);
+		}else if(op.equals(OP_AGREE)){//同意规则排除
+			map.put("path","next");
+			single.setWarnStatus(WARNING_ELIM_STATUS);
+			single.setEliminateDt(new Date());
+			single.setEliminateFlag("Y");
+		}else if(op.equals(OP_ADD_CASES)){//新增案例
+			single.setHandler(userId);
+			map.put("path","end");
+			single.setWarnStatus(HANDLE_ING_STATUS);
+		}else if(op.equals(OP_JOIN_CASES)){//归入案例
+			single.setHandler(userId);
+			map.put("path","end");
+			single.setWarnStatus(HANDLE_ING_STATUS);
+			single.setCasesId(cases.getId());
+		}
+		processManagerService.taskComplete(map,taskId);
+	}
+}

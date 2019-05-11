@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-3-17 12:35:44 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+	<class name="com.gbicc.job.entity.TEtlJobDefine" table="T_ETL_JOB_DEFINE" schema="ECUSER">
+		<comment>批处理日志表</comment>		
+		<id name="jobName" type="string">
+			<column name="JOB_NAME" length="100" />
+			<generator class="assigned" />
+		</id>
+		
+		<property name="runMatchine" type="string">
+			<column name="RUN_MATCHINE" length="100" />
+		</property>
+		<property name="proType" type="string">
+			<column name="PRO_TYPE" length="3" />
+		</property>
+		<property name="proLevel" type="java.lang.Integer">
+			<column name="PRO_LEVEL" />
+		</property>
+		<property name="proStatus" type="string">
+			<column name="PRO_STATUS" length="1" />
+		</property>
+		<property name="beginTime" type="string">
+			<column name="BEGIN_TIME" length="19" />
+		</property>
+		<property name="endTime" type="string">
+			<column name="END_TIME" length="19" />
+		</property>
+		<property name="des" type="string">
+			<column name="DES" length="100" />
+		</property>
+		<property name="proFlag" type="string">
+			<column name="PRO_FLAG" length="3" />
+		</property>
+       <property name="isSuccess" type="string">
+			<column name="IS_SUCCESS" length="3" />
+		</property>
+	</class>
+</hibernate-mapping>

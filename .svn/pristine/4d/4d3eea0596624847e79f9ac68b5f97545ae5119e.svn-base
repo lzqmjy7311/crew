@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<META>
+	<!--单规则预警处置 2015年11月27日15:23:32-->
+	<Query id="SingleRulWarning" path="/gbicc-com-pages/single/xml/single_rul_warning_task.xml"/>
+	<Query id="SingleRulWarningSelect" path="/gbicc-com-pages/single/xml/single_rul_warning.xml"/>
+	<Query id="SingleRulCases" path="/gbicc-com-pages/single/xml/single_rul_cases_task.xml"/>
+	<Query id="SingleRulCasesSelect" path="/gbicc-com-pages/single/xml/single_rul_cases.xml"/>
+	<Query id="SingleRulInvestigation" path="/gbicc-com-pages/single/xml/single_rul_investigation.xml"/>
+	<Query id="SingleRulInvestigationTask" path="/gbicc-com-pages/single/xml/single_rul_investigation_task.xml"/>
+	<Query id="SingleRulWarningQuery" path="/gbicc-com-pages/single/query_xml/single_rul_warning_query.xml"/>
+	<Query id="SingleRulCasesQuery" path="/gbicc-com-pages/single/query_xml/single_rul_cases_query.xml"/>
+	<Query id="SingleRulInvestigationQuery" path="/gbicc-com-pages/single/query_xml/single_rul_investigation_query.xml"/>
+	<Query id="SingleRulCasesDutyinfo" path="/gbicc-com-pages/single/query_xml/single_rul_cases_dutyinfo.xml"/>
+	
+	<Query id="TbCsmFinanceStatementData" path="/gbicc-com-pages/FinanciaAnalysis/xml/TbCsmFinanceStatementData.xml"/>
+	<Query id="TbCsmFinanceStatementTendencyData" path="/gbicc-com-pages/FinanciaAnalysis/xml/TbCsmFinanceStatementTendencyData.xml"/>
+	<Query id="TbCsmFinanceIndexTendencyData" path="/gbicc-com-pages/FinanciaAnalysis/xml/TbCsmFinanceIndexTendencyData.xml"/>
+	
+	<Query id="A01" path="/gbicc-com-pages/single/output_xml/A01.xml"/>
+	<Query id="A38" path="/gbicc-com-pages/single/output_xml/A38.xml"/>
+	<Query id="C01" path="/gbicc-com-pages/single/output_xml/C01.xml"/>
+	<Query id="C03" path="/gbicc-com-pages/single/output_xml/C03.xml"/>
+	<Query id="C05" path="/gbicc-com-pages/single/output_xml/C05.xml"/>
+	<Query id="C06" path="/gbicc-com-pages/single/output_xml/C06.xml"/>
+	<Query id="C08" path="/gbicc-com-pages/single/output_xml/C08.xml"/>
+	<Query id="C11" path="/gbicc-com-pages/single/output_xml/C11.xml"/>
+	<Query id="C12" path="/gbicc-com-pages/single/output_xml/C12.xml"/>
+	<Query id="C13" path="/gbicc-com-pages/single/output_xml/C13.xml"/>
+	<Query id="C14" path="/gbicc-com-pages/single/output_xml/C14.xml"/>
+	<Query id="J02" path="/gbicc-com-pages/single/output_xml/J02.xml"/>
+	<Query id="J04" path="/gbicc-com-pages/single/output_xml/J04.xml"/>
+	<Query id="J09" path="/gbicc-com-pages/single/output_xml/J09.xml"/>
+	<Query id="J16" path="/gbicc-com-pages/single/output_xml/J16.xml"/>
+	<Query id="J17" path="/gbicc-com-pages/single/output_xml/J17.xml"/>
+	<Query id="J18" path="/gbicc-com-pages/single/output_xml/J18.xml"/>
+	<Query id="L01" path="/gbicc-com-pages/single/output_xml/L01.xml"/>
+	<Query id="L02" path="/gbicc-com-pages/single/output_xml/L02.xml"/>
+	<Query id="L03" path="/gbicc-com-pages/single/output_xml/L03.xml"/>
+	<Query id="L04" path="/gbicc-com-pages/single/output_xml/L04.xml"/>
+	<Query id="L05" path="/gbicc-com-pages/single/output_xml/L05.xml"/>
+	<Query id="L11" path="/gbicc-com-pages/single/output_xml/L11.xml"/>
+	<Query id="L12" path="/gbicc-com-pages/single/output_xml/L12.xml"/>
+	<Query id="L13" path="/gbicc-com-pages/single/output_xml/L13.xml"/>
+	<Query id="L14" path="/gbicc-com-pages/single/output_xml/L14.xml"/>
+	<Query id="L15" path="/gbicc-com-pages/single/output_xml/L15.xml"/>
+	
+	<!--报表口径 类别 年报、半年报、季报、月报 -->
+	<Query id="repnoSelect" path="/gbicc-com-pages/FinanciaAnalysis/xml/RepnoSelect.xml"/>
+	<!--财报科目代码 下拉列表-->
+	<Query id="projectSelect" path="/gbicc-com-pages/FinanciaAnalysis/xml/TCmFinanceStatementCode.xml"/>
+	<!--财报指标代码    -->
+	<Query id="TbCsmFinanceIndexCd" path="/gbicc-com-pages/FinanciaAnalysis/xml/TbCsmFinanceIndexCd.xml"/>
+	<Query id="TFinanceIndexQ" path="/gbicc-com-pages/FinanciaAnalysis/xml/TFinanceIndexQ.xml"/>
+
+	<!--财报指标数据    -->
+	<Query id="TbCsmFinanceIndexData" path="/gbicc-com-pages/FinanciaAnalysis/xml/TbCsmFinanceIndexData.xml"/>
+	<!--风险视图基本信息-->
+	<Query id="RiskMonitorBaseinfo" path="/gbicc-com-pages/warning_baseinfo/xml/warningbaseinfo.xml"/>
+	<Query id="RiskMontitorShareHolder" path="/gbicc-com-pages/warning_baseinfo/xml/RiskMontitorShareHolder.xml"/>
+	<Query id="RiskMontitorList" path="/gbicc-com-pages/warning_baseinfo/xml/RiskMontitorList.xml"/>
+	<Query id="RiskMontitorCalinfo" path="/gbicc-com-pages/warning_baseinfo/xml/RiskMontitorCalinfo.xml"/>
+	<Query id="RiskMontitorLendlist" path="/gbicc-com-pages/warning_baseinfo/xml/RiskMontitorLendlist.xml"/>
+	<Query id="RiskMontitorAssureinfo" path="/gbicc-com-pages/warning_baseinfo/xml/RiskMontitorAssureinfo.xml"/>
+	<Query id="RiskMonitorBaseinfo1" path="/gbicc-com-pages/warning_test/xml/warninginfo.xml"/>
+	<Query id="RiskMontitorRelevanceC" path="/gbicc-com-pages/relevance/xml/RiskMontitorRelevanceC.xml"/>
+	<Query id="RiskMontitorRelevanceP" path="/gbicc-com-pages/relevance/xml/RiskMontitorRelevanceP.xml"/>
+	<Query id="dataverification" path="/gbicc-com-pages/externaldata/xml/dataverification.xml"/>
+	<Query id="externaldatastatistics" path="/gbicc-com-pages/externaldata/xml/externaldatastatistics.xml"/>
+	<Query id="riskoverview" path="/gbicc-com-pages/riskoverview/xml/riskoverview.xml"/>
+	<Query id="zwt" path="/gbicc-com-pages/riskoverview/xml/riskoverviewtwo.xml"/>
+	<Query id="financialIndexAnalsis" path="/gbicc-com-pages/financialIndexAnalsis/xml/financialIndexAnalsis.xml"/>
+	<Query id="CapitalLiabilities" path="/gbicc-com-pages/financialIndexAnalsis/xml/capital_liabilities.xml"/>
+	<Query id="Profit" path="/gbicc-com-pages/financialIndexAnalsis/xml/profit.xml"/>
+	
+	<Query id="ZtMmfxy" path="/gbicc-com-pages/accountpage/xml/ZtxMmfxy.xml"/>
+	<Query id="TreeNode123" path="/gbicc-com-pages/accountpage/xml/TAccountPage.xml"/>
+	<Query id="zxinfo" path="/gbicc-com-pages/zxinfo/xml/zxinfo.xml"/>
+	<Query id="zxtest" path="/gbicc-com-pages/zxinfo/xml/zxtest.xml"/>
+	<Query id="zxinfodata" path="/gbicc-com-pages/zxinfo/xml/zxinfodata.xml"/>
+	
+	<Query id="TCmWarnPersonRule" path="/gbicc-com-pages/cmWarnDisposal/xml/TCmWarnPersonRule.xml"/>
+	<Query id="TCmCustomer" path="/gbicc-com-pages/cmWarnDisposal/xml/TCmCustomer.xml"/>
+	<Query id="TCmCustomerList" path="/gbicc-com-pages/cmWarnDisposal/xml/TCmCustomerList.xml"/>
+	<Query id="TCmWarnControlmeasure" path="/gbicc-com-pages/cmWarnDisposal/xml/TCmWarnControlmeasure.xml"/>
+	<Query id="TCmWarnTask" path="/gbicc-com-pages/cmWarnDisposal/xml/TCmWarnTask.xml"/>
+	<Query id="TCmWarnTaskRel" path="/gbicc-com-pages/cmWarnDisposal/xml/TCmWarnTaskRel.xml"/>
+	<Query id="TRulDefinitionList" path="/gbicc-com-pages/cmWarnDisposal/xml/TRulDefinition.xml"/>
+	
+	<Query id="textout" path="/gbicc-com-pages/testout/xml/textout.xml" />
+	<Query id="Bctl" path="/gbicc-com-pages/warning_test/xml/Bctl.xml" />
+	<Query id="TlrInfo" path="/gbicc-com-pages/warning_test/xml/TlrInfo.xml" />
+</META>

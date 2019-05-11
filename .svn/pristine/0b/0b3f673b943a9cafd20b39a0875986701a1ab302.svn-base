@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2011-11-5 20:30:12 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.rule.entity.TRulCategory" table="T_PUB_RUL_CATEGORY" schema="ECUSER">
+        <comment>规则目录定义表</comment>
+        <id name="id" column="FD_ID"  type="string">
+			<generator class="uuid.hex" />  
+		</id>
+        <property name="categoryName" type="string" >
+            <column name="FD_CATEGORY_NAME" length="50" />
+        </property>
+        <property name="categoryCode" type="string">
+            <column name="FD_CATEGORY_CODE" length="50" />
+        </property>
+        <property name="categoryType" type="string">
+            <column name="FD_CATEGORY_TYPE" length="50" />
+        </property>
+        <property name="remark" type="string">
+            <column name="FD_REMARK" length="500" />
+        </property>
+          <property name="parentId" type="string">
+            <column name="FD_PARENT_ID" length="50" />
+        </property>
+        <property name="sno" type="int">
+            <column name="FD_SNO" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,218 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+
+<@CommonQueryMacro.page title="重大事件管理">
+	<@CommonQueryMacro.CommonQuery id="GreatEvent" init="true" submitMode="current">
+		<@CommonQueryMacro.Interface id="GreatEventInterface" label="请输入查询条件" colNm=8 labelwidth="150" showButton="false"/>		
+				<div align="center" style="margin-bottom:10px">
+					<@CommonQueryMacro.InterfaceButton desc="查询" />
+					<@CommonQueryMacro.SimpleButton id="btnReset" desc="重置" icon="icon-reload" />
+				</div>
+		<@CommonQueryMacro.DataTable id="GreatEventTable" readonly="true" paginationbar="btnAdd,btnUpd" 
+		fieldStr="regiUserName[100],regiDate[100],atteMain[100],mainObjName[150],contentDesc[400],explain" width="100%" hasFrame="true"/>
+		<@CommonQueryMacro.FloatWindow id="GreatEventFW" modal="true" label="重大事件" 
+		resize="true" minimize="false" width="800" height="300" maximize="true" closure="true" show="false" defaultZoom="normal">
+			<div name='group1' class="group" style="width:99%">
+			    <table width="100%" class="grouptable" height="100%" style="table-layout: auto;">
+			    	<tr>
+			    		<td class="labeltd" align="center" width="width:20%">
+							关注主体:
+						</td>
+						<td align="left" nowrap style="width:80%">
+							<@CommonQueryMacro.SingleField fId="atteMain"/>
+						</td>
+			    	</tr>
+			        <tr>
+			    		<td class="labeltd" align="center" width="width:20%">
+							主体对象:
+						</td>
+						<td align="left" nowrap style="width:80%">
+							<@CommonQueryMacro.SingleField fId="mainObjName"/>
+							<@CommonQueryMacro.SimpleButton id="btnSelect" desc="选择" onclick="selectMainObj();" icon="" plain="false" />
+						</td>
+			    	</tr>
+			    	<tr>
+			    		<td class="labeltd" align="center" width="width:20%">
+							重大事件内容:
+						</td>
+						<td align="left" nowrap style="width:80%">
+							<@CommonQueryMacro.SingleField fId="content"/>
+						</td>
+			    	</tr>
+			    	<tr>
+			    		<td class="labeltd" align="center" width="width:20%">
+							说明:
+						</td>
+						<td align="left" nowrap style="width:80%">
+							<@CommonQueryMacro.SingleField fId="explain"/>
+						</td>
+			    	</tr>
+			     </table>
+			</div>
+			<br/>
+			<center>
+				<@CommonQueryMacro.Button id="btnSave" />
+				<@CommonQueryMacro.Button id="btnCancel" />
+			</center>
+		</@CommonQueryMacro.FloatWindow>
+	</@CommonQueryMacro.CommonQuery>
+	<@CommonQueryMacro.FloatWindow id="ZrrFW" modal="true" label="自然人客户选择" 
+		resize="true" minimize="false" width="1000" height="500" maximize="true" closure="true" show="false" defaultZoom="normal">
+		<table>
+		<@CommonQueryMacro.CommonQuery id="SelectZrr" init="true" submitMode="current">
+			<tr>
+				<td>
+					<@CommonQueryMacro.Interface id="SelectZrrInterface" colNm=6 labelwidth="100" label="请输入查询条件" />
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<@CommonQueryMacro.DataTable id="SelectZrrTable" readonly="true" paginationbar="btnZrrConfirm"  width="100%" hasFrame="false" 
+						fieldStr="custid,custname,paperkind,paperid,mobilecall,workcorp" />
+				</td>
+			</tr>
+		</@CommonQueryMacro.CommonQuery>
+		</table>
+	</@CommonQueryMacro.FloatWindow>
+	<@CommonQueryMacro.FloatWindow id="FrFW" modal="true" label="法人客户选择" 
+		resize="true" minimize="false" width="1000" height="500" maximize="true" closure="true" show="false" defaultZoom="normal">
+			<table>
+			<@CommonQueryMacro.CommonQuery id="SelectFr" init="true" submitMode="current">
+				<tr>
+					<td>
+						<@CommonQueryMacro.Interface id="SelectFrInterface" colNm=6 labelwidth="100" label="请输入查询条件" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<@CommonQueryMacro.DataTable id="SelectFrTable" readonly="true" paginationbar="btnFrConfirm"  width="100%" hasFrame="false" 
+							fieldStr="custid,custname,liceid,orgaid,regifund,leadcustname,staffnum,controlid,controlname,holdcustid,holdcustname" />
+					</td>
+				</tr>
+			</@CommonQueryMacro.CommonQuery>
+			</table>
+	</@CommonQueryMacro.FloatWindow>
+	<@CommonQueryMacro.FloatWindow id="HzfFW" modal="true" label="相关合作方选择" 
+		resize="true" minimize="false" width="1000" height="500" maximize="true" closure="true" show="false" defaultZoom="normal">
+			<table>
+			<@CommonQueryMacro.CommonQuery id="SelectHzf" init="true" submitMode="current">
+				<tr>
+					<td>
+						<@CommonQueryMacro.Interface id="SelectHzfInterface" colNm=6 labelwidth="100" label="请输入查询条件" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<@CommonQueryMacro.DataTable id="SelectHzfTable" readonly="true" paginationbar="btnHzfConfirm"  width="100%" hasFrame="false" 
+							fieldStr="projid,corpid,corpname,projname,liceno" />
+					</td>
+				</tr>
+			</@CommonQueryMacro.CommonQuery>
+			</table>
+	</@CommonQueryMacro.FloatWindow>
+<script>
+	//重置查询条件
+	function btnReset_onClick(button){
+		GreatEvent_interface_dataset.clearData();
+	}
+	function btnSave_onClickCheck(){
+		return confirm("保存后将无法修改，是否确定所填信息？");
+	}
+	//保存后关闭页面，刷新表格
+	function btnSave_postSubmit(button) {
+		button.url="#";
+		top.easyMsg.info("保存成功！");
+		subwindow_GreatEventFW.close();
+		GreatEvent_dataset.flushData(GreatEvent_dataset.pageIndex);
+	}
+	function btnCancel_onClick(){
+		subwindow_GreatEventFW.close();
+		GreatEvent_dataset.flushData(GreatEvent_dataset.pageIndex);
+	}
+	function GreatEventFW_floatWindow_beforeClose(){
+		GreatEvent_dataset.flushData(GreatEvent_dataset.pageIndex);
+		return true;
+	}
+	function GreatEventFW_floatWindow_beforeHide(){
+		GreatEvent_dataset.flushData(GreatEvent_dataset.pageIndex);
+		return true;
+	}
+	function selectMainObj(){
+		var atteMain=GreatEvent_dataset.getValue("atteMain");//获取关注主体
+		if(atteMain==null || atteMain==""){
+			top.easyMsg.info("请先选择关注主体！");
+			return;
+		}
+		if(atteMain=="1"){
+			subwindow_ZrrFW.show();
+		}else if(atteMain=="2"){
+			subwindow_FrFW.show();
+		}else if(atteMain=="3"){
+			subwindow_HzfFW.show();
+		}
+	}
+	function btnZrrConfirm_onClick(){
+		var custid=SelectZrr_dataset.getValue("custid");
+		var custname=SelectZrr_dataset.getValue("custname");
+		if(custid==null || custid==""){
+			top.easyMsg.info("请先选择客户！");
+			return;
+		}
+		GreatEvent_dataset.setValue("mainObjName",custname);
+		GreatEvent_dataset.setValue("mainObj",custid);
+		subwindow_ZrrFW.close();
+	}
+	function btnFrConfirm_onClick(){
+		var custid=SelectFr_dataset.getValue("custid");
+		var custname=SelectFr_dataset.getValue("custname");
+		if(custid==null || custid==""){
+			top.easyMsg.info("请先选择法人客户！");
+			return;
+		}
+		GreatEvent_dataset.setValue("mainObjName",custname);
+		GreatEvent_dataset.setValue("mainObj",custid);
+		subwindow_FrFW.close();
+	}
+	function btnHzfConfirm_onClick(){
+		var projid=SelectHzf_dataset.getValue("projid");
+		var projname=SelectHzf_dataset.getValue("corpname");
+		if(projid==null || projid==""){
+			top.easyMsg.info("请先选择合作方！");
+			return;
+		}
+		GreatEvent_dataset.setValue("mainObjName",projname);
+		GreatEvent_dataset.setValue("mainObj",projid);
+		subwindow_HzfFW.close();
+	}
+	function btnAdd_onClick(){
+		GreatEvent_dataset.insertRecord("end");
+		subwindow_GreatEventFW.show();
+		GreatEvent_dataset.setFieldReadOnly("atteMain",false);
+		GreatEvent_dataset.setFieldReadOnly("content",false);
+		$("a[id=btnSelect]").show();
+	}
+	function btnUpd_onClick(){
+		subwindow_GreatEventFW.show();
+		GreatEvent_dataset.setFieldReadOnly("atteMain",true);
+		GreatEvent_dataset.setFieldReadOnly("content",true);
+		$("a[id=btnSelect]").hide();
+		GreatEvent_dataset.setValue("contentName",GreatEvent_dataset.getValue("contentDesc"));
+	}
+	//重大事件内容
+	function content_DropDown_beforeOpen(dropDown){
+		var atteMain=GreatEvent_dataset.getValue("atteMain");//获取关注主体
+		if(!atteMain){
+			return "请先选择关注主体!";
+		}
+		SubAutoGreatEvent_DropDownDataset.setParameter("atteMain",atteMain);
+		content_DropDown.cached=false;//让qGroupId不存入缓存
+	}
+	//重大事件内容按键弹起事件
+	function content_DropDown_onKeyup(val){
+		if(val.length>=0){
+			return true;
+		}
+		return false;
+	}
+</script>
+</@CommonQueryMacro.page>

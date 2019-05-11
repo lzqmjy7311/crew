@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.huateng.ebank.entity.data.mng">
+	<class
+		name="SysTaskInfo"
+		table="SYS_TASK_INFO"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="id"
+			type="string"
+			column="TSK_ID"
+		>
+		</id>
+
+		<property
+			name="intOperId"
+			column="INT_OPER_ID"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="insCd"
+			column="INS_CD"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="intInsId"
+			column="INT_INS_ID"
+			type="string"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="adtRcdPk"
+			column="ADT_RCD_PK"
+			type="string"
+			not-null="false"
+			length="32"
+		/>
+		<property
+			name="updTransCd"
+			column="UPD_TRANS_CD"
+			type="string"
+			not-null="false"
+			length="2"
+		/>
+		<property
+			name="crtDt"
+			column="CRT_DT"
+			type="string"
+			not-null="false"
+			length="8"
+		/>
+		<property
+			name="lastUpdOper"
+			column="LAST_UPD_OPER"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="lastUpdTms"
+			column="LAST_UPD_TMS"
+			type="string"
+			not-null="false"
+			length="14"
+		/>
+		<property
+			name="newVal1"
+			column="NEW_VAL1"
+			type="string"
+			not-null="false"
+		/>
+		<property
+			name="newVal2"
+			column="NEW_VAL2"
+			type="string"
+			not-null="false"
+		/>
+		<property
+			name="oldSt"
+			column="OLD_ST"
+			type="string"
+			not-null="false"
+			length="1"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

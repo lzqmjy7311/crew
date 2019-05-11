@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CommQry title="DataDicEntry.title" navigate="数据字典" type="call"
+	interface="false" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.huateng.ebank.business.pages.getter.FPPageTypeGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+
+		<Field id="id"  desc="" edittype="text" datatype="string" size="32" xpath="/id" />
+		<Field id="name" desc="名称" edittype="text" size="128" xpath="/name" />
+		<Field id="descInfo" desc="描述信息" edittype="textarea"  size="256" xpath="/descInfo" />
+		<Field id="type" desc="类型资源" edittype="select" translated="LIST:0,目录;1,页面组装;2,功能组装" size="1" xpath="/type" />
+		<Field id="parent"  desc="父节点序号" edittype="text" datatype="string" status="F" size="20" xpath="/parent" />
+		<Field id="status" desc="有效表示" edittype="radio" translated="LIST:0,无效;1,有效"  xpath="/status" />
+		<Field id="lastUpdTlr" desc="最后修改操作员" edittype="text" datatype="string" status="F" size="100" xpath="/lastUpdTlr" />
+		<Field id="lastUpdTs" desc="最后修改时间" edittype="text" datatype="string" size="1" xpath="/lastUpdTs" />
+		
+	   <!-- 做为下拉和普通树控件必须属性 -->
+		<Field id="_hasChild_" desc="是否有孩子节点" edittype="checkbox" xpath="/hasChild" readonly="true"/>
+        <Field id="_id" desc="节点ID" xpath="/id" />
+        <Field id="_parentId" desc="父节点" xpath="/pid" readonly="true"/>
+        <!-- 做为普通树控件必须属性 -->
+        <Field id="_text" desc="" method="" xpath="/text" />
+        <Field id="_checked" desc="" method="" xpath="/checked" />
+        <!-- 做为树控件扩展属性 -->
+        <Field id="_icon" desc="" method="" xpath="/iconCls" />
+		
+       </Fields>
+
+	<Parameters></Parameters>
+	<Where>
+		<TextBox id="qDataTypeNo" desc="字典类型编号" datatype="int" index="0" />
+		<TextBox id="qDataTypeName" desc="字典类型名称" datatype="string" index="1" />
+		<TextBox id="qDataNo" desc="字典码" datatype="string" rules="isNumOrWord" errmsg="只允许输入字母或数字" index="2" />
+		<TextBox id="qDataName" desc="数据名称" datatype="string" index="3" />
+	</Where>
+
+	<Operations>
+		<Button id="btNew" name="btNew" desc="新增" operation="addrecord" />
+		<Button id="btCancel" name="btCancel" desc="取消" operation="" />
+		<Button id="pbtDel" name="btDel" desc="删除" operation="asysubmit" updateClass="com.huateng.ebank.business.pages.updater.FPPageTypeFolderUpdater" url="#"  />
+		<Button id="btSave" name="btSave" desc="保存" operation="asysubmit" updateClass="com.huateng.ebank.business.pages.updater.FPPageTypeFolderUpdater" url="#"   />
+	</Operations>
+
+	<Script></Script>
+
+</CommQry>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--jianxue.zhang-->
+<CommQry
+title="待办任务"
+navigate="系统维护 >主管确认 >待审批用户维护信息"
+type="call"
+interface="false"
+pagesize="10"
+async="true"
+databusid=""
+txnlogflag="true"
+transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.huateng.ebank.business.approve.getter.TaskListBeanGetter"
+>
+	<Include id="BankParam"/>
+
+	<Fields>
+
+			<Field id="id" desc="任务编号" status="F" size="14"
+			require="false" readonly="false" edittype="text" datatype="string"
+			tip="任务编号" xpath="/id" />
+		<Field id="updTransCd" desc="操作说明"
+			status="F" size="2" require="false" readonly="false" edittype="select"
+			datatype="string" tip="操作说明" xpath="/sysTaskInfo/updTransCd"
+			translated="DATA_DIC.311" />
+		<Field id="crtDt" desc="创建日期" status="F"
+			size="8" require="false" readonly="false" edittype="text" datatype="date"
+			tip="创建日期" xpath="/sysTaskInfo/crtDt" />
+		<Field id="adtRcdPk" desc="原纪录主键" status="F"
+			size="32" require="false" readonly="false" edittype="text" datatype="string"
+			tip="原纪录主键" xpath="/sysTaskInfo/adtRcdPk" />
+			<Field id="intInsId" desc="记录类型" status="F"
+			size="10" require="false" readonly="false" edittype="select"
+			datatype="string" tip="记录类型" xpath="/sysTaskInfo/intInsId" translated="DATA_DIC.300001" />
+
+		<Field id="brname" desc="所属机构" status="N"  method="com.huateng.ebank.business.common.CQMethod.getBrhName"
+			readonly="" primary="true" type="String" size="20" default=""
+			xpath="/tlrInfo/tlrInfo/brcode" />
+
+		<Field id="tlrno" desc="操作员号" status="N" method="None"
+			readonly="" primary="true" type="String" size="20" xpath="/tlrInfo/tlrInfo/tlrno"
+			default="" />
+
+		<Field id="tlrName" desc="操作员名称" status="N" method="None"
+			width="50" readonly="" primary="true" type="String" size="20"
+			xpath="/tlrInfo/tlrInfo/tlrName" default="" />
+
+	</Fields>
+
+	<Where>
+	</Where>
+	<Operations>
+	</Operations>
+
+
+
+</CommQry>

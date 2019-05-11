@@ -1,0 +1,89 @@
+package com.gbicc.rule.update;
+
+import java.util.Date;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.BeanUtils;
+
+import com.gbicc.rule.entity.TRulDefinition;
+import com.gbicc.rule.operation.TRulDefinitionOperation;
+import com.gbicc.rule.service.TRulDefinitionService;
+import com.huateng.common.err.Module;
+import com.huateng.common.err.Rescode;
+import com.huateng.commquery.result.MultiUpdateResultBean;
+import com.huateng.commquery.result.UpdateResultBean;
+import com.huateng.commquery.result.UpdateReturnBean;
+import com.huateng.ebank.framework.operation.OPCaller;
+import com.huateng.ebank.framework.operation.OperationContext;
+import com.huateng.ebank.framework.web.commQuery.BaseUpdate;
+import com.huateng.exception.AppException;
+
+public class TRuleDefinitionUpdate extends BaseUpdate {
+	private static final String DATASET_ID =TRulDefinition.class.getSimpleName();
+	@Override
+	public UpdateReturnBean saveOrUpdate(MultiUpdateResultBean arg0,
+			HttpServletRequest arg1, HttpServletResponse arg2)
+			throws AppException {
+		try {
+			UpdateReturnBean updateReturnBean = new UpdateReturnBean();
+			UpdateResultBean updateResultBean = multiUpdateResultBean.getUpdateResultBeanByID(DATASET_ID);
+			TRulDefinition dd = new TRulDefinition();
+			OperationContext oc = new OperationContext();
+			if (updateResultBean.hasNext()) {
+				@SuppressWarnings("rawtypes")
+				Map map = updateResultBean.next();
+				String op = updateResultBean.getParameter("op");
+				if("mod".equals(op)){
+					oc.setAttribute(TRulDefinitionOperation.CMD, TRulDefinitionOperation.CMD_UPDATE);
+					mapToObject(dd, map);
+					//20160822更新，防止保存后内容出错，再maptoobject后纠正性的重新给rulecontent赋正确的内容
+					dd.setRuleContent(map.get("ruleContent").toString());
+				}else if("uptContent".equals(op)){
+					oc.setAttribute(TRulDefinitionOperation.CMD, TRulDefinitionOperation.CMD_UPDATE);
+					TRulDefinition _t=TRulDefinitionService.getInstance().get(map.get("id").toString());
+					String content=map.get("ruleContent").toString();
+//					content=content.replaceAll("&lt;","<");
+//					content=content.replaceAll("&gt;",">");
+//					content=content.replaceAll("&quot;","\"");
+//					content=content.replaceAll("&cmt;",Matcher.quoteReplacement("$"));
+//					content=content.replaceAll("&apos;","'");
+					_t.setRuleUpdateddate(new Date());
+					_t.setRuleContent(content);
+					dd=_t;
+				}else if("upload".equals(op)){//发布
+					oc.setAttribute(TRulDefinitionOperation.CMD, TRulDefinitionOperation.CMD_UPLOAD);
+					mapToObject(dd, map);
+				}else if("copy".equals(op)){//复制发布版本
+					oc.setAttribute(TRulDefinitionOperation.CMD, TRulDefinitionOperation.CMD_INSERT);
+					TRulDefinition _t=TRulDefinitionService.getInstance().get(map.get("id").toString());
+					BeanUtils.copyProperties(_t, dd);
+					dd.setId(null);
+					dd.setRuleStatus("0");
+					dd.setRuleVersion(TRulDefinitionService.getInstance().getMaxVersion(_t.getRuleCode()));
+					dd.setRuleCreateddate(new Date());
+					dd.setRuleUpdateddate(null);
+					dd.setEnable("1");
+				}else if("del".equals(op)){
+					oc.setAttribute(TRulDefinitionOperation.CMD, TRulDefinitionOperation.CMD_DELETE);
+					mapToObject(dd, map);
+				}else if("enabled".equals(op)){
+					dd=TRulDefinitionService.getInstance().get(map.get("id").toString());
+					oc.setAttribute(TRulDefinitionOperation.CMD, TRulDefinitionOperation.CMD_ENABLED);
+					mapToObject(dd, map);
+				}
+			}
+			oc.setAttribute(TRulDefinitionOperation.IN_PARAM, dd);
+			OPCaller.call(TRulDefinitionOperation.ID, oc);
+			return updateReturnBean;
+		} catch (AppException appEx) {
+			throw appEx;
+		} catch (Exception ex) {
+			throw new AppException(Module.SYSTEM_MODULE,
+					Rescode.DEFAULT_RESCODE, ex.getMessage(), ex);
+		}
+	}
+
+}

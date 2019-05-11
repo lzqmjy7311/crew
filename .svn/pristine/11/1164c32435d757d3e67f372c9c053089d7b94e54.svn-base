@@ -1,0 +1,68 @@
+<CommQry title="TRewC02BorrAccountListInfoId" navigate="TRewC02BorrAccountListInfoId" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.C02Getter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="infoId" desc="信息ID" edittype="text" datatype="string" 
+        xpath="/infoId" />
+        <Field id="borrowNum" desc="借据号" edittype="text" datatype="string" 
+        xpath="/borrowNum" />
+        <Field id="accounts" desc="帐号" edittype="text" datatype="string" 
+        xpath="/accounts" />
+        <Field id="exchangeDate" desc="交易日期" edittype="text" datatype="string" 
+        xpath="/exchangeDate" />
+        <!--Field id="exchangeTime" desc="交易时间" edittype="text" datatype="string" 
+        xpath="/exchangeTime" /-->
+        <Field id="exchangeCode" desc="交易码" edittype="text" datatype="string" 
+        xpath="/exchangeCode" />
+        <Field id="onLoanSign" desc="借贷标识" edittype="select" translated="DATA_DIC.2047" init="true" datatype="string" 
+        xpath="/onLoanSign" />
+        <Field id="exchangeSum" desc="交易金额" edittype="text" datatype="string" 
+        xpath="/exchangeSum" />
+        <Field id="accountsBalance" desc="帐户余额" edittype="text" datatype="string" 
+        xpath="/accountsBalance" />
+        <Field id="exchangeOrgan" desc="交易机构" edittype="text" datatype="string" 
+        xpath="/exchangeOrgan" />
+        <Field id="exchangeOp" desc="交易柜员" edittype="text" datatype="string" 
+        xpath="/exchangeOp" />
+        <Field id="accreditOp" desc="授权柜员" edittype="text" datatype="string" 
+        xpath="/accreditOp" />
+        <Field id="opExchangeSign" desc="柜员交易号" edittype="text" datatype="string" 
+        xpath="/opExchangeSign" />
+        <Field id="conversionSign" desc="现转标识" edittype="select" translated="DATA_DIC.2048" init="true" datatype="string" 
+        xpath="/conversionSign" />
+        <Field id="organExchangeSign" desc="本网点交易号" edittype="text" datatype="string" 
+        xpath="/organExchangeSign" />
+        <Field id="summary" desc="摘要" edittype="text" datatype="string" 
+        xpath="/summary" />
+        <Field id="cbSign" desc="冲补标识" edittype="text" datatype="string" 
+        xpath="/cbSign" />
+        <Field id="recordState" desc="记录状态" edittype="select" translated="DATA_DIC.2033" init="true" multiple="false" datatype="string" 
+        xpath="/recordState" />
+        <Field id="lastMaintainDate" desc="日终登记日期" edittype="text" datatype="string" 
+        xpath="/lastMaintainDate" />
+        <Field id="etlDate" desc="ETL日期" edittype="text" datatype="string" 
+        xpath="/etlDate" />
+        <Field id="detailCd" desc="帐务明细标识" edittype="text" datatype="string" 
+        xpath="/detailCd" />
+        <Field id="bucketP" desc="拖欠本金（桶子P）" edittype="text" datatype="string" 
+        xpath="/bucketP" />
+        <Field id="bocketI" desc="拖欠利息（桶子I）" edittype="text" datatype="string" 
+        xpath="/bocketI" />
+        <Field id="bocketW" desc="欠本罚息（桶子W）" edittype="text" datatype="string" 
+        xpath="/bocketW" />
+        <Field id="bocketA" desc="欠息罚息（桶子A）" edittype="text" datatype="string" 
+        xpath="/bocketA" />
+        <Field id="bocketE" desc="复利（桶子E）" edittype="text" datatype="string" 
+        xpath="/bocketE" />
+        <Field id="ctaAccState" desc="未知字段27" edittype="text" datatype="string" 
+        xpath="/ctaAccState" />
+        <Field id="adjustType" desc="调整交易标志" edittype="text" datatype="string" 
+        xpath="/adjustType" />
+        <Field id="warnId" desc="预警ID" edittype="text" datatype="string" 
+        xpath="/warnId" />
+        <Field id="dataDt" desc="数据日期" edittype="text" datatype="string" 
+        xpath="/dataDt" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

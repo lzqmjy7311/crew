@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="FIVE" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.fp.demo.getter.GroupFieldsGetter">
+	<Include id="BankParam" />
+	<PageQryExp type="XLS" limit="true" encoding="GBK"
+		url="/trans/qryExp.do" desc="XLS导出" perfetch="20" maxpage="20"
+		directory="F:/upload1" />
+	<Fields>
+		<Field id="text" desc="普通文本" edittype="datalabel" xpath="/text" />
+		<Field id="placeholder" desc="文本占位符" placeholder="请输入..."
+			edittype="text" xpath="" />
+		<Field id="textInput" desc="普通文本框" xpath="/textInput" />
+        <Field id="textyear" desc="年" size="4" xpath="" />
+        <Field id="textmonth" desc="月" size="2" xpath="" />
+        <Field id="textday" desc="日" size="2" xpath="" />
+		<Field id="integerText" desc="整数输入框" edittype="text" datatype="int"
+			xpath="/integerText" />
+		<Field id="doubleText" desc="浮点输入框" edittype="text" datatype="double"
+			size="10" scale="2" xpath="/doubleText" />
+		<Field id="currencyText" desc="货币输入框" edittype="text" datatype="currency"
+			size="20" scale="2" prefix="$" xpath="/currencyText" default="0" />
+		<Field id="textArea" desc="大文本框" edittype="textarea" xpath="/textArea"
+			height="100" width="300" />
+
+
+		<Field id="dateSelect" desc="日期选择框-date" edittype="date"
+			placeholder="yyyy-MM-dd" datatype="date" xpath="/dateSelect" />
+		<Field id="dateStringSelect" desc="日期选择框-string" edittype="date"
+			placeholder="yyyy-MM-dd" datatype="string" xpath="/dateStringSelect" />
+		<Field id="dateSelectEdit" desc="日期选择框-可输入" edittype="date"
+			placeholder="yyyy-MM-dd" datetype="date" xpath="/dateSelect"
+			editable="true" />
+		<Field id="preDateSelect" desc="日期选择框-指定日期之前" edittype="predate"
+			datatype="predate" xpath="/preDateSelect" />
+		<Field id="postDateSelect" desc="日期选择框-指定日期之后" edittype="postdate"
+			datatype="postdate" xpath="/postDateSelect" />
+		<Field id="yyyymmSelect" desc="年月" placeholder="yyyyMM"
+			edittype="select" editable="true" dropdowntype="custom"
+			url="/templets/lib/yyyyMM.ftl" startyear="2005" yearlength="10"
+			require="false" fieldmap="yyyymmSelect=yyyyMM;yyyymmSelectName=yyyyMM"
+			viewField="yyyyMM" />
+		<Field id="timestamp" desc="时间选择框" placeholder="yyyy-MM-dd HH:mm:ss"
+			edittype="timestamp" datatype="timestamp" xpath="/timestamp" />
+
+		<Field id="radio" desc="单选框" edittype="radio" translated="LIST:yes,是;no,否"
+			datatype="string" xpath="/radio" />
+		<Field id="check" desc="复选框" edittype="checkbox"
+			translated="LIST:0,10;1,20;2,30;3,40;" datatype="string" xpath="/check" />
+		<Field id="dialog" desc="弹出选择框" edittype="select" dropdowntype="dialog"
+			fieldMap="dialog=col1;dialogName=col2;" url="/demo/ftl/datagrid_default_tab.ftl"
+			datatype="string" />
+		<Field id="staticComboboxList" desc="静态下拉框-LIST(单选)" xpath="/staticCombobox"
+			multiple="false" placeholder="占位符" edittype="select" translated="LIST:male,男;female,女" />
+		<Field id="staticComboboxList2" desc="静态下拉框-LIST(多选)"
+			placeholder="占位符" edittype="select" translated="LIST:0,10;1,20;2,30;3,40;"
+			multiple="true" datatype="string" xpath="/check" />
+		<Field id="staticComboboxList3" desc="静态下拉框-LIST(可输入)" xpath="/staticCombobox"
+			multiple="false" placeholder="占位符" editable="true" edittype="select"
+			translated="LIST:male,男;female,女" />
+		<Field id="staticComboboxDic" desc="静态下拉框-Dic(单选)" multiple="false"
+			placeholder="占位符" edittype="select" translated="DATA_DIC.37"
+			datatype="int" size="10" />
+		<Field id="staticComboboxDic2" desc="静态下拉框-Dic(多选)" multiple="true"
+			placeholder="占位符" edittype="select" translated="DATA_DIC.37"
+			datatype="int" size="10" />
+		<Field id="dynamicComboboxCQ" desc="动态下拉框－CQ(单选)" status="N"
+			fieldname="dataNo" placeholder="占位符" edittype="select" dropdowntype="dynamic"
+			dataType="String" readonly="false" translated="CQ:CQDemo"
+			viewField="brname" init="true" multiple="false"
+			fieldmap="dynamicComboboxCQ=brcode;dynamicComboboxCQName=brname"
+			size="20" primary="false" type="String" />
+		<Field id="dynamicComboboxCQ2" desc="动态下拉框－CQ(多选)" status="N"
+			multiple="true" fieldname="dataNo" placeholder="占位符" edittype="select"
+			dropdowntype="dynamic" dataType="String" readonly="false"
+			translated="CQ:CQDemo" viewField="brname" init="true"
+			fieldmap="dynamicComboboxCQ2=brcode;dynamicComboboxCQ2Name=brname"
+			size="20" primary="false" type="String" />
+		<Field id="dynamicComboboxTree" desc="动态下拉框－树(单选)" status="N"
+			multiple="false" translated="CQ:FunctionTree" placeholder="占位符"
+			method="com.huateng.ebank.business.common.CQMethod.getDataDicName"
+			fieldmap="dynamicComboboxTree=funcid;dynamicComboboxTreeName=funcname"
+			viewField="funcname" edittype="select" dropdowntype="dynamictree"
+			primary="true" init="false" size="3" default="2" />
+		<Field id="dynamicComboboxTree2" desc="动态下拉框－树(多选)" status="N"
+			multiple="true" editable="" translated="CQ:FunctionTree" placeholder="占位符"
+			method="com.huateng.ebank.business.common.CQMethod.getDataDicName"
+			readonly="false"
+			fieldmap="dynamicCombobox2Tree=funcid;dynamicComboboxTree2Name=funcname"
+			viewField="funcname" edittype="select" dropdowntype="dynamictree"
+			primary="true" init="false" size="3" default="2" />
+	</Fields>
+	<Operations>
+		<Button id="btn1" name="btn1" desc="按钮1" operation="addRecord" />
+		<Button id="btn2" name="btn2" desc="按钮2" operation="addRecord" />
+		<Button id="btn3" name="btn3" desc="按钮3" operation="addRecord" />
+		<Button id="btn4" name="btn4" desc="按钮4" operation="addRecord" />
+		<Button id="btn5" name="btn5" desc="按钮5" operation="addRecord" />
+	</Operations>
+</CommQry>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="zxinfo" navigate="zxinfo" type="call" interface="false" pagesize="30" databusid="" async="true" transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.gbicc.company.view.zxinfo.getter.TCmCompanyCreditIndexViewGetter">
+    <Include id="BankParam" />
+	<Fields>       
+		<Field id="fdAcctId" desc="客户编号" xpath="/fdAcctId" readonly="false"/>
+		<Field id="fdReportdate" desc="报告日期" xpath="/reportdate" readonly="true"/>
+		<Field id="fdReportdate1" desc=""  readonly="true"/>
+		<Field id="fdReportdate2" desc="" readonly="true"/>
+		<Field id="fdReportdate3" desc=""  readonly="true"/>
+		<Field id="indexId" desc="ID号" xpath="/indexId" readonly="false"/>
+		<Field id="indexName" desc="指标名称" xpath="/indexName" readonly="false"/>
+		<Field id="indexValue" desc="指标值" xpath="/indexValue" readonly="false"/>
+	</Fields>
+	<Operations>
+		<Button id="btExpExcel" name="btExpExcel" desc="导出"
+			updateClass=""
+			url="" txn="" />
+    </Operations>
+</CommQry>

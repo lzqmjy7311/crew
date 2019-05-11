@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+    navigate:导航信息
+    type:方式（sql|call)
+    interface:是否显示输入条件页面(true|false)
+    databusid:数据总线编号
+    transdataactionurl:数据整理URL
+    async:异步提交标志
+    pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="核算管理" navigate="主页 &gt; 利率管理 &gt; 利率查询" type="call"
+    interface="true"
+    pagesize="10"
+    async="true"
+    databusid="ACESUBJ_DB"
+    transdataactionurl="/trans/TransDataAction.do"
+    getterclassname="com.huateng.ebank.business.management.getter.IntranteQueryGetter">
+
+    <Include id="BankParam" />
+
+    <ResultViewParam>
+        /fpages/management/ftl/IntrateQuery.ftl
+    </ResultViewParam>
+    
+    <!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+    <!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+    <Fields>
+
+        <Field id="curcd" desc="币种" status="F" edittype="text"
+            method="com.huateng.ebank.business.common.CQMethod.getDataDicName" 
+            readOnly="true" primary="true" type="String" size="1"
+            default="" tip="币种" xpath="/bean/curcd" width="80" translated="DATA_DIC.202" />
+
+        <Field id="intratecd" desc="利率代码" status="F" edittype="text"
+            method="None" readOnly="true" primary="true" type="String"
+            default="" tip="利率代码" xpath="/bean/intratecd" width="80" />
+
+        <Field id="intratecdName" desc="利率名称" status="F" edittype="text"
+            method="None" readOnly="true" primary="true" type="String"
+            default="" tip="利率名称" xpath="/intratecdName" width="200" />
+            
+        <Field id="brcode" desc="机构代码" status="F" edittype="text"
+            method="None"  readOnly="true" primary="true" type="String"
+            default="" tip="机构代码" xpath="/bean/brcode" width="80" />
+
+        <Field id="brcodeName" desc="机构名称" status="F" edittype="text"
+            method="None" readOnly="true" primary="true" type="String"
+            default="" tip="机构名称" xpath="/brcodeName" width="150" />
+
+        <Field id="effectDate" desc="生效日期" status="F" edittype="text"
+            method="None" readOnly="true" primary="true" type="String" 
+            default="" tip="生效日期" xpath="/bean/effectDate" width="90" />
+
+<!--        <Field id="expireDate" desc="失效日期" status="F" edittype="text"-->
+<!--            method="None" readOnly="true" primary="true" type="String" -->
+<!--            default="" tip="失效日期" xpath="/bean/expireDate" width="90" />-->
+            
+        <Field id="yrIntrate" desc="年利率(%)" status="F" edittype="text"
+	           method="None" readOnly="true" primary="true" type="String" 
+	           default="" tip="年利率" xpath="/bean/yrIntrate" width="80" require="true" />
+               
+        <Field id="ratePerMonth" desc="月利率(%)" status="F" edittype="text"
+            method="None" readOnly="true" primary="true" type="String" 
+            default="" tip="月利率(%)" xpath="/ratePerMonth" width="80" require="true" />
+
+        <Field id="sts" desc="利率状态" status="F" edittype="text"
+            method="None" readOnly="true" primary="true" type="String" 
+            default="" tip="利率状态" xpath="/bean/sts" width="80" require="true" />
+    </Fields>
+    
+    <Where>
+        <Option id="curcd_q" tablename="Intrate" fieldname="curcd"
+            operation="EQ" size="" desc="货币代码" tip="货币代码" type="string"
+            translated="DATA_DIC.202" edittype="select" require="false" readOnly="" />
+        <DateTextBox id="effectDateStart" tablename="Intrate" fieldname="effectDateStart"
+            type="String" dataType="date" operation="EQ" size="10" desc="生效日"
+            tip="生效日起始日" method="" index="6" function="" width="" default="" scale=""
+            require="" readOnly="" rules="" errmsg="" />
+            
+        <DateTextBox id="effectDateEnd" tablename="Intrate" fieldname="effectDateEnd"
+            type="String" dataType="date" operation="EQ" size="10" desc="至"
+            tip="生效日结束日" method="" index="6" function="" width="" default="" scale=""
+            require="" readOnly="" rules="" errmsg="" />
+<!---->
+<!--    <DateTextBox id="expireDate" tablename="Intrate" fieldname="expireDate"-->
+<!--        type="String" dataType="date" operation="EQ" size="10" desc="失效日期"-->
+<!--        tip="失效日期" method="" index="6" function="" width="" default="" scale=""-->
+<!--        require="" readOnly="" rules="" errmsg="" />-->
+
+    </Where>
+    
+    <Operations>
+    </Operations>
+
+</CommQry>

@@ -1,0 +1,180 @@
+package com.gbicc.common.filemng;
+
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.UUID;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FileUtils;
+
+import com.gbicc.common.FileUpDownProperties;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.entity.data.mng.TlrInfo;
+import com.huateng.ebank.framework.exceptions.CommonException;
+import com.huateng.ebank.framework.operation.OPCaller;
+import com.huateng.ebank.framework.operation.OperationContext;
+/**
+ * 
+ * @date    2015年11月26日
+ * @author  tangdu
+ * @desc    共用文件上传类
+ */
+public class FileHandlerServlet extends HttpServlet {
+	private static final long serialVersionUID = -6901003787476793848L;
+	private static String upload_path=null;
+	private static Integer maxFileSize=0;
+	static{
+		String rootPath = FileUpDownProperties.readValue("rootPath");
+		String projectPath = FileUpDownProperties.readValue("projectPath");
+		String tempPath = FileUpDownProperties.readValue("tempPath");
+		upload_path=rootPath+File.separator+projectPath+File.separator+tempPath+File.separator;
+		maxFileSize=Integer.valueOf(FileUpDownProperties.readValue("maxFileSize"));
+	}
+	
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		String method=req.getParameter("method");
+		String id=req.getParameter("id");
+		
+		OperationContext oc = new OperationContext();
+		if("download".equals(method)){
+			ServletOutputStream outputStream=null;
+			BufferedInputStream bs=null;
+			try {
+				FileUpload f=ROOTDAOUtils.getROOTDAO().query(FileUpload.class, id);
+				String name=f.getFileName();
+				name=new String(name.getBytes("gbk"),"iso-8859-1");
+				
+				resp.setContentType("image/png");
+				resp.addHeader("Content-Disposition",
+						"attachment;filename=" + name);
+				resp.addHeader("Content-Length", "" + f.getFileSize());
+				resp.setContentType("application/octet-stream");
+				
+				File file=new File(upload_path+f.getFilePath());
+				if(!file.exists()){
+					return;
+				}
+				outputStream=resp.getOutputStream();
+				byte[]bte=new byte[1024];
+				bs=new BufferedInputStream(new FileInputStream(file));
+				while(bs.read(bte)!=-1){
+					outputStream.write(bte);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally{
+				if(bs!=null){bs.close();}
+				if(outputStream!=null){outputStream.close();}
+			}
+		}else if("delete".equals(method)){
+			try {
+				FileUpload f=ROOTDAOUtils.getROOTDAO().query(FileUpload.class, id);
+				GlobalInfo gi=(GlobalInfo)req.getSession().getAttribute(GlobalInfo.KEY_GLOBAL_INFO);
+				if(gi!=null && !gi.getTlrno().equals(f.getTlrno())){
+					throw new CommonException("失败", "删除失败，只能删除自己上传附件！");
+				}
+				oc.setAttribute(FileUploadOperation.CMD,FileUploadOperation.CMD_DELETE);
+				oc.setAttribute(FileUploadOperation.IN_PARAM, id);
+				OPCaller.call(FileUploadOperation.ID, oc);
+			} catch (CommonException e) {
+				throw new ServletException(e);
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if("view".equals(method)){
+			
+		}
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		GlobalInfo gi=(GlobalInfo)req.getSession().getAttribute(GlobalInfo.KEY_GLOBAL_INFO);
+		FileItemFactory diskFileItemFactory=new DiskFileItemFactory();
+		ServletFileUpload diskFileUpload=new ServletFileUpload(diskFileItemFactory);
+		diskFileUpload.setSizeMax(maxFileSize);
+		try {
+			resp.setCharacterEncoding("gbk");
+			req.setCharacterEncoding("gbk");
+			String relaID=null;
+			String relaType=null;
+			List items = diskFileUpload.parseRequest(req);
+			Iterator it=items.iterator();
+			OperationContext oc = new OperationContext();
+			oc.setAttribute(FileUploadOperation.CMD,FileUploadOperation.CMD_INSERT);
+			
+			while(it.hasNext()){
+				SimpleDateFormat dateFormat=new SimpleDateFormat("yyyyMMddHHmmss");
+				FileItem item=(FileItem) it.next();
+				if(item.isFormField()){
+					if("relaID".equals(item.getFieldName())){//主表ID,不是业务ID
+						relaID=item.getString();
+					}
+					if("relaType".equals(item.getFieldName())){
+						relaType=item.getString();
+					}
+				}
+				if(item.getName()!=null && item.getName()!="" && !item.isFormField()){
+					String fileSuffix=item.getName().substring(item.getName().lastIndexOf("."));
+					String realName=UUID.randomUUID().toString()+fileSuffix;
+					Integer fileSize=(int)(item.getSize());//m
+					if(maxFileSize<fileSize){
+						resp.getWriter().print("上传文件大小大于5M,请修改");
+						return;
+					}
+					String path=dateFormat.format(new Date())+File.separator+realName;
+					File file=new File(upload_path+path);
+					FileUtils.writeByteArrayToFile(file, item.get());
+					FileUpload fileUpload=new FileUpload();
+					fileUpload.setRelaID(relaID);
+					fileUpload.setRelaType(relaType);
+					String name=item.getName();
+					if(name.contains("\\")){
+						name=name.substring(name.lastIndexOf("\\")+1);
+					}
+					fileUpload.setFileName(name);
+					fileUpload.setFilePath(path);
+					fileUpload.setFileSize(fileSize);
+					fileUpload.setFileSuffix(fileSuffix);
+					fileUpload.setSno(1);
+					fileUpload.setUploadTime(new Date());
+					fileUpload.setTlrno(gi.getTlrno());
+					TlrInfo tf=ROOTDAOUtils.getROOTDAO().query(TlrInfo.class, gi.getTlrno());
+					fileUpload.setTlrname(tf.getTlrName());
+					fileUpload.setFileRealName(realName);
+					
+					oc.setAttribute(FileUploadOperation.IN_PARAM, fileUpload);
+					OPCaller.call(FileUploadOperation.ID, oc);
+				}
+			}
+		} catch (Exception e) {
+			resp.getWriter().print("上传失败，请联系管理员");
+		}
+	}
+	public static void main(String[] args) {
+		for(int i=0;i<100;i++){
+			SimpleDateFormat dateFormat=new SimpleDateFormat("yyyyMMddHHmmssss");
+			System.out.println(dateFormat.format(new Date()));
+		}
+	}
+
+}

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="操作员增加" navigate="主页 &gt; 系统管理 &gt; 操作员查询" type="call"
+	interface="true" pagesize="5" async="true" databusid="MANAGEMENTTLR"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.management.getter.TlrAddGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="brcode" desc="机构号" status="N" require="true"
+			fieldname="brcode" edittype="select" dropdowntype="dynamic"
+			dataType="String" readOnly="false" translated="CQ:AllDownBrcodeSelect"
+			viewField="brcodeTypeName" init="false"
+			fieldmap="brcode=brcode;brcodeName=brcodeTypeName" size="20"
+			primary="false" type="String" xpath="" />
+
+		<Field id="departmentCode" desc="部门名" status="N" require="false"
+			fieldname="departmentCode" edittype="select" dropdowntype="dynamic"
+			dataType="String" readOnly="false" translated="CQ:AllDownDepartmentSelect"
+			viewField="departmentName" init="false"
+			fieldmap="departmentCode=departmentCode;departmentCodeName=departmentName" size="20"
+			primary="false" type="String" xpath="" />
+
+		<Field id="extTlrno" desc="操作员号" status="F" require="false"
+			edittype="text" dataType="String" readonly="false" errmsg="操作员号必须为8位数字" size="8"
+			primary="true" type="String" xpath="" />
+
+	</Fields>
+
+	<Where>
+
+	</Where>
+
+	<Operations>
+		<Button id="btSave" name="btSave" desc="查询"
+			operation="asysubmit"
+			updateClass="com.huateng.ebank.business.management.updater.QryTlrUpdate"
+			url="/fpages/management/ftl/TlrInfoEx.ftl" txn="" />
+	</Operations>
+	<Sql></Sql>
+</CommQry>

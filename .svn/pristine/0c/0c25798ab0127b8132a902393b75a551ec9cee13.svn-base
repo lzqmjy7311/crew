@@ -1,0 +1,121 @@
+<CommQry title="TRewC16PlsAccountId" navigate="TRewC16PlsAccountId" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.C16Getter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="loanacno" desc="账户编号" edittype="text" datatype="string" 
+        xpath="/loanacno" />
+        <Field id="loanid" desc="业务编号" edittype="text" datatype="string" 
+		xpath="/loanid" />
+        <Field id="custid" desc="客户编号" edittype="text" datatype="string" 
+        xpath="/custid" />
+        <Field id="custname" desc="客户名称" edittype="text" datatype="string" 
+        xpath="/custname" />
+        <Field id="corpcustid" desc="法人客户编号" edittype="text" datatype="string" 
+        xpath="/corpcustid" />
+        <Field id="prodid" desc="产品类型" edittype="text" datatype="string" 
+        xpath="/prodid" />
+        <Field id="prodname" desc="产品名称" edittype="text" datatype="string" 
+        xpath="/prodname" />
+        <Field id="tcapi" desc="贷款金额" xpath="/tcapi" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" default="0" />
+        <Field id="tterm" desc="贷款期限" edittype="text" datatype="string" 
+		xpath="/tterm" />
+        <Field id="retukind" desc="还款方式" edittype="text" datatype="string" 
+        xpath="/retukind" />
+        <Field id="warrno" desc="凭证编号" edittype="text" datatype="string" 
+        xpath="/warrno" />
+        <Field id="enstroid" desc="入库编号" edittype="text" datatype="string" 
+        xpath="/enstroid" />
+        <Field id="warrbusidate" desc="权证入库日期" edittype="text" datatype="string" 
+        xpath="/warrbusidate" />
+        <Field id="totalMortgageValue" desc="总押品价值" edittype="text" datatype="string" 
+        xpath="/totalMortgageValue" />
+        <Field id="payoffflag" desc="是否结清" edittype="text" datatype="string" 
+        xpath="/payoffflag" />
+        <Field id="unprofname" desc="联保小组名称" edittype="text" datatype="string" 
+        xpath="/unprofname" />
+        <Field id="begindate" desc="开户日期" edittype="text" datatype="date" 
+        xpath="/begindate" />
+        <Field id="enddate" desc="到期日期" edittype="text" datatype="string" 
+        xpath="/enddate" />
+        <Field id="operid" desc="经办人" edittype="text" datatype="string" 
+        xpath="/operid" />
+        <Field id="opername" desc="经办人名称" edittype="text" datatype="string" 
+        xpath="/opername" />
+        <Field id="bankid" desc="经办行" edittype="text" datatype="string" 
+        xpath="/bankid" />
+        <Field id="bankname" desc="经办行名称" edittype="text" datatype="string" 
+        xpath="/bankname" />
+        <Field id="assukind" desc="担保方式" edittype="text" datatype="string" 
+        xpath="/assukind" />
+        <Field id="floatinterate" desc="浮动比例" edittype="text" datatype="string" 
+        xpath="/floatinterate" />
+		<Field id="acflag" xpath="/acflag" desc="账户状态" edittype="select" translated="DATA_DIC.120" datatype="string" 
+			   readonly="true" width="250" />
+		<Field id="acflag2" xpath="/acflag2" desc="应计非应计" edittype="select" translated="DATA_DIC.121" datatype="string" />
+        <Field id="riskflag" xpath="/riskflag" desc="风险状态" edittype="select" translated="DATA_DIC.122" datatype="string" 
+			   readonly="true" width="250" />
+        <Field id="contno" desc="合同编号" edittype="text" datatype="string" 
+        xpath="/contno" />
+        <Field id="dutyid" desc="检查人编号" edittype="text" datatype="string" 
+        xpath="/dutyid" />
+        <Field id="dutyid2" desc="催收人编号" edittype="text" datatype="string" 
+        xpath="/dutyid2" />
+        <Field id="reckday" desc="账单日" edittype="text" datatype="string" 
+        xpath="/reckday" />
+        <Field id="retuday" desc="每期还款日" edittype="text" datatype="string" 
+		xpath="/retuday" />
+        <Field id="corpid" desc="合作方编号" edittype="text" datatype="string"
+        xpath="/corpid" />
+        <Field id="corpname" desc="合作方名称" edittype="text" datatype="string" 
+        xpath="/corpname" />
+        <Field id="projid" desc="合作项目编号" edittype="text" datatype="string" 
+        xpath="/projid" />
+        <Field id="corpappid" desc="合作项目额度编号" edittype="text" datatype="string" 
+        xpath="/corpappid" />
+        <Field id="basicinterate" desc="基准利率" edittype="text" datatype="string" 
+        xpath="/basicinterate" />
+        <Field id="interate" desc="贷款利率" edittype="text" datatype="string" 
+        xpath="/interate" />
+        <Field id="goodsamt" desc="全额价款" edittype="text" datatype="currency" 
+        xpath="/goodsamt" />
+        <Field id="loanhousecount" desc="贷款购置住房套数" edittype="text" datatype="string" 
+        xpath="/loanhousecount" />
+        <Field id="familyhousecount" desc="家庭所购房套数" edittype="text" datatype="string" 
+        xpath="/familyhousecount" />
+        <Field id="spousecustid" desc="配偶客户编号" edittype="text" datatype="string" 
+        xpath="/spousecustid" />
+        <Field id="bal" desc="贷款余额" edittype="text" datatype="currency" 
+        xpath="/bal" />
+        <Field id="overbal" desc="拖欠本金" edittype="text" datatype="currency" 
+        xpath="/overbal" />
+        <Field id="overinte" desc="拖欠利息" edittype="text" datatype="currency" 
+        xpath="/overinte" />
+        <Field id="sumtcapi" desc="累计发放金额" edittype="text" datatype="currency" 
+        xpath="/sumtcapi" />
+        <Field id="isOver" desc="是否逾期" edittype="text" datatype="string" 
+        xpath="/isOver" />
+        <Field id="overStartDate" desc="逾期开始日" edittype="text" datatype="string" 
+        xpath="/overStartDate" />
+        <Field id="overDays" desc="当前逾期天数" edittype="text" datatype="string" 
+        xpath="/overDays" />
+        <Field id="overCount" desc="当前逾期期数" edittype="text" datatype="string" 
+        xpath="/overCount" />
+        <Field id="overCountLast12M" desc="12个月内逾期期数" edittype="text" datatype="string" 
+        xpath="/overCountLast12M" />
+        <Field id="overCountMaxHis" desc="历史最高逾期期数" edittype="text" datatype="string" 
+        xpath="/overCountMaxHis" />
+        <Field id="overCountSumHis" desc="历史累计逾期期数" edittype="text" datatype="string" 
+        xpath="/overCountSumHis" />
+        <Field id="isDefault" desc="是否违约" edittype="text" datatype="string" 
+        xpath="/isDefault" />
+        <Field id="defaultStartDate" desc="违约开始日期" edittype="text" datatype="string" 
+        xpath="/defaultStartDate" />
+        <Field id="defaultCount" desc="当前违约次数" edittype="text" datatype="string" 
+        xpath="/defaultCount" />
+        <Field id="defaultCountHis" desc="历史累计违约次数" edittype="text" datatype="string" 
+        xpath="/defaultCountHis" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

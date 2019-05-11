@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FieldModels>
+	<FieldModel id="contractno" name="合同号" desc="合同号数据类型" type="string"
+		length="20" scale="0" width="170" height="1" gen="" rule="isNumber"
+		errormessage="错误的合同号" />
+</FieldModels>

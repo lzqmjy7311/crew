@@ -1,0 +1,145 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign op=RequestParameters["op"]?default("")>
+<#assign brcode=RequestParameters["brcode"]?default("")>
+<@CommonQueryMacro.page title="操作员角色管理">
+	<table align="left" width="100%">
+		<tr align="center">
+			<td width="100%" colspan="2">
+				<@CommonQueryMacro.CommonQuery id="operMngMod"  init="true" navigate="false" submitMode="all" >
+					<@CommonQueryMacro.Group id ="table1" label="详细信息" fieldStr="tlrno,tlrName" colNm="4"/>
+					<#--所属机构<@CommonQueryMacro.SingleField fId="brcode"/>
+					
+					<FIELDSET name='guoup1' style="padding: 6px;">
+					<LEGEND extra="groupboxtitle">操作员信息</LEGEND>
+						<table frame=void class="grouptable" width="100%">
+						<tr>
+							<td align="center" nowrap class="labeltd" width="25%"> 操作员号 </td>
+							<td class="datatd"  width="25%"><@CommonQueryMacro.SingleField fId="tlrno"/></td>
+							<td align="center" nowrap class="labeltd"  width="25%"> 操作员名称 </td>
+							<td  class="datatd"  width="25%"><@CommonQueryMacro.SingleField fId="tlrName" /></td>
+						</tr>
+						<tr>
+							<td align="center" nowrap class="labeltd"  width="25%"> 操作员名称 </td>
+							<td  class="datatd"  width="25%"><@CommonQueryMacro.SingleField fId="brname" /></td>
+						</tr>
+					   </table>
+				  	</FIELDSET>
+				  	-->
+				</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+		<tr id="tlrBctlRel">
+			<td width="45%">
+				<@CommonQueryMacro.CommonQuery id="bctlMngEntry" init="true" submitMode="selected" navigate="false">
+					
+					<table width="100%">
+					<tr>
+						<td width="100%">
+						<FIELDSET name='guoup3' style="padding: 6px;">
+							<LEGEND extra="groupboxtitle">授权机构信息</LEGEND>
+								<table frame=void width="100%">
+							      	<tr>
+							      		<td valign="top">
+												<@CommonQueryMacro.DataTable height="350" id ="datatable1" fieldStr="select[60],brno[80],brname" width="100%" readonly="false"/>
+										</td>
+								 	</tr>
+								 </table>
+						</FIELDSET>
+						 </td>
+					 </tr>
+					</table>
+				</@CommonQueryMacro.CommonQuery>
+		 	</td>
+		 	<td width="55%">
+		 		<@CommonQueryMacro.CommonQuery id="operMngRoleInfo" init="true" submitMode="selected" navigate="false">
+					<table width="100%" >
+					<tr>
+						<td width="100%">
+						<FIELDSET name='guoup3' style="padding: 6px;">
+							<LEGEND extra="groupboxtitle">岗位信息</LEGEND>
+								<table frame=void width="100%">
+							      	<tr>
+							      		<td valign="top">
+												<@CommonQueryMacro.DataTable height="350" id ="datatable1" fieldStr="select[60],roleId[80],roleName[150],isDefault" width="100%" readonly="false"/>
+										</td>
+								 	</tr>
+								 </table>
+						</FIELDSET>
+						 </td>
+					 </tr>
+					</table>
+				</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+		<tr align="center">
+			<td width="100%" colspan="2">
+			<@CommonQueryMacro.CommonQuery id="operMngRoleInfo" init="true" submitMode="selected" navigate="false">
+	      		<@CommonQueryMacro.Button id= "btRoleSave" />
+			</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+</table>
+<script language="javascript">
+	var op = "${op}";
+	var brcode = "${brcode}";
+	var showRel = '1';//${statics["com.huateng.ebank.business.management.service.SystemParamService"].queryParameter("ISAUTH","BCTL")};
+
+	function initCallGetter_post(dataset) {
+		if (op == "new") {
+			operMngMod_dataset.setFieldReadOnly("tlrno",false);
+			operMngMod_dataset.setValue('brcode',brcode);
+		}else{
+			operMngMod_dataset.setFieldReadOnly("tlrno",true);
+		}
+		operMngMod_dataset.setParameter("op",op);
+		if(showRel!='1'){
+			$('#tlrBctlRel').css('display','none');
+		}
+	}
+	
+	function btRoleSave_onClickCheck(){
+		var tlrno = operMngMod_dataset.getValue("tlrno");
+		var tlrName = operMngMod_dataset.getValue("tlrName");
+		var brcode = operMngMod_dataset.getValue('brcode');
+		if (tlrno.length==0 || tlrName.length==0 || brcode.length==0) {
+			alert("操作员号、操作员名称和分支机构号必须填写！");
+			return false;
+		}
+		var hasBctlSelected = false;
+		var bctlRecord = bctlMngEntry_dataset.getFirstRecord();
+		while(bctlRecord){
+			var v_selected = bctlRecord.getValue("select");
+			if( v_selected == true ){
+				hasBctlSelected=true;
+			}
+			bctlRecord=bctlRecord.getNextRecord();
+	   	}
+	   	if (showRel=='1' && !hasBctlSelected) {
+	   		alert("至少选择一个授权机构！");
+	   		return false;
+	   	}
+
+	   	var hasRoleSelected = false;
+		var roleRecord = operMngRoleInfo_dataset.getFirstRecord();
+		while(roleRecord){
+			var v_selected = roleRecord.getValue("select");
+			if( v_selected == true ){
+				hasRoleSelected=true;
+			}
+			roleRecord=roleRecord.getNextRecord();
+	   	}
+	   	if (!hasRoleSelected) {
+	   		alert("至少选择一个岗位！");
+	   		return false;
+	   	}
+
+	   	return true;
+	}
+	
+	
+	function btRoleSave_postSubmit(){
+		alert('保存成功！');
+		window.parent.closeSubWin();
+	}
+</script>
+</@CommonQueryMacro.page>

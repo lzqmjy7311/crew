@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<META>
+	<Query id="BiWorkDateYearSelect" path="/fpages/system/dropdownxml/BiWorkDateYearSelect.xml" />
+
+	<Query id="biWorkDate" path="/fpages/system/xml/BiWorkDate.xml" />
+	<Query id="SysParamsEntryDetail" path="/fpages/system/xml/SysParamsEntryDetail.xml" />
+	<Query id="branchManageDetail" path="/fpages/management/xml/branchManageDetail.xml" />
+	<Query id="cutoverWorkDate" path="/fpages/system/xml/CutoverWorkDate.xml" />
+	<!-- 安全参数设置-->
+	<Query id="SysParamsSec" path="/fpages/system/xml/SysParamsSec.xml" />
+	<!--  zhihong.zeng-->
+	<Query id="SysParamsSecDetail"  path="/fpages/system/xml/SysParamsSecDetail.xml"/>
+
+	<Query id="sysParamsEntry" path="/fpages/system/xml/SysParamsEntry.xml" txn="" desc="绯荤粺鍙傛暟璁剧疆" />
+	<Query id="paramgroupIdSelectGetter" path="/fpages/system/dropdownxml/ParamgroupIdSelect.xml" txn="" desc="鍙傛暟娈电紪鍙蜂笅鎷夋"/>
+	<!-- jianxue.zhang -->
+	<Query id="UndoConfirm" path="/fpages/system/xml/UndoConfirm.xml" />
+	<Query id="approve_log" path="/fpages/system/xml/approve_log.xml" />
+	<Query id="approve_SysParamsEntry" path="/fpages/system/approvexml/approve_SysParamsEntry.xml" />
+	<Query id="approve_common" path="/fpages/system/xml/approve_common.xml" />
+	<Query id="approve_bctl" path="/fpages/system/approvexml/approve_bctl.xml" />
+	<Query id="approve_biDay" path="/fpages/system/approvexml/approve_biDay.xml" />
+	<Query id="approve_biMonth" path="/fpages/system/approvexml/approve_biMonth.xml" />
+	<Query id="approve_biNation" path="/fpages/system/approvexml/approve_biNation.xml" />
+	<Query id="approve_currency" path="/fpages/system/approvexml/approve_currency.xml" />
+	<Query id="approve_role" path="/fpages/system/approvexml/approve_role.xml" />
+	<Query id="approve_tlrInfo" path="/fpages/system/approvexml/approve_tlrInfo.xml" />
+	<Query id="approve_workdate" path="/fpages/system/approvexml/approve_workdate.xml" />
+	<Query id="approve_pfSysParams" path="/fpages/system/approvexml/approve_pfSysParams.xml" />
+	<!-- 机构信息维护 -->
+	<Query id="RbsBranchCodeMappEntry" path="/fpages/system/xml/RbsBranchCodeMappEntry.xml" />
+	<!-- 日期详细 -->
+	<Query id="biWorkDateDetail" path="/fpages/system/xml/BiWorkDateDetail.xml" />
+
+	<Query id="recoverBakFile" path="/fpages/system/xml/RecoverBakFile.xml" />
+	
+	<Query id="LeftAccordionMenu" path="/fpages/common/xml/LeftAccordionMenu.xml" />
+</META>

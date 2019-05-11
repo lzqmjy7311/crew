@@ -1,0 +1,99 @@
+<CommQry title="TRewA01DepositAcctTxnDtlInfo" navigate="TRewA01DepositAcctTxnDtlInfo" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.A01Getter">
+    <Include id="BankParam" />
+    <Fields>
+    	<Field id="custName" desc="客户名称" edittype="text" datatype="string" readonly="true"  xpath="/custName" />
+        <Field id="custId" desc="核心客户号" edittype="text" datatype="string" readonly="true"  xpath="/custId" />
+	<!--<Field id="acctName" desc="账户名称" edittype="text" datatype="string" readonly="true"  xpath="/acctName" />-->
+		<Field id="acctId" desc="账号" edittype="text" datatype="string" readonly="true"  xpath="/acctId" />
+        <Field id="itemId" desc="科目存储" edittype="text" datatype="string" readonly="true"  xpath="/itemId" />
+		<Field id="txnSerialId" desc="前端流水号" edittype="text" datatype="string" readonly="true" 
+        xpath="/txnSerialId" />
+		<Field id="txnCd" desc="前端交易码" edittype="text" datatype="string" readonly="true"  xpath="/txnCd" />
+	<!--<Field id="txnName" desc="前端交易名称" edittype="text" datatype="string" readonly="true"  xpath="/txnName" />-->
+		<Field id="ccy" desc="币种" edittype="text" datatype="string" readonly="true"  xpath="/ccy" />
+		<Field id="txnAmt" desc="交易金额" edittype="text" datatype="string" readonly="true"  xpath="/txnAmt" />
+		<Field id="debCrdInd" desc="借贷标识" edittype="text" datatype="string" readonly="true" 
+        xpath="/debCrdInd" />
+        <Field id="txnAftrBal" desc="余额" edittype="text" datatype="string" readonly="true" 
+        xpath="/txnAftrBal" />
+        <Field id="oppoAcctId" desc="交易对手账号" edittype="text" datatype="string" readonly="true" 
+        xpath="/oppoAcctId" />
+        <Field id="oppoCustNm" desc="交易对手名称" edittype="text" datatype="string" readonly="true" 
+        xpath="/oppoCustNm" />
+        <Field id="txnCateg" desc="交易类型" edittype="text" datatype="string" readonly="true" 
+        xpath="/txnCateg" />
+        <Field id="prodId" desc="产品标识" edittype="text" datatype="string" readonly="true"  xpath="/prodId" />
+        <Field id="txnOrg" desc="交易机构" edittype="text" datatype="string" readonly="true"  xpath="/txnOrg" />
+        <Field id="txnDt" desc="交易日期" edittype="text" datatype="string" readonly="true"  xpath="/txnDt" />
+        <Field id="txnTm" desc="交易时间" edittype="text" datatype="string" readonly="true"  xpath="/txnTm" />
+	<!--<Field id="aa" desc="冲正交易标识" edittype="text" datatype="string" readonly="true"  xpath="/aa" />
+	<Field id="aaa" desc="被冲账原流水号" edittype="text" datatype="string" readonly="true"  xpath="/aa" />
+	<Field id="aaaa" desc="凭证类型" edittype="text" datatype="string" readonly="true"  xpath="/aa" />
+	<Field id="aaaaa" desc="凭证号码" edittype="text" datatype="string" readonly="true"  xpath="/aa" />-->
+		<Field id="chnSerialId" desc="外围渠道编号" edittype="text" datatype="string" readonly="true" 
+        xpath="/chnSerialId" />
+		<!--
+        <Field id="recdId" desc="" edittype="text" datatype="string" readonly="true"  xpath="/recdId" />
+        <Field id="inacctDt" desc="" edittype="text" datatype="string" readonly="true" 
+        xpath="/inacctDt" />
+        <Field id="aioAccntAcctId" desc="" edittype="text" datatype="string" readonly="true" 
+        xpath="/aioAccntAcctId" />
+        <Field id="cardId" desc="" edittype="text" datatype="string" readonly="true"  xpath="/cardId" />
+        <Field id="cardTypeSelfServEquip" desc="" edittype="text" datatype="string" readonly="true" 
+        xpath="/cardTypeSelfServEquip" />
+        <Field id="acctOrg" desc="" edittype="text" datatype="string" readonly="true" 
+        xpath="/acctOrg" />
+        <Field id="bal" desc="" edittype="text" datatype="string" readonly="true"  xpath="/bal" />
+        <Field id="acctAttri" desc="" edittype="text" datatype="string" readonly="true" 
+        xpath="/acctAttri" />
+        <Field id="cardBal" desc="" edittype="text" datatype="string" readonly="true" 
+        xpath="/cardBal" />
+        <Field id="oppoBank" desc="" edittype="text" datatype="string" readonly="true" 
+        xpath="/oppoBank" />
+        <Field id="oppoTxnCcy" desc="" edittype="text" datatype="string" readonly="true" 
+        xpath="/oppoTxnCcy" />
+        <Field id="txnTlr" desc="" edittype="text" datatype="string" readonly="true"  xpath="/txnTlr" />
+        <Field id="authTlr" desc="" edittype="text" datatype="string" readonly="true" 
+        xpath="/authTlr" />
+        <Field id="tmlId" desc="" edittype="text" datatype="string" readonly="true"  xpath="/tmlId" />
+        <Field id="txnSrcSelfServEquip" desc="" edittype="text" datatype="string" readonly="true" 
+        xpath="/txnSrcSelfServEquip" />
+        <Field id="txnChn" desc="" edittype="text" datatype="string" readonly="true"  xpath="/txnChn" />
+        <Field id="txnInt" desc="" edittype="text" datatype="string" readonly="true"  xpath="/txnInt" />
+        <Field id="fee" desc="" edittype="text" datatype="string" readonly="true"  xpath="/fee" />
+        <Field id="txnAbstr" desc="" edittype="text" datatype="string" readonly="true" 
+        xpath="/txnAbstr" />
+        <Field id="rvsAcctInd" desc="" edittype="text" datatype="string" readonly="true" 
+        xpath="/rvsAcctInd" />
+        <Field id="validInd" desc="" edittype="text" datatype="string" readonly="true" 
+        xpath="/validInd" />
+        <Field id="curTransInd" desc="" edittype="text" datatype="string" readonly="true" 
+        xpath="/curTransInd" />
+        <Field id="txnSucceInd" desc="" edittype="text" datatype="string" readonly="true" 
+        xpath="/txnSucceInd" />
+        <Field id="uuid" desc="" edittype="text" datatype="string" readonly="true"  xpath="/uuid" />
+        <Field id="outSysCd" desc="" edittype="text" datatype="string" readonly="true" 
+        xpath="/outSysCd" />
+        <Field id="outSerialId" desc="" edittype="text" datatype="string" readonly="true" 
+        xpath="/outSerialId" />
+        <Field id="agentBank" desc="" edittype="text" datatype="string" readonly="true" 
+        xpath="/agentBank" />
+        <Field id="nonCardPayInd" desc="" edittype="text" datatype="string" readonly="true" 
+        xpath="/nonCardPayInd" />
+        <Field id="withdrInd" desc="" edittype="text" datatype="string" readonly="true" 
+        xpath="/withdrInd" />
+        <Field id="fincInd" desc="" edittype="text" datatype="string" readonly="true" 
+        xpath="/fincInd" />
+        <Field id="merchantTypeCd" desc="" edittype="text" datatype="string" readonly="true" 
+        xpath="/merchantTypeCd" />
+        <Field id="etlProcDt" desc="" edittype="text" datatype="date" readonly="true" 
+        xpath="/etlProcDt" />
+        <Field id="warnId" desc="预警表ID" edittype="text" datatype="string" readonly="true" 
+        xpath="/warnId" />
+        <Field id="dataDt" desc="数据日期" edittype="text" datatype="date" readonly="true" 
+        xpath="/dataDt" />-->
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

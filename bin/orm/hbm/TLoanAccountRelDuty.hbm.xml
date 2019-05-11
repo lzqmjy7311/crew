@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-12-8 14:45:50 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.bpm.entity.TLoanAccountRelDuty" table="T_PL_ACCOUNT_REL_DUTY" schema="ECUSER">
+        <comment>帐户关联责任人表</comment>
+        <id name="loanacno" type="string">
+            <column name="FD_LOANACNO" length="30" />
+        </id>
+        <property name="dutyid" type="string">
+            <column name="FD_DUTYID" length="50" />
+        </property>
+        <property name="dutyname" type="string">
+            <column name="FD_DUTYNAME" length="50" />
+        </property>
+        <property name="dutyorg" type="string">
+            <column name="FD_DUTYORG" length="50" />
+        </property>
+        <property name="collid" type="string">
+            <column name="FD_COLLID" length="50" />
+        </property>
+        <property name="collname" type="string">
+            <column name="FD_COLLNAME" length="50" />
+        </property>
+        <property name="collorg" type="string">
+            <column name="FD_COLLORG" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,601 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src-huateng/main/java"/>
+	<classpathentry kind="src" path="src-gbicc/main/java"/>
+	<classpathentry kind="src" path="src-huateng/main/resources"/>
+	<classpathentry kind="src" path="src-gbicc/main/resources"/>
+	<classpathentry kind="src" path="src-gbicc/test/java"/>
+	<classpathentry kind="src" path="src-gbicc/test/resources"/>
+	<classpathentry kind="src" path="src-gbicc-engine/main/java"/>
+	<classpathentry kind="src" path="src-gbicc-engine/main/resources"/>
+	<classpathentry kind="src" path="src-gbicc-engine/test/java"/>
+	<classpathentry kind="src" path="src-gbicc-engine/test/resources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER" exported="true"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container" exported="true"/>
+	<classpathentry kind="output" path="bin"/>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-gbicc/runtime/db2jcc4_license_cisuz.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-gbicc/runtime/activiti-modeler-5.18.0.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-gbicc/runtime/activiti-bpmn-layout-5.18.0.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-gbicc/runtime/commons-compress-1.8.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-gbicc/runtime/activiti-process-validation-5.18.0.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-gbicc/runtime/mybatis-3.2.5.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-gbicc/runtime/activiti-spring-5.18.0.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-gbicc/runtime/activiti-bpmn-model-5.18.0.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-gbicc/runtime/activiti-engine-5.18.0.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-gbicc/runtime/jackson-databind-2.2.3.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-gbicc/runtime/jackson-core-2.2.3.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-gbicc/runtime/activiti-image-generator-5.18.0.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-gbicc/runtime/groovy-all-2.3.9.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-gbicc/runtime/commons-lang3-3.3.2.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-gbicc/runtime/db2jcc4_license_cu.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-gbicc/runtime/joda-time-2.6.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-gbicc/runtime/javassist-3.17.1-GA.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-gbicc/runtime/db2jcc4.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-gbicc/runtime/activiti-bpmn-converter-5.18.0.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-gbicc/runtime/jackson-annotations-2.2.3.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/xbean.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/geronimo-j2ee-management_1.0_spec-1.0.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/jasperreports-2.0.5.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/spring-beans-3.0.5.RELEASE.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/commons-logging-api-1.1.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/mail.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/spring-jms-3.0.5.RELEASE.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/livetribe-jsr223.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/aspectjrt-1.6.3.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/jta-1.1.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/spring-tx-3.0.5.RELEASE.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/bcprov-jdk14-138.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/aopalliance-1.0.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/quartz-all-1.6.5.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/dwr.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/commons-beanutils-1.7.0.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/flowswitch-micro-1.5.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/struts.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/commons-logging-1.1.1.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/spring-security-config-3.0.5.RELEASE.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/jstl-1.2.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/commons-httpclient-3.1.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/geronimo-jms_1.1_spec-1.1.1.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/spring-security-web-3.0.5.RELEASE.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/junit-4.10.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/slf4j-api-1.6.1.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/backport-util-concurrent-2.1.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/oro-2.0.8.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/spring-core-3.0.5.RELEASE.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/slf4j-log4j12-1.6.1.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/json-lib-2.4-jdk15.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/hibernate-core-3.3.1.GA.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/iTextAsianCmaps.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/opencsv-2.2.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/commons-dbcp-1.1.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/dhbcore.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/commons-el.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/shiro-all-1.2.1.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/iTextAsian.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/commons-validator-1.3.1.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/commons-discovery.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/poi-ooxml-3.9.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/proxool-cglib.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/log4j-1.2.16.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/commons-pool-1.1.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/commons-digester-1.8.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/commons-attributes-api.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/itext-1.3.1.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/spring-security-core-3.0.5.RELEASE.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/spring-orm-3.0.5.RELEASE.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/commonj-twm.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/commons-fileupload-1.2.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/saif-0.2.0.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/spring-context-support-3.0.5.RELEASE.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/sigar.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/spring-jdbc-3.0.5.RELEASE.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/commons-net-1.4.0.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/mysql-connector-java-5.1.17-bin.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/xalan-2.7.0.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/commons-chain-1.1.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/BasePackage.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/camel-core-1.3.0.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/jasperreports-2.0.5-applet.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/spring-expression-3.0.5.RELEASE.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/poi-3.9.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/jaxen-1.1.1.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/xbean_xpath.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/commons-codec-1.3.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/cglib-nodep-2.1_3.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/fpcommon.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/spring-web-3.0.5.RELEASE.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/dom4j-1.6.1.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/standard-1.1.2.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/commons-collections-3.2.1.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/c3p0-0.9.1.1.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/spring-context-3.0.5.RELEASE.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/spring-test-3.0.5.RELEASE.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/commons-lang-2.5.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/commons-io-1.4.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/fpframework.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/ojdbc5.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/spring-integration-core-2.0.3.RELEASE.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/aspectjweaver-1.6.8.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/antlr-2.7.6.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/commons-jxpath-1.2.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/jxl.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/license-1.4.7.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/spring-asm-3.0.5.RELEASE.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/poi-ooxml-schemas-3.9.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/freemarker.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/proxool-0.9.1.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/ehcache-1.2.3.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/spring-webmvc-3.0.5.RELEASE.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/ezmorph-1.0.6.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/spring-aop-3.0.5.RELEASE.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-huateng/jdom.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/Users/monstar..lzq/Documents/eclipse-workspace/crew/lib-gbicc/provided/servlet-api.jar" exported="true">
+		<attributes>
+			<attribute name="org.eclipse.jst.component.nondependency" value=""/>
+		</attributes>
+	</classpathentry>
+</classpath>

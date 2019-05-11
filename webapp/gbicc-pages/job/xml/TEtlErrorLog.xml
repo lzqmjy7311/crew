@@ -1,0 +1,40 @@
+<CommQry title="TEtlErrorLog" navigate="TEtlErrorLog" type="call" interface="false" pagesize="20" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.log.getter.TEtlErrorLogGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+        <Field id="etlErrorLogId" desc="ID" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/etlErrorLogId" />
+        <Field id="procName" desc="存储过程名称" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/procName" />
+        <Field id="errMsg" desc="错误信息" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/errMsg" />
+        <Field id="errSql" desc="SQL错误语句" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/errSql" />
+        <Field id="errTimestamp" desc="时间戳" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/errTimestamp" />
+    </Fields>
+    <Where>
+    	<TextBox id="procName" desc="存储过程名称" require="" 
+    		   edittype="text" datatype="string" 
+    		   method="None" type="" status="F" 
+    		   size="15" scale="2" default="" />
+        		
+        <TextBox id="errMsg" desc="错误信息" require="" 
+        	   edittype="text" datatype="string" 
+        	   method="None" type="" status="F" 
+        	   size="15" scale="2" default="" />
+        	   
+        <TextBox id="errSql" desc="SQL错误语句" require="" 
+        	   edittype="text" datatype="string" 
+        	   method="None" type="" status="F" 
+        	   size="15" scale="2" default="" />
+        	   
+        <DateTextBox id="errTimestamp" desc="时间戳" require="" 
+        	   edittype="date" datatype="string" 
+        	   method="None" type="" status="F" 
+        	   size="15" scale="2" default="" placeholder="yyyy-MM-dd" />
+    </Where>
+    <Operations>
+    	<Button id="btRest" name="btRest" desc="重置" icon="icon-remove" updateClass="#" url="" txn="" />
+	    <Button id="btQuery" name="btQuery" desc="查询" icon="icon-search" updateClass="#" url="" txn="" />
+    </Operations>
+</CommQry>

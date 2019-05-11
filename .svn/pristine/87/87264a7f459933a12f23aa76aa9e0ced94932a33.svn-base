@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.huateng.ebank.entity.data.mng">
+	<class name="SysCurrency" table="SYS_CURRENCY">
+		<meta attribute="sync-DAO">false</meta>
+		<id name="id" type="string" column="CURCD"></id>
+
+		<property name="curno" column="CURNO" type="string"
+			not-null="false" length="52" />
+		<property name="cnname" column="cnname" type="string"
+			not-null="false" length="52" />
+		<property name="enname" column="ENNAME" type="string"
+			not-null="false" length="20" />
+		<property name="st" column="ST" type="string" not-null="false"
+			length="1" />
+		<property name="lock" column="IS_LOCK" type="true_false"
+			not-null="false" length="1" />
+		<property name="del" column="IS_DEL" type="true_false"
+			not-null="false" length="1" />
+		<property name="createDate" column="CREATE_DATE"
+			type="string" not-null="false"  />
+		<property name="createTlr" column="CREATE_TLR" type="string"
+			not-null="false" length="10" />
+		<property name="lastUpdTlr" column="LAST_UPD_TLR" type="string"
+			not-null="false" length="20" />
+		<property name="lastUpdDate" column="LAST_UPD_DATE"
+			type="string" not-null="false"/>
+		<property name="isUsd" column="ISUSD" type="string"
+			not-null="false" length="1" />
+		<property name="cursymBol" column="CURSYMBOL" type="string"
+			not-null="false" length="20" />
+		<property name="curedicd" column="CUR_EDICD" type="string"
+			not-null="false" length="3" />
+		<property name="curediname" column="CUR_EDINAME" type="string"
+			not-null="false" length="20" />
+		<property name="minunit" column="MIN_UNIT" type="string"
+			not-null="false" length="20" />
+		<property name="showSeq" column="SHOWSEQ" type="integer"
+			not-null="false" length="22" />
+		<property name="baseunit" column="BASE_UNIT" type="string"
+			not-null="false" length="22" />
+		<property name="dratedays" column="DRATEDAYS" type="string"
+			not-null="false" length="1" />
+
+	</class>
+</hibernate-mapping>

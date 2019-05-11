@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	txnlogflag:true记录日志
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="ExecuteStateQueryEntry.title" navigate="数据查询    &gt; 执行状态查询" type="call"
+	interface="false" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.huateng.ebank.business.dataquery.getter.ExecuteStateQueryEntryGetter">
+	<Include id="BankParam" />
+	
+	<PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="批量下载-业务操作日志" perfetch="15"  directory="E:/upload1"/>
+	
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="id" desc="记录主键" require="" edittype="text" datatype="string" method="None"
+			readonly="false" size="32" status="F" default="" primary="true" xpath="/id" />
+		<Field id="appType" desc="应用类型" require="" edittype="select" datatype="string" method="None"
+			readonly="false" size="3" status="F" default="" xpath="/appType" translated="DATA_DIC.17"/>
+		<Field id="brNo" desc="机构号" edittype="text" datatype="string" status="F" size="20" xpath="/brNo" />
+		<Field id="brName" desc="机构名称" edittype="text" status="F" datatype="string" size="64" xpath="/brName" />
+		<Field id="workDate" desc="工作日期" edittype="text" status="F" datatype="string" size="28" xpath="/workDate" />
+		<Field id="operType" desc="操作类型" edittype="select" datatype="string" status="N" size="64" xpath="/operType" translated="LIST:01,手工;02,定时;" />
+		<Field id="busiType" desc="业务类型" edittype="select" datatype="string" status="N" size="64" xpath="/busiType" translated="DATA_DIC.35" />
+		<Field id="startTm" desc="开始时间" edittype="text" datatype="timestamp" status="N" size="64" xpath="startTm" />
+		<Field id="endTm" desc="结束时间" edittype="text" datatype="timestamp" status="N" size="64" xpath="/endTm" />
+		<Field id="executeType" desc="执行类型" edittype="select" datatype="string" status="N" size="64" xpath="/executeType" translated="DATA_DIC.67" />
+		<Field id="executeTm" desc="执行时间" edittype="text" datatype="timestamp" status="N" size="64" xpath="/executeTm" />
+		<Field id="executeId" desc="执行人" edittype="text" datatype="string" status="N" size="64" xpath="/executeId" />
+		<Field id="operation" desc="操作" />
+		
+		<Field id="ip" desc="用户IP地址" edittype="text" datatype="string" status="F" size="32" xpath="/ip" />
+    </Fields>
+    <Where>
+    	<Option id="qbusiType" desc="业务类型" edittype="select" datatype="string" size="10" index="0" translated="DATA_DIC.35" />
+    	<Option id="qappType" operationb="EQ" size="" index="1"
+        	desc="应用类型" tip="应用类型" type="string" translated="CQ:AppTypeSelect"
+        	fieldmap="qappTypeName=dataName;qappType=dataNo" viewField="dataName"
+        	ropdowntype="dynamic" init="true" require="" readOnly=""/>
+    	<TextBox id="qbrNo" desc="机构号" edittype="text" status="F" datatype="string" size="20" index="2" />
+		<TextBox id="qworkDateStart" desc="开始工作日期" require="true" edittype="text" datatype="date" size="64" index="3" />
+		<TextBox id="qworkDateEnd" desc="结束工作日期" require="true" edittype="text" datatype="date" size="64" index="4" />
+		<TextBox id="qbrName" desc="机构名称" edittype="text" status="F" datatype="string" size="20" index="5" />
+    </Where>
+	<Operations>
+	</Operations>
+</CommQry>

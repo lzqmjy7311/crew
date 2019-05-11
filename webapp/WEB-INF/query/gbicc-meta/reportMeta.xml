@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<META>
+	<Query id="TCwIndexINDUSTRY" path="/gbicc-report-pages/combinationWarn/xml/TCwIndexINDUSTRY.xml"/>
+	<Query id="TCwIndexORG" path="/gbicc-report-pages/combinationWarn/xml/TCwIndexORG.xml"/>
+	<Query id="TCwIndexPRODUCT" path="/gbicc-report-pages/combinationWarn/xml/TCwIndexPRODUCT.xml"/>
+	<Query id="TCwCreditAssetsMonitor" path="/gbicc-report-pages/combinationWarn/xml/TCwCreditAssetsMonitor.xml"/>
+	<Query id="TCwCreditAssetsMonitor0" path="/gbicc-report-pages/combinationWarn/xml/TCwCreditAssetsMonitor0.xml"/>
+	<Query id="TCwCreditAssetsMonitor2" path="/gbicc-report-pages/combinationWarn/xml/TCwCreditAssetsMonitor2.xml"/>
+	<Query id="TCwCreditAssetsMonitor3" path="/gbicc-report-pages/combinationWarn/xml/TCwCreditAssetsMonitor3.xml"/>
+	<Query id="TCwCreditAssetsMonitor4" path="/gbicc-report-pages/combinationWarn/xml/TCwCreditAssetsMonitor3.xml"/>
+	<Query id="TCwFinancialValMonitor" path="/gbicc-report-pages/combinationWarn/xml/TCwFinancialValMonitor.xml"/>
+	<Query id="TCwFinancialAllValMonitor" path="/gbicc-report-pages/combinationWarn/xml/TCwFinancialAllValMonitor.xml"/>
+	<Query id="thresholdQuery" path="/gbicc-report-pages/combinationWarn/xml/TCwIdnexQuery.xml"/>
+	<Query id="thresholdtable" path="/gbicc-report-pages/thresholdManage/xml/TCwIdnexManage.xml"/>
+	<Query id="subthresholdtable" path="/gbicc-report-pages/thresholdManage/xml/TCwThresholdversion.xml"/>
+	<Query id="IndustryTree" path="/gbicc-report-pages/IndustryTree/xml/IndustryTreeSelectGetter.xml" />
+	<!--阈值管理    -->
+	<Query id="ImportExcel" path="/gbicc-com-pages/ImportExcel/xml/TCwCreditInexOptRecord.xml"/>
+	<Query id="HbImportExcel" path="/gbicc-com-pages/ImportExcel/xml/HbImportExcel.xml"/>
+</META>

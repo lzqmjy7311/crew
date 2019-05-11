@@ -1,0 +1,20 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+
+<#assign warningId=RequestParameters["warningId"]?default("")>
+
+<@CommonQueryMacro.page title="信贷公司客户信息">
+<table>
+	<@CommonQueryMacro.CommonQuery id="J18" init="true" submitMode="current">
+		<@CommonQueryMacro.DataTable id="J18Table" height="305" readonly="true" fitColumns="false"
+		fieldStr="customerNum,chineseName,englishName,businessLicenseNum,orgnNum,pbcIndustryCd,loanCardNum[120],corporativeCertification,nationalTaxRegistrationNum[150],foundedDate,loanRelationDate,registeredCapital,customerSizeCd,listedCompanyInd,groupCustomerInd,basicAcctBank,openDate,ourBankNplRecord[120],debtTransferStockCustInd[120],creditCustomerInd,industryLevelTwoCd,customerStatusCd,crbCustomerSizeCd,corpImpLevel,myStockholderInd,economyType,corpNature,profAssureCorp,farmingIndustrySign,imexManaInd[120],loanRelationDate[150],cooperationBankInd,guaCustomerInd,bizLicExpirationDate,industryNum,financeLicenceNum,corScientificInd,corShutInd,govFinanceFlat,pawnLoanInd,govFinanceType,cooperateType,smallCorporationInd" width="100%" hasFrame="true"/>
+	</@CommonQueryMacro.CommonQuery>
+</table>
+<script>
+	//页面初始化
+	function initCallGetter_post(){
+		var warningId='${warningId}';
+		J18_dataset.setParameter("warningId",warningId);
+	}
+</script>
+</@CommonQueryMacro.page>

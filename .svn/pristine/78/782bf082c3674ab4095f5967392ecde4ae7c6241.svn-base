@@ -1,0 +1,34 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<@CommonQueryMacro.page title="用户登录日志查询">
+<#assign jzyear=RequestParameters["jzyear"]?default("")>
+<#assign caliber=RequestParameters["caliber"]?default("")>
+<#assign repno=RequestParameters["repno"]?default("")>
+<#assign finType=RequestParameters["finType"]?default("")>
+
+<@CommonQueryMacro.CommonQuery id="TbCsmFinanceStatementData" init="false" submitMode="current" navigate="false">
+
+<table align="left" width="100%">
+
+
+	<tr>
+		<td>
+			<@CommonQueryMacro.DataTable id ="datatablefincour" fieldStr="financeStatementName,科目值{projectValue|sProjectValue|ssProjectValue}" readonly="true" height="260"  width="100%"/></br>
+		</td>
+	</tr>
+</table>
+</@CommonQueryMacro.CommonQuery>
+<script language="JavaScript">
+//页面初始化
+	function initCallGetter_post(){
+	var jzyear='${jzyear}';
+	var caliber='${caliber}';
+	var repno='${repno}';
+	 TbCsmFinanceStatementData_dataset.setParameter("jzyear",jzyear);
+	 TbCsmFinanceStatementData_dataset.setParameter("caliber",caliber);
+	 TbCsmFinanceStatementData_dataset.setParameter("repno",repno);
+	 TbCsmFinanceStatementData_dataset.flushData(TbCsmFinanceStatementData_dataset.pageIndex);
+	}
+
+
+</script>
+</@CommonQueryMacro.page>

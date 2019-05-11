@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.gbicc.person.riskrulelist.entity">
+	<class name="RiskruleList" table="T_PL_RISKLIST" lazy="false">
+		<meta attribute="sync-DAO">false</meta>
+	
+		<id name="id" 
+			column="ID" 
+			type="string">
+			<generator class="uuid.hex" />  
+		</id>
+		
+		<property
+			name="bankName"
+			column="OPER_BANK"
+			type="string"
+			not-null="false"
+			length="32"
+		/>
+		<property
+			name="productName"
+			column="PRODUCT_NAME"
+			type="string"
+			not-null="false"
+			length="64"
+		/>
+		<property
+			name="lounAcc"
+			column="LOAN_ACCOUNT"
+			type="string"
+			not-null="false"
+			length="32"
+		/>
+		<property
+			name="custName"
+			column="CUST_NAME"
+			type="string"
+			not-null="false"
+			length="64"
+		/>
+		<property
+			name="warningLevel"
+			column="WARN_LEVEL"
+			type="string"
+			not-null="false"
+			length="25"
+		/>
+		<property
+			name="loanAmt"
+			column="LOAN_AMOUNT"
+			type="double"
+			not-null="false"
+		/>
+		<property
+			name="loanBalance"
+			column="LOAN_BALANCE"
+			type="double"
+			not-null="false"
+		/>
+		<property
+			name="warnDate"
+			column="WARN_TIME"
+			type="date"
+			not-null="false"
+		/>
+		<property
+			name="operator"
+			column="OPERATOR"
+			type="string"
+			not-null="false"
+			length="32"
+		/>
+		<property
+			name="ruleDesc"
+			column="RULE_DESC"
+			type="string"
+			not-null="false"
+			length="128"
+		/>
+		<property
+			name="changeDate"
+			column="STA_CHANGE_DATE"
+			type="date"
+			not-null="false"
+		/>
+		<property
+			name="warnSignal"
+			column="WARN_SIGNAL"
+			type="string"
+			not-null="false"
+			length="32"
+		/>
+		<property
+			name="ruleID"
+			column="RULE_ID"
+			type="string"
+			not-null="false"
+			length="32"
+		/>
+		<property
+			name="isNewcust"
+			column="IS_NEW_CUST"
+			type="string"
+			not-null="false"
+			length="25"
+		/>
+	</class>
+</hibernate-mapping>

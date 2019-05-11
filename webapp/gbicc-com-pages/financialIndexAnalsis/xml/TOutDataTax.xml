@@ -1,0 +1,32 @@
+<CommQry title="TOutDataTax" navigate="TOutDataTax" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.financial.analysis.getter.TOutDataTaxGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" maxPage="20" perfecth="20" />
+    <Fields>
+        <Field id="id" desc="ID" require="" edittype="text" datatype="text" method="None" readonly="true" type="" status="F" size="50" scale="2" default="" xpath="/id" />
+        <Field id="paytexUser" desc="纳税人名称" require="" edittype="text" datatype="text" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/paytexUser" />
+        <Field id="paytexDistcode" desc="纳税人识别号" require="" edittype="text" datatype="text" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/paytexDistcode" />
+        <Field id="orgcode" desc="组织机构代码" require="" edittype="text" datatype="text" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/orgcode" />
+        <Field id="registorAddress" desc="注册地址" require="" edittype="text" datatype="text" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/registorAddress" />
+        <Field id="legalName" desc="法定代表人信息" require="" edittype="text" datatype="text" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/legalName" />
+        <Field id="mainName" desc="财务直接负责人信息" require="" edittype="text" datatype="text" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/mainName" />
+        <Field id="secondmName" desc="财务直接负责人信息" require="" edittype="text" datatype="text" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/secondmName" />
+        <Field id="caseType" desc="案例性质" require="" edittype="text" datatype="text" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/caseType" />
+        <Field id="itemContent" desc="违法事实" require="" edittype="text" datatype="text" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/itemContent" />
+        <Field id="relaId" desc="解析文件id" require="" edittype="text" datatype="text" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/relaId" />
+        <Field id="rowDate" desc="数据日期" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/rowDate" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

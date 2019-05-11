@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CommQry title="表单项" navigate="" type="call"
+	interface="false" pagesize="10" async="false" databusid="FIVE"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.fp.demo.getter.FieldGetter">
+	<Include id="BankParam" />
+
+	<Fields>
+		<Field id="c" desc="数字字典下拉" edittype="select" readonly="false" translated="DATA_DIC.100" multiple="false"
+         datatype="int" size="10" xpath="/dataNoLen"   require="true" editable="true"/>
+        <Field id="e" desc="动态下拉框－CQ" status="N" fieldname="dataNo" edittype="select" dropdowntype="dynamic"
+            dataType="String" readonly="false" translated="CQ:AllDownBrcodeSelect"  require="true"
+            viewField="brcode,brname" init="true"  fieldmap="e=brcode;eName=brname"  size="20" multiple="true"
+            primary="false" type="String" xpath="/comboxDropdown" editable="true"/>
+        <Field id="f" desc="动态下拉框－树" status="N"  translated="CQ:FunctionTree"  multiple="true"
+            method="com.huateng.ebank.business.common.CQMethod.getDataDicName" readonly="false" require="true"
+	        fieldmap="f=funcid;fName=funcname"  viewField="funcname" edittype="select"  editable="true"
+	        dropdowntype="dynamictree" primary="true"  init="false" size="3" default="2" xpath="/comboxDropdown"/>
+	    <Field id="g" desc="LIST下拉" edittype="select" multiple="false" readonly="false"  editable="true"       
+	     translated="LIST:0,10;1,20;2,30;3,40;4,50" datatype="int" size="10" xpath="/dataNoLen"  
+	     require="true"/>
+      
+    </Fields>
+    
+    <Operations>
+        <Button id="btSave" name="btSave" desc="保存" operation="asysubmit" updateClass="com.huateng.fp.demo.updater.FieldUpdate" url="#" txn="" />
+    </Operations>
+</CommQry>

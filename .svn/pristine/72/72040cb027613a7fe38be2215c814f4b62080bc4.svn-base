@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2011-11-6 21:23:13 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.person.importtext.entity.Importpublictext" table="T_PL_IMPORTPUBLIC_TABLE" schema="ECUSER">
+        <id name="id" column="FD_ID" type="string">
+			<generator class="uuid.hex" />  
+		</id>
+        <property name="bankCode" type="string">
+            <column name="FD_BANKCODE" length="50" not-null="true" />
+        </property>
+        <property name="middleSigncode" type="string">
+            <column name="FD_MIDDLE_SIGNCODE" length="50" not-null="true" />
+        </property>
+        <property name="organizationCode" type="string">
+            <column name="FD_ORGANIZATION_CODE" length="50" not-null="true" />
+        </property>
+        <property name="informationCode" type="string">
+            <column name="FD_INFORMATION_CODE" length="25" not-null="true" />
+        </property>
+        <property name="creatTime" type="date">
+            <column name="FD_CREATTIME"  not-null="true" />
+        </property>
+        <property name="importTime" type="date">
+            <column name="FD_IMPORTTIME"  not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

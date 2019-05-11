@@ -1,0 +1,195 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC_CN"/>
+<title>网络资源监控</title>
+<link rel="stylesheet" type="text/css" href="../../../templets/ui/themes/blue/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../../templets/ui/themes/icon.css">
+<script type="text/javascript" src="../../../templets/ui/js/jquery-1.8.2.js"></script>
+<script type="text/javascript" src="../../../templets/ui/js/basic.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../templets/ui/js/chart/highcharts.js"></script>
+<script type="text/javascript" src="../../../templets/ui/js/chart/highcharts-more.js"></script>
+<script type="text/javascript" src="../../../templets/ui/js/uicore-min.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../templets/ui/js/uirender-min.js" charset="utf-8"></script>
+<script type="text/javascript" src='../../../dwr/engine.js'> </script>
+<script type="text/javascript" src='../../../dwr/util.js'> </script>  
+<script type='text/javascript' src='../../../dwr/interface/SysMonitor.js'> </script>	
+<style type="text/css">  
+body,html {  
+    margin: 0;  
+    padding: 0;  
+    width: 100%;  
+    font-size: 14px;  
+    font-family: arial;  
+} 
+#dynamicNetwork {  
+    margin: 10px auto 0;  
+    padding: 5px;  
+    width: 80%;  
+    height: 250px;  
+    border: 1px solid #ccc;  
+    border-radius: 5px;  
+}  
+#charts{
+     position: relative;
+} 
+#grid {
+    padding: 5px;  
+    width: 90%;  
+    margin: 8px auto 0;
+    position: relative;
+}
+</style>  
+<script type="text/javascript">  
+    function quickAjaxPost(url, data, async){  
+        var res;  
+        $.ajax({  
+            async : async,  
+            type : 'post',  
+            url : url,  
+            data : data,  
+            success : function(result){  
+                res = result;  
+            },  
+            error : function(result){  
+                res = "timeout";  
+            }  
+        });  
+        return res;  
+    }  
+    $(document).ready(function(){  
+        Highcharts.setOptions({  
+            global: {  
+                useUTC: false  
+            }  
+        });  
+        var chart = new Highcharts.Chart({  
+            chart : {  
+                renderTo : 'dynamicNetwork',  
+                type : 'spline',  
+                events : {  
+                    load : function(){  
+                        var series = this.series[0];  
+                        var series1 = this.series[1];  
+                        setInterval(function(){  
+                            var x = (new Date()).getTime();  
+                            SysMonitor.getNetwork(function(y){
+	                            	if(y!=null){
+	                            		series.addPoint([x, parseFloat(y[0])], true, true); 
+	                            		series1.addPoint([x, parseFloat(y[1])], true, true); 
+	                            	}
+                            	});
+                        }, 3000);  
+                    }  
+                }  
+            },  
+            title : {  
+                text : '网络数据流量监控'  
+            },  
+            xAxis : {  
+                type : 'datetime',  
+                tickPixelInterval: 100,  
+                title : {  
+                    text : '时间'  
+                }  
+            },  
+            yAxis : {  
+                title : {  
+                    text : '总字节数'  
+                }  
+            },  
+            tooltip : {  
+                formatter : function(){  
+                    return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' + Highcharts.numberFormat(this.y, 2);  
+                }  
+            },  
+            legend : {  
+                enabled : false  
+            },  
+            exporting : {  
+                enabled : false  
+            },  
+            series : [{  
+                name : '接收到的总字节数',  
+                data : (function(){  
+                    var data = [];  
+                    var time = (new Date()).getTime();  
+                    for (var i = -15; i <= 0; i++) {  
+                        data.push({  
+                            x: time + i * 1000,  
+                            y: 90  
+                        });  
+                    }  
+                return data;  
+                })()  
+            },
+            {  
+                name : '发送到的总字节数',  
+                data : (function(){  
+                    var data = [];  
+                    var time = (new Date()).getTime();  
+                    for (var i = -15; i <= 0; i++) {  
+                        data.push({  
+                            x: time + i * 1000,  
+                            y: 90  
+                        });  
+                    }  
+                return data;  
+                })()  
+            }]  
+        });  
+    });  
+</script>  
+</head>
+<body>
+<div id="dynamicNetwork"></div>
+<div id="grid">
+<table id="pg" class="easyui-propertygrid" style="" showGroup="true" scrollbarSize="0" data-options="columns: mycolumns">
+</div>
+<script type="text/javascript">
+var mycolumns = [[
+            {field:'name',title:'参数名',width:200,sortable:true},
+               {field:'value',title:'参数值',width:300,resizable:true}
+        ]];
+SysMonitor.getNetworkInfo(function(list){
+     var rows = new Array();
+	for(var i=0;i<list.length;i++){
+	   var nk = list[i];
+	   var groupName = '';
+       var j=0;
+	   for(var property in nk){ 
+        if(nk[property]=='GROUP'){
+          groupName = property;
+        }else{
+     	   var row = { name:property, value:nk[property], group:groupName};
+     	   rows[i*10 + j]=row;
+     	   j++;
+	    }
+      }
+   }
+   $('#pg').propertygrid();
+   $("#pg").propertygrid('loadData', rows);
+});
+ setInterval(function(){  
+ SysMonitor.getNetworkInfo(function(list){
+     var rows = new Array();
+	for(var i=0;i<list.length;i++){
+	   var nk = list[i];
+	   var groupName = '';
+       var j=0;
+	   for(var property in nk){ 
+        if(nk[property]=='GROUP'){
+          groupName = property;
+        }else{
+     	   var row = { name:property, value:nk[property], group:groupName};
+     	   rows[i*10 + j]=row;
+     	   j++;
+	    }
+      }
+   }
+   $('#pg').propertygrid();
+   $("#pg").propertygrid('loadData', rows);
+});
+},5000);
+</script>
+</body>
+</html>

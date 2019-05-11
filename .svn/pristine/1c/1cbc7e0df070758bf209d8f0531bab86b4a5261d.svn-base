@@ -1,0 +1,21 @@
+<CommQry title="TOdsCmsCodeIndustryId" navigate="TOdsCmsCodeIndustryId" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.rule.getter.TOdsCmsCodeIndustryGetter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="INDUSTRY_TYPE_ID" desc="编号" edittype="text" datatype="string"
+        xpath="/INDUSTRY_TYPE_ID" />
+        <Field id="TYPE_CD" desc="行业代码" edittype="text" datatype="string"
+        xpath="/TYPE_CD" />
+        <Field id="TYPE_VALUE" desc="行业名称" edittype="text" datatype="string"
+        xpath="/TYPE_VALUE" />
+        <Field id="LEVEL_CD" desc="行业级别" edittype="text" datatype="string"
+        xpath="/LEVEL_CD" />
+    </Fields>
+    <Where>
+    	<TextBox id="TYPE_CD" desc="行业代码" edittype="text" datatype="string" index="1" />
+    	<TextBox id="TYPE_VALUE" desc="行业名称" edittype="text" datatype="string" index="2" />
+    </Where>
+    <Operations>
+    	<Button id="btnSave" name="btnSave" desc="确定" icon="icon-save"/>
+    </Operations>
+</CommQry>

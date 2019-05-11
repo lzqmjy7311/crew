@@ -1,0 +1,68 @@
+package com.gbicc.common;
+
+import java.util.List;
+
+import com.gbicc.company.view.entity.TCmCodeIndustryNew;
+import com.gbicc.person.product.entity.Product;
+import com.huateng.commquery.config.bean.base.ICommonQueryBaseBean;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.exception.HuatengException;
+
+
+
+import javax.servlet.ServletRequest;
+
+import org.apache.commons.lang.StringUtils;
+
+public class CQMethod
+{
+  
+
+  public static String getProcuctNameByProductCode(ICommonQueryBaseBean element, String value, ServletRequest request)
+    throws HuatengException
+  {  
+    if (StringUtils.isEmpty(value)) {
+        return "";
+      }
+      ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+      List l = rootdao.queryByQL2List("from Product p where  p.prodCode = '" + value + "'");
+      if ((l == null) || (l.isEmpty())) {
+        return "";
+      }
+      Product product = (Product)l.get(0);
+      return product.getProdName();
+  }
+
+  public static String getindustryLevelTwoCdBytypeCd(ICommonQueryBaseBean element, String value, ServletRequest request)
+		    throws HuatengException
+		  {  
+		    if (StringUtils.isEmpty(value)) {
+		        return "";
+		      }
+		      ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		      List l = rootdao.queryByQL2List("from TCmCodeIndustryNew p where  p.typeCd = '" + value + "'");
+		      if ((l == null) || (l.isEmpty())) {
+		        return "";
+		      }
+		      TCmCodeIndustryNew tCmCodeIndustryNew = (TCmCodeIndustryNew)l.get(0);
+		      return tCmCodeIndustryNew.getTypeValue();
+		  }
+  
+  public static String getDateString(String date)
+  {
+	  StringBuffer buffer=new StringBuffer();
+	  buffer.append(date.charAt(0));
+	  buffer.append(date.charAt(1));
+	  buffer.append(date.charAt(2));
+	  buffer.append(date.charAt(3));
+	  buffer.append('-');
+	  buffer.append(date.charAt(4));
+	  buffer.append(date.charAt(5));
+	  buffer.append('-');
+	  buffer.append(date.charAt(6));
+	  buffer.append(date.charAt(7));
+	  String changDate=buffer.toString();
+	  return changDate;
+  }
+}

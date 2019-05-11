@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="安全参数" navigate="主页 &gt; 系统管理 &gt; 安全参数设置" type="call" interface="true"
+async="true" databusid="" transdataactionurl="/trans/TransDataAction.do" pagesize="50"
+	 getterclassname="com.huateng.ebank.business.approve.getter.SecParameterGetter" >
+	<Include id="BankParam" />
+	<PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="系统安全参数" maxPage="20" perfecth="20" />
+	<Fields>
+	    <Field id="magicId" desc="参数标识" status="F" readonly="true"
+			require="" method="None" primary="true" type="String" size="20"
+			xpath="/id/magicId" default=""/>
+		<Field id="paramId" desc="参数主键" status="N" readonly="true"
+			require="" method="None" primary="true" type="String" size="20"
+			xpath="/id/paramId" default=""/>
+
+		<Field id="paramValueTx" desc="系统参数" status="F" readonly=""
+			require="true" method="None" primary="true" datatype="string" type="" size="200"
+			xpath="/paramValueTx" default=""/>
+
+		<Field id="desc0" desc="参数说明" status="F" readonly="true"
+			require=""  datatype="string" method="None" primary="false" type="参数说明" size="30"
+			xpath="/desc0" default="" width="400"/>
+
+	  <Field id="st" desc="记录状态" status="N" require="false" edittype="select"
+			datatype="string" method="None" readonly="true" primary="true" type="st"
+			translated="DATA_DIC.3001" size="30" default="" xpath="/st" tip="" />
+
+      <Field id="lock" desc="是否锁定" edittype="text" datatype="string" status="N" size="1" xpath="/lock"/>
+	  <Field id="del" desc="是否已删除" edittype="text" datatype="string" status="N" size="1" xpath="/del"/>
+
+		<Field id="opr" desc="操作" require="false" edittype="text"
+			datatype="string" method="None" readonly="true" primary="true" type="操作"
+			 default="" xpath="" tip="操作" />
+	</Fields>
+	<Operations>
+		<Button id="btUpdate" name="updateBuspar" desc="修改" operation="asysubmit"
+			url="" show="" group="" txn="" />
+		<Button id="btSubmit" name="btSubmit" desc="保存" operation="asysubmit"
+			updateClass="com.huateng.ebank.business.approve.updater.SecParameterUpdate" />
+
+	</Operations>
+
+
+	<Where>
+
+		<Option id="qst" desc="记录状态" edittype="select"
+			datatype="string" size="1" index="1" translated="DATA_DIC.3001" />
+
+
+	</Where>
+</CommQry>

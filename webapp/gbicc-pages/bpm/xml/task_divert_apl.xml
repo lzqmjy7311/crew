@@ -1,0 +1,28 @@
+<CommQry title="TTaskDivert" navigate="TTaskDivert" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true" transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.gbicc.bpm.getter.TTaskDivertGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+        <Field id="id" desc="ID主键" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/id" />
+        <Field id="aplDate" desc="申请时间" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/aplDate" />
+        <Field id="aplPer" desc="申请人" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/aplPer/tlrName" />
+        <Field id="assignee" desc="现任务处理人" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/assignee/tlrName" />
+        <Field id="oldAssignee" desc="原任务处理人" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/oldAssignee/tlrName" />
+        <Field id="passDate" desc="审批通过时间" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/passDate" />
+        <Field id="status" desc="状态（0：审核中，1审核通过）" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/status" />
+        
+        <Field id="assigneeOrg" desc="现任务处理人所属机构" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/assigneeOrg/brname" />
+        <Field id="oldAssigneeOrg" desc="原任务处理人所属机构" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/oldAssigneeOrg/brname" />
+    </Fields>
+    <Operations>
+    	<Button id="btHandle" name="btHandle" desc="处理" icon="icon-add" updateClass="#" url="" txn="" />
+    </Operations>
+</CommQry>

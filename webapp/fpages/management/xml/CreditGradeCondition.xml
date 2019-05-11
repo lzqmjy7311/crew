@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="顺延方式设置" navigate="主页 &gt; 业务参数管理 &gt; 授信评分设置" type="call"
+	interface="true"
+	pagesize="100"
+	async="true"
+	databusid="ACEENTRY_DB"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.management.getter.CreditGradeConditionGetter">
+
+	<Include id="BankParam" />
+
+	<ResultViewParam>
+		/fpages/management/ftl/CreditGradeCondition.ftl
+	</ResultViewParam>
+	<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+	<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+	<Fields>
+
+	   <Field id="creditType" desc="授信种类" status="N"  method="None" readonly="false"
+		    edittype="select" translated="LIST:Special,专项授信;Composite,综合授信" require="true"
+			primary="true" type="String" size="32" xpath="/creditType" />
+
+	  <Field id="value1" desc="客户评级" status="N"  method="None" readonly="false" require="true"
+		primary="true" type="String" edittype="select" translated="DATA_DIC.4" size="20" xpath="/value1"  />
+
+ 	  <Field id="value2" desc="债项评分" status="N"  method="None" readonly="false" require="true"
+		primary="true" type="String" edittype="" datatype="float" scale="2" size="" xpath="/value2"  />
+	</Fields>
+
+	<Operations>
+		<Button id="btnAdd" name="btnAdd" desc="增加"
+			operation="addrecord" url="" show="" group="" txn="" />
+		<Button id="btnDel" name="btnDel" desc="删除"
+			operation="delrecord" url="" show="" group="" txn="" />
+		<Button id="btSave" name="btSave" desc="保存"
+			operation="asysubmit"
+			updateClass="com.huateng.ebank.business.management.updater.CreditGradeConditionUpdate"
+			url="/fpages/management/ftl/CreditGradeCondition.ftl" txn="" />
+	</Operations>
+
+</CommQry>

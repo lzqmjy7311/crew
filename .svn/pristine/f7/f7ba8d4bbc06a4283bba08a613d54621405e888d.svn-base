@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CommQry
+title="待办任务"
+navigate="主页 &gt; 我的工作台&gt; 待办任务 "
+type="call"
+interface="true"
+pagesize="10"
+async="true"
+databusid=""
+transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.huateng.ebank.business.management.getter.WaitToHandleTaskListGetter"
+>
+	<Include id="BankParam"/>
+	<ResultViewParam>
+		/fpages/management/ftl/WaitToHandleTaskEntry.ftl
+	</ResultViewParam>
+	<EmptyResultViewParam>
+		/fpages/management/ftl/WaitToHandleTaskEntry.ftl
+	</EmptyResultViewParam>
+
+	<Fields>
+		<Field id="taskId" desc="任务序号" status="F" method="None" xpath="/taskId" datatype="long"
+			primary="true" type="taskId" size="20"  default="" tip="任务序号" />
+
+		<Field id="transNo" desc="协议号" status="N" method="None" xpath="/transNo"
+			primary="true" type="transNo" size="" default="" tip="协议号"/>
+
+		<Field id="custno" desc="客户号" status="N" method="None" xpath="/custno"
+			primary="true" type="custno" size="20" default="" tip="客户号"/>
+
+		<Field id="custName" desc="客户名称" status="N" method="None" xpath="/custName"
+			primary="true" type="custNm" size="50" default="" tip="客户名称"/>
+			
+		<Field id="actionName" desc="待办事宜名称" status="F" method="None" xpath="/actionName"
+			primary="true" type="actionName" size="20" default="" tip="待办事宜名称" />
+			
+		<!-- add by jornezhang 20091114 BMS-2187 质押申请 begin -->
+<!--		<Field id="taskName" desc="任务名" status="F" method="None" xpath="/taskName" edittype="select"-->
+<!--			translated="LIST:CheckTask,计息复核;ApproveTask,审批;AccountTask,记账;ConfirmTask,客户经理确认;BackToModifyTask,退回修改;QueryResultTask,查询查复结果登记;LaunchSignTask,签收发送;LaunchApplicationTask,发送签收申请;DrawBillTask,出票;AccountBackTask,会计经办;AccountApproveTask,记账"-->
+<!--			primary="true" type="taskName" size="20" default="" tip="任务名" />-->
+		<!-- add by jornezhang 20091114 BMS-2187 质押申请 end -->
+		
+		<Field id="status" desc="任务状态" status="F" method="None" xpath="/status"
+			primary="true" type="status" size="20" scale="2" default="" tip="任务状态" />
+
+		<Field id="owner" desc="任务办理者" status="F" method="None" xpath="/owner"
+			primary="true" type="owner" size="20" default="" tip="任务办理者" />
+
+		<Field id="pinstanceTemplate" status="F" method="None" desc="流程名称" tip="流程名称" xpath="/pinstanceTemplate"
+			primary="true" type="pinstanceTemplate" size="20" default=""/>
+
+<!--		<Field id="procName" status="F" method="None" desc="流程名称" tip="流程名称" xpath="/procName"-->
+<!--			edittype="select" translated="CQ:WorkflowProcNameSelect" fieldmap="procName=name;procNameName=description" viewField="description"-->
+<!--			primary="true" type="procName" size="20" default=""/>-->
+
+<!--		<Field id="bussType" desc="业务种类" status="N" method="None" xpath="/bussType"  translated="DATA_DIC.29" edittype="select"-->
+<!--			primary="true" type="bizClass" size="20" default="" tip="业务种类" />-->
+
+		<Field id="starter" desc="发起者" status="F" method="None" xpath="/starter"
+			primary="true" type="starter" size="20" default="" tip="发起者" />
+
+		<Field id="startTime" desc="流程发起时间" status="F" method="None" readOnly="true"  edittype="text"
+			primary="false" type="startTime" size="100" default="" xpath="/startTime" tip="流程发起时间"/>
+<!---->
+<!--		<Field id="appno" desc="申请号" status="F" method="None" readOnly="true"  edittype="text"-->
+<!--			primary="false" type="appno" size="100" default="" xpath="/appno" tip="申请号"/>-->
+<!---->
+<!--		<Field id="procInsId" desc="流程实例号" readonly="false" type="procInsId" size="20"-->
+<!--			edittype="text" datatype="long" xpath="/procInsId"/>-->
+<!---->
+<!--		<Field id="amount" desc="贷款金额" status="F" method="None" readOnly="true"  edittype="text"-->
+<!--			primary="false" type="feeamt" size="100" default="" xpath="/amount" tip="贷款金额"/>-->
+<!---->
+<!--		<Field id="contractId" desc="协议id" status="F" method="None" readOnly="true" edittype="text"-->
+<!--			primary="false" type="contractId" size="100" default="" xpath="/contractId" tip="协议id"/>-->
+
+	</Fields>
+
+	<Where>
+		<TextBox  id="inTransNo" tablename="ci" fieldname="inTransNo"
+			type="inTransNo"  dataType="" 	operation="EQ" size="20"  desc="协议号"  tip="协议号"
+			method="None"  index="0" function="" width="" default=""
+			scale="" require=""    readOnly=""
+			errmsg=""/>
+
+<!--		<Option id="procNameQuery" tablename="ci" fieldname="procNameQuery"-->
+<!--			operation="EQ"  size=""  desc="流程名" tip="流程名"-->
+<!--			type="procNameQuery" translated="CQ:WorkflowProcNameSelect" fieldmap="procNameQuery=name;procNameQueryName=description"-->
+<!--			viewField="description" edittype="select" dropdowntype="dynamic" require=""-->
+<!--			method="None"   index="1" width="" height="" default="" onchange=""-->
+<!--		    readOnly="">-->
+<!--		</Option>-->
+
+
+	</Where>
+	<Operations>
+		<Button id="btApply" name="btApply" desc="我要办理" operation="href"
+			url=""
+			show="0" group="o" txn="MSYSMOV002"/>
+
+
+	</Operations>
+
+
+
+</CommQry>

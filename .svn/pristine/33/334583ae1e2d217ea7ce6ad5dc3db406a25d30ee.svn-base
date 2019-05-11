@@ -1,0 +1,344 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+
+<#assign userInfo_=Session["USER_SESSION_INFO"] />
+
+<@CommonQueryMacro.page title="检查任务分派信息">
+	<@CommonQueryMacro.CommonQuery id="LoanAccount" init="true" submitMode="selected">
+		<@CommonQueryMacro.Interface id="LoanAccountInterface" label="请输入查询条件" colNm=6 labelwidth="150"/>
+		<@CommonQueryMacro.DataTable id="LoanAccountTable" readonly="true" paginationbar="btnDistribute,btnDistributes" 
+		fieldStr="select,loanacno[150],custname[150],dutyInfo[200],prodid[100],prodname[200],acflag[80],acflag2[100],riskflag[80],overbal[100],operidName[100],bankidName[100]" width="100%" hasFrame="true"/>
+	</@CommonQueryMacro.CommonQuery>
+	<@CommonQueryMacro.FloatWindow id="distributeFW" modal="true" label="检查任务分派(单笔)" 
+	resize="true" minimize="false" width="900" height="450" maximize="true" closure="true" show="false" defaultZoom="normal">
+	<table>
+		<tr>
+			<td colspan="2">
+				<@CommonQueryMacro.CommonQuery id="LoanAccount" init="true" submitMode="selected">
+					<@CommonQueryMacro.Group id="distributeGroup" label="基本信息" colNm=4 labelwidth="150" 
+					fieldStr="loanacno,bankidName,prodid,prodname,custid,custname,acflag,riskflag"/>
+				</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+				<@CommonQueryMacro.CommonQuery id="LoanAccountDutyDistribute" init="false" submitMode="current">
+					<@CommonQueryMacro.Group id="distributeGroup" label="分派信息" colNm=4 labelwidth="150" 
+					fieldStr="oldCheckUser,checkUser,distDt,remark,operOrgName,operUserName"/>
+					<br/><center>
+						<@CommonQueryMacro.Button id="btnSubmit" />
+						<@CommonQueryMacro.Button id="btnCancel" />
+					</center>
+				</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+	</table>
+	</@CommonQueryMacro.FloatWindow>
+	<@CommonQueryMacro.FloatWindow id="muchDistributeFW" modal="true" label="检查任务分派(批量)" 
+	resize="true" minimize="false" width="900" height="550" maximize="true" closure="true" show="false" defaultZoom="normal">
+	<div name='group1' class="group" style="width:98%">
+	    <table width="100%" class="grouptable" height="100%" style="table-layout: auto;">
+	    	<tr>
+	    		<td class="labeltd" align="center" width="width:10%">
+					分派前检查人：
+				</td>
+				<td align="right" nowrap style="width:40%">
+					<select  multiple name="oldCheckUser" id="oldCheckUser" size="5" style='width:100%;'></select>
+				</td>
+				<td width="width:10%"></td>
+				<td class="labeltd" valign=center align="left" nowrap style="width:40%">
+					（前格说明，网点号，姓名，用户编号）
+				</td>
+	    	</tr>
+	    	<tr>
+	    		<td>
+	    			&nbsp;
+	    		</td>
+	    	</tr>
+	        <tr id="text_TR" fieldId="text">
+	        	<td class="labeltd" align="center" width="width:10%">
+					分派后检查人：
+				</td>
+				<td align="right" nowrap style="width:40%">
+					<select  multiple name="left" id="left" size="5" style='width:100%;'
+						ondblclick="moveOption(document.getElementById('left'), document.getElementById('right'))">
+					</select>
+				</td>
+				<td width="width:10%">
+					<center>
+						<@CommonQueryMacro.SimpleButton id="btn5" desc="添加->" onclick="moveOption(document.getElementById('left'),document.getElementById('right'))" icon="" plain="false" />
+					</center>
+					<br/>
+					<center>
+						<@CommonQueryMacro.SimpleButton id="btn6" desc="<-删除" onclick="moveOption(document.getElementById('right'), document.getElementById('left'))" icon="" plain="false" />
+					</center>
+				</td>
+				<td valign=center align="right" nowrap style="width:40%">
+					<select  multiple name="right" id="right" size="5" style='width:100%;'
+						ondblclick="moveOption(document.getElementById('right'), document.getElementById('left'))">
+					</select>
+				</td>
+			</tr>
+	     </table>
+	</div>
+	<table>
+		<tr>
+			<td>
+				<@CommonQueryMacro.CommonQuery id="LoanAccountDutyDistribute" init="false" submitMode="current">
+					<@CommonQueryMacro.Group id="muchDistributeGroup" label="分派信息" colNm=4 labelwidth="150" 
+					fieldStr="distPrinciple,distQuantity,distDt,remark,operUserName,operOrgName"/>
+					<br/><center>
+						<@CommonQueryMacro.Button id="btnMuchSubmit" />
+						<@CommonQueryMacro.Button id="btnMuchCancel" />
+					</center>
+				</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+	</table>
+	</@CommonQueryMacro.FloatWindow>
+<script>
+	function btnDistribute_onClick(){
+		var record=LoanAccount_dataset.getFirstRecord();
+		var records=[];
+		while(record){
+			if(record.getValue("select")==true){
+				records.push(record);
+			}
+			record=record.getNextRecord();
+		}
+		if(!(records.length>0)){
+			top.easyMsg.info("请选择要分派的任务！");
+			return;
+		}
+		if(records.length>1){
+			top.easyMsg.info("多任务分派请使用【批量分派】功能！");
+			return;
+		}
+		//检查该帐号是否已发送分派任务，且尚未审核完成。
+		var loanacno=records[0].getValue("loanacno");
+		AccountDutyDistribute.dwrFindDistributeRuningProcess(loanacno,function(y){
+			if(y=="false"){
+				setPageFieldsNullFun();
+				subwindow_distributeFW.show();
+				LoanAccountDutyDistribute_dataset.setValue("oldCheckUser",records[0].getValue("dutyInfo"));
+				LoanAccountDutyDistribute_dataset.setFieldRequired("checkUser",true);
+				TaskVariable.getSystemCurrentDate(null,function(y){
+					LoanAccountDutyDistribute_dataset.setValue("distDt",y);
+				});
+				LoanAccountDutyDistribute_dataset.setValue("operUserId",'${userInfo_.tlrNo}');
+				LoanAccountDutyDistribute_dataset.setValue("operUserName",'${userInfo_.tlrName}');
+				LoanAccountDutyDistribute_dataset.setValue("operOrgId",'${userInfo_.brCode}');
+				LoanAccountDutyDistribute_dataset.setValue("operOrgName",'${userInfo_.brName}');
+				LoanAccountDutyDistribute_dataset.setValue("loanacnoId",loanacno);
+			}else{
+				top.easyMsg.info("该货款帐号已发送分派申请，请等待审核结束后再执行操作！");
+				return;
+			}
+		});
+	}
+	//分派后检查人
+	function checkUser_DropDown_beforeOpen(dropDown){
+		var oldCheckUser=LoanAccountDutyDistribute_dataset.getValue("oldCheckUser");//获取分派前检查人机构
+		var str=oldCheckUser.split(",");
+		var qServerType=str[0];
+		if(!qServerType){
+			return "分派前检查人为空或者分派前检查人机构为空,无法进行分派操作!";
+		}
+		subAutoUserAndOrg_DropDownDataset.setParameter("orgId",qServerType);
+		subAutoUserAndOrg_DropDownDataset.setParameter("currAssignee",str[2]);
+		checkUser_DropDown.cached=false;//让qGroupId不存入缓存
+	}
+	//分派后检查人按键弹起事件
+	function checkUser_DropDown_onKeyup(val){
+		if(val.length>=0){
+			return true;
+		}
+		return false;
+	}
+	function btnDistributes_onClick(){
+		var record=LoanAccount_dataset.getFirstRecord();
+		var records=[];
+		while(record){
+			if(record.getValue("select")==true){
+				records.push(record);
+			}
+			record=record.getNextRecord();
+		}
+		if(!(records.length>0)){
+			top.easyMsg.info("请选择要分派的任务！");
+			return;
+		}
+		if(records.length<2){
+			top.easyMsg.info("单任务分派请使用【分派】功能！");
+			return;
+		}
+		var records2=records;
+		for(var i=0;i<records.length;i++){
+			for(var k=0;k<records2.length;k++){
+				if(records[i].getValue("bankidId")!=records2[k].getValue("bankidId")){
+					top.easyMsg.info("只能同时分派同一机构下的任务！");
+					return;
+				}
+			}
+		}
+		var bool="false";
+		DWREngine.setAsync(false);
+		var loanacnos="";
+		var orgId=records[0].getValue("bankidId");
+		for(var i=0;i<records.length;i++){
+			var loanacno=records[i].getValue("loanacno");
+			loanacnos=loanacnos+loanacno+",";
+			AccountDutyDistribute.dwrFindDistributeRuningProcess(loanacno,function(y){
+				if(y=="true"){
+					bool="true";
+				}
+			});
+		}
+		if(bool=="false"){//弹出窗口，初始化页面
+			$('#oldCheckUser').empty();
+			$('#left').empty();
+			$('#right').empty();
+			setPageFieldsNullFun();
+			subwindow_muchDistributeFW.show();
+			
+			var distType="1";
+			AccountDutyDistribute.dwrFindOldCheckUser(loanacnos,distType,function(y){
+				initSel(y,'oldCheckUser');
+			});
+			AccountDutyDistribute.dwrFindLeftCheckUser(orgId,"",function(y){
+				initSel(y,'left');
+			});
+			LoanAccountDutyDistribute_dataset.setValue("distQuantity",records.length);
+			TaskVariable.getSystemCurrentDate(null,function(y){
+				LoanAccountDutyDistribute_dataset.setValue("distDt",y);
+			});
+			LoanAccountDutyDistribute_dataset.setValue("operUserId",'${userInfo_.tlrNo}');
+			LoanAccountDutyDistribute_dataset.setValue("operUserName",'${userInfo_.tlrName}');
+			LoanAccountDutyDistribute_dataset.setValue("operOrgId",'${userInfo_.brCode}');
+			LoanAccountDutyDistribute_dataset.setValue("operOrgName",'${userInfo_.brName}');
+			LoanAccountDutyDistribute_dataset.setFieldRequired("distPrinciple",true);
+		}else{
+			top.easyMsg.info("货款帐号【"+loanacno+"】已发送分派申请，请等待审核结束后再执行操作！");
+		}
+		DWREngine.setAsync(true);
+	}
+	function initSel(val,selId){
+        if(val!=null && val.length>0){
+            var obj = document.getElementById(selId);
+            var vals = val.split(";");
+            for(var i=0;i<vals.length;i++){
+                var tmp = vals[i];
+                if(tmp!=null && tmp.length>0){
+                    var tmps = tmp.split("=");
+                    var opt = null;
+                    if(tmps.length>1){
+                        opt = new Option(tmps[1],tmps[0]);
+                    }else{
+                        opt = new Option(tmps[0],tmps[0]);
+                    }
+                    obj.options.add(opt);
+                }
+            }
+        }
+    }
+	//移动
+    function moveOption(obj1, obj2){
+		for(var i = obj1.options.length - 1 ; i >= 0 ; i--){
+			if(obj1.options[i].selected){
+				var opt = new Option(obj1.options[i].text,obj1.options[i].value);
+				obj2.options.add(opt);
+				obj1.remove(i);
+			}
+		}
+    }
+	//设置dataset所有字段值为Null
+	function setPageFieldsNullFun(){
+		var fieldName="";
+		for(var i=0;i<LoanAccountDutyDistribute_dataset.fields.length;i++){
+			fieldName=LoanAccountDutyDistribute_dataset.fields[i].name;
+			if(fieldName.substring(0,1)!="_"){
+				LoanAccountDutyDistribute_dataset.setValue(fieldName,null);
+			}
+		}
+	}
+	function distributeFW_floatWindow_beforeClose(){
+		LoanAccountDutyDistribute_dataset.setFieldRequired("checkUser",false);
+		return true;
+	}
+	function distributeFW_floatWindow_beforeHide(){
+		LoanAccountDutyDistribute_dataset.setFieldRequired("checkUser",false);
+		return true;
+	}
+	function muchDistributeFW_floatWindow_beforeClose(){
+		LoanAccountDutyDistribute_dataset.setFieldRequired("distPrinciple",false);
+		return true;
+	}
+	function muchDistributeFW_floatWindow_beforeHide(){
+		LoanAccountDutyDistribute_dataset.setFieldRequired("distPrinciple",false);
+		return true;
+	}
+	function btnMuchSubmit_onClickCheck(){
+		var obj = document.getElementById("right");
+        var str = "";
+        for(var i=0;i<obj.options.length;i++){
+            str+=obj.options[i].value+",";
+        }
+        if(str==""){
+        	top.easyMsg.info("请选择分派后检查人！");
+    		return false;
+        }
+		var distPrinciple=LoanAccountDutyDistribute_dataset.getValue("distPrinciple");
+		var distQuantity=LoanAccountDutyDistribute_dataset.getValue("distQuantity");
+		if(distPrinciple=="1" && obj.options.length>distQuantity){
+			top.easyMsg.info("选择【本次分派总量平均原则】时[分派后检查人]数量不能大于[分派笔数]！");
+    		return false;
+		}
+		var record=LoanAccount_dataset.getFirstRecord();
+		var loanacnos="";
+		var oldCheckUsers="";
+		while(record){
+			if(record.getValue("select")==true){
+				loanacnos=loanacnos+record.getValue("loanacno")+",";
+				oldCheckUsers=oldCheckUsers+record.getValue("dutyInfo")+";";
+			}
+			record=record.getNextRecord();
+		}
+		loanacnos=loanacnos.substring(0,loanacnos.length-1);
+        str=str.substring(0,str.length-1);
+        oldCheckUsers=oldCheckUsers.substring(0,oldCheckUsers.length-1);
+        LoanAccountDutyDistribute_dataset.setParameter("checkUser",str);
+        LoanAccountDutyDistribute_dataset.setParameter("op","submit");
+        LoanAccountDutyDistribute_dataset.setParameter("loanacnos",loanacnos);
+        LoanAccountDutyDistribute_dataset.setParameter("oldCheckUsers",oldCheckUsers);
+	}
+	function btnSubmit_onClickCheck(){
+		LoanAccountDutyDistribute_dataset.setParameter("op","submit");
+	}
+ 	//提交后关闭页面，刷新表格
+	function btnSubmit_postSubmit(button) {
+		button.url="#";
+		top.easyMsg.info("操作成功！");
+		subwindow_distributeFW.close();
+		flushCurrentPage();
+	}
+	function btnMuchSubmit_postSubmit(button) {
+		button.url="#";
+		top.easyMsg.info("操作成功！");
+		subwindow_muchDistributeFW.close();
+		flushCurrentPage();
+	}
+ 	function btnCancel_onClick(){
+ 		subwindow_distributeFW.close();
+ 	}
+ 	function btnMuchCancel_onClick(){
+ 		subwindow_muchDistributeFW.close();
+ 	}
+	//刷新当前页
+	function flushCurrentPage() {
+		LoanAccount_dataset.flushData(LoanAccount_dataset.pageIndex);
+	}
+</script>
+<script type='text/javascript' src='${contextPath}/dwr/interface/AccountDutyDistribute.js'> </script>
+<script type='text/javascript' src='${contextPath}/dwr/interface/TaskVariable.js'> </script>
+<script type="text/javascript" src="${contextPath}/gbicc-pages/jquery-form.js"></script>
+</@CommonQueryMacro.page>

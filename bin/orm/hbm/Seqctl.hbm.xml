@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping package="com.huateng.ebank.entity.data.mng">
+	<class
+		name="Seqctl"
+		table="SEQCTL"
+		lazy="false"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="id"
+			type="string"
+			column="ID"
+		>
+			<generator class="uuid.hex" />  
+		</id>
+
+		<property
+			name="valueNo"
+			column="VALUE_NO"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="valueIndex"
+			column="VALUE_INDEX"
+			type="string"
+			not-null="false"
+			length="40"
+		/>
+		<property
+			name="valueCurr"
+			column="VALUE_CURR"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="maxValue"
+			column="MAX_VALUE"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="minValue"
+			column="MIN_VALUE"
+			type="integer"
+			not-null="false"
+			length="10"
+		/>
+
+
+	</class>
+</hibernate-mapping>

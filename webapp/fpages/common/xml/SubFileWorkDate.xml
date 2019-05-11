@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="生成上报文件日期切换" navigate="主页 &gt; 生成上报文件 &gt; 选择日期"
+	type="call"
+	interface="false"
+	pagesize="10"
+	async="true"
+	databusid="ACEENTRY_DB"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.common.getter.SubFileChangeFileDateGetter">
+
+	<Include id="BankParam" />
+
+	<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+	<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+	<Fields>
+		<Field id="oldFileDate" desc="原工作日" require="false" edittype="text"
+			datatype="date" method="None" readonly="true" tip="日期"
+			size="30" status="F" default="" xpath="/oldFileDate" />
+
+		<Field id="newFileDate" desc="日期" require="true" edittype="text"
+			datatype="date" method="None" readonly="false" tip="日期"
+			size="30" status="F" default="" xpath="/newFileDate" />
+	</Fields>
+
+	<Operations>
+		<Button id="btSave" name="btSave" desc="确定"
+			operation="asysubmit" updateClass="com.huateng.ebank.business.common.update.SubFileChangeDateUpdate" url="#"  show="" group="" txn="" />
+
+		<Button id="btCancel" name="btCancel" desc="取消"
+			operation="" updateClass="" url=""  show="" group="" txn="" />
+	</Operations>
+
+</CommQry>

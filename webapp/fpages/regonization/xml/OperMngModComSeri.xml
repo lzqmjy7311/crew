@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="操作员修改" navigate="主页 &gt; 系统管理 &gt; 操作员修改" type="call"
+	interface="true" pagesize="5" async="true" databusid="MANAGEMENTTLR"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.opermng.getter.OperMngModComSeriGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+
+		<Field id="tlrno" desc="操作员号" readonly="true" status="N" require="" rules="isTlrno" errmsg="错误的操作员号[请输入8位数字]"
+			primary="true" type="String" size="8" xpath="/tlrno" />
+
+		<Field id="tlrName" desc="操作员名称" status="N" require="" readonly="true"
+			primary="true" type="String" size="30" xpath="/tlrName" />
+	
+		<Field id="status" desc="状态" status="N" readonly="true"
+			translated="DATA_DIC.37" require="" edittype="select" width=""
+			method="None" primary="true" type="String" size="20" xpath="/status"
+			default="" />
+
+		<Field id="effectDate" desc="生效日期" require="false" status="F"
+			edittype="date" datatype="date" method="None" width=""
+			primary="false" type="String" size="20" xpath="/effectDate"
+			default="" />
+		<Field id="expireDate" desc="失效日期" require="false" status="F"
+			edittype="date" datatype="date" method="None" width=""
+			primary="false" type="String" size="20" xpath="/expireDate"
+			default="" />
+
+		<Field id="email" desc="EMAIL" require="" status="F"
+			method="None" width="" primary="false" type="String" size="20"
+			xpath="/email" default="" />
+
+		<Field id="loginIp" desc="操作员IP" require="false" status="F"
+			readonly="false" edittype="String" datatype="String"
+			primary="true" type="String" size="15" xpath="/loginIp" />
+		<!--modify by zhiyang.he 用户管理双岗复核改造 2012-09-04 begin -->
+		<Field id="flag" desc="有效状态" status="N" readonly="true"
+			translated="LIST:1,有效;0,无效" require="false" edittype="select" width=""
+			method="None" primary="true" type="String" size="20"
+			xpath="/flag" default="" />
+		<Field id="isLock" desc="锁定状态" require="" status="F" method="None" translated="LIST:1,已锁定;0,未锁定"
+			edittype="select" width="" primary="false" type="String" size="20" xpath="/isLock" readonly="true"
+			default="" />
+		<Field id="isLockModify" desc="修改锁定状态" require="" status="F" method="None" translated=""
+			edittype="select" width="" primary="false" type="String" size="20" xpath="/isLockModify" readonly="true"
+			default="" />
+		<Field id="reset" desc="重置密码状态" status="N" require="" readonly="true"
+			primary="true" type="String" size="30" xpath="/reset" />
+		
+		<Field id="newFlg" desc="是否新增" require="" status="F" method="None" translated=""
+			edittype="" width="" primary="" type="String" size="20" xpath="" readonly="true" />
+		<!--modify by zhiyang.he 用户管理双岗复核改造 2012-09-04 end -->
+	</Fields>
+
+	<Where>
+	</Where>
+
+	<Operations>
+		<Button id="btModSave" name="btSave" desc="确定" operation=""
+			updateClass="com.huateng.ebank.business.opermng.update.OperMngModUpdate"
+			url="#" txn="" />
+	    <Button id="btCancel" name="btCancel" desc="返回" operation="asysubmit"
+			url="#" txn="" />
+	</Operations>
+	<Sql></Sql>
+</CommQry>

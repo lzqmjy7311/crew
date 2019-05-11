@@ -1,0 +1,30 @@
+<CommQry title="TDataOwingTaxes" navigate="TDataOwingTaxes" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.financial.analysis.getter.TDataOwingTaxesGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+        <Field id="id" desc="ID" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="50" scale="2" default="" xpath="/id" />
+        <Field id="companyName" desc="企业名称" require="" edittype="text" datatype="text" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/companyName" />
+        <Field id="taxEnterNo" desc="税务登记号" require="" edittype="text" datatype="text" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/taxEnterNo" />
+        <Field id="legalName" desc="法定代表人" require="" edittype="text" datatype="text" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/legalName" />
+        <Field id="legalCertNo" desc="证件号码" require="" edittype="text" datatype="text" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/legalCertNo" />
+        <Field id="taxType" desc="欠税类型" require="" edittype="text" datatype="text" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/taxType" />
+        <Field id="sumTaxAmt" desc="累计欠缴税额" require="" edittype="text" datatype="text" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/sumTaxAmt" />
+        <Field id="newTaxAmt" desc="本年度新欠税额" require="" edittype="text" datatype="text" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/newTaxAmt" />
+        <Field id="belongOrg" desc="税款所属税务机关" require="" edittype="text" datatype="text" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/belongOrg" />
+        <Field id="relaId" desc="解析文件id" require="" edittype="text" datatype="text" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/relaId" />
+        <Field id="rowDate" desc="数据日期" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/rowDate" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

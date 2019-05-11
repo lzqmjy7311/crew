@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CommQry
+title="批处理监控"
+navigate="主页 &gt; 系统管理 &gt; 批量监控"
+type="call"
+interface="true"
+pagesize="10"
+async="true"
+databusid="DEMO"
+transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.huateng.ebank.monitor.batch.getter.BatchStepListGetter"
+>
+	<Include id="BankParam"/>
+	<Fields>
+		<Field id="jobno" desc="作业号" status="F" method="None" readOnly="true" edittype="" datatype="long"
+			primary="false" type="jobno" size="100" default="" xpath="/jobNo"/>
+		<Field id="step" desc="步骤号" status="F" method="None" readOnly="true" edittype="" datatype="long"
+			primary="false" type="step" size="100" default="" xpath="/stepNo"/>
+		<Field id="substep" desc="子步骤号" status="F" method="None" readOnly="true" edittype="" datatype="long"
+			primary="false" type="substep" size="100" default="" xpath="/subStepNo"/>
+		<Field id="substepname" desc="步骤名称" status="F" method="None" readOnly="true" edittype="" datatype="string"
+			primary="false" type="substep" size="100" default="" xpath="/subStepName"/>
+		<Field id="stepdispname" desc="作业号-步骤号-子步骤号" status="F" method="None" readOnly="true" edittype="" datatype="string"
+			primary="false" type="substep" size="100" default="" xpath="/stepDispName"/>
+		<Field id="starttime" desc="开始时间" status="F" method="None" readOnly="true" edittype="" datatype="string"
+			primary="false" type="substep" size="100" default="" xpath="/startTime"/>
+		<Field id="endtime" desc="结束时间" status="F" method="None" readOnly="true" edittype="" datatype="string"
+			primary="false" type="substep" size="100" default="" xpath="/endTime"/>
+		<Field id="status" desc="运行状态" status="F" method="None" readOnly="true" edittype="" datatype="string"
+			primary="false" type="substep" size="100" default="" xpath="/statusDisp"/>
+			
+		<Field id="batchstatus" desc="当前运行" status="F" method="None" readOnly="true" edittype="" datatype="string"
+			primary="false" type="strng" size="100" default="" xpath="/batchInfo/statusDisp"/>
+		<Field id="batchcurrentstep" desc="当前运行作业" status="F" method="None" readOnly="true" edittype="" datatype="string"
+			primary="false" type="strng" size="100" default="" xpath="/batchInfo/currentStep/stepDispName"/>
+		<Field id="batchsubstepcount" desc="总步骤数" status="F" method="None" readOnly="true" edittype="" datatype="long"
+			primary="false" type="jobno" size="100" default="" xpath="/batchInfo/subStepCount"/>
+		<Field id="successstepcount" desc="成功完成步骤数" status="F" method="None" readOnly="true" edittype="" datatype="long"
+			primary="false" type="step" size="100" default="" xpath="/batchInfo/successStepCount"/>
+		<Field id="failstepcount" desc="失败步骤数" status="F" method="None" readOnly="true" edittype="" datatype="long"
+			primary="false" type="substep" size="100" default="" xpath="/batchInfo/failStepCount"/>
+		<Field id="bhdate" desc="批量日期" status="F" method="None" readOnly="true" edittype="" datatype="string"
+			primary="false" type="strng" size="100" default="" xpath="/batchInfo/bhDate"/>
+	</Fields>
+
+	<Where>
+  		 <TextBox  id="bhdate" tablename="ci" fieldname="bhdate" datatype="date" colNm=""
+			 	operation="EQ" size="30"  desc="批量日期"  tip="批量日期" method="None" index="1"
+			 	 function="" width="" default="" require=""   readOnly="false" />
+	</Where>
+	<Operations>
+	</Operations>
+</CommQry>

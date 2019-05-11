@@ -1,0 +1,42 @@
+<CommQry title="TCwIdnexManage" navigate="TCwIdnexManage" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.warn.ComninationWarn.getter.TCwIdnexManageGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+        <Field id="id" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/id" />
+        <Field id="indexCode" desc="指标编号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/indexCode" />
+        <Field id="indexName" desc="指标名称" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/indexName" />
+        <Field id="indexType" desc="指标分类" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/indexType" />
+        <Field id="gatherType" desc="展示类型" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/gatherType" />
+        <Field id="monitorRpe" desc="监测频率" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/monitorRpe" />
+        <Field id="threshold1" desc="红色边界值" require="" edittype="text" datatype="double" method="None" type="" status="F" size="15" scale="2" default=""
+        xpath="/threshold1" />
+        <Field id="threshold2" desc="黄色边界值" require="" edittype="text" datatype="double" method="None" type="" status="F" size="15" scale="2" default=""
+        xpath="/threshold2" />
+        <Field id="creditUser" desc="创建人" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/creditUser" />
+        <Field id="updateUser" desc="更新人" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/updateUser" />
+        <Field id="updateed" desc="修改日期" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/updateed" />
+        <Field id="credited" desc="创建日期" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/credited" />
+        <Field id="indexType2" desc="指标类型（1递增，0递减）" require="" edittype="select" translated="LIST:1,递增;0,递减" type="" status="F" size="15" scale="2" default=""
+        xpath="/indexType2" />
+       <Field id="thresholdVersion" desc="阈值版本号"  require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/thresholdVersion" />
+       <Field id="zbDescripe" desc="指标描述"  width="600" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/zbDescripe" />\
+    </Fields>
+    <Where></Where>
+    <Operations>
+    	<Button id="btModify" name="btModify" desc="修改" txn="" />
+    	<Button id="btSave" name="btSave" desc="提交"  operation="asysubmit" txn="#" updateClass="com.gbicc.warn.ComninationWarn.update.TCwIdnexManageUpdate"/>
+    	<Button id="btCancel" name="btCancel" desc="取消" url="" txn="" />
+    </Operations>
+</CommQry>

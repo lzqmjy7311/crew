@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="单客户预警处置  &gt;  人工预警规则" navigate="预警处置    &gt; 预警处置" type="call" interface="false" pagesize="8" async="true" databusid="" transdataactionurl="/trans/TransDataAction.do" txnlogflag="true" getterclassname="com.gbicc.company.warnDisposal.getter.TCmWarnPersonRuleGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+        <Field id="id" desc="ID" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default="" xpath="/id" />
+        <Field id="warnCode" desc="规则编号" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/warnCode" />
+        <Field id="warnName" desc="规则名称" width="500" colspan="4" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="100" scale="2" default=""
+        xpath="/warnName" />
+        <Field id="warnSubjectCode" desc="主题" require="" edittype="select" translated="DATA_DIC.12608" datatype="string" method="None" readonly="false" type="" status="F" size="150" scale="2" default=""
+        xpath="/warnSubjectCode" />
+        <Field id="warnLevel" desc="规则等级" require="" edittype="select" translated="DATA_DIC.12606" datatype="string" method="None" readonly="false" type="" status="F" size="150" scale="2" default=""
+        xpath="/warnLevel" />
+        <Field id="warnProcessLevel" desc="审批层级" require="" edittype="select" translated="DATA_DIC.202" datatype="string" method="None" readonly="false" type="" status="F" size="150" scale="2" default=""
+        xpath="/warnProcessLevel" />
+        <Field id="desc" desc="说明" require="" width="500" colspan="4" edittype="textarea" height="50" datatype="string" method="None" readonly="false" type="" status="F" size="1000" scale="2" default="" xpath="/desc" />
+        <Field id="credited" desc="创建日期" require="" edittype="text" datatype="date" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/credited" />
+        <Field id="updated" desc="修改日期" require="" edittype="text" datatype="date" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/updated" />
+        <Field id="opr" desc="操作" edittype="text" datatype="string" xpath="/opr" />
+    </Fields>
+    <Where>
+    	<TextBox id="warnCode" desc="规则编号" edittype="text" datatype="string" size="50" require="" index="0" />
+		<TextBox id="warnName" desc="规则名称" edittype="text" status="F" datatype="string" size="50" index="1" />\
+    </Where>
+    <Operations>
+    	<Button id="ruleAddBtn" name="ruleAddBtn" desc="确定" icon="icon-save" updateClass="#" url="#" txn="" />
+    	<Button id="btnAdd" name="btnAdd"  desc="增加"  icon="icon-add" operation="" url="" show="" group="" txn="" />
+		<Button id="btnUpd" name="btnUpd" desc="修改" icon="icon-edit" operation="" url="" show="" group="" txn="" />
+		<Button id="btnDel" name="btnDel" desc="删除"  icon="icon-remove" operation="asysubmit" updateClass="com.gbicc.company.warnDisposal.update.TCmWarnPersonRuleUpdate"
+			url="" txn="" />
+		<Button id="btnSave" name="btnSave" desc="保存"  icon="icon-save" operation="asysubmit" updateClass="com.gbicc.company.warnDisposal.update.TCmWarnPersonRuleUpdate"
+			url="" txn="" />
+    </Operations>
+</CommQry>

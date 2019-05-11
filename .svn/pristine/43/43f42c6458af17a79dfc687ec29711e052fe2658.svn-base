@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- create by fubo 2010/4/22 -->
+<CommQry
+title="客户下拉菜单"
+navigate="客户下拉菜单"
+type="call"
+interface="true"
+pagesize="10"
+async="true"
+transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.huateng.ebank.business.common.getter.CustomerInfoWithZeroGetter"
+>
+	<Include id="BankParam"/>
+	<Fields>
+
+		<Field id="id" desc="id" status="F" method="None" readOnly="true" xpath="/id"
+			primary="true" type="String" size="20" default="" tip="id" width="170"/>
+
+		<Field id="custNo" desc="客户号" status="F" method="None" readOnly="true" xpath="/custNo"
+			primary="true" type="String" size="20" default="" tip="客户号" width="170"/>
+
+		<Field id="custName" desc="客户名称" status="F" method="None" readOnly="true" xpath="/custName"
+			primary="true" type="String" size="20" default="" tip="客户名称" width="170"/>
+
+	</Fields>
+
+	<Parameters>
+		<Parameter id="custNo" value=""/>
+		<Parameter id="custName" value=""/>
+		<Parameter id="value" value=""/>
+	</Parameters>
+
+</CommQry>

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-3-3 15:11:20 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.person.importtext.entity.TOdsOutEiaIllInfoId" table="T_ODS_OUT_EIA_ILL_INFO" schema="ECUSER">
+        <comment>环评违法企业名单</comment>
+            <id name="id" type="string">
+                <column name="ID" length="32" />
+            </id>
+            <property name="custName" type="string">
+                <column name="CUST_NAME" length="200" />
+            </property>
+            <property name="lawType" type="string">
+                <column name="LAW_TYPE" length="200" />
+            </property>
+            <property name="dealResult" type="string">
+                <column name="DEAL_RESULT" length="300" />
+            </property>
+            <property name="dealOrg" type="string">
+                <column name="DEAL_ORG" length="200" />
+            </property>
+            <property name="dealDate" type="string">
+                <column name="DEAL_DATE" length="10" />
+            </property>
+            <property name="custOrgCode" type="string">
+                <column name="CUST_ORG_CODE" length="200" />
+            </property>
+            <property name="custAddress" type="string">
+                <column name="CUST_ADDRESS" length="300" />
+            </property>
+            <property name="lawContent" type="string">
+                <column name="LAW_CONTENT" length="300" />
+            </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-11-27 14:24:58 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.single.entity.TCmSingleRulWarning" table="T_CM_SINGLE_RUL_WARNING" schema="ECUSER">
+        <comment>对公-单规则预警信息</comment>
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="warnCode" type="string">
+            <column name="FD_WARN_CODE" length="100" />
+        </property>
+        <property name="warnDt" type="date">
+            <column name="FD_WARN_DT" length="10" />
+        </property>
+        <property name="warnLevel" type="string">
+            <column name="FD_WARN_LEVEL" length="50" />
+        </property>
+        <property name="warnStatus" type="string">
+            <column name="FD_WARN_STATUS" length="50" />
+        </property>
+        <property name="warnDesc" type="string">
+            <column name="FD_WARN_DESC" length="500" />
+        </property>
+        <property name="rulCode" type="string">
+            <column name="FD_RUL_CODE" length="100" />
+        </property>
+        <property name="rulName" type="string">
+            <column name="FD_RUL_NAME" length="500" />
+        </property>
+        <property name="rulType" type="string">
+            <column name="FD_RUL_TYPE" length="50" />
+        </property>
+        <property name="eliminateFlag" type="string">
+            <column name="FD_ELIMINATE_FLAG" length="50" />
+        </property>
+        <property name="eliminateDesc" type="string">
+            <column name="FD_ELIMINATE_DESC" length="500" />
+        </property>
+        <property name="eliminateDt" type="date">
+            <column name="FD_ELIMINATE_DT" length="10" />
+        </property>
+        
+        <many-to-one 
+			name="mainOrg" 
+			column="FD_ORGANKEY"
+            class="com.huateng.ebank.entity.data.mng.Bctl" 
+			fetch="select"
+			not-null="false"
+	    	not-found="ignore"
+	    />
+        
+        <property name="casesId" type="string">
+            <column name="FD_CASES_ID" length="32" />
+        </property>
+        <property name="handleOrgFlag" type="string">
+            <column name="FD_HANDLE_ORG_FLAG" length="50" />
+        </property>
+        <property name="rulDesc" type="string">
+            <column name="FD_RUL_DESC" length="500" />
+        </property>
+        <property name="warningRelieve" type="string">
+            <column name="FD_WARNING_RELIEVE" length="50" />
+        </property>
+        <property name="handler" type="string">
+            <column name="FD_HANDLER" length="32" />
+        </property>
+        <property name="fcettypecode" type="string">
+            <column name="FD_FCETTYPECODE" length="50" />
+        </property>
+        <property name="fcetname" type="string">
+            <column name="FD_FCETNAME" length="200" />
+        </property>
+        <property name="halfresult" type="string">
+            <column name="FD_HALFRESULT" length="200" />
+        </property>
+        <property name="taskMatureDt" type="date">
+            <column name="FD_TASK_MATURE_DT" length="10" />
+        </property>
+                <property name="pbcIndustryCd" type="string"
+            formula="(SELECT N.PBC_INDUSTRY_CD FROM ECUSER.T_ODS_CMS_CORPORATION N WHERE N.CUSTOMER_NUM=FD_FCETTYPECODE)"/>
+    </class>
+</hibernate-mapping>

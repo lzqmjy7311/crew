@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CommQry title="分页缓存示例" navigate="分页缓存示例" type="call"
+	interface="true" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.fp.demo.getter.CacheCountGetter">
+	<Include id="BankParam" />
+	<PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="批量下载-分页缓存示例"/>
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<!-- 日志信息 -->
+		<Field id="id" desc="记录主键" require="" edittype="text" datatype="string" method="None"
+	 	  readonly="false" size="32" status="N" default="" primary="true" xpath="/id" />
+
+		<Field id="tlrNo" desc="操作员编号" require="" edittype="text" datatype="string" method="None"
+	 	  readonly="false" size="20" status="F" default="" xpath="/tlrNo" />
+
+		<Field id="brNo" desc="机构编号" require="" edittype="text" datatype="string" method="None"
+	 	  readonly="false" size="20" status="F" default="" xpath="/brNo" />
+
+		<Field id="loginSucTm" desc="成功登录时间" require="" edittype="text" datatype="timestamp" method="None"
+	 	  readonly="false" size="32" status="F" default="" xpath="/loginSucTm" />
+
+		<Field id="loginOutTm" desc="退出系统时间" require="" edittype="text" datatype="timestamp" method="None"
+	 	  readonly="false" size="32" status="F" default="" xpath="/loginOutTm" />
+
+		<Field id="loginFailTm" desc="登录失败时间" require="" edittype="text" datatype="timestamp" method="None"
+	 	  readonly="false" size="32" status="F" default="" xpath="/loginFailTm" />
+
+		<Field id="loginAddr" desc="操作员IP地址" require="" edittype="text" datatype="string" method="None"
+	 	  readonly="false" size="32" status="F" default="" xpath="/loginAddr" />
+
+		<Field id="loginRemark" desc="登录描述" require="" edittype="textarea" datatype="string" method="None"
+	 	  readonly="false" size="256" status="F" default="" xpath="/loginRemark" />
+
+		<Field id="sessionId" desc="会话id" require="" edittype="text" datatype="string" method="None"
+	 	  readonly="false" size="32" status="F" default="" xpath="/sessionId" />
+
+		<Field id="crtTm" desc="创建时间" require="" edittype="text" datatype="timestamp" method="None"
+	 	  readonly="false" size="32" status="F" default="" xpath="/crtTm" />
+	</Fields>
+	<Where></Where>
+	<Operations></Operations>
+</CommQry>

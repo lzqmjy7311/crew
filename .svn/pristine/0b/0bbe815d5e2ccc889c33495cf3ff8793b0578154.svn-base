@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.company.view.relevance.getter.AffiliatedCViewGetter">
+	<Include id="BankParam" />
+	
+	<Fields>
+		<Field id="affiTpCd" desc="关联类型" xpath="/affiTpCd"/>
+		<Field id="customerNum" desc="客户编号" xpath="/customerNum"/>
+		<Field id="custname" desc="客户名称" xpath="/custname"/>
+		<Field id="businessLicenseNum" desc="营业执照号" datatype="string" xpath="/businessLicenseNum" />
+        <Field id="registeredCapital" desc="注册资本"  xpath="/registeredCapital"/>
+        <Field id="foundedDate" desc="成立日期"  xpath="/foundedDate"/>
+        <Field id="outstandingAdvanceCount" desc="未结清贷款笔数"  xpath="/outstandingAdvanceCount"/>
+        <Field id="advanceBalance" desc="贷款余额"  xpath="/advanceBalance"/>
+        <Field id="creditLevel" desc="风险预警等级"  xpath="/creditLevel"/>
+	</Fields>
+	
+	<Operations>
+
+	</Operations>
+</CommQry>

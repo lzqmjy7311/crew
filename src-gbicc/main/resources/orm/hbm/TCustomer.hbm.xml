@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.gbicc.person.customer.entity">
+	<class
+		name="TCustomer"
+		table="T_PL_CUSTOMER_V"
+		lazy="false"
+	>
+		
+
+		<id
+			name="loanAccount"
+			column="LOAN_ACCOUNT"
+			type="string"
+		>
+		 
+		</id>
+
+	
+		   <property name="productCode" type="string">
+                <column name="PRODUCT_CODE" length="200" />
+            </property>
+         
+            <property name="custCode" type="string">
+                <column name="CUSTCODE" length="35" />
+            </property>
+            <property name="custName" type="string">
+                <column name="CUSTNAME" length="200" />
+            </property>
+            <property name="loanAmount" type="big_decimal">
+                <column name="LOAN_AMOUNT" precision="18" />
+            </property>
+            <property name="loanBalance" type="big_decimal">
+                <column name="LOAN_BALANCE" precision="18" />
+            </property>
+            <property name="floatinterate" type="big_decimal">
+                <column name="FLOATINTERATE" precision="6" />
+            </property>
+            <property name="loanPeriod" type="java.lang.Integer">
+                <column name="LOAN_PERIOD" />
+            </property>
+            <property name="operator" type="string">
+                <column name="OPERATOR" length="200" />
+            </property>
+            <property name="operBank" type="string">
+                <column name="OPER_BANK" length="200" />
+            </property>
+            <property name="paperkind" type="string">
+                <column name="PAPERKIND" length="10" />
+            </property>
+            <property name="paperid" type="string">
+                <column name="PAPERID" length="30" />
+            </property>
+            <property name="birtdate" type="date">
+                <column name="BIRTDATE" length="10" />
+            </property>
+            <property name="sexsign" type="string">
+                <column name="SEXSIGN" length="10" />
+            </property>
+            <property name="mobilecall" type="string">
+                <column name="MOBILECALL" length="20" />
+            </property>
+            <property name="workcorpid" type="string">
+                <column name="WORKCORPID" length="1" />
+            </property>
+            <property name="workcorp" type="string">
+                <column name="WORKCORP" length="200" />
+            </property>
+            <property name="corpaddr" type="string">
+                <column name="CORPADDR" length="200" />
+            </property>
+            <property name="waykind" type="string">
+                <column name="WAYKIND" length="10" />
+            </property>
+            <property name="yearinco" type="big_decimal">
+                <column name="YEARINCO" precision="18" />
+            </property>
+            <property name="balance" type="big_decimal">
+                <column name="BALANCE" precision="18" />
+            </property>
+            <property name="amSalaryLast2M" type="big_decimal">
+                <column name="AM_SALARY_LAST_2_M" precision="18" />
+            </property>
+            <property name="amSalaryLastM" type="big_decimal">
+                <column name="AM_SALARY_LAST_M" precision="18" />
+            </property>
+            <property name="amPaymentLast2M" type="big_decimal">
+                <column name="AM_PAYMENT_LAST_2_M" precision="18" />
+            </property>
+            <property name="amPaymentLastM" type="big_decimal">
+                <column name="AM_PAYMENT_LAST_M" precision="18" />
+            </property>
+            <property name="status" type="string">
+                <column name="STATUS" length="30" />
+            </property>
+            <property name="statusDate" type="date">
+                <column name="STATUS_DATE" length="10" />
+            </property>
+            <property name="overCountMaxHis" type="java.lang.Integer">
+                <column name="OVER_COUNT_MAX_HIS" />
+            </property>
+            <property name="unpaidCount" type="java.lang.Integer">
+                <column name="UNPAID_COUNT" />
+            </property>
+            <property name="marrsign" type="string">
+                <column name="MARRSIGN" length="10" />
+            </property>
+            <property name="educsign" type="string">
+                <column name="EDUCSIGN" length="10" />
+            </property>
+            <property name="degreesign" type="string">
+                <column name="DEGREESIGN" length="10" />
+            </property>
+            <property name="vocasign" type="string">
+                <column name="VOCASIGN" length="10" />
+            </property>
+            <property name="natisign2" type="string">
+                <column name="NATISIGN2" length="4" />
+            </property>
+            <property name="nativeplace" type="string">
+                <column name="NATIVEPLACE" length="200" />
+            </property>
+            <property name="natisign1" type="string">
+                <column name="NATISIGN1" length="10" />
+            </property>
+            <property name="natiflag" type="string">
+                <column name="NATIFLAG" length="2" />
+            </property>
+            <property name="reginatu" type="string">
+                <column name="REGINATU" length="10" />
+            </property>
+            <property name="contaddr" type="string">
+                <column name="CONTADDR" length="200" />
+            </property>
+            <property name="workyearmonth" type="string">
+                <column name="WORKYEARMONTH" length="6" />
+            </property>
+
+		
+	</class>
+</hibernate-mapping>

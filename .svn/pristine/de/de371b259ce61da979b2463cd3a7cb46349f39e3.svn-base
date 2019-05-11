@@ -1,0 +1,23 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro> 
+<@CommonQueryMacro.page title="d">
+
+<@CommonQueryMacro.CommonQuery id="TEtlErrorLog" init="true" submitMode="selected" navigate="false">
+
+<table align="left" width="100%">
+    <tr>
+		<td>
+			<@CommonQueryMacro.Interface id="intface" label="输入查询日期" colNm=4 />
+		</td>
+	</tr>
+    
+	<tr>
+		<td>
+			<@CommonQueryMacro.DataTable id ="datatable1" fieldStr="etlErrorLogId,procName,errMsg,errSql,errTimestamp" readonly="true" width="100%"/></br>
+		</td>
+	</tr>
+</table>
+</@CommonQueryMacro.CommonQuery>
+<script language="JavaScript">
+
+</script>
+</@CommonQueryMacro.page>

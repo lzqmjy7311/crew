@@ -1,0 +1,315 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-1-18 16:47:45 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.view.entity.TCmCustomer_v" table="T_CM_CUSTOMER" schema="ECUSER">
+        <comment>对公客户表</comment>
+            <id name="partyId" type="string">
+                <column name="PARTY_ID" length="32" />
+            </id>
+            <property name="customerNum" type="string">
+                <column name="CUSTOMER_NUM" length="21" />
+            </property>
+            <property name="customerTypeCd" type="string">
+                <column name="CUSTOMER_TYPE_CD" length="20" />
+            </property>
+            <property name="chineseName" type="string">
+                <column name="CHINESE_NAME" length="100" />
+            </property>
+            <property name="englishName" type="string">
+                <column name="ENGLISH_NAME" length="100" />
+            </property>
+            <property name="chineseShortName" type="string">
+                <column name="CHINESE_SHORT_NAME" length="20" />
+            </property>
+            <property name="englishShortName" type="string">
+                <column name="ENGLISH_SHORT_NAME" length="20" />
+            </property>
+            <property name="businessLicenseNum" type="string">
+                <column name="BUSINESS_LICENSE_NUM" length="30" />
+            </property>
+            <property name="businessLicenseCheckDate" type="string">
+                <column name="BUSINESS_LICENSE_CHECK_DATE" length="10" />
+            </property>
+            <property name="orgnNum" type="string">
+                <column name="ORGN_NUM" length="20" />
+            </property>
+            <property name="pbcIndustryCd" type="string">
+                <column name="PBC_INDUSTRY_CD" length="20" />
+            </property>
+            <property name="loanCardNum" type="string">
+                <column name="LOAN_CARD_NUM" length="30" />
+            </property>
+            <property name="corporativeCertification" type="string">
+                <column name="CORPORATIVE_CERTIFICATION" length="40" />
+            </property>
+            <property name="loanCardCheckDate" type="string">
+                <column name="LOAN_CARD_CHECK_DATE" length="10" />
+            </property>
+            <property name="nationalTaxRegistrationNum" type="string">
+                <column name="NATIONAL_TAX_REGISTRATION_NUM" length="30" />
+            </property>
+            <property name="localTaxRegistrationCum" type="string">
+                <column name="LOCAL_TAX_REGISTRATION_CUM" length="30" />
+            </property>
+            <property name="ownershipTypeCd" type="string">
+                <column name="OWNERSHIP_TYPE_CD" length="20" />
+            </property>
+            <property name="orgTypeCd" type="string">
+                <column name="ORG_TYPE_CD" length="20" />
+            </property>
+            <property name="foundedDate" type="string">
+                <column name="FOUNDED_DATE" length="10" />
+            </property>
+            <property name="deadlineFinancialYear" type="string">
+                <column name="DEADLINE_FINANCIAL_YEAR" length="10" />
+            </property>
+            <property name="registerCapitalCurrencyCd" type="string">
+                <column name="REGISTER_CAPITAL_CURRENCY_CD" length="20" />
+            </property>
+            <property name="launchCurrencyCd" type="string">
+                <column name="LAUNCH_CURRENCY_CD" length="20" />
+            </property>
+            <property name="registeredCapital" type="big_decimal">
+                <column name="REGISTERED_CAPITAL" precision="22" />
+            </property>
+            <property name="launchAmt" type="big_decimal">
+                <column name="LAUNCH_AMT" precision="22" />
+            </property>
+            <property name="regCapitalReceivedRate" type="big_decimal">
+                <column name="REG_CAPITAL_RECEIVED_RATE" precision="22" scale="6" />
+            </property>
+            <property name="supervisingDept" type="string">
+                <column name="SUPERVISING_DEPT" length="100" />
+            </property>
+            <property name="customerRunStatusCd" type="string">
+                <column name="CUSTOMER_RUN_STATUS_CD" length="20" />
+            </property>
+            <property name="customerCreditPolicyCd" type="string">
+                <column name="CUSTOMER_CREDIT_POLICY_CD" length="20" />
+            </property>
+            <property name="financialIncomeSourceCd" type="string">
+                <column name="FINANCIAL_INCOME_SOURCE_CD" length="20" />
+            </property>
+            <property name="customerSizeCd" type="string">
+                <column name="CUSTOMER_SIZE_CD" length="20" />
+            </property>
+            <property name="staffNum" type="java.lang.Integer">
+                <column name="STAFF_NUM" />
+            </property>
+            <property name="listedCompanyInd" type="string">
+                <column name="LISTED_COMPANY_IND" length="1" />
+            </property>
+            <property name="groupCustomerInd" type="string">
+                <column name="GROUP_CUSTOMER_IND" length="1" />
+            </property>
+            <property name="basicAcctBank" type="string">
+                <column name="BASIC_ACCT_BANK" length="100" />
+            </property>
+            <property name="basicAcctNum" type="string">
+                <column name="BASIC_ACCT_NUM" length="28" />
+            </property>
+            <property name="openDate" type="string">
+                <column name="OPEN_DATE" length="10" />
+            </property>
+            <property name="firstLoanDate" type="string">
+                <column name="FIRST_LOAN_DATE" length="10" />
+            </property>
+            <property name="ourBankNplRecord" type="string">
+                <column name="OUR_BANK_NPL_RECORD" length="100" />
+            </property>
+            <property name="otherBankNplRecord" type="string">
+                <column name="OTHER_BANK_NPL_RECORD" length="100" />
+            </property>
+            <property name="cooperationBankInd" type="string">
+                <column name="COOPERATION_BANK_IND" length="1" />
+            </property>
+            <property name="ourBankDepositRevenueSettl" type="big_decimal">
+                <column name="OUR_BANK_DEPOSIT_REVENUE_SETTL" precision="22" scale="6" />
+            </property>
+            <property name="basicCustomerInd" type="string">
+                <column name="BASIC_CUSTOMER_IND" length="1" />
+            </property>
+            <property name="badAssetsPeeledCustomerInd" type="string">
+                <column name="BAD_ASSETS_PEELED_CUSTOMER_IND" length="1" />
+            </property>
+            <property name="badAssetsPeeledBank" type="string">
+                <column name="BAD_ASSETS_PEELED_BANK" length="40" />
+            </property>
+            <property name="debtTransferStockCustInd" type="string">
+                <column name="DEBT_TRANSFER_STOCK_CUST_IND" length="1" />
+            </property>
+            <property name="ccbEstablishmentInd" type="string">
+                <column name="CCB_ESTABLISHMENT_IND" length="1" />
+            </property>
+            <property name="legalCorporateRepresentative" type="string">
+                <column name="LEGAL_CORPORATE_REPRESENTATIVE" length="100" />
+            </property>
+            <property name="transferedRWDeptInd" type="string">
+                <column name="TRANSFERED_R_W_DEPT_IND" length="1" />
+            </property>
+            <property name="creditCustomerInd" type="string">
+                <column name="CREDIT_CUSTOMER_IND" length="1" />
+            </property>
+            <property name="customerMaintStatCd" type="string">
+                <column name="CUSTOMER_MAINT_STAT_CD" length="20" />
+            </property>
+            <property name="industryLevelOneCd" type="string">
+                <column name="INDUSTRY_LEVEL_ONE_CD" length="20" />
+            </property>
+            <property name="industryLevelTwoCd" type="string">
+                <column name="INDUSTRY_LEVEL_TWO_CD" length="20" />
+            </property>
+            <property name="lastMaintainDate" type="string">
+                <column name="LAST_MAINTAIN_DATE" length="10" />
+            </property>
+            <property name="maintainUserNum" type="string">
+                <column name="MAINTAIN_USER_NUM" length="20" />
+            </property>
+            <property name="districtCd" type="string">
+                <column name="DISTRICT_CD" length="20" />
+            </property>
+            <property name="deptCd" type="string">
+                <column name="DEPT_CD" length="20" />
+            </property>
+            <property name="transferStatusCd" type="string">
+                <column name="TRANSFER_STATUS_CD" length="20" />
+            </property>
+            <property name="industryDesc" type="string">
+                <column name="INDUSTRY_DESC" length="4000" />
+            </property>
+            <property name="customerStatusCd" type="string">
+                <column name="CUSTOMER_STATUS_CD" length="20" />
+            </property>
+            <property name="crbCustomerSizeCd" type="string">
+                <column name="CRB_CUSTOMER_SIZE_CD" length="20" />
+            </property>
+            <property name="corpImpLevel" type="string">
+                <column name="CORP_IMP_LEVEL" length="50" />
+            </property>
+            <property name="myStockholderInd" type="string">
+                <column name="MY_STOCKHOLDER_IND" length="1" />
+            </property>
+            <property name="economyType" type="string">
+                <column name="ECONOMY_TYPE" length="50" />
+            </property>
+            <property name="corpNature" type="string">
+                <column name="CORP_NATURE" length="20" />
+            </property>
+            <property name="profAssureCorp" type="string">
+                <column name="PROF_ASSURE_CORP" length="100" />
+            </property>
+            <property name="farmingIndustrySign" type="string">
+                <column name="FARMING_INDUSTRY_SIGN" length="100" />
+            </property>
+            <property name="imexManaInd" type="string">
+                <column name="IMEX_MANA_IND" length="1" />
+            </property>
+            <property name="loanRelationDate" type="string">
+                <column name="LOAN_RELATION_DATE" length="10" />
+            </property>
+            <property name="cooperateInd" type="string">
+                <column name="COOPERATE_IND" length="1" />
+            </property>
+            <property name="guaCustomerInd" type="string">
+                <column name="GUA_CUSTOMER_IND" length="1" />
+            </property>
+            <property name="bpBusinessNum" type="string">
+                <column name="BP_BUSINESS_NUM" length="20" />
+            </property>
+            <property name="collectivityTypeCd" type="string">
+                <column name="COLLECTIVITY_TYPE_CD" length="20" />
+            </property>
+            <property name="bizLicExpirationDate" type="string">
+                <column name="BIZ_LIC_EXPIRATION_DATE" length="10" />
+            </property>
+            <property name="loanCardPwd" type="string">
+                <column name="LOAN_CARD_PWD" length="20" />
+            </property>
+            <property name="registeredTypeCd" type="string">
+                <column name="REGISTERED_TYPE_CD" length="20" />
+            </property>
+            <property name="industryNum" type="string">
+                <column name="INDUSTRY_NUM" length="80" />
+            </property>
+            <property name="capitalLandCurrencyCd" type="string">
+                <column name="CAPITAL_LAND_CURRENCY_CD" length="20" />
+            </property>
+            <property name="financeLicenceNum" type="string">
+                <column name="FINANCE_LICENCE_NUM" length="40" />
+            </property>
+            <property name="mybankStockRate" type="big_decimal">
+                <column name="MYBANK_STOCK_RATE" precision="22" scale="6" />
+            </property>
+            <property name="busCheckYear" type="string">
+                <column name="BUS_CHECK_YEAR" length="4" />
+            </property>
+            <property name="financingBuyInd" type="string">
+                <column name="FINANCING_BUY_IND" length="1" />
+            </property>
+            <property name="newEvalResult" type="string">
+                <column name="NEW_EVAL_RESULT" length="20" />
+            </property>
+            <property name="holdingEnterpriseType" type="string">
+                <column name="HOLDING_ENTERPRISE_TYPE" length="50" />
+            </property>
+            <property name="corScientificInd" type="string">
+                <column name="COR_SCIENTIFIC_IND" length="1" />
+            </property>
+            <property name="corShutInd" type="string">
+                <column name="COR_SHUT_IND" length="1" />
+            </property>
+            <property name="govFinanceFlat" type="string">
+                <column name="GOV_FINANCE_FLAT" length="1" />
+            </property>
+            <property name="newCustomerInd" type="string">
+                <column name="NEW_CUSTOMER_IND" length="1" />
+            </property>
+            <property name="smallLoanInd" type="string">
+                <column name="SMALL_LOAN_IND" length="1" />
+            </property>
+            <property name="pawnLoanInd" type="string">
+                <column name="PAWN_LOAN_IND" length="1" />
+            </property>
+            <property name="govFinanceType" type="string">
+                <column name="GOV_FINANCE_TYPE" length="10" />
+            </property>
+            <property name="directorUnitInd" type="string">
+                <column name="DIRECTOR_UNIT_IND" length="1" />
+            </property>
+            <property name="cooperateType" type="string">
+                <column name="COOPERATE_TYPE" length="50" />
+            </property>
+            <property name="smallCorporationInd" type="string">
+                <column name="SMALL_CORPORATION_IND" length="1" />
+            </property>
+            <property name="farmerMarktLinkInd" type="string">
+                <column name="FARMER_MARKT_LINK_IND" length="1" />
+            </property>
+            <property name="joinSmesInd" type="string">
+                <column name="JOIN_SMES_IND" length="1" />
+            </property>
+            <property name="steelTradeInd" type="string">
+                <column name="STEEL_TRADE_IND" length="1" />
+            </property>
+            <property name="operBank" type="string">
+                <column name="FD_OPER_BANK" length="64" />
+            </property>
+            <property name="operator" type="string">
+                <column name="FD_OPERATOR" length="64" />
+            </property>
+            <property name="loanAmount" type="java.lang.Double">
+                <column name="FD_LOAN_AMOUNT" precision="53" scale="0" />
+            </property>
+            <property name="loanBalance" type="java.lang.Double">
+                <column name="FD_LOAN_BALANCE" precision="53" scale="0" />
+            </property>
+            <property name="custWarnLevel" type="string">
+                <column name="FD_CUST_WARN_LEVEL" length="25" />
+            </property>
+            <property name="isBlackName" type="string">
+                <column name="FD_IS_BLACK_NAME" length="25" />
+            </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="" navigate="预警处置    &gt; 预警处置" type="call" interface="false" pagesize="20" async="true" databusid="" transdataactionurl="/trans/TransDataAction.do" txnlogflag="true" getterclassname="com.gbicc.warn.ComninationWarn.getter.TCwCreditAssetsMonitor0Getter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="INDEX_NAME" desc="指标名称" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/INDEX_NAME" />
+        <Field id="INDEX_CODE" desc="指标编号" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/INDEX_CODE" />
+       	<Field id="INDEX_TYPE" desc="指标分类" require="" edittype="select" datatype="string" method="None" readonly="false" primary="true" type="" status="F" translated="DATA_DIC.12630"  size="15" scale="2" default=""
+        xpath="/INDEX_TYPE" />
+        <Field id="ORG_CODE" desc="机构" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/ORG_CODE" />
+        <Field id="ORG_PARENT" desc="机构" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/ORG_PARENT" />
+        <Field id="ORG_NAME" desc="机构" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/ORG_NAME" />
+        <Field id="PRODUCT_NAME" desc="产品" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/PRODUCT_NAME" />
+        <Field id="INDUSTRY_NAME" desc="行业" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/INDUSTRY_NAME" />
+        <Field id="GATHER_TYPE" desc="数据类型" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/GATHER_TYPE" />
+        <Field id="PRODUCT_CODE" desc="产品编号" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/PRODUCT_CODE" />
+        <Field id="PRODUCT_TYPE" desc="产品类型" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/PRODUCT_TYPE" />
+        <Field id="INDUSTRY_CODE" desc="行业" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/INDUSTRY_CODE" />
+        <Field id="INDUSTRY_TYPE" desc="行业类型" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/INDUSTRY_TYPE" />
+        <Field id="INDUSTRY_PARENT" desc="行业父级" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/INDUSTRY_PARENT" />
+        <Field id="COLO" desc="等级(颜色)" require="" edittype="select" datatype="string" method="None" readonly="false" primary="true" type="st" status="F" translated="DATA_DIC.12605" size="30" scale="2" default=""
+        xpath="/COLO" />
+        <Field id="MONITOR_FRE" desc="监控频率" require="" edittype="select" datatype="string" method="None" readonly="false" primary="true" type="st" status="F" translated="DATA_DIC.12604" size="30" scale="2" default=""
+        xpath="/MONITOR_FRE" />
+        <Field id="NOW_VAL" desc="本期值" require="" edittype="text" datatype="double" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/NOW_VAL" />
+        <Field id="TOP_VAL" desc="上期值" require="" edittype="text" datatype="double" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/TOP_VAL" />
+        <Field id="YC_VAL" desc="年初值" require="" edittype="text" datatype="double" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/YC_VAL" />
+        <Field id="BSQ" desc="比上期" edittype="text" datatype="string" xpath="/BSQ" />
+        <Field id="BYC" desc="比年初" edittype="text" datatype="string" xpath="/BYC" />
+        <Field id="THRESHOLD1" desc="阀值1" require="" edittype="text" datatype="double" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/THRESHOLD1" />
+        <Field id="THRESHOLD2" desc="阀值2" require="" edittype="text" datatype="double" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/THRESHOLD2" />
+        
+        <Field id="opr" desc="操作" edittype="text" datatype="string" xpath="/id" />
+        
+        
+         <Field id="year1" desc="年份" require="true" edittype="select" datatype="string" method="None" readonly="false" primary="true" type="st" status="F"
+         	   translated="DATA_DIC.12601" size="30" scale="2" default="2015" xpath="" />
+         <Field id="yearQ1" desc="季度" require="true" edittype="select" datatype="string" method="None" readonly="false" primary="true" type="st" status="F"
+         	   translated="DATA_DIC.12602" size="30" scale="2" default="1" xpath="" />
+         <Field id="year2" desc="年份" require="true" edittype="select" datatype="string" method="None" readonly="false" primary="true" type="st" status="F"
+         	   translated="DATA_DIC.12601" size="30" scale="2" default="2015" xpath="" />
+         <Field id="yearQ2" desc="季度" require="true" edittype="select" datatype="string" method="None" readonly="false" primary="true" type="st" status="F"
+         	   translated="DATA_DIC.12602" size="30" scale="2" default="4" xpath="" />
+        
+    </Fields>
+    <Where>
+    </Where>
+    <Operations>
+    	<Button id="btHandle" name="btHandle" desc="查询" icon="icon-add" updateClass="#" url="" txn="" />
+    </Operations>
+</CommQry>

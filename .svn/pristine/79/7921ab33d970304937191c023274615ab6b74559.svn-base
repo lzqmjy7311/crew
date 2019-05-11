@@ -1,0 +1,30 @@
+<CommQry title="TRewL14BlacklistInfoId" navigate="TRewL14BlacklistInfoId" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.L14Getter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="blacklistId" desc="" edittype="text" datatype="string"
+        xpath="/blacklistId" />
+        <Field id="blacklistCustomerName" desc="客户名称" edittype="text" datatype="string"
+        xpath="/blacklistCustomerName" />
+        <Field id="blacklistOrgnCd" desc="客户组织机构代码" edittype="text" datatype="string"
+        xpath="/blacklistOrgnCd" />
+        <Field id="putinCause" desc="入库原因" edittype="text" datatype="string"
+        xpath="/putinCause" />
+        <Field id="putinTime" desc="入库时间" edittype="text" datatype="date"
+        xpath="/putinTime" />
+        <Field id="fstBankName" desc="开户行名称" edittype="text" datatype="string"
+        xpath="/fstBankName" />
+        <Field id="userNum" desc="入库人" edittype="text" datatype="string"
+        xpath="/userNum" />
+        <Field id="blackTypeCd" desc="证件类型" edittype="text" datatype="string"
+        xpath="/blackTypeCd" />
+        <Field id="blackCustomerTypeCd" desc="黑名单客户类型" edittype="text" datatype="string"
+        xpath="/blackCustomerTypeCd" />
+        <Field id="fdWarnId" desc="预警表ID" edittype="text" datatype="string"
+        xpath="/fdWarnId" />
+        <Field id="fdDataDt" desc="数据日期" edittype="text" datatype="date"
+        xpath="/fdDataDt" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

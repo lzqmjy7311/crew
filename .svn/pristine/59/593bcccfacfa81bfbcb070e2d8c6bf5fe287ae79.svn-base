@@ -1,0 +1,17 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+<@CommonQueryMacro.page title="信贷资产监测指标展示">
+<table align="left" style="width: 100%"><tr><td>
+<@CommonQueryMacro.DynamicTabSet id="demotab" hasMenu="true" height="700" fit="true" selected="t1">
+			        <@CommonQueryMacro.DynamicTab id="t1" title="总体" url="/gbicc-report-pages/combinationWarn/ftl/TCwIndexTotalReport.ftl"> 
+			        </@CommonQueryMacro.DynamicTab>
+			        <@CommonQueryMacro.DynamicTab id="t2" title="对公" url="/gbicc-report-pages/combinationWarn/ftl/TCwIndexCompanyReport.ftl"> 
+			        </@CommonQueryMacro.DynamicTab>
+			        <@CommonQueryMacro.DynamicTab id="t2" title="对私" url="/gbicc-report-pages/combinationWarn/ftl/TCwIndexPersonReport.ftl"> 
+			        </@CommonQueryMacro.DynamicTab>
+	</@CommonQueryMacro.DynamicTabSet>
+</td></tr>
+</table>
+<script language="JavaScript">
+</script>
+</@CommonQueryMacro.page>

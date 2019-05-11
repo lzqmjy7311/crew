@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="用户操作信息查询" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.user.getter.TModifiedRoleidGetter">
+	<Include id="BankParam" />
+	<PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="操作日志" perfetch="15"  directory="D:/templet" />
+	<Fields>
+		<Field id="fdOpername" desc="操作用户" xpath="/fdOperid" edittype="select" status="F" method="com.gbicc.common.CQMethod.getUserNameByCode" readonly="true"/>
+		<Field id="fdUsername1" desc="修改用户" edittype="select" status="F" method="com.gbicc.common.CQMethod.getUserNameByCode"  xpath="/fdUserid" readonly="true"/>
+		<Field id="fdRoleidb" desc="修改前内容" xpath="/fdRoleidb" status="F" readonly="true"/>
+		<Field id="fdRoleida" desc="修改后内容" xpath="/fdRoleida" status="F" readonly="true"/>
+		<Field id="fdOrgid" desc="机构ID" xpath="/fdOrgid" status="F" readonly="true"/>
+		<Field id="fdOrgname" desc="机构名称" xpath="/fdOrgname" status="F" readonly="true"/>
+		<Field id="fdChangedate" desc="修改日期" xpath="/fdChangedate" status="F" readonly="true"/>
+	</Fields>
+	<Where>
+		<TextBox id="fdOperid" desc="操作ID"/>
+		<TextBox id="fdOpername" desc="操作用户" viewField="tlrName"   require=""  translated="CQ:TlrInfo" fieldmap="fdOpername=tlrName;fdOperid=tlrno"/>
+		<Option id="fdUserid" desc="修改ID"/>
+		<TextBox id="fdUsername" desc="修改用户" viewField="tlrName"   require=""  translated="CQ:TlrInfo" fieldmap="fdUsername=tlrName;fdUserid=tlrno"/>
+		<Option  id="fdOrgname" desc="所属机构" status="N" 
+            multiple="false" translated
+            ="CQ:branchTree" placeholder="占位符"
+            fieldmap="fdOrgid=id;fdOrgname=name"
+            viewField="name" edittype="select" dropdowntype="dynamictree"
+            primary="true" init="false" size="3" default="2"  />
+		<Option id="fdOrgid" desc="所属机构" status="N" 
+            multiple="false" translated="CQ:Bctl" placeholder="占位符"
+            fieldmap="fdOrgid=id;fdOrgname=name"
+            viewField="name" edittype="select" dropdowntype="dynamictree"
+            primary="true" init="false" size="3" default="2"/>
+		<DateTextBox id="fdstartdate" desc="开始日期"/>
+		<DateTextBox id="fdenddate" desc="结束日期"/>
+	</Where>
+	<Operations>
+	</Operations>
+</CommQry>

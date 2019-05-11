@@ -1,0 +1,117 @@
+package com.gbicc.company.view.externaldata.getter;
+import java.util.List;
+
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.util.StringUtils;
+
+import com.gbicc.company.view.externaldata.entity.TDataGsxtIcIllegal;
+import com.huateng.common.err.Module;
+import com.huateng.common.err.Rescode;
+import com.huateng.commquery.result.Result;
+import com.huateng.commquery.result.ResultMng;
+import com.huateng.ebank.business.common.PageQueryResult;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.framework.util.ApplicationContextUtils;
+import com.huateng.ebank.framework.web.commQuery.BaseGetter;
+import com.huateng.exception.AppException;
+
+
+public class TDataGsxtIcIllegalGetter extends BaseGetter {
+
+	@Override
+	public Result call() throws AppException {
+		try {
+			PageQueryResult pageResult = getData();
+			ResultMng.fillResultByList(getCommonQueryBean(),
+					getCommQueryServletRequest(), pageResult.getQueryResult(),
+					getResult());
+			result.setContent(pageResult.getQueryResult());
+			result.getPage().setTotalPage(
+					pageResult.getPageCount(getResult().getPage()
+							.getEveryPage()));
+			result.init();
+			return result;
+		} catch (AppException appEx) {
+			throw appEx;
+		} catch (Exception ex) {
+			throw new AppException(Module.SYSTEM_MODULE,
+					Rescode.DEFAULT_RESCODE, ex.getMessage(), ex);
+		}
+	}
+
+	protected PageQueryResult getData() throws Exception {
+
+		String relaId = (String) getCommQueryServletRequest().getParameterMap()
+				.get("relaId");
+		String fdDate = (String) getCommQueryServletRequest().getParameterMap()
+				.get("fdDate");
+		PageQueryResult pageQueryResult = new PageQueryResult();
+		// 分页大小
+		int pageSize = getResult().getPage().getEveryPage();
+		// 页码
+		int pageIndex = getResult().getPage().getCurrentPage();
+		
+		JdbcTemplate jt=(JdbcTemplate)ApplicationContextUtils.getBean("JdbcTemplate");
+		StringBuffer querySql=new StringBuffer("SELECT L.FD_UPDATE_TIME fdUpdateTime, L.FD_JBK_ID fdJbkId,L.FD_ENT_ID fdEntId, L.FD_SEQUENCE fdSequence, L.FD_IN_ILLEGAL_RESON fdInIllegalReson, L.FD_IN_ILLEGAL_DATE fdInIllegalDate, L.FD_OUT_ILLEGAL_RESON fdOutIllegalReson, L.FD_OUT_ILLEGAL_DATE fdOutIllegalDate, L.FD_DECISION_ORG fdDecisionOrg, V.FD_REG_NUM fdRegNum, V.FD_NAME fdName, V.FD_TYPE fdType, V.FD_LECAL_PERSON fdLecalPerson, V.FD_REG_CAPITAL fdRegCapital, V.FD_SET_UP_DATE fdSetUpDate, V.FD_ENT_ADDRESS fdEntAddress, V.FD_BUSINESS_TERM_START fdBusinessTermStart, V.FD_BUSINESS_TERM_END fdBusinessTermEnd, V.FD_BUSINESS_SCOPE fdBusinessScope, V.FD_REG_ORG fdRegOrg, V.FD_APPROVAL_DATE fdApprovalDate, V.FD_REG_STATUS fdRegStatus,  V.FD_SHAREHOLDER_TYPE fdShareholderType, V.FD_SHAREHOLDER fdShareholder, V.FD_ID_TYPE fdIdType, V.FD_ID_NUM fdIdNum FROM ECUSER.T_DATA_GSXT_IC_ILLEGAL L LEFT JOIN T_WB_GSINFO_V V ON L.FD_ENT_ID=V.FD_ENT_ID WHERE 1=1");
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+//		if(StringUtils.hasText(id)){
+//			hql.append(" and id = '"+id+"'");
+//		}
+		if(StringUtils.hasText(relaId)){
+//			hql.append(" and relaId = '"+relaId+"'");
+			querySql.append(" AND L.FD_JBK_ID='"+relaId+"'");
+		}else{
+			querySql.append(" AND 1=0");
+		}
+		if(StringUtils.hasText(fdDate)){
+//			Calendar cd= Calendar.getInstance();
+//			SimpleDateFormat df= new SimpleDateFormat("yyyy-MM-dd");
+//			Date nowdat=new Date();
+//			String nowstr=df.format(nowdat);
+//			Date lastdat=new Date();
+			
+			if(fdDate.equals("time1")){
+//				cd.add(Calendar.MONTH, -1);
+//				lastdat=cd.getTime();
+				querySql.append(" and L.FD_IN_ILLEGAL_DATE between CURRENT DATE - 1 MONTH AND CURRENT DATE");
+			}else if(fdDate.equals("time3")){
+//				cd.add(Calendar.MONTH, -3);
+//				lastdat=cd.getTime();
+				querySql.append(" and L.FD_IN_ILLEGAL_DATE between CURRENT DATE - 3 MONTH AND CURRENT DATE");
+			}else if(fdDate.equals("timehalf")){
+//				cd.add(Calendar.MONTH, -6);
+//				lastdat=cd.getTime();
+				querySql.append(" and L.FD_IN_ILLEGAL_DATE between CURRENT DATE - 6 MONTH AND CURRENT DATE");
+			}else if(fdDate.equals("timeyear")){
+//				cd.add(Calendar.YEAR, -1);
+//				lastdat=cd.getTime();
+				querySql.append(" and L.FD_IN_ILLEGAL_DATE between CURRENT DATE - 1 YEAR AND CURRENT DATE");
+			}else if(fdDate.equals("timetwo")){
+//				cd.add(Calendar.YEAR, -2);
+//				lastdat=cd.getTime();
+				querySql.append(" and L.FD_IN_ILLEGAL_DATE between CURRENT DATE - 2 YEAR AND CURRENT DATE");
+			}
+			
+//			String laststr=df.format(lastdat);
+//			hql.append(" and judgDate between to_date('"+laststr+"','yyyy-mm-dd') and to_date('"+nowstr+"','yyyy-mm-dd')");
+		}
+//		pageQueryResult = rootdao.pageQueryByHql(pageIndex, pageSize,
+//				hql.toString());
+		StringBuffer sqlp=new StringBuffer("select t0.* from ( ");
+		sqlp.append("select t.*,row_number() over() as rnum from ( ");
+		sqlp.append(querySql);
+		sqlp.append(") t ) t0 where t0.rnum>"+(pageIndex-1)*pageSize+" ");
+		sqlp.append("fetch first "+pageSize+" rows only ");
+		StringBuffer sqll=new StringBuffer("select count(1) from ( ");
+		sqll.append(querySql);
+		sqll.append(" )");
+		Integer totalCount=(Integer)rootdao.querySqlOne(sqll.toString());
+		List<TDataGsxtIcIllegal> listT=jt.query(sqlp.toString(), BeanPropertyRowMapper.newInstance(TDataGsxtIcIllegal.class));
+		pageQueryResult.setQueryResult(listT);
+		pageQueryResult.setTotalCount(totalCount);
+		return pageQueryResult;
+	}
+}
+

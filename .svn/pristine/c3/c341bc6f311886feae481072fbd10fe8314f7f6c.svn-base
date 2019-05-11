@@ -1,0 +1,119 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign customerNum="${RequestParameters['customerNum']?default('')}" />
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+<@CommonQueryMacro.page title="外部风险数据">
+<@CommonQueryMacro.CommonQuery id="dataverification" init="false" submitMode="current" navigate="false">
+<@CommonQueryMacro.DataTable id="demodatatable"  title="数据验真"  fieldStr="dataItem,creditSystem,creditInvestigationSystem,taxData,GjfData,verifyResult"/>
+</@CommonQueryMacro.CommonQuery>
+<@CommonQueryMacro.CommonQuery id="externaldatastatistics" init="true" submitMode="current" navigate="false">
+<@CommonQueryMacro.DataTable id="externaldatatable"  title="外部数据" fieldStr="fdType,onemonth,threemonth,halfYear,oneYear,twoyear" />
+</@CommonQueryMacro.CommonQuery>
+</@CommonQueryMacro.page>
+
+<script>
+function externaldatatable_onemonth_onRefresh(cell,value,record) {
+	if (record) {//当存在记录时
+		var fdType=record.getValue("fdType");
+		var typeId=record.getValue("typeId");
+		cell.innerHTML="<a href=\"JavaScript:aclick('"+fdType+"','"+typeId+"','time1')\">"+value+"</a>";
+	} else {//当不存在记录时
+		cell.innerHTML="&nbsp;";
+	}
+}
+function externaldatatable_threemonth_onRefresh(cell,value,record) {
+	if (record) {//当存在记录时
+		var fdType=record.getValue("fdType");
+		var typeId=record.getValue("typeId");
+		cell.innerHTML="<a href=\"JavaScript:aclick('"+fdType+"','"+typeId+"','time3')\">"+value+"</a>";
+	} else {//当不存在记录时
+		cell.innerHTML="&nbsp;";
+	}
+}
+function externaldatatable_halfyear_onRefresh(cell,value,record) {
+	if (record) {//当存在记录时
+		var fdType=record.getValue("fdType");
+		var typeId=record.getValue("typeId");
+		cell.innerHTML="<a href=\"JavaScript:aclick('"+fdType+"','"+typeId+"','timehalf')\">"+value+"</a>";
+	} else {//当不存在记录时
+		cell.innerHTML="&nbsp;";
+	}
+}
+function externaldatatable_oneyear_onRefresh(cell,value,record) {
+	if (record) {//当存在记录时
+		var fdType=record.getValue("fdType");
+		var typeId=record.getValue("typeId");
+		cell.innerHTML="<a href=\"JavaScript:aclick('"+fdType+"','"+typeId+"','timeyear')\">"+value+"</a>";
+	} else {//当不存在记录时
+		cell.innerHTML="&nbsp;";
+	}
+}
+function externaldatatable_twoyear_onRefresh(cell,value,record) {
+	if (record) {//当存在记录时
+		var fdType=record.getValue("fdType");
+		var typeId=record.getValue("typeId");
+		cell.innerHTML="<a href=\"JavaScript:aclick('"+fdType+"','"+typeId+"','timetwo')\">"+value+"</a>";
+	} else {//当不存在记录时
+		cell.innerHTML="&nbsp;";
+	}
+}
+function initCallGetter_post(){
+	
+	var customerNum ='${customerNum}';
+	externaldatastatistics_dataset.setParameter("customerNum",customerNum);
+	externaldatastatistics_dataset.flushData();
+}
+function externaldatastatistics_dataset_flushDataPost(dataset){
+	length=externaldatastatistics_dataset.length;
+	for(var i=0;i<length;i++){
+		var fdType=externaldatastatistics_dataset.record.getValue("fdType");
+		if(fdType=="行政处罚"){
+			$('a#xc1').html(externaldatastatistics_dataset.record.getValue("oneMonth"));
+			$('a#xc2').html(externaldatastatistics_dataset.record.getValue("threeMonth"));
+			$('a#xc3').html(externaldatastatistics_dataset.record.getValue("halfYear"));
+			$('a#xc4').html(externaldatastatistics_dataset.record.getValue("oneYear"));
+		}
+		if(fdType=="涉诉·开庭"){
+			$('a#sc1').html(externaldatastatistics_dataset.record.getValue("oneMonth"));
+			$('a#sc2').html(externaldatastatistics_dataset.record.getValue("threeMonth"));
+			$('a#sc3').html(externaldatastatistics_dataset.record.getValue("halfYear"));
+			$('a#sc4').html(externaldatastatistics_dataset.record.getValue("oneYear"));
+		}
+		if(fdType=="涉诉·判决"){
+			$('a#sp1').html(externaldatastatistics_dataset.record.getValue("oneMonth"));
+			$('a#sp2').html(externaldatastatistics_dataset.record.getValue("threeMonth"));
+			$('a#sp3').html(externaldatastatistics_dataset.record.getValue("halfYear"));
+			$('a#sp4').html(externaldatastatistics_dataset.record.getValue("oneYear"));
+		}
+		if(fdType=="涉诉·执行"){
+			$('a#sz1').html(externaldatastatistics_dataset.record.getValue("oneMonth"));
+			$('a#sz2').html(externaldatastatistics_dataset.record.getValue("threeMonth"));
+			$('a#sz3').html(externaldatastatistics_dataset.record.getValue("halfYear"));
+			$('a#sz4').html(externaldatastatistics_dataset.record.getValue("oneYear"));
+		}
+		if(fdType=="工商变更"){
+			$('a#gb1').html(externaldatastatistics_dataset.record.getValue("oneMonth"));
+			$('a#gb2').html(externaldatastatistics_dataset.record.getValue("threeMonth"));
+			$('a#gb3').html(externaldatastatistics_dataset.record.getValue("halfYear"));
+			$('a#gb4').html(externaldatastatistics_dataset.record.getValue("oneYear"));
+		}
+		externaldatastatistics_dataset.moveNext();
+	}
+	
+}
+function aclick(fdType,typeId,fdDate){
+	var customerNum='${customerNum}';
+	windows = openSubWin("wbdata", "外部数据明细：&nbsp;"+fdType, "/gbicc-com-pages/externaldata/ftl/TWbdataTest.ftl?typeId="+typeId+"&fdDate="+fdDate+"&customerNum="+customerNum,"800","300",false,true,'',false);
+}
+//$(document).ready(function(){
+//	var strid;
+//	$("a").mouseover(function(){
+//		var str1=$(this).attr("id");
+//		strid="#div"+str1;
+//		$("#div").css('display','block');
+//		$("#div").text("现在点击的表格ID是"+strid);
+//	});
+//	$("a").mouseleave(function(){
+//		$("#div").css('display','none');
+//	});
+//})
+</script>

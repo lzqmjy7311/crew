@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "/WEB-INF/dtd/spring-beans-2.0.dtd">
+<beans>
+
+	<!-- 通用service -->
+	<bean id="com.huateng.ebank.business.common.service.CommonService"
+		class="com.huateng.ebank.business.common.service.CommonService">
+	</bean>
+	<bean id="com.huateng.ebank.business.management.service.PasswordService"
+		class="com.huateng.ebank.business.management.service.PasswordService">
+	</bean>
+	<bean id="com.huateng.ebank.business.management.service.UserMgrService"
+		class="com.huateng.ebank.business.management.service.UserMgrService">
+	</bean>
+	<bean id="com.huateng.ebank.business.common.service.BctlService"
+		class="com.huateng.ebank.business.common.service.BctlService">
+	</bean>
+
+	<bean id="com.huateng.ebank.business.common.service.DataDicService"
+		class="com.huateng.ebank.business.common.service.DataDicService">
+	</bean>
+
+	<!-- 操作员Service -->
+	<bean id="TellerService" class="com.huateng.ebank.business.parammng.TellerService">
+	</bean>
+
+
+	<!-- 批量监控 begin -->
+	<bean id="com.huateng.ebank.monitor.batch.service.BatchMonitorService"
+		class="com.huateng.ebank.monitor.batch.service.BatchMonitorService">
+	</bean>
+	<bean id="com.huateng.ebank.monitor.globalInfo.service.GlobalInfoService"
+		class="com.huateng.ebank.monitor.globalInfo.service.GlobalInfoService">
+	</bean>
+
+	<!-- 批量监控 end -->
+
+	<bean id="com.huateng.ebank.business.management.service.TlrInfoExService"
+		class="com.huateng.ebank.business.management.service.TlrInfoExService">
+	</bean>
+
+	<bean id="com.huateng.ebank.business.management.service.RoleInfoService"
+		class="com.huateng.ebank.business.management.service.RoleInfoService">
+	</bean>
+
+
+	<!-- 操作员服务 -->
+	<bean id="com.huateng.ebank.business.management.service.TlrInfoService"
+		class="com.huateng.ebank.business.management.service.TlrInfoService">
+	</bean>
+
+	<bean id="com.huateng.ebank.business.common.service.LogSeqService"
+		class="com.huateng.ebank.business.common.service.LogSeqService">
+	</bean>
+
+
+	<bean id="com.huateng.ebank.business.management.service.RoleMgrService"
+		class="com.huateng.ebank.business.management.service.RoleMgrService">
+	</bean>
+
+
+	<bean id="com.huateng.ebank.business.management.service.HolidayService"
+		class="com.huateng.ebank.business.management.service.HolidayService">
+	</bean>
+
+	<!-- 日志查询服务 -->
+	<bean id="com.huateng.ebank.business.logger.service.OperLoggerService"
+		class="com.huateng.ebank.business.logger.service.OperLoggerService">
+	</bean>
+
+	<bean
+		id="com.huateng.ebank.business.management.service.SysCurrencyService"
+		class="com.huateng.ebank.business.management.service.SysCurrencyService">
+	</bean>
+	
+	<bean id="com.huateng.ebank.business.management.service.CurrrateMngService" class="com.huateng.ebank.business.management.service.CurrrateMngService" />
+	
+	<!-- 用户登录日志管理 -->
+	<bean
+		id="com.huateng.ebank.business.management.service.TlrLoginLogService"
+		class="com.huateng.ebank.business.management.service.TlrLoginLogService">
+	</bean>
+
+	<!-- 国家/地区维护service -->
+	<bean id="biNationregionService"
+		class="com.huateng.ebank.business.management.service.BiNationregionService" />
+	<!-- 系统参数服务类 -->
+	<bean id="sysParamsService"
+		class="com.huateng.ebank.business.approve.service.SysParamsService">
+	</bean>
+	<bean id="TaskListService"
+		class="com.huateng.ebank.business.approve.service.TaskListService">
+	</bean>
+	<bean id="RoleInfoTSKService"
+		class="com.huateng.ebank.business.approve.service.RoleInfoTSKService">
+	</bean>
+	<bean id="UndoConfirmService"
+		class="com.huateng.ebank.business.approve.service.UndoConfirmService">
+	</bean>
+	<!-- 公用类 -->
+	<bean id="com.huateng.report.common.service.ReportCommonService"
+		class="com.huateng.report.common.service.ReportCommonService">
+	</bean>
+	<bean id="com.huateng.report.common.service.ReportShowDetailService"
+		class="com.huateng.report.common.service.ReportShowDetailService">
+	</bean>
+	<bean id="com.huateng.ebank.business.dataquery.service.TblCsBizLogService"
+		class="com.huateng.ebank.business.dataquery.service.TblCsBizLogService">
+	</bean>
+   <bean id="com.huateng.ebank.business.common.service.BopTimedSchedulerService"
+		class="com.huateng.ebank.business.common.service.BopTimedSchedulerService">
+	</bean>
+	<bean id="SCHDL.JobMNGOP"
+   		  class="com.huateng.ebank.monitor.scheduler.operation.JobManageOperation">
+  	</bean>
+  	<bean id="bopTimedSchedulerOperation"
+   		  class="com.huateng.ebank.monitor.scheduler.operation.BopTimedSchedulerOperation">
+  	</bean>
+  	<!-- 页面组装服务 ,since v2.3.1 -->
+  	<bean id="com.huateng.ebank.business.pages.service.FPPagesMngService"
+   		  class="com.huateng.ebank.business.pages.service.FPPagesMngService">
+  	</bean>
+  	<bean id="com.huateng.ebank.business.pages.service.FPPagesRenderService"
+   		  class="com.huateng.ebank.business.pages.service.FPPagesRenderService">
+  	</bean>
+  	<!--  -->
+</beans>

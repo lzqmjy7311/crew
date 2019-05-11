@@ -1,0 +1,47 @@
+<CommQry title="TRewJ16TbassetaccId" navigate="TRewJ16TbassetaccId" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.J16Getter">
+    <Include id="BankParam" />
+    <Fields>
+    	<Field id="clientNo" desc="核心客户编号" edittype="text" datatype="string"
+        xpath="/clientNo" />
+        <Field id="custName" desc="客户名称" edittype="text" datatype="string"
+        xpath="/custName" />
+        <Field id="clientType" desc="客户类型" edittype="select" translated="DATA_DIC.2025" init="true" multiple="false" datatype="string"
+        xpath="/clientType" />
+        <Field id="bankAcc" desc="银行账号" edittype="text" datatype="string"
+        xpath="/bankAcc" />
+        <Field id="assetAcc" desc="理财帐号" edittype="text" datatype="string"
+        xpath="/assetAcc" />
+        <Field id="prdType" desc="产品类别" edittype="text" datatype="string"
+        xpath="/prdType" />
+        <Field id="status" desc="帐户状态" edittype="text" datatype="string" xpath="/status" />
+        <Field id="branchNo" desc="理财账户开户机构" edittype="text" datatype="string"
+        xpath="/branchNo" />
+		<Field id="clientManager" desc="客户经理" edittype="text" datatype="string"
+        xpath="/clientManager" />
+        <Field id="openDate" desc="开通日期" edittype="text" datatype="date"
+        xpath="/openDate" />
+    	<!--
+        <Field id="eventkey" desc="" edittype="text" datatype="string"
+        xpath="/eventkey" />
+        <Field id="taCode" desc="" edittype="text" datatype="string" xpath="/taCode" />
+        <Field id="sendFreq" desc="" edittype="text" datatype="string"
+        xpath="/sendFreq" />
+        <Field id="sendMode" desc="" edittype="text" datatype="string"
+        xpath="/sendMode" />
+        <Field id="divMode" desc="" edittype="text" datatype="string"
+        xpath="/divMode" />
+        <Field id="openFlag" desc="" edittype="text" datatype="string"
+        xpath="/openFlag" />
+        <Field id="reserve1" desc="" edittype="text" datatype="string"
+        xpath="/reserve1" />
+        <Field id="taClient" desc="" edittype="text" datatype="string"
+        xpath="/taClient" />
+        <Field id="warnId" desc="预警表ID" edittype="text" datatype="string"
+        xpath="/warnId" />
+        <Field id="dataDt" desc="数据日期" edittype="text" datatype="date"
+        xpath="/dataDt" />-->
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

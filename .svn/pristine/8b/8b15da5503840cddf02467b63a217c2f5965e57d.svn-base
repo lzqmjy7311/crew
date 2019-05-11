@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-1-16 16:29:27 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.person.supervision.entity.TPlQualitysupQuerytemp" table="T_PL_QUALITYSUP_QUERYTEMP" schema="ECUSER">
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="assigned" />
+        </id>
+        <property name="warningLevel" type="string">
+            <column name="WARN_LEVEL" length="50" />
+        </property>
+        <property name="loanAcct" type="string">
+            <column name="LOAN_ACCT" length="100" />
+        </property>
+        <property name="custName" type="string">
+            <column name="CUST_NAME" length="100" />
+        </property>
+        <property name="custCode" type="string">
+            <column name="CUST_CODE" length="50" />
+        </property>
+        <property name="loanVariety" type="string">
+            <column name="LOAN_VARIETY" length="50" />
+        </property>
+        <property name="loanAmt" type="java.lang.Double">
+            <column name="LOAN_AMT" precision="53" scale="0" />
+        </property>
+        <property name="loanBalance" type="java.lang.Double">
+            <column name="LOAN_BALANCE" precision="53" scale="0" />
+        </property>
+        <property name="loanTerm" type="string">
+            <column name="LOAN_TERM" length="25" />
+        </property>
+        <property name="rptStatus" type="string">
+            <column name="RPT_STATUS" length="10" />
+        </property>
+        <property name="taskMatureDate" type="date">
+            <column name="TASK_MATURE_DATE" length="10" />
+        </property>
+        <property name="handler" type="string">
+            <column name="HANDLER" length="32" />
+        </property>
+        <property name="reportId" type="string">
+            <column name="REPORT_ID" length="32" />
+        </property>
+        <property name="reportUrl" type="string">
+            <column name="REPORT_URL" length="100" />
+        </property>
+        <property name="taskType" type="string">
+            <column name="TASK_TYPE" length="50" />
+        </property>
+        <property name="warnRule" type="string">
+            <column name="WARN_RULE" length="200" />
+        </property>
+        <property name="warnDesc" type="string">
+            <column name="WARN_DESC" length="200" />
+        </property>
+        <property name="productName" type="string">
+            <column name="PRODUCT_NAME" length="100" />
+        </property>
+        <property name="bankname" type="string">
+            <column name="BANKNAME" length="50" />
+        </property>
+        <property name="username" type="string">
+            <column name="USERNAME" length="30" />
+        </property>
+    </class>
+</hibernate-mapping>

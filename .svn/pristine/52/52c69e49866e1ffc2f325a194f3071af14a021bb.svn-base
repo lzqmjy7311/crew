@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="20" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.person.monitor.getter.TPlYtReportTaskGetter">
+	<Include id="BankParam" />
+	
+	<Fields>
+		<Field id="id" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/id" />
+        <Field id="warnLevel" desc="预警等级" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/warnLevel" />
+        <Field id="loanAcct" desc="贷款账号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/loanAcct" />
+        <Field id="custName" desc="客户姓名" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/custName" />
+        <Field id="custCode" desc="客户编号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/custCode" />
+        <Field id="loanVariety" desc="贷款品种" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/loanVariety" />
+        <Field id="loanAmt" desc="贷款金额" require="" edittype="text" datatype="double" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/loanAmt" />
+        <Field id="loanBalance" desc="贷款余额" require="" edittype="text" datatype="double" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/loanBalance" />
+        <Field id="loanTerm" desc="贷款期限" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/loanTerm" />
+        <Field id="rptStatus" desc="报告状态" edittype="select" translated="DATA_DIC.102" status="F"
+        xpath="/rptStatus" />
+        <Field id="taskMatureDate" desc="任务到期日" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/taskMatureDate" />
+        <Field id="handler" desc="经办人" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/handler" />
+        <Field id="reportId" desc="报告ID" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/reportId" />
+        <Field id="reportUrl" desc="报告模板Url" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/reportUrl" />
+        <Field id="taskType" desc="任务类型：DQ定期监控；YT用途监控；YJ预警处置；RF中小融辅" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15"
+        scale="2" default="" xpath="/taskType" />
+        <Field id="taskCreatDate" desc="任务生成日期" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/taskCreatDate" />
+	</Fields>
+	
+	<Where>
+    	<TextBox id="operator" desc="经办人" edittype="text" status="F" datatype="string" size="10" index="2" />\
+		<TextBox id="loanAccount" desc="贷款账号" edittype="text" status="F" datatype="string" size="10" index="3" />\					
+		<TextBox id="operBank" desc="经办行" edittype="text" status="F" datatype="string" size="10" index="4" />\
+		<Option id="productCode" desc="产品名称" status="N"
+	        fieldname="qdataNo" edittype="select" dropdowntype="dynamic"
+			dataType="String" readOnly="false" translated="CQ:AllProductSelect"
+			viewField="prodName,prodCode" init="true"
+			fieldmap="productName=prodName;productCode=prodCode" size="32"
+			primary="false" type="String" index="5" />
+		<TextBox id="productName" desc="产品名称" edittype="text" status="F" datatype="string" size="32" />\
+        <Option id="taskType" desc="任务类型" multiple="false" init="true"
+        placeholder="占位符" edittype="select" translated="DATA_DIC.701"
+        datatype="string" size="50"  />
+       <TextBox id="createDate" desc="任务生产日"  edittype="date" satas="F" datatype="date" placeholder="yyyy-MM-dd" />\
+       <TextBox id="dueDate" desc="任务生产日"  edittype="date" satas="F" datatype="date" placeholder="yyyy-MM-dd" />\
+    
+	 </Where>
+	<Operations>
+		<Button id="BtnAdd" name="BtnAdd" desc="新增" icon="icon-add" updateClass="#" url="#" txn="" />
+		<Button id="BtnTodo" name="BtnTodo" desc="处理" icon="icon-save" updateClass="#" url="#" txn="" />
+	</Operations>
+</CommQry>

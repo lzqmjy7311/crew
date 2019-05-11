@@ -1,0 +1,24 @@
+<CommQry title="TEdwPlsSocietalRelV" navigate="TEdwPlsSocietalRelV" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.person.customer.getter.TEdwPlsSocietalRelVGetter">
+    <Include id="BankParam" />
+    
+    <Fields>
+        <Field id="keyno" desc="社会关系记录编号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/keyno" />
+        <Field id="custid" desc="客户编号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/custid" />
+        <Field id="relasign" desc="与客户关系" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/relasign" />
+        <Field id="familycustid" desc="关系人编号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/familycustid" />
+        <Field id="familycustname" desc="关系人" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/familycustname" />
+        <Field id="paperkind" desc="证件类型" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/paperkind" />
+        <Field id="paperid" desc="证件号码" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/paperid" />
+        <Field id="operid" desc="客户经理" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/operid" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

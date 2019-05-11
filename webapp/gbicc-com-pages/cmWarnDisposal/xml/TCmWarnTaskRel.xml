@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="单客户预警处置  &gt;  预警处置" navigate="预警处置    &gt; 预警处置" type="call" interface="false" pagesize="10" async="true" databusid="" transdataactionurl="/trans/TransDataAction.do" txnlogflag="true" getterclassname="com.gbicc.company.warnDisposal.getter.TCmWarnTaskRelGetter">
+    <Include id="BankParam" />
+    <Fields>
+    	<Field id="select" desc="" xpath="/col1" />
+        <Field id="id" desc="ID" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="150" scale="2" default="" xpath="/id" />
+        <Field id="warnCode" desc="预警信号编号" require="" colspan="4" width="300" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="150" scale="2" default=""
+        xpath="/warnCode" />
+        <Field id="customerId" desc="客户ID" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="150" scale="2" default=""
+        xpath="/customerId" />
+        <Field id="taskId" desc="任务编号" require="" colspan="4" width="300" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="150" scale="2" default=""
+        xpath="/taskId" />
+        <Field id="warnId" desc="规则ID" require="" colspan="4" width="300" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="150" scale="2" default=""
+        xpath="/warnId" />
+        <Field id="warnSubject" desc="规则主题" require="" colspan="4" width="300" edittype="select" translated="DATA_DIC.212" datatype="string" method="None" readonly="false" type="" status="F" size="150" scale="2" default=""
+        xpath="/warnSubject" />
+        <Field id="warnName" desc="规则名称" colspan="4" width="300" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="150" scale="2" default=""
+        xpath="/warnName" />
+        <Field id="warnDate" desc="预警时间" require="" colspan="4" width="300" edittype="text" datatype="date" method="None" readonly="false" type="" status="F" size="150" scale="2" default=""
+        xpath="/warnDate" />
+        <Field id="relieveDate" desc="解除时间" require="" colspan="4" width="300" edittype="text" datatype="date" method="None" readonly="false" type="" status="F" size="150" scale="2" default=""
+        xpath="/relieveDate" />
+        <Field id="warnStatus" desc="预警状态" require="" colspan="4" width="300" translated="DATA_DIC.12599" edittype="select" datatype="string" method="None" readonly="false" type="" status="F" size="150" scale="2" default=""
+        xpath="/warnStatus" />
+        <Field id="warnType" desc="预警类型" require="" colspan="4" width="300" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="150" scale="2" default=""
+        xpath="/warnType" />
+        <Field id="warnElimIs" desc="是否排除" require="" colspan="4" width="300" edittype="select" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="150" scale="2" default="1"
+        xpath="/warnElimIs" />
+        <Field id="warnElimDesc" desc="排除说明" require="" colspan="4" edittype="textarea" height="60" width="300" datatype="string" method="None" readonly="false" type="" status="F" size="1000" scale="2" default=""
+        xpath="/warnElimDesc" />
+        <Field id="warnElimDate" desc="排除时间" require="" colspan="4" width="300" edittype="text" datatype="date" method="None" readonly="false" type="" status="F" size="150" scale="2" default=""
+        xpath="/warnElimDate" />
+        <Field id="relieveIs" desc="是否解除" require="" colspan="4" width="300" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="150" scale="2" default=""
+        xpath="/relieveIs" />
+        <Field id="processLevel" desc="审批等级" require="" colspan="4" width="300" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="150" scale="2" default=""
+        xpath="/processLevel" />
+        <Field id="relieveDesc" desc="解除说明" require="" colspan="4" width="300" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="1000" scale="2" default=""
+        xpath="/relieveDesc" />
+        <Field id="warnLevel" desc="预警信号等级" require="" colspan="4" width="300" edittype="select" translated="DATA_DIC.12606" datatype="string" method="None" readonly="false" type="" status="F" size="150" scale="2" default=""
+        xpath="/warnLevel" />
+        <Field id="riskDesc" desc="风险描述" require="" colspan="4" edittype="textarea" height="60" width="300" datatype="string" method="None" readonly="false" type="" status="F" size="1000" scale="2" default=""
+        xpath="/riskDesc" />
+        <Field id="warnDesc" desc="预警描述" require="" colspan="4" edittype="textarea" height="60" width="300" datatype="string" method="None" readonly="false" type="" status="F" size="1000" scale="2" default=""
+        xpath="/warnDesc" />
+        <Field id="halfresult" desc="规则输出" require="" colspan="4" edittype="textarea" height="60" width="300" datatype="string" method="None" readonly="false" type="" status="F" size="150" scale="2" default=""
+        xpath="/halfresult" />
+        <Field id="dddd" desc="" require="" edittype="radio" translated="" datatype="string" method="None" readonly="false" type="" status="F" size="150" scale="2" default=""
+        xpath="/dddd" />
+    </Fields>
+    <Where>
+    </Where>
+    <Operations>
+    	<Button id="addWarnBtn" name="addWarnBtn" desc="添加" icon="icon-add" updateClass="#" url="" txn="" />
+    	<Button id="disposalBtn" name="disposalBtn" desc="排除" icon="icon-add" updateClass="#" url="" txn="" />
+    	<Button id="lookBtn" name="lookBtn" desc="查看" icon="icon-add" updateClass="#" url="" txn="" />
+    	<Button id="delDisposalBtn" name="delBtn" desc="删除" icon="icon-remove" updateClass="#" url="" txn="" />
+    	<Button id="warnSignalConfirm" name="warnSignalConfirm" desc="确定" icon="icon-save" updateClass="#" url="#" txn="" />
+    </Operations>
+</CommQry>

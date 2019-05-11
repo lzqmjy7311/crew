@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="参数管理  &gt; 产品管理" navigate="参数管理  &gt; 产品管理" type="call"
+	interface="false" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.person.product.getter.ProductGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="id" desc="" edittype="text" datatype="string" size="32" xpath="/id" />
+		<Field id="prodCode" desc="产品编码"  edittype="text" status="F" datatype="string" size="50" xpath="/prodCode" />
+		<Field id="prodName" desc="产品名称"  edittype="text" status="F" datatype="string" size="100" xpath="/prodName" />
+		<Field id="prodType" desc="产品类型" multiple="false" init="true"
+            placeholder="占位符" edittype="select" translated="DATA_DIC.900"
+            datatype="string" size="50" xpath="/prodType" />
+    </Fields>
+    <Where>
+		<TextBox id="prodCode" desc="产品编码" edittype="text" status="F" datatype="string" size="50" index="1" colspan="2" />
+		<TextBox id="prodName" desc="产品名称" edittype="text" status="F" datatype="string" size="100" index="2" colspan="2" />
+		<Option id="prodType" desc="产品类型" translated="DATA_DIC.900" multiple="false" edittype="select" datatype="string" size="50" index="3" colspan="2"/>
+    </Where>
+	<Operations>
+		<Button id="btAdd" name="btAdd" desc="新增" icon="icon-add" operation="addrecord" updateClass="#" url="#" txn="" />
+		<Button id="btnSave" name="btnSave" desc="保存" icon="icon-save" operation="asysubmit" 
+			updateClass="com.gbicc.person.product.update.ProductUpdate" url="#" txn="" />
+        <Button id="btDel" name="btDel" desc="删除" icon="icon-delete" operation="delrecord"/>
+		<Button id="btDataDel" name="btDataDel" desc="后台删除" icon="icon-delete" operation="asysubmit"
+			updateClass="com.gbicc.person.product.update.ProductDelUpdate" url="" />
+	</Operations>
+</CommQry>

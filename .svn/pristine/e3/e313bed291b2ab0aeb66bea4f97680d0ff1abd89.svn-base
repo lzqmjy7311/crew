@@ -1,0 +1,169 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+<@CommonQueryMacro.page title="规则行业阀值设置列表">
+
+<@CommonQueryMacro.CommonQuery id="TPubRulIndustryValue" init="true" submitMode="current">
+<table>
+	<tr>
+		<td>
+			<@CommonQueryMacro.Interface id="intface" label="请输入查询条件" showButton="false" labelwidth="100" colNm=8/>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div align="center" style="margin-bottom:5px">
+				<@CommonQueryMacro.InterfaceButton desc="查询" />
+				<@CommonQueryMacro.SimpleButton id="btnReset" desc="重置" icon="icon-reload" />
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<@CommonQueryMacro.DataTable id="TPubRulIndustryValueDataTable" nowrap="true" height="555" readonly="true" paginationbar="btnAdd,btnUpd,btnDel,btnRead" remoteSort="true" sortable="true" 
+			fieldStr="rulCode[100],rulName[300],industryCode[100],industryName[300],valueType[150]" width="100%" hasFrame="true"/>
+			<@CommonQueryMacro.FloatWindow id="SelectRulAndIndustryFW" modal="true" label="请先选择要新增的规则与行业" 
+			resize="true" minimize="false" width="700" height="200" maximize="true" closure="true" show="false" defaultZoom="normal">
+				<div name='group1' class="group" style="width:99%">
+					<table width="100%" class="grouptable" height="100%" style="table-layout: auto;">
+				    	<tr>
+				    		<td class="labeltd" align="center" width="width:20%">
+								规则:
+							</td>
+							<td align="left" nowrap style="width:80%">
+								<@CommonQueryMacro.SingleField fId="addRulCode"/>
+							</td>
+				    	</tr>
+				        <tr>
+				    		<td class="labeltd" align="center" width="width:20%">
+								行业:
+							</td>
+							<td align="left" nowrap style="width:80%">
+								<@CommonQueryMacro.SingleField fId="addIndustryName"/>
+								<@CommonQueryMacro.SimpleButton id="btnSelect" desc="选择" onclick="selectIndustry();" icon="" plain="false" />
+							</td>
+				    	</tr>
+				    </table>
+				</div>
+				<br/>
+				<center>
+					<@CommonQueryMacro.Button id="btnSave" />
+				</center>
+			</@CommonQueryMacro.FloatWindow>
+		</td>
+	</tr>
+</table>
+</@CommonQueryMacro.CommonQuery>
+<script>
+	var selectWin=null;
+	var addWin=null;
+	var readWin=null;
+	function btnUpd_onClick(){
+		var rulCode=TPubRulIndustryValue_dataset.getValue("rulCode");
+		var industryCode=TPubRulIndustryValue_dataset.getValue("industryCode");
+		if(!rulCode || rulCode==""){
+			top.easyMsg.info("请选择要修改的数据！");
+			return;
+		}
+		addWin=openSubWin("addWin","修改行业适用阀值（双击表格进行阀值的修改）","/gbicc-pages/rule/TPubRulIndustryValueAdd.ftl?flag=update&rulCode="+rulCode+"&industryCode="+industryCode,"1200","600",null,true,function(){
+			TPubRulIndustryValue_dataset.flushData(TPubRulIndustryValue_dataset.pageIndex);
+		});
+	}
+	function btnSave_onClick(){
+		var addRulCode=TPubRulIndustryValue_dataset.getValue("addRulCode");
+		var addIndustryCode=TPubRulIndustryValue_dataset.getValue("addIndustryCode");
+		if(!addRulCode || addRulCode==""){
+			top.easyMsg.info("请选择规则！");
+			return;
+		}
+		if(!addIndustryCode || addIndustryCode==""){
+			top.easyMsg.info("请选择行业！");
+			return;
+		}
+		//判断系统中是否存在相同规则，相同行业的记录。
+		IndustryValueAjax.dwrFindIndustryValue(addRulCode,addIndustryCode,function(y){
+			if(y>0){
+				top.easyMsg.info("同一规则同一行业只能配置一套阀值！");
+				return;
+			}else{
+				subwindow_SelectRulAndIndustryFW.close();
+				addWin=openSubWin("addWin","新增行业适用阀值（双击表格进行阀值的填写）","/gbicc-pages/rule/TPubRulIndustryValueAdd.ftl?flag=add&rulCode="+addRulCode+"&industryCode="+addIndustryCode,"1200","600",null,true,function(){
+					TPubRulIndustryValue_dataset.flushData(TPubRulIndustryValue_dataset.pageIndex);
+				});
+			}
+		});
+	}
+	function TPubRulIndustryValueDataTable_onDbClick(){
+		btnRead_onClick();
+	}
+	function btnRead_onClick(){
+		var rulCode=TPubRulIndustryValue_dataset.getValue("rulCode");
+		var industryCode=TPubRulIndustryValue_dataset.getValue("industryCode");
+		if(!rulCode || rulCode==""){
+			top.easyMsg.info("请选择要查看的数据！");
+			return;
+		}
+		readWin=openSubWin("readWin","查看行业适用阀值","/gbicc-pages/rule/TPubRulIndustryValueRead.ftl?rulCode="+rulCode+"&industryCode="+industryCode,"1200","600");
+	}
+	function btnDel_onClickCheck(){
+		var rulCode=TPubRulIndustryValue_dataset.getValue("rulCode");
+		var industryCode=TPubRulIndustryValue_dataset.getValue("industryCode");
+		if(!rulCode || rulCode==""){
+			top.easyMsg.info("请选择要删除的数据！");
+			return false;
+		}
+		if(!industryCode || industryCode==""){
+			top.easyMsg.info("系统默认阀值无法删除！");
+			return false;
+		}
+		var v=confirm("数据删除后无法恢复，是否确认删除？");
+		if(v){
+			TPubRulIndustryValue_dataset.setParameter("rulCode",rulCode);
+			TPubRulIndustryValue_dataset.setParameter("industryCode",industryCode);
+		}
+		return v;
+	}
+	function btnDel_postSubmit(button){
+		button.url="#";
+		top.easyMsg.info("删除成功！");
+		TPubRulIndustryValue_dataset.setParameter("rulCode",null);
+		TPubRulIndustryValue_dataset.setParameter("industryCode",null);
+		TPubRulIndustryValue_dataset.flushData(TPubRulIndustryValue_dataset.pageIndex);
+	}
+	function saveIndustryFun(typeCd,typeValue){
+		selectWin.close();
+		TPubRulIndustryValue_dataset.setValue("addIndustryCode",typeCd);
+		TPubRulIndustryValue_dataset.setValue("addIndustryName",typeValue);
+	}
+	function btnAdd_onClick(){
+		TPubRulIndustryValue_dataset.setFieldRequired("addRulCode",true);
+		TPubRulIndustryValue_dataset.setFieldRequired("addIndustryCode",true);
+		TPubRulIndustryValue_dataset.setFieldRequired("addIndustryName",true);
+		subwindow_SelectRulAndIndustryFW.show();
+	}
+	function SelectRulAndIndustryFW_floatWindow_beforeClose(){
+		TPubRulIndustryValue_dataset.setFieldRequired("addRulCode",false);
+		TPubRulIndustryValue_dataset.setFieldRequired("addIndustryCode",false);
+		TPubRulIndustryValue_dataset.setFieldRequired("addIndustryName",false);
+		TPubRulIndustryValue_dataset.setValue("addRulCode",null);
+		TPubRulIndustryValue_dataset.setValue("addIndustryCode",null);
+		TPubRulIndustryValue_dataset.setValue("addIndustryName",null);
+		return true;
+	}
+	function SelectRulAndIndustryFW_floatWindow_beforeHide(){
+		TPubRulIndustryValue_dataset.setFieldRequired("addRulCode",false);
+		TPubRulIndustryValue_dataset.setFieldRequired("addIndustryCode",false);
+		TPubRulIndustryValue_dataset.setFieldRequired("addIndustryName",false);
+		TPubRulIndustryValue_dataset.setValue("addRulCode",null);
+		TPubRulIndustryValue_dataset.setValue("addIndustryCode",null);
+		TPubRulIndustryValue_dataset.setValue("addIndustryName",null);
+		return true;
+	}
+	function selectIndustry(){
+		selectWin=openSubWin("selectWin","行业选择","/gbicc-pages/rule/TOdsCmsCodeIndustry.ftl","800","480");
+	}
+	function btnReset_onClick(){
+		TPubRulIndustryValue_interface_dataset.clearData();
+	}
+</script>
+<script type='text/javascript' src='${contextPath}/dwr/interface/IndustryValueAjax.js'> </script>
+</@CommonQueryMacro.page>

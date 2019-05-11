@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="基本信息" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.company.view.getter.TOdsCsmCorporationGetter">
+	<Include id="BankParam" />
+	
+	<Fields>
+		<Field id="customerNum" desc="客户编号" status="F" require="true"
+				method="None"  primary="true" type="String"
+				default="" xpath="/customerNum" readonly="true"/>
+		<Field id="chineseName" desc="客户名称" xpath="/chineseName" readonly="true"/>
+		<Field id="legalrepresentative" desc="法人代表" xpath="/legalrepresentative" readonly="true"/>
+		<Field id="registeredaddress" desc="注册地址" xpath="/registeredaddress" readonly="true"/>
+		<Field id="membershipgroup" desc="所属集团" xpath="/membershipgroup" readonly="true"/>
+		<Field id="businessaddress" desc="营业地址" xpath="/businessaddress" readonly="true"/>
+		<Field id="businessLicenseNum" desc="营业执照号" xpath="/businessLicenseNum" readonly="true"/>
+        <Field id="orgnNum" desc="组织机构代码" xpath="/orgnNum" readonly="true"/>
+		<Field id="registeredCapital" desc="注册资本" xpath="/registeredCapital" readonly="true"/>
+		<Field id="customerSizeCd" desc="企业规模" xpath="/customerSizeCd" readonly="true"/>
+		<Field id="industryLevelOneCd" desc="行业分类" xpath="/industryLevelOneCd" readonly="true"/>
+		<Field id="newEvalResult" desc="内评等级" xpath="/newEvalResult" readonly="true"/>
+	</Fields>
+	
+	<Operations>
+
+	</Operations>
+</CommQry>

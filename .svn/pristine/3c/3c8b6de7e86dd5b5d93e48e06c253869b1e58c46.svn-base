@@ -1,0 +1,78 @@
+<CommQry title="TTaskDivert" navigate="TTaskDivert" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true" transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.gbicc.company.single.getter.TCmSingleRulWarningQueryGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="规则预警任务信息" perfetch="15"  directory="D:/templet" />
+    <Fields>
+    	<Field id="fcettypecode" desc="客户编号" edittype="text" datatype="string" readonly="true" 
+        xpath="/fcettypecode" width="250" status="F"/>
+    	<Field id="fcetname" desc="客户名称" edittype="text" datatype="string" readonly="true" 
+        xpath="/fcetname" width="250" status="F"/>
+        <Field id="halfresult" desc="输出结果" edittype="text" datatype="string" readonly="true" 
+        xpath="/halfresult" width="250" status="N"/>
+        
+       	<Field id="id" desc="ID主键" edittype="text" datatype="string"  readonly="true"
+       	xpath="/id" width="250" status="N"/>
+        <Field id="warnCode" desc="预警编号" edittype="text" datatype="string" readonly="true"
+        xpath="/warnCode" width="250" status="N"/>
+        <Field id="warnDt" desc="预警时间" edittype="text" datatype="date" readonly="true"
+        xpath="/warnDt" width="250" status="F"/>
+        <Field id="warnLevel" desc="预警等级" edittype="text" datatype="string" readonly="true"
+        xpath="/warnLevel" width="250" status="F"/>
+        <Field id="warnStatus" desc="预警处理状态" xpath="/warnStatus" multiple="false" init="true" readonly="true"
+            placeholder="占位符" edittype="select" translated="DATA_DIC.105"
+            datatype="string" size="50" width="250" status="F"/>
+        <Field id="warnDesc" desc="预警描述" edittype="textarea" datatype="string" readonly="true"
+        xpath="/warnDesc" colspan="4" height="50" width="722" status="F"/>
+        <Field id="rulCode" desc="规则编号" edittype="text" datatype="string" readonly="true"
+        xpath="/rulCode" width="250" status="F"/>
+        <Field id="rulName" desc="规则名称" edittype="text" datatype="string" readonly="true"
+        xpath="/rulName" width="250" status="F"/>
+        <Field id="rulType" desc="规则类型" edittype="text" datatype="string" readonly="true"
+        xpath="/rulType" width="250" status="F"/>
+        <Field id="eliminateFlag" desc="是否排除" edittype="checkbox" datatype="string" readonly="true"
+        xpath="/eliminateFlag" status="N"/>
+        <Field id="eliminateDesc" desc="排除说明" edittype="textarea" datatype="string" readonly="true"
+        xpath="/eliminateDesc" colspan="4" height="50" width="722" status="N"/>
+        <Field id="eliminateDt" desc="排除时间" edittype="text" datatype="date" readonly="true"
+        xpath="/eliminateDt" colspan="4" height="100" width="500" status="N"/>
+        <Field id="mainOrgId" desc="主责机构" edittype="text" datatype="string" readonly="true"
+        xpath="/mainOrg/brcode" width="250" status="N"/>
+        <Field id="mainOrg" desc="主责机构" edittype="text" datatype="string" readonly="true"
+        xpath="/mainOrg/brname" width="250" status="F"/>
+        <Field id="casesId" desc="案例ID" edittype="text" datatype="string" readonly="true"
+        xpath="/casesId" status="N"/>
+        <Field id="handleOrgFlag" desc="处理机构标识" edittype="text" datatype="string" readonly="true"
+        xpath="/handleOrgFlag" status="N"/>
+        <Field id="rulDesc" desc="规则描述" edittype="text" datatype="string" readonly="true"
+        xpath="/rulDesc" width="250" status="N"/>
+        <Field id="opinion" desc="审核意见" xpath="/opinion" size="500" edittype="textarea" readonly="true"
+        colspan="4" height="100" width="722" status="N"/>
+        
+       <Field id="removedat" desc="解除时间" edittype="text" datatype="date" readonly="true"
+        xpath="/removedat" colspan="4" height="100" width="500" status="N"/>
+        <Field id="removeFlag" desc="是否解除" edittype="checkbox" datatype="string" readonly="true"
+        xpath="/removeFlag" status="N"/>        
+        <Field id="currentagent" desc="当前经办人" edittype="text" datatype="string" readonly="true"
+        xpath="/currentagent" width="250" status="N"/>
+       <Field id="warningtype" desc="预警类型" edittype="checkbox" translated="LIST：0,0-自动;1,1-手工" datatype="string" readonly="true"
+        xpath="/warningtype" width="250" status="N"/>
+       <Field id="rulTheme" desc="规则主题" edittype="text" datatype="string" readonly="true"
+        xpath="/rulTheme" width="250" status="N"/>
+    </Fields>
+    <Where>
+    	<TextBox id="warnDtStart" desc="预警时间" edittype="text" datatype="date" index="0" />
+    	<TextBox id="warnDtEnd" desc="至" edittype="text" datatype="date" index="1" />
+    	<TextBox id="fcettypecode" desc="客户编号" edittype="text" datatype="string" index="2" />
+    	<TextBox id="fcetname" desc="客户名称" edittype="text" datatype="string" index="3" />
+    	<Option id="warnStatus" desc="预警处理状态" init="true" placeholder="占位符" 
+    		translated="DATA_DIC.105" datatype="string" index="4"/>
+    	<TextBox id="rulCode" desc="规则编号" edittype="text" datatype="string" index="5"/>
+    	<TextBox id="rulName" desc="规则名称" edittype="text" datatype="string" index="6"/>
+        <Option id="mainOrg" desc="主责机构" translated="CQ:branchTree" placeholder="占位符"
+			fieldmap="mainOrg=id;mainOrgName=name" viewField="name" dropdowntype="dynamictree"
+            primary="true" init="false" index="7"/>
+    </Where>
+    <Operations>
+    	<Button id="btnRead" name="btnRead" desc="查看" icon="icon-search" />
+    </Operations>
+</CommQry>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<META>
+	<!-- 基础信息维护 ： 币种信息维护-->
+	<Query id="CurrencyManEntry" path="/fpages/basis/xml/CurrencyManEntry.xml" esc="查询币种信息" />
+	<Query id="CurrencyManEntryDetail" path="/fpages/basis/xml/CurrencyManEntryDetail.xml"  />
+	<!-- 基础信息维护：国家/地区代码维护 -->
+	<Query id="BiNationregionEntry" path="/fpages/basis/xml/BiNationregionEntry.xml" txn="" desc="" />	
+	<Query id="BiNationregionSelect" path="/fpages/basis/dropdownxml/BiNationregionSelect.xml" txn="" desc="" />
+     <Query id="BiNationregionEntryDetail" path="/fpages/basis/xml/BiNationregionEntryDetail.xml"  />
+     	<!-- 基础信息维护 ： 客户帐户信息：币种下拉框-->
+	<Query id="CurrencyLoadPageSelect" path="/fpages/basis/dropdownxml/CurrencySelect.xml" desc="币种选项" />
+	<Query id="tblCsBizLogQuery" path="/fpages/dataquery/xml/TblCsBizLogQuery.xml" />
+	<Query id="SupplyEnterVerifyStateQueryEntry" path="/fpages/dataquery/xml/SupplyEnterVerifyStateQueryEntry.xml"/>
+	<Query id="TlrLoginLogQuery" path="/fpages/dataquery/xml/TlrLoginLogQuery.xml"/>
+	<Query id="TlrLoginLogCountQuery" path="/fpages/dataquery/xml/TlrLoginLogCountQuery.xml"/>
+	<Query id="tlrLoginLogQueryTabs" path="/fpages/dataquery/xml/tlrLoginLogQueryTabs.xml"/>
+	
+	<!--测试数据
+	<Query id="cssjQuery" path="/gbicc-pages/customer/ftl/ee.ftl"/>
+	 -->
+</META>

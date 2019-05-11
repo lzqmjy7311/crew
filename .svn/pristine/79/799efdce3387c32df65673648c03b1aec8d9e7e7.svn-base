@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-5-31 13:44:22 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.gbicc.company.financial.analysis.entity.TDataTax" table="T_DATA_TAX" schema="ECUSER">
+		<id name="fdId" type="int">
+			<column name="FD_ID" />
+		</id>
+		<property name="fdRunNum" type="java.lang.Integer">
+			<column name="FD_RUN_NUM" />
+		</property>
+		<property name="fdPuk" type="string">
+			<column name="FD_PUK" length="1000" />
+		</property>
+		<property name="fdUri" type="string">
+			<column name="FD_URI" length="1000" />
+		</property>
+		<property name="fdVersions" type="string">
+			<column name="FD_VERSIONS" length="1000" />
+		</property>
+		<property name="fdUpdatetime" type="string">
+			<column name="FD_UPDATETIME" length="2000" />
+		</property>
+		<property name="fdCreatetime" type="string">
+			<column name="FD_CREATETIME" length="1000" />
+		</property>
+		<property name="fdCustomerState" type="java.lang.Integer">
+			<column name="FD_CUSTOMER_STATE" />
+		</property>
+		<property name="fdTaskId" type="string">
+			<column name="FD_TASK_ID" length="100" />
+		</property>
+		<property name="fdStatic" type="string">
+			<column name="FD_STATIC" length="200" />
+		</property>
+		<property name="fdSource" type="string">
+			<column name="FD_SOURCE" length="100" />
+		</property>
+		<property name="fdTaxpayerName" type="string">
+			<column name="FD_TAXPAYER_NAME" length="200" />
+		</property>
+		<property name="fdTaxpayerId" type="string">
+			<column name="FD_TAXPAYER_ID" length="200" />
+		</property>
+		<property name="fdCompany" type="string">
+			<column name="FD_COMPANY" length="200" />
+		</property>
+		<property name="fdRegisterAddress" type="string">
+			<column name="FD_REGISTER_ADDRESS" length="300" />
+		</property>
+		<property name="fdRepresentName" type="string">
+			<column name="FD_REPRESENT_NAME" length="90" />
+		</property>
+		<property name="fdRepresentSex" type="string">
+			<column name="FD_REPRESENT_SEX" length="20" />
+		</property>
+		<property name="fdRepresentSign" type="string">
+			<column name="FD_REPRESENT_SIGN" length="300" />
+		</property>
+		<property name="fdDirectorName" type="string">
+			<column name="FD_DIRECTOR_NAME" length="90" />
+		</property>
+		<property name="fdDirectorSign" type="string">
+			<column name="FD_DIRECTOR_SIGN" length="300" />
+		</property>
+		<property name="fdDirectorSex" type="string">
+			<column name="FD_DIRECTOR_SEX" length="20" />
+		</property>
+		<property name="fdDirectorCompany" type="string">
+			<column name="FD_DIRECTOR_COMPANY" length="600" />
+		</property>
+		<property name="fdUsageType" type="string">
+			<column name="FD_USAGE_TYPE" length="200" />
+		</property>
+		<property name="fdBasis" type="clob">
+			<column name="FD_BASIS" />
+		</property>
+		<property name="fdJbkId" type="string">
+			<column name="FD_JBK_ID" length="200" />
+		</property>
+	</class>
+</hibernate-mapping>

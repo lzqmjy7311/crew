@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-12-5 15:33:01 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.financial.analysis.entity.TCmFinanceStatementCode" table="T_CM_FINANCE_STATEMENT_CODE" schema="ECUSER">
+        <comment>财务报表代码表</comment>
+        <id name="projectCd" type="string">
+            <column name="PROJECT_CD" length="32" />
+            <generator class="assigned" />
+        </id>
+        <property name="projectName" type="string">
+            <column name="PROJECT_NAME" length="100" />
+        </property>
+        <property name="financeReportSortCd" type="string">
+            <column name="FINANCE_REPORT_SORT_CD" length="20" />
+        </property>
+        <property name="reportType" type="string">
+            <column name="REPORT_TYPE" length="20" />
+        </property>
+    </class>
+</hibernate-mapping>

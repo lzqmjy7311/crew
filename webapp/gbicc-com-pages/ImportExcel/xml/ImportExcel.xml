@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="风险清单" navigate="风险清单" type="call"
+	interface="false" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.person.importtext.getter.ImportpersonGetter">
+	<Include id="BankParam" />
+    <PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="导出数据" perfetch="15"  directory="D:/templet" />
+	
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="id" desc="" edittype="text" datatype="string" size="25" xpath="/id" />
+		<Field id="bankCode" desc="本机构业务分支机构代码"  edittype="text" status="F" datatype="string" size="50" xpath="/bankCode"/>			
+		<Field id="name" desc="姓名"   edittype="text"  datatype="string" status="F" size="25" xpath="/name"/>
+		<Field id="cardType" desc="证件类型"  edittype="text"  datatype="string" status="F" size="50" xpath="/cardType"/>
+		<Field id="cardNo" desc="证件号码"  edittype="text"  datatype="string" status="F" size="100" xpath="/cardNo"/>
+		<Field id="informationCode" desc="信息代码"  edittype="text"  datatype="string" status="F" width="100" size="32" xpath="/informationCode"/>
+		<Field id="creatTime" desc="信息生成时间"  edittype="text" datatype="date" status="F"  xpath="/creatTime"/>
+    </Fields>
+    
+    <Where>
+ 	
+        <TextBox id="bankCode" desc="本机构业务分支机构代码" edittype="text" status="F" datatype="string" size="100" index="1"  />\					
+        <TextBox id="name" desc="姓名"  edittype="text" status="F" datatype="string" size="25" index="2" />\
+		<TextBox id="informationCode" desc="信息代码"  edittype="text" status="F" datatype="string" size="100" index="3" />\
+		<TextBox id="cardNo" desc="证件号码"  edittype="text" status="F" datatype="string" size="100" index="4" />\
+		<DateTextBox id="creatTime" desc="信息生成时间"  status="F" datatype="string" placeholder="yyyy-MM-dd" index="5"/>\
+		<TextBox id="cardType" desc="证件类型"  edittype="text" status="F" datatype="string" size="50" index="6" />\
+
+
+
+    </Where>
+	<Operations>		
+		<Button id="btCancel" name="btCancel" desc="返回" operation="href" url="" />
+		<Button id="btImport" name="btImport" desc="导入" operation="" url="#" show="" group="" txn="" icon="icon-add"/>
+		<Button id="btModify" name="btModify" desc="修改" operation="" url="#" show="" group="" txn="" icon="icon-edit"/>
+		<Button id="btUpload" name="btUpload" desc="上传" operation="" url="#" show="" group="" txn="" icon="icon-add"/>		
+	</Operations>
+</CommQry>

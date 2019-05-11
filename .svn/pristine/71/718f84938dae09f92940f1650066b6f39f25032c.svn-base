@@ -1,0 +1,380 @@
+package com.gbicc.bpm.servlet;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+
+import org.apache.commons.fileupload.FileItem;
+import org.apache.commons.fileupload.FileItemFactory;
+import org.apache.commons.fileupload.disk.DiskFileItemFactory;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.poifs.filesystem.POIFSFileSystem;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import com.gbicc.bpm.SpringContextHolder;
+import com.gbicc.common.FileTools;
+import com.gbicc.common.FileUpDownProperties;
+import com.gbicc.util.DateUtils;
+import com.gbicc.warn.ComninationWarn.entity.TCwCreditInexOptRecord;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+
+
+public class ImportExcelServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	public ImportExcelServlet() {
+		super();
+	}
+
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+	}
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {	
+			request.setCharacterEncoding("GBK");
+			response.setCharacterEncoding("GBK");
+			FileItemFactory diskFileItemFactory=new DiskFileItemFactory();
+			ServletFileUpload diskFileUpload=new ServletFileUpload(diskFileItemFactory);
+			File file = null;
+		try{
+			ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+			String rootPath = FileUpDownProperties.readValue("rootPath");
+			String fileRealPath = rootPath + File.separator +"ExcelImporttemp"+File.separator ;// 文件真实路径,以文件分隔符结尾
+			FileTools.createFolder(fileRealPath);// 创建目录
+			List items=diskFileUpload.parseRequest(request);
+			int errorcount=0;
+			int sucesscount=0;
+			boolean boolflag=true;
+			java.lang.StringBuffer sbcount=new java.lang.StringBuffer("以下记录未成功导入，行数为：");
+			boolean sbcountflag=true;
+			String flagstr=null;
+			String monitorfre=null;
+			List<String> listset=new ArrayList<String>();
+			Iterator it1=items.iterator();
+			TCwCreditInexOptRecord tcio=new TCwCreditInexOptRecord();
+			GlobalInfo info=(GlobalInfo) request.getSession().getAttribute(GlobalInfo.KEY_GLOBAL_INFO);
+			String userId=info.getTlrno();
+			tcio.setUsername(userId);
+			Date date=new Date();
+			int id=(int)date.getTime();
+			tcio.setId(id);
+			Timestamp ts=new Timestamp(System.currentTimeMillis());
+			
+			tcio.setDate(ts);			
+			while(it1.hasNext()){
+				FileItem item=(FileItem) it1.next();
+				if(item.isFormField()){
+					String name=item.getFieldName();
+					String value=item.getString();
+					if(name.equals("editortype")){
+						monitorfre=value;
+						if(monitorfre.equals("11")){
+							flagstr="季度";
+						}else if(monitorfre.equals("00")){
+							flagstr="月度";
+						}
+						
+					}
+				}
+				if(item.getName()!=null && item.getName()!=""){
+					String fileName=new String(item.getName());
+					fileName=fileName.substring((fileName.lastIndexOf("\\")+1), fileName.length());
+					file=new File(fileRealPath+fileName);
+					InputStream is = item.getInputStream();
+					int buffer = 1024; // 定义缓冲区的大小
+					int length = 0;
+					byte[] b = new byte[buffer];
+					FileOutputStream fos = new FileOutputStream(file);
+					while ((length = is.read(b)) != -1) {
+						fos.write(b, 0, length); // 向文件输出流写读取的数据
+					}
+					fos.close();
+				}
+			}
+			//上传完成       开始处理
+			InputStream is=new FileInputStream(file);
+			POIFSFileSystem psfs=new POIFSFileSystem(is);
+			HSSFWorkbook hssfw=new HSSFWorkbook(psfs);
+			HSSFSheet hssfs=hssfw.getSheetAt(0);
+			int length=hssfs.getLastRowNum();
+			boolean flag=true;
+			int flagcount=0;
+			HSSFRow row=hssfs.getRow(0);
+			short celllength=row.getLastCellNum();
+			List<String> rownamelist=new ArrayList<String>();
+			for(int j=0;j<celllength;j++){
+				HSSFCell cell=row.getCell(j);
+				String str=cell.getStringCellValue().trim();
+				rownamelist.add(str);
+			}
+			if((celllength==7)&&rownamelist.get(0).equals("指标编号")&&rownamelist.get(1).equals("指标名称")&&rownamelist.get(2).equals("指标值")&&rownamelist.get(3).equals("期数")&&rownamelist.get(4).equals("频率")&&rownamelist.get(5).equals("行业编号")&&rownamelist.get(6).equals("机构层级")){
+			}else{
+				flag=false;
+			}
+		if(flag==true){	
+			for(int i=1;i<=length;i++){
+				boolflag=true;
+			try{
+				row=hssfs.getRow(i);
+				if(null!=row){
+					celllength=row.getLastCellNum();
+					HashMap cellmap=new HashMap<String, Object>();
+					String gathertype = null;
+					//获取每一行的cell值，注意：excel表格中的内容为文本格式，如果为123等数字字符，仍会被识别为数字类型，需要做转换。0：数字格式，1：字符格式。
+	 				for(int j=0;j<7;j++){
+						HSSFCell cell=row.getCell(j);
+//						System.out.print(cell.getCellType());
+						if(cell!=null){			
+//							rowlist.add(cell.getNumericCellValue());
+							switch(cell.getCellType()){
+							case 0:
+								if("期数".equals(rownamelist.get(j))){
+									int flagint=(int) cell.getNumericCellValue();
+									String datastr=String.format("%d",flagint);
+									Date dat=DateUtils.getLastDayOfMonth(Integer.valueOf(datastr.substring(0, 4)), Integer.valueOf(datastr.substring(4)));
+									datastr=String.format("%tF", dat);
+									cellmap.put(rownamelist.get(j),datastr);									
+								}else if("行业编号".equals(rownamelist.get(j))){
+									int flagint=(int) cell.getNumericCellValue();
+									String datastr=String.format("%d",flagint);
+									cellmap.put(rownamelist.get(j),datastr);
+								}else if("机构层级".equals(rownamelist.get(j))){
+									int flagint=(int) cell.getNumericCellValue();
+									if(flagstr.equals("季度")){
+						 				if(flagint==0){
+						 					gathertype="3";
+						 				}else{
+						 					gathertype="4";
+						 				}
+									}else if(flagstr.equals("月度")){
+						 				if(flagint==0){
+						 					gathertype="5";
+						 				}else{
+						 					gathertype="6";
+						 				}
+									}
+					 			
+									String datastr=String.format("%d",flagint);
+									cellmap.put(rownamelist.get(j),datastr);
+								}else{
+									cellmap.put(rownamelist.get(j), cell.getNumericCellValue());
+								}
+								break;
+							case 1:
+								if("指标编号".equals(rownamelist.get(j))){
+									if(listset.contains(cell.getStringCellValue())){
+										//boolflag=false;
+										//break;
+										listset.add(cell.getStringCellValue());
+									}else{
+										listset.add(cell.getStringCellValue());
+									}
+								}
+								if("机构层级".equals(rownamelist.get(j))){
+									
+									if(flagstr.equals("季度")){
+						 				if(cell.getStringCellValue().equals("0")){
+						 					gathertype="3";
+						 				}else{
+						 					gathertype="4";
+						 				}
+									}else if(flagstr.equals("月度")){
+						 				if(cell.getStringCellValue().equals("0")){
+						 					gathertype="5";
+						 				}else{
+						 					gathertype="6";
+						 				}
+									}
+								}
+								if("频率".equals(rownamelist.get(j))){
+						 				if(flagstr.equals(cell.getStringCellValue())){
+						 					
+						 				}else{
+						 					boolflag=false;
+						 					break;
+						 				}
+								}
+								cellmap.put(rownamelist.get(j), cell.getStringCellValue());
+								break;
+							default:
+									if("行业名称".equals(rownamelist.get(j))){
+										cellmap.put(rownamelist.get(j), "");
+									}else
+										boolflag=false;
+							 }
+							}else{
+								if("行业名称".equals(rownamelist.get(j))){
+									cellmap.put(rownamelist.get(j), "");
+								}else
+									boolflag=false;
+							}
+		 				if(boolflag==false){
+		 					errorcount++;
+		 					sbcount.append(" "+Integer.valueOf(i+1)+",");
+		 					sbcountflag=false;
+		 					break;
+		 				}
+					}
+	 				
+	 				if(boolflag==true){
+	 				//根据指标编号获取ECUSER.T_CW_IDNEX_MANAGE中的指标类型，阈值一，阈值二，
+	 				StringBuffer thresholdsql=new StringBuffer("SELECT t.INDEX_NAME,t.INDEX_TYPE, t.THRESHOLD1, t.THRESHOLD2, t.INDEX_TYPE2 FROM ECUSER.T_CW_IDNEX_MANAGE t WHERE t.INDEX_CODE ='"+cellmap.get("指标编号")+"'");
+	 				JdbcTemplate jt1=SpringContextHolder.getBean(JdbcTemplate.class);
+	 				List<Map<String,Object>> listmap1=jt1.queryForList(thresholdsql.toString());
+	 				Iterator<Map<String,Object>> ita1=listmap1.iterator();
+	 				String type = null;Double t1=null;Double t2=null;String type2=null;String indexName=null;boolean fff=false;
+	 				while(ita1.hasNext()){
+	 					Map<String,Object> maptemp=ita1.next();
+	 					if(!fff){
+	 						indexName=(String)maptemp.get("INDEX_NAME");
+	 					}
+	 					fff=true;
+	 					if(maptemp.containsKey("INDEX_TYPE")){
+	 						type=(String)maptemp.get("INDEX_TYPE");
+	 					}
+	 					if(maptemp.containsKey("THRESHOLD1")){
+	 						t1=(Double)maptemp.get("THRESHOLD1");	 						
+	 					}
+	 					if(maptemp.containsKey("THRESHOLD2")){
+	 						t2=(Double)maptemp.get("THRESHOLD2");
+	 					}
+	 					if(maptemp.containsKey("INDEX_TYPE2")){
+	 						type2=(String)maptemp.get("INDEX_TYPE2");
+	 					}
+	 				}
+	 				//根据行业编号获取ECUSER.T_CW_INDUSTRY中的上级行业，行业类型，行业名称
+	 				StringBuffer industry=new StringBuffer("SELECT t.INDUSTRY_PARENT,t.INDUSTRY_TYPE, t.INDUSTRY_NAME FROM ECUSER.T_CW_INDUSTRY t WHERE t.INDUSTRY ='"+cellmap.get("行业编号")+"'");
+	 				String iparent = null;String itype=null;String iname=null;String color="'LV2'";
+	 				JdbcTemplate jt=SpringContextHolder.getBean(JdbcTemplate.class);
+	 				List<Map<String,Object>> listmap=jt.queryForList(industry.toString());
+	 				Iterator<Map<String,Object>> ita=listmap.iterator();
+	 				while(ita.hasNext()){
+	 					Map<String,Object> maptemp=ita.next();
+	 					if(maptemp.containsKey("INDUSTRY_PARENT")){
+	 						iparent=(String)maptemp.get("INDUSTRY_PARENT");
+	 					}
+	 					if(maptemp.containsKey("INDUSTRY_TYPE")){
+	 						itype=(String)maptemp.get("INDUSTRY_TYPE");
+	 					}
+	 					if(maptemp.containsKey("INDUSTRY_NAME")){
+	 						iname=(String)maptemp.get("INDUSTRY_NAME");
+	 					}
+	 				}
+		 			String hybh=null;
+		 			String pl=null;
+		 			if(flagstr.equals("季度")){
+		 				hybh="-";
+		 				pl="Q";
+		 			}else{
+		 				hybh=(String) cellmap.get("行业编号");
+		 				pl="M";
+		 			}
+	 				//删除ECUSER.T_CW_CREDIT_INDEX_VAL之前的相同记录
+	 				StringBuffer deletstr=new StringBuffer("DELETE FROM ECUSER.T_CW_CREDIT_INDEX_VAL WHERE ");
+		 			deletstr.append("DATA_DATE = '"+cellmap.get("期数")+"' AND ");								
+		 			deletstr.append("INDEX_CODE = '"+cellmap.get("指标编号")+"' AND ");
+		 			deletstr.append("MONITOR_FRE = '"+pl+"' AND ");
+		 			deletstr.append("INDUSTRY_CODE = '"+hybh+"' AND ");
+		 			deletstr.append("GATHER_TYPE = '"+gathertype+"' AND ");
+		 			deletstr.append("PRODUCT_CODE = '-' ");
+		 			rootdao.executeSql(deletstr.toString());
+		 			Double temp=(Double) cellmap.get("指标值");
+		 			if(t1!=null&&t2!=null&&temp!=null&&type2!=null&&temp!=null){          //判断阈值颜色
+			 			if(type2.equals("0")){
+			 				if(temp>t2){
+			 					color="'LV3'";
+			 				}else if(temp<=t1){
+			 					color="'LV1'";
+			 				}
+			 			}
+			 			if(type2.equals("1")){
+			 				if(temp<t2){
+			 					color="'LV3'";
+			 				}else if(temp>=t1){
+			 					color="'LV1'";
+			 				}
+			 			}
+		 			}else{
+		 				color="'0'";
+		 			}
+		 			if(type2!=null){
+		 				type2="'"+type2+"'";
+		 			}
+		 			if(type!=null){
+		 				type="'"+type+"'";
+		 			}
+		 			//insert CUSER.T_CW_CREDIT_INDEX_VAL  数据
+					StringBuffer insertstr=new StringBuffer("INSERT INTO ECUSER.T_CW_CREDIT_INDEX_VAL(DATA_DATE, INDEX_CODE, INDEX_NAME, INDEX_TYPE, MONITOR_FRE, ORG_CODE, ORG_NAME, ORG_PARENT, PRODUCT_CODE, PRODUCT_NAME, PRODUCT_TYPE, INDUSTRY_CODE, INDUSTRY_NAME, INDUSTRY_TYPE, INDUSTRY_PARENT, COLO, NOW_VAL, TOP_VAL, YC_VAL, THRESHOLD_TYPE, THRESHOLD1, THRESHOLD2, GATHER_TYPE) "
+							+ "VALUES('"+cellmap.get("期数")+"', '"+cellmap.get("指标编号")+"', '"+indexName+"', "+type+", '"+pl+"', '-', '0', '0', '-', '0', '0', '"+hybh+"', '"+iname+"', '"+itype+"', '"+iparent+"', "+color+","+cellmap.get("指标值")+", 0, 0, "+type2+","+t1+", "+t2+", '"+gathertype+"')");
+					rootdao.executeSql(insertstr.toString());
+					sucesscount++;
+	 				}
+				}else{
+					if(flagcount!=i){					//判断flagcount是否等于当前行，如果不等，赋值并使errount加一
+						errorcount++;
+						flagcount=i;
+					}
+				}
+
+			}catch(Exception ee){
+				ee.printStackTrace();
+				if(flagcount!=i){
+					errorcount++;
+					flagcount=i;
+				}
+				continue;
+					}
+			}
+			tcio.setErrorcount(errorcount);				//保存操作记录，最后两条，增加成功和失败条数。
+			tcio.setSucesscount(sucesscount);			
+			rootdao.save(tcio);
+			is.close();
+		if(file.exists()){
+			file.delete();
+		}
+		PrintWriter pw=response.getWriter();
+		if(!sbcountflag){
+				pw.println("{'success':'true','msg':'操作结束！"+sbcount.substring(0, sbcount.length()-1)+"'}");
+			}else{
+				pw.println("{'success':'true','msg':'操作成功！'}");
+			}
+		}else{
+			PrintWriter pw=response.getWriter();
+			pw.println("{'success':'true','msg':'请检查数据表格式，表结构出错！'}");
+			if(file.exists()){
+				file.delete();
+			}
+		}	
+			
+		} catch (Exception e) {
+			if(file.exists()){
+				file.delete();
+			}
+			e.printStackTrace();
+		}
+	}
+}

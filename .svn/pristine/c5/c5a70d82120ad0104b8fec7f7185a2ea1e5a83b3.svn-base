@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-1-19 14:43:52 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.view.zxinfo.entity.TCmCompanyCreditIndexView" table="T_CM_COMPANY_CREDIT_INDEX_VIEW" schema="ECUSER">
+            <id name="id" type="string">
+                <column name="FD_ID" length="50" />
+            </id>
+            <property name="loancardno" type="string">
+                <column name="FD_LOANCARDNO" length="50" />
+            </property>
+            <property name="indexId" type="string">
+                <column name="INDEX_ID" length="21" />
+            </property>
+            <property name="indexName" type="string">
+                <column name="INDEX_NAME" length="36" />
+            </property>
+            <property name="indexValue" type="big_decimal">
+                <column name="INDEX_VALUE" precision="13" />
+            </property>
+            <property name="reportid" type="string">
+                <column name="FD_REPORTID" length="50" />
+            </property>
+            <property name="reportdate" type="timestamp">
+                <column name="FD_REPORTDATE" length="26" />
+            </property>
+    </class>
+</hibernate-mapping>

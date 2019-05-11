@@ -1,0 +1,120 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+<#assign INDEX_CODE=RequestParameters["INDEX_CODE"]?default("")>
+<#assign INDUSTRY_CODE=RequestParameters["INDUSTRY_CODE"]?default("")>
+<#assign DATA_DATE=RequestParameters["DATA_DATE"]?default("")>
+<@CommonQueryMacro.page title="行业监测指标">
+<style>
+div.form1{
+	width:90%;
+	height:250px;
+	text-align:center;
+	border:1px solid #0099CC;
+	float:left;
+	margin:5px 2px 2px 2px;
+	margin-left: 40px;
+	}
+</style>
+<table align="left" style="width: 100%">
+<tr><td>
+<@CommonQueryMacro.CommonQuery id="TCwFinancialValMonitor" init="false" submitMode="selected" navigate="false">
+			<table align="left" width="100%">
+			    <tr>
+					<td>
+					<center>
+						数值类型：<@CommonQueryMacro.SingleField fId="dateType"/>
+						<span style="width: 20px">&nbsp;
+						</span><@CommonQueryMacro.Button id="btHandle" />
+						</center>
+					</td>
+				</tr>
+			</table>
+	</@CommonQueryMacro.CommonQuery>
+	</td></tr>
+	<tr><td>
+      		<div id="report1" class="form1">无数据</div>
+</td></tr>
+	<tr><td>
+      		<@CommonQueryMacro.CommonQuery id="TCwFinancialAllValMonitor" init="false" submitMode="current">
+				<@CommonQueryMacro.DataTable id="datatable1" paginationbar="" maxRow="3" fieldStr="INDUSTRY_NAME,均值{NOW_VAL_1|TOP_VAL_1|YC_VAL_1},90%分位{NOW_VAL_2|TOP_VAL_2|YC_VAL_2},70%分位{NOW_VAL_3|TOP_VAL_3|YC_VAL_3},50%分位{NOW_VAL_4|TOP_VAL_4|YC_VAL_4},30%分位{NOW_VAL_5|TOP_VAL_5|YC_VAL_5},10%分位{NOW_VAL_6|TOP_VAL_6|YC_VAL_6},上市公司行业均值{NOW_VAL_7|TOP_VAL_7|YC_VAL_7}"  width="100%" hasFrame="true"/>
+			</@CommonQueryMacro.CommonQuery>
+</td></tr>
+
+</table>
+<script type="text/javascript" src="${contextPath}/gbicc-pages/jquery-form.js"></script>
+<script src="${contextPath}/templets/ui/js/chart/highcharts.js"></script>
+<script src="${contextPath}/templets/ui/js/chart/highcharts-more.js"></script>
+<script type='text/javascript' src='${contextPath}/dwr/interface/EComninationWarnDAjax.js'> </script>
+<script language="JavaScript">
+
+function creditRepotType1(id,dname,xlist,valList,defaultSeriesType){
+	$(id).highcharts({  
+        chart:{  
+             defaultSeriesType: defaultSeriesType//图表的显示类型（line,spline,scatter,splinearea bar,pie,area,column）  
+        },  
+        title:{  
+            text: dname,//主表题  
+                x: -20 //center  
+        },  
+        credits:{text:'<span style="color:blue;font-size:12px"  title="点击图列项可以显示或隐藏相关图例">使用提示</span>'},
+        xAxis: {   //横坐表  
+        	//             categories: dataJson.listXdata 动态解析
+        	categories:xlist
+        },  
+           yAxis: {  
+           title: {  
+             text: '数值' //纵坐表  
+               },  
+               plotLines: [{  //表线属性  
+            value: -100,  
+             width: 1,  
+             color: 'yellow'  
+                }]  
+              },  
+             tooltip: { //数据点的提示框  
+ 				valueSuffix:''
+        },  
+         series:valList//动态解析
+  			
+         });
+}
+
+function initCallGetter_post(){
+	
+	var INDEX_CODE='${INDEX_CODE}';
+	var INDUSTRY_CODE='${INDUSTRY_CODE}';
+	var DATA_DATE='${DATA_DATE}';
+	TCwFinancialAllValMonitor_dataset.setParameter("INDEX_CODE",INDEX_CODE);
+	TCwFinancialAllValMonitor_dataset.setParameter("INDUSTRY_PARENT",INDUSTRY_CODE);
+	TCwFinancialAllValMonitor_dataset.setParameter("DATA_DATE",DATA_DATE);
+	TCwFinancialAllValMonitor_dataset.flushData(TCwFinancialAllValMonitor_dataset.pageIndex);
+	////ORG_CODE, PRODUCT_CODE, INDEX_CODE, INDUSTRY_CODE, GATHER_TYPE,String THRESHOLD_TYPE,
+	var paramStr=[INDEX_CODE, INDUSTRY_CODE,DATA_DATE,"4"];
+	EComninationWarnDAjax.industryValZXT3(paramStr,function(y){
+		if(y.success=="true"){
+			creditRepotType1('div#report1',window.parent.constWinTitleNameStr,y.jsonData1.listXdata,y.jsonData1.data,'line');
+		}
+	});
+	
+}
+
+//提交_参数
+function btHandle_onClickCheck(button){
+	var dateType = TCwFinancialValMonitor_dataset.getValue("dateType");
+	if(dateType){
+	}else{
+		top.easyMsg.info("请选择数值类型！");
+		return false;
+	}
+	var INDEX_CODE='${INDEX_CODE}';
+	var INDUSTRY_CODE='${INDUSTRY_CODE}';
+	var DATA_DATE='${DATA_DATE}';
+	var paramStr=[INDEX_CODE, INDUSTRY_CODE,DATA_DATE,dateType];
+	EComninationWarnDAjax.industryValZXT3(paramStr,function(y){
+		if(y.success=="true"){
+			creditRepotType1('div#report1',window.parent.constWinTitleNameStr,y.jsonData1.listXdata,y.jsonData1.data,'line');
+		}
+	});
+}
+</script>
+</@CommonQueryMacro.page>

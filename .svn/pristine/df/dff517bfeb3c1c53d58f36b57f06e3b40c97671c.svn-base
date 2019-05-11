@@ -1,0 +1,229 @@
+package com.gbicc.person.riskrulelist.getter;
+
+import java.util.Iterator;
+
+import org.springframework.util.StringUtils;
+
+
+
+
+
+import com.gbicc.person.monitor.service.TPlTaskService;
+import com.huateng.common.err.Module;
+import com.huateng.common.err.Rescode;
+import com.huateng.commquery.result.Result;
+import com.huateng.commquery.result.ResultMng;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.business.common.PageQueryResult;
+import com.huateng.ebank.business.common.service.BctlService;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.framework.web.commQuery.BaseGetter;
+import com.huateng.exception.AppException;
+@SuppressWarnings("unchecked")
+public class RiskruleListGetter extends BaseGetter{
+	@Override
+	public Result call() throws AppException {
+		try {
+			PageQueryResult pageResult = getData();
+			ResultMng.fillResultByList(getCommonQueryBean(),
+					getCommQueryServletRequest(), pageResult.getQueryResult(),
+					getResult());
+			result.setContent(pageResult.getQueryResult());
+			result.getPage().setTotalPage(
+					pageResult.getPageCount(getResult().getPage()
+							.getEveryPage()));
+			result.init();
+			return result;
+		} catch (AppException appEx) {
+			throw appEx;
+		} catch (Exception ex) {
+			throw new AppException(Module.SYSTEM_MODULE,
+					Rescode.DEFAULT_RESCODE, ex.getMessage(), ex);
+		}
+	}
+	
+	
+	protected PageQueryResult getData() throws Exception {
+		
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		GlobalInfo info=GlobalInfo.getCurrentInstance();
+		String userId=info.getTlrno();
+		String brcode= info.getBrcode();
+		StringBuffer hq2 = new StringBuffer("select  ROLE_ID from TLR_ROLE_REL  t where 1=1 ");
+		StringBuffer hql = new StringBuffer("from RiskruleList t where 1=1 ");
+		hq2.append(" and t.TLRNO = '"+userId+"'");
+		Integer roleId=0;
+		String operator=null;
+		String bankName=null;
+		Iterator it =rootdao.queryBySQL(hq2.toString());
+		
+		//获得岗位代码
+		while(it.hasNext()){
+			roleId=(Integer)it.next();
+		}
+
+		if(roleId==222)
+		{
+			 operator=userId;
+				if(StringUtils.hasText(operator)){
+					hql.append(" and operator = '"+operator+"'");			
+				}
+		}
+		else if(roleId!=557&&roleId!=558&&roleId!=111)
+		{
+			BctlService bctlService = BctlService.getInstance();
+			String brcodes=bctlService.getAllSubListStr(brcode);
+			TPlTaskService tts=TPlTaskService.getInstance();
+			hql = new StringBuffer("from RiskruleList t where 1=1 and operator in ");
+			String userIds=tts.getUserIdsByBrcodes(brcodes)	;
+			hql.append("("+userIds+")");
+//			hq2 = new StringBuffer("select cast( BRCODE as VARCHAR(4)) from TLR_INFO  t where 1=1 "); //获得机构代码
+//			hq2.append(" and t.TLRNO = '"+userId+"'");	
+//			it=  rootdao.queryBySQL(hq2.toString());  	
+//			boolean flg_=false;
+//			while(it.hasNext()){						
+//				BrCode=(String)it.next();	
+//				if(roleId!=557 && roleId!=557&&BrCode.equals("0015")){
+//					flg_=true;
+//					
+//			        break;		
+//			}
+//				if(flg_){
+//					JOptionPane.showMessageDialog(null, "您登录的用户权限有问题，请联系管理员");
+//					PageQueryResult pageQueryResult = new PageQueryResult();
+//					pageQueryResult = rootdao.pageQueryByHql(0, 0, "from RiskruleList t where 0=0".toString());
+//					return pageQueryResult;
+//				}
+//				hq2 = new StringBuffer("select TLRNO from TLR_INFO  t where 1=1 and BRCODE = '"+BrCode+"'"); //取出登录账户对应银行下的所有客户经理
+//				it=  rootdao.queryBySQL(hq2.toString());
+//				
+//				while(it.hasNext()){
+//					list.add((String)it.next());	//客户经理list
+//				}			
+//			Iterator<String> it1=list.iterator();  //客户经理迭代			
+//				while(it1.hasNext()){
+//						operator=(String)it1.next();	//取出客户经理代码并存入hql语句					
+//					}
+//				list.clear();
+//			
+//			hq2 = new StringBuffer("select cast( BRCODE as VARCHAR(4)) from BCTL  t where 1=1 and BRNO= '"+BrNo+"'");
+//			it=rootdao.queryBySQL(hq2.toString());
+//			
+//			while(it.hasNext())
+//			{
+//				BrCode=it.next().toString();
+//			}
+//			hq2 = new StringBuffer("select cast( BRCODE as VARCHAR(4)) from BCTL  t where 1=1 "); 
+//			hq2.append(" and t.BLN_UP_BRCODE = '"+BrCode+"'");   //取出登录用户所在银行的所有下属银行。
+//			it=  rootdao.queryBySQL(hq2.toString());
+//			while(it.hasNext()){
+//				list.add(it.next().toString()); //下属银行List	
+//			}
+//			if(!list.isEmpty()){
+//				Iterator<String> it2=list.iterator(); //下属银行list迭代
+//				while(it2.hasNext()){
+//					hq2 = new StringBuffer("select TLRNO from TLR_INFO  t where 1=1 and BRCODE = ");		
+//					BrCode=(String)it2.next(); //取出当前下属银行CODE
+//					hq2.append( "'"+BrCode+"'");
+//					it=  rootdao.queryBySQL(hq2.toString());//获得当前银行所有客户经理迭代
+//					while(it.hasNext()){
+//						operator=(String)it.next();
+//					hql.append("'"+userIds+"',");
+//					}		
+//				}
+//			}
+//			hql.deleteCharAt(hql.length()-1);
+//			hql.append(")");
+			}
+			else 
+			{
+				bankName = (String) getCommQueryServletRequest().getParameterMap().get("bankName");
+
+			}
+
+			
+			
+				
+		String id = (String) getCommQueryServletRequest().getParameterMap().get("id"); 
+		String productName = (String) getCommQueryServletRequest().getParameterMap().get("productName");
+		String lounAcc = (String) getCommQueryServletRequest().getParameterMap().get("lounAcc");
+		String custName = (String) getCommQueryServletRequest().getParameterMap().get("custName");
+		String warningLevel = (String) getCommQueryServletRequest().getParameterMap().get("warningLevel");
+		String loanAmt = (String) getCommQueryServletRequest().getParameterMap().get("loanAmt");
+		String loanBalance = (String) getCommQueryServletRequest().getParameterMap().get("loanBalance");
+		String warnDate = (String) getCommQueryServletRequest().getParameterMap().get("warnDate");
+		String ruleDesc = (String) getCommQueryServletRequest().getParameterMap().get("ruleDesc");
+		String changeDate = (String) getCommQueryServletRequest().getParameterMap().get("changeDate");
+		String warnSignal = (String) getCommQueryServletRequest().getParameterMap().get("warnSignal");
+		String ruleID = (String) getCommQueryServletRequest().getParameterMap().get("ruleID");
+		String isNewcust = (String) getCommQueryServletRequest().getParameterMap().get("isNewcust");
+		String lastwarnDate = (String) getCommQueryServletRequest().getParameterMap().get("lastwarnDate");
+		
+		//分页大小
+		int pageSize = getResult().getPage().getEveryPage();
+		//页码
+		int pageIndex = getResult().getPage().getCurrentPage();
+				
+		
+
+		if(StringUtils.hasText(id)){
+			hql.append(" and id = '"+id+"'");
+		}
+		if(StringUtils.hasText(bankName)){
+			hql.append(" and bankName like '%"+bankName+"%'");
+		}
+		if(StringUtils.hasText(productName)){
+			hql.append(" and productName = '"+productName+"%'");
+		}
+		if(StringUtils.hasText(lounAcc)){
+			hql.append(" and lounAcc = '"+lounAcc+"%'");
+		}
+		if(StringUtils.hasText(custName)){
+			hql.append(" and custName like '%"+custName+"%'");
+		}
+		if(StringUtils.hasText(warningLevel)){
+			hql.append(" and warningLevel ='"+warningLevel+"%'");
+		}
+		if(StringUtils.hasText(loanAmt)){
+			hql.append(" and loanAmt = '"+loanAmt+"%'");			
+		}
+		if(StringUtils.hasText(loanBalance)){
+			hql.append(" and loanBalance = '"+loanBalance+"%'");
+		}
+		if(StringUtils.hasText(warnDate)){
+			hql.append(" and warnDate >= to_date('"+warnDate+"','yyyy-mm-dd')");
+		}
+		if(StringUtils.hasText(lastwarnDate)){
+			hql.append(" and warnDate <= to_date('"+lastwarnDate+"','yyyy-mm-dd')");
+		}
+		if(StringUtils.hasText(ruleDesc)){
+			hql.append(" and ruleDesc = '"+ruleDesc+"'");
+		}
+		if(StringUtils.hasText(changeDate)){
+			
+			hql.append(" and changeDate = to_date('"+changeDate+"','yyyy-mm-dd')");
+		}
+		if(StringUtils.hasText(warnSignal)){
+			hql.append(" and warnSignal = '"+warnSignal+"%'");			
+		}
+		if(StringUtils.hasText(ruleID)){
+			hql.append(" and ruleID = '"+ruleID+"'");
+		}
+		if(StringUtils.hasText(isNewcust)){
+			hql.append(" and isNewcust = '"+isNewcust+"%'");			
+		}
+
+		
+//		List<TCustomer> list = rootdao.pageQueryByHql(hql.toString(), pageIndex, pageSize);
+//		pageQueryResult.setTotalCount(list.size());
+//		pageQueryResult.setQueryResult(list);
+		hql.append(" order by t.warnDate");
+		PageQueryResult pageQueryResult = new PageQueryResult();
+		pageQueryResult = rootdao.pageQueryByHql(pageIndex, pageSize, hql.toString());
+        
+
+		return pageQueryResult;
+	}
+
+}

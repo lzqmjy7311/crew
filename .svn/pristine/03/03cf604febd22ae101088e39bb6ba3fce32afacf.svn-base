@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="协查人员选择" navigate="协查任务选择"
+	type="call"
+	interface="true"
+	pagesize="15"
+	async="true"
+	btnNm="aaa"
+	databusid="DEMO"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.company.single.getter.TCmSingleRulInvestigationInveuserGetter">
+	<Include id="BankParam" />
+
+	<Fields>
+		<Field id="brno" desc="机构号" status="N" method="None"
+			readonly="" primary="true" type="String" size="20" default=""
+			xpath="/brno" />
+
+		<Field id="brname" desc="操作机构" status="N"  method="com.huateng.ebank.business.common.CQMethod.getBrhName"
+			readonly="" primary="true" type="String" size="20" default=""
+			xpath="/brcode" />
+			
+		<Field id="roles" desc="角色" status="N" type="String" xpath="/roles" />	
+
+		<Field id="tlrno" desc="操作员号" status="F" method="None"
+			readonly="" primary="true" type="String" size="20" xpath="/tlrno"
+			default="" />
+
+		<Field id="tlrName" desc="操作员名称" status="F" method="None"
+			width="50" readonly="" primary="true" type="String" size="20"
+			xpath="/TLR_NAME" default="" />
+
+		<Field id="status" desc="登陆状态" status="N" readonly="true" translated="DATA_DIC.37"   edittype="select" width="90"
+			method="None" primary="true" type="String" size="20"
+			xpath="/status"  />
+
+
+		<Field id="flag" desc="有效状态" status="F" readonly="true"
+			translated="LIST:1,有效;0,无效" require="true" edittype="select" width="90"
+			method="None" primary="true" type="String" size="20"
+			xpath="/flag" default="" />
+
+		<Field id="lastaccesstm" desc="最近登陆时间" require="" edittype="text" datatype="timestamp"
+			status="F" method="None" width="180" primary="false" type="String"
+			size="6" xpath="/lastaccesstm" default=""/>
+			
+		<Field id="effectDate" desc="生效日期" require="" status="N"
+			method="None" width="90" primary="false" type="String" size="20"
+			xpath="/effectDate" default="" />
+
+		<Field id="misc" desc="所属部门" require="" status="N" method="None"
+			width="" primary="false" type="String" size="20" xpath="/misc"
+			default="" />
+		<Field id="defRoleid" desc="默认岗位" require="" status="N"
+			readonly="false" edittype="select" fieldmap="" method="None"
+			translated="DATA_DIC.100" width="90" viewField="" primary="false"
+			type="String" size="10" xpath="/roleid" tip="请先选择操作员岗位"/>
+		
+	</Fields>
+
+	<Where>
+		<TextBox id="qtlrno"
+			type="String" dataType="" operation="EQ" size="8" desc="操作员号"
+			tip="操作员号" method="genLikeP" index="0" function="" width=""
+			default="" scale="" require="" readOnly="" rules="" errmsg="操作员号必须是八位" />
+		<TextBox id="qtlrnoName"
+			type="String" dataType="" operation="EQ" size="8" desc="操作员名称"
+			tip="操作员名称" method="genLikeP" index="1" function="" width=""
+			default="" scale="" require="" readOnly="" />
+	</Where>
+
+	<Operations>
+		<Button id="btSubmit" name="btSubmit" desc="确定" operation=""
+			url="#" show="" group="" txn=""  icon="icon-add"/>
+	</Operations>
+	<Sql>
+	</Sql>
+</CommQry>

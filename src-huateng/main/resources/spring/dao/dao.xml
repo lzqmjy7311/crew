@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "/WEB-INF/dtd/spring-beans-2.0.dtd">
+<beans>
+	<bean id="BankCommQueryDAO"
+		class="com.huateng.ebank.framework.web.commQuery.BankCommQueryDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+	<bean id="DataDicDAO" class="com.huateng.ebank.entity.dao.mng.DataDicDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="HQLDAO" class="com.huateng.ebank.framework.operation.orm.HQLDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="ROOTDAO" class="com.huateng.ebank.entity.dao.mng.ROOTDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+	<bean id="GlobalinfoDAO" class="com.huateng.ebank.entity.dao.mng.GlobalinfoDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="FunctionInfoDAO" class="com.huateng.ebank.entity.dao.mng.FunctionInfoDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+	<bean id="RoleInfoDAO" class="com.huateng.ebank.entity.dao.mng.RoleInfoDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="BctlDAO" class="com.huateng.ebank.entity.dao.mng.BctlDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+	<bean id="TlrRoleRelDAO" class="com.huateng.ebank.entity.dao.mng.TlrRoleRelDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="RoleFuncRelDAO" class="com.huateng.ebank.entity.dao.mng.RoleFuncRelDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+	<bean id="BranchFuncRelDAO" class="com.huateng.ebank.entity.dao.mng.BranchFuncRelDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+	<bean id="TlrInfoDAO" class="com.huateng.ebank.entity.dao.mng.TlrInfoDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="BhProcStepDAO" class="com.huateng.ebank.entity.dao.mng.BhProcStepDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+	<bean id="SeqctlDAO" class="com.huateng.ebank.entity.dao.mng.SeqctlDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="ApplydtlDAO" class="com.huateng.ebank.entity.dao.mng.ApplydtlDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="HolidayDAO" class="com.huateng.ebank.entity.dao.mng.HolidayDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+	<bean id="PfSysParamDAO" class="com.huateng.ebank.entity.dao.mng.PfSysParamDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+	 <!-- 查询结果 - 批量下载 -->
+	<bean id="TBLCSFileExportTskDAO"
+		class="com.huateng.ebank.entity.dao.mng.TBLCSFileExportTskDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+
+	<!-- 日志 -->
+	<bean id="TblBizLogDAO"
+		class="com.huateng.ebank.entity.dao.mng.TblBizLogDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+
+
+	<bean id="tblCronTaskJobDAO" class="com.huateng.ebank.entity.dao.mng.TblCronTaskJobDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+
+	<bean id="tblCronTaskJobLogDAO" class="com.huateng.ebank.entity.dao.mng.TblCronTaskJobLogDAO">
+		<property name="sessionFactory">
+			<ref bean="mySessionFactory" />
+		</property>
+	</bean>
+</beans>
+

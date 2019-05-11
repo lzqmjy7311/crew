@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ChannelClients>
+<!-- 定义作为客户方的通道信息，impClass为作为服务方的通讯相关组件，由技术统一实现 -->
+	<ChannelClient id="SocketTcpClient" desc="Socket同步半双工短连接通讯客户端" impClass="com.huateng.flowswitch.micro.model.channel.SocketClientChannel">
+		<attrs>
+			<attr id="serverIp" value="localhost" desc="服务端IP，无默认值"></attr>
+			<attr id="port" value="8989" desc="端口,无默认值"></attr>
+			<attr id="conntimeout" value="60" desc="连接超时时(秒),默认60"></attr>
+			<attr id="sockettimeout" value="60" desc="传输超时时(秒),默认60"></attr>
+			<attr id="msglength" value="5" desc="报文长度字段长度,默认值5"></attr>
+			<attr id="ishead" value="true" desc="报文长度是否包含定义长度,默认值false"></attr>
+		</attrs>
+		<Format id="StringFormat" desc="定长字符串报文处理" impClass="com.huateng.flowswitch.micro.model.channel.StringFormat">
+				<attrs>
+					<attr id="txncode" value="21,2" desc="交易码起始位置,长度,无默认"></attr>
+					<attr id="txnlog" value="23,1" desc="流水号起始位置，长度,无默认"></attr>
+					<attr id="encoding" value="utf-8" desc="编码，默认值UIF-8"></attr>
+					<attr id="rspcode" value="21,4" desc="应答码起始位置,长度,无默认"></attr>
+					<attr id="succescode" value="0000" desc="成功应答码,判断应答是否成功，默认值0000"></attr>
+				</attrs>
+		</Format>
+		<ChannelInterceptors>
+		<!-- 定义通道阻拦器，可支持多个 -->
+		<!-- 
+		<ChannelInterceptor id="ClientChannelInterceptor" desc="广农特殊报文头拦截器" impClass="com.huateng.fs.micro.demo.channel.ClientChannelInterceptor"/> 
+		-->
+		</ChannelInterceptors>
+	</ChannelClient>
+	
+	<!-- 定义作为客户方的通道信息，impClass为作为服务方的通讯相关组件，由技术统一实现 -->
+	<ChannelClient id="SocketXMLTcpClient" desc="Socket同步半双工短连接通讯客户端" impClass="com.huateng.flowswitch.micro.model.channel.SocketClientChannel">
+		<attrs>
+			<attr id="serverIp" value="localhost" desc="服务端IP，无默认值"></attr>
+			<attr id="port" value="9898" desc="端口,无默认值"></attr>
+			<attr id="conntimeout" value="60" desc="连接超时时(秒),默认60"></attr>
+			<attr id="sockettimeout" value="60" desc="传输超时时(秒),默认60"></attr>
+			<attr id="msglength" value="5" desc="报文长度字段长度,默认值5"></attr>
+			<attr id="ishead" value="true" desc="报文长度是否包含定义长度,默认值false"></attr>
+		</attrs>
+		<Format id="XMLFormat" desc="XML报文处理" impClass="com.huateng.flowswitch.micro.model.channel.XMLFormat">
+				<attrs>
+					<attr id="txncode" value="xtype" desc="交易码,通过报文头获取，这处填写为空"></attr>
+					<!--
+					支持从属性获取，根buffer属性 
+					<attr id="txncode" value="[xtype]" desc="交易码,通过报文头获取，这处填写为空"></attr>
+					 -->
+					<attr id="txnlog" value="xclass" desc="流水号起始位置，长度,无默认"></attr>
+					<attr id="encoding" value="utf-8" desc="编码，默认值UIF-8"></attr>
+					<attr id="rspcode" value="rspcode" desc="应答码起始位置,长度,无默认"></attr>
+					<attr id="succescode" value="0000" desc="成功应答码,判断应答是否成功，默认值0000"></attr>
+				</attrs>
+		</Format>
+		<ChannelInterceptors>
+		<!-- 定义通道阻拦器，可支持多个 -->
+		<ChannelInterceptor id="ClientChannelInterceptor" desc="广农特殊报文头拦截器" impClass="com.huateng.fs.micro.demo.channel.ClientChannelInterceptor"/> 
+		</ChannelInterceptors>
+	</ChannelClient>
+	
+		
+	<!-- 直接发送字符串报文接口，不用处理请求xml（返回bean可以根据需要配置） -->
+	<ChannelClient id="SocketXMLTcpClientSendStr" desc="Socket同步半双工短连接通讯客户端" impClass="com.huateng.flowswitch.micro.model.channel.SocketClientChannel">
+		<attrs>
+			<attr id="serverIp" value="localhost" desc="服务端IP，无默认值"></attr>
+			<attr id="port" value="9898" desc="端口,无默认值"></attr>
+			<attr id="conntimeout" value="60" desc="连接超时时(秒),默认60"></attr>
+			<attr id="sockettimeout" value="60" desc="传输超时时(秒),默认60"></attr>
+			<attr id="msglength" value="5" desc="报文长度字段长度,默认值5"></attr>
+			<attr id="ishead" value="true" desc="报文长度是否包含定义长度,默认值false"></attr>
+		</attrs>
+		<!-- 返回结果报文格式配置，encoding必须配置，字符串报文编码 -->
+		<Format id="XMLFormat" desc="XML报文处理" impClass="com.huateng.flowswitch.micro.model.channel.XMLFormat">
+				<attrs>
+					<attr id="encoding" value="utf-8" desc="编码，默认值UIF-8"></attr>
+					<attr id="rspcode" value="rspcode[rspcode]" desc="应答码起始位置,长度,无默认"></attr>
+					<attr id="succescode" value="0000" desc="成功应答码,判断应答是否成功，默认值0000"></attr>
+				</attrs>
+		</Format>
+		<ChannelInterceptors>
+		</ChannelInterceptors>
+	</ChannelClient>
+	
+	<!-- 定义作为客户方的通道信息，impClass为作为服务方的通讯相关组件，由技术统一实现 -->
+	<ChannelClient id="SocketXMLTcpClientTest" desc="Socket同步半双工短连接通讯客户端" impClass="com.huateng.flowswitch.micro.model.channel.SocketClientChannel">
+		<attrs>
+			<attr id="serverIp" value="localhost" desc="服务端IP，无默认值"></attr>
+			<attr id="port" value="9899" desc="端口,无默认值"></attr>
+			<attr id="conntimeout" value="60" desc="连接超时时(秒),默认60"></attr>
+			<attr id="sockettimeout" value="60" desc="传输超时时(秒),默认60"></attr>
+			<attr id="msglength" value="5" desc="报文长度字段长度,默认值5"></attr>
+			<attr id="ishead" value="true" desc="报文长度是否包含定义长度,默认值false"></attr>
+		</attrs>
+		<Format id="XMLFormat" desc="XML报文处理" impClass="com.huateng.flowswitch.micro.model.channel.XMLFormat">
+				<attrs>
+					<attr id="txncode" value="" desc="交易码,通过报文头获取，这处填写为空"></attr>
+					<attr id="txnlog" value="xclass" desc="流水号起始位置，长度,无默认"></attr>
+					<attr id="encoding" value="utf-8" desc="编码，默认值UIF-8"></attr>
+					<attr id="rspcode" value="rspcode" desc="应答码起始位置,长度,无默认"></attr>
+					<attr id="succescode" value="0000" desc="成功应答码,判断应答是否成功，默认值0000"></attr>
+				</attrs>
+		</Format>
+		<ChannelInterceptors>
+		<!-- 定义通道阻拦器，可支持多个 -->
+		<!-- <ChannelInterceptor id="ClientChannelInterceptor" desc="广农特殊报文头拦截器" impClass="test.com.huateng.flowswitch.micro.channel.ClientChannelInterceptor"/> 
+		 -->
+		</ChannelInterceptors>
+	</ChannelClient>
+	
+	<!-- 定义作为客户方的通道信息，impClass为作为服务方的通讯相关组件，由技术统一实现 -->
+	<ChannelClient id="HttpXMLTcpClient" desc="Http通讯客户端" impClass="com.huateng.flowswitch.micro.model.channel.http.HttpClientChannel">
+		<attrs>
+			<attr id="serverUrl" value="http://localhost:8080/TestHttpProject/HttpTestServlet?xtype=${xtype}" desc="服务端URL，无默认值(支持url参数,例如：url?type=${type}，type为javabean中值)"></attr>
+			<attr id="conntimeout" value="60" desc="连接超时时(秒),默认60"></attr> 
+			<attr id="sotimeout" value="60" desc="传输超时时(秒),默认60"></attr> 
+			<attr id="mode" value="1" desc="发送值模式，0表示直接从post流中发送，1表示从流中以key=value形式发送"></attr> 
+			<attr id="sendKey" value="sendMsgKey" desc="模式为1使用，发送Key"></attr> 
+		</attrs>
+		<Format id="XMLFormat" desc="XML报文处理" impClass="com.huateng.flowswitch.micro.model.channel.XMLFormat">
+				<attrs>
+					<attr id="txncode" value="" desc="交易码,通过报文头获取，这处填写为空"></attr>
+					<attr id="txnlog" value="xclass" desc="流水号起始位置，长度,无默认"></attr>
+					<attr id="encoding" value="utf-8" desc="编码，默认值UIF-8"></attr>
+					<attr id="rspcode" value="rspcode" desc="应答码起始位置,长度,无默认"></attr>
+					<attr id="succescode" value="0000" desc="成功应答码,判断应答是否成功，默认值0000"></attr>
+				</attrs>
+		</Format>
+		<ChannelInterceptors>
+		<!-- 定义通道阻拦器，可支持多个 -->
+		<!-- <ChannelInterceptor id="ClientChannelInterceptor" desc="广农特殊报文头拦截器" impClass="com.huateng.fs.micro.demo.channel.ClientChannelInterceptor"/> --> 
+		</ChannelInterceptors>
+		
+	</ChannelClient>
+	
+	<!-- 定义作为客户方的通道信息，impClass为作为服务方的通讯相关组件，由技术统一实现 -->
+	<ChannelClient id="HttpsXMLTcpClient" desc="Http通讯客户端" impClass="com.huateng.flowswitch.micro.model.channel.http.HttpsClientChannel">
+		<attrs>
+			<attr id="serverUrl" value="https://mail.huateng.com/exchweb/bin/auth/owalogon.asp" desc="服务端URL，无默认值(支持url参数,例如：url?type=${type}，type为javabean中值)"></attr>
+			<attr id="keyStorePath" value="" desc="私钥证书路径"></attr>
+			<attr id="keyStorePwd" value="" desc="私钥密码"></attr>
+			<attr id="keyStoreType" value="" desc="私钥类型,证书存在为空使用默认(JKS)"></attr>
+			<attr id="trustStorePath" value="c:/huatengkey.pkg" desc="可信任的证书路径"></attr>
+			<attr id="trustStorePwd" value="" desc="公钥的证书密码"></attr>
+			<attr id="trustStoreType" value="" desc="公钥类型，证书存在为空使用默认(JKS)"></attr>
+			<attr id="conntimeout" value="60" desc="连接超时时(秒),默认60"></attr>
+			<attr id="sotimeout" value="60" desc="传输超时时(秒),默认60"></attr> 
+			<attr id="mode" value="0" desc="发送值模式，0表示直接从post流中发送，1表示从流中以key=value形式发送"></attr> 
+			<attr id="sendKey" value="" desc="模式为1使用，发送Key"></attr> 
+		</attrs>
+		<Format id="XMLFormat" desc="XML报文处理" impClass="com.huateng.flowswitch.micro.model.channel.XMLFormat">
+				<attrs>
+					<attr id="txncode" value="" desc="交易码,通过报文头获取，这处填写为空"></attr>
+					<attr id="txnlog" value="xclass" desc="流水号起始位置，长度,无默认"></attr>
+					<attr id="encoding" value="utf-8" desc="编码，默认值UIF-8"></attr>
+					<attr id="rspcode" value="rspcode" desc="应答码起始位置,长度,无默认"></attr>
+					<attr id="succescode" value="0000" desc="成功应答码,判断应答是否成功，默认值0000"></attr>
+				</attrs>
+		</Format>
+		<ChannelInterceptors>
+		<!-- 定义通道阻拦器，可支持多个 -->
+		 	<ChannelInterceptor id="ClientChannelInterceptor" desc="报文头特殊处理及返回报文记录" impClass="com.huateng.fs.micro.demo.channel.ClientChannelHandAndBodyInterceptor"/> --> 
+		</ChannelInterceptors>
+		
+	</ChannelClient>
+	
+	
+</ChannelClients>

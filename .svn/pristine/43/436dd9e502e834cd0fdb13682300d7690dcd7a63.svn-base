@@ -1,0 +1,130 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+<#assign userInfo_=Session["USER_SESSION_INFO"] />
+<@CommonQueryMacro.page title="流程管理  &gt;  任务转移">
+<!-- 对公任务列表 -->
+<@CommonQueryMacro.CommonQuery id="TaskDivertP" init="false" submitMode="selected">
+	<div>
+		<div>
+			<@CommonQueryMacro.Interface id="intface" label="请输入查询条件" showButton="false" labelwidth="100" colNm=6 
+				fieldStr="taskCode,taskType,custCode,custName,createTimeStart,createTimeEnd,tlrInfo,brName" />
+		</div>
+		<div style="text-align:center;">
+			<@CommonQueryMacro.InterfaceButton desc="查询" />
+			<@CommonQueryMacro.SimpleButton id="btnReset" desc="重置" icon="icon-reload" />
+		</div>
+		<div>
+			<@CommonQueryMacro.DataTable id="taskAfreshAssignTable" remoteSort="true" 
+				nowrap="true"
+				sortable="true" 
+				toolbar="mytoolbar" readonly="false" 
+				paginationbar="btAdd" 
+				remoteSort="true" sortable="true"
+				fieldStr="select[20],taskCode[150],taskTypeName[90],custCode[120],custName[200],brName[150],taskStatus[80],createTime[120],tlrInfo[200]" width="100%" hasFrame="true" />
+		</div>
+	<div>
+</@CommonQueryMacro.CommonQuery>
+<script>
+	var DGRWZYWin=null;
+	//初始化数据
+	function initCallGetter_post(){
+		var brCode=user_info.orgId;
+		var roleId=user_info.roleId;
+		var tlrNo=user_info.userId;
+		var roleType=user_info.roleType;
+		TaskDivertP_dataset.setParameter('brCode',brCode);
+		TaskDivertP_dataset.flushData();
+	};
+	//刷新数据
+	function TaskDivertP_flush_data(){
+		var brCode=user_info.orgId;
+		var roleId=user_info.roleId;
+		var tlrNo=user_info.userId;
+		var roleType=user_info.roleType;
+		TaskDivertP_dataset.setParameter('brCode',brCode);
+		TaskDivertP_dataset.flushData(TaskDivertP_dataset.pageIndex);
+		DGRWZYWin.close();
+		top.easyMsg.info("任务转移成功！");
+	};
+	//重置查询条件
+	function btnReset_onClick(){
+		TaskDivertP_interface_dataset.clearData();
+	};
+	//显示对公任务转移弹出页面
+	function btAdd_onClick(){
+		//判断是否同一类型任务
+		//如果不是同一类型任务，给出提示，不能转移任务
+		var sl=[];
+		var record=TaskDivertP_dataset.getFirstRecord();
+		while(record){
+			if(record.getValue("select")==true){
+				sl.push(record);
+			}
+			record=record.getNextRecord();
+		}
+		var sl2=[];
+		for(var i=0;i<sl.length;i++){
+			sl2.push(sl[i]);
+		}
+		for(var i=0;i<sl.length;i++){
+			for(var k=0;k<sl2.length;k++){
+				if(sl[i].getValue("taskType")!=sl2[k].getValue("taskType")){
+					top.easyMsg.info("只能同时转移同一类型的任务！");
+					return;
+				}
+				if(sl[i].getValue("brClass")!=sl2[k].getValue("brClass")){
+					top.easyMsg.info("只能同时转移机构等级为同一等级的任务！");
+					return;
+				}
+			}
+		}
+		var taskType=sl.length>0?sl[0].getValue("taskType"):null;
+		//判断任务是否处于起始节点
+		//如果不是起始节点，给出所选节点中的不是起始节点的任务id，不能转移任务的提示
+		var wrongTasks='';
+		for(var i=0;i<sl.length;i++){
+			if(sl[i].getValue('rootFlag')!='true'){
+				wrongTasks+=sl[i].getValue('custCode');
+				if(i!=sl.length-1){
+					wrongTasks+=',';
+				}
+			}
+		}
+		if(wrongTasks!=''){
+			top.easyMsg.info("你所勾选的记录中部分任务【客户编号："+wrongTasks+"】已经在处理中，无法进行任务转移，请重新勾选或将任务退回至原始操作人后进行任务转移！");
+			return;
+		}
+		//如果没有勾选转移任务，给出提示
+		if(sl.length==0){
+			top.easyMsg.info("请勾选要转移的任务！");
+			return;
+		}
+		//id对应的是相关表中FD_ID
+		//ids是多个id拼起来的字符串，分隔符为';'
+		//将ids带回后台，将相关id的任务做更新处理
+		var ids='';
+		for(var i=0;i<sl.length;i++){
+			ids+=sl[i].getValue("id");
+			if(i!=sl.length-1){
+				ids+=";";
+			}
+		}
+		//获取当前用户的相关信息
+		//将当前用户的机构带回后台，查找该用户所在机构以及所在机构下子机构的所有任务
+		var brCode=user_info.orgId;
+		var roleId=user_info.roleId;
+		var tlrNo=user_info.userId;
+		var roleType=user_info.roleType;
+		var brClass=sl[0].getValue("brClass");
+		//弹出"对公任务转移"对话框
+		DGRWZYWin=openSubWin("DGRWZY",
+				"对公任务转移",
+				"/gbicc-pages/bpm/ftl/ZGRWZY.ftl?brCode="+brCode+"&ids="+ids+"&taskType="+taskType+"&brClass="+brClass,
+				"1200","600",false,true,function(){
+			
+		},false);
+	};
+</script>
+<script type='text/javascript' src='${contextPath}/dwr/interface/TaskVariable.js'> </script>
+<script type="text/javascript" src="${contextPath}/gbicc-pages/jquery-form.js"></script>
+</@CommonQueryMacro.page>

@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-12-22 14:03:25 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.person.monitor.entity.TPlDqReportJyPartner" table="T_PL_DQ_REPORT_JY_PARTNER" schema="ECUSER">
+        <comment>经营类监控报告股东信息</comment>
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="holdcustid" type="string">
+            <column name="FD_HOLDCUSTID" length="35" />
+        </property>
+        <property name="holdcustname" type="string">
+            <column name="FD_HOLDCUSTNAME" length="60" />
+        </property>
+        <property name="paperkind" type="string">
+            <column name="FD_PAPERKIND" length="2" />
+        </property>
+        <property name="paperid" type="string">
+            <column name="FD_PAPERID" length="30" />
+        </property>
+        <property name="inveamt" type="java.lang.Double">
+            <column name="FD_INVEAMT" precision="53" scale="0" />
+        </property>
+        <property name="stockperc" type="java.lang.Double">
+            <column name="FD_STOCKPERC" precision="53" scale="0" />
+        </property>
+        <property name="businessid" type="string">
+            <column name="FD_BUSINESSID" length="32" />
+        </property>
+    </class>
+</hibernate-mapping>

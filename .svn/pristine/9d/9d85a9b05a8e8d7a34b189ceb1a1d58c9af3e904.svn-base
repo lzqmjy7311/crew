@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="风险清单" navigate="风险清单" type="call"
+	interface="false" pagesize="20" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.person.riskrulelist.getter.RiskruleListGetter">
+	<Include id="BankParam" />
+	
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="id" desc="" edittype="text" datatype="string" size="40" xpath="/id" />
+		<Field id="warnSignal" desc="预警信号" edittype="select" translated="DATA_DIC.200"  datatype="string" status="F" size="32" xpath="warnSignal" />
+		<Field id="ruleID" desc="规则ID"  edittype="text" status="F" datatype="string" size="32" xpath="/ruleID"/>	
+		<Field id="ruleCode" desc="规则代码"  edittype="text" status="F" datatype="string" size="32" xpath="/ruleCode"/>		
+		<Field id="ruleDesc" desc="规则描述"    datatype="string" status="F" size="128" xpath="/ruleDesc"/>
+		<Field id="warningLevel" desc="预警等级"  edittype="select" translated="DATA_DIC.702" datatype="string" status="F" size="25" xpath="/warningLevel"/>
+		<Field id="lounAcc" desc="贷款账户"    datatype="string" status="F" width="120" size="32" xpath="/lounAcc"/>
+		<Field id="custName" desc="客户姓名"  edittype="text" datatype="string" status="F" size="64" xpath="custName"/>
+		<Field id="productName" desc="产品名称"  datatype="string" status="F" size="64" xpath="/productName"/>
+		<Field id="loanAmt" desc="贷款金额" edittype="text" scale="2" datatype="double" status="F"  xpath="/loanAmt"/>
+		<Field id="loanBalance" desc="贷款余额" edittype="text" scale="2" datatype="double" status="F" xpath="/loanBalance"/>
+		<Field id="bankName" desc="经办行" edittype="text" datatype="string" status="F" size="32" xpath="/bankName"/>
+		<Field id="changeDate" desc="状态变化日期" edittype="text"   datatype="string" status="F" size="20"  xpath="/changeDate" /> 
+		<Field id="warnDate" desc="预警时间"  edittype="text"  datatype="string" status="F" size="20"  xpath="/warnDate"/>
+		<Field id="warnDateStr" desc="预警时间"    datatype="string" status="F" size="128" xpath="/warnDateStr"/>
+		<Field id="isNewcust" desc="是否新增用户" edittype="text" datatype="string" status="F" size="25" xpath="/isNewcust"/> 
+		<Field id="operator" desc="经办人" edittype="text" datatype="string" status="F" size="25" xpath="/operator"/> 
+    </Fields>
+    
+    <Where>
+ 	
+        <TextBox id="ruleDesc" desc="规则代码"  edittype="text" status="F" datatype="string"/>\ 	
+        <TextBox id="productName" desc="产品名称" datatype="string" size="50" require="false" index="1" />\
+        <TextBox id="lounAcc" desc="贷款账号" edittype="text" status="F" datatype="string" size="20" index="3"  />\					
+
+        <DateTextBox id="warnDate" desc="预警开始日期"  status="F" datatype="string" placeholder="yyyy-MM-dd" index="6"/>\
+                <TextBox id="custName" desc="客户名称"  edittype="text" status="F" datatype="string" size="20" index="5" />\
+		<DateTextBox id="lastwarnDate" desc="预警结束日期"  status="F" datatype="string" placeholder="yyyy-MM-dd" index="7"/>\
+		<TextBox id="bankName" desc="经办行"  edittype="text" status="F" datatype="string" size="20" index="4" />\
+
+    </Where>
+	<Operations>
+		<Button id="btModOrAdd" name="btModOrAdd" desc="保存" operation="asysubmit"
+			updateClass="com.gbicc.person.supervision.update.QualitysuParAddUpdate"
+			url="" txn="" />			
+		<Button id="btRest" name="btRest" desc="重置" icon="icon-remove" updateClass="#" url="" txn="" />
+		<Button id="btCancel" name="btCancel" desc="返回" operation="href" url="" />
+		<Button id="btAdd" name="btAdd" desc="新增" operation="" url="#" show="" group="" txn="" icon="icon-add"/>
+		<Button id="btModify" name="btModify" desc="修改" operation="" url="#" show="" group="" txn="" icon="icon-edit"/>		
+		<Button id="dktz" name="dktz" desc="贷款台账" operation="" url="#" show="" group="" txn="" icon="icon-view-detail"/>
+		<Button id="custinfo" name="custinfo" desc="客户信息" operation="" url="#" show="" group="" txn="" icon="icon-view-detail"/>
+		<Button id="taskinfo" name="taskinfo" desc="任务信息" operation="" url="#" show="" group="" txn="" icon="icon-view-detail"/>
+		<Button id="ruleinfo" name="ruleinfo" desc="预警信息" operation="" url="#" show="" group="" txn="" icon="icon-view-detail"/>
+	    <Button id="btQuery" name="btQuery" icon="icon-search" desc="查询"/>
+	    
+	    <Button id="forminfo" name="forminfo" desc="预警明细" icon="icon-view-detail" updateClass="#" url="" txn="" />
+	    <Button id="moreHandle" name="moreHandle" desc="更多" icon="icon-sys-search-org" updateClass="#" url="" txn="" />
+	</Operations>
+</CommQry>

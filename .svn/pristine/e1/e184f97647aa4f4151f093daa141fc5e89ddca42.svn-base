@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="操作员管理" navigate="主页 &gt; 系统管理 &gt; 操作员管理" type="call"
+	interface="false" pagesize="20" async="true" databusid="MANAGEMENTTLR"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.management.getter.AllRoleGetter">
+	<Include id="BankParam" />
+
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="selected" desc="选择" status="N" method="None" datetype="checkbox"
+			edittype="checkbox" readonly="false" primary="true" type="String"
+			size="20" default="false" xpath="/selected" />
+
+		<Field id="roleId" desc="岗位号" status="N" method="None"
+			readonly="true" primary="false" type="String" size="20"
+			xpath="/roleId" />
+
+		<Field id="roleName" desc="岗位名称" status="N" method="None"
+			width="50" readonly="true" primary="false" type="String" size="20"
+			xpath="/roleName" />
+
+		<Field id="tlrno" desc="操作员号" status="N" method="None"
+			readonly="true" primary="false" type="String" size="20"
+			xpath="/tlrno" />
+	</Fields>
+
+	<Where>
+
+	</Where>
+	<Operations>
+
+	</Operations>
+	<Sql></Sql>
+</CommQry>

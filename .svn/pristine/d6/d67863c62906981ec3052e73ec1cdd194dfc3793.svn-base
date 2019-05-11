@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.person.monitor.getter.TPlDqReportWarnRulInfoGetter">
+	<Include id="BankParam" />
+	
+	<Fields>
+        <Field id="accId" desc="" xpath="/accId" />
+		<Field id="id" desc="" xpath="/id" />
+        <Field id="ruleId" desc="" xpath="/ruleId" />
+        <Field id="ruleCode" desc="规则编号" xpath="/ruleCode" />
+        <Field id="ruleName" desc="规则名称" xpath="/ruleName" />
+        <Field id="ruleDesc" desc="规则描述" xpath="/ruleDesc" />
+        <Field id="ruleRank" desc="规则等级" xpath="/ruleRank" />
+		<Field id="trigDate" desc="触发时间"  xpath="/trigDate" edittype="date"
+            datatype="string" />
+	</Fields>
+</CommQry>

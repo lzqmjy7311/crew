@@ -1,0 +1,52 @@
+<CommQry title="Bctl" navigate="Bctl" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true" transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.gbicc.company.view.getter.BctlGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+        <Field id="brcode" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/brcode" />
+        <Field id="brno" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/brno" />
+        <Field id="brname" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/brname" />
+        <Field id="brclass" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/brclass" />
+        <Field id="brattr" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/brattr" />
+        <Field id="blnBranchClass" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/blnBranchClass" />
+        <Field id="blnBranchBrcode" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/blnBranchBrcode" />
+        <Field id="blnManageBrcode" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/blnManageBrcode" />
+        <Field id="blnUpBrcode" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/blnUpBrcode" />
+        <Field id="txnBrcode" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/txnBrcode" />
+        <Field id="authlvl" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/authlvl" />
+        <Field id="linkman" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/linkman" />
+        <Field id="teleno" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/teleno" />
+        <Field id="address" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/address" />
+        <Field id="postno" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/postno" />
+        <Field id="otherAreaFlag" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/otherAreaFlag" />
+        <Field id="regionalism" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/regionalism" />
+        <Field id="financeCode" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/financeCode" />
+        <Field id="status" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/status" />
+        <Field id="miscflgs" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/miscflgs" />
+        <Field id="misc" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/misc" />
+        <Field id="lastUpdTlr" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/lastUpdTlr" />
+        <Field id="lastUpdFunc" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/lastUpdFunc" />
+        <Field id="lastUpdDate" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/lastUpdDate" />
+        <Field id="st" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/st" />
+        <Field id="isLock" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/isLock" />
+        <Field id="isDel" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/isDel" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

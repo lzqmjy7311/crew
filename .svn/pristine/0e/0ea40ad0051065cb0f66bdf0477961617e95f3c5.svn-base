@@ -1,0 +1,347 @@
+package com.gbicc.person.monitor.operation;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.gbicc.bpm.service.ProcessManagerService;
+import com.gbicc.common.CommonService;
+import com.gbicc.person.creditMemo.entity.TPlCreditMemo;
+import com.gbicc.person.creditMemo.service.TPlCreditMemoService;
+import com.gbicc.person.monitor.entity.TPlControlmeasure;
+import com.gbicc.person.monitor.entity.TPlReportRelation;
+import com.gbicc.person.monitor.entity.TPlTask;
+import com.gbicc.person.monitor.entity.TPlYtMonitor;
+import com.gbicc.person.monitor.entity.TPlYtReport;
+import com.gbicc.person.monitor.service.TPlControlmeasureService;
+import com.gbicc.person.monitor.service.TPlDqMonitorService;
+import com.gbicc.person.monitor.service.TPlTaskService;
+import com.gbicc.person.monitor.service.TPlYtReportService;
+import com.gbicc.personCommon.entity.TEdwPlsAccount;
+import com.gbicc.personCommon.entity.TEdwPlsCust;
+import com.gbicc.personCommon.entity.TEdwPlsIou;
+import com.gbicc.util.DateUtils;
+import com.gbicc.warn.entity.TWarnSignal;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.entity.data.mng.TlrInfo;
+import com.huateng.ebank.framework.exceptions.CommonException;
+import com.huateng.ebank.framework.operation.BaseOperation;
+import com.huateng.ebank.framework.operation.OperationContext;
+
+/**
+ * 用途监控服务类
+ * @date    2015年11月10日
+ * @author  tangdu
+ * @desc
+ */
+public class TPlYtReportOperation extends BaseOperation {
+
+	public static final String ID = TPlYtReportOperation.class.getSimpleName();
+	public static final String CMD = "CMD";
+	public static final String OP = "op";
+	public static final String CMD_QUERY = "CMD_QUERY";
+	public static final String CMD_INSERT = "CMD_INSERT";
+	public static final String CMD_UPDATE = "CMD_UPDATE";
+	public static final String CMD_DELETE = "CMD_DELETE";
+	public static final String CMD_STARTPROCESS = "CMD_STARTPROCESS";
+	public static final String CMD_UPDATE_STATUS = "CMD_UPDATE_STATUS";
+	public static final String IN_PARAM = "IN_PARAM";
+	public static final String IN_PARAM_REPORTID = "ReportID";
+	public static final String IN_PARAM_LOANNO = "loanNo";
+	public static final String IN_PARAM_DUEBILLNO = "duebillno";
+	public static final String IN_WARN_LIST="IN_WARN_LIST";
+	public static final String IN_TASK_SOURCE_TYPE="SYS";//默认系统 发起
+	
+	public static final String BUSINESS_ID = "BUSINESS_ID";
+	public static final String LOAN_PERSION_LIST = "LOAN_PERSION_LIST";
+	public static final String WAIT_HZ_APPROVE_STATUS="2";//待行长审核状态
+	
+	public static final String CTRL_TYPE_LMT="1";//控制类型-授信额度控制
+	public static final String CTRL_TYPE_OTH="2";//控制类型-其他控制（风险控制措施）
+	public static final String CTRL_TYPE_APD="3";//控制类型-附加处理措施
+	public static final String RISK_CTRL_OTHER="SS";//其他控制-其他措施
+	
+	@Override
+	public void afterProc(OperationContext context) throws CommonException {
+	}
+
+	@Override
+	public void beforeProc(OperationContext context) throws CommonException {
+	}
+	
+	//保存控制措施
+	public void saveCtrl(TPlYtReport ytReport,String businessId) throws CommonException{
+		CommonService.getInstance().executeHQL("delete from TPlControlmeasure where taskId='"+businessId+"' ");
+		if(StringUtils.isNotEmpty(ytReport.getLmtCtrl())){
+			setCtrl(ytReport,ytReport.getLmtCtrl(),TPlYtReportOperation.CTRL_TYPE_LMT,businessId);
+		}
+		if(StringUtils.isNotEmpty(ytReport.getRiskCtrl())){
+			setCtrl(ytReport,ytReport.getRiskCtrl(),CTRL_TYPE_OTH,businessId);
+		}
+		if(StringUtils.isNotEmpty(ytReport.getAppendCtrl())){
+			List<String> apdList=new ArrayList<String>();
+			if(ytReport.getAppendCtrl().indexOf(",")>-1){
+				String[] str=ytReport.getAppendCtrl().split(",");
+				apdList=Arrays.asList(str);
+			}else{
+				apdList.add(ytReport.getAppendCtrl());
+			}
+			for(String apd:apdList){
+				setCtrl(ytReport,apd,TPlYtReportOperation.CTRL_TYPE_APD,businessId);
+			}
+		}
+	}
+	//设置控制措施并保存
+	public void setCtrl(TPlYtReport ytReport,String code,String type,String businessId) throws CommonException{
+		TPlControlmeasureService ctrlService=TPlControlmeasureService.getInstance();
+		TPlControlmeasure ctrl=new TPlControlmeasure();
+		ctrl.setConmeasCode(code);
+		ctrl.setCredited(new Date());
+		TPlTaskService taskService=TPlTaskService.getInstance();
+		TPlTask task=taskService.get(businessId);
+		if(task!=null){
+			ctrl.setOrgCode(task.getHandler().getBrcode());
+		}
+		ctrl.setCtrlType(type);
+		ctrl.setTaskId(businessId);
+		ctrl.setTaskType("YTBG");
+		if(type.equals(TPlYtReportOperation.CTRL_TYPE_OTH)
+				&& code.contains(TPlYtReportOperation.RISK_CTRL_OTHER)){
+			ctrl.setOtherCtrlDesc(ytReport.getOtherCtrlDesc());
+		}
+		ctrlService.save(ctrl);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void execute(OperationContext context) throws CommonException {
+		String cmd = (String) context.getAttribute(CMD);
+		String op = (String) context.getAttribute("op");
+		String businessId = (String) context.getAttribute(BUSINESS_ID);
+		String opinion = (String) context.getAttribute("opinion");
+		String taskAssignee = (String) context.getAttribute("taskAssignee");
+		TPlYtReport dd = (TPlYtReport) context.getAttribute(IN_PARAM);
+		List<TWarnSignal> tWarnSignals=(List<TWarnSignal>) context.getAttribute(IN_WARN_LIST);
+		
+		TPlYtReportService service = TPlYtReportService.getInstance();
+		ROOTDAO rootdao=ROOTDAOUtils.getROOTDAO();
+		
+		if (CMD_QUERY.equals(cmd)) {
+		} else if (CMD_INSERT.equals(cmd)) {
+			//保存业务主表
+			service.save(dd);
+			//删除关系中间表
+			CommonService.getInstance()
+			.executeHQL("delete from TPlReportRelation where businessId='"+businessId+"'");
+			//保存关系中间表
+			TPlReportRelation relation=new TPlReportRelation();
+			relation.setBusinessId(businessId);
+			relation.setReportId(dd.getId());
+			relation.setReportType("YT");
+			rootdao.save(relation);
+			
+			saveCtrl(dd,businessId);
+		} else if (CMD_UPDATE.equals(cmd)) {
+			//删除关系中间表
+			CommonService.getInstance()
+			.executeHQL("delete from TPlReportRelation where businessId='"+businessId+"'");
+			//保存关系中间表
+			TPlReportRelation relation=new TPlReportRelation();
+			relation.setBusinessId(businessId);
+			relation.setReportId(dd.getId());
+			relation.setReportType("YT");
+			rootdao.save(relation);
+			saveCtrl(dd,businessId);
+			//保存主表
+			service.update(dd);
+		} else if (CMD_DELETE.equals(cmd)) {
+			service.delete(dd.getId());
+		} else if (CMD_STARTPROCESS.equals(cmd)) {
+			ProcessManagerService managerService=ProcessManagerService.getInstace();
+			String duebillno= (String) context.getAttribute(IN_PARAM_DUEBILLNO);//借据编号
+			String sourceType= (String) context.getAttribute(IN_TASK_SOURCE_TYPE);//任务来源
+			//查询借据表
+			List<TEdwPlsIou> list3=CommonService.getInstance()
+				.findSqlListBySpringJdbc("select * from  T_EDW_PLS_IOU where DUEBILLNO='"+duebillno+"'", TEdwPlsIou.class);
+			TEdwPlsIou iou=list3.get(0);
+			String loanNo=iou.getLoanacno();
+			//查询账户 表
+			List<TEdwPlsAccount> list=CommonService.getInstance()
+				.findSqlListBySpringJdbc("select * from t_edw_pls_account where loanacno='"+loanNo+"'", TEdwPlsAccount.class);
+			TEdwPlsAccount info=list.get(0);
+			//查询客户表
+			List<TEdwPlsCust> list2=CommonService.getInstance()
+				.findSqlListBySpringJdbc("select * from T_EDW_PLS_CUST  where CUSTID='"+info.getCustid()+"'", TEdwPlsCust.class);
+			TEdwPlsCust cust=list2.get(0);
+			TPlYtMonitor plYtMonitor = new TPlYtMonitor();
+			plYtMonitor.setTaskType("YT");
+			plYtMonitor.setRptStatus("1");//待填报告
+			//判断是系统 发起还是手工发起
+			if(org.springframework.util.StringUtils.hasText(sourceType)){
+				String dt=DateUtils.formatDate(new Date());
+				plYtMonitor.setTaskSourceType(sourceType);
+				rootdao.executeSql("UPDATE T_PL_TASK_USAGE SET"
+						+ " FD_TRIG_DATE=to_date('"+dt+"','yyyy-MM-dd'),FD_TASK_TRIG_TYPE='1' WHERE FD_IOU_ID='"+duebillno+"' ");
+				
+			}else{
+				plYtMonitor.setTaskSourceType(IN_TASK_SOURCE_TYPE);
+			}
+			plYtMonitor.setBankId(info.getBankid());//经办人业务机构
+			plYtMonitor.setLoanVariety(info.getProdname());
+			plYtMonitor.setCustCode(info.getCustid());
+			plYtMonitor.setCustName(cust.getCustname());
+			plYtMonitor.setLoanBalance(info.getBal()==null ? 0:info.getBal().doubleValue());
+			plYtMonitor.setLoanTerm(info.getTterm()==null ? "":info.getTterm().toString());
+			plYtMonitor.setLoanAmt(info.getTcapi()==null ? 0 :info.getTcapi().doubleValue());
+			plYtMonitor.setLoanAcct(loanNo);
+			TlrInfo tlrInfo=ROOTDAOUtils.getTlrInfoDAO().queryById(managerService.findCheckDutyUserId(loanNo));
+			plYtMonitor.setHandler(tlrInfo);
+			TPlYtReport report=new TPlYtReport();
+			report.setCustName(cust.getCustname());
+			report.setCustPhone(cust.getMobilecall());
+			report.setCheckAddress(cust.getContaddr());
+			report.setCustCode(info.getCustid());
+			report.setMainSurvPer(tlrInfo.getTlrName());//主调查人
+			report.setAssistSurvPer(info.getOpername());//贷款经办人
+			report.setLoanNo(loanNo);
+			report.setLendCode(duebillno);
+			report.setLoanAmt(plYtMonitor.getLoanAmt());
+			report.setGuarType(info.getAssukind());//担保方式
+			report.setLoanBalance(plYtMonitor.getLoanBalance());
+			report.setProductCode(plYtMonitor.getLoanVariety());
+			report.setCustTrade(cust.getWaykind());
+			//设置预警等级
+			String level=(String)CommonService.getInstance().findSqlOneBySpringJdbc(
+					"select  t.FD_RANK_FINAL from T_PL_TASK_RISK_RANK t where t.FD_ACC_ID='"+loanNo+"'",String.class);
+			plYtMonitor.setWarnLevel(level);
+			TPlYtReportService.getInstance().startProcess(plYtMonitor,report);
+		}else if(CMD_UPDATE_STATUS.equals(cmd)){
+			//找出监控报告信息,如果贷款资金没有使用完成。则
+			TPlYtReport report =(TPlYtReport) CommonService.getInstance()
+					.queryListHQL("from TPlYtReport where id in (select reportId from TPlReportRelation where businessId='"+businessId+"') ").get(0);
+			if("1".equals(report.getLoanResult())){
+				Calendar calendar=Calendar.getInstance();
+				calendar.add(Calendar.DATE, 15);
+				String dt=DateUtils.formatDate(calendar.getTime());
+				//FD_TRIG_DATE=to_date('"+dt+"','yyyy-MM-dd'),
+				rootdao.executeSql("UPDATE T_PL_TASK_USAGE SET"
+						+ " FD_TRIG_DATE=null WHERE FD_IOU_ID='"+report.getLendCode()+"' ");
+			}
+			if(StringUtils.isNotEmpty(report.getFrequency())){
+				rootdao.executeSql("UPDATE T_PL_TASK_ROUTINE_MONI SET FD_TRIG_RATE_ADJUST="+
+					report.getFrequency()+" WHERE FD_ACC_ID='"+report.getLendCode()+"' ");
+			}
+		}
+		
+		if(StringUtils.isNotEmpty(op) && !"save".equals(op)){
+			try {
+				taskComplete(businessId,op,dd,opinion,taskAssignee);
+			} catch (Exception e) {
+				e.printStackTrace();
+				throw new CommonException("系统异常",e.getMessage());
+			}
+		}
+	}
+
+	public void taskComplete(String businessId,String op,TPlYtReport dd,String opinion,String taskAssignee) throws Exception{
+		GlobalInfo info=GlobalInfo.getCurrentInstance();
+		String userId=info.getTlrno();
+		String orgId=info.getBrcode();
+		ProcessManagerService processManagerService=ProcessManagerService.getInstace();
+		String taskId=processManagerService.findTaskId(businessId, userId);
+		TPlTaskService taskService=TPlTaskService.getInstance();
+		TPlTask task=taskService.get(businessId);
+		Map<String, Object> map=new HashMap<String, Object>();
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		List<String> assigneeList=new ArrayList<String>();
+		if(StringUtils.isNotEmpty(taskAssignee)){
+			assigneeList.add(taskAssignee);
+		}
+		Map<String,String> variables=processManagerService.findTaskVariable(businessId);
+		if(op.equals("submit") && variables.get("status").equals(WAIT_HZ_APPROVE_STATUS)){
+			map.put("operation","提交");
+			
+			//如果选择了控制措施，则加入信贷备忘录
+			if( (StringUtils.isNotBlank(dd.getLmtCtrl()) ||
+					StringUtils.isNotBlank(dd.getRiskCtrl())  ||
+					StringUtils.isNotBlank(dd.getAppendCtrl()) ) &&
+					variables.get("ctrlMeas").equals("show")){//选择控制措施则 添加信贷备忘录
+				String reportId=dd.getId();
+				String warningSignalId=null;
+				String sql="SELECT T.id FROM TWarnSignal T WHERE T.reportId='"+reportId+"' ";
+				List<Object> list=(List<Object>) rootdao.queryByCondition(sql);
+				if(list.size()>0){
+					for(Object ob:list){
+						warningSignalId=(String)list.get(0);
+					}
+				}
+				rootdao.executeSql("DELETE FROM ECUSER.T_PL_CREDIT_MEMO WHERE FD_BUSINESS_ID='"+businessId+"' ");
+				
+				TPlCreditMemo tPlCreditMemo=new TPlCreditMemo();
+				tPlCreditMemo.setBusinessId(businessId);
+				tPlCreditMemo.setControlmeasure(dd.getId());//保存报告ID
+				tPlCreditMemo.setCustname(dd.getCustName());
+				tPlCreditMemo.setCustcode(dd.getCustCode());
+				tPlCreditMemo.setLoanAccount(dd.getLoanNo());
+				tPlCreditMemo.setOperator(task.getHandler().getTlrno());
+				tPlCreditMemo.setOperBank(task.getHandler().getBrcode());
+				tPlCreditMemo.setReprotCode(warningSignalId);//预警信号id
+				tPlCreditMemo.setStartDate(task.getTaskCreatDate());
+//				tPlCreditMemo.setStartRemark(startRemark);//发起原因
+				tPlCreditMemo.setStartType(task.getTaskType());
+				TPlCreditMemoService.getInstance().save(tPlCreditMemo);
+			}
+			
+			List<String> list=TPlDqMonitorService.getInstance().dwrFindCtrl(businessId);
+			if(null!=list && list.size()>0){
+				map.put("path", "next");
+				if(StringUtils.isNotEmpty(variables.get("nextRole"))){
+					if(assigneeList==null || assigneeList.size()==0){
+						throw new CommonException("未配置审核人","根据当前机构【"+info.getBrName()+"】查找流程下一节点未找到审核人");
+					}
+					map.put("assigneeList",assigneeList);
+				}else if(StringUtils.isNotEmpty(variables.get("nextAssignee"))){
+					map.put("assignee",task.getHandler().getTlrno());
+				}
+			}else{
+				map.put("path","end");
+			}
+		}else if(op.equals("back")){
+			map.put("operation","退回");
+			map.put("path","back");
+			map.put("assignee",task.getHandler().getTlrno());
+		}else if(op.equals("submit")){
+			map.put("operation","提交");
+			map.put("path","next");
+			if(StringUtils.isNotEmpty(variables.get("nextRole"))){
+				if(assigneeList==null || assigneeList.size()==0){
+					throw new CommonException("未配置审核人","根据当前机构【"+info.getBrName()+"】查找流程下一节点未找到审核人");
+				}
+				map.put("assigneeList",assigneeList);
+			}else if(StringUtils.isNotEmpty(variables.get("nextAssignee"))){
+				map.put("assignee",task.getHandler().getTlrno());
+			}
+		}
+		map.put("desc", "业务ID:"+businessId+","
+				+ "贷款账号:"+dd.getLoanNo()
+				+ ",借据编号:"+dd.getLendCode()
+				+ ",客户名称:"+dd.getCustName());
+		map.put("opinion",opinion);
+		processManagerService.taskComplete(map, taskId);
+		
+		Map<String,String> newVar=processManagerService.findTaskVariable(businessId);
+		if(null!=newVar && newVar.size()>0){
+			String status=newVar.get("status");
+			//更改业务状态
+			rootdao.executeSql("UPDATE ECUSER.T_PL_TASK SET RPT_STATUS='"+status+"' WHERE FD_ID='"+businessId+"' ");
+		}
+	}
+}

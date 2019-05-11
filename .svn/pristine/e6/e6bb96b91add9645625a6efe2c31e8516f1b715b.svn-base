@@ -1,0 +1,50 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign customerNum="${RequestParameters['customerNum']?default('')}" />
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+<@CommonQueryMacro.page title="外部风险数据">
+<@CommonQueryMacro.CommonQuery id="dataverification" init="false" submitMode="current" navigate="false">
+<@CommonQueryMacro.DataTable id="demodatatable"  title="数据验真"  fieldStr="dataItem,creditSystem,creditInvestigationSystem,taxData,GjfData,verifyResult"/>
+</@CommonQueryMacro.CommonQuery>
+<div style="height:10px"></div>
+<hr/>
+</@CommonQueryMacro.page>
+<div style="height:16px;width:1280px;background-color:#CEEBF9;margin:20px 0 20px 0;color:#416AA3;padding:6px 0 0 10px;font-size:110%">外部风险预警统计分析</div>
+<style>
+td.form1{border-left:1px solid black;border-top:1px solid black;}
+</style>
+<div style="margin:0 auto;width:600px;float:none;clear:both">
+
+<table cellpadding="0" style="border-right:1px solid black;width:100%;height:200px;border-bottom:1px solid black;text-align:center;">
+<tr><td class=form1></td><td class=form1>近一个月</td><td class=form1>近三个月</td><td class=form1>近半年</td><td class=form1>近一年</td><td class=form1>近两年</td></tr>
+<tr><td class=form1>行政处罚</td><td class=form1><a id="11"></a></td><td class=form1><a id="12"></a></td><td class=form1><a id="13"></a></td><td class=form1><a id="14"></a></td><td class=form1><a id="15"></a></td></tr>
+<tr><td class=form1>涉诉·开庭</td><td class=form1><a id="21"></a></td><td class=form1><a id="22"></a></td><td class=form1><a id="23"></a></td><td class=form1><a id="24"></a></td><td class=form1><a id="25"></a></td></tr>
+<tr><td class=form1>涉诉·判决</td><td class=form1><a id="31"></a></td><td class=form1><a id="32"></a></td><td class=form1><a id="33"></a></td><td class=form1><a id="34"></a></td><td class=form1><a id="35"></a></td></tr>
+<tr><td class=form1>涉诉·执行</td><td class=form1><a id="41"></a></td><td class=form1><a id="42"></a></td><td class=form1><a id="43"></a></td><td class=form1><a id="44"></a></td><td class=form1><a id="45"></a></td></tr>
+<tr><td class=form1>工商变更</td><td class=form1><a id="51"></a></td><td class=form1><a id="52"></a></td><td class=form1><a id="53"></a></td><td class=form1><a id="54"></a></td><td class=form1><a id="55"></a></td></tr>
+</table>
+<div id="div" style="position:relative;top:10px;left:10px;width:20%;background-color:yellow;height:50px;border:1px solid red;display:none">
+</div>
+</div>
+
+<script>
+function initCallGetter_post(){
+	var customerNum='${customerNum}';
+	for(var i=11;i<16;i++){
+		var str=document.getElementById(i);
+		str.innerHTML="链接";
+	}
+	
+}
+$(document).ready(function(){
+	var strid;
+	$("a").mouseover(function(){
+		var str1=$(this).attr("id");
+		strid="#div"+str1;
+		$("#div").css('display','block');
+		$("#div").text("现在点击的表格ID是"+strid);
+	});
+	$("a").mouseleave(function(){
+		$("#div").css('display','none');
+	});
+})
+</script>

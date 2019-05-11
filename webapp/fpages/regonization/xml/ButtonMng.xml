@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="" navigate="主页 &gt; 机构管理 &gt; 机构管理" type="call"
+	interface="false" pagesize="10" async="false" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.buttonmng.getter.DatasetButtonGetter">
+	<Include id="BankParam" />
+	<Fields>
+         <Field id="select" desc="多选"  xpath="/select" />
+		<Field id="datasetName" desc="数据集ID" size="50"  width="200" xpath="/datasetName" />	
+        <Field id="id" desc="id" size="50" width="100" xpath="/id" />
+		<Field id="desc" desc="描述" size="500" width="200" xpath="/desc" />
+		
+
+	</Fields>
+	<Where>
+	   <TextBox id="qdatasetName" desc="数据集ID" size="50" />
+	</Where>
+	<Parameters>
+		<Parameter id="valueqdatasetName" desc="数据集ID"  size="50" />
+	</Parameters>
+	<Operations>
+	</Operations>
+</CommQry>

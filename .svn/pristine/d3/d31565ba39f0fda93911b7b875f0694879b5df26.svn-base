@@ -1,0 +1,302 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+
+<#assign casesId=RequestParameters["casesId"]?default("")>
+<#assign warningIds=RequestParameters["warningIds"]?default("")>
+<#assign inveId=RequestParameters["inveId"]?default("")>
+<#assign oper=RequestParameters["oper"]?default("")>
+<#assign userId = statics["com.huateng.ebank.business.common.GlobalInfo"].getCurrentInstanceWithoutException().getTlrno()>
+<@CommonQueryMacro.page title="单规则预警-协查任务">
+<script type='text/javascript' src='${contextPath}/dwr/interface/upLoadNumsAjax.js'> </script>
+<table>
+	<tr>
+		<td>
+			<@CommonQueryMacro.GroupBox id="SingleRulWarningSelectBox" label="关联预警信息" expand="true">
+				<@CommonQueryMacro.CommonQuery id="SingleRulWarningSelect" init="false" submitMode="current">
+					<@CommonQueryMacro.DataTable id="SingleRulWarningSelectTable" readonly="true" paginationbar="btnShow" 
+					fieldStr="warnCode[80],rulType[100],rulName[150],rulDesc[150],warnStatus[100],warnDt[100],mainOrg[100]" width="100%" hasFrame="true"/>
+				</@CommonQueryMacro.CommonQuery>
+			</@CommonQueryMacro.GroupBox>
+		</td>
+	</tr>
+	<@CommonQueryMacro.CommonQuery id="SingleRulInvestigation" init="true" submitMode="current">
+	<tr>
+		<td>
+			<@CommonQueryMacro.GroupBox id="SingleRulInvestigationBox" label="协查任务信息" expand="true">
+					<@CommonQueryMacro.Group id="SingleRulInvestigationGroup" label="" colNm=4 labelwidth="150"
+					fieldStr="inveCode,inveName,matureDt,inveOrg,status,inveUser,inveCont"/>
+					协查任务说明：<a id="fupload" href="javascript:void()">浏览（<font id="Nums1"></font>）</a>
+			</@CommonQueryMacro.GroupBox>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<@CommonQueryMacro.GroupBox id="SingleRulInvestigationBox2" label="任务核查情况" expand="true">
+					<@CommonQueryMacro.Group id="SingleRulInvestigationGroup2" label="" colNm=2 labelwidth="150"
+					fieldStr="inveFeedDt,inveConc" />
+					协查反馈报告：<a id="fupload2" href="javascript:void()">浏览（<font id="Nums2"></font>）</a>
+			</@CommonQueryMacro.GroupBox>
+		</td>
+	</tr>
+	</@CommonQueryMacro.CommonQuery>
+	<tr>
+		<td>
+			<@CommonQueryMacro.CommonQuery id="SingleRulInveHist" init="true" submitMode="current">
+				<@CommonQueryMacro.GroupBox id="SingleRulInvestigationBox4" label="前一次重调查内容" expand="true">
+						<@CommonQueryMacro.Group id="SingleRulInvestigationGroup4" label="" colNm=2 labelwidth="150"
+						fieldStr="inveFeedDt,inveConc" />
+				</@CommonQueryMacro.GroupBox>
+			</@CommonQueryMacro.CommonQuery>
+		</td>
+	</tr>
+	<@CommonQueryMacro.CommonQuery id="SingleRulInvestigation" mode="1" init="true" submitMode="current">
+	<tr>
+		<td>
+			<@CommonQueryMacro.GroupBox id="SingleRulInvestigationBox3" label="重调查意见" expand="true">
+					<@CommonQueryMacro.Group id="SingleRulInvestigationGroup3" label="" colNm=4 labelwidth="150"
+					fieldStr="againCreateDt,againMatureDt,againCreateUserName,againOpinion" />
+			</@CommonQueryMacro.GroupBox>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<br/><center>
+				<@CommonQueryMacro.Button id="btnSave" />
+				<@CommonQueryMacro.Button id="btnSubmit" />
+				<@CommonQueryMacro.Button id="btnAgainInveSubmit" />
+				<@CommonQueryMacro.Button id="btCancel" />
+			</center>
+		</td>
+	</tr>
+	</@CommonQueryMacro.CommonQuery>
+</table>
+<script>
+	var oper='${oper}';
+	$("#fupload").linkbutton({"iconCls":"icon-upload"}).click(function(){
+		openUploadWin(1,"taskDesc");
+	});
+	$("#fupload2").linkbutton({"iconCls":"icon-upload"}).click(function(){
+		if(oper=="waitInve" || oper=="waitAgainInve"){
+			openUploadWin(0,"feedRept");
+		}else{
+			openUploadWin(1,"feedRept");
+		}
+	});
+	
+	//查看
+	function btnShow_onClick(){
+		var businessId=SingleRulWarningSelect_dataset.getValue("id");
+		if(businessId==null || businessId==""){
+			top.easyMsg.info("请选择一条数据！");
+			return false;
+		}
+		if(businessId!=null && businessId!=""){
+			parent.parent.parent.GTab.addTab('SingleRulWarning',"详细信息",'/gbicc-com-pages/single/ftl/single_rul_warning_info.ftl?businessId='+businessId);
+		}
+	};
+	function openUploadWin(readOnlyFlag,fileType){
+		var businessId=SingleRulInvestigation_dataset.getValue("id");
+		if(businessId){
+			openSubWin("uploadFile", "附件管理","/gbicc-pages/upload/commonupload.ftl?relaID="+businessId+"&relaType="+fileType+"&readOnly="+readOnlyFlag,null,400);
+		}else{
+			top.easyMsg.info("请保存基本信息后再上传附件！");
+			return;
+		}
+	}
+	//页面初始化
+	function initCallGetter_post(){
+		var warningIds='${warningIds}';
+		var inveId='${inveId}';
+		SingleRulWarningSelect_dataset.setParameter("warningIds",warningIds);
+		SingleRulWarningSelect_dataset.flushData(SingleRulWarningSelect_dataset.pageIndex);
+		if(inveId!=""){
+			SingleRulInvestigation_dataset.setParameter("id",inveId);
+			SingleRulInvestigation_dataset.flushData(SingleRulInvestigation_dataset.pageIndex);
+		}
+		//设置页面只读
+		var fields=["inveCode","inveName","matureDt","inveOrg","status","inveUser","inveCont","inveFeedDt"];
+		setPageReadOnlyFieldsFun(fields);
+		//协查人员赋值
+		var inveUserId=SingleRulInvestigation_dataset.getValue("inveUserId");
+		var userId='${userId}';
+		var userName='${Session["USER_SESSION_INFO"].tlrName}';
+		if(inveUserId==null || inveUserId=="" && (oper!="read")){
+			SingleRulInvestigation_dataset.setValue("inveUserId",userId);
+			SingleRulInvestigation_dataset.setValue("inveUser",userName);
+		}
+		var inveFeedDt=SingleRulInvestigation_dataset.getValue("inveFeedDt");
+		if(inveFeedDt==null || inveFeedDt=="" && (oper!="read")){
+			TaskVariable.getSystemCurrentDate(null,function(y){
+				SingleRulInvestigation_dataset.setValue("inveFeedDt",y);
+			});
+		}else if(inveFeedDt!=null && oper=="waitAgainInve"){
+			TaskVariable.getSystemCurrentDate(null,function(y){
+				SingleRulInvestigation_dataset.setValue("inveFeedDt",y);
+			});
+		}
+		var againCreateDt=SingleRulInvestigation_dataset.getValue("againCreateDt");
+		if(againCreateDt==null || againCreateDt=="" && (oper!="read" && oper!="waitInve" && oper!="waitAgainInve")){
+			TaskVariable.getSystemCurrentDate(null,function(y){
+				SingleRulInvestigation_dataset.setValue("againCreateDt",y);
+			});
+		}
+		var againCreateUserId=SingleRulInvestigation_dataset.getValue("againCreateUserId");
+		if(againCreateUserId==null || againCreateUserId=="" && (oper!="read" && oper!="waitInve" && oper!="waitAgainInve")){
+			SingleRulInvestigation_dataset.setValue("againCreateUserId",userId);
+			SingleRulInvestigation_dataset.setValue("againCreateUserName",userName);
+		}
+		//设置重调查、任务核查情况BOX只读
+		var againFields=["againCreateDt","againMatureDt","againCreateUserName","againOpinion"];
+		var taskCheckFields=["inveFeedDt","inveConc"];
+		SingleRulInveHist_dataset.setParameter("inveId",inveId);
+		SingleRulInveHist_dataset.flushData(1);
+		if(oper=="read"){
+			setPageReadOnlyFieldsFun(againFields);
+			setPageReadOnlyFieldsFun(taskCheckFields);
+			$("a[id=btCancel]").hide();
+			$("a[id=btnSave]").hide();
+			$("a[id=btnSubmit]").hide();
+			$("a[id=btnAgainInveSubmit]").hide();
+		}else if(oper=="againInve"){
+			SingleRulInvestigation_dataset.setFieldRequired("againOpinion",true);
+			setPageReadOnlyFieldsFun(taskCheckFields);
+			$("a[id=btnSubmit]").hide();
+			setPageRequiredFieldsFun(againFields);
+		}else if(oper=="waitInve"){
+			$("fieldset[name=SingleRulInvestigationBox3]").hide();
+			$("fieldset[name=SingleRulInvestigationBox4]").hide();
+			$("a[id=btnAgainInveSubmit]").hide();
+		}else if(oper=="waitAgainInve"){
+			$("a[id=btnAgainInveSubmit]").hide();
+			setPageReadOnlyFieldsFun(againFields);
+		}
+		var inveNumb=SingleRulInvestigation_dataset.getValue("inveNumb");
+		if(inveNumb<2){
+			$("fieldset[name=SingleRulInvestigationBox4]").hide();
+		}
+		if(!SingleRulInveHist_dataset.getValue("id") || SingleRulInveHist_dataset.getValue("id")==null){
+			$("fieldset[name=SingleRulInvestigationBox4]").hide();
+		}
+		//显示上传文件的数量
+		showNums1();
+		showNums2();
+	}
+	//页面显示上传次数
+	function showNums1(){
+		var numsDom=document.getElementById('Nums1');
+		numsDom.innerHTML="0";
+		numsDom.setAttribute('color','black');
+		var realId=SingleRulInvestigation_dataset.getValue("id");
+		var relaType="taskDesc";
+		upLoadNumsAjax.getRuleNums(realId,relaType,function(result){
+			if(result.flag=="true"){
+				if(parseInt(result.nums)>0){
+					numsDom.innerHTML=result.nums;
+					numsDom.setAttribute('color','red');
+				}
+			}
+		});
+		var inveConc=SingleRulInvestigation_dataset.getValue("inveConc");
+		SingleRulInvestigation_dataset.flushData();
+		SingleRulInvestigation_dataset.setValue("inveConc",inveConc);
+	}
+	//页面显示上传次数
+	function showNums2(){
+		var numsDom=document.getElementById('Nums2');
+		numsDom.innerHTML="0";
+		numsDom.setAttribute('color','black');
+		var realId=SingleRulInvestigation_dataset.getValue("id");
+		var relaType="feedRept";
+		upLoadNumsAjax.getRuleNums(realId,relaType,function(result){
+			if(result.flag=="true"){
+				if(parseInt(result.nums)>0){
+					numsDom.innerHTML=result.nums;
+					numsDom.setAttribute('color','red');
+				}
+			}
+		});
+		var inveConc=SingleRulInvestigation_dataset.getValue("inveConc");
+		SingleRulInvestigation_dataset.flushData();
+		SingleRulInvestigation_dataset.setValue("inveConc",inveConc);
+	}
+	//设置页面字段只读
+	function setPageReadOnlyFieldsFun(fields){
+		for(var i=0;i<fields.length;i++){
+			SingleRulInvestigation_dataset.setFieldReadOnly(fields[i],true);
+		}
+	}
+	//设置页面字段必填
+	function setPageRequiredFieldsFun(fields){
+		for(var i=0;i<fields.length;i++){
+			SingleRulInvestigation_dataset.setFieldRequired(fields[i],true);
+		}
+	}
+	//参与协查人员
+	function partUser_DropDown_beforeOpen(dropDown){
+		var qServerType =SingleRulInvestigation_dataset.getValue("inveOrg");//获取协查机构
+		if(!qServerType){
+			return "请选择所属机构!";
+		}
+		subAutoUserTree_DropDownDataset.setParameter("orgId",qServerType);
+		partUser_DropDown.cached=false;//让qGroupId不存入缓存
+	}
+	//参与协查人员按键弹起事件
+	function partUser_DropDown_onKeyup(val){
+		if(val.length>=0){
+			return true;
+		}
+		return false;
+	}
+	//重调查提交
+	function btnAgainInveSubmit_onClickCheck(){
+		var casesId='${casesId}';
+		var warningIds='${warningIds}';
+		SingleRulInvestigation_dataset.setParameter("casesId",casesId);
+		SingleRulInvestigation_dataset.setParameter("warningIds",warningIds);
+		SingleRulInvestigation_dataset.setParameter("op","againInveSubmit");
+	}
+	function btnAgainInveSubmit_postSubmit(button){
+		if(parent.parent.GTab){
+			parent.parent.GTab.closeTab();
+		}
+		window.parent.investigationWin_and_parWin_close();
+	}
+	//保存
+	function btnSave_onClickCheck(){
+		var casesId='${casesId}';
+		var warningIds='${warningIds}';
+		SingleRulInvestigation_dataset.setParameter("casesId",casesId);
+		SingleRulInvestigation_dataset.setParameter("warningIds",warningIds);
+		SingleRulInvestigation_dataset.setParameter("op","saveInve");
+	}
+	function btnSave_postSubmit(button){
+		top.easyMsg.info("保存成功！");
+	}
+	//提交
+	function btnSubmit_onClickCheck(){
+		var casesId='${casesId}';
+		var warningIds='${warningIds}';
+		SingleRulInvestigation_dataset.setParameter("casesId",casesId);
+		SingleRulInvestigation_dataset.setParameter("warningIds",warningIds);
+		SingleRulInvestigation_dataset.setParameter("op","inveComplete");
+	}
+	function btnSubmit_postSubmit(button){
+		if(parent.parent.GTab){
+			parent.parent.GTab.closeTab();
+		}
+		window.parent.investigationWin_close();
+	}
+	//取消
+	function btCancel_onClick(){
+		if(parent.parent.GTab){
+			parent.parent.GTab.closeTab();
+		}
+		if(window && window.parent){
+			window.parent.investigationWin_close();
+		}
+	}
+	
+</script>
+<script type='text/javascript' src='${contextPath}/dwr/interface/TaskVariable.js'> </script>
+<script type="text/javascript" src="${contextPath}/gbicc-pages/jquery-form.js"></script>
+</@CommonQueryMacro.page>

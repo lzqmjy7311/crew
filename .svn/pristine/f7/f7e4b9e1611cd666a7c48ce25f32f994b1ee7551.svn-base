@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<META>
+	<Query id="LikmUser" path="/gbicc-pages/user_test/xml/user_index.xml"/>
+	<Query id="GuarEntry" path="/gbicc-pages/user_test/xml/guar_entry.xml"/>
+	<Query id="PersonalConsumeRptTab" path="/gbicc-pages/user_test/xml/personal_consume_rpt_tab.xml"/>
+	<Query id="PersonalOperateRptTab" path="/gbicc-pages/user_test/xml/personal_operate_rpt_tab.xml"/>
+	<Query id="StockStruEntry" path="/gbicc-pages/user_test/xml/stock_stru_entry.xml"/>
+	<Query id="OurbankCreditBusiEntry" path="/gbicc-pages/user_test/xml/ourbank_credit_busi_entry.xml"/>
+	<Query id="OurbankGuarEntry" path="/gbicc-pages/user_test/xml/ourbank_guar_entry.xml"/>
+	<Query id="LoanPerMortgageEntry" path="/gbicc-pages/user_test/xml/loan_per_mortgage_entry.xml"/>
+	<Query id="LoanPerCollatEntry" path="/gbicc-pages/user_test/xml/loan_per_collat_entry.xml"/>
+	<Query id="WarningEntry11" path="/gbicc-pages/user_test/xml/warning_entry.xml"/>
+	<Query id="RiskCtrlMeasEntry" path="/gbicc-pages/user_test/xml/risk_ctrl_meas_entry.xml"/>
+	
+	<!-- 任务表格 -->
+	<Query id="AdjustMonitorFreq" path="/gbicc-pages/task_grid/xml/adjust_monitor_freq.xml"/>
+	<Query id="RuleRemove" path="/gbicc-pages/task_grid/xml/rule_remove.xml"/>
+	<Query id="RuleRecover" path="/gbicc-pages/task_grid/xml/rule_recover.xml"/>
+	<Query id="WaitHandleTask" path="/gbicc-pages/task_grid/xml/wait_handle_task.xml"/>
+	<Query id="WarningInfo" path="/gbicc-pages/task_grid/xml/warning_info.xml"/>
+	<Query id="RemindInfo" path="/gbicc-pages/task_grid/xml/remind_info.xml"/>
+
+	<Query id="ProductEntry" path="/gbicc-pages/param/product/xml/product_entry.xml" />
+	<!--客户管理-->
+	<Query id="TCustomerEntry" path="/gbicc-pages/customer/xml/TCustomerEntry.xml"/>
+	<Query id="TCustomerInfoEntry" path="/gbicc-pages/customer/xml/TCustomerInfoEntry.xml"/>
+	<Query id="TEdwPlsSocietalRelV" path="/gbicc-pages/customer/xml/TEdwPlsSocietalRelV.xml"/>
+	<Query id="GreatEvent" path="/gbicc-pages/great/great_event.xml"/>
+	<Query id="SubAutoGreatEvent" path="/gbicc-pages/great/sub_auto_great_event.xml"/>
+	<Query id="SelectZrr" path="/gbicc-pages/great/select_zrr.xml"/>
+	<Query id="SelectFr" path="/gbicc-pages/great/select_fr.xml"/>
+	<Query id="SelectHzf" path="/gbicc-pages/great/select_hzf.xml"/>
+	<Query id="GreatEventDtl" path="/gbicc-pages/customer/xml/great_event_dtl.xml"/>
+	<!--催收管理-->
+	<Query id="TCollectionInfo" path="/gbicc-pages/collectionManage/xml/TCollectionInfo.xml"/>	
+	<Query id="TCollectionInfoSelect" path="/gbicc-pages/collectionManageSelect/xml/TCollectionInfoSelect.xml"/>	
+	<Query id="TCollectionInfoHis" path="/gbicc-pages/collectionManage/xml/TCollectionInfoHis.xml"/>	
+	<!--逾期清单-->
+	<Query id="TEdwPlsAccount" path="/gbicc-pages/collectionManage/xml/TEdwPlsAccount.xml"/>	
+	<!--产品名称 -->
+	<Query id="AllProductSelect" path="/gbicc-pages/customer/xml/AllProductSelect.xml"/>
+	<!--流程管理-->
+	<Query id="ProcessDeploy" path="/gbicc-pages/bpm/xml/process_deploy.xml"/>
+	<Query id="ProcessInstance" path="/gbicc-pages/bpm/xml/process_instance.xml"/>
+	<Query id="MyProcessHistory" path="/gbicc-pages/bpm/xml/my_process_history.xml"/>
+	<Query id="MyLaunchProcess" path="/gbicc-pages/bpm/xml/my_launch_process.xml"/>
+	<Query id="subAutoProcessType" path="/gbicc-pages/bpm/xml/subAutoProcessType.xml"/>
+	<Query id="TaskAfreshAssign" path="/gbicc-pages/bpm/xml/task_afresh_assign.xml"/>
+	<Query id="subAutoOrgTree" path="/gbicc-pages/bpm/xml/subAutoOrgTree.xml" />
+	<Query id="subAutoUserTree" path="/gbicc-pages/bpm/xml/subAutoUserTree.xml" />
+	<Query id="TaskDivertApl" path="/gbicc-pages/bpm/xml/task_divert_apl.xml" />
+	<Query id="TaskDivertDtl" path="/gbicc-pages/bpm/xml/task_divert_dtl.xml" />
+	<Query id="subAutoUserAndOrg" path="/gbicc-pages/bpm/xml/subAutoUserAndOrg.xml" />
+	<Query id="LoanAccount" path="/gbicc-pages/bpm/xml/loan_account.xml" />
+	<Query id="LoanAccountDutyDistribute" path="/gbicc-pages/bpm/xml/loan_account_duty_distribute.xml" />
+	<Query id="LoanAccountColl" path="/gbicc-pages/bpm/xml/loan_account_coll.xml" />
+	<Query id="LoanAccountCollDistribute" path="/gbicc-pages/bpm/xml/loan_account_coll_distribute.xml" />
+	<Query id="subAutoDataDic" path="/gbicc-pages/bpm/xml/subAutoDataDic.xml" />
+	<Query id="subAutoTaskAssignee" path="/gbicc-pages/bpm/xml/subAutoTaskAssignee.xml" />
+	<Query id="TaskAssignee" path="/gbicc-pages/bpm/xml/task_assignee.xml" />
+	<!--任务管理 -->
+	<Query id="TaskEntry" path="/gbicc-pages/task/xml/task_entry.xml"/>
+	<Query id="TaskInfoEntry" path="/gbicc-pages/task/xml/task_info_entry.xml"/>
+	<!--预警管理-->
+	<Query id="WarningEntry" path="/gbicc-pages/warn/xml/warning_entry.xml"/>
+	<Query id="WarnTable"    path="/gbicc-pages/warn/xml/warn_table.xml" />
+	<Query id="WarningInfoEntry" path="/gbicc-pages/warn/xml/warning_info_entry.xml"/>
+	<!--（提醒信息）零售人工发起预警处置-->
+	<Query id="TPlTaskRuleTrig" path="/gbicc-pages/warn/xml/TPlTaskRuleTrig.xml"/>
+	<!--零售人工发起预警处置-->
+	<Query id="TPlTaskRuleTrigAll" path="/gbicc-pages/warn/xml/TPlTaskRuleTrigAll.xml"/>
+	<!--零售 预警处置-->
+	<Query id="plWarnDisposalRep" path="/gbicc-pages/warn/xml/plWarnDisposalRep.xml"/>
+	<Query id="plWarnSignal"      path="/gbicc-pages/warn/xml/plWarnSignal.xml"/>
+	<Query id="YjMonitorReportWin" path="/gbicc-pages/warn/xml/yj_monitor_report.xml"/>
+	<!--定期监控报告管理-->
+	<Query id="MonitorReportList" path="/gbicc-pages/regular/xml/monitor_report_list.xml"/>
+	<Query id="MonitorReportDestList" path="/gbicc-pages/regular/xml/monitor_report_desk_list.xml"/>
+	<Query id="AJMonitorReportWin" path="/gbicc-pages/regular/xml/aj_monitor_report_win.xml"/>
+	<Query id="XFMonitorReportWin" path="/gbicc-pages/regular/xml/xf_monitor_report_win.xml"/>
+	<Query id="JYMonitorReportWin" path="/gbicc-pages/regular/xml/jy_monitor_report_win.xml"/>
+	<Query id="JYStockStruInfo" path="/gbicc-pages/regular/xml/jy_stock_stru_info.xml"/>
+	<Query id="JYOurbankCreditBusiInfo" path="/gbicc-pages/regular/xml/jy_ourbank_credit_busi_info.xml"/>
+	<Query id="JYOurbankGuarInfo" path="/gbicc-pages/regular/xml/jy_ourbank_guar_info.xml"/>
+	<Query id="JYLoanPerMortgageInfo" path="/gbicc-pages/regular/xml/jy_loan_per_mortgage_info.xml"/>
+	<Query id="JYLoanPerCollatInfo" path="/gbicc-pages/regular/xml/jy_loan_per_collat_info.xml"/>
+	<Query id="JYWarningInfo" path="/gbicc-pages/regular/xml/jy_warning_info.xml"/>
+	<Query id="TaskApprovalHistory" path="/gbicc-pages/regular/xml/task_approval_history.xml"/>
+	<Query id="TaskApprovalHistorySelectAll" path="/gbicc-pages/regular/xml/task_approval_history_selectAll.xml"/>
+	<Query id="MonitorReportWarnInfo" path="/gbicc-pages/regular/xml/monitor_report_warn_info.xml"/>
+	<!--规则配置管理-->
+	<Query id="TRulCategoryTree" path="/gbicc-pages/rule/TRulCategoryTree.xml"/>
+	<Query id="TRulCategory" path="/gbicc-pages/rule/TRulCategory.xml"/>
+	<Query id="TRulDefinition" path="/gbicc-pages/rule/TRulDefinition.xml"/>
+	<Query id="TPubRulIndustryValue" path="/gbicc-pages/rule/TPubRulIndustryValue.xml"/>
+	<Query id="TOdsCmsCodeIndustry" path="/gbicc-pages/rule/TOdsCmsCodeIndustry.xml"/>
+	<Query id="TPubRulIndustryValueDtl" path="/gbicc-pages/rule/TPubRulIndustryValueDtl.xml"/>
+	<!--质量监督参数管理-->
+	<Query id="QualitysuPar" path="/gbicc-pages/supervision/xml/TQualitysuParEntry1.xml"/> 
+	<Query id="QualitySup" path="/gbicc-pages/qualitysup/xml/QualitySup.xml"/>
+	<!--风险清单管理-->
+	<Query id="TRiskruleListA" path="/gbicc-pages/riskrulelist/xml/RiskruleList.xml"/>
+	<Query id="TRiskruleList" path="/gbicc-pages/riskrulelist/xml/RiskruleList.xml"/>
+	<Query id="TPlZxrfInfo" path="/gbicc-pages/zxrfProcess/xml/TPlZxrfInfo.xml"/>
+	<Query id="TPlZxrfwarningRule" path="/gbicc-pages/zxrfProcess/xml/warningRule.xml"/>
+	<Query id="TPlZxrfInfo" path="/gbicc-pages/zxrfProcess/xml/TPlZxrfInfo.xml"/>
+	<Query id="TWarnSignal" path="/gbicc-pages/zxrfProcess/xml/TWarnSignal.xml"/>
+	<Query id="TPlZxrfwarningRule" path="/gbicc-pages/zxrfProcess/xml/warningRule.xml"/>
+	<!--用途监控-->
+	<Query id="YtMonitorReportWin" path="/gbicc-pages/yongtuminitor/xml/yt_monitor_report_win.xml"/>
+	<Query id="Yt_PlWarnSignal" path="/gbicc-pages/yongtuminitor/xml/plWarnSignal.xml"/>
+	<Query id="YtMonitorView" path="/gbicc-pages/yongtuminitor/xml/yt_monitor_view.xml"/>
+	<Query id="YtMonitorAcctView" path="/gbicc-pages/yongtuminitor/xml/yt_monitor_acct_view.xml"/>
+	<!--规则排除/恢复-->
+	<Query id="ruleeliminatequery" path="/gbicc-pages/rule_eliminate/xml/rule_eliminate_query.xml"/>
+	<Query id="TriggerRuleAcct" path="/gbicc-pages/rule_eliminate/xml/trigger_rule_acct.xml"/>
+	<Query id="TriggerWarningRule" path="/gbicc-pages/rule_eliminate/xml/trigger_warning_rule.xml"/>
+	<Query id="RuleEliminate" path="/gbicc-pages/rule_eliminate/xml/rule_eliminate.xml"/>
+	<Query id="RuleEliminateTask" path="/gbicc-pages/rule_eliminate/xml/rule_eliminate_task.xml"/>
+	<!--调整监控频率-->
+	<Query id="TPlTriggerFrequencyAcct" path="/gbicc-pages/rule_frequency/xml/TPlTriggerFrequencyAcct.xml"/>
+	<Query id="TPlTrigFrequencyAcctV" path="/gbicc-pages/rule_frequency/xml/TPlTrigFrequencyAcctV.xml"/>
+	<Query id="TPlTriggerFrequencyAcctTask" path="/gbicc-pages/rule_frequency/xml/TPlTriggerFrequencyAcctTask.xml"/>
+	<Query id="RuleEliminate" path="/gbicc-pages/rule_eliminate/xml/rule_eliminate.xml"/>
+	<Query id="RuleEliminateTask" path="/gbicc-pages/rule_eliminate/xml/rule_eliminate_task.xml"/>
+	<Query id="TPlCreditMemo" path="/gbicc-pages/creditMemo/xml/TPlCreditMemo.xml"/>
+	<!--导入text-->
+	<Query id="TImportpublictext" path="/gbicc-pages/importpublictext/xml/ImportPublictext.xml"/>
+	<Query id="TImportpersontext" path="/gbicc-pages/importpersontext/xml/ImportPersontext.xml"/>
+	<!--文件上传-->
+	<Query id="FileUpload" path="/gbicc-pages/upload/commonupload.xml"/>
+	<!-- 行业管理 -->
+	<Query id="roleIndustryTreeAsync" path="/gbicc-pages/industryMng/xml/roleIndustryTreeAsync.xml"/>
+	<!-- 下拉框列表查询 -->
+	<Query id="SelectUserCQTree" path="/gbicc-pages/commonSelectCQ/xml/SelectUserCQTree.xml"/>
+	<Query id="SelectOrgCQTree" path="/gbicc-pages/commonSelectCQ/xml/SelectOrgCQTree.xml"/>
+	<Query id="SelectDicDataCQTree" path="/gbicc-pages/commonSelectCQ/xml/SelectDicDataCQTree.xml"/>
+
+	<Query id="TEtlDetailLog" path="/gbicc-pages/job/xml/TEtlDetailLog.xml"/>
+	<Query id="TEtlErrorLog" path="/gbicc-pages/job/xml/TEtlErrorLog.xml"/>
+
+	<Query id="TEtlJobDefine" path="/gbicc-pages/job/xml/TEtlJobDefine.xml" />
+	<Query id="TPubRulExecuteLog" path="/gbicc-pages/job/xml/TPubRulExecuteLog.xml" />
+</META>

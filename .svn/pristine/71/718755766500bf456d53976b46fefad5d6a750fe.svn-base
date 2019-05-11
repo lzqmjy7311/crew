@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.bpm.getter.TaskApprovalHistoryGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<Field id="taskAssignee" desc="任务发送至" xpath="/taskAssignee" translated="CQ:subAutoTaskAssignee" 
+			fieldmap="taskAssignee=tlrno;taskAssigneeName=tlrName" viewField="tlrName"
+			edittype="select" dropdowntype="dynamic" primaty="true" init="true" size="10" 
+			editable="false" require="true" width="250" />
+	</Fields>
+	<Operations>
+		<Button id="btnConfirm" name="btnConfirm" desc="确定" icon="icon-save"/>
+		<Button id="btnCancel" name="btnCancel" desc="取消" icon="icon-cancel"/>
+	</Operations>
+</CommQry>

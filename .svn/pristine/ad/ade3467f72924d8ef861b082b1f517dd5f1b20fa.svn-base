@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FieldModels>
+	<FieldModel id="accumFundActno" name="公积金" desc="公积金" type="string"
+		length="9" scale="0" width="70" height="1" gen=""
+		rule="isAccumFundActno" errormessage="错误的公积金" />
+
+	<FieldModel id="acreage" name="面积" desc="面积" type="dboue"
+		length="16" scale="2" width="130" height="1" gen="" rule="IsNumber"
+		errormessage="错误的面积" />
+
+	<FieldModel id="actno" name="帐号" desc="帐号" type="string" length="20"
+		scale="0" width="160" height="1" gen="" rule="isActNo"
+		errormessage="错误的帐号" />
+
+	<FieldModel id="accountStatus" name="本行账户开立情况" desc="本行账户开立情况"
+		type="string" length="1" scale="0" width="8" height="1" gen=""
+		rule="isAccountStatus" errormessage="错误的本行账户开立情况" />
+
+	<FieldModel id="address" name="地址" desc="地址" type="string"
+		length="60" scale="0" width="480" height="1" gen="" rule="isAddress"
+		errormessage="错误的地址" />
+
+	<FieldModel id="amount" name="金额" desc="金额" type="double"
+		length="16" scale="2" width="130" height="1" gen="" rule="isAmount"
+		errormessage="错误的金额" />
+
+	<FieldModel id="appno" name="审批编号" desc="审批编号" type="string"
+		length="20" scale="0" width="160" height="1" gen="" rule="isAppNo"
+		errormessage="错误的审批编号" />
+
+	<FieldModel id="appstat" name="审批状态" desc="审批状态" type="string"
+		length="1" scale="0" width="8" height="1" gen="" rule="isAppStat"
+		errormessage="错误的审批状态" />
+
+	<FieldModel id="apptype" name="申请类型" desc="申请类型" type="string"
+		length="2" scale="0" width="" height="16" gen="" rule="isAppType"
+		errormessage="错误的申请类型" />
+
+	<FieldModel id="archiveId" name="档案要素编号" desc="档案要素编号" type="int"
+		length="" scale="0" width="" height="1" gen="" rule="isArchiveId"
+		errormessage="错误的档案要素编号" />
+
+	<FieldModel id="attitude" name="审批结果" desc="审批结果" type="string"
+		length="1" scale="0" width="8" height="1" gen="" rule="isAttitude"
+		errormessage="错误的审批结果" />
+
+	<FieldModel id="batchNo" name="批量号" desc="批量号" type="int" length=""
+		scale="0" width="" height="1" gen="" rule="isBatchNo"
+		errormessage="错误的批量号" />
+
+	<FieldModel id="batchSeqno" name="批量顺序号" desc="批量顺序号" type="int"
+		length="" scale="0" width="" height="1" gen="" rule="isBatchSeqno"
+		errormessage="错误的批量顺序号" />
+
+	<FieldModel id="batchStep" name="批量步骤号" desc="批量步骤号" type="int"
+		length="" scale="0" width="" height="1" gen="" rule="isBatchStep"
+		errormessage="错误的批量步骤号" />
+
+	<FieldModel id="batchSubno" name="批量子序号" desc="批量子序号" type="string"
+		length="40" scale="0" width="320" height="1" gen=""
+		rule="isBatchSubno" errormessage="错误的批量子序号" />
+
+	<FieldModel id="brclass" name="机构级别" desc="机构级别" type="string"
+		length="1" scale="0" width="8" height="1" gen="" rule="isBrclass"
+		errormessage="错误的机构级别" />
+
+	<FieldModel id="brcode" name="内部机构号" desc="内部机构号" type="string"
+		length="4" scale="0" width="32" height="1" gen="" rule="isBrcode"
+		errormessage="错误的内部机构号" />
+
+	<FieldModel id="brname" name="机构名称" desc="机构名称" type="string"
+		length="60" scale="0" width="480" height="1" gen="" rule="isBrname"
+		errormessage="错误的机构名称" />
+
+	<FieldModel id="brno" name="外部机构号" desc="外部机构号" type="string"
+		length="4" scale="0" width="32" height="1" gen="" rule="isBrno"
+		errormessage="错误的外部机构号" />
+
+	<FieldModel id="cino" name="借据号" desc="借据号" type="string"
+		length="16" scale="0" width="130" height="1" gen="" rule="isCino"
+		errormessage="错误的借据号" />
+
+	<FieldModel id="closeType" name="" desc="贷款结清类型" type="string"
+		length="1" scale="0" width="10" height="1" gen="" rule="isCloseType"
+		errormessage="错误的贷款结清类型" />
+
+	<FieldModel id="clr_class" name="" desc="五级分类" type="string"
+		length="1" scale="0" width="10" height="1" gen="" rule="isClrClass"
+		errormessage="错误的五级分类" />
+
+	<FieldModel id="clr_mode" name="" desc="五级分类方式" type="string"
+		length="1" scale="0" width="10" height="1" gen="" rule="isClrMode"
+		errormessage="错误的五级分类方式" />
+
+	<FieldModel id="cname" name="" desc="中文名（对公）" type="string"
+		length="60" scale="0" width="500" height="1" gen="" rule="isCname"
+		errormessage="错误的中文名" />
+
+	<FieldModel id="contractno" name="" desc="贷款合同号(20)/ 授信合同号(14)"
+		type="string" length="20" scale="0" width="160" height="1" gen=""
+		rule="isContractNo" errormessage="错误的贷款合同号/授信合同号" />
+
+	<FieldModel id="corp_code_type" name="" desc="客户编码类型" type="string"
+		length="1" scale="0" width="10" height="1" gen=""
+		rule="isCorpCodeType" errormessage="错误的客户编码类型" />
+
+	<FieldModel id="corp_property" name="" desc="单位性质" type="string"
+		length="1" scale="0" width="10" height="1" gen=""
+		rule="isCorpProperty" errormessage="错误的单位性质" />
+
+	<FieldModel id="corp_scale1" name="" desc="企业规模" type="string"
+		length="1" scale="0" width="10" height="1" gen="" rule="isCorpScale1"
+		errormessage="错误的企业规模" />
+
+	<FieldModel id="corp_scale2" name="企业规模" desc="" type="string"
+		length="1" scale="0" width="10" height="1" gen="" rule="isCorpScale2"
+		errormessage="错误的企业规模" />
+
+	<FieldModel id="corp_typ" name="" desc="特约商户类型" type="string"
+		length="1" scale="0" width="10" height="1" gen="" rule="isCorpTyp"
+		errormessage="错误的特约商户类型" />
+
+	<FieldModel id="count" name="" desc="次数、笔数" type="int" length=""
+		scale="0" width="" height="1" gen="" rule="isCount"
+		errormessage="错误的次数、笔数" />
+
+	<FieldModel id="country" name="" desc="国籍" type="string" length="3"
+		scale="0" width="30" height="1" gen="" rule="isCountry"
+		errormessage="错误的国籍" />
+
+	<FieldModel id="cower_mode" name="" desc="经济类型（单位所有制性质）"
+		type="string" length="3" scale="0" width="10" height="1" gen=""
+		rule="isCowerMode" errormessage="错误的经济类型（单位所有制性质）" />
+
+	<FieldModel id="credit_grade" name="" desc="信用等级" type="string"
+		length="1" scale="0" width="10" height="1" gen="" rule="isCreditGrade"
+		errormessage="错误的信用等级" />
+
+	<FieldModel id="credit_status" name="" desc="人行征信情况" type="string" length="1" scale="0"
+		width="10" height="1" gen="" rule="isCreditStatus" errormessage="错误的人行征信情况" />
+
+	<FieldModel id="curcd" name="" desc="币种" type="string" length="3" scale="0"
+		width="30" height="1" gen="" rule="isCurcd" errormessage="错误的币种" />
+
+	<FieldModel id="cust_type" name="" desc="客户类型" type="string" length="1" scale="0"
+		width="10" height="1" gen="" rule="isCustType" errormessage="错误的客户类型" />
+
+	<FieldModel id="custcd" name="" desc="客户内部编码" type="string" length="10" scale="0"
+		width="80" height="1" gen="" rule="isCustcd" errormessage="错误的客户内部编码" />
+
+			<FieldModel id="custno" name="" desc="客户号" type="string" length="10" scale="0"
+		width="80" height="1" gen="" rule="isCustno" errormessage="错误的客户号" />
+
+	<FieldModel id="DATE" name="" desc="日期" type="string" length="" scale="0"
+		width="" height="1" gen="" rule="isDATE" errormessage="错误的日期" />
+
+			<FieldModel id="degree" name="" desc="学位" type="string" length="1" scale="0"
+		width="10" height="1" gen="" rule="isDegree" errormessage="错误的学位" />
+
+			<FieldModel id="desc" name="" desc="备注" type="string" length="256" scale="0"
+		width="500" height="1" gen="" rule="isDesc" errormessage="错误的备注" />
+
+			<FieldModel id="desc_large" name="" desc="长备注" type="string" length="1024" scale="0"
+		width="500" height="1" gen="" rule="isDescLarge" errormessage="错误的长备注" />
+
+			<FieldModel id="desc_small" name="" desc="短备注" type="string" length="60" scale="0"
+		width="500" height="1" gen="" rule="isDescSmall" errormessage="错误的短备注" />
+
+			<FieldModel id="dun_contacter" name="" desc="催收联系人" type="string" length="1" scale="0"
+		width="10" height="1" gen="" rule="isDunContacter" errormessage="错误的催收联系人" />
+
+			<FieldModel id="dun_mode" name="" desc="催收方式" type="string" length="1" scale="0"
+		width="10" height="1" gen="" rule="isDunMode" errormessage="错误的催收方式" />
+
+			<FieldModel id="dun_reason" name="" desc="逾期违约的原因" type="string" length="1" scale="0"
+		width="10" height="1" gen="" rule="isDunReason" errormessage="错误的逾期违约的原因" />
+
+			<FieldModel id="dun_result" name="" desc="催收处理结果" type="string" length="1" scale="0"
+		width="10" height="1" gen="" rule="isDunResult" errormessage="错误的催收处理结果" />
+
+			<FieldModel id="duty" name="" desc="职务" type="string" length="1" scale="0"
+		width="10" height="1" gen="" rule="isDuty" errormessage="错误的职务" />
+
+			<FieldModel id="eco_form" name="" desc="经营组织形式" type="string" length="1" scale="0"
+		width="10" height="1" gen="" rule="isEcoForm" errormessage="错误的经营组织形式" />
+
+			<FieldModel id="edu_level" name="" desc="学历" type="string" length="2" scale="0"
+		width="20" height="1" gen="" rule="isEduLevel" errormessage="错误的学历" />
+
+			<FieldModel id="email" name="" desc="电子邮箱" type="string" length="60" scale="0"
+		width="500" height="1" gen="" rule="isEmail" errormessage="错误的电子邮箱" />
+
+			<FieldModel id="ename" name="" desc="英文名称" type="string" length="60" scale="0"
+		width="500" height="1" gen="" rule="isEname" errormessage="错误的英文名称" />
+
+			<FieldModel id="err_code" name="" desc="错误代码" type="string" length="6" scale="0"
+		width="50" height="1" gen="" rule="isErrCode" errormessage="错误的错误代码" />
+
+			<FieldModel id="flag" name="" desc="标志" type="string" length="1" scale="0"
+		width="10" height="1" gen="" rule="isFlag" errormessage="错误的标志" />
+
+			<FieldModel id="fltrate" name="" desc="浮动利率" type="double" length="7" scale="4"
+		width="60" height="1" gen="" rule="isFltrate" errormessage="错误的浮动利率" />
+
+			<FieldModel id="folk" name="" desc="民族" type="string" length="2" scale="0"
+		width="20" height="1" gen="" rule="isFolk" errormessage="错误的民族" />
+
+			<FieldModel id="func_code" name="" desc="交易代码" type="int" length="" scale="0"
+		width="" height="1" gen="" rule="isFuncCode" errormessage="错误的交易代码" />
+
+			<FieldModel id="fund_repay_mode" name="" desc="公积金冲还贷方式" type="string" length="1" scale="0"
+		width="10" height="1" gen="" rule="isFundRepayMode" errormessage="错误的公积金冲还贷方式" />
+
+			<FieldModel id="fund_repay_month" name="" desc="公积金冲还贷月份" type="string" length="1" scale="0"
+		width="10" height="1" gen="" rule="isFundRepayMonth" errormessage="错误的公积金冲还贷月份" />
+
+			<FieldModel id="grant_mode" name="" desc="发放方式" type="string" length="1" scale="0"
+		width="10" height="1" gen="" rule="isGrantMode" errormessage="错误的发放方式" />
+
+			<FieldModel id="guatcode" name="" desc="担保类型" type="string" length="1" scale="0"
+		width="10" height="1" gen="" rule="isGuatCode" errormessage="错误的担保类型" />
+
+			<FieldModel id="guattype" name="" desc="担保类型" type="string" length="5" scale="0"
+		width="40" height="1" gen="" rule="isGuatType" errormessage="错误的担保类型" />
+
+			<FieldModel id="health" name="" desc="健康状况" type="string" length="1" scale="0"
+		width="10" height="1" gen="" rule="isHealth" errormessage="错误的健康状况" />
+
+			<FieldModel id="house_stat" name="" desc="房屋状况" type="string" length="2" scale="0"
+		width="10" height="1" gen="" rule="isHouseStat" errormessage="错误的房屋状况" />
+
+			<FieldModel id="house_type" name="" desc="房屋类型" type="string" length="1" scale="0"
+		width="10" height="1" gen="" rule="isHouseType" errormessage="错误的房屋类型" />
+
+			<FieldModel id="houseno" name="" desc="楼盘编号" type="string" length="12" scale="0"
+		width="100" height="1" gen="" rule="isHouseno" errormessage="错误的楼盘编号" />
+
+			<FieldModel id="house_property" name="" desc="住宅性质" type="string" length="1" scale="0"
+		width="10" height="1" gen="" rule="isHouseProperty" errormessage="错误的住宅性质" />
+
+			<FieldModel id="hukou_type" name="" desc="户籍性质" type="string" length="1" scale="0"
+		width="10" height="1" gen="" rule="isHukouType" errormessage="错误的户籍性质" />
+
+</FieldModels>

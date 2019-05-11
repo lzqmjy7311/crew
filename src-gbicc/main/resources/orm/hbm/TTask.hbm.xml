@@ -1,0 +1,129 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.gbicc.task.entity">
+	<class
+		name="TTask"
+		table="T_PL_TASK"
+		lazy="false"
+	>
+		<meta attribute="sync-DAO">false</meta>
+
+		<id
+			name="id"
+			column="id"
+			type="string"
+		>
+		<generator class="uuid.hex" />  
+		</id>
+		
+		<many-to-one 
+			name="customerId" 
+			column="CUSTOMER_ID"
+            class="com.gbicc.person.customer.entity.TCustomer" 
+			cascade="save-update" 
+			fetch="select"
+			not-null="true"
+		/>
+		
+				<property
+			name="custCode"
+			column="CUST_CODE"
+			type="string"
+			not-null="false"
+			length="32"
+		/>
+		
+		<property
+			name="custName"
+			column="CUST_NAME"
+			type="string"
+			not-null="false"
+			length="64"
+		/>
+		
+		<property
+			name="custType"
+			column="CUST_TYPE"
+			type="string"
+			not-null="false"
+			length="25"
+		/>
+		<property
+			name="loanAccount"
+			column="LOAN_ACCOUNT"
+			type="string"
+			not-null="false"
+			length="32"
+		/>
+		<property
+			name="productCode"
+			column="PRODUCT_CODE"
+			type="string"
+			not-null="false"
+			length="25"
+		/>
+	   <property
+			name="loanAmount"
+			column="LOAN_AMOUNT"
+			type="double"
+		/>
+		<property
+			name="loanBalance"
+			column="LOAN_BALANCE"
+			type="double"
+		/>
+		<property
+			name="loanPeriod"
+			column="LOAN_PERIOD"
+			type="int"
+		/>
+		<property
+			name="operator"
+			column="OPERATOR"
+			type="string"
+		/>
+		<property
+			name="operBank"
+			column="OPER_BANK"
+			type="string"
+		/>
+	
+		<property
+			name="taskType"
+			column="TASK_TYPE"
+			type="string"
+			not-null="false"
+			length="25"
+		/>
+		<property
+			name="createDate"
+			column="CTREATE_DATE"
+			type="date"
+			not-null="false"
+		/>
+		<property
+			name="dueDate"
+			column="DUE_DATE"
+			type="date"
+			not-null="false"
+		/>
+		<property
+			name="outDays"
+			column="OUT_DAYS"
+			type="int"
+			not-null="false"
+		/>
+		<property
+			name="dearPeople"
+			column="DEAR_PEOPLE"
+			type="string"
+			not-null="false" length="32"
+		/>
+		 
+
+		
+	</class>
+</hibernate-mapping>

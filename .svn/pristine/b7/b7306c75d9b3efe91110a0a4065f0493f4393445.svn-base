@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	txnlogflag:true记录日志
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="基础信息管理  &gt;  国家title" navigate="基础信息管理    &gt; 国家/地区代码维护" type="call"
+	interface="false" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.huateng.ebank.business.management.getter.BiNationregionEntryGetter">
+	<Include id="BankParam" />
+	<!--
+	<PageQryExp type="CSV" limit="true" encoding="GBK" url="/trans/qryExp.do" directory="F:/upload"/>
+	-->
+	<PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="批量下载-国家/地区代码" maxPage="20" perfecth="20" />
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+
+		<Field id="id" desc="国家/地区代码" edittype="text" datatype="string" status="F" size="3" xpath="/id" rules="isValidChat3" errmsg="只允许输入字母且不超过3位" require="true"  />
+		<Field id="chinaName" desc="中文全称"  edittype="text" status="F" datatype="string" size="64" xpath="/chinaName" />
+		<Field id="nationregionNumber" desc="国家/地区数字代码" edittype="text" status="F" datatype="string" size="3" xpath="/nationregionNumber" errmsg="只允许输入数字且不超过3位" rules="isValidNumber3" />
+		<Field id="st" desc="记录状态" status="F" require="false" edittype="select"
+			datatype="string" method="None" readonly="true" primary="true" type="st"
+			translated="DATA_DIC.3001" size="30" default="" xpath="/st" tip="" />
+		<Field id="lock" desc="是否锁定" edittype="text" datatype="string" status="F" size="1" xpath="/lock"/>
+		<Field id="del" desc="是否已删除" edittype="text" datatype="string" status="F" size="1" xpath="/del"/>
+		<Field id="crtDt" desc="创建日期" edittype="text" datatype="string" status="F" size="8" xpath="/crtDt"/>
+		<Field id="lastUpdTms" desc="最后更新时间" edittype="text" datatype="string" status="F" size="14" xpath="/lastUpdTms"/>
+		<Field id="lastUpdOper" desc="最后操作人" edittype="text" datatype="string" status="F" size="20" xpath="/lastUpdOper"/>
+		<Field id="chinaShortName" desc="中文简称" edittype="text" datatype="string" status="N" size="64" xpath="/chinaShortName" />
+		<Field id="engName" desc="英文全称" edittype="text" datatype="string" status="N" size="64" xpath="/engName" />
+		<Field id="engShortName" desc="英文简称" edittype="text" datatype="string" status="N" size="64" xpath="/engShortName" />
+		<Field id="operation" desc="操作" />
+    </Fields>
+    <Where>
+    	<TextBox id="qid" desc="国家/地区代码" edittype="text" datatype="string" size="10" require="" index="0" />
+		<TextBox id="qnationregionNumber" desc="国家/地区数字代码" edittype="text" status="F" datatype="string" size="10" index="1" />\
+		<TextBox id="cnEnFullName" desc="中文/英文全称"  edittype="text" datatype="string" size="64" index="2" />
+		<TextBox id="cnEnShortName" desc="中文/英文简称"  edittype="text" datatype="string" size="64" index="3" />
+		<Option id="st"  default="" desc="记录状态" type="st" tip="" method="None" index="4" translated="DATA_DIC.3001"/>
+    </Where>
+	<Operations>
+		<Button id="btModOrAdd" name="btModOrAdd" desc="保存" operation="asysubmit"
+			updateClass="com.huateng.ebank.business.management.updater.BiNationregionModOrAddUpdate"
+			url="" txn="" />
+		<Button id="btDel" name="btDel" desc="删除" operation="asysubmit"
+			updateClass="com.huateng.ebank.business.management.updater.BiNationregionDelUpdate"
+			url="" />
+		<Button id="btCancel" name="btCancel" desc="取消" operation="href" url="" />
+		<Button id="btAdd" name="btAdd" desc="新增" operation="" url="#" show="" group="" txn="" icon="icon-add"/>
+	</Operations>
+</CommQry>

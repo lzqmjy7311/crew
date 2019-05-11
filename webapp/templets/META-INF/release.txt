@@ -1,0 +1,173 @@
+release 2.6 
+  new feature:
+	dwr2.0.6 update to dwr3.0.M1
+	表格支持后台合计
+	表格支持显示总记录数，需要后台配合
+	添加了汇率维护功能模块
+	表格支持远程排序
+	下拉 实时查询
+	屏蔽回退键
+	菜单体验优化
+	easyMsg弹出框添加参数timeout，并在propties.js中添加统一参数来控制自动消息
+  fix:
+	修复动态下拉反显问题
+	优化Floatwindow，在IE10+下 draggable属性导致文本必须双击生效的问题
+	修复树表格初始化时查询两次的问题
+	补充批量任务缺少的spring注入配置
+	下拉框查询页码串值问题
+	可编辑表格中textarea失效
+	可编辑表格中树控件不可手工输入的问题
+	修复多选下拉的onselect事件导致无法赋值问题
+	修复树形表格双击事件
+	弹出选择框类似的字段在表格中时，弹出失效
+	修复js原生.toFix的四舍五入问题
+        多表头列太多时对不齐
+    Floatwindow在64位IE10下多次加载url的问题
+  update:
+	部分功能界面操作优化
+	折叠菜单支持异步方式
+	树控件优化
+	机构查询优化，只查询当前机构及其子机构 
+	优化币种维护功能
+	对下拉框进行优化，在多选下拉框增加checkbox
+	可编辑表格点击击内部滚动条时，编辑状态消失的问题
+	屏蔽回退键
+----------------------------HISTORY RELEASE-----------------------------------------
+release 2.3:
+  fix:
+   531 Field控件中在初始化进来的时候，不再进行isValid的验证。	
+  feature:
+   530 对floatwindow 进行性能优化，改成lazy init的形式。
+
+release 2.2.2:
+  fix:
+   B2270 滚动条拉到最右端时滚动条会自动回到最左端
+   B2248 金额数字类型输入，未能正确控制长度，输入过长时，会自动显示最大值或者科学输入法，需要普通文本一样，出现输入不合法的提示信息。
+   B2249 IE6,7下表格relative问题导致浮动 
+   B2250 XLS导出时起始页码不正确,
+   B2251 表格中空格显示问题
+   B2260 表格开启多选模式,设置选中行的任意一字段的值,前面的checkbox框消失 
+   B2261 下拉的cached=false时有问题 
+  feature:
+   S524 floatwindow支持模态窗口
+   S525 查询条件支持可配置更多查询条件
+   S526 查询结果列头显示可配置
+   S527 简单的只读表格模式
+   
+release 2.2.1:
+  308 清理原来JS的逻辑，消除冗余的部分
+  309  针对他们具体的页面情况，来分析问题，找出消耗时间的地方，做了修改	
+
+release 2.2:
+  1174:FP2.0.6版本起，weblogic的兼容性问题。
+  1238:首页的收藏夹在ie下存在问题。
+  1423:IE6,7下csv文件无法导出的问题。
+  feature:
+  439  J2EE平台CQ型下拉UI的重写,性能提升。
+ 
+release 2.1.2: 
+  bug:
+   1174 FP2.0.06版本起，在weblogic 11G中存在兼容性问题。
+   1140 DataBus在2个标签栏存在串用情况。
+   814	导出功能，在没有开始页和结束页为空，同时勾选了所有页面后，点击导出下载时，无法正常下载。
+   766	表格的编辑模式在自定义验证规则的时候，第一次输错，并且鼠标点击其他行，它不验证，就直接关闭了编辑的那行。
+   672	表格中的编辑模式，里面输入验证不合法的值后，可以点击保存提交。
+  feature:
+   423	在 HTTP 标头中为静态资源设置有效期。
+   422  以新增过滤器的方式，开启gzip压缩，提升页面打开速度。
+   421  长度验证信息提示方式的修改 。
+   407	表格的编辑模式中，增加beforeEdit事件。
+   425	CQ型下拉框的内容显示优化。
+   429  页面必输项的校验方式。
+   
+release 2.1.1: 
+  fix:
+    BUG #494 关于openSubWin的内存回收。
+    BUG #391 IE6下表格的自适应存在问题。
+    BUG #389 树形表格缺乏自适应的支持
+    BUG #350 dataset的afterChange事件，在多选表格中，点击全选的时候，afterChange事件中传过来的record 都是第一条record。
+    BUG #329 字段在对汉字进行长度验证的时候，不准确，同一个汉字，不同的编码被判断成不同的长度。
+    BUG #317 [数据导出]批量数据导出存在JDK版本缺陷问题
+    BUG #168 可编辑表格长度验证的信息提示重复。
+    
+
+release 2.1: 
+  fix:
+    IE6中提示框遇见原生的select标签的时候，遮挡的问题。
+  feature:
+          增加表格DataGrid的自适应。	
+  	顶部菜单做了一些针对性的优化布局。
+  	页面必输项的提示方式作出了修改。								
+    
+
+release 2.0.06: 
+  fix:
+    FPP-147	隐藏字段在验证的时候有可能验证出错。
+    FPP-148	调整多tab栏加载进度条
+  feature:
+    FPP-149	增加权限控制到按钮
+    FPP-150	增加对直接访问URL的权限控制
+
+release 2.0.05: 
+  fix:
+    FPP-139	在用主页tab对象的add方法时，直接引入跨域页面的时候，加载的页面无法正常关闭进度条。
+    FPP-140	在fireFox中，内部类加载有顺序问题，若定义的内部类，写在调用后面，其无法正常识别该类。
+    FPP-145	日期控件中点击切换年按钮后，会出现赋值上一次值的情况。
+  feature:
+    FPP-141	在table控件中，增加新参数isHiddenScoll，来决定是否隐藏预留的表格的滚动条位。默认值为：false.
+    FPP-142	在table控件中，增加表头的水平位置定义方式，参数为headAlign，值有left,right,center,默认值为：left.
+    FPP-143	在table控件中，增加对表格的列是否开启排序功能的参数sortable，默认值为：true.
+    FPP-144	扩展复选框字段类型checkbox，使其能够支持数据来源为静态的list型或者dic型的复选框展现。
+  
+release 2.0.03:    
+    FPP-127 多个表格时，游标的滚动失效
+
+release 2.0.02:
+  feature: 
+    FPP-91  优化必须输入的渲染方式,并dataset添加字段是否必须的方法:setFieldRequired(string 字段ID,boolean 是/否);
+  fix:   
+    FPP-87  IE6下菜单黑色边框问题
+    FPP-88  IE6下表格加载数据时会有瞬间的空白及行号错位问题
+    FPP-90  IE6下按钮跳转失效 
+            IE6下下拉箭头浮动问题
+    FPP-93  edittype="datalabel"日期控件显示不正确 
+    FPP-96  字段的onUpdate事件 被遗漏，现已补上
+    FPP-97  IE6下分页栏的页码下拉选择无法遮挡的问题
+    FPP-98  主页菜单一屏显示不了的问题
+    FPP-99  中文长度验证不准确的问题
+    FPP-100 字段的dataType类型为double和float时无法正常输入
+    FPP-101 dataset.setValue2改为dataset.setValue方法
+    FPP-103 tabletree编辑模式打开后，无法正常结束编辑模式  
+    FPP-104 tabletree 在数据为空的情况下，使用insertRecord 方法，出现错误。  
+    FPP-106 edittype为datalabel的时，同时datatype为date型，当值为空时，报错
+    FPP-108 国际化问题,异常处理未格式化
+    FPP-109 IE6下滑动菜单无滚动条
+    FPP-110 静态下拉在多选模式下，点击清空按钮，会出现错误（table中的静态下拉也有类似的问题） 
+    FPP-111 修正下下拉字段不能用document.getElementById("字段名")的方式获取 
+    FPP-112 table的编辑模式，readonly=true的字段，其无法实现单元格的刷新。
+    FPP-116 日期类型无法赋值2012-1-4这种格式
+    FPP-119 如果查询条件有必输项,而没输入,这时点刷新报错
+    FPP-120 表格中编辑时,beforeUpdate事件中止更新表格问题
+    FPP-122 缺少datalabel的onRefresh事件
+    FPP-123 低于或等于IE8版本的浏览器，在使用singleField的时候，出现不对齐的情况
+ 
+release 2.0.01: 
+  feature: 
+    FPP-70  Group，interface宏中，新增labelwidth属性，可用来定义label的宽度。默认为20%。
+    FPP-73  新增一个dataset的验证方法  dataset.validate()。
+    FPP-81  长度验证失败要给出提示 
+    FPP-79  增加树形表格行移动的API:moveTreegridRecord(table,mode,recordid,targetid)
+    FPP-80  PORTAL页面子窗口可刷新
+
+  fix: 
+    FPP-71  下拉的只读状态在XML中配置为true的时候，后面对其进行状态修改，会出现无法点击下拉的情况 。
+    FPP-72  radio的必需验证 存在问题，不验证，直接通过 。
+    FPP-75  loadpagewindow 特殊情况下一直显示loading状态。
+    FPP-76  个别页面报fieldName错误。
+    FPP-77  消息提示内容不换行。
+    FPP-78  在加载页面片断时,initCallGetter重复调用 
+    FPP-82  表格中的编辑模式，字段类型为Currency时候，如果prefix没有设值，会出现错误。  
+    FPP-83  styleSheet 在loadPageWindows 中载入表格时，会出现这对象为空，未定义"styleSheet"属性的错误。
+    FPP-85  checkbox的必需验证 存在问题，不验证，直接通过 。
+    FPP-86  标签页的事件不触发
+      

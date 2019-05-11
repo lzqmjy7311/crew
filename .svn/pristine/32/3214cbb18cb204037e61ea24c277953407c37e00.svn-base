@@ -1,0 +1,49 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+<@CommonQueryMacro.page title="规则预警任务查询列表">
+
+<@CommonQueryMacro.CommonQuery id="WarningQuery" init="true" submitMode="current">
+<table>
+	<tr>
+		<td>
+			<@CommonQueryMacro.Interface id="intface" label="请输入查询条件" showButton="false" labelwidth="100" colNm=8/>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<div align="center" style="margin-bottom:10px">
+				<@CommonQueryMacro.InterfaceButton desc="查询" />
+				<@CommonQueryMacro.SimpleButton id="btnReset" desc="重置" icon="icon-reload" />
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<@CommonQueryMacro.DataTable id="WarningQueryTable" readonly="true" paginationbar="" 
+			fieldStr="fd_warn_code[100],fd_warn_level[100],task_type[100],fd_rul_theme_cd[100],fd_rul_name[200],fd_warn_dt[100],fd_warn_status[100],CUSTOMER_NAME[250],CUSTOMER_NUM[100],ASSIGNEE_[100]" width="100%" hasFrame="true"/>
+		</td>
+	</tr>
+</table>
+</@CommonQueryMacro.CommonQuery>
+<script>
+	//协查任务列表刷新触发
+	function WarningQueryTable_task_type_onRefresh(cell,value,record) {
+		if (record) {//当存在记录时
+			if(record.getValue("task_type")=="CUST"){
+				cell.innerHTML="单客户";
+			}else{
+				cell.innerHTML="单规则";
+			}
+		} 
+	}
+	//页面初始化
+	function initCallGetter_post(){
+		
+	}
+	function btnReset_onClick(){
+		WarningQuery_interface_dataset.clearData();
+	}
+</script>
+<script type='text/javascript' src='${contextPath}/dwr/interface/TaskVariable.js'> </script>
+<script type="text/javascript" src="${contextPath}/gbicc-pages/jquery-form.js"></script>
+</@CommonQueryMacro.page>

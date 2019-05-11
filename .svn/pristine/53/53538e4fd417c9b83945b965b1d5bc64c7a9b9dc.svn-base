@@ -1,0 +1,126 @@
+package com.gbicc.warn.ComninationWarn.getter;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import com.gbicc.util.DateUtils;
+import com.gbicc.warn.ComninationWarn.entity.TCwCreditAssetsMonitor;
+import com.huateng.common.err.Module;
+import com.huateng.common.err.Rescode;
+import com.huateng.commquery.result.Result;
+import com.huateng.commquery.result.ResultMng;
+import com.huateng.ebank.business.common.DAOUtils;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.business.common.PageQueryCondition;
+import com.huateng.ebank.business.common.PageQueryResult;
+import com.huateng.ebank.framework.operation.orm.HQLDAO;
+import com.huateng.ebank.framework.util.ApplicationContextUtils;
+import com.huateng.ebank.framework.web.commQuery.BaseGetter;
+import com.huateng.exception.AppException;
+
+@SuppressWarnings("unchecked")
+public class TCwIndexALLGetter extends BaseGetter {
+
+	@Override
+	public Result call() throws AppException {
+		try {
+			PageQueryResult pageResult = getData();
+			ResultMng.fillResultByList(getCommonQueryBean(),getCommQueryServletRequest(), pageResult.getQueryResult(),getResult());
+			result.setContent(pageResult.getQueryResult());
+			result.getPage().setTotalPage(pageResult.getPageCount(getResult().getPage().getEveryPage()));
+			result.init();
+			return result;
+		} catch (AppException appEx) {
+			throw appEx;
+		} catch (Exception ex) {
+			throw new AppException(Module.SYSTEM_MODULE,Rescode.DEFAULT_RESCODE, ex.getMessage(), ex);
+		}
+	}
+
+	public PageQueryResult getData() throws Exception {
+		
+		GlobalInfo info=GlobalInfo.getCurrentInstance();
+		
+		                                                                                  
+		int pageSize = getResult().getPage().getEveryPage();// 分页大小
+		int pageIndex = getResult().getPage().getCurrentPage();// 页码
+		
+		Map<String,Object> map =  getCommQueryServletRequest().getParameterMap();
+		Date nowDate=new Date();
+		StringBuffer sbf = new StringBuffer("");
+		sbf.append(" SELECT ROWNUMBER() OVER()  AS ROWNUM,T.* FROM (");
+		sbf.append(" 	SELECT * FROM T_CW_CREDIT_INDEX_VAL T WHERE T.DATA_DATE='"+DateUtils.formatDate(nowDate)+"' AND T.MONITOR_FRE='D'");
+		sbf.append(" 	UNION ALL");
+		sbf.append(" 	SELECT * FROM T_CW_CREDIT_INDEX_VAL T WHERE T.MONITOR_FRE='M'");
+		//为测试有数据 注释
+		//sbf.append(" 	AND T.DATA_DATE=TO_CHAR(LAST_DAY(DATE('"+DateUtils.formatDate(nowDate)+"')-1 MONTHS),'YYYY-MM-DD')  ");
+		sbf.append(" 	UNION ALL");
+		sbf.append(" 	SELECT * FROM T_CW_CREDIT_INDEX_VAL T WHERE  T.MONITOR_FRE='Q' ");
+		//为测试有数据 注释
+		//sbf.append(" 	AND T.DATA_DATE=TO_CHAR(DATE('"+DateUtils.getNowDateLastQ(new Date())+"')-1 DAYS,'YYYY-MM-DD') ");
+		sbf.append(" 	) T INNER JOIN T_CW_IDNEX_MANAGE TI ON T.INDEX_CODE=TI.INDEX_CODE ");
+		sbf.append(" 	WHERE 1=1 ");
+		//机构
+		if(map.get("ORG_PARENT")!=null && StringUtils.isNotBlank((String)map.get("ORG_PARENT"))){
+			sbf.append(" 	AND T.ORG_PARENT='"+(String)map.get("ORG_PARENT")+"' and  ORG_CODE<>'"+(String)map.get("ORG_PARENT")+"' ");
+		}else if(map.get("ORG_CODE")!=null && StringUtils.isNotBlank((String)map.get("ORG_CODE"))){
+			sbf.append(" 	AND T.ORG_CODE='"+(String)map.get("ORG_CODE")+"' ");
+		}else{//为测试有数据 注释
+			sbf.append(" 	AND T.ORG_CODE='"+info.getBrcode()+"' ");
+		}
+		if(map.get("INDEX_CODE")!=null && StringUtils.isNotBlank((String)map.get("INDEX_CODE"))){
+			sbf.append(" 	AND T.INDEX_CODE='"+(String)map.get("INDEX_CODE")+"' ");
+		}
+		//产品
+		if(map.get("PRODUCT_CODE")!=null && StringUtils.isNotBlank((String)map.get("PRODUCT_CODE"))){
+			sbf.append(" 	AND T.PRODUCT_CODE='"+(String)map.get("PRODUCT_CODE")+"' ");
+		}else{
+			sbf.append(" 	AND T.PRODUCT_CODE<>'-' ");
+		}
+		//行业
+		if(map.get("INDUSTRY_PARENT")!=null && StringUtils.isNotBlank((String)map.get("INDUSTRY_PARENT"))){
+			sbf.append(" 	AND T.INDUSTRY_PARENT='"+(String)map.get("INDUSTRY_PARENT")+"' ");
+		}else if(map.get("INDUSTRY_CODE")!=null && StringUtils.isNotBlank((String)map.get("INDUSTRY_CODE"))){
+			sbf.append(" 	AND T.INDUSTRY_CODE='"+(String)map.get("INDUSTRY_CODE")+"' ");
+		}else{
+			sbf.append(" 	AND T.INDUSTRY_CODE<>'-' ");
+		}
+		if(map.get("INDUSTRY_TYPE")!=null && StringUtils.isNotBlank((String)map.get("INDUSTRY_TYPE"))){
+				sbf.append(" 	AND T.INDUSTRY_TYPE='"+(String)map.get("INDUSTRY_TYPE")+"' ");
+		}
+		if(map.get("GATHER_TYPE")!=null && StringUtils.isNotBlank((String)map.get("GATHER_TYPE"))){
+			sbf.append(" 	AND T.GATHER_TYPE='"+(String)map.get("GATHER_TYPE")+"' ");
+		}
+		String countSql=sbf.toString();
+		sbf.append(" AND ROWNUM>="+((pageIndex-1)*pageSize+1)+" AND ROWNUM<="+(pageIndex*pageSize));
+		
+		String sql= sbf.toString();
+		
+		PageQueryCondition queryCondition = new PageQueryCondition();
+		queryCondition.setPageIndex(pageIndex);
+		queryCondition.setPageSize(pageSize);
+		queryCondition.setQueryString(countSql);
+		HQLDAO hqlDAO = DAOUtils.getHQLDAO();
+		System.out.println("机构指标列表查询------------"+sql);
+		JdbcTemplate jdbcTemplate=(JdbcTemplate) ApplicationContextUtils.getBean("JdbcTemplate");
+		List<TCwCreditAssetsMonitor> listT=jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(TCwCreditAssetsMonitor.class));
+		PageQueryResult pageQueryResult=hqlDAO.pageQueryBySQL(queryCondition);
+		pageQueryResult.setQueryResult(listT);
+		return pageQueryResult;
+	}
+	
+
+	public static void main(String[] args) throws ParseException {
+		System.out.println(DateUtils.getNowDateLastQ(new Date()));
+		
+	}
+	
+}

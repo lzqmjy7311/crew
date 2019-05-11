@@ -1,0 +1,64 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+<#assign businessId=RequestParameters["businessId"]?default("")>
+<#assign rptStatus=RequestParameters["rptStatus"]?default("")>
+
+<@CommonQueryMacro.page title="基本信息">
+	<table>
+		<tr>
+			<td>
+				<@CommonQueryMacro.CommonQuery id="RiskMonitorBaseinfo1" init="true" submitMode="current">
+					<@CommonQueryMacro.GroupBox id="Baseinfo" label="基本信息">
+						<@CommonQueryMacro.DataTable id="table12" paginationbar="btHandle" fieldStr="chineseName,customerNum,businessLicenseNum,orgnNum,registeredCapital,customerSizeCd,industryLevelTwoCd"/>
+					</@CommonQueryMacro.GroupBox>
+				</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+	</table>
+	<script>
+	var windows;
+
+	function btHandle_onClick(button){
+		var customerNum =RiskMonitorBaseinfo1_dataset.getValue("customerNum");
+		var chineseName =RiskMonitorBaseinfo1_dataset.getValue("chineseName");
+		var paramMap=new Map();
+		paramMap.put("customerNum",customerNum);
+		windows = openSubWin("warninfoWin", "客户风险视图", "/gbicc-pages/riskview/ftl/riskView.ftl?customerNum="+customerNum+"&chineseName="+chineseName,"1150","600",false,true,windows_close,true);
+		btHandle.disable(true);
+	}
+	
+	function windows_close(){
+		btHandle.disable(false);
+	}
+
+	//设置页面所有字段只读
+	function setPageReadOnlyFun(){
+		var fieldName="";
+		for(var i=0;i<RiskMonitorBaseinfo_dataset.fields.length;i++){
+			fieldName=RiskMonitorBaseinfo_dataset.fields[i].name;
+			if(fieldName.substring(0,1)!="_"){
+				RiskMonitorBaseinfo_dataset.setFieldReadOnly(fieldName,true);
+			}
+		}
+	}
+
+	//保存后关闭页面，刷新表格
+	function btnSave_postSubmit(button) {
+		button.url="#";
+		top.easyMsg.info("保存成功！");
+		window.parent.ajMonitorReportWin_close();
+	}
+	//保存后关闭页面，刷新表格
+	function btnSubmit_postSubmit(button) {
+		button.url="#";
+		top.easyMsg.info("操作成功！");
+		window.parent.ajMonitorReportWin_close();
+	}
+	//退回后关闭页面，刷新表格
+	function btnBack_postSubmit(button) {
+		button.url="#";
+		top.easyMsg.info("操作成功！");
+		window.parent.ajMonitorReportWin_close();
+	}
+</script>
+</@CommonQueryMacro.page>

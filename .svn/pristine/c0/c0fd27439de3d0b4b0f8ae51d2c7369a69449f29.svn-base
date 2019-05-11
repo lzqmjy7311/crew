@@ -1,0 +1,23 @@
+<CommQry title="TRewL03IndPunishDetailId" navigate="TRewL03IndPunishDetailId" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.L03Getter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="id" desc="ID" edittype="text" datatype="string" xpath="/id" />
+        <Field id="decideWrit" desc="决定书文号" edittype="text" datatype="string"
+        xpath="/decideWrit" />
+        <Field id="breakType" desc="违法类型" edittype="text" datatype="string"
+        xpath="/breakType" />
+        <Field id="punishContent" desc="处罚内容" edittype="text" datatype="string"
+        xpath="/punishContent" />
+        <Field id="decideOrg" desc="决定机关" edittype="text" datatype="string"
+        xpath="/decideOrg" />
+        <Field id="baseId" desc="关联基本信息主键" edittype="text" datatype="string"
+        xpath="/baseId" />
+        <Field id="warnId" desc="预警表ID" edittype="text" datatype="string"
+        xpath="/warnId" />
+        <Field id="dataDt" desc="数据日期" edittype="text" datatype="date"
+        xpath="/dataDt" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

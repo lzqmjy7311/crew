@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-12-10 16:02:15 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.bpm.entity.TLoanAccountDutyDistribute" table="T_PL_ACCOUNT_DUTY_DISTRIBUTE" schema="ECUSER">
+        <comment>帐户责任人分派记录表</comment>
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        
+        <many-to-one 
+			name="loanacno" 
+			column="FD_LOANACNO"
+            class="com.gbicc.personCommon.entity.TEdwPlsAccount" 
+			fetch="select"
+			not-found="ignore"
+			not-null="false"
+	    />
+        
+        <property name="distFlag" type="string">
+            <column name="FD_DIST_FLAG" length="10" />
+        </property>
+        <property name="distType" type="string">
+            <column name="FD_DIST_TYPE" length="10" />
+        </property>
+        <property name="status" type="string">
+            <column name="FD_STATUS" length="10" />
+        </property>
+        <property name="oldCheckUser" type="string">
+            <column name="FD_OLD_CHECK_USER" length="3000" />
+        </property>
+        <property name="checkUser" type="string">
+            <column name="FD_CHECK_USER" length="2000" />
+        </property>
+        <property name="distDt" type="date">
+            <column name="FD_DIST_DT" length="10" />
+        </property>
+        <property name="remark" type="string">
+            <column name="FD_REMARK" length="500" />
+        </property>
+        
+        <many-to-one 
+			name="operUser" 
+			column="FD_OPER_USER"
+            class="com.huateng.ebank.entity.data.mng.TlrInfo" 
+			fetch="select"
+			not-found="ignore"
+			not-null="false"
+	    />
+	    <many-to-one 
+			name="operOrg" 
+			column="FD_OPER_ORG"
+            class="com.huateng.ebank.entity.data.mng.Bctl" 
+			fetch="select"
+			not-found="ignore"
+			not-null="false"
+	    />
+	    
+        <property name="distPrinciple" type="string">
+            <column name="FD_DIST_PRINCIPLE" length="10" />
+        </property>
+        <property name="distQuantity" type="java.lang.Integer">
+            <column name="FD_DIST_QUANTITY" />
+        </property>
+        <property name="aplUser" type="string">
+            <column name="FD_APL_USER" length="32" />
+        </property>
+    </class>
+</hibernate-mapping>

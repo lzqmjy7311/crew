@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="预警管理  &gt; 监控预警查询" navigate="预警管理  &gt; 预警清单" type="call"
+	interface="false" pagesize="20" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.warn.getter.TWarningEntryGetter">
+	<Include id="BankParam" />
+	<PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="批量下载-预警信息" />
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="id" desc="" edittype="text" datatype="string" size="40" xpath="/id" />
+		<Field id="custCode" desc="客户编号" edittype="text" datatype="string" status="F" size="10" xpath="/custCode" require="true"  />
+		<Field id="custName" desc="客户名称"  edittype="text" status="F" datatype="string" size="50" xpath="/custName" />
+		
+		<Field id="loanAccount" desc="贷款账号" edittype="text" datatype="string" status="F" size="20" xpath="/loanAccount"/>
+		<!-- translated="CQ:AllProductSelect" -->
+		
+		<Field id="productName" desc="产品名称" status="F"
+			 readonly="" primary="true" type="String" size="150"
+			xpath="/productCode" default=""/>
+			
+		<Field id="loanAmount" desc="贷款金额"  edittype="text" datatype="double" status="F" size="100" xpath="/customerId/loanAmount"/>
+		<Field id="loanBalance" desc="贷款余额"  edittype="text" datatype="double" status="F" size="100" xpath="/customerId/loanBalance"/>
+		<Field id="loanPeriod" desc="贷款期限" edittype="text" datatype="int" status="F" size="100" xpath="loanPeriod"/>
+		<Field id="operator" desc="经办人" edittype="text" datatype="string" status="F" size="100" xpath="/operator"/>
+		<Field id="operBank" desc="经办行" edittype="text" datatype="string" status="F" size="100" xpath="/operBank"/>
+		
+		<!--<Field id="ruleDesc" desc="规则描述" edittype="textarea" datatype="string" status="F" size="100" xpath="/ruleDesc"/>-->
+		<Field id="ruleId" desc="" edittype="textarea" datatype="string" status="F" size="100" xpath="/ruleId"/>
+		
+		<Field id="ruleLevel" desc="预警等级" multiple="false" init="true"
+			placeholder="占位符" edittype="select" translated="DATA_DIC.701"
+			datatype="string" size="50" xpath="/ruleLevel" />
+		<Field id="createDate" desc="预警日期" edittype="date" datatype="date" status="F" placeholder="yyyy-MM-dd" xpath="/createDate"/>
+		<Field id="staChangeDate" desc="状态改变日期" edittype="date" datatype="date" status="F" placeholder="yyyy-MM-dd" xpath="/createDate"/>
+		<Field id="isNewCustomer" desc="是否新开户" multiple="false" init="true"
+			placeholder="占位符" edittype="select" translated="DATA_DIC.10004"
+			datatype="string" size="50" xpath="/isNewCustomer" />
+	</Fields>
+    
+	<Where>
+		<TextBox id="operator" desc="经办人" edittype="text" status="F" datatype="string" size="50" index="2" />\
+		<TextBox id="loanAccount" desc="贷款账号" edittype="text" status="F" datatype="string" size="50" index="3" />\					
+		<TextBox id="operBank" desc="经办行" edittype="text" status="F" datatype="string" size="50" index="4" />\
+		<Option id="productCode" desc="产品名称" status="N"
+			fieldname="qdataNo" edittype="select" dropdowntype="dynamic"
+			dataType="String" readOnly="false" translated="CQ:AllProductSelect"
+			viewField="prodName,prodCode" init="true"
+			fieldmap="productName=prodName;productCode=prodCode" size="32"
+			primary="false" type="String" index="5" />
+		<TextBox id="productName" desc="产品名称" edittype="text" status="F" datatype="string" size="50" />\
+		<Option id="ruleLevel" desc="预警等级" multiple="false" init="true"
+			placeholder="占位符" edittype="select" translated="DATA_DIC.702"
+			datatype="string" size="50"  />
+		<DateTextBox id="createDate" desc="预警开始日期"  status="F" datatype="string" placeholder="yyyy-MM-dd" index="7"/>\
+		<DateTextBox id="lastwarnDate" desc="预警结束日期"  status="F" datatype="string" placeholder="yyyy-MM-dd" index="7"/>\
+    
+	</Where>
+	<Operations>
+		<Button id="btShow" name="btShow" desc="查看触发规则详情" icon="icon-view-list" updateClass="" />
+		
+		<Button id="btAdd" name="btAdd" desc="新增" icon="icon-add" operation="addrecord" updateClass="#" url="#" txn="" />
+		<Button id="btnSave" name="btnSave" desc="保存" icon="icon-save" operation="asysubmit" 
+			updateClass="com.gbicc.person.product.update.ProductUpdate" url="#" txn="" />
+		<Button id="btDel" name="btDel" desc="删除" icon="icon-delete" operation="asysubmit"
+			updateClass="com.gbicc.person.product.update.ProductDelUpdate" url="" />
+		<Button id="moreHandle" name="moreHandle" desc="更多" icon="icon-sys-search-org" updateClass="#" url="" txn="" />
+		<Button id="chanceAcc" name="chanceAcc" desc="选取" operation="" url="#" show="" group="" txn="" icon="icon-add"/>
+		<Button id="btRest" name="btRest" desc="重置" icon="icon-remove" updateClass="#" url="" txn="" />
+	    <Button id="btQuery" name="btQuery" desc="查询" icon="icon-search" updateClass="#" url="" txn="" />
+
+	</Operations>
+</CommQry>

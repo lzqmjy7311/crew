@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="对公客户建立" navigate="主页 &gt; 客户管理 &gt; 对公客户建立" type="call"
+    interface="true" pagesize="5" async="true" databusid="CUSTINFOMAG_DB"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.management.getter.PosiNameCheckGetter">
+	<Include id="BankParam" />
+
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+
+		<Field id="roleName" desc="岗位名称" status="F" require="false" edittype="text"
+			datatype="string" method="None" readonly="" primary="true"
+			size="30" default="" xpath="/roleName" tip="岗位名称" />
+
+		<Field id="flag" desc="标志位" status="N"  require="false"
+		    edittype="text" xpath="/flag" default="" datatype="String"
+		    method="None"  size="10" width="150" readOnly="" />
+
+	</Fields>
+
+    <Where>
+	</Where>
+
+	<Operations>
+	</Operations>
+</CommQry>

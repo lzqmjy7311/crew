@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 用于多tab页面的模板查询 -->
+<CommQry title="用户登录日志查询" navigate="用户登录日志查询&gt; 用户登录日志次数时间段查询">
+	<Include id="BankTabs" />
+	<Fields></Fields>
+	<Where></Where>
+	<Operations>
+		<Button id="TlrLoginLogQuery" name="TlrLoginLogQuery" desc="用户登录日志查询"
+			url="/fpages/dataquery/ftl/TlrLoginLogQuery.ftl" show="0" group="o"
+			txn="" />
+			
+		<Button id="TlrLoginLogCountQuery" name="TlrLoginLogCountQuery" desc="用户登录日志次数时间段查询"
+			url="/fpages/dataquery/ftl/TlrLoginLogCountQuery.ftl" show="0" group="o"
+			txn="" />
+	</Operations>
+	<Sql></Sql>
+	<Script></Script>
+</CommQry>

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-7-20 8:37:50 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.gbicc.user.entity.TModifiedRoleid" table="T_MODIFIED_ROLEID" schema="ECUSER">
+        <id name="fdId" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="fdOperid" type="string">
+            <column name="FD_OPERID" length="25" />
+        </property>
+       <property name="fdOpername" type="string"
+        		formula="(SELECT O.TLR_NAME FROM TLR_INFO O WHERE O.TLRNO=FD_OPERID)"  
+        />
+        <property name="fdUserid" type="string">
+            <column name="FD_USERID" length="25" />
+        </property>
+        
+        <property name="fdUsername" type="string"
+        		formula="(SELECT O.TLR_NAME FROM TLR_INFO O WHERE O.TLRNO=FD_USERID)"  
+        />
+        	
+        	
+        <property name="fdRoleidb" type="string">
+            <column name="FD_ROLEIDB" length="100" />
+        </property>
+        <property name="fdRoleida" type="string">
+            <column name="FD_ROLEIDA" length="100" />
+        </property>
+        <property name="fdChangedate" type="string">
+            <column name="FD_CHANGEDATE" length="25" />
+        </property>
+        <property name="fdOrgid" type="string">
+            <column name="FD_ORGID" length="25" />
+        </property>
+        <property name="fdOrgname" type="string">
+            <column name="FD_ORGNAME" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

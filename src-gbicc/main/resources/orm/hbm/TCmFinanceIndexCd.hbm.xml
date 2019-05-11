@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-12-7 14:12:44 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.financial.analysis.entity.TCmFinanceIndexCd" table="T_CM_FINANCE_INDEX_CD" schema="ECUSER">
+        <comment>财务指标代码表</comment>
+        <id name="indexCd" type="string">
+            <column name="INDEX_CD" length="32" />
+            <generator class="assigned" />
+        </id>
+        <property name="indexName" type="string">
+            <column name="INDEX_NAME" length="100" />
+        </property>
+        <property name="indexType" type="string">
+            <column name="INDEX_TYPE" length="20" />
+        </property>
+        <property name="reportClass" type="string">
+            <column name="REPORT_CLASS" length="20" />
+        </property>
+        <property name="idCertificate" type="string">
+            <column name="ID_CERTIFICATE" length="20" />
+        </property>
+        <property name="remarks" type="string">
+            <column name="REMARKS" length="25" />
+        </property>
+    </class>
+</hibernate-mapping>

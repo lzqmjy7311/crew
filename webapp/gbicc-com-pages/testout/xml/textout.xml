@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="5" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="">
+	<Include id="BankParam" />
+	
+	<Fields>
+		<Field id="zbnum" xpath="/zbnum"  desc="指标代码" />
+		<Field id="zbname" xpath="/zbnum"  desc="指标名称" />
+        <Field id="a" xpath="/a"  desc="数据A" />
+        <Field id="b" desc="数据B" xpath="/b" />
+<!--    <Field id="id" desc="指标ID" xpath="/id" />
+        <Field id="functionname" desc="指标公式" xpath="/functionname" />
+        <Field id="tablename" desc="查询表" xpath="/tablename" />
+	     <Field id="by" desc="备用栏" xpath="/by" />  -->
+	</Fields>
+	<Where>
+		<TextBox id="zbnum" xpath="/zbnum"  desc="指标代码" width="1000"/>\
+		<TextBox id="zbname" xpath="/zbnum"  desc="指标名称" width="1000"/>\
+		<TextBox id="a" desc="数据A" width="1000" require="" edittype="text" datatype="string" method="None" type="" status="F" scale="2" default="" />\
+        <TextBox id="b" desc="数据B" width="1000" require="" edittype="text" datatype="string" method="None"  type="" status="F" scale="2" default=""/>\
+<!--         <TextBox id="id" desc="指标ID" require="" edittype="text" datatype="string" method="None"  type="" status="F"  scale="2" default=""/>
+        <TextBox id="functionname" desc="功能" require="" edittype="text" datatype="String" method="None" type="" status="F" scale="2" default=""/>
+        <TextBox id="tablename" desc="查询表" require="" edittype="text" datatype="String" method="None" type="" status="F"  scale="2" default="" />
+        <TextBox id="by" desc="备用栏" require="" edittype="text" datatype="String" method="None"  type="" status="F"  scale="2" default=""/> -->
+	</Where>
+	<Operations>
+		<Button id="btSave" name="btSave" desc="提交" url="#" txn="" />
+	</Operations>
+</CommQry>

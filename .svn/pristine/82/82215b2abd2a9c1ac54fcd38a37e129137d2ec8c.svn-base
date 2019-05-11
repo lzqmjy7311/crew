@@ -1,0 +1,94 @@
+/**
+ * Copyright (c) 2009-2012 GBICC Information Technology Co., Ltd. All Rights Reserved.
+ *
+ * This software is the confidential and proprietary information of GBICC Information Technology Co., Ltd. ("Confidential Information").  You shall not
+ * disclose such Confidential Information and shall use it only in
+ * accordance with the terms of the license agreement you entered into
+ * with Gbicc.
+ *
+ * Gbicc MAKES NO REPRESENTATIONS OR WARRANTIES ABOUT THE SUITABILITY OF THE
+ * SOFTWARE, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE
+ * IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+ * PURPOSE, OR NON-INFRINGEMENT. ERRY SHALL NOT BE LIABLE FOR ANY DAMAGES
+ * SUFFERED BY LICENSEE AS A RESULT OF USING, MODIFYING OR DISTRIBUTING
+ * THIS SOFTWARE OR ITS DERIVATIVES.
+ *
+ * 文件名称：ReportFactory.java
+ * 摘    要：
+ * 作 成 者：Alex Zhou
+ * 作成日期：2012-6-5
+ * 修 改 者：Alex Zhou
+ * 修改日期：2012-6-5
+ */
+package com.gbicc.common;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.Locale;
+import java.util.Map;
+
+import org.apache.log4j.Logger;
+import org.springframework.core.io.ClassPathResource;
+
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+
+/**
+ * 模板构造器，负责读取指定模板并且返回输出
+ * 
+ */
+public class TemplateBuilder {
+	private static final Logger log = Logger.getLogger(TemplateBuilder.class);
+	private static volatile TemplateBuilder INSTANCE = new TemplateBuilder();
+	private Configuration cfg;
+
+	public static TemplateBuilder getInstance() {
+		return INSTANCE;
+	}
+
+	private TemplateBuilder() {
+		cfg = new Configuration();
+		cfg.setDefaultEncoding("UTF-8");
+		cfg.setEncoding(Locale.CHINA, "UTF-8");
+		cfg.setDateFormat("yyyy-MM-dd");
+		ClassPathResource classPathResource=new ClassPathResource("/template/docXml");
+		File file=null;
+		try {
+			file=classPathResource.getFile();
+			if(!file.exists()){
+				log.error("file not exists "+file.getPath());
+			}
+			cfg.setDirectoryForTemplateLoading(file);
+		} catch (Exception e) {
+			e.printStackTrace();
+			if(file!=null){
+				log.error("file not exists "+file.getPath(),e);
+			}else{
+				log.error("file not exists ",e);
+			}
+		}
+	}
+
+	public String getReportContent(String name, Map<String, Object> params) throws IOException, TemplateException {
+		StringWriter sw = new StringWriter();
+		try{
+			Template temp = cfg.getTemplate(name);
+			temp.process(params, sw);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return sw.toString();
+	}
+	
+	public Template getTemplate(String name) throws IOException, TemplateException {
+		try{
+			Template temp = cfg.getTemplate(name);
+			return temp;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+}

@@ -1,0 +1,56 @@
+<CommQry title="TOutIndBaseInfoId" navigate="TOutIndBaseInfoId" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.view.externaldata.getter.TDataGsxtIcRegModifyGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" maxPage="20" perfecth="20" />
+    <Fields>
+        <Field id="id" desc="ID" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/fdEntId" />
+        <Field id="companyName" desc="企业名称" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdName" />
+        <Field id="registorNo" desc="注册号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdRegNum" />
+        <Field id="legalName" desc="法定代表人" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdLecalPerson" />
+        <Field id="certNo" desc="证照/证件号码" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdIdNum" />
+        <Field id="fdModifyItem" desc="变更事项 " require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdModifyItem" />
+        <Field id="fdInfoBeforeModify" desc="变更前内容 " require="" edittype="textarea" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdInfoBeforeModify" />
+        <Field id="fdInfoBeforeModify2" desc=" " require="" edittype="textarea" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdInfoBeforeModify" width="800" height="150" />
+        <Field id="fdInfoAfterModify" desc="变更后内容 " require="" edittype="textarea" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdInfoAfterModify" />
+        <Field id="fdInfoAfterModify2" desc=" " require="" edittype="textarea" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdInfoAfterModify" width="800" height="150" />
+        <Field id="cancelDate" desc="变更日期" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" default=""
+        xpath="/fdModifyDate" />
+        <Field id="enterStatus" desc="登记状态" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdRegStatus" />
+        <Field id="busstartDate" desc="经营期限起始日" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdBusinessTermStart" />
+        <Field id="busendDate" desc="经营期限结束日" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdBusinessTermEnd" />
+        <Field id="busscope" desc="经营范围" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdBusinessScope" />
+        <Field id="busscope2" desc="" require="" edittype="textarea" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdBusinessScope" width="800" height="150" />
+        <Field id="registorAmt" desc="注册资本" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdRegCapital" />
+        <Field id="enterOrg" desc="登记机关" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdRegOrg" />
+        <Field id="address" desc="住所" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdEntAddress" />
+        <Field id="checkDate" desc="核准日期" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdApprovalDate" />
+        <Field id="shareHolder" desc="股东" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdShareholder" />
+        <Field id="sourceLink" desc="原链接" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/sourceLink" />
+        <Field id="rowDate" desc="数据日期" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/rowDate" />
+        <Field id="relaId" desc="关联ID" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdJbkId" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

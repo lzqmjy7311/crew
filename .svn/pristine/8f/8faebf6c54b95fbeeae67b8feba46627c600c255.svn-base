@@ -1,0 +1,124 @@
+package com.gbicc.company.single.getter;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import com.gbicc.bpm.SpringContextHolder;
+import com.gbicc.common.FileUpDownProperties;
+import com.gbicc.company.single.operation.TCmSingleRulWarningOperation;
+import com.gbicc.util.DateUtils;
+import com.huateng.common.err.Module;
+import com.huateng.common.err.Rescode;
+import com.huateng.commquery.result.Result;
+import com.huateng.commquery.result.ResultMng;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.business.common.PageQueryResult;
+import com.huateng.ebank.framework.web.commQuery.BaseGetter;
+import com.huateng.exception.AppException;
+
+public class TCmSingleRulWarningGetter extends BaseGetter {
+
+	@Override
+	public Result call() throws AppException {
+		try {
+			PageQueryResult pageResult = getData();
+			ResultMng.fillResultByList(getCommonQueryBean(),
+					getCommQueryServletRequest(), pageResult.getQueryResult(),
+					getResult());
+			result.setContent(pageResult.getQueryResult());
+			result.getPage().setTotalPage(
+					pageResult.getPageCount(getResult().getPage()
+							.getEveryPage()));
+			result.init();
+			return result;
+		} catch (AppException appEx) {
+			throw appEx;
+		} catch (Exception ex) {
+			throw new AppException(Module.SYSTEM_MODULE,
+					Rescode.DEFAULT_RESCODE, ex.getMessage(), ex);
+		}
+	}
+
+	protected PageQueryResult getData() throws Exception {
+		String id = (String) getCommQueryServletRequest().getParameterMap().get("id");
+		String taskType = (String) getCommQueryServletRequest().getParameterMap().get("taskType");
+		String rulCode = (String) getCommQueryServletRequest().getParameterMap().get("rulCode");
+		String rulName = (String) getCommQueryServletRequest().getParameterMap().get("rulName");
+		String fcettypecode = (String) getCommQueryServletRequest().getParameterMap().get("fcettypecode");
+		String fcetname = (String) getCommQueryServletRequest().getParameterMap().get("fcetname");
+		String mainOrg = (String) getCommQueryServletRequest().getParameterMap().get("mainOrg");
+		String warnDtStart = (String) getCommQueryServletRequest().getParameterMap().get("warnDtStart");
+		String warnDtEnd = (String) getCommQueryServletRequest().getParameterMap().get("warnDtEnd");
+		
+		//String order = (String) getCommQueryServletRequest().getParameterMap().get("order");
+		//String sortField = (String) getCommQueryServletRequest().getParameterMap().get("sortField");
+		
+		GlobalInfo info=GlobalInfo.getCurrentInstance();
+		String userId=info.getTlrno();
+		String orgId=info.getBrcode().trim();
+		PageQueryResult pageQueryResult = new PageQueryResult();
+		// 分页大小
+		//int pageSize = getResult().getPage().getEveryPage();
+		// 页码
+		//int pageIndex = getResult().getPage().getCurrentPage();
+
+		//ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		StringBuffer hql = new StringBuffer("SELECT T1.*,B.BRCODE AS mainOrgId,B.BRNAME AS mainOrg FROM T_CM_SINGLE_RUL_WARNING T1 LEFT JOIN BCTL B ON T1.FD_ORGANKEY=B.BRCODE,T_ACT_ACTIVETASK_V T2 "+
+		" WHERE T1.FD_ID=T2.BUSINESS_KEY ");
+		String srcbBrcode=FileUpDownProperties.readValue("srcb_brcode");
+		if(StringUtils.isNotEmpty(orgId)){
+			hql.append(" AND (CASE WHEN FD_HANDLE_ORG_FLAG='"+TCmSingleRulWarningOperation.HEAD_FLAG+"' THEN '"+srcbBrcode+"' ELSE "+
+			" (SELECT BLN_UP_BRCODE FROM BCTL WHERE BRCODE=FD_ORGANKEY) END )= "+
+			" (CASE WHEN FD_HANDLE_ORG_FLAG='"+TCmSingleRulWarningOperation.HEAD_FLAG+"' THEN '"+srcbBrcode+"' ELSE '"+orgId+"' END) ");
+		}else{
+			//机构为空不查询任何机构。
+			hql.append(" and 1=2 ");
+		}
+		if(StringUtils.isNotEmpty(id)){
+			hql.append(" and t1.FD_id like '%"+id+"%' ");
+		}
+		if(StringUtils.isNotEmpty(rulCode)){
+			hql.append(" and t1.FD_rul_Code like '%"+rulCode+"%' ");
+		}
+		if(StringUtils.isNotEmpty(rulName)){
+			hql.append(" and t1.FD_rul_Name like '%"+rulName+"%' ");
+		}
+		if(StringUtils.isNotEmpty(fcettypecode)){
+			hql.append(" and t1.FD_FCETTYPECODE like '%"+fcettypecode+"%' ");
+		}
+		if(StringUtils.isNotEmpty(fcetname)){
+			hql.append(" and t1.FD_FCETNAME like '%"+fcetname+"%' ");
+		}
+		if(StringUtils.isNotEmpty(warnDtStart)){
+			hql.append(" and to_char(t1.FD_WARN_DT,'yyyyMMdd') >= '"+warnDtStart+"'");
+		}
+		if(StringUtils.isNotEmpty(warnDtEnd)){
+			hql.append(" and to_char(t1.FD_WARN_DT,'yyyyMMdd') <='"+warnDtEnd+"'");
+		}
+		
+		if(StringUtils.isNotEmpty(mainOrg)){
+			hql.append(" and t1.FD_ORGANKEY ='"+mainOrg+"'");
+			
+		}
+		hql.append(" and t2.ASSIGNEE='").append(userId).append("'");
+		
+		if(StringUtils.isNotEmpty(taskType)){
+			hql.append(" and '"+DateUtils.formatYmdDate(new Date())+"'>to_char(t1.FD_TASK_MATURE_DT,'yyyymmdd') ");
+		}
+		/*String orderby=" order by t1.warnDt desc ";
+		if(StringUtils.isNotEmpty(order) && StringUtils.isNotEmpty(sortField)){
+			orderby=" order by t1."+sortField+" "+order;
+		}
+		hql.append(orderby);
+		*/
+		//pageQueryResult = rootdao.pageQueryByHql(pageIndex, pageSize,hql.toString());
+		JdbcTemplate jdbcTemplate=SpringContextHolder.getBean(JdbcTemplate.class);
+		List<Map<String,Object>> list=jdbcTemplate.queryForList(hql.toString());
+		pageQueryResult.setQueryResult(list);
+		return pageQueryResult;
+	}
+}

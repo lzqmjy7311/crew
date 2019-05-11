@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-2-25 17:00:15 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.financial.analysis.entity.TOutCouNoticeDetail" table="T_DATA_COURT" schema="ECUSER">
+        <comment>裁判文书</comment>
+            <id name="id" type="string">
+                <column name="FD_PUK" length="50" />
+            </id>
+            <property name="courtName" type="string">
+                <column name="FD_ADDRESS" length="50" />
+            </property>
+            <property name="court2Name" type="string">
+                <column name="FD_COURT" length="50" />
+            </property>
+            <property name="tryDate" type="date">
+                <column name="FD_COURT_DATE" length="10" />
+            </property>
+            <property name="caseNo" type="string">
+                <column name="FD_USAGE_ID" length="50" />
+            </property>
+            <property name="caseReason" type="string">
+                <column name="FD_REASON" length="500" />
+            </property>
+            <property name="mainDept" type="string">
+                <column name="FD_ACCEPTER" length="50" />
+            </property>
+            <property name="tryName" type="string">
+                <column name="FD_JUDGE" length="50" />
+            </property>
+            <property name="accuser" type="string">
+                <column name="FD_PLAINTIFF" length="50" />
+            </property>
+            <property name="defendant" type="string">
+                <column name="FD_DEFENDANF" length="50" />
+            </property>
+            <property name="sourceLink" type="string">
+                <column name="FD_URI" length="100" />
+            </property>
+            <property name="relaId" type="string">
+                <column name="FD_JBK_ID" length="50" />
+            </property>
+            <property name="rowDate" type="date">
+                <column name="FD_CREATETIME" length="10" />
+            </property>
+    </class>
+</hibernate-mapping>

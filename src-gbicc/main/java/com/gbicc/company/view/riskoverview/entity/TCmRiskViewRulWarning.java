@@ -1,0 +1,144 @@
+package com.gbicc.company.view.riskoverview.entity;
+
+import java.util.Date;
+
+public class TCmRiskViewRulWarning {
+	/*
+	    */
+		private String id;
+	    private String customerId;
+	    /*
+	    */
+		private String fdDesc;
+		private String taskCode;
+	    private String eliminateFlag;
+	    /*
+	    */
+	    private String rulThemeCd;
+	    /*
+	    */
+	    private String warnCode;
+	    /*
+	    */
+	    private String warnLevel;
+	    /*
+	    */
+	    private Date warnDt;
+	    /*
+	    */
+	    private String rulName;
+	    /*
+	    */
+	    private String warnStatus;
+	    /*
+	    */
+	    private Date eliminateDt;
+	    /*
+	    */
+	    private Date warningRelieveDt;
+	    /*
+	    */
+	    private String handler;
+	    
+	    private String rulType;
+	    
+	    
+	    private String warningtype;
+		public String getCustomerId() {
+			return customerId;
+		}
+		public void setCustomerId(String customerId) {
+			this.customerId = customerId;
+		}
+		public String getEliminateFlag() {
+			return eliminateFlag;
+		}
+		public void setEliminateFlag(String eliminateFlag) {
+			this.eliminateFlag = eliminateFlag;
+		}
+		public String getRulThemeCd() {
+			return rulThemeCd;
+		}
+		public void setRulThemeCd(String rulThemeCd) {
+			this.rulThemeCd = rulThemeCd;
+		}
+		public String getWarnCode() {
+			return warnCode;
+		}
+		public void setWarnCode(String warnCode) {
+			this.warnCode = warnCode;
+		}
+		public String getWarnLevel() {
+			return warnLevel;
+		}
+		public void setWarnLevel(String warnLevel) {
+			this.warnLevel = warnLevel;
+		}
+		public Date getWarnDt() {
+			return warnDt;
+		}
+		public void setWarnDt(Date warnDt) {
+			this.warnDt = warnDt;
+		}
+		public String getRulName() {
+			return rulName;
+		}
+		public void setRulName(String rulName) {
+			this.rulName = rulName;
+		}
+		public String getWarnStatus() {
+			return warnStatus;
+		}
+		public void setWarnStatus(String warnStatus) {
+			this.warnStatus = warnStatus;
+		}
+		public Date getEliminateDt() {
+			return eliminateDt;
+		}
+		public void setEliminateDt(Date eliminateDt) {
+			this.eliminateDt = eliminateDt;
+		}
+		public Date getWarningRelieveDt() {
+			return warningRelieveDt;
+		}
+		public void setWarningRelieveDt(Date warningRelieveDt) {
+			this.warningRelieveDt = warningRelieveDt;
+		}
+		public String getHandler() {
+			return handler;
+		}
+		public void setHandler(String handler) {
+			this.handler = handler;
+		}
+		public String getRulType() {
+			return rulType;
+		}
+		public void setRulType(String rulType) {
+			this.rulType = rulType;
+		}
+		public String getId() {
+			return id;
+		}
+		public void setId(String id) {
+			this.id = id;
+		}
+		public String getFdDesc() {
+			return fdDesc;
+		}
+		public void setFdDesc(String fdDesc) {
+			this.fdDesc = fdDesc;
+		}
+		public String getWarningtype() {
+			return warningtype;
+		}
+		public void setWarningtype(String warningtype) {
+			this.warningtype = warningtype;
+		}
+		public String getTaskCode() {
+			return taskCode;
+		}
+		public void setTaskCode(String taskCode) {
+			this.taskCode = taskCode;
+		}
+		
+}

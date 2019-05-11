@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="20" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.person.great.getter.TPlGreatEventGetter">
+	<Include id="BankParam" />
+	
+	<Fields>
+        <Field id="id" xpath="/id"  desc="" require="" edittype="text" datatype="string" method="None" readonly="true" />
+        <Field id="regiUserId" desc="登记用户" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" scale="2" default=""
+        xpath="/regiUser/tlrno" />
+        <Field id="regiUserName" desc="登记用户" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" scale="2" default=""
+        xpath="/regiUser/tlrName" />
+        <Field id="regiDate" desc="登记时间" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" scale="2" default=""
+        xpath="/regiDate" />
+        <Field id="atteMain" desc="关注主体" xpath="/atteMain" multiple="false" init="true" require="true" 
+            placeholder="占位符" edittype="select" translated="DATA_DIC.117"
+            datatype="string" width="550"/>
+        <Field id="mainObj" desc="主体对象" require="true" edittype="text" datatype="string" method="None" readonly="true" type="" status="F"  scale="2" default=""
+        xpath="/mainObj" width="550"/>
+         <Field id="mainObjName" desc="主体对象" require="true" edittype="text" datatype="string" method="None" readonly="true" type="" status="F"  scale="2" default=""
+        xpath="/mainObjName" width="550"/>
+        
+        <Field id="content" desc="重大事件内容" xpath="/content" translated="CQ:SubAutoGreatEvent" 
+			   fieldmap="content=dataNo;contentName=dataName" viewField="dataName" require="true"
+			   edittype="select" dropdowntype="dynamic" primaty="true" init="true" size="10" 
+			   editable="true" width="550"/>
+		<Field id="contentDesc" xpath="/contentDesc"  desc="重大事件内容" require="" edittype="text" datatype="string" method="None" readonly="true" />
+        
+        <Field id="explain" desc="说明" require="true" size="500" edittype="textarea" datatype="string" 
+        xpath="/explain" height="100" width="550"/>
+	</Fields>
+	
+	<Where>
+		<DateTextBox id="regiDateStart" desc="登记时间起始日期" edittype="date" status="F" datatype="string" index="0" />
+		<DateTextBox id="regiDateEnd" desc="登记时间结束日期" edittype="date" status="F" datatype="string" index="1" />
+		<Option id="atteMain" desc="关注主体" edittype="select" datatype="string" multiple="false" init="true" translated="DATA_DIC.117" index="2" />
+		<TextBox id="explain" desc="说明" edittype="text" datatype="string" index="3" />
+	</Where>
+	
+	<Operations>
+		<Button id="btnAdd" name="btnAdd" desc="增加重大事件" operation="" url="#" show="" group="" txn="" icon="icon-add"/>
+		<Button id="btnUpd" name="btnUpd" desc="修改重大事件" operation="" url="#" show="" group="" txn="" icon="icon-edit"/>
+		
+		<Button id="btnSave" name="btnSave" desc="保存" icon="icon-save" operation="asysubmit" 
+			updateClass="com.gbicc.person.great.update.TPlGreatEventUpdate" url="#" txn="" />
+		<Button id="btnCancel" name="btnCancel" desc="取消" icon="icon-cancel" updateClass="#" url="" txn="" />
+	</Operations>
+</CommQry>

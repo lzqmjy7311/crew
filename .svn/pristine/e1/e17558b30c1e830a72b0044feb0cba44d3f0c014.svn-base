@@ -1,0 +1,87 @@
+package com.gbicc.rule.update;
+
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.gbicc.rule.entity.TRulCategory;
+import com.gbicc.rule.operation.TRulCategoryOperation;
+import com.gbicc.rule.service.TRulCategoryService;
+import com.huateng.common.err.Module;
+import com.huateng.common.err.Rescode;
+import com.huateng.commquery.result.MultiUpdateResultBean;
+import com.huateng.commquery.result.UpdateResultBean;
+import com.huateng.commquery.result.UpdateReturnBean;
+import com.huateng.ebank.framework.operation.OPCaller;
+import com.huateng.ebank.framework.operation.OperationContext;
+import com.huateng.ebank.framework.web.commQuery.BaseUpdate;
+import com.huateng.exception.AppException;
+
+public class TRuleCategoryUpdate extends BaseUpdate {
+	private static final String DATASET_ID =TRulCategory.class.getSimpleName();
+	
+	@Override
+	public UpdateReturnBean saveOrUpdate(MultiUpdateResultBean arg0,
+			HttpServletRequest arg1, HttpServletResponse arg2)
+			throws AppException {
+		try {
+			UpdateReturnBean updateReturnBean = new UpdateReturnBean();
+			UpdateResultBean updateResultBean = multiUpdateResultBean.getUpdateResultBeanByID( DATASET_ID);
+			TRulCategory dd = new TRulCategory();
+			OperationContext oc = new OperationContext();
+			
+			if (updateResultBean.hasNext()) {
+				@SuppressWarnings("rawtypes")
+				Map map = updateResultBean.next();
+				
+				String op = updateResultBean.getParameter("op");
+				if("newcategory".equals(op)) {
+					dd = new TRulCategory();
+					oc.setAttribute(TRulCategoryOperation.CMD, TRulCategoryOperation.CMD_INSERTCATEGORY);
+					mapToObject(dd, map);
+				} else if ("newrule".equals(op)) {
+					dd = new TRulCategory();
+					oc.setAttribute(TRulCategoryOperation.CMD, TRulCategoryOperation.CMD_INSERTRULE);
+					mapToObject(dd, map);
+				}else if ("uptcategory".equals(op)) {
+					dd = TRulCategoryService.getInstance().get((String) map.get("id"));
+					if(map.get("categoryName")!=null){
+						dd.setCategoryName(map.get("categoryName").toString());
+					}
+					if(map.get("sno")!=null){
+						dd.setSno(Integer.valueOf(map.get("sno").toString()));
+					}
+					if(map.get("remark")!=null){
+						dd.setRemark(map.get("remark").toString());
+					}
+					if(map.get("rulType")!=null){
+						dd.setRulType(map.get("rulType").toString());
+					}
+					oc.setAttribute(TRulCategoryOperation.CMD, TRulCategoryOperation.CMD_UPDATECATEGORY);
+				}else if ("uptrule".equals(op)) {
+					dd = TRulCategoryService.getInstance().get((String) map.get("id"));
+					oc.setAttribute(TRulCategoryOperation.CMD, TRulCategoryOperation.CMD_UPDATERULE);
+					if(map.get("categoryName")!=null){
+						dd.setCategoryName(map.get("categoryName").toString());
+					}
+					if(map.get("remark")!=null){
+						dd.setRemark(map.get("remark").toString());
+					}
+					if(map.get("rulType")!=null){
+						dd.setRulType(map.get("rulType").toString());
+					}
+				}
+			}
+			oc.setAttribute(TRulCategoryOperation.IN_PARAM, dd);
+			OPCaller.call(TRulCategoryOperation.ID, oc);
+			return updateReturnBean;
+		} catch (AppException appEx) {
+			throw appEx;
+		} catch (Exception ex) {
+			throw new AppException(Module.SYSTEM_MODULE,
+					Rescode.DEFAULT_RESCODE, ex.getMessage(), ex);
+		}
+	}
+
+}

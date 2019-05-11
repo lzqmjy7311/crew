@@ -1,0 +1,172 @@
+package com.gbicc.person.frequency.getter;
+
+import java.util.Iterator;
+
+
+
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.util.StringUtils;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import com.gbicc.bpm.SpringContextHolder;
+import com.gbicc.bpm.service.ProcessManagerService;
+import com.gbicc.person.monitor.service.TPlTaskService;
+import com.huateng.common.err.Module;
+import com.huateng.common.err.Rescode;
+import com.huateng.commquery.result.Result;
+import com.huateng.commquery.result.ResultMng;
+import com.huateng.ebank.business.common.DAOUtils;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.business.common.PageQueryResult;
+import com.huateng.ebank.business.common.service.BctlService;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.framework.exceptions.CommonException;
+import com.huateng.ebank.framework.web.commQuery.BaseGetter;
+import com.huateng.exception.AppException;
+
+@SuppressWarnings("unchecked")
+public class TPlTriggerFrequencyAcctGetter extends BaseGetter {
+	private static String ZHGLG_ROLEID="444";//一级支行贷后管理岗
+	private static String WCL=" '0' ";//未处理状态
+	private static String TH=" '3' ";//退回
+
+	@Override
+	public Result call() throws AppException {
+		try {
+			PageQueryResult pageResult = getData();
+			ResultMng.fillResultByList(getCommonQueryBean(),
+					getCommQueryServletRequest(), pageResult.getQueryResult(),
+					getResult());
+			result.setContent(pageResult.getQueryResult());
+			result.getPage().setTotalPage(
+					pageResult.getPageCount(getResult().getPage()
+							.getEveryPage()));
+			result.init();
+			return result;
+		} catch (AppException appEx) {
+			throw appEx;
+		} catch (Exception ex) {
+			throw new AppException(Module.SYSTEM_MODULE,
+					Rescode.DEFAULT_RESCODE, ex.getMessage(), ex);
+		}
+	}
+
+	protected PageQueryResult getData() throws Exception {
+		//前台取得登录用户信息
+		//String userId = (String) getCommQueryServletRequest().getParameterMap().get("userId");
+//		String roleId = (String) getCommQueryServletRequest().getParameterMap().get("roleId");
+//		String brcode = (String) getCommQueryServletRequest().getParameterMap().get("orgId");
+		
+		
+		GlobalInfo info=GlobalInfo.getCurrentInstance();
+		String userId=info.getTlrno();
+		String  roleId= info.getWorkflowRoleId();
+		String brcode=info.getBrcode();
+		String custCode = (String) getCommQueryServletRequest().getParameterMap().get("custCode");
+		String custName = (String) getCommQueryServletRequest().getParameterMap().get("custName");
+		String warnLevel = (String) getCommQueryServletRequest().getParameterMap().get("warnLevel");
+		String loanAccount = (String) getCommQueryServletRequest().getParameterMap().get("loanAcct");
+		String loanVariety = (String) getCommQueryServletRequest().getParameterMap().get("loanVariety");
+		String frequency = (String) getCommQueryServletRequest().getParameterMap().get("frequency");
+		String warnDate = (String) getCommQueryServletRequest().getParameterMap().get("warnDate");
+		
+		
+		
+		// 分页大小
+		int pageSize = getResult().getPage().getEveryPage();
+		// 页码
+		int pageIndex = getResult().getPage().getCurrentPage();
+        
+		//基准sql
+		StringBuffer sql = new StringBuffer(" SELECT  B.FD_LOAN_ACCT loanAcct ,B.FD_CUST_NAME custName,B.FD_WARN_LEVEL warnLevel,B.FD_WARN_DATE warnDate,B.FD_LOAN_VARIETY loanVariety,");
+        sql.append(" B.FD_FREQUENCY frequency,B.FD_LOAN_AMT loanAmt,B.FD_LOAN_BALANCE loanBalance,B.FD_LOAN_TERM loanTerm,B.FD_STATUS status, ");
+        sql.append(" B.FD_LAUNCHPER launchPer,B.FD_LAUNCHP_BANK launchBank,B.FD_SYS_FREQUENCY sysFrequency  FROM 　T_PL_TRIGGER_FREQUENCY_ACCT B LEFT JOIN T_EDW_PLS_ACCOUNT ACC ON B.FD_LOAN_ACCT=ACC.LOANACNO  where 1=1");
+		if(StringUtils.hasText(custCode)){
+			sql.append(" and B.CUSTCODE like '%"+custCode+"%'");
+		}
+		if(StringUtils.hasText(custName)){
+			sql.append(" and B.FD_CUST_NAME like '%"+custName+"%'");
+		}
+		if(StringUtils.hasText(warnLevel)){
+			sql.append(" and B.FD_WARN_LEVEL ='"+warnLevel+"'");
+		}
+		if(StringUtils.hasText(loanAccount)){
+			sql.append(" and B.FD_LOAN_ACCT like '%"+loanAccount+"%'");
+		}
+		if(StringUtils.hasText(loanVariety)){
+			sql.append(" and B.FD_LOAN_VARIETY ='"+loanVariety+"'");
+		}
+		if(StringUtils.hasText(frequency)){
+			sql.append(" and B.FD_FREQUENCY ='"+frequency+"'");
+		}
+		if(StringUtils.hasText(warnDate)){
+			sql.append(" and B.FD_WARN_DATE =to_date('"+warnDate+"','yyyymmdd')");
+		}
+		
+		String operator=null;
+		//获得岗位代码
+				boolean flag=false;
+				
+				  if(roleId.equals("222")){//客户经理
+						operator=userId;
+						if(StringUtils.hasText(operator)){
+							sql.append(" and ACC.DUTYID  = '"+operator+"'");
+							flag=true;
+						}
+					}else if(roleId.equals("557")||roleId.equals("558")||roleId.equals("111"))//总行机构
+					{
+						flag=true;
+					}
+		if(!flag){
+			BctlService bctlService = BctlService.getInstance();
+			String brcodes=bctlService.getAllSubListStr(brcode);
+			sql.append(" AND   ACC.DUTYID IN                                                      ");
+			TPlTaskService tts=TPlTaskService.getInstance();
+			String userIds=tts.getUserIdsByBrcodes(brcodes)	;
+			sql.append("("+userIds+")");
+		}
+		
+		String orderby="";
+		//构造分页
+		StringBuffer sqlp=new StringBuffer("select t0.* from ( ");
+		sqlp.append("select t.*,row_number() over("+orderby+") as rnum from ( ");
+		sqlp.append(sql);
+		sqlp.append(") t ) t0 where t0.rnum>"+(pageIndex-1)*pageSize+" ");
+		sqlp.append("fetch first "+pageSize+" rows only ");
+		
+		JdbcTemplate jdbcTemplate=SpringContextHolder.getBean(JdbcTemplate.class);
+		List<Map<String,Object>> resultList=jdbcTemplate.queryForList(sqlp.toString());
+		//构造数据量
+		StringBuffer sqll=new StringBuffer("select count(1) from ( ");
+		sqll.append(sql);
+		sqll.append(" )");
+		//set
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		Integer totalCount=(Integer)rootdao.querySqlOne(sqll.toString());
+		
+		PageQueryResult result = new PageQueryResult();
+		result.setQueryResult(resultList);
+		result.setTotalCount(totalCount);
+		return result;
+	}
+	
+	public String getUserRoleId(String userId){
+		String roleId="";
+		String sql="SELECT ROLE_ID FROM TLR_ROLE_REL WHERE TLRNO ='"+userId+"'";
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		try {
+			Iterator<Integer> it= rootdao.queryBySQL(sql);
+			while(it.hasNext()){
+				roleId=it.next().toString();
+			}
+		} catch (CommonException e) {
+			e.printStackTrace();
+		}
+
+		return roleId;
+	}
+}

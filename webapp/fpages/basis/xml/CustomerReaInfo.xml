@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	txnlogflag:true记录日志
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="CustomerReaEntry.title" navigate="基础信息管理 &gt;客户信息管理"  type="call"  interface="true" 
+	databusid=""  pagesize="10"  transdataactionurl="/trans/TransDataAction.do"
+    asyns="true" 
+    getterclassname="com.huateng.ebank.business.management.getter.CustomerReaInfoQueryGetter" >
+    <Include id="BankParam"/>
+    <Fields>
+    	<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+    	<Field id="id" desc="客户号" edittype="text" datatype="string" size="10"  require="true" status="F" xpath="/id"/>
+    	
+    	<Field id="orgId" desc="机构" status="F"
+			primary="false" method="None" readonly="false" type="String"
+			size="20" edittype="select"  translated="CQ:AllBranchSelect"
+			fieldmap="orgId=brcode;orgIdName=brcodeTypeName"
+			viewField="brcodeTypeName" default="" xpath="/orgId"
+			require="false" tip="机构" />
+    	
+    	<Field id="orgIdName" desc="机构" status="F" 
+			method="None"
+			width="" readonly="" primary="true" type="String" size="150"
+			xpath="/orgId" default=""/>
+    	<Field id="customerType" desc="客户类型" edittype="select" translated="DATA_DIC.2001" datatype="string" size="2" require="true" status="F" xpath="/customerType" />
+		<Field id="paperType" desc="证件类型" edittype="select" translated="DATA_DIC.21"   datatype="String" size="2" require="true"  status="F"  xpath="/paperType"/>
+		<Field id="paperTypeMemo" desc="证件类型备注"  edittype="text" datatype="string" size="30" require="true"  status="F" xpath="/paperTypeMemo"/> 
+		<Field id="paperCode" desc="证件号码"   edittype="text" datatype="string" size="20"  status="F" xpath="/paperCode"/>
+		<Field id="customerName" desc="客户名称" edittype="text" datatype="string" size="64"  require="true" status="F"  xpath="/customerName"/>
+		<Field id="customerEnname" desc="英文名称" edittype="text" datatype="string" size="128"  require="true" status="F" xpath="/customerEnname"/>
+		<!-- <Field id="customerNationality"  desc="客户国籍"  edittype="text" datatype="string" size="10" require="true"  status="F" xpath="/customerEnname"/>
+	 -->
+		
+		<Field id="customerNationality" desc="客户国籍" require="true" 						
+		edittype="select" size="3"  datatype="string" status="F" 				
+		translated="CQ:BiNationregionSelect" dropdowntype="dynamic" method="None" viewField="nationregionIdName" 				
+		fieldmap="customerNationality=nationregionId;customerNationalityName=nationregionIdName" xpath="/customerNationality" />		
+	
+		<Field id="customerNationalityName" desc="客户国籍" status="F" 
+			method="None"
+			width="" readonly="" primary="true" type="String" size="150"
+			xpath="/customerNationality" default=""/>
+	
+		<Field id="telephone"  desc="联系电话"  edittype="text" datatype="string" size="64"  status="F" xpath="/telephone"/>
+		<Field id="customerAddress"  desc="客户地址"  edittype="text" datatype="string" size="128" require="true" status="F" xpath="/customerAddress"/>
+		<Field id="customerOthers"  desc="其他联系方式"  edittype="text" datatype="string" size="64" status="F" xpath="/customerOthers"/>
+		<Field id="vocationType"  desc="对私职业对公行业类型"  edittype="select"  translated="DATA_DIC.222" datatype="string" size="2"  require="true" status="F" xpath="/vocationType"/>
+		<Field id="registrationMoney"  desc="对公客户注册资金"  edittype="text" datatype="string" size="22"  status="F" xpath="/registrationMoney"/>
+		<Field id="corporationRepname"  desc="对公客户法定代表人姓名"  edittype="text" datatype="string" size="32"   status="F" xpath="/corporationRepname"/>
+		<Field id="corporationPaperType"  desc="对公客户法定代表人身份证件类型"  edittype="select" translated="DATA_DIC.21"   datatype="string" size="2" status="F" xpath="/corporationPaperType"/>
+		<Field id="corporationPaperId"  desc="对公客户法定代表人身份证件号码"  edittype="text" datatype="string" size="20"   status="F" xpath="/corporationPaperId"/>
+		<Field id="farenPaperTypeMemo"  desc="法人证件类型备注"  edittype="text" datatype="string" size="30"   status="F"  xpath="/farenPaperTypeMemo"/>
+		<Field id="stockFlag"  desc="证券、保险机构标志"  edittype="select" translated="DATA_DIC.22"  datatype="string"   size="10" status="F" xpath="/stockFlag"/>
+		<Field id="opr" desc="操作" edittype="text" datatype="string" xpath="/id" />
+    </Fields>
+    <Where>
+	</Where>
+    
+   <Operations>
+    	<Button id="btSave" name="btSave" desc="保存" operation="asysubmit" updateClass="com.huateng.ebank.business.management.updater.CustomerReaUpdate" url="/fpages/basis/ftl/CustomerReaEntry.ftl" txn="" />
+		<Button id="btBack" name="btBack" desc="返回" operation="href" url="/fpages/basis/ftl/CustomerReaEntry.ftl" txn=""/>
+	</Operations>
+</CommQry> 

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CommQry title="表单项" navigate="" type="call"
+	interface="false" pagesize="10" async="false" databusid="FIVE"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.fp.demo.getter.GridFieldsGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<Field id="col1" desc="列1" edittype="" xpath="/col1" status="F" default="" />
+		<Field id="col2" desc="列2" edittype="" xpath="/col2" status="F" default="" />
+		<Field id="col3" desc="列3" edittype="text" datatype="double" size="20" scale="2" xpath="/col3" status="F" default="" />
+		<Field id="col4" desc="列4" edittype="text" datatype="currency" prefix="$" size="20" scale="2" xpath="/col4" status="F" default="" />
+		<Field id="col5" desc="列5" edittype="" xpath="/col5" status="F" default="" />
+    </Fields>
+    
+    <Operations>
+    </Operations>
+</CommQry>

@@ -1,0 +1,122 @@
+package com.gbicc.company.view.accountpage.getter;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import com.gbicc.bpm.SpringContextHolder;
+import com.gbicc.util.DateUtils;
+import com.huateng.common.err.Module;
+import com.huateng.common.err.Rescode;
+import com.huateng.commquery.result.Result;
+import com.huateng.commquery.result.ResultMng;
+import com.huateng.ebank.business.common.PageQueryResult;
+import com.huateng.ebank.framework.web.commQuery.BaseGetter;
+import com.huateng.exception.AppException;
+
+public class CapitalLiabilitiesGetter extends BaseGetter {
+	
+	/**
+	 * 主营业务收入财报编码
+	 */
+	public static final String BUSIN_INCOME="00030001";
+	/**
+	 * 执行重要性水平参考值基准值
+	 */
+	public static final double REFERENCE_VALUE=0.0075;
+
+	@Override
+	public Result call() throws AppException {
+		try {
+			PageQueryResult pageResult = getData();
+			ResultMng.fillResultByList(getCommonQueryBean(),getCommQueryServletRequest(), pageResult.getQueryResult(),getResult());
+			result.setContent(pageResult.getQueryResult());
+			result.getPage().setTotalPage(pageResult.getPageCount(getResult().getPage().getEveryPage()));
+			result.init();
+			return result;
+		} catch (AppException appEx) {
+			throw appEx;
+		} catch (Exception ex) {
+			throw new AppException(Module.SYSTEM_MODULE,Rescode.DEFAULT_RESCODE, ex.getMessage(), ex);
+		}
+	}
+
+	public PageQueryResult getData() throws Exception {
+		String customerNum = (String) getCommQueryServletRequest().getParameterMap().get("customerNum");
+		String jzyear = (String) getCommQueryServletRequest().getParameterMap().get("jzyear");
+		String caliber = (String) getCommQueryServletRequest().getParameterMap().get("caliber");
+		String repno = (String) getCommQueryServletRequest().getParameterMap().get("repno");
+		String tableCd= (String) getCommQueryServletRequest().getParameterMap().get("tableCd");
+		List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();
+		if(StringUtils.isNotEmpty(customerNum) && StringUtils.isNotEmpty(jzyear) && StringUtils.isNotEmpty(caliber) && StringUtils.isNotEmpty(repno)){
+			Integer jzyear2=Integer.parseInt(jzyear)-1;
+			String type="";//报表口径，1年，2半年，3季度，4月
+			String str="";
+			String str2="";
+			if(caliber.equals("707")){
+				type="1";
+				str=" TO_CHAR(TO_DATE(CUST.FINANCE_STATEMENT_DEADLINE,'YYYY-MM-DD'),'YYYY')='"+jzyear+"' ";
+				str2=" TO_CHAR(TO_DATE(CUST2.FINANCE_STATEMENT_DEADLINE,'YYYY-MM-DD'),'YYYY')='"+jzyear2+"' ";
+			}else if(caliber.equals("709")){
+				type="3";
+				String month="";
+				if(repno.equals("1")){
+					month="3";
+				}else if(repno.equals("2")){
+					month="6";
+				}else if(repno.equals("3")){
+					month="9";
+				}else if(repno.equals("4")){
+					month="12";
+				}
+				Date endDate=DateUtils.getLastDayOfMonth(Integer.valueOf(jzyear),Integer.valueOf(month));
+				Date endDate2=DateUtils.getLastDayOfMonth(Integer.valueOf(jzyear2),Integer.valueOf(month));
+				SimpleDateFormat dateFormat=new SimpleDateFormat("yyyyMMdd");
+				String dateStr=dateFormat.format(endDate);
+				String dateStr2=dateFormat.format(endDate2);
+				str=" CUST.FINANCE_STATEMENT_DEADLINE='"+dateStr+"' ";
+				str2=" CUST2.FINANCE_STATEMENT_DEADLINE='"+dateStr2+"' ";
+			}
+			String sql="SELECT PROJECT_CD,PROJECT_NAME,PROJECT_VALUE,PROJECT_VALUE_2,AMT,"
+			+ "CASE WHEN AMT IS NULL THEN NULL WHEN PROJECT_VALUE_2=0 THEN NULL "
+			+ "ELSE AMT/PROJECT_VALUE_2 END AS RATE,CASE WHEN AMT IS NULL THEN NULL "
+			+ "WHEN AMT>REFERENCE_VALUE THEN 'Y' "
+			+ "ELSE 'N' END AS EXCEP_FLAG,NULL AS EXCEP_FLAG_2,REFERENCE_VALUE FROM (SELECT DA.CUSTOMER_FINANCE_ID,"
+			+ "DA.PROJECT_CD,CODE.PROJECT_NAME,DA.PROJECT_VALUE,CUST_2.PROJECT_VALUE AS PROJECT_VALUE_2,"
+			+ "CASE WHEN (DA.PROJECT_VALUE IS NULL OR CUST_2.PROJECT_VALUE IS NULL) THEN NULL "
+			+ "WHEN (DA.PROJECT_VALUE-CUST_2.PROJECT_VALUE<0) "
+			+ "THEN '('||(DA.PROJECT_VALUE-CUST_2.PROJECT_VALUE)||')' "
+			+ "ELSE DA.PROJECT_VALUE-CUST_2.PROJECT_VALUE END AS AMT,ROUND(TT.PROJECT_VALUE*"+REFERENCE_VALUE+",-3) AS REFERENCE_VALUE FROM T_CM_FINANCE_STATEMENT_CODE CODE "
+			+ "LEFT JOIN T_CM_FINANCE_STATEMENT_DATA DA ON DA.PROJECT_CD=CODE.PROJECT_CD "
+			+ "LEFT JOIN T_CM_FINANCE_STATEMENT_DATA TT ON DA.CUSTOMER_FINANCE_ID=TT.CUSTOMER_FINANCE_ID AND TT.PROJECT_CD='"+BUSIN_INCOME+"' "
+			+ "LEFT JOIN (SELECT RANK() OVER(PARTITION BY CUSTOMER_NUM ORDER BY FINANCE_STATEMENT_DEADLINE DESC) "
+			+ "RM,CUSTOMER_FINANCE_ID,CUSTOMER_NUM,FINANCE_STATEMENT_TYPE_CD,FINANCE_STATEMENT_DEADLINE "
+			+ "FROM T_CM_CUSTOMER_FINANCE WHERE CUSTOMER_NUM='"+customerNum+"' AND "
+			+ "FINANCE_STATEMENT_TYPE_CD='"+type+"') CUST ON DA.CUSTOMER_FINANCE_ID=CUST.CUSTOMER_FINANCE_ID "
+			+ "LEFT JOIN(SELECT DA2.PROJECT_CD,CODE2.PROJECT_NAME,DA2.PROJECT_VALUE FROM "
+			+ "T_CM_FINANCE_STATEMENT_CODE CODE2 LEFT JOIN T_CM_FINANCE_STATEMENT_DATA DA2 "
+			+ "ON DA2.PROJECT_CD=CODE2.PROJECT_CD LEFT JOIN (SELECT RANK() OVER(PARTITION BY "
+			+ "CUSTOMER_NUM ORDER BY FINANCE_STATEMENT_DEADLINE DESC) RM,CUSTOMER_FINANCE_ID,"
+			+ "CUSTOMER_NUM,FINANCE_STATEMENT_TYPE_CD,FINANCE_STATEMENT_DEADLINE FROM "
+			+ "T_CM_CUSTOMER_FINANCE WHERE CUSTOMER_NUM='"+customerNum+"' AND "
+			+ "FINANCE_STATEMENT_TYPE_CD='"+type+"') CUST2 ON DA2.CUSTOMER_FINANCE_ID="
+			+ "CUST2.CUSTOMER_FINANCE_ID WHERE "+str2+" "
+			+ "AND CODE2.FINANCE_REPORT_SORT_CD='"+tableCd+"') "
+			+ "CUST_2 ON DA.PROJECT_CD=CUST_2.PROJECT_CD WHERE "+str+" "
+			+ "AND CODE.FINANCE_REPORT_SORT_CD='"+tableCd+"') T ORDER BY PROJECT_CD ASC ";
+			
+			JdbcTemplate jdbcTemplate=SpringContextHolder.getBean(JdbcTemplate.class);
+			list=jdbcTemplate.queryForList(sql);
+		}
+		
+		PageQueryResult result = new PageQueryResult();
+		result.setQueryResult(list);
+		result.setTotalCount(0);
+		return result;
+	}
+}

@@ -1,0 +1,448 @@
+package com.gbicc.person.monitor.operation;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.gbicc.bpm.BpmDescUtil;
+import com.gbicc.bpm.service.ProcessManagerService;
+import com.gbicc.common.CommonService;
+import com.gbicc.common.FileUpDownProperties;
+import com.gbicc.person.monitor.entity.TPlDqMonitor;
+import com.gbicc.person.monitor.entity.TPlDqReportAj;
+import com.gbicc.person.monitor.entity.TPlDqReportJy;
+import com.gbicc.person.monitor.entity.TPlDqReportJyCreditBusin;
+import com.gbicc.person.monitor.entity.TPlDqReportJyGuarant;
+import com.gbicc.person.monitor.entity.TPlDqReportJyMortgage;
+import com.gbicc.person.monitor.entity.TPlDqReportJyPartner;
+import com.gbicc.person.monitor.entity.TPlDqReportXf;
+import com.gbicc.person.monitor.entity.TPlReportRelation;
+import com.gbicc.person.monitor.service.TPlDqMonitorService;
+import com.gbicc.person.monitor.service.TPlDqReportJyService;
+import com.gbicc.personCommon.entity.TEdwPlsAccount;
+import com.gbicc.personCommon.entity.TEdwPlsBusiness;
+import com.gbicc.personCommon.entity.TEdwPlsController;
+import com.gbicc.personCommon.entity.TEdwPlsCust;
+import com.gbicc.personCommon.entity.TEdwPlsGuarantor;
+import com.gbicc.personCommon.entity.TEdwPlsIou;
+import com.gbicc.personCommon.entity.TEdwPlsLegalPerson;
+import com.gbicc.util.DateUtils;
+import com.huateng.ebank.business.common.service.DataDicService;
+import com.huateng.ebank.business.management.service.TlrInfoService;
+import com.huateng.ebank.entity.data.mng.TlrInfo;
+import com.huateng.ebank.framework.exceptions.CommonException;
+import com.huateng.ebank.framework.operation.BaseOperation;
+import com.huateng.ebank.framework.operation.OperationContext;
+
+
+/**
+ * @author likm
+ * @time   2015年12月16日09:59:58
+ * @desc   生成定期监控任务操作类
+ */
+public class GenerateDqMonitorTaskOperation extends BaseOperation {
+	public static final String ID = "GenerateDqMonitorTaskOperation";
+	public static final String CMD = "CMD";
+	public static final String CMD_QUERY = "CMD_QUERY";
+	public static final String CMD_INSERT = "CMD_INSERT";
+	public static final String CMD_UPDATE = "CMD_UPDATE";
+	public static final String CMD_DELETE = "CMD_DELETE";
+	public static final String IN_PARAM = "IN_PARAM";
+	
+	public static final String REGULAR_MONITOR_PROCESS="regular_monitor_process";//定期监控流程关键字
+	
+	public static final String URL_FLAG_AJ="/gbicc-pages/regular/ftl/aj_monitor_report.ftl";//url标识-按揭
+	public static final String URL_FLAG_XF="/gbicc-pages/regular/ftl/xf_monitor_report.ftl";//url标识-消费
+	public static final String URL_FLAG_JY="/gbicc-pages/regular/ftl/jy_monitor_report.ftl";//url标识-经营
+	
+	/**
+	 * 任务分发管理员-字典类型编码
+	 */
+	public static final String TASK_DISTRIBUTE_MNG_TYPE="task_distribute_mng_type";
+	/**
+	 * 任务分发管理员-字典码
+	 */
+	public static final String TASK_DISTRIBUTE_MNG_CODE="task_distribute_mng_code";
+	
+	@Override
+	public void afterProc(OperationContext context) throws CommonException {
+	}
+
+	@Override
+	public void beforeProc(OperationContext context) throws CommonException {
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void execute(OperationContext context) throws CommonException {
+		try {
+			String acctId=(String) context.getAttribute("acctId");
+			String level=(String) context.getAttribute("level");
+			String url=(String) context.getAttribute("url");
+			if(StringUtils.isNotEmpty(acctId)){
+				CommonService service=CommonService.getInstance();
+				TlrInfoService tlrService=TlrInfoService.getInstance();
+				String actSql="select * from t_edw_pls_account_v where loanacno='"+acctId+"' ";
+				List<TEdwPlsAccount> actList=service.findSqlListBySpringJdbc(actSql,TEdwPlsAccount.class);
+				if(actList==null || actList.size()==0){
+					return;
+				}
+				TEdwPlsAccount account=actList.get(0);
+				TPlDqMonitor monitor = new TPlDqMonitor();
+				monitor.setBankId(account.getBankid());
+				monitor.setRptStatus("1");
+				monitor.setTaskType("DQ");
+				monitor.setLoanVariety(account.getProdname());
+				monitor.setCustName(account.getCustname());
+				monitor.setCustCode(account.getCustid());
+				if(account.getTcapi()!=null){
+					monitor.setLoanAmt(account.getTcapi().doubleValue());
+				}
+				if(account.getBal()!=null){
+					monitor.setLoanBalance(account.getBal().doubleValue());
+				}
+				monitor.setWarnLevel(level);
+				monitor.setLoanAcct(account.getLoanacno());
+				if(account.getTterm()!=null){
+					monitor.setLoanTerm(account.getTterm().toString());
+				}
+				String dutyId=ProcessManagerService.getInstace().findCheckDutyUserId(acctId);
+				Integer dicType=Integer.parseInt(FileUpDownProperties.readValue(TASK_DISTRIBUTE_MNG_TYPE));
+				String dicNo=FileUpDownProperties.readValue(TASK_DISTRIBUTE_MNG_CODE);
+				String dicName=DataDicService.getInstance().getNameByTypeNo(dicType,dicNo);
+				TlrInfo tlr=tlrService.getTlrInfoByTlrno(dicName);
+				monitor.setHandler(tlr);
+				if(StringUtils.isNotEmpty(dutyId)){
+					TlrInfo tlrinfo=tlrService.getTlrInfoByTlrno(dutyId);
+					if(null!=tlrinfo){
+						monitor.setHandler(tlrinfo);
+					}
+				}
+				monitor.setTaskMatureDate(DateUtils.addDay(new Date(),15));
+				monitor.setReportUrl(url);
+				TPlDqMonitorService monitorService = TPlDqMonitorService.getInstance();
+				monitorService.save(monitor);
+				
+				//查找客户基本信息，存入报告表中。
+				String cusSql="select * from t_edw_pls_cust where custid='"+account.getCustid()+"' ";
+				List<TEdwPlsCust> cusList=service.findSqlListBySpringJdbc(cusSql,TEdwPlsCust.class);
+				if(cusList==null || cusList.size()==0){
+					return;
+				}
+				if(monitor.getReportUrl().equals(URL_FLAG_AJ)){
+					TPlDqReportAj report=saveAjReport(account,cusList.get(0),service);
+					//保存关联表
+					TPlReportRelation relation=new TPlReportRelation();
+					relation.setBusinessId(monitor.getId());
+					relation.setReportId(report.getId());
+					relation.setReportType(TPlDqReportAjOperation.AJ);
+					service.save(relation);
+				}else if(monitor.getReportUrl().equals(URL_FLAG_XF)){
+					TPlDqReportXf report=saveXfReport(account,cusList.get(0),service);
+					//保存关联表
+					TPlReportRelation relation=new TPlReportRelation();
+					relation.setBusinessId(monitor.getId());
+					relation.setReportId(report.getId());
+					relation.setReportType(TPlDqReportXfOperation.XF);
+					service.save(relation);
+				}else if(monitor.getReportUrl().equals(URL_FLAG_JY)){
+					TPlDqReportJy report=saveJyReport(account,cusList.get(0),service,monitor);
+					//保存关联表
+					TPlReportRelation relation=new TPlReportRelation();
+					relation.setBusinessId(monitor.getId());
+					relation.setReportId(report.getId());
+					relation.setReportType(TPlDqReportJyOperation.JY);
+					service.save(relation);
+				}
+				
+				//启动任务
+				String procKey=FileUpDownProperties.readValue(REGULAR_MONITOR_PROCESS);
+				ProcessManagerService pms=ProcessManagerService.getInstace();
+				Map<String, Object> map=new HashMap<String, Object>();
+				map.put("assignee",monitor.getHandler().getTlrno());
+				map.put("desc",BpmDescUtil.getDesc(monitor.getId(),monitor.getLoanAcct(),StringUtils.isNotEmpty(monitor.getCustName())? monitor.getCustName() : "" ));
+				pms.startProcess(monitor.getId(),procKey,monitor.getHandler().getTlrno(),map);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+	
+	/**
+	 * 保存按揭类监控报告
+	 * @param account 帐户实体
+	 * @param cust 客户实体
+	 * @param service 公共service
+	 * @throws CommonException
+	 */
+	@SuppressWarnings("unchecked")
+	public TPlDqReportAj saveAjReport(TEdwPlsAccount account,TEdwPlsCust cust,CommonService service) throws CommonException{
+		TPlDqReportAj report=new TPlDqReportAj();
+		report.setContaddr(cust.getContaddr());
+		report.setMobilecall(cust.getMobilecall());
+		report.setLoanVariety(account.getProdname());
+		if(account.getTcapi()!=null){
+			report.setLoanAmt(account.getTcapi().doubleValue());
+		}
+		report.setIssueDate(account.getBegindate());
+		report.setCompleteDate(account.getEnddate());
+		report.setGuarWay(account.getAssukind());
+		if(StringUtils.isNotEmpty(account.getAcflag())){
+			report.setAcctStatus(account.getAcflag().toString());
+		}
+		report.setCheckPerCode(ProcessManagerService.getInstace().findCheckDutyUserId(account.getLoanacno()));
+		report.setCustCode(cust.getCustid());
+		report.setCustName(cust.getCustname());
+		report.setCertCode(cust.getPaperid());
+		report.setCertType(cust.getPaperkind());
+		if(account.getBal()!=null){
+			report.setLoanBalance(account.getBal().doubleValue());
+		}
+		if(account.getSumtcapi()!=null){
+			report.setIssueAmt(account.getSumtcapi().doubleValue());
+		}
+		if(account.getOverbal()!=null){
+			report.setArrearAmt(account.getOverbal().doubleValue());
+		}
+		if(account.getOverinte()!=null){
+			report.setArrearInte(account.getOverinte().doubleValue());
+		}
+		report.setRiskStatus(account.getRiskflag());
+		report.setCoopObj(account.getCorpid());
+		report.setCoopObjName(account.getCorpname());
+		report.setGageCode(account.getEnstroid());
+		String iouSql="select * from t_edw_pls_iou where loanacno='"+account.getLoanacno()+"' ";
+		List<TEdwPlsIou> iouList=service.findSqlListBySpringJdbc(iouSql,TEdwPlsIou.class);
+		String iouCode="";
+		for(TEdwPlsIou iou:iouList){
+			iouCode=iouCode+iou.getDuebillno()+",";
+		}
+		if(StringUtils.isNotEmpty(iouCode)){
+			iouCode=iouCode.substring(0,iouCode.length()-1);
+		}
+		report.setLendCode(iouCode);
+		service.save(report);
+		return report;
+	}
+	
+	/**
+	 * 保存消费类监控报告
+	 * @param account 帐户实体
+	 * @param cust 客户实体
+	 * @param service 公共service
+	 * @throws CommonException
+	 */
+	@SuppressWarnings("unchecked")
+	public TPlDqReportXf saveXfReport(TEdwPlsAccount account,TEdwPlsCust cust,CommonService service) throws CommonException{
+		TPlDqReportXf report=new TPlDqReportXf();
+		report.setContaddr(cust.getContaddr());
+		report.setMobilecall(cust.getMobilecall());
+		report.setLoanVariety(account.getProdname());
+		if(account.getTcapi()!=null){
+			report.setLoanAmt(account.getTcapi().doubleValue());
+		}
+		report.setIssueDate(account.getBegindate());
+		report.setCompleteDate(account.getEnddate());
+		report.setGuarWay(account.getAssukind());
+		if(StringUtils.isNotEmpty(account.getAcflag())){
+			report.setAcctStatus(account.getAcflag().toString());
+		}
+		if(account.getBal()!=null){
+			report.setLoanBalance(account.getBal().doubleValue());
+		}
+		if(account.getSumtcapi()!=null){
+			report.setIssueAmt(account.getSumtcapi().doubleValue());
+		}
+		if(account.getOverbal()!=null){
+			report.setArrearAmt(account.getOverbal().doubleValue());
+		}
+		report.setRiskStatus(account.getRiskflag());
+		report.setCheckPerCode(ProcessManagerService.getInstace().findCheckDutyUserId(account.getLoanacno()));
+		report.setCustCode(cust.getCustid());
+		report.setCustName(cust.getCustname());
+		report.setCertCode(cust.getPaperid());
+		report.setCertType(cust.getPaperkind());
+		String iouSql="select * from t_edw_pls_iou where loanacno='"+account.getLoanacno()+"' ";
+		List<TEdwPlsIou> iouList=service.findSqlListBySpringJdbc(iouSql,TEdwPlsIou.class);
+		String iouCode="";
+		for(TEdwPlsIou iou:iouList){
+			iouCode=iouCode+iou.getDuebillno()+",";
+		}
+		if(StringUtils.isNotEmpty(iouCode)){
+			iouCode=iouCode.substring(0,iouCode.length()-1);
+		}
+		report.setLendCode(iouCode);
+		report.setCoopObj(account.getCorpid());
+		report.setCoopObjName(account.getCorpname());
+		report.setGageCode(account.getEnstroid());
+		service.save(report);
+		return report;
+	}
+	
+	/**
+	 * 保存经营类监控报告
+	 * @param account 帐户实体
+	 * @param cust 客户实体
+	 * @param service 公共service
+	 * @throws CommonException
+	 */
+	@SuppressWarnings("unchecked")
+	public TPlDqReportJy saveJyReport(TEdwPlsAccount account,TEdwPlsCust cust,CommonService service,TPlDqMonitor monitor) throws CommonException{
+		TPlDqReportJy report=new TPlDqReportJy();
+		report.setContaddr(cust.getContaddr());
+		report.setMobilecall(cust.getMobilecall());
+		report.setLoanAcct(account.getLoanacno());
+		report.setCustCode(cust.getCustid());
+		report.setCustName(cust.getCustname());
+		report.setProdName(account.getProdname());
+		if(account.getTcapi()!=null){
+			report.setLoanAmt(account.getTcapi().doubleValue());
+		}
+		if(account.getBal()!=null){
+			report.setLoanBalance(account.getBal().doubleValue());
+		}
+		report.setGuarWay(account.getAssukind());
+		if(account.getFloatinterate()!=null){
+			report.setRateFloPct(account.getFloatinterate().doubleValue());
+		}
+		if(StringUtils.isNotEmpty(account.getAcflag())){
+			report.setAcctStatus(account.getAcflag().toString());
+		}
+		report.setRiskType(account.getRiskflag());
+		
+		//客户经营情况表
+		String corSql="select * from t_edw_pls_business where CUSTID='"+account.getCorpcustid()+"' ";
+		List<TEdwPlsBusiness> corList=service.findSqlListBySpringJdbc(corSql,TEdwPlsBusiness.class);
+		if(null!=corList && corList.size()>0){
+			TEdwPlsBusiness cor=corList.get(0);
+			report.setEstaDate(cor.getComedate());
+			report.setRegiAddr(cor.getLiceaddr());
+			report.setOperAddr(cor.getDealaddr());
+			report.setOperStartDate(cor.getComedate());//当前日-成立日
+			report.setStaffQuan(cor.getEmpnum());
+			report.setOperScope(cor.getDealscope());
+			
+			report.setFinaDeptAddr(null);
+			report.setOperEndDate(null);
+			report.setEnteProp(null);
+			report.setInduClass(null);
+			report.setEnteScale(null);
+		}
+		//法人信息表
+		String legSql="select * from t_edw_pls_legal_person where custid='"+account.getCustid()+"' ";
+		List<TEdwPlsLegalPerson> legList=service.findSqlListBySpringJdbc(legSql,TEdwPlsLegalPerson.class);
+		if(null!=legList && legList.size()>0){
+			TEdwPlsLegalPerson leg=legList.get(0);
+			if(leg.getRegifund()!=null){
+				report.setRegiCapi(leg.getRegifund().doubleValue());
+			}
+			if(leg.getFactcapi()!=null){
+				report.setRcvCapi(leg.getFactcapi().doubleValue());
+			}
+			report.setJuirPerDelegate(leg.getCustname());
+			report.setJuirPerIdentCode(leg.getPaperid());
+			report.setBusiLice(leg.getLiceid());
+			report.setOrgCode(leg.getOrgaid());
+			report.setTaxRegiCode(leg.getCreveid());
+			
+			//实际控制人表
+			String ctlSql="select * from t_edw_pls_controller where corpcustid='"+leg.getCustid()+"' ";
+			List<TEdwPlsController> ctlList=service.findSqlListBySpringJdbc(ctlSql,TEdwPlsController.class);
+			if(null!=ctlList && ctlList.size()>0){
+				TEdwPlsController ctl=ctlList.get(0);
+				report.setRealCtrlPer(ctl.getControlname());
+				report.setRealCtrlPerIdentCode(ctl.getPaperid());
+			}
+			
+			//股东信息表
+			String parSql="select * from t_edw_pls_dacuststockholder where custid='"+leg.getCustid()+"' ";
+			List<TPlDqReportJyPartner> parList=service.findSqlListBySpringJdbc(parSql,TPlDqReportJyPartner.class);
+			for(TPlDqReportJyPartner par:parList){
+				par.setId(null);
+				par.setBusinessid(monitor.getId());
+				service.save(par);
+			}
+		}
+		//保证人及担保信息
+		String guaSql="select * from t_edw_pls_guarantor where assuid in (select assuid from t_edw_pls_guarant_cust_mortgage_rel where loanid='"+account.getLoanid()+"') ";
+		List<TEdwPlsGuarantor> guaList=service.findSqlListBySpringJdbc(guaSql,TEdwPlsGuarantor.class);
+		if(null!=guaList && guaList.size()>0){
+			TEdwPlsGuarantor gua=guaList.get(0);
+			report.setGuarantorName(gua.getAssucustname());
+			report.setOurbankLoanBal(gua.getOurloanbal());
+			report.setOthbankLoanBal(gua.getOtherloanbal());
+			
+			report.setOurbankGuarTotAmt(null);
+			report.setOthbankGuarTotAmt(null);
+			
+			//保证人在本行授信业务列表
+			String actSql="select * from t_edw_pls_account where custid='"+gua.getAssucustid()+"' ";
+			List<TPlDqReportJyCreditBusin> actList=service.findSqlListBySpringJdbc(actSql,TPlDqReportJyCreditBusin.class);
+			for(TPlDqReportJyCreditBusin creditBusin:actList){
+				creditBusin.setId(null);
+				creditBusin.setBusinessid(monitor.getId());
+				service.save(creditBusin);
+			}
+			
+			//保证人在本行担保信息列表
+			String actSql2="select * from t_edw_pls_account where custid in(select assucustid from t_edw_pls_guarantor where assuid in "+
+			"(select assuid from t_edw_pls_guarant_cust_mortgage_rel where assuid in "+
+			"(select assuid from t_edw_pls_guarant_cust_mortgage_rel where loanid='"+account.getLoanid()+"')))";
+			List<TEdwPlsAccount> actList2=service.findSqlListBySpringJdbc(actSql2,TEdwPlsAccount.class);
+			for(TEdwPlsAccount act:actList2){
+				TPlDqReportJyGuarant guarant=new TPlDqReportJyGuarant();
+				if(!act.getBankid().equals(account.getBankid())){
+					//非本机构名下的担保信息的“借款人、合同号”以“***”显示
+					guarant.setCustname("***");
+					guarant.setContno("***");
+				}else{
+					String sql="select * from t_edw_pls_cust where custid='"+act.getCustid()+"' ";
+					List<TEdwPlsCust> cList=service.findSqlListBySpringJdbc(sql, TEdwPlsCust.class);
+					if(cList!=null && cList.size()>0){
+						guarant.setCustname(cList.get(0).getCustname());
+					}
+					guarant.setContno(act.getContno());
+				}
+				guarant.setAssukind(act.getAssukind());
+				guarant.setBegindate(act.getBegindate());
+				guarant.setEnddate(act.getEnddate());
+				guarant.setRiskflag(act.getRiskflag());
+				guarant.setTcapi(act.getTcapi());
+				
+				guarant.setBal(null);
+				guarant.setBusinessid(monitor.getId());
+				service.save(guarant);
+			}
+		}
+		//借款人抵押物信息
+		String morSql="select * from t_edw_pls_mortgage where assuid in (select assuid from t_edw_pls_guarant_cust_mortgage_rel "
+		+ "where loanid='"+account.getLoanid()+"' and regikind='3')";
+		List<TPlDqReportJyMortgage> morList=service.findSqlListBySpringJdbc(morSql,TPlDqReportJyMortgage.class);
+		for(TPlDqReportJyMortgage mor:morList){
+			mor.setId(null);
+			mor.setAssusort("D");
+			mor.setBusinessid(monitor.getId());
+			service.save(mor);
+		}
+		//借款人质押物信息
+		String morSql2="select * from t_edw_pls_mortgage where assuid in (select assuid from t_edw_pls_guarant_cust_mortgage_rel "
+		+ "where loanid='"+account.getLoanid()+"' and regikind='4')";
+		List<TPlDqReportJyMortgage> morList2=service.findSqlListBySpringJdbc(morSql2,TPlDqReportJyMortgage.class);
+		for(TPlDqReportJyMortgage mor:morList2){
+			mor.setId(null);
+			mor.setAssusort("Z");
+			mor.setBusinessid(monitor.getId());
+			service.save(mor);
+		}
+		
+		report.setEnteGrade(null);
+		report.setZhongZhengMa(null);
+		report.setEnviFlag(null);
+		TPlDqReportJyService.getInstance().save(report);
+		return report;
+	}
+}

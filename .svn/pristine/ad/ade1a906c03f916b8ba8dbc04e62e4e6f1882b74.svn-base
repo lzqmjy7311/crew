@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+	<bean id="CronJobTransactionInterceptor"
+		class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager">
+			<ref bean="myTransactionManager" />
+		</property>
+		<property name="transactionAttributeSource">
+			<value>
+				com.huateng.ebank.monitor.scheduler.service.ITaskJobScheduler.*=PROPAGATION_REQUIRED,-Exception
+			</value>
+		</property>
+	</bean>
+	
+	<bean id="com.huateng.ebank.monitor.scheduler.service.JobSchedulerService"
+		class="com.huateng.ebank.monitor.scheduler.service.JobSchedulerService">
+	</bean>
+	
+	<bean id="SCHDL.ExecuteJob" class="com.huateng.ebank.monitor.scheduler.operation.ExecuteJobOperation" />
+	<bean id="bopTimedSchedulerOperation" class="com.huateng.ebank.monitor.scheduler.operation.BopTimedSchedulerOperation" />
+	<bean id="SCHDL.JobMNGOP" class="com.huateng.ebank.monitor.scheduler.operation.JobManageOperation" />
+	
+	<bean id="TaskJobSchedulerTarget"
+		class="com.huateng.ebank.monitor.scheduler.service.TaskJobScheduler"
+		singleton="false">
+		<property name="tblCronTaskJobDAO">
+			<ref bean="tblCronTaskJobDAO" />
+		</property>
+		<property name="tblCronTaskJobLogDAO">
+			<ref bean="tblCronTaskJobLogDAO" />
+		</property>
+	</bean>
+	<bean id="TaskJobScheduler"
+		class="org.springframework.aop.framework.ProxyFactoryBean">
+		<property name="singleton"><value>false</value></property>
+		<property name="proxyInterfaces">
+			<value>
+				com.huateng.ebank.monitor.scheduler.service.ITaskJobScheduler
+			</value>
+		</property>
+		<property name="interceptorNames">
+			<list>
+				<value>CronJobTransactionInterceptor</value>
+				<value>TaskJobSchedulerTarget</value>
+			</list>
+		</property>
+	</bean>
+	
+    <bean name="QuartzSchedulerFactory" class="com.huateng.ebank.entity.data.mng.HTschedulerFactory">
+        <property name="scheduler">
+        	<ref bean="QuartzScheduler"/>
+        </property>
+    </bean>
+	<bean name="QuartzScheduler"
+		class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="dataSource" ref="defaultDataSource" />
+		<property name="applicationContextSchedulerContextKey" value="applicationContextKey" />
+		<property name="configLocation" value="classpath:quartz_oracle.properties" />
+		<!--自动启动-->
+		<property name="autoStartup" value="false"></property>
+		<!--延时启动，应用启动完后 QuartzScheduler 再启动-->
+		<property name="startupDelay" value="120" />
+		<property name="globalTriggerListeners">
+			<list>
+				<ref bean="GlobalTriggerListener" />
+			</list>
+		</property>
+	</bean>
+	<bean name="GlobalTriggerListener"
+		class="com.huateng.ebank.entity.data.mng.TriggerListenerImpl">
+		<property name="name" value="globalTriggerListener"></property>
+	</bean>
+</beans>

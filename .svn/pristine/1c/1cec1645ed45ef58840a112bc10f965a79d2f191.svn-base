@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	  navigate:导航信息
+	  type:方式（sql|call)
+	  interface:是否显示输入条件页面(true|false)
+	  databusid:数据总线编号
+	  transdataactionurl:数据整理URL
+	  async:异步提交标志
+	  pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry
+title="贷款品种流程设置"
+navigate="主页 &gt; 系统管理 &gt; 贷款品种流程设置"
+type="call"
+interface="true"
+pagesize="10"
+async="true"
+databusid="BRHWORKFLOW"
+transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.huateng.ebank.business.management.getter.BrhWorkFlowMngCallGetter"
+>
+	<Include id="BankParam"/>
+	<ResultViewParam>
+		/fpages/management/ftl/BrhWorkFlowMng.ftl
+	</ResultViewParam>
+
+	<Fields>
+	<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+	<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+
+		<Field id="id" desc="" status="F" width="170"
+			method="None" primary="true" type="String"  default="" xpath="/id" tip="" />
+
+<!--		<Field id="nature" desc="贷款发生类型(合同性质)" status="F" width="170" translated="DATA_DIC.9008"-->
+<!--			edittype="select" method="None" primary="true" type="String"  default="" xpath="/nature" tip="" />-->
+
+		<Field id="brcode" desc="机构号" status="F" primary="true"  method="trimStringRS"
+			edittype="select" require="true" translated="CQ:AllDownBrcodeSelect" width="170"
+			fieldmap="brcode=brcode;brcodeName=brcodeTypeName" dropdowntype="dynamic" init="false"
+			viewField="brcodeTypeName"	type="String" size="20" default="" xpath="/brcode"  tip="机构号"/>
+
+		<Field id="brcodeName" desc="机构名称" require="false" status="F"  method="None"
+			width="170" readonly="" primary="" type="String"  xpath="/brcodeName" tip="机构号" />
+
+ <!--      <Field id="lnid" desc="贷款大类" status="F"  require="true" translated="DATA_DIC.4011" width="170"
+			method="None" primary="true" type="String"  edittype="select"  default="" xpath="/lnid" tip="贷款大类" />
+-->
+
+		<Field id="bizClass" desc="贷款种类" status="F" width="170"
+			edittype="select" require="true" translated="CQ:QueryLoanID"
+			fieldmap="bizclass=lnid;bizclassName=loanTypeName"
+			viewField="loanTypeName" method="None" primary="false" type="String"
+			size="100" height="500" default="" xpath="/bizClass" tip="贷款种类" dropdowntype="dynamic" init="false" colspan="2"/>
+
+		<Field id="bizclassName" desc="贷款种类"  require="false" status="F"  method="None"
+			width="170" readonly="" primary="" type="String" xpath="/bizclassName"  />
+			
+		 <Field id="processTemplate" desc="流程名称" status="F" width="170"
+			edittype="select" translated="CQ:WfpTemplateSelect" require="true"
+			fieldmap="processTemplate=processTemplate;processTemplateName=processTemplateName"
+			viewField="processTemplateName" method="None" primary="false"
+			readonly="false" type="String" size="100" default=""
+			xpath="/processTemplate" tip="流程名称" dropdowntype="dynamic" init="false" />
+			
+		<Field id="processTemplateName" desc="流程名称" status="F" width="170"
+			method="None" primary="false" type="String" size="100" default=""
+			xpath="/processTemplateName" tip="流程名称" />
+
+ 		<Field id="apptype" desc="申请类型" status="F" width="170"
+			edittype="select" translated="CQ:WfpappTypeSelect" require="true"
+			fieldmap="appType=appType;appTypeName=appTypeName"
+			viewField="appTypeName" method="None" primary="false"
+			readonly="flase" type="String" size="100" default=""
+			xpath="/apptype" tip="申请类型" dropdowntype="dynamic" init="false" />
+
+		<Field id="apptypeName" desc="申请类型" status="F" width="170"
+			method="None" primary="false" type="String" size="100" default=""
+			xpath="/apptypeName" tip="申请类型" />
+
+	</Fields>
+
+	<Where>
+	<Option  id="brcode" tablename="lp" fieldname="brcode"
+			type="String"  dataType="" 	operation="EQ" size="20"  desc="机构号"  tip="机构号"
+			method="None"  index="0" function="" width="" default="" height="500"
+			translated="CQ:AllDownBrcodeSelect"  fieldmap="brcode=brcode;brcodeName=brcodeTypeName"  viewField="brcodeTypeName"
+			scale="" require=""    readOnly="" rules=""
+			errmsg="" dropdowntype="dynamic" init="false"/>
+
+	</Where>
+	<Operations>
+		<Button id="btNew" name="btNew" desc="增加新记录" operation="addrecord"
+			url="" txn=""/>
+		<Button id="btDelete" name="btDelete" desc="删除" operation="delrecord"
+			url="#" txn="" />
+		<Button id="btSave" name="btSave" desc="确定" operation="asysubmit"
+			updateClass="com.huateng.ebank.business.management.updater.BrhWorkFlowMngUpdate"
+			url="#" show="0" group="o" txn=""/>
+	</Operations>
+
+
+</CommQry>

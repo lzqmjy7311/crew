@@ -1,0 +1,99 @@
+package com.gbicc.company.view.zxinfo.getter;
+
+import java.sql.Date;
+import java.util.List;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.util.StringUtils;
+
+import com.gbicc.company.view.zxinfo.entity.TCmCompanyCreditIndexView;
+import com.huateng.common.err.Module;
+import com.huateng.common.err.Rescode;
+import com.huateng.commquery.result.Result;
+import com.huateng.commquery.result.ResultMng;
+import com.huateng.ebank.business.common.PageQueryCondition;
+import com.huateng.ebank.business.common.PageQueryResult;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.framework.util.ApplicationContextUtils;
+import com.huateng.ebank.framework.web.commQuery.BaseGetter;
+import com.huateng.exception.AppException;
+
+@SuppressWarnings("unchecked")
+public class TCmCompanyCreditIndexViewGetter extends BaseGetter {
+
+	@Override
+	public Result call() throws AppException {
+		try {
+			PageQueryResult pageResult = getData();
+			ResultMng.fillResultByList(getCommonQueryBean(),
+					getCommQueryServletRequest(), pageResult.getQueryResult(),
+					getResult());
+			result.setContent(pageResult.getQueryResult());
+			result.getPage().setTotalPage(
+					pageResult.getPageCount(getResult().getPage()
+							.getEveryPage()));
+			result.init();
+			return result;
+		} catch (AppException appEx) {
+			throw appEx;
+		} catch (Exception ex) {
+			throw new AppException(Module.SYSTEM_MODULE,
+					Rescode.DEFAULT_RESCODE, ex.getMessage(), ex);
+		}
+	}
+
+	protected PageQueryResult getData() throws Exception {
+		
+		String loanCardNum = (String) getCommQueryServletRequest().getParameterMap().get("loanCardNum");               
+//		String indexId = (String) getCommQueryServletRequest().getParameterMap().get("indexId");
+//		String indexName = (String) getCommQueryServletRequest().getParameterMap().get("indexName");
+//		String indexValue = (String) getCommQueryServletRequest().getParameterMap().get("indexValue");
+//		PageQueryResult pageQueryResult = new PageQueryResult();
+		// 分页大小
+//		int pageSize = getResult().getPage().getEveryPage();
+//		// 页码
+//		int pageIndex = getResult().getPage().getCurrentPage();
+
+//		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		StringBuffer hql = new StringBuffer(" select t.INDEX_VALUE as indexValue,t.INDEX_ID as indexId,t.INDEX_NAME as indexName,t.FD_REPORTDATE as reportdate  from T_CM_COMPANY_CREDIT_INDEX_VIEW t where 1=1 ");
+		if(StringUtils.hasText(loanCardNum)){
+				hql.append(" and FD_LOANCARDNO = '"+loanCardNum+"'");
+				hql.append(" and t.FD_REPORTDATE = (select FD_REPORTDATE from T_CM_COMPANY_CREDIT_INDEX_VIEW  where FD_REPORTDATE is not null and FD_LOANCARDNO ='"+loanCardNum+"' order by FD_REPORTDATE desc fetch first 1 rows only)");
+		}else{
+			hql.append(" AND 1=0");
+		}
+		
+//		if(StringUtils.hasText(indexId)){
+//			hql.append(" and indexId = '"+indexId+"'");
+//		}
+//		if(StringUtils.hasText(indexName)){
+//			hql.append(" and indexName = '"+indexName+"'");
+//		}
+//		if(StringUtils.hasText(indexValue)){
+//			hql.append(" and indexValue = '"+indexValue+"'");
+//		}
+//		hql.append("order by FD_REPORTDATE desc fetch first 1 row only");
+
+		 JdbcTemplate jdbcTemplate=(JdbcTemplate) ApplicationContextUtils.getBean("JdbcTemplate");
+		 List<TCmCompanyCreditIndexView> listT=jdbcTemplate.query(hql.toString(), BeanPropertyRowMapper.newInstance(TCmCompanyCreditIndexView.class));
+
+		
+		 PageQueryResult pageQueryResult = new PageQueryResult();
+		 pageQueryResult.setQueryResult(listT);
+		 pageQueryResult.setTotalCount(listT.size());
+		 
+//		 ResultMng.fillResultByList(getCommonQueryBean(),
+//					getCommQueryServletRequest(), pageQueryResult.getQueryResult(),
+//					getResult());
+		
+//		pageQueryResult = rootdao.pageQueryByHql(pageIndex, pageSize,
+//				hql.toString());
+		return pageQueryResult;
+	}
+}

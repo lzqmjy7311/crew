@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	  navigate:导航信息
+	  type:方式（sql|call)
+	  interface:是否显示输入条件页面(true|false)
+	  databusid:数据总线编号
+	  transdataactionurl:数据整理URL
+	  async:异步提交标志
+	  pagesize:页面显示记录数(缺省为10)
+-->
+<!-- add by jornezhang 20091229 BMS-2385 大数据量下拉框功能优化 begin -->
+<!--add by jornezhang 20091019 BMS-2101 查询速度优化 begin-->
+<CommQry
+title="合作项目下拉菜单"
+navigate="合作项目下拉菜单"
+type="call"
+interface="true"
+pagesize="10"
+async="true"
+transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.huateng.ebank.business.common.getter.BankNameGetter"
+>
+<!--add by jornezhang 20091019 BMS-2101 查询速度优化 end-->
+<!-- add by jornezhang 20091229 BMS-2385 大数据量下拉框功能优化 end -->
+	<Include id="BankParam"/>
+	<Fields>
+	<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+	<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+
+		<Field id="ubankNo" desc="付款行行号" status="F" method="None" readOnly="true" xpath="/ubankNo"
+			primary="true" type="String" size="20" default="" tip="付款行行号" width="170"/>
+
+		<Field id="ubankName" desc="付款行名称" status="F" method="None" readOnly="true" xpath="/ubankName"
+			primary="true" type="String" size="20" default="" tip="付款行名称" width="170"/>
+
+<!-- test -->
+		<Field id="ubankNameName" desc="付款行名称" status="F" method="None" readOnly="true" xpath="/ubankName"
+			primary="true" type="String" size="20" default="" tip="付款行名称" width="170"/>
+
+		<Field id="ubankAddress" desc="付款行地址" status="F" method="None" readOnly="true" xpath="/ubankAddress"
+			primary="true" type="String" size="20" default="" tip="付款行名称" width="170"/>
+
+		<Field id="ubankId" desc="hibernate id" status="F" method="None" readOnly="true" xpath="/id"
+			primary="true" type="String" size="20" default="" tip="id" width="170"/>
+
+		<Field id="bankNoAndName" desc="付款行行号-名称" status="F" method="None" readOnly="true" xpath="/ubankNo|/ubankName"
+			primary="true" type="String" size="20" default="" tip="账号" width="170"/>
+
+
+	</Fields>
+	<Parameters>
+		<Parameter id="ubankNo" value=""/>
+		<Parameter id="ubankName" value=""/>
+		<Parameter id="value" value=""/>
+
+	</Parameters>
+
+	<Where>
+	</Where>
+	<Operations>
+	</Operations>
+</CommQry>

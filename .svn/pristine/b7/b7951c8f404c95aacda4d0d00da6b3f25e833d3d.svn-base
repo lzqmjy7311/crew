@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	txnlogflag:true记录日志
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+
+<CommQry title="币种信息维护" navigate="基础信息管理  &gt; 币种信息维护" type="call"
+	interface="false" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do" txnlogflag="true"
+	getterclassname="com.huateng.ebank.business.management.getter.CurrencyManEntryGetter">
+	<Include id="BankParam" />
+
+	<PageQryExp type="XLS" limit="true" encoding="GBK"
+		url="/trans/qryExp.do" desc="币种信息" />
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+
+		<Field id="id" desc="币种货币代码" edittype="text" require="true"
+			size="6" errmsg="币种代码不能为空！" datatype="string" status="F" xpath="/id" />
+
+		<Field id="curno" desc="外部币种代码" edittype="text" require="true"
+			size="6" errmsg="币种代码不能为空！" datatype="string" status="F" xpath="/curno" />
+
+		<Field id="curedicd" desc="EDI币种代码" edittype="text" require="false"
+			size="3" errmsg="" datatype="string" status="F" xpath="/curedicd" />
+
+		<Field id="curediname" desc="EDI币种名称" edittype="text" require="false"
+			size="25" errmsg="" datatype="string" status="F" xpath="/curediname" />
+
+		<!-- <Field id="id" desc="CurrencyManEntry.field.id" size="6" datatype="string" xpath="/id"></Field>-->
+		<Field id="cnname" desc="币种中文名称" edittype="string" size="52"
+			require="true" errmsg="" datatype="string" status="F"
+			xpath="/cnname" />
+
+		<Field id="enname" desc="币种英文名称" edittype="text" size="20"
+			require="true" errmsg="" datatype="string" status="F"
+			xpath="/enname" />
+		<Field id="baseunit" desc="基本单位" edittype="text" size="4"
+			require="false" errmsg="" datatype="string" status="F"
+			xpath="/baseunit" />
+		<Field id="minunit" desc="最小单位" edittype="text" size="4"
+			require="false" errmsg="" datatype="string" status="F"
+			xpath="/minunit" />
+
+		<Field id="cursymBol" desc="币种符号" status="F" require="true"
+			method="None" primary="true" readonly="false" rules=""
+			errmsg="内容不能为空或者空格" type="String" size="3" default=""
+			xpath="/cursymBol" />
+
+		<Field id="showSeq" desc="显示顺序" status="F" require="true"
+			method="None" primary="true" readonly="false" type="String" size="3"
+			default="" xpath="/showSeq" />
+
+		<Field id="st" desc="记录状态" status="N" require="false"
+			edittype="select" datatype="string" method="None" readonly="true"
+			primary="true" type="st" translated="DATA_DIC.3001" size="30"
+			default="" xpath="/st" tip="" />
+
+		<Field id="isUsd" desc="有效状态" status="N" require="true"
+			edittype="select" datatype="string" method="None" readonly="true"
+			primary="true" type="st" translated="DATA_DIC.80" size="30"
+			default="" xpath="/isUsd" tip="" />
+		<Field id="dratedays" desc="日利息计算天数" status="N" require="true"
+			edittype="select" datatype="string" method="None" readonly="true"
+			primary="true" type="st" translated="DATA_DIC.360" size="30"
+			default="" xpath="/dratedays" tip="" />
+
+		<Field id="lock" desc="是否锁定" edittype="text" datatype="string"
+			status="N" size="1" xpath="/lock" />
+
+		<Field id="del" desc="是否已删除" edittype="text" datatype="string"
+			status="N" size="1" xpath="/del" />
+
+		<Field id="lastUpdDate" desc="最后更新时间" edittype="text"
+			datatype="string" status="F" size="14" xpath="/lastUpdTms" />
+
+		<Field id="lastUpdTlr" desc="最后操作人" edittype="text"
+			datatype="string" status="N" size="20" xpath="/lastUpdOper" />
+
+		<Field id="opr" desc="操作" edittype="text" datatype="string"
+			xpath="/id" />
+
+
+	</Fields>
+
+	<Where>
+		<TextBox id="curcd" desc="币种货币代码" datatype="string"
+			index="0" />
+		<TextBox id="cnname" desc="币种中文名称" datatype="string"
+			index="1" />
+		<Option id="st" default="" desc="记录状态" type="st" tip=""
+			method="None" index="2" translated="DATA_DIC.3001" />
+
+	</Where>
+
+	<Operations>
+		<Button id="btNew" name="btNew" desc="新增" operation="addrecord"
+			url="#" show="" group="" txn="" icon="icon-add" />
+		/>
+		<Button id="btMod" name="btMod" desc="修改" operation="syncsubmit"
+			url="#" show="" group="" txn="" />
+
+		<Button id="btDel" name="btDel" desc="删除" operation="asysubmit"
+			updateClass="com.huateng.ebank.business.management.updater.CurrencyManDelUpdate"
+			url="#" txn="" />
+
+		<Button id="btSave" name="btSave" desc="保存"
+			operation="asysubmit"
+			updateClass="com.huateng.ebank.business.management.updater.CurrencyManUpdate"
+			url="#" txn="" />
+
+	</Operations>
+	<Script></Script>
+</CommQry>

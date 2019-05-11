@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-11-2 14:15:53 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.gbicc.person.monitor.entity.TPlDqReportXf" table="T_PL_DQ_REPORT_XF" schema="ECUSER">
+        <id name="id" column="FD_ID" type="string">
+			<generator class="uuid.hex" />  
+		</id>
+        <property name="certType" type="string">
+            <column name="FD_CERT_TYPE" length="50">
+            </column>
+        </property>
+        <property name="certCode" type="string">
+            <column name="FD_CERT_CODE" length="100">
+            </column>
+        </property>
+        <property name="coopObj" type="string">
+            <column name="FD_COOP_OBJ" length="100">
+            </column>
+        </property>
+        <property name="coopObjName" type="string">
+            <column name="FD_COOP_OBJ_NAME" length="100">
+            </column>
+        </property>
+		<property name="issueDate" type="date">
+            <column name="FD_ISSUE_DATE" length="10">
+            </column>
+        </property>
+        <property name="completeDate" type="date">
+            <column name="FD_COMPLETE_DATE" length="10">
+            </column>
+        </property>
+        <property name="issueAmt" type="java.lang.Double">
+            <column name="FD_ISSUE_AMT" precision="53" scale="0">
+            </column>
+        </property>
+        <property name="lendCode" type="string">
+            <column name="FD_LEND_CODE" length="50">
+            </column>
+        </property>
+        <property name="guarWay" type="string">
+            <column name="FD_GUAR_WAY" length="50">
+            </column>
+        </property>
+        <property name="gageCode" type="string">
+            <column name="FD_GAGE_CODE" length="50">
+            </column>
+        </property>
+        <property name="arrearAmt" type="java.lang.Double">
+            <column name="FD_ARREAR_AMT" precision="53" scale="0">
+            </column>
+        </property>
+        <property name="riskStatus" type="string">
+            <column name="FD_RISK_STATUS" length="50">
+            </column>
+        </property>
+        <property name="acctStatus" type="string">
+            <column name="FD_ACCT_STATUS" length="50">
+            </column>
+        </property>
+        <property name="checkPerCode" type="string">
+            <column name="FD_CHECK_PER_CODE" length="50">
+            </column>
+        </property>
+        <property name="checkReason" type="string">
+            <column name="FD_CHECK_REASON" length="10">
+            </column>
+        </property>
+        <property name="checkWay" type="string">
+            <column name="FD_CHECK_WAY" length="10">
+            </column>
+        </property>
+        <property name="checkPlace" type="string">
+            <column name="FD_CHECK_PLACE" length="200">
+            </column>
+        </property>
+        <property name="checkDate" type="date">
+            <column name="FD_CHECK_DATE" length="10">
+            </column>
+        </property>
+        <property name="checkType" type="string">
+            <column name="FD_CHECK_TYPE" length="10">
+            </column>
+        </property>
+         <property name="applyOpin" type="string">
+            <column name="FD_APPLY_OPIN" length="500">
+            </column>
+        </property>
+        
+        <property name="loanVariety" type="string">
+            <column name="FD_LOAN_VARIETY" length="100">
+            </column>
+        </property>
+        <property name="custName" type="string">
+            <column name="FD_CUST_NAME" length="100">
+            </column>
+        </property>
+        <property name="custCode" type="string">
+            <column name="FD_CUST_CODE" length="50">
+            </column>
+        </property>
+        <property name="loanAmt" type="java.lang.Double">
+            <column name="FD_LOAN_AMT" precision="53" scale="0">
+            </column>
+        </property>
+        <property name="loanBalance" type="java.lang.Double">
+            <column name="FD_LOAN_BALANCE" precision="53" scale="0">
+            </column>
+        </property>
+        <property name="measCompleteDate" type="date">
+            <column name="FD_MEAS_COMPLETE_DATE" length="10">
+            </column>
+        </property>
+        
+        <property name="healthCond" type="string">
+            <column name="FD_HEALTH_COND" length="50" />
+        </property>
+        <property name="marriageCond" type="string">
+            <column name="FD_MARRIAGE_COND" length="50" />
+        </property>
+        <property name="contactWay" type="string">
+            <column name="FD_CONTACT_WAY" length="50" />
+        </property>
+        <property name="contactWayUpd" type="string">
+            <column name="FD_CONTACT_WAY_UPD" length="200" />
+        </property>
+        <property name="profession" type="string">
+            <column name="FD_PROFESSION" length="50" />
+        </property>
+        <property name="professionUpd" type="string">
+            <column name="FD_PROFESSION_UPD" length="200" />
+        </property>
+        <property name="property" type="string">
+            <column name="FD_PROPERTY" length="50" />
+        </property>
+        <property name="income" type="string">
+            <column name="FD_INCOME" length="50" />
+        </property>
+        <property name="liabilities" type="string">
+            <column name="FD_LIABILITIES" length="50" />
+        </property>
+        <property name="ifinflrepmt" type="string">
+            <column name="FD_IFINFLREPMT" length="50" />
+        </property>
+        
+        <property name="pledgeAddr" type="string">
+            <column name="FD_PLEDGE_ADDR" length="200" />
+        </property>
+        <property name="pledgeStatus" type="string">
+            <column name="FD_PLEDGE_STATUS" length="50" />
+        </property>
+        <property name="pledgeValueChange" type="string">
+            <column name="FD_PLEDGE_VALUE_CHANGE" length="50" />
+        </property>
+        <property name="pledgeValue" type="string">
+            <column name="FD_PLEDGE_VALUE" length="50" />
+        </property>
+        <property name="pledgeOwner" type="string">
+            <column name="FD_PLEDGE_OWNER" length="50" />
+        </property>
+        <property name="pledgeOwnerDesc" type="string">
+            <column name="FD_PLEDGE_OWNER_DESC" length="500" />
+        </property>
+        <property name="guarPerson" type="string">
+            <column name="FD_GUAR_PER" length="50" />
+        </property>
+        <property name="guarPerName" type="string">
+            <column name="FD_GUAR_PER_NAME" length="100" />
+        </property>
+        <property name="guarPerPhone" type="string">
+            <column name="FD_GUAR_PER_PHONE" length="100" />
+        </property>
+        <property name="guarPerLia" type="string">
+            <column name="FD_GUAR_PER_LIA" length="50" />
+        </property>
+        <property name="guarPerLiaAmt" type="java.lang.Double">
+            <column name="FD_GUAR_PER_LIA_AMT" precision="53" scale="0" />
+        </property>
+        <property name="guarAbility" type="string">
+            <column name="FD_GUAR_ABILITY" length="50" />
+        </property>
+        <property name="frequency" type="string">
+            <column name="FD_FREQUENCY" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

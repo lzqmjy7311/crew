@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.huateng.ebank.entity.data.mng">
+	<class
+		name="Globalinfo"
+		table="GLOBALINFO"
+		lazy="false"
+	>
+		<meta attribute="sync-DAO">false</meta>
+
+		<id
+			name="id"
+			column="ID"
+			type="integer"
+		>
+		<generator class="assigned"/>
+		</id>
+		<property
+			name="systemName"
+			column="SYSTEM_NAME"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="tbsdy"
+			column="TBSDY"
+			type="string"
+			not-null="false"
+			length="8"
+		/>
+		<property
+			name="bhdate"
+			column="BHDATE"
+			type="string"
+			not-null="false"
+			length="8"
+		/>
+		<property
+			name="lbhdate"
+			column="LBHDATE"
+			type="string"
+			not-null="false"
+			length="8"
+		/>
+		<property
+			name="status"
+			column="STATUS"
+			type="string"
+			not-null="false"
+			length="1"
+		/>
+		<property
+			name="systemType"
+			column="SYSTEM_TYPE"
+			type="string"
+			not-null="false"
+			length="2"
+		/>
+		<property
+			name="miscflgs"
+			column="MISCFLGS"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+
+
+	</class>
+</hibernate-mapping>

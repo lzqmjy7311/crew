@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="岗位权限设置" navigate="主页 &gt; 系统管理 &gt; 岗位权限设置" type="call"
+	interface="false" pagesize="5" async="true" databusid="DEMO"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.management.getter.RoleInfoGetter">
+	<Include id="BankParam" />
+	<ResultViewParam>/fpages/management/ftl/RoleInfo.ftl</ResultViewParam>
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="v_id" desc="" status="N" require="" edittype="text" datatype="int"
+			method="None" readonly="true" primary="true" type="String" size="4"
+			default="false" xpath="/v_id" />
+		<Field id="roleid" desc="岗位编号" status="N" require="true"
+			method="None" readonly="true" primary="true" type="String" size="4"
+			default="false" xpath="/roleid" />
+		<Field id="rolename" desc="岗位名称" status="N" require="true"
+			width="160" method="None" readonly="true" primary="true" type="String"
+			size="20" xpath="/rolename" default="false" />
+		<Field id="status" desc="有效标志" status="N" readonly="true"
+			translated="DATA_DIC.309" require="true" edittype="select" width="90"
+			method="None" primary="true" type="String" size="20"
+			xpath="/status" default="false" />
+		<!--
+		<Field id="workflowrole" desc="工作流平台岗位编号" require="true" readonly="true"
+			status="F" width="100" method="None" primary="false" type="String"
+			size="20" xpath="/workflowrole" default="" />
+		-->
+		<Field id="roletype" desc="岗位类型" status="F" require="true"  readonly="true"
+			method="None" translated="DATA_DIC.441" edittype="select" width="100"
+			primary="false" xpath="/roletype" type="String" size="1" default="" />
+		<Field id="effectDate" desc="生效日期" status="N" require="true" readonly="true"
+			edittype="date" datatype="date" method="None"
+			primary="true" type="String" size="20" xpath="/effectDate"
+			default="false" />
+		<Field id="expireDate" desc="失效日期" status="N" require="true" readonly="true"
+			edittype="date" datatype="date" method="None"
+			primary="true" type="String" size="20" xpath="/expireDate"
+			default="false" />
+
+	</Fields>
+
+	<Where>
+
+	</Where>
+	<Operations>
+		<!-- operation( addrecord:delrecord:syncsubmit:asyncqrysubmit:asyncupadasubmit ) -->
+		<Button id="RoleInfo1" name="RoleInfo1" desc="设置岗位功能"
+			operation="submitform"
+			url="/trans/CommQueryServlet?CQId=parammng_RoleInfo1"
+			txn="MSYSMOV002" />
+		<Button id="RoleInfo2" name="RoleInfo2" desc="设置报表浏览权限"
+			operation="submitform"
+			url="/trans/CommQueryServlet?CQId=parammng_RoleInfo2"
+			txn="MSYSMOV002" />
+		<Button id="btNew" name="btNew" desc="新增岗位"
+			operation="addrecord" url="" txn="" />
+		<Button id="btDelete" name="btDelete" desc="删除岗位"
+			operation="delrecord" url="" txn="" />
+		<Button id="btSave" name="btSave" desc="保存"
+			operation="asysubmit"
+			updateClass="com.huateng.ebank.business.management.updater.RoleInfoUpdate"
+			url="#" txn="" />
+	</Operations>
+	<Sql>
+		<![CDATA[
+				select
+				role_id,
+				role_name,
+				status,
+				workflow_role,
+				role_type
+				from role_info as ri
+    	]]>
+	</Sql>
+</CommQry>

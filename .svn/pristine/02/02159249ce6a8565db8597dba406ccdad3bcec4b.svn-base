@@ -1,0 +1,28 @@
+<CommQry title="TEtlJobDefine" navigate="TEtlJobDefine" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.job.getter.TEtlJobErrorLogGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+    	<Field id="etlErrorLogID" desc="etlErrorLogID" datatype="string" xpath="/etlErrorLogID" />
+    	<Field id="etlScheduleID" desc="etlScheduleID" datatype="string" xpath="/etlScheduleID" />
+    	<Field id="jobName" desc="任务名称" datatype="string" xpath="/jobName" />
+    	
+    	<Field id="errMsg"  desc="错误消息" datatype="string" xpath="/errMsg" />
+    
+    	<Field id="errSql"  desc="错误sql" datatype="string" xpath="/errSql" />
+    	
+    	<Field id="errTimestamp"  desc="错误时间" datatype="string" xpath="/errTimestamp" />
+    
+    </Fields>
+    <Where>
+    	<TextBox id="etlErrorLogID" desc="etlErrorLogID" edittype="text"   datatype="string"  />
+		<TextBox id="etlScheduleID" desc="etlScheduleID" edittype="text"    datatype="string"  />
+    	<TextBox id="jobName" desc="任务名称" edittype="text"  datatype="string"  />
+    	<TextBox id="errMsg"  desc="错误消息"  edittype="text"  datatype="string"  />
+		<TextBox id="errSql"  desc="错误sql"  edittype="text"   datatype="string"  />
+    	<TextBox id="startTime"  desc="开始时间"  edittype="text" datatype="date"  />
+    	<TextBox id="endTime"   desc="结束时间"  edittype="text" datatype="date"  />
+    </Where>
+    <Operations>
+    </Operations>
+</CommQry>

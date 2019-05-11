@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-5-26 11:02:29 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.group.TOdsCmsCreditGroup" table="T_ODS_CMS_CREDIT_GROUP">
+        <id name="partyId" type="java.lang.String">
+            <column name="PARTY_ID" />
+        </id>
+        <property name="bpkCustomerCd" type="java.lang.String">
+            <column name="BPK_CUSTOMER_CD" />
+        </property>
+        <property name="customerCreditPolicyCd" type="java.lang.String">
+            <column name="CUSTOMER_CREDIT_POLICY_CD" />
+        </property>
+        <property name="groupName" type="java.lang.String">
+            <column name="GROUP_NAME" />
+        </property>
+        <property name="groupTypeCd" type="java.lang.String">
+            <column name="GROUP_TYPE_CD" />
+        </property>
+        <property name="industryTypeCd" type="java.lang.String">
+            <column name="INDUSTRY_TYPE_CD" />
+        </property>
+        <property name="orgLevel1AdmitInd" type="java.lang.String">
+            <column name="ORG_LEVEL1_ADMIT_IND" />
+        </property>
+        <property name="orgLevel2AdmitInd" type="java.lang.String">
+            <column name="ORG_LEVEL2_ADMIT_IND" />
+        </property>
+        <property name="orgnNum" type="java.lang.String">
+            <column name="ORGN_NUM" />
+        </property>
+        <property name="standbyCode" type="java.lang.String">
+            <column name="STANDBY_CODE" />
+        </property>
+        <property name="standbyDesc1" type="java.lang.String">
+            <column name="STANDBY_DESC1" />
+        </property>
+        <property name="standbyDesc2" type="java.lang.String">
+            <column name="STANDBY_DESC2" />
+        </property>
+        <property name="standbyInd1" type="java.lang.String">
+            <column name="STANDBY_IND1" />
+        </property>
+        <property name="standbyInd2" type="java.lang.String">
+            <column name="STANDBY_IND2" />
+        </property>
+        <property name="standbyLong" type="int">
+            <column name="STANDBY_LONG" />
+        </property>
+    </class>
+</hibernate-mapping>

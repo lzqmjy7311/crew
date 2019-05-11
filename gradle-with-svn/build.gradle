@@ -1,0 +1,91 @@
+import java.security.Security;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+import org.tmatesoft.svn.cli.SVN;
+
+/**
+ * 本 gradle 构建脚本主要完成以下功能：
+ * 1. 从 svn 中 checkout 出svn修订号的源代码
+ * 		使用方法：gradle checkout -Prevision=svn修订号
+ * 		示例：
+ * 			gradle checkout -Prevision=3296	(检出修订版本为3296源代码)
+ * 			gradle checkout					(检出修订版本为HEAD，即最新源代码)
+ * 
+ * 2. 清除 svn checkout 出的源码及其相关文件及目录
+ * 		使用方法：gradle clean
+ * 		示例:
+ * 			gradle clean
+ * 
+ * 3. 编译从 svn checkout 出的源码
+ * 		使用方法：gradle build
+ * 		示例:
+ * 			gradle build -Pdeploy=product -x test	(采用产品环境配置文件构建war)
+ * 			gradle build -x test					(采用测试环境配置文件构建war)
+ * @author srcb
+ *
+ */
+
+version ="1.0.0"
+
+buildscript {
+	repositories {
+		maven { url "https://localhost:8081/nexus/content/groups/public" }
+	}
+	dependencies {
+		classpath(fileTree(dir: "build-lib", include: "*.jar"))
+	}
+}
+
+if(hasProperty("revision")){
+	project.ext.revision = project["revision"]
+}else{
+	project.ext.revision = "HEAD"
+}
+
+def _disableSystemExitCall ={
+	System.setSecurityManager(new SecurityManager(){
+		public void checkPermission(java.security.Permission perm){
+		
+		}
+		
+		public void checkExit(int status){
+			throw new SecurityException();
+		}
+	});
+};
+
+def _enableSystemExitCall ={System.setSecurityManager(null);};
+
+def doSvn ={ String... args ->
+	_disableSystemExitCall();
+	try{
+		SVN.main(args as String[]);
+	}finally{
+		_enableSystemExitCall();
+	}
+};
+
+task('checkout')<<{
+	println "begin checkout project [${project_name}]-[${revision}] from ${svn_repository_url}";
+	def file =new File('./settings.gradle');
+	if(file!=null && file.exists()){
+		file.delete();
+	}
+	file << "include '${project_name}_${revision}'";
+	Security.addProvider(new BouncyCastleProvider());
+	String command ="checkout ${svn_repository_url} -r ${revision} --depth=infinity --force --username ${svn_username} --password ${svn_password} ${project_name}_${revision}";
+	SVN.main(command.split(" "));
+}
+
+task('clean')<<{
+	new File("./settings.gradle").delete();
+	new File("./").traverse(maxDepth:0){
+		if(it.path.endsWith("build-lib")
+			|| it.path.endsWith("build.gradle")
+			|| it.path.endsWith("gradle.properties")
+		){
+			
+		}else{
+			it.deleteDir();
+		}
+	}
+}

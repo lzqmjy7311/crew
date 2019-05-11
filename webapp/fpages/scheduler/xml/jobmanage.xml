@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+	<!--
+		title:标题 navigate:导航信息 type:方式（sql|call)
+		interface:是否显示输入条件页面(true|false) databusid:数据总线编号
+		transdataactionurl:数据整理URL async:异步提交标志 pagesize:页面显示记录数(缺省为10)
+	-->
+<CommQry title="系统状态信息" navigate="定时任务管理" type="call"
+	interface="false" pagesize="10" async="true" databusid="CUSTINFO_DB"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.monitor.scheduler.getter.JobListGetter">
+
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="select" desc="选择" require="false" edittype="checkbox"
+			datatype="boolean" method="None" readonly="false" type="选择" size="20"
+			default="" xpath="" />
+		<Field id="jobNo" desc="任务编号" require="" edittype="text"
+			datatype="string" method="None" primary="true" readonly="false" type="string" size="15"
+			scale="2" default="" status="F" xpath="/jobNo" />
+		<Field id="desc0" desc="任务描述" require="" edittype="text"
+			datatype="string" method="None" readonly="false" type="string" size="15"
+			scale="2" default="" xpath="/desc0" />
+		<Field id="isRunning" desc="任务状态" require="" edittype="select"
+			translated="LIST:true,运行中;false,已停止" datatype="string" method="None"
+			readonly="false" type="string" size="15" scale="2" default=""
+			xpath="/isRunning" />
+		<Field id="runTime" desc="执行方式" require="" edittype="select"
+			translated="LIST:90,每日;9N,不运行;97,每月某日" datatype="string" method="None"
+			readonly="false" type="string" size="15" scale="2" default=""
+			xpath="/runTime" />
+		<Field id="dayOfMonth" desc="每月某日" require="" edittype="text"
+			translated="" datatype="string" method="None" readonly="false" type="string"
+			size="15" scale="2" default="" xpath="/dayOfMonth" />
+		<Field id="startTime" desc="开始时间" require="" edittype="text"
+			translated="" datatype="string" method="None" readonly="false" type="string"
+			size="15" scale="2" default="" xpath="/beginTime" />
+		<Field id="endTime" desc="结束时间" require="" edittype="text"
+			translated="" datatype="string" method="None" readonly="false" type="string"
+			size="15" scale="2" default="" xpath="/endTime" />
+		<Field id="repeatCNT" desc="日执行次数" require="" edittype="text"
+			translated="" datatype="string" method="None" readonly="false" type="string"
+			size="15" scale="2" default="" xpath="/repeatCNT" />
+		<Field id="repeatInterval" desc="执行间隔" require="" edittype="text"
+			translated="" datatype="string" method="None" readonly="false" type="string"
+			size="15" scale="2" default="" xpath="/repeatInterval" />
+		<Field id="processFunc" desc="执行任务类" require="" edittype="text"
+			translated="" datatype="string" method="None" readonly="false" type="string"
+			size="15" scale="2" default="" xpath="/processFunc" />
+		<Field id="startFlag" desc="开启标识" require="" edittype="text"
+			translated="" datatype="string" primary="true"  method="None" readonly="false" type="string"
+			size="15" scale="2" default="" xpath="/startFlag" />
+		<!-- added by Henry 20110617  -->
+		<Field id="opr" desc="操作" require="false" edittype="text"
+			datatype="string" method="None" readonly="true" primary="true" type="操作"
+			size="12" default="" xpath="" tip="操作" />
+	</Fields>
+
+	<Parameters></Parameters>
+
+	<Where>
+	</Where>
+	<Operations>
+	    <!-- modify by Chengyu.LI BMS-2362 2010.1.8 begin -->
+		<Button id="btStart" name="btStart" desc="开启" operation="asysubmit"
+			updateClass="com.huateng.ebank.monitor.scheduler.updater.JobUpdater"
+			url="/fpages/jobscheduler/ftl/jobmanage.ftl" show="" group="" txn="txnmng.jobmanagestart.update" />
+		<Button id="btStop" name="btStop" desc="停止" operation="asysubmit"
+			updateClass="com.huateng.ebank.monitor.scheduler.updater.JobUpdater"
+			url="/fpages/jobscheduler/ftl/jobmanage.ftl" show="" group="" txn="txnmng.jobmanagestop.update" />
+		<!-- modify by Chengyu.LI BMS-2362 2010.1.8 end-->
+	</Operations>
+
+	<Script>
+	</Script>
+
+</CommQry>
+

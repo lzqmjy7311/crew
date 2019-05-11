@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="流程管理  &gt; 任务重分配" navigate="流程管理  &gt; 任务重分配" type="call"
+	interface="false" pagesize="15" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.bpm.getter.TaskAfreshAssignGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="select" desc="select" edittype="checkbox" xpath="" />
+		<Field id="roleId" desc="当前任务节点所属角色，截取act_ru_task表中的task_def_key_" xpath="/roleId" />
+		<Field id="procInstId" xpath="/procInstId" desc="流程实例ID" width="100" edittype="text" status="F" datatype="string" />
+		<Field id="procName" xpath="/procName" desc="任务类型" width="150" edittype="text" status="F" datatype="string" />
+		<Field id="taskName" xpath="/taskName" desc="任务名称" width="150" edittype="text" status="F" datatype="string" />
+		<Field id="taskDesc" xpath="/taskDesc" desc="业务描述"  edittype="text" status="F" datatype="string" />
+		<Field id="taskId" xpath="/taskId" desc="任务编号" width="80" edittype="text" status="F" datatype="string" />
+		<Field id="assignee" xpath="/assignee" desc="经办人Id" width="100" edittype="text" status="F" datatype="string" />
+		<Field id="assigneeDesc" xpath="/assigneeDesc" desc="当前任务处理人" width="100" edittype="text" status="F" datatype="string" />
+		<Field id="assigneeOrg" xpath="/assigneeOrg" desc="经办行" width="100" edittype="text" status="F" datatype="string" />
+		<Field id="createTime" xpath="/createTime" desc="任务受理时间" width="150" edittype="text" status="F" datatype="string" />
+		<Field id="suspensionState" xpath="/suspensionState" desc="任务状态"  edittype="text" status="F" datatype="string" />
+		<Field id="procKey" xpath="/procKey" desc="流程关键字"  edittype="text" status="F" datatype="string" />
+		
+		<Field id="organization" desc="机构" translated="CQ:subAutoOrgTree" require="false" 
+			fieldmap="organization=brcode;organizationName=brname" viewField="brname" 
+			edittype="select" dropdowntype="dynamic" primary="true" init="true" size="10"  
+			editable="true" width="300" colspan="4"/>
+		
+		<Field id="user" desc="用户" translated="CQ:subAutoUserTree" require="false" 
+			fieldmap="user=tlrno;userName=tlrName" viewField="tlrName"
+			edittype="select" dropdowntype="dynamic" primaty="true" init="true" size="10" 
+			editable="true" width="300" colspan="4"/>
+    </Fields>
+    <Where>
+    	<Option id="procName" desc="任务类型" translated="CQ:subAutoProcessType" placeholder="占位符"
+			fieldmap="procName=procId;procNameName=procName" viewField="procName" dropdowntype="dynamic"
+            primary="true" init="true" index="0"/>
+        <TextBox id="createTimeStart" desc="任务受理时间" edittype="text" datatype="date" index="1" />
+    	<TextBox id="createTimeEnd" desc="至" edittype="text" datatype="date" index="2" />
+    	<TextBox id="businessId" desc="业务描述" edittype="text" status="F" datatype="string" index="3" />
+    	<TextBox id="assignee" desc="当前任务处理人" edittype="text" status="F" datatype="string" index="4" />
+    	<Option id="bank" desc="经办行" translated="CQ:subAutoOrgTree"
+			fieldmap="bank=brcode;bankName=brname" viewField="brname"
+			edittype="select" dropdowntype="dynamic" primaty="true" init="true" size="10" 
+			editable="true" index="5"/>
+    </Where>
+	<Operations>
+		<Button id="btAdd" name="btAdd" desc="任务转移" icon="icon-add" 
+			updateClass="" url="#" txn="" />
+		<Button id="btAdd2" name="btAdd2" desc="重分配" icon="icon-add" 
+			updateClass="" url="#" txn="" />
+		<Button id="btnSubmit" name="btnSubmit" desc="提交" icon="icon-default" operation="asysubmit" 
+			updateClass="com.gbicc.bpm.update.TaskAfreshAssignUpdate" url="#" txn="" />
+		<Button id="btProcDiag" name="btProcDiag" desc="查看流程图" icon="icon-clockwise"
+			updateClass="" url="" />
+	</Operations>
+</CommQry>

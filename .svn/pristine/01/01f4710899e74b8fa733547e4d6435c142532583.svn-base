@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="zxinfo" navigate="zxinfo" type="call" interface="false" pagesize="10" databusid="" async="true" transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.gbicc.company.view.accountpage.getter.ZtxMmfxyGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="流水清单" maxPage="20" perfecth="20"  directory="D:/templet" />
+	<Fields>       
+		
+		
+		<Field id="txnDt" desc="交易日期" edittype="date" datatype="string" placeholder="yyyy-MM-dd" status="F" xpath="/txnDt"/>   
+		<Field id="txnTm" desc="交易时间" edittype="date" datatype="string"  status="F" xpath="/txnTm"/> 
+		<Field id="chineseName" desc="客户名称"  status="F" xpath="/chineseName" readonly="true"/>
+		<Field id="custId" desc="客户编号" xpath="/custId" status="N" />
+		<Field id="debCrdInd" desc="收/付"  status="F" translated="DATA_DIC.725" edittype="select" datatype="string" xpath="/debCrdInd"/>		
+		<Field id="txnAmt" desc="交易金额" edittype="text" datatype="currency" scale="2" status="F" xpath="/txnAmt"/>		
+		<Field id="oppoAcctId" desc="交易对手账号" status="F" xpath="/oppoAcctId"/>
+		<Field id="oppoCustNm" desc="交易对手名称" status="F" xpath="/oppoCustNm"/>
+		<Field id="oppoBank" desc="对方行名" status="F" xpath="/oppoBank"/>
+		<Field id="txnAftrBal" desc="账户余额" edittype="text" datatype="currency" scale="2" status="F" xpath="/txnAftrBal"/>
+		<Field id="txnCateg" desc="交易类型" translated="DATA_DIC.724" edittype="select" status="N" xpath="/txnCateg"/>
+		<Field id="txnSerialId" desc="业务流水号" status="F" xpath="/txnSerialId"/>
+		<Field id="txnAbstr" desc="备注" status="F" xpath="/txnAbstr"/>
+		<Field id="endbussdate" desc="交易结束时间"  edittype="date" datatype="string" placeholder="yyyy-MM-dd" status="N" xpath="/endbussdate"/>
+		<Field id="acctId" desc="银行账号"  status="N" xpath="/acctId" readonly="true"/>
+		<Field id="acctType" desc="账户类型" translated="DATA_DIC.903" edittype="select" status="N" xpath="/acctType" readonly="true"/>
+		<Field id="roleId" desc=""  status="N" xpath="/roleId" readonly="true"/>
+	</Fields>
+	<Where>
+		<TextBox id="acctType" desc="账户类型" translated="DATA_DIC.903" edittype="select" status="F" datatype="string" readonly="true" index="1"/>\
+		<DateTextBox id="txnDt" desc="交易起始日期"  status="F"  placeholder="yyyy-MM-dd" index="1"/>\
+		<TextBox id="acctId" desc="银行账号"  satas="F" edittype="text" datatype="string"  readonly="true" />\
+        <DateTextBox id="endbussdate" desc="交易结束日期"  satas="F"   placeholder="yyyy-MM-dd" />\
+	</Where>	
+	<Operations>
+		<Button id="btQuery" name="btQuery" desc="查询"   url="#" txn="" />
+		<Button id="btCancel" name="btCancel" desc="重置"   url="#" txn="" />
+	</Operations>
+</CommQry>

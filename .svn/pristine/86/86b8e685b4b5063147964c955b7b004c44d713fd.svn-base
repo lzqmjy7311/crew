@@ -1,0 +1,38 @@
+<CommQry title="TCmSingleRulCases" navigate="TCmSingleRulCases" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.getter.TCmSingleRulCasesByConditionGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+        <Field id="id" desc="ID主键" edittype="text" datatype="string" readonly="true" xpath="/id" />
+        <Field id="casesCode" desc="案例编号" size="100" edittype="text" datatype="string" readonly="true"
+        xpath="/casesCode" />
+        <Field id="casesName" desc="案例名称" size="100" edittype="text" datatype="string" readonly="true"
+        xpath="/casesName" />
+         <Field id="casesStatus" desc="案例状态" xpath="/casesStatus" multiple="false" init="true" readonly="true"
+            placeholder="占位符" edittype="select" translated="DATA_DIC.106"
+            datatype="string" size="50" />
+        <Field id="casesDesc" desc="案例描述" size="500" edittype="textarea" datatype="string" readonly="true"
+        xpath="/casesDesc" width="200"/>
+        <Field id="createDt" desc="创建日期" edittype="text" datatype="date" readonly="true"
+        xpath="/createDt" />
+        <Field id="createOrgId" desc="创建机构Id" edittype="text" datatype="string" readonly="true"
+        xpath="/createOrg/brcode" />
+        <Field id="createOrg" desc="创建机构" edittype="text" datatype="string" readonly="true"
+        xpath="/createOrg/brname" />
+        <Field id="createUserId" desc="创建人Id" edittype="text" datatype="string" readonly="false"
+        xpath="/createUser/tlrno" />
+        <Field id="createUser" desc="创建人" edittype="text" datatype="string" readonly="false"
+        xpath="/createUser/tlrName" />
+        <Field id="handleOrgFlag" desc="处理机构标识" edittype="text" datatype="string" readonly="false"
+        xpath="/handleOrgFlag" />
+    </Fields>
+    <Where>
+    	<TextBox id="casesCode" desc="案例编号" edittype="text" status="F" datatype="string" index="1" />
+    	<TextBox id="casesName" desc="案例名称" edittype="text" status="F" datatype="string" index="2" />
+    </Where>
+    <Operations>
+    	<Button id="btnSubmit" name="btnSubmit" desc="提交" icon="icon-ok" operation="asysubmit" 
+			updateClass="com.gbicc.company.single.update.TCmSingleRulJoinCasesUpdate" url="#" txn="" />
+		<Button id="btCancel" name="btCancel" desc="取消" icon="icon-cancel" updateClass="#" url="" txn="" />
+    </Operations>
+</CommQry>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="FIVE" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.fp.demo.getter.DemoFieldsGetter">
+	<Include id="BankParam" />
+
+	<PageQryExp type="XLS" limit="true" encoding="GBK"
+		url="/trans/qryExp.do" desc="XLS导出" perfetch="20" maxpage="20"
+		directory="F:/upload1" />
+
+	<Fields>
+		<Field id="id" desc="员工编号" edittype="" readonly="true" editable="" xpath="/id" status="F"
+			default="" />
+		<Field id="pid" desc="部门编号" edittype="" xpath="/pid" status="F"
+			default="" />
+		<Field id="managerId" desc="经理编号" edittype="" xpath="/managerId"
+			status="F" default="" />
+		<Field id="name" desc="姓名" edittype="" xpath="/name" status="F"
+			default="" />
+		<Field id="sex" desc="性别" xpath="/sex" edittype="select"
+			translated="LIST:male,男;female,女;" />
+		<Field id="age" desc="年龄" edittype="text" datatype="int" xpath="/age"
+			status="F" />
+		<Field id="salary" desc="薪酬" edittype="text" datatype="double"
+			xpath="/salary" size="10" scale="2" status="F" />
+		<Field id="birthday" desc="出生日期" edittype="date" datatype="date"
+			xpath="/birthday" status="F" />
+		<Field id="workStartTime" desc="工作开始时间" edittype="timestamp"
+			datatype="timestamp" xpath="/workStartTime" status="F" />
+		<Field id="workEndTime" desc="工作结束时间" edittype="timestamp"
+			datatype="string" xpath="/workEndTime" status="F" />
+		<Field id="yyyymm" desc="创建年月" placeholder="yyyyMM" edittype="select"
+			xpath="/yyyymm" editable="true" dropdowntype="custom"
+			url="/templets/lib/yyyyMM.ftl" startyear="2005" yearlength="10"
+			require="false" fieldmap="yyyymm=yyyyMM;yyyymmName=yyyyMM" viewField="yyyyMM" />
+	</Fields>
+	
+	<Where>
+		<TextBox id="id" desc="员工编号" datatype="int"/>		
+		<TextBox id="name" desc="姓名" size="20"  type="String" />
+	</Where>
+	
+	<Operations>
+		<Button id="btnNew" name="btnNew" desc="新增" icon="icon-add"
+			operation="addrecord" updateClass="#" url="#" txn="" />
+		<Button id="btnDel" name="btnDel" desc="删除" icon="icon-remove"
+			operation="delrecord" updateClass="#" url="#" txn="" />
+		<Button id="btnSave" name="btnSave" desc="保存" icon="icon-save"
+			operation="asysubmit" updateClass="com.huateng.fp.demo.updater.DemoFieldsModifyUpdate"
+			url="#" txn="" />
+	</Operations>
+</CommQry>

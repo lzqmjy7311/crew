@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-11-24 10:47:46 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.person.customer.entity.TPlCustGreatEvent" table="T_PL_CUST_GREAT_EVENT" schema="ECUSER">
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="custId" type="string">
+            <column name="FD_CUST_ID" length="32" />
+        </property>
+        
+        <many-to-one 
+			name="registerUser" 
+			column="FD_REGISTER_USER"
+            class="com.huateng.ebank.entity.data.mng.TlrInfo" 
+			fetch="select"
+			not-null="false"
+	    />
+	    
+        <property name="registerDate" type="date">
+            <column name="FD_REGISTER_DATE" />
+        </property>
+    </class>
+</hibernate-mapping>

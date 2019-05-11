@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-11-27 11:18:29 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.warnDisposal.entity.TCmWarnControlmeasure" table="T_CM_WARN_CONTROLMEASURE" schema="ECUSER">
+        <comment>客户预警任务风控措施表</comment>
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="conmeasCode" type="string">
+            <column name="FD_CONMEAS_CODE" length="200" />
+        </property>
+        <property name="conmeasDesc" type="string">
+            <column name="FD_CONMEAS_DESC" length="1000" />
+        </property>
+        <property name="taskId" type="string">
+            <column name="FD_TASK_ID" length="32" />
+        </property>
+        <property name="taskType" type="string">
+            <column name="FD_TASK_TYPE" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,71 @@
+package com.gbicc.bpm.operation;
+
+import java.util.List;
+
+import org.activiti.engine.task.Task;
+
+import com.gbicc.bpm.entity.TTaskDivertDtl;
+import com.gbicc.bpm.service.ProcessManagerService;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.framework.exceptions.CommonException;
+import com.huateng.ebank.framework.operation.BaseOperation;
+import com.huateng.ebank.framework.operation.OperationContext;
+
+
+/**
+ * @author likm
+ * @time   2015年11月20日09:44:16
+ * @desc   任务重分配操作类
+ */
+public class TaskAfreshAssignOperation extends BaseOperation {
+	
+	public static final String ID = "TaskAfreshAssignOperation";
+	public static final String CMD = "CMD";
+	public static final String CMD_QUERY = "CMD_QUERY";
+	public static final String CMD_INSERT = "CMD_INSERT";
+	public static final String CMD_UPDATE = "CMD_UPDATE";
+	public static final String CMD_DELETE = "CMD_DELETE";
+	public static final String IN_PARAM = "IN_PARAM";
+	
+	@Override
+	public void afterProc(OperationContext context) throws CommonException {
+	}
+
+	@Override
+	public void beforeProc(OperationContext context) throws CommonException {
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public void execute(OperationContext context) throws CommonException {
+		ProcessManagerService service=ProcessManagerService.getInstace();
+		String assignee =(String) context.getAttribute("assignee");;
+		String assigneeOrg =(String) context.getAttribute("assigneeOrg");;
+		List<TTaskDivertDtl> list=(List<TTaskDivertDtl>)context.getAttribute("list");
+		ROOTDAO rootdao=ROOTDAOUtils.getROOTDAO();
+		//String op=(String) context.getAttribute("op");
+		for(TTaskDivertDtl divert:list){
+			Task task=service.getTaskService().createTaskQuery().taskId(divert.getTaskId()).singleResult();
+			task.setAssignee(assignee);
+			service.getTaskService().saveTask(task);
+			if("CM_CustWranDisposalProcess".equals(divert.getProcKey())){
+				if(divert.getProcInstId()!=null){
+					String esql="UPDATE T_CM_WARN_CUSTOMER T SET T.FD_OPER_BANK='"+assigneeOrg+"',T.FD_OPERATOR='"+assignee+"' WHERE T.FD_ID IN " 
+						+" ("
+						+" SELECT T1.FD_CUSTOMER_ID FROM T_CM_WARN_TASK T1 INNER JOIN ACT_RU_EXECUTION T2 ON T1.FD_ID=T2.BUSINESS_KEY_ WHERE T2.PROC_INST_ID_='"+divert.getProcInstId()+"'"
+						+") ";
+					rootdao.executeSql(esql);
+					rootdao.flush();
+				}
+			}else if("PL_CollectionMngProcess".equals(divert.getProcKey())){
+				String esql="UPDATE T_PL_COLLECTION_INFO T SET T.FD_OPERATOR='"+assignee+"',T.FD_OPER_BANK='"+assigneeOrg+"',T.FD_COLLE_PERSON_CODE='"+assignee+"' WHERE T.FD_ID IN " 
+						+" ("
+						+" SELECT T2.BUSINESS_KEY_ FROM ACT_RU_EXECUTION T2 WHERE T2.PROC_INST_ID_='"+divert.getProcInstId()+"'"
+						+") ";
+						rootdao.executeSql(esql);
+						rootdao.flush();
+			}
+		}
+	}
+}

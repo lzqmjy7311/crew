@@ -1,0 +1,139 @@
+package com.gbicc.company.warnDisposal.operation;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import com.gbicc.company.warnDisposal.entity.TCmWarnTask;
+import com.gbicc.company.warnDisposal.entity.TCmWarnTaskRel;
+import com.gbicc.company.warnDisposal.service.TCmWarnTaskRelService;
+import com.gbicc.company.warnDisposal.service.TCmWarnTaskService;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.framework.exceptions.CommonException;
+import com.huateng.ebank.framework.operation.BaseOperation;
+import com.huateng.ebank.framework.operation.OperationContext;
+
+
+/**
+ * @author liufei
+ * @time   2015年12月2日
+ * @desc   单客户预警预警处置
+ */
+public class TCmWarnDisPosalProcessEndOperation extends BaseOperation {
+	public static final String ID = "TCmWarnDisPosalProcessEndOperation";
+	public static final String HANDLE_COMPLETE_STATUS="6";//处置反馈完成
+	public static final String REPORT_STATUS="9";//预警处置完成
+	public static final String OPINION="OPINION";//意见
+	public static final String BUSINESSID="BUSINESSID";//业务主键
+	
+	@Override
+	public void afterProc(OperationContext context) throws CommonException {
+	}
+
+	@Override
+	public void beforeProc(OperationContext context) throws CommonException {
+	}
+
+	@Override
+	public void execute(OperationContext context) throws CommonException {
+		String businessId = (String) context.getAttribute(BUSINESSID);
+		TCmWarnTaskService service = TCmWarnTaskService.getInstance();
+		TCmWarnTask domain = service.get(businessId);
+		if(domain!=null){
+			Date nowDate=new Date();
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(nowDate);
+			//三个月
+			calendar.add(Calendar.MONTH, 3);
+			String isContinue = domain.getIsContinue();
+			if("DC".equals(domain.getTaskType())){
+				domain.setInspeEndDate(nowDate);
+				domain.setOverRc("0");
+				domain.setStatus(REPORT_STATUS);
+				if("1".equals(isContinue)){//是否持续关注
+					domain.setNextStartTaskDate(calendar.getTime());
+				}else{
+					domain.setNextStartTaskDate(null);
+				}
+				if("1".equals(domain.getIsOver())){
+					domain.setNextStartTaskDate(null);
+					domain.setOverRc("1");
+					domain.setIsContinue("0");
+					domain.setStatus("7");
+				}
+				GlobalInfo info=GlobalInfo.getCurrentInstance();
+				domain.setDisposalPer(info.getTlrno());
+			}else{
+				String overRc = domain.getOverRc();
+				domain.setDisposalEndDate(nowDate);
+				domain.setStatus(HANDLE_COMPLETE_STATUS);
+				if("1".equals(overRc)){//是否解除
+					domain.setNextStartTaskDate(null);
+				}else{
+					if("1".equals(isContinue)){//是否持续关注
+						domain.setNextStartTaskDate(calendar.getTime());
+					}else{
+						domain.setNextStartTaskDate(null);
+					}
+				}
+			}
+			service.update(domain);
+			this.disposalWarnTaskRel(domain);
+		}
+	}
+	
+	/**
+	 * 更新预警信号状态
+	 * @param task
+	 * @throws CommonException
+	 */
+	public void disposalWarnTaskRel(TCmWarnTask task) throws CommonException{
+		TCmWarnTaskRelService service = TCmWarnTaskRelService.getInstance();
+		List<TCmWarnTaskRel> list = service.findByBusinessId(task.getId());
+		if("DC".equals(task.getTaskType())){
+			for (TCmWarnTaskRel tCmWarnTaskRel : list) {
+				if(!"4".equals(tCmWarnTaskRel.getWarnStatus())){
+					//如果状态非预警排除,则设置其状态为6 (预警未解除)
+					tCmWarnTaskRel.setWarnStatus("6");
+					service.update(tCmWarnTaskRel);
+				}
+			}
+		}else{
+			for (TCmWarnTaskRel tCmWarnTaskRel : list) {
+				if("4".equals(tCmWarnTaskRel.getWarnStatus())){
+					continue;
+				}
+				if("1".equals(task.getOverRc())){//是否解除
+					//状态为是，预警状态为预警解除 DIC:12599
+					tCmWarnTaskRel.setWarnStatus("5");
+					tCmWarnTaskRel.setRelieveIs("1");
+					tCmWarnTaskRel.setRelieveDate(new Date());
+					service.update(tCmWarnTaskRel);
+				}else{
+					//状态为是，预警状态为预警未解除
+					tCmWarnTaskRel.setWarnStatus("6");
+					tCmWarnTaskRel.setRelieveIs("0");
+					service.update(tCmWarnTaskRel);
+				}
+			}
+		}
+		
+	}
+	
+	/**
+	 * 更新预警信号状态
+	 * @param task
+	 * @throws CommonException
+	 */
+	public void disposalWarnTaskRelIsOver(TCmWarnTask task) throws CommonException{
+		TCmWarnTaskRelService service = TCmWarnTaskRelService.getInstance();
+		List<TCmWarnTaskRel> list = service.findByBusinessId(task.getId());
+		for (TCmWarnTaskRel tCmWarnTaskRel : list) {
+			tCmWarnTaskRel.setWarnStatus("4");
+			tCmWarnTaskRel.setWarnElimIs("1");
+			tCmWarnTaskRel.setRelieveIs("1");
+			service.update(tCmWarnTaskRel);
+		}
+		
+	}
+}

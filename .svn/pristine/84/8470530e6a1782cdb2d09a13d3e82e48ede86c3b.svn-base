@@ -1,0 +1,339 @@
+package com.gbicc.company.financial.analysis.entity;
+
+// Generated 2016-6-27 13:30:38 by Hibernate Tools 3.4.0.CR1
+
+import java.sql.Clob;
+import java.util.Date;
+
+/**
+ * Entity: 开庭公告
+ */
+public class TOutCouJudgmentDetail implements java.io.Serializable {
+
+	private static final long serialVersionUID = 1L;
+
+	/** 
+	 * ID.
+	 */
+	private String id;
+
+	/** 
+	 * 企业名称/姓名.
+	 */
+	private String companyAnme;
+
+	/** 
+	 * 案件大类.
+	 */
+	private String caseType;
+
+	/** 
+	 * 文书编号.
+	 */
+	private String writNo;
+
+	/** 
+	 * 文书标题.
+	 */
+	private String writTitle;
+
+	/** 
+	 * 判决法院.
+	 */
+	private String judgCourt;
+
+	/** 
+	 * 判决时间.
+	 */
+	private Date judgDate;
+
+	/** 
+	 * 原始文档.
+	 */
+	private Clob content;
+
+	/** 
+	 * 原链接.
+	 */
+	private String sourceLink;
+
+	/** 
+	 * 关联基本信息主键.
+	 */
+	private String baseId;
+
+	/** 
+	 * 关联ID.
+	 */
+	private String relaId;
+
+	/** 
+	 * 数据日期.
+	 */
+	private Date rowDate;
+
+	public TOutCouJudgmentDetail() {
+	}
+
+	public TOutCouJudgmentDetail(String id, String companyAnme,
+			String caseType, String writNo, String writTitle, String judgCourt,
+			Date judgDate, Clob content, String sourceLink, String baseId,
+			String relaId, Date rowDate) {
+		this.id = id;
+		this.companyAnme = companyAnme;
+		this.caseType = caseType;
+		this.writNo = writNo;
+		this.writTitle = writTitle;
+		this.judgCourt = judgCourt;
+		this.judgDate = judgDate;
+		this.content = content;
+		this.sourceLink = sourceLink;
+		this.baseId = baseId;
+		this.relaId = relaId;
+		this.rowDate = rowDate;
+	}
+
+	/**
+	 * toJson
+	 * 
+	 * @return String
+	 */
+	public String toJson() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("{");
+		buffer.append("\"id\":\"" + id + "\",");
+		buffer.append("\"companyAnme\":\"" + companyAnme + "\",");
+		buffer.append("\"caseType\":\"" + caseType + "\",");
+		buffer.append("\"writNo\":\"" + writNo + "\",");
+		buffer.append("\"writTitle\":\"" + writTitle + "\",");
+		buffer.append("\"judgCourt\":\"" + judgCourt + "\",");
+		buffer.append("\"judgDate\":\"" + judgDate + "\",");
+		buffer.append("\"content\":\"" + content + "\",");
+		buffer.append("\"sourceLink\":\"" + sourceLink + "\",");
+		buffer.append("\"baseId\":\"" + baseId + "\",");
+		buffer.append("\"relaId\":\"" + relaId + "\",");
+		buffer.append("\"rowDate\":\"" + rowDate + "\",");
+		buffer.deleteCharAt(buffer.length() - 1);
+		buffer.append("}");
+		return buffer.toString();
+	}
+
+	@Override
+	public String toString() {
+
+		StringBuffer buffer = new StringBuffer();
+
+		buffer.append("开庭公告[");
+
+		buffer.append("\"ID\":\"" + id + "\",");
+
+		buffer.append("\"企业名称/姓名\":\"" + companyAnme + "\",");
+
+		buffer.append("\"案件大类\":\"" + caseType + "\",");
+
+		buffer.append("\"文书编号\":\"" + writNo + "\",");
+
+		buffer.append("\"文书标题\":\"" + writTitle + "\",");
+
+		buffer.append("\"判决法院\":\"" + judgCourt + "\",");
+
+		buffer.append("\"判决时间\":\"" + judgDate + "\",");
+
+		buffer.append("\"原始文档\":\"" + content + "\",");
+
+		buffer.append("\"原链接\":\"" + sourceLink + "\",");
+
+		buffer.append("\"关联基本信息主键\":\"" + baseId + "\",");
+
+		buffer.append("\"关联ID\":\"" + relaId + "\",");
+
+		buffer.append("\"数据日期\":\"" + rowDate + "\",");
+
+		buffer.deleteCharAt(buffer.length() - 1);
+		buffer.append("]");
+		return buffer.toString();
+	}
+
+	public String getId() {
+		return this.id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getCompanyAnme() {
+		return this.companyAnme;
+	}
+
+	public void setCompanyAnme(String companyAnme) {
+		this.companyAnme = companyAnme;
+	}
+
+	public String getCaseType() {
+		return this.caseType;
+	}
+
+	public void setCaseType(String caseType) {
+		this.caseType = caseType;
+	}
+
+	public String getWritNo() {
+		return this.writNo;
+	}
+
+	public void setWritNo(String writNo) {
+		this.writNo = writNo;
+	}
+
+	public String getWritTitle() {
+		return this.writTitle;
+	}
+
+	public void setWritTitle(String writTitle) {
+		this.writTitle = writTitle;
+	}
+
+	public String getJudgCourt() {
+		return this.judgCourt;
+	}
+
+	public void setJudgCourt(String judgCourt) {
+		this.judgCourt = judgCourt;
+	}
+
+	public Date getJudgDate() {
+		return this.judgDate;
+	}
+
+	public void setJudgDate(Date judgDate) {
+		this.judgDate = judgDate;
+	}
+
+	public Clob getContent() {
+		return this.content;
+	}
+
+	public void setContent(Clob content) {
+		this.content = content;
+	}
+
+	public String getSourceLink() {
+		return this.sourceLink;
+	}
+
+	public void setSourceLink(String sourceLink) {
+		this.sourceLink = sourceLink;
+	}
+
+	public String getBaseId() {
+		return this.baseId;
+	}
+
+	public void setBaseId(String baseId) {
+		this.baseId = baseId;
+	}
+
+	public String getRelaId() {
+		return this.relaId;
+	}
+
+	public void setRelaId(String relaId) {
+		this.relaId = relaId;
+	}
+
+	public Date getRowDate() {
+		return this.rowDate;
+	}
+
+	public void setRowDate(Date rowDate) {
+		this.rowDate = rowDate;
+	}
+
+	public boolean equals(Object other) {
+		if ((this == other))
+			return true;
+		if ((other == null))
+			return false;
+		if (!(other instanceof TOutCouJudgmentDetail))
+			return false;
+		TOutCouJudgmentDetail castOther = (TOutCouJudgmentDetail) other;
+
+		return ((this.getId() == castOther.getId()) || (this.getId() != null
+				&& castOther.getId() != null && this.getId().equals(
+				castOther.getId())))
+				&& ((this.getCompanyAnme() == castOther.getCompanyAnme()) || (this
+						.getCompanyAnme() != null
+						&& castOther.getCompanyAnme() != null && this
+						.getCompanyAnme().equals(castOther.getCompanyAnme())))
+				&& ((this.getCaseType() == castOther.getCaseType()) || (this
+						.getCaseType() != null
+						&& castOther.getCaseType() != null && this
+						.getCaseType().equals(castOther.getCaseType())))
+				&& ((this.getWritNo() == castOther.getWritNo()) || (this
+						.getWritNo() != null && castOther.getWritNo() != null && this
+						.getWritNo().equals(castOther.getWritNo())))
+				&& ((this.getWritTitle() == castOther.getWritTitle()) || (this
+						.getWritTitle() != null
+						&& castOther.getWritTitle() != null && this
+						.getWritTitle().equals(castOther.getWritTitle())))
+				&& ((this.getJudgCourt() == castOther.getJudgCourt()) || (this
+						.getJudgCourt() != null
+						&& castOther.getJudgCourt() != null && this
+						.getJudgCourt().equals(castOther.getJudgCourt())))
+				&& ((this.getJudgDate() == castOther.getJudgDate()) || (this
+						.getJudgDate() != null
+						&& castOther.getJudgDate() != null && this
+						.getJudgDate().equals(castOther.getJudgDate())))
+				&& ((this.getContent() == castOther.getContent()) || (this
+						.getContent() != null && castOther.getContent() != null && this
+						.getContent().equals(castOther.getContent())))
+				&& ((this.getSourceLink() == castOther.getSourceLink()) || (this
+						.getSourceLink() != null
+						&& castOther.getSourceLink() != null && this
+						.getSourceLink().equals(castOther.getSourceLink())))
+				&& ((this.getBaseId() == castOther.getBaseId()) || (this
+						.getBaseId() != null && castOther.getBaseId() != null && this
+						.getBaseId().equals(castOther.getBaseId())))
+				&& ((this.getRelaId() == castOther.getRelaId()) || (this
+						.getRelaId() != null && castOther.getRelaId() != null && this
+						.getRelaId().equals(castOther.getRelaId())))
+				&& ((this.getRowDate() == castOther.getRowDate()) || (this
+						.getRowDate() != null && castOther.getRowDate() != null && this
+						.getRowDate().equals(castOther.getRowDate())));
+	}
+
+	public int hashCode() {
+		int result = 17;
+
+		result = 37 * result + (getId() == null ? 0 : this.getId().hashCode());
+		result = 37
+				* result
+				+ (getCompanyAnme() == null ? 0 : this.getCompanyAnme()
+						.hashCode());
+		result = 37 * result
+				+ (getCaseType() == null ? 0 : this.getCaseType().hashCode());
+		result = 37 * result
+				+ (getWritNo() == null ? 0 : this.getWritNo().hashCode());
+		result = 37 * result
+				+ (getWritTitle() == null ? 0 : this.getWritTitle().hashCode());
+		result = 37 * result
+				+ (getJudgCourt() == null ? 0 : this.getJudgCourt().hashCode());
+		result = 37 * result
+				+ (getJudgDate() == null ? 0 : this.getJudgDate().hashCode());
+		result = 37 * result
+				+ (getContent() == null ? 0 : this.getContent().hashCode());
+		result = 37
+				* result
+				+ (getSourceLink() == null ? 0 : this.getSourceLink()
+						.hashCode());
+		result = 37 * result
+				+ (getBaseId() == null ? 0 : this.getBaseId().hashCode());
+		result = 37 * result
+				+ (getRelaId() == null ? 0 : this.getRelaId().hashCode());
+		result = 37 * result
+				+ (getRowDate() == null ? 0 : this.getRowDate().hashCode());
+		return result;
+	}
+
+}

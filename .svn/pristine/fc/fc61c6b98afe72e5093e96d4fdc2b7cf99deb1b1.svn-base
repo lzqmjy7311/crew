@@ -1,0 +1,142 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+
+<@CommonQueryMacro.page title="财务科目趋势分析">
+
+	<@CommonQueryMacro.CommonQuery id="TbCsmFinanceStatementTendencyData" init="false" submitMode="selected" navigate="false">
+			<#assign jzyear=''>
+			<#assign caliber=''>
+			<#assign repno=''>
+			<#assign customerNum=RequestParameters["customerNum"]?default("")>
+			
+			<table align="left" width="100%">
+			    <tr>
+					<td>
+						<@CommonQueryMacro.Group id="group22" label="" colNm=8  
+						fieldStr="startDate,backQs,caliber,project"/>
+						<center>
+           			           <@CommonQueryMacro.Button id="btModOrAdd23" />
+						</center>
+					</td>
+				</tr>
+			
+			    
+			</table>
+	</@CommonQueryMacro.CommonQuery>
+
+
+
+<script type="text/javascript" src="${contextPath}/gbicc-pages/jquery-form.js"></script>
+<script src="${contextPath}/templets/ui/js/chart/highcharts.js"></script>
+<script src="${contextPath}/templets/ui/js/chart/highcharts-more.js"></script>
+
+<div id="container" style="width: 800px; height: 300px; margin: 0 auto"></div>	
+	
+
+
+
+
+
+
+<script language="JavaScript">
+
+function btModOrAdd23_onClickCheck(button){
+	// var jzyear =TbCsmFinanceStatementTendencyData_dataset.getValue('jzyear');
+	 var caliber =TbCsmFinanceStatementTendencyData_dataset.getValue('caliber');
+	 var project  =TbCsmFinanceStatementTendencyData_dataset.getValue('project');
+	 var startDate  =TbCsmFinanceStatementTendencyData_dataset.getValue('startDate');
+	 var backQs  =TbCsmFinanceStatementTendencyData_dataset.getValue('backQs');
+	 var customerNum='${customerNum}';
+	 
+	 if(caliber==''){
+	 easyMsg.info('口径不能为空');
+	 return false;
+	 }else if(project==''){
+	 easyMsg.info('财务科目不能为空');
+	 return false;
+	 }
+	 
+	 
+	 var arrys=new Array();
+	 arrys= project.split(",");
+	//console.log("length"+arrys.length);
+	 if(arrys.length>5){
+	    top.easyMsg.info("所选的科目不能超过5个！");
+	    return false;
+	 }
+	  
+	 
+	 	//异步提交表单
+			$.ajax({								
+				url :"${contextPath}/char/GetHighCharServlet",
+		        type : "post",
+				data:{
+				   caliber:caliber,
+				   project:project,
+				   startDate:startDate,
+				   backQs:backQs,
+				   customerNum:customerNum,
+				   type:'course'				   
+				},
+				success:function(data){
+				
+				var dataJson=eval("("+data+")");
+				   
+					 //此处构建曲线  
+                     $('#container').highcharts({  
+				        chart:{  
+				             defaultSeriesType: 'line',//图表的显示类型（line,spline,scatter,splinearea bar,pie,area,column）  
+				             marginRight: 125,//上下左右空隙  
+				             marginBottom: 25 //上下左右空隙  
+				        },  
+				        title:{  
+				            text: '财务科目分析视图',//主标题  
+				                x: -20 //center  
+				        },  
+				        xAxis: {   //横坐标  
+				               categories: dataJson.listXdata //动态解析
+				        },  
+				            yAxis: {  
+				           title: {  
+				             text: '' //纵坐标  
+				               },  
+				               plotLines: [{  //标线属性  
+				            value: 0,  
+				             width: 1,  
+				             color: 'red'  
+				                }]  
+				              },  
+				             tooltip: { //数据点的提示框  
+				             formatter: function() { //formatter格式化函数  
+				             return '<b>'+ this.series.name +'</b><br/>'+  
+				             this.x +': '+ this.y;  
+				            }  
+				        },  
+				        legend: {  
+				              layout: 'vertical',  
+				              align: 'right',  
+				              verticalAlign: 'top',  
+				              x: -10,  
+				              y: 100,  
+				              borderWidth: 0  
+				             },   
+				         series:dataJson.data//动态解析
+				         });
+				}
+			});
+     
+ 
+  }
+
+//输入统计项
+	function project_DropDown_onKeyup(val){
+		if(val.length>=0){
+			return true;
+		}
+		return false;
+	}
+
+
+
+
+</script>
+</@CommonQueryMacro.page>

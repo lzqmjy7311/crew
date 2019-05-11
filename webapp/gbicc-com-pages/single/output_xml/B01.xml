@@ -1,0 +1,44 @@
+<CommQry title="TRewB01IouId" navigate="TRewB01IouId" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.B01Getter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="duebillno" desc="借据编号" edittype="text" datatype="string"
+        xpath="/duebillno" />
+        <Field id="loanacno" desc="账户编号" edittype="text" datatype="string"
+        xpath="/loanacno" />
+        <Field id="begindate" desc="放款日期" edittype="text" datatype="date"
+        xpath="/begindate" />
+        <Field id="custid" desc="客户编号" edittype="text" datatype="string" 
+        xpath="/custid" />
+        <Field id="custname" desc="客户名称" edittype="text" datatype="string"
+        xpath="/custname" />
+        <Field id="contno" desc="借款合同编号" edittype="text" datatype="string" 
+        xpath="/contno" />
+        <Field id="listid" desc="单据序号" edittype="text" datatype="string" 
+        xpath="/listid" />
+        <Field id="listtype" desc="单据类型" edittype="text" datatype="string"
+        xpath="/listtype" />
+        <Field id="busitype" desc="业务类型" edittype="text" datatype="string"
+        xpath="/busitype" />
+        <Field id="loanid" desc="业务编号" edittype="text" datatype="string" 
+        xpath="/loanid" />
+        <Field id="subjid" desc="会计科目" edittype="text" datatype="string" 
+        xpath="/subjid" />
+        <Field id="prodid" desc="产品代码" edittype="text" datatype="string" 
+        xpath="/prodid" />
+        <Field id="tcapi" desc="贷款金额" edittype="text" datatype="currency" 
+        xpath="/tcapi" />
+        <Field id="tterm" desc="贷款期限" edittype="text" datatype="int" 
+        xpath="/tterm" />
+        <Field id="enddate" desc="到期日期" edittype="text" datatype="date" 
+        xpath="/enddate" />
+        <Field id="saveacno" desc="存款账号" edittype="text" datatype="string"
+        xpath="/saveacno" />
+        <Field id="bankid" desc="经办行" edittype="text" datatype="string" 
+        xpath="/bankid" />
+        <Field id="operid" desc="经办人" edittype="text" datatype="string" 
+        xpath="/operid" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

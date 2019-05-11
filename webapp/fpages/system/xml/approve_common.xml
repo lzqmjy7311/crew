@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--jianxue.zhang-->
+<CommQry
+title="待办任务审计"
+navigate=""
+type="call"
+interface="false"
+pagesize="10"
+async="true"
+databusid=""
+txnlogflag="true"
+transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.huateng.ebank.business.approve.getter.ApproveRecordGetter">
+	<Include id="BankParam" />
+
+	<Fields>
+		<Field id="approveRemark" desc="备注" status="F" require="false" edittype="textarea"
+			datatype="string" method="None" readonly="false"
+			size="100" default="" xpath="/approveRemark" tip="" width="200"/>
+
+		<Field id="approveResult" desc="审批结果" status="F" require="true" edittype="select" width="200"
+			datatype="string" method="None" readonly="false"   translated="LIST:01,01-通过;02,02-拒绝"
+			size="" default="" xpath="/approveResult" tip="" />
+
+		<Field id="intInsId" desc="" status="N" method="None" xpath="/intInsId"
+			primary="true" type="string" size="" default="" tip=""/>
+	</Fields>
+	<Where>
+	</Where>
+	<Operations>
+	    <Button id="btApprove" name="btApprove" desc="确定" operation="asysubmit" updateClass="com.huateng.ebank.business.approve.updater.TaskListUpdate" url="/fpages/system/ftl/DirectorConfirm.ftl" show="" group="" txn="" />
+	    <Button id="btBack" name="btBack" desc="取消" operation="href" url="/fpages/system/ftl/DirectorConfirm.ftl" show="" group="" txn="" />
+	</Operations>
+</CommQry>

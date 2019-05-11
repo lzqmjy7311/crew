@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Clients>
+<!-- 定义作为客户方的服务，id:调用服务表示,type:调用服务类型，一般服务都为common , impClass:调用实现类，基础版本由技术实现  txnCode:交易码 desc:服务描述  -->
+	<Client id="SocketClient" type="common" impClass="com.huateng.flowswitch.micro.model.server.CommonClient" txnCode="1111" desc="简单测试客户端">
+		<Param id="IN" type="CEReq" impClass="com.huateng.fs.micro.demo.bean.TestInputBean" desc="输入报文信息" />
+		<Param id="OUT" type="CERes" impClass="com.huateng.fs.micro.demo.bean.TestOutputBean" desc="输出报文信息" />
+		<Param id="FAIL" type="Error" impClass="com.huateng.fs.micro.demo.bean.TestFailBean" desc="失败报文信息" />
+<!-- 关联客户端通道配置 -->	
+		<ChannelCient id="SocketTcpClient"></ChannelCient>
+<!-- 定义客户端接入点处理，支持成功后操作和失败后操作,自动调用对应操作 -->
+<!-- 咱不支持 
+		<EndpointMappings>
+		 	<mapping key="doSuccess" uri="Services.TestService::clientSucess"/>	
+		 	<mapping key="doFail" uri="Services.TestService::ClientFail"/>	
+		</EndpointMappings>
+-->
+	</Client>
+	
+	
+	<!-- 定义作为客户方的服务，id:调用服务表示,type:调用服务类型，一般服务都为common , impClass:调用实现类，基础版本由技术实现  txnCode:交易码 desc:服务描述  -->
+	<Client id="SocketXMLClient" type="common" impClass="com.huateng.flowswitch.micro.model.server.CommonClient" txnCode="1010" desc="简单测试客户端">
+		<Param id="IN" type="CEReq" impClass="com.huateng.fs.micro.demo.bean.TestInputBean" desc="输入报文信息" />
+		<Param id="OUT" type="CERes" impClass="com.huateng.fs.micro.demo.bean.TestOutputBean" desc="输出报文信息" />
+		<Param id="FAIL" type="Error" impClass="com.huateng.fs.micro.demo.bean.TestFailBean" desc="失败报文信息" />
+<!-- 关联客户端通道配置 -->	
+		<ChannelCient id="SocketXMLTcpClient"></ChannelCient>
+	</Client>
+	<!-- 不接收或不处理返回值 -->	
+	<Client id="SocketXMLClientNotOut" type="common" impClass="com.huateng.flowswitch.micro.model.server.CommonClient" txnCode="1010" desc="简单测试客户端">
+		<Param id="IN" type="CEReq" impClass="test.com.huateng.flowswitch.micro.server.TestInputBean" desc="输入报文信息" />
+		<!-- <Param id="OUT" type="CERes" impClass="test.com.huateng.flowswitch.micro.server.TestOutputBean" desc="输出报文信息" /> -->
+		<Param id="FAIL" type="Error" impClass="test.com.huateng.flowswitch.micro.server.TestFailBean" desc="失败报文信息" />
+		<ChannelCient id="SocketXMLTcpClient"></ChannelCient>
+	</Client>
+	
+	<!-- 发送字符串报文，接收返回处理 -->
+	<Client id="SocketXMLClientSendStr" type="common" impClass="com.huateng.flowswitch.micro.model.server.CommonClient" txnCode="1010" desc="简单测试客户端">
+		<Param id="OUT" type="CERes" impClass="test.com.huateng.flowswitch.micro.server.TestOutputBean" desc="输出报文信息" />
+		<Param id="FAIL" type="Error" impClass="test.com.huateng.flowswitch.micro.server.TestFailBean" desc="失败报文信息" />
+		<ChannelCient id="SocketXMLTcpClientSendStr"></ChannelCient>
+	</Client>
+	
+	<!-- 发送字符串报文,不接受或不处理返回值 -->
+	<Client id="SocketXMLClientSendStrNotOut" type="common" impClass="com.huateng.flowswitch.micro.model.server.CommonClient" txnCode="1010" desc="简单测试客户端">
+		<!-- <Param id="OUT" type="CERes" impClass="test.com.huateng.flowswitch.micro.server.TestOutputBean" desc="输出报文信息" /> -->
+		<Param id="FAIL" type="Error" impClass="test.com.huateng.flowswitch.micro.server.TestFailBean" desc="失败报文信息" />
+		<ChannelCient id="SocketXMLTcpClientSendStr"></ChannelCient>
+	</Client>
+	
+	<!-- 定义作为客户方的服务，id:调用服务表示,type:调用服务类型，一般服务都为common , impClass:调用实现类，基础版本由技术实现  txnCode:交易码 desc:服务描述  -->
+	<Client id="SocketXMLClientTest" type="common" impClass="com.huateng.flowswitch.micro.model.server.CommonClient" txnCode="1010" desc="简单测试客户端">
+		<Param id="IN" type="CEReq" impClass="com.huateng.fs.micro.demo.bean.TestInputBean" desc="输入报文信息" />
+		<Param id="OUT" type="CERes" impClass="com.huateng.fs.micro.demo.bean.TestOutputBean" desc="输出报文信息" />
+		<Param id="FAIL" type="Error" impClass="com.huateng.fs.micro.demo.bean.TestFailBean" desc="失败报文信息" />
+<!-- 关联客户端通道配置 -->	
+		<ChannelCient id="SocketXMLTcpClientTest"></ChannelCient>
+	</Client>
+	
+	<!-- 定义作为客户方的服务，id:调用服务表示,type:调用服务类型，一般服务都为common , impClass:调用实现类，基础版本由技术实现  txnCode:交易码 desc:服务描述  -->
+	<Client id="HttpXMLClient" type="common" impClass="com.huateng.flowswitch.micro.model.server.CommonClient" txnCode="1010" desc="简单测试客户端">
+		<Param id="IN" type="CEReq" impClass="com.huateng.fs.micro.demo.bean.TestInputBean" desc="输入报文信息" />
+		<Param id="OUT" type="CERes" impClass="com.huateng.fs.micro.demo.bean.TestOutputBean" desc="输出报文信息" />
+		<Param id="FAIL" type="Error" impClass="com.huateng.fs.micro.demo.bean.TestFailBean" desc="失败报文信息" />
+<!-- 关联客户端通道配置 -->	
+		<ChannelCient id="HttpXMLTcpClient"></ChannelCient>
+	</Client>
+	
+	<!-- 定义作为客户方的服务，id:调用服务表示,type:调用服务类型，一般服务都为common , impClass:调用实现类，基础版本由技术实现  txnCode:交易码 desc:服务描述  -->
+	<Client id="HttpsXMLClient" type="common" impClass="com.huateng.flowswitch.micro.model.server.CommonClient" txnCode="1010" desc="简单测试客户端">
+		<Param id="IN" type="CEReq" impClass="com.huateng.fs.micro.demo.bean.TestInputBean" desc="输入报文信息" />
+		<Param id="OUT" type="CERes" impClass="com.huateng.fs.micro.demo.bean.TestOutputBean" desc="输出报文信息" />
+		<Param id="FAIL" type="Error" impClass="com.huateng.fs.micro.demo.bean.TestFailBean" desc="失败报文信息" />
+<!-- 关联客户端通道配置 -->	
+		<ChannelCient id="HttpsXMLTcpClient"></ChannelCient>
+	</Client>
+	<!-- 不接收或不处理返回值 -->	
+	<Client id="SocketXMLClientNotOut" type="common" impClass="com.huateng.flowswitch.micro.model.server.CommonClient" txnCode="1010" desc="简单测试客户端">
+		<Param id="IN" type="CEReq" impClass="com.huateng.fs.micro.demo.bean.TestInputBean" desc="输入报文信息" />
+		<Param id="FAIL" type="Error" impClass="com.huateng.fs.micro.demo.bean.TestFailBean" desc="失败报文信息" />
+		<ChannelCient id="SocketXMLTcpClientTest"></ChannelCient>
+	</Client>
+	
+	
+	
+	
+</Clients>

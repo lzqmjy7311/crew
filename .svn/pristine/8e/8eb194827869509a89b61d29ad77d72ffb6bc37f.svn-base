@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="FIVE" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.fp.demo.getter.SwitchGetter">
+	<Include id="BankParam" />
+	
+	<Fields>
+		<Field id="pan" desc="卡号" edittype="text" datatype="string" xpath="/pan" size="19" require="true"/>
+		<Field id="acqBIN" desc="acqBIN" edittype="text" datatype="string" xpath="/merchant/acqBIN" size="11" require="true"/>
+		<Field id="merID" desc="merID" edittype="text" datatype="string" xpath="/merchant/merID" size="11" require="true"/>
+		<Field id="password" desc="password" edittype="text" datatype="string" xpath="/merchant/password" size="11" require="true"/>
+		<Field id="name" desc="name" edittype="text" datatype="string" xpath="/merchant/name" size="11" require="true"/>
+		<Field id="country" desc="country" edittype="text" datatype="string" xpath="/merchant/country" size="11" require="true"/>
+		<Field id="purchAmount" desc="交易金额" edittype="text" datatype="currency" xpath="/purchase/purchAmount" size="18" scale="2" prefix="$" require="true"/>
+		<Field id="currency" desc="交易币种"  edittype="select" translated="LIST:CNY,人民币"  datatype="string" xpath="/purchase/currency" size="4"  require="true"/>
+		<Field id="exponent" desc="货币指数"  edittype="text"  datatype="int" xpath="/purchase/exponent" size="1"  require="true"/>
+		<Field id="trsFeeAmount" desc="交易手续费" edittype="text" datatype="currency" xpath="/purchase/trsFeeAmount" size="9" scale="4" prefix="$" require="true"/>
+	</Fields>
+	<Where>
+		<TextBox id="qpan" desc="卡号" datatype="string" index="0" />
+	</Where>
+	<Operations>
+	<Button id="btSubmit" name="btSubmit" desc="提交" operation="asysubmit"
+			updateClass="com.huateng.fp.demo.updater.SwitchAddUpdate"
+			url="#" txn="" />
+	</Operations>
+</CommQry>

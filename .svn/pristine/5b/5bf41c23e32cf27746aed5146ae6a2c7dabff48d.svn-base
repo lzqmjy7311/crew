@@ -1,0 +1,170 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-11-7 11:09:12 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.person.monitor.entity.TPlYjReport" table="T_PL_YJ_REPORT" schema="ECUSER">
+        <id name="fdId" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="fdCustomerId" type="string">
+            <column name="FD_CUSTOMER_ID" length="32" />
+        </property>
+        <property name="fdCustCode" type="string">
+            <column name="FD_CUST_CODE" length="32" />
+        </property>
+        <property name="fdCustName" type="string">
+            <column name="FD_CUST_NAME" length="64" />
+        </property>
+        <property name="fdCustType" type="string">
+            <column name="FD_CUST_TYPE" length="25" />
+        </property>
+        <property name="fdLoanAccount" type="string">
+            <column name="FD_LOAN_ACCOUNT" length="32" />
+        </property>
+        <property name="fdProductCode" type="string">
+            <column name="FD_PRODUCT_CODE" length="32" />
+        </property>
+        <property name="fdLoanAmt" type="java.lang.Double">
+            <column name="FD_LOAN_AMT" precision="53" scale="0" />
+        </property>
+        <property name="fdLoanBalance" type="java.lang.Double">
+            <column name="FD_LOAN_BALANCE" precision="53" scale="0" />
+        </property>
+        <property name="fdLoanPeriod" type="java.lang.Integer">
+            <column name="FD_LOAN_PERIOD" />
+        </property>
+        <property name="fdOperator" type="string">
+            <column name="FD_OPERATOR" length="32" />
+        </property>
+        <property name="fdOperBank" type="string">
+            <column name="FD_OPER_BANK" length="32" />
+        </property>
+        <property name="fdIndustry" type="string">
+            <column name="FD_INDUSTRY" length="25" />
+        </property>
+        <property name="fdGuarWay" type="string">
+            <column name="FD_GUAR_WAY" length="25" />
+        </property>
+        <property name="fdSlidingScales" type="java.lang.Double">
+            <column name="FD_SLIDING_SCALES" precision="53" scale="0" />
+        </property>
+        <property name="fdAcctStatus" type="string">
+            <column name="FD_ACCT_STATUS" length="25" />
+        </property>
+        <property name="fdRiskClass" type="string">
+            <column name="FD_RISK_CLASS" length="25" />
+        </property>
+        <property name="fdVisitWay" type="string">
+            <column name="FD_VISIT_WAY" length="25" />
+        </property>
+        <property name="fdVisitAdd" type="string">
+            <column name="FD_VISIT_ADD" length="25" />
+        </property>
+        <property name="fdLeadInvestigator" type="string">
+            <column name="FD_LEAD_INVESTIGATOR" length="32" />
+        </property>
+        <property name="fdAssInvestigator" type="string">
+            <column name="FD_ASS_INVESTIGATOR" length="32" />
+        </property>
+        <property name="fdSurveyDate" type="date">
+            <column name="FD_SURVEY_DATE" length="10" />
+        </property>
+       
+       
+        <property name="fdApplyOpin" type="string">
+            <column name="FD_APPLY_OPIN" length="128" />
+        </property>
+        <property name="fdIsZdzqzwjfflss" type="string">
+            <column name="FD_IS_ZDZQZWJFFLSS" length="25" />
+        </property>
+        <property name="fdIsZdzqzwjfflssDesc" type="string">
+            <column name="FD_IS_ZDZQZWJFFLSS_DESC" length="128" />
+        </property>
+        <property name="fdIsIsEytfyhzf" type="string">
+            <column name="FD_IS_IS_EYTFYHZF" length="25" />
+        </property>
+        <property name="fdIsIsEytfyhzfDesc" type="string">
+            <column name="FD_IS_IS_EYTFYHZF_DESC" length="128" />
+        </property>
+        <property name="fdIsTdfsbh" type="string">
+            <column name="FD_IS_TDFSBH" length="25" />
+        </property>
+        <property name="fdIsTdfsbhDesc" type="string">
+            <column name="FD_IS_TDFSBH_DESC" length="128" />
+        </property>
+        <property name="fdIsTgxjzl" type="string">
+            <column name="FD_IS_TGXJZL" length="25" />
+        </property>
+        <property name="fdIsTgxjzlDesc" type="string">
+            <column name="FD_IS_TGXJZL_DESC" length="128" />
+        </property>
+        <property name="fdIsCweh" type="string">
+            <column name="FD_IS_CWEH" length="25" />
+        </property>
+        <property name="fdIsCwehDesc" type="string">
+            <column name="FD_IS_CWEH_DESC" length="128" />
+        </property>
+        <property name="fdIsZyzc" type="string">
+            <column name="FD_IS_ZYZC" length="25" />
+        </property>
+        <property name="fdIsZyzcDesc" type="string">
+            <column name="FD_IS_ZYZC_DESC" length="128" />
+        </property>
+        <property name="fdIsCzlhhfccg" type="string">
+            <column name="FD_IS_CZLHHFCCG" length="25" />
+        </property>
+        <property name="fdIsCzlhhfccgDesc" type="string">
+            <column name="FD_IS_CZLHHFCCG_DESC" length="128" />
+        </property>
+        <property name="fdIsZzdx" type="string">
+            <column name="FD_IS_ZZDX" length="25" />
+        </property>
+        <property name="fdIsZzdxDesc" type="string">
+            <column name="FD_IS_ZZDX_DESC" length="128" />
+        </property>
+        <property name="fdIsTcbtc" type="string">
+            <column name="FD_IS_TCBTC" length="25" />
+        </property>
+        <property name="fdIsTcbtcDesc" type="string">
+            <column name="FD_IS_TCBTC_DESC" length="128" />
+        </property>
+        <property name="fdIsPcbpc" type="string">
+            <column name="FD_IS_PCBPC" length="25" />
+        </property>
+        <property name="fdIsPcbpcDesc" type="string">
+            <column name="FD_IS_PCBPC_DESC" length="128" />
+        </property>
+        <property name="fdIsFmbd" type="string">
+            <column name="FD_IS_FMBD" length="25" />
+        </property>
+        <property name="fdIsFmbdDesc" type="string">
+            <column name="FD_IS_FMBD_DESC" length="128" />
+        </property>
+        <property name="fdIsZdzh" type="string">
+            <column name="FD_IS_ZDZH" length="25" />
+        </property>
+        <property name="fdIsZdzhDesc" type="string">
+            <column name="FD_IS_ZDZH_DESC" length="128" />
+        </property>
+        <property name="fdIsBsxxycs" type="string">
+            <column name="FD_IS_BSXXYCS" length="25" />
+        </property>
+        <property name="fdIsBsxxycsDesc" type="string">
+            <column name="FD_IS_BSXXYCS_DESC" length="128" />
+        </property>
+        <property name="fdIsXysmsx" type="string">
+            <column name="FD_IS_XYSMSX" length="25" />
+        </property>
+        <property name="fdIsXysmsxDesc" type="string">
+            <column name="FD_IS_XYSMSX_DESC" length="128" />
+        </property>
+         <property name="fdCompleteDate" type="date">
+            <column name="FD_COMPLETE_DATE"  />
+        </property>
+         <property name="frequency" type="string">
+            <column name="FD_FREQUENCY" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

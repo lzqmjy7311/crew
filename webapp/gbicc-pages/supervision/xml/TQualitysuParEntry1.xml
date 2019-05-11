@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="质量监督参数维护列表" navigate="质量监督参数维护列表" type="call"
+	interface="false" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.person.supervision.getter.QualitysuParGetter">
+	<Include id="BankParam" />
+
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="id" desc="" edittype="text" datatype="string" size="40" xpath="/id" />
+		<Field id="bankName" desc="支行名称" edittype="text" datatype="string" status="F" size="50" xpath="bankName" require="true"  />
+		<Field id="productName" desc="产品名称"  edittype="text" status="F" datatype="string" size="100" xpath="/productName" />			
+		<Field id="riskSignal" desc="风险信号"  edittype="text" datatype="string" status="F" size="50" xpath="/riskSignal"/>
+		<Field id="assureType" desc="担保方式"  edittype="text" datatype="string" status="F" size="40" xpath="/assureType"/>
+		<Field id="warningLevel" desc="预警优先级" edittype="text" datatype="string" status="F" size="25" xpath="/warningLevel"/>
+		<Field id="qualitysupPerc" desc="质量监督比例%" edittype="process" status="F" size="50" xpath="/qualitysupPerc"/>	
+		<Field id="status" desc="状态" status="F" require="true"  primary="true" type="String" size="10" xpath="/status" default="" edittype="text"/>
+		<Field id="startTime" desc="启用开始时间" edittype="text" datatype="date" status="F" placeholder="yyyy-MM-dd" xpath="/startTime"/>
+		<Field id="endTime" desc="启用结束时间" edittype="text" datatype="date" status="F" placeholder="yyyy-MM-dd" xpath="/endTime"/>
+		<Field id="zhuangtai" desc="启用状态" edittype="text" datatype="String" status="F"/>
+    </Fields>
+    
+    <Where>
+	<!--    	
+		<TextBox id="custCode" desc="客户编号" edittype="text" datatype="string" size="10" require="" index="0" />
+		<TextBox id="custName" desc="客户名称" edittype="text" status="F" datatype="string" size="10" index="1" />\
+		<TextBox id="operator" desc="经办人" edittype="text" status="F" datatype="string" size="10" index="2" />\
+		<TextBox id="loanAccount" desc="贷款账号" edittype="text" status="F" datatype="string" size="10" index="3" />\					
+		<TextBox id="operBank" desc="经办行" edittype="text" status="F" datatype="string" size="10" index="4" />\
+		<Option id="productCode" desc="产品名称" status="N"
+	        fieldname="qdataNo" edittype="select" dropdowntype="dynamic"
+			dataType="String" readOnly="false" translated="CQ:AllProductSelect"
+			viewField="prodName,prodCode" init="true"
+			fieldmap="productName=prodName;productCode=prodCode" size="32"
+			primary="false" type="String" index="5" />\
+		<TextBox id="productName" desc="产品名称" edittype="text" status="F" datatype="string" size="32" />\
+	-->
+    </Where>
+	<Operations>
+		<Button id="btModOrAdd" name="btModOrAdd" desc="保存" operation="asysubmit"
+			updateClass="com.gbicc.person.supervision.update.QualitysuParAddUpdate"
+			url="" txn="" />			
+		<Button id="btCancel" name="btCancel" desc="返回" operation="href" url="" />
+		<Button id="btAdd" name="btAdd" desc="新增" operation="" url="#" show="" group="" txn="" icon="icon-add"/>
+		<Button id="btModify" name="btModify" desc="修改" operation="" url="#" show="" group="" txn="" icon="icon-edit"/>		
+	</Operations>
+</CommQry>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="zxinfo" navigate="zxinfo" type="call" interface="false" databusid="" async="true" transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.gbicc.company.view.accountpage.getter.CapitalLiabilitiesGetter">
+    <Include id="BankParam" />
+	<Fields>
+		<Field id="project_cd" desc="利润表CODE" edittype="text" datatype="string" readonly="true"
+        xpath="/project_cd" />
+        <Field id="project_name" desc="利润表" edittype="text" datatype="string" readonly="true"
+        xpath="/project_name" />
+        <Field id="project_value" desc="当期值" edittype="text" datatype="currency" 
+		xpath="/project_value" size="20" scale="2" prefix="￥" readOnly="true" />
+		<Field id="project_value_2" desc="去年同期值" edittype="text" datatype="currency" 
+		xpath="/project_value_2" size="20" scale="2" prefix="￥" readOnly="true" />
+		<Field id="amt" desc="两期科目差额" edittype="text" datatype="string" 
+		xpath="/amt" scale="2" readOnly="true" />
+		<Field id="rate" desc="同比" edittype="text" datatype="string" readonly="true"
+        xpath="/rate" />
+        <Field id="excep_flag" desc="同比本企业异常" edittype="text" datatype="string" readonly="true"
+        xpath="/excep_flag" /> 
+        <Field id="excep_flag_2" desc="同比标杆企业异常" edittype="text" datatype="string" readonly="true"
+        xpath="/excep_flag_2" />
+	</Fields>
+	<Operations>
+    </Operations>
+</CommQry>

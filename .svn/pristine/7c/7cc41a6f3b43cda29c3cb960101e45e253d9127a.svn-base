@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-1-8 9:37:30 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.person.great.entity.TPlGreatEvent" table="T_PL_GREAT_EVENT" schema="ECUSER">
+        <comment>重大事件表</comment>
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        
+	    <many-to-one 
+			name="regiUser" 
+			column="FD_REGI_USER"
+            class="com.huateng.ebank.entity.data.mng.TlrInfo" 
+			cascade="save-update" 
+			fetch="select"
+			not-null="false"
+			not-found="ignore" 
+		/>
+        
+        <property name="regiDate" type="date">
+            <column name="FD_REGI_DATE" length="10" />
+        </property>
+        <property name="atteMain" type="string">
+            <column name="FD_ATTE_MAIN" length="50" />
+        </property>
+        <property name="mainObj" type="string">
+            <column name="FD_MAIN_OBJ" length="50" />
+        </property>
+        <property name="mainObjName" type="string">
+            <column name="FD_MAIN_OBJ_NAME" length="200" />
+        </property>
+        <property name="content" type="string">
+            <column name="FD_CONTENT" length="1000" />
+        </property>
+        <property name="explain" type="string">
+            <column name="FD_EXPLAIN" length="1000" />
+        </property>
+        <property name="level" type="string">
+            <column name="FD_LEVEL" length="10" />
+        </property>
+        <property name="contentCode" type="string">
+            <column name="FD_CONTENT_CODE" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

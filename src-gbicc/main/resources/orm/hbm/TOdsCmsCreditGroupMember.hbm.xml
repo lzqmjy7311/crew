@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-5-26 11:08:16 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.group.TOdsCmsCreditGroupMember" table="T_ODS_CMS_CREDIT_GROUP_MEMBER">
+        <id name="creditGroupMemberId" type="java.lang.String">
+            <column name="CREDIT_GROUP_MEMBER_ID" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="partyId" type="java.lang.String">
+            <column name="PARTY_ID" />
+        </property>
+        <property name="creditGroupLevel" type="java.lang.String">
+            <column name="CREDIT_GROUP_LEVEL" />
+        </property>
+        <property name="creditGroupParticipantId" type="java.lang.String">
+            <column name="CREDIT_GROUP_PARTICIPANT_ID" />
+        </property>
+        <property name="creditGroupRelInstruct" type="java.lang.String">
+            <column name="CREDIT_GROUP_REL_INSTRUCT" />
+        </property>
+        <property name="creditGroupRelationStatus" type="java.lang.String">
+            <column name="CREDIT_GROUP_RELATION_STATUS" />
+        </property>
+        <property name="creditGroupSuperiorId" type="java.lang.String">
+            <column name="CREDIT_GROUP_SUPERIOR_ID" />
+        </property>
+        <property name="customerNum" type="java.lang.String">
+            <column name="CUSTOMER_NUM" />
+        </property>
+        <property name="effectiveFlag" type="java.lang.String">
+            <column name="EFFECTIVE_FLAG" />
+        </property>
+        <property name="groupInfoNum" type="java.lang.String">
+            <column name="GROUP_INFO_NUM" />
+        </property>
+        <property name="groupRelTypeCd" type="java.lang.String">
+            <column name="GROUP_REL_TYPE_CD" />
+        </property>
+        <property name="isCoreCustomer" type="java.lang.String">
+            <column name="IS_CORE_CUSTOMER" />
+        </property>
+        <property name="maintainOrgName" type="java.lang.String">
+            <column name="MAINTAIN_ORG_NAME" />
+        </property>
+        <property name="maintainTime" type="java.sql.Timestamp">
+            <column name="MAINTAIN_TIME" />
+        </property>
+        <property name="maintainTypeCd" type="java.lang.String">
+            <column name="MAINTAIN_TYPE_CD" />
+        </property>
+        <property name="memberTypeCd" type="java.lang.String">
+            <column name="MEMBER_TYPE_CD" />
+        </property>
+        <property name="relalationRelId" type="java.lang.String">
+            <column name="RELALATION_REL_ID" />
+        </property>
+    </class>
+</hibernate-mapping>

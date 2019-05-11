@@ -1,0 +1,20 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+
+<#assign warningId=RequestParameters["warningId"]?default("")>
+
+<@CommonQueryMacro.page title="对公客户信息">
+<table>
+	<@CommonQueryMacro.CommonQuery id="J02" init="true" submitMode="current">
+		<@CommonQueryMacro.DataTable height="305" id="J02Table" readonly="true" fitColumns="false"
+		fieldStr="custno,custname[200],contactCode,clientSubTpCd,custLevelTpCd[110],creditLevelTpCd,industryTpCd,econatureTpCd,businessScope[200],mainBusiness,establishedDt,scaleTpCd,conName,conPositionTpCd,legalPersonName[110],legalPersonIdTpCd[140],legalPersonIdNum[140],bankStockholderInd,onlineBankInd,hasExBizInd,listedCompInd,approvalNum,superorgTpCd,headName,stockHolderId,impowerContId,hostOrg" width="100%" hasFrame="true"/>
+	</@CommonQueryMacro.CommonQuery>
+</table>
+<script>
+	//页面初始化
+	function initCallGetter_post(){
+		var warningId='${warningId}';
+		J02_dataset.setParameter("warningId",warningId);
+	}
+</script>
+</@CommonQueryMacro.page>

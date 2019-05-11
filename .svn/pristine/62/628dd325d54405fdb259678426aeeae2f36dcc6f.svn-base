@@ -1,0 +1,12 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+<@CommonQueryMacro.page title="任务管理  &gt; 预警清单工作台">
+	<@CommonQueryMacro.CommonQuery id="WarningEntry" init="true" submitMode="current">
+		<@CommonQueryMacro.DataTable id="taskTable" paginationbar="moreHandle"   fieldStr="custCode,ruleLevel,ruleDesc,custName,loanAccount,productName,loanPeriod,operator,operBank,createDate,staChangeDate,isNewCustomer" width="100%" hasFrame="true"/>
+	</@CommonQueryMacro.CommonQuery>
+<script>
+	function moreHandle_onClick(){
+		parent.parent.parent.GTab.addTab('WarningEntry',"预警清单",'/gbicc-pages/warn/ftl/warning_entry.ftl?flag=desk');
+	}
+</script>
+</@CommonQueryMacro.page>

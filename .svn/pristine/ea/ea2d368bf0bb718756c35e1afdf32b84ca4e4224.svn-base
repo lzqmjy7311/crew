@@ -1,0 +1,27 @@
+<CommQry title="TRewC14CorpGcircleId" navigate="TRewC14CorpGcircleId" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.C14Getter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="customerNum" desc="对公客户编号" edittype="text" datatype="string"
+        xpath="/customerNum" />
+        <Field id="gcircleCd" desc="担保类型" edittype="text" datatype="string"
+        xpath="/gcircleCd" />
+        <Field id="gcCustIdTpCd" desc="担保人证件类型" edittype="text" datatype="string"
+        xpath="/gcCustIdTpCd" />
+        <Field id="gcCustIdNum" desc="担保人证件号码" edittype="text" datatype="string"
+        xpath="/gcCustIdNum" />
+        <Field id="gcCustTpCd" desc="担保人类型" edittype="text" datatype="string"
+        xpath="/gcCustTpCd" />
+        <Field id="gcCustNum" desc="担保人信贷客户编号" edittype="text" datatype="string"
+        xpath="/gcCustNum" />
+        <Field id="gcCustCoreNum" desc="担保人核心客户号" edittype="text" datatype="string"
+        xpath="/gcCustCoreNum" />
+        <Field id="id" desc="" edittype="text" datatype="string" xpath="/id" />
+        <Field id="warnId" desc="预警表ID" edittype="text" datatype="string"
+        xpath="/warnId" />
+        <Field id="dataDt" desc="数据日期" edittype="text" datatype="date"
+        xpath="/dataDt" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

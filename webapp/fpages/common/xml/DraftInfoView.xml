@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="网银交易->票据信息" navigate="" type="call"
+	interface="false" pagesize="20" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.common.getter.DraftInfoGetter">
+	<Include id="BankParam" />
+
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+
+		<Field id="id" desc="电子票据号码" require="false" readonly="true"
+			edittype="datalabel" datatype="string" method="None"
+			type="电子票据号码" size="20" scale="2" default="" xpath="/id" />
+		<Field id="draftType" desc="票据种类" require="" edittype="datalabel"
+			datatype="string" method="" tip="票据种类" size="60" readonly="true"
+			default="" xpath="/draftType" />
+		<Field id="draftTypeName" desc="票据种类" require="" edittype="datalabel" translated="DATA_DIC.54"
+			datatype="string" method="com.huateng.ebank.business.common.CustCQMethod.getDataDicName" tip="票据种类" size="60" readonly="true"
+			default="" xpath="/draftType" />
+
+		<Field id="draftAmount" desc="票据金额" require="false"
+			edittype="datalabel" datatype="currency" method="None" readonly="true"
+			type="票据金额" size="20" scale="2" default="" xpath="/draftAmount" />
+
+		<Field id="draftAmountCH" desc="票据金额大写" require="false"
+			edittype="datalabel" datatype="string" method="com.huateng.ebank.business.common.CustCQMethod.getRMBCapitalMoney" readonly="true"
+			type="票据金额大写" size="20"  default="" xpath="/draftAmount" />
+
+		<Field id="remitDate" desc="出票日期" require="false"
+			edittype="datalabel" datatype="date" method="None" readonly="true"
+			type="出票日期" size="20" scale="2" default="" xpath="/remitDate" />
+
+		<Field id="maturityDate" desc="到期日期" require="false"
+			edittype="datalabel" datatype="date" method="None" readonly="true"
+			type="到期日期" size="20" scale="2" default="" xpath="/maturityDate" />
+
+		<Field id="remitterName" desc="出票人名称" require="" edittype="datalabel"
+			datatype="string" method="None" readonly="true" tip="出票人名称" size="100"
+			default="" xpath="/remitterName" />
+
+		<Field id="acceptorName" desc="承兑人名称" require="" edittype="datalabel"
+			datatype="string" method="None" readonly="true" tip="承兑人名称" size="60"
+			default="" xpath="/acceptorName" />
+
+		<Field id="payeeName" desc="收款人名称" require="" edittype="datalabel"
+			datatype="string" method="None" readonly="true" tip="收款人名称" size="60"
+			default="" xpath="/payeeName" />
+
+         <!-- 出票人账号 -->
+	    <Field id="remitterAccount" desc="出票人账号" require="" edittype="datalabel"
+	    datetype="String" method="None" tip="出票人账号" size="60" readonly="true"
+	    default="" xpath="/remitterAccount" />
+	     <!-- 出票人开户行号 -->
+	    <Field id="remitterBankId" desc="出票人开户行号" require="" edittype="datalabel"
+	    datetype="String" method="None" tip="出票人开户行号" size="60" readonly="true"
+	    default="" xpath="/remitterBankId" />
+	     <!-- 出票人开户行名 -->
+	     <Field id="remitterBankName" desc="出票人开户行名" require="" edittype="datalabel"
+	    datetype="String" method="com.huateng.ebank.business.common.CustCQMethod.getUbankNamebyNo" tip="出票人开户行名" size="60" readonly="true"
+	    default="" xpath="/remitterBankId" />
+	        <!-- 承兑人账号 -->
+	    <Field id="acceptorAccount" desc="承兑人账号" require="" edittype="datalabel"
+	    datetype="String" method="None" tip="承兑人账号" size="60" readonly="true"
+	    default="" xpath="/acceptorAccount" />
+	        <!-- 承兑人开户行号 -->
+	    <Field id="acceptorBankId" desc="承兑人开户行号" require="" edittype="datalabel"
+	    datetype="String" method="None" tip="承兑人开户行号" size="60" readonly="true"
+	    default="" xpath="/acceptorBankId" />
+	      <!-- 承兑人开户行名 -->
+	    <Field id="acceptorBankName" desc="承兑人开户行名" require="" edittype="datalabel"
+	    datetype="String" method="com.huateng.ebank.business.common.CustCQMethod.getUbankNamebyNo"
+	    tip="承兑人开户行名" size="60" readonly="true"
+	    default="" xpath="/acceptorBankId" />
+
+	         <!--收款人账号  -->
+	    <Field id="payeeAccount" desc="收款人账号" require="" edittype="datalabel"
+	    datetype="String" method="None" tip="收款人账号" size="60" readonly="true"
+	    default="" xpath="/payeeAccount" />
+	        <!-- 收款人开户行号 -->
+	    <Field id="payeeBankId" desc="收款人开户行号" require="" edittype="datalabel"
+	    datetype="String" method="None" tip="收款人开户行号" size="60" readonly="true"
+	    default="" xpath="/payeeBankId" />
+	           <!-- 收款人开户行名 -->
+	    <Field id="payeeBankName" desc="收款人开户行名" require="" edittype="datalabel"
+	    datetype="String" method="com.huateng.ebank.business.common.CustCQMethod.getUbankNamebyNo"
+	    tip="收款人开户行名" size="60" readonly="true"
+	    default="" xpath="/payeeBankId" />
+	      <!-- 到期无条件支付委托 -->
+	     <Field id="consignmentCode" desc="到期无条件支付委托" require="" edittype="datalabel" translated="DATA_DIC.100"
+	    datetype="String" method="com.huateng.ebank.business.common.CustCQMethod.getDataDicName" tip="到期无条件支付委托" size="60" readonly="true"
+	    default="" xpath="/consignmentCode" />
+
+	      <!-- 申请备注 -->
+	    <Field id="remark" desc="申请备注" require="" edittype="datalabel"
+	    datetype="String" method="None" tip="申请备注" size="60" readonly="true"
+	    default="" xpath="/remark" />
+	    <!-- 允许背书 -->
+	  <Field id="transferFlag" desc="允许背书" require="" edittype="datalabel" translated="DATA_DIC.99"
+	    datetype="String" method="com.huateng.ebank.business.common.CustCQMethod.getDataDicName" tip="允许背书" size="60" readonly="true"
+	    default="" xpath="/transferFlag" />
+       </Fields>
+
+	<Parameters></Parameters>
+	<Where>
+
+	</Where>
+
+	<Operations>
+    <Button id="btBack1" name="btBack1" desc="关闭" operation=""
+			url="#" txn=""/>
+    <Button id="btPrint" name="btPrint" desc="打印" operation=""
+			url="#" txn=""/>
+
+	</Operations>
+
+	<Script></Script>
+
+</CommQry>

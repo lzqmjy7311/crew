@@ -1,0 +1,109 @@
+<CommQry title="TRewC09DraftInfoId" navigate="TRewC09DraftInfoId" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.C09Getter">
+    <Include id="BankParam" />
+    <PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+        <Field id="id" desc="ID序号" edittype="text" datatype="int" method="None" xpath="/id" />
+        <Field id="draftNumber" desc="票号" edittype="text" datatype="string" method="None" 
+        xpath="/draftNumber" />
+        <Field id="voucherNo" desc="凭证号" edittype="text" datatype="string" method="None" 
+        xpath="/voucherNo" />
+        <Field id="draftClass" desc="票级别" edittype="text" datatype="string" method="None" 
+        xpath="/draftClass" />
+        <Field id="draftTerm" desc="理财期次" edittype="text" datatype="string" method="None" 
+        xpath="/draftTerm" />
+        <Field id="dfclsCtl" desc="票据级控制标志" edittype="text" datatype="string" method="None" 
+        xpath="/dfclsCtl" />
+        <Field id="srcType" desc="角色来源" edittype="text" datatype="string" method="None" 
+        xpath="/srcType" />
+        <Field id="buyContractId" desc="买入协议ID" edittype="text" datatype="int" method="None" 
+        xpath="/buyContractId" />
+        <Field id="endOrSementMk" desc="人行可转让标志" edittype="text" datatype="string" method="None" 
+        xpath="/endOrSementMk" />
+        <Field id="draftAttr" desc="据属性" edittype="text" datatype="string" method="None" 
+        xpath="/draftAttr" />
+        <Field id="draftType" desc="票据类型" edittype="text" datatype="string" method="None" 
+        xpath="/draftType" />
+        <Field id="remitDate" desc="出票日" edittype="text" datatype="string" method="None" 
+        xpath="/remitDate" />
+        <Field id="maturityDate" desc="票面到期日" edittype="text" datatype="string" method="None" 
+        xpath="/maturityDate" />
+        <Field id="remitterId" desc="客户ID" edittype="text" datatype="int" method="None" 
+        xpath="/remitterId" />
+        <Field id="remitterRole" desc="出票人类别" edittype="text" datatype="string" method="None" 
+        xpath="/remitterRole" />
+        <Field id="remitterCmonid" desc="出票人组织机构代码" edittype="text" datatype="string" method="None" 
+        xpath="/remitterCmonid" />
+        <Field id="remitterName" desc="出票人名称" edittype="text" datatype="string" method="None" 
+        xpath="/remitterName" />
+        <Field id="remitterAccount" desc="出票人账号" edittype="text" datatype="string" method="None" 
+        xpath="/remitterAccount" />
+        <Field id="remitterBankId" desc="出票人开户行ID" edittype="text" datatype="int" method="None" 
+        xpath="/remitterBankId" />
+        <Field id="remitterBankName" desc="出票人开户行名称" edittype="text" datatype="string" method="None" 
+        xpath="/remitterBankName" />
+        <Field id="dfDrwrCdtratgs" desc="出票人-信用等级" edittype="text" datatype="string" method="None" 
+        xpath="/dfDrwrCdtratgs" />
+        <Field id="dfDrwrCdtratgsagcy" desc="出票人-评级机构" edittype="text" datatype="string" method="None" 
+        xpath="/dfDrwrCdtratgsagcy" />
+        <Field id="dfDrwrCdtratgduedt" desc="出票人-评级到期日" edittype="text" datatype="string" method="None" 
+       xpath="/dfDrwrCdtratgduedt" />
+        <Field id="acceptorRole" desc="承兑人类别" edittype="text" datatype="string" method="None" 
+        xpath="/acceptorRole" />
+        <Field id="acceptor" desc="承兑人" edittype="text" datatype="string" method="None" 
+        xpath="/acceptor" />
+        <Field id="acceptorBankId" desc="承兑人开户行" edittype="text" datatype="int" method="None" 
+        xpath="/acceptorBankId" />
+        <Field id="acceptorActno" desc="承兑人账号" edittype="text" datatype="string" method="None" 
+        xpath="/acceptorActno" />
+        <Field id="acceptorBankName" desc="承兑人开户行名称" edittype="text" datatype="string" method="None" 
+        xpath="/acceptorBankName" />
+        <Field id="payeeName" desc="票面收款人名称" edittype="text" datatype="string" method="None" 
+        xpath="/payeeName" />
+        <Field id="payeeAccount" desc="票面收款人账号" edittype="text" datatype="string" method="None" 
+        xpath="/payeeAccount" />
+        <Field id="payeeBankId" desc="票面收款人开户行ID" edittype="text" datatype="int" method="None" 
+        xpath="/payeeBankId" />
+        <Field id="payeeBankName" desc="票面收款人开户行" edittype="text" datatype="string" method="None" 
+        xpath="/payeeBankName" />
+        <Field id="payeeId" desc="收款人客户ID" edittype="text" datatype="int" method="None" 
+        xpath="/payeeId" />
+        <Field id="payeeOrganCode" desc="票面收款人组织机构代码" edittype="text" datatype="string" method="None" 
+        xpath="/payeeOrganCode" />
+        <Field id="faceAmount" desc="票面金额" edittype="text" datatype="string" method="None" 
+        xpath="/faceAmount" />
+        <Field id="drftRemark" desc="票面备注" edittype="text" datatype="string" method="None" 
+        xpath="/drftRemark" />
+        <Field id="drawerBankFlag" desc="是否系统内承兑" edittype="select" translated="LIST:0,否;1,是" datatype="string" method="None" 
+        xpath="/drawerBankFlag" />
+        <Field id="belongBranchId" desc="票据所属机构号" edittype="text" datatype="int" method="None" 
+        xpath="/belongBranchId" />
+        <Field id="storeStatus" desc="实物库存状态" edittype="text" datatype="string" method="None" 
+        xpath="/storeStatus" />
+        <Field id="status" desc="票据状态" edittype="text" datatype="string" method="None" 
+        xpath="/status" />
+        <Field id="tmpStatus" desc="处理中状态" edittype="text" datatype="string" method="None" 
+        xpath="/tmpStatus" />
+        <Field id="collztnStatus" desc="质押状态" edittype="text" datatype="string" method="None" 
+        xpath="/collztnStatus" />
+        <Field id="collztnId" desc="质押登记簿ID" edittype="text" datatype="int" method="None" 
+        xpath="/collztnId" />
+        <Field id="lossStatus" desc="挂失状态" edittype="text" datatype="string" method="None" 
+        xpath="/lossStatus" />
+        <Field id="rplossId" desc="挂失登记簿ID" edittype="text" datatype="int" method="None" 
+        xpath="/rplossId" />
+        <Field id="debitOrder" desc="扣款顺序" edittype="text" datatype="string" method="None" 
+        xpath="/debitOrder" />
+        <Field id="misc" desc="信息域" edittype="text" datatype="string" method="None" xpath="/misc" />
+        <Field id="lastUpdOperId" desc="最后修改操作员号" edittype="text" datatype="int" method="None" 
+        xpath="/lastUpdOperId" />
+        <Field id="lastUpdTime" desc="最后修改时间" edittype="text" datatype="string" method="None" 
+        xpath="/lastUpdTime" />
+        <Field id="warnId" desc="预警表ID" edittype="text" datatype="string" method="None" 
+        xpath="/warnId" />
+        <Field id="dataDt" desc="数据日期" edittype="text" datatype="date" method="None" 
+        xpath="/dataDt" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

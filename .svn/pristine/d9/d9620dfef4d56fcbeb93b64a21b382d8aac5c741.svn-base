@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-12-22 15:40:36 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.person.monitor.entity.TPlDqReportJyCreditBusin" table="T_PL_DQ_REPORT_JY_CREDIT_BUSIN" schema="ECUSER">
+        <comment>经营类监控报告保证人授信业务</comment>
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="contno" type="string">
+            <column name="FD_CONTNO" length="26" />
+        </property>
+        <property name="assukind" type="string">
+            <column name="FD_ASSUKIND" length="10" />
+        </property>
+        <property name="tcapi" type="big_decimal">
+            <column name="FD_TCAPI" precision="12" />
+        </property>
+        <property name="bal" type="big_decimal">
+            <column name="FD_BAL" precision="12" />
+        </property>
+        <property name="begindate" type="date">
+            <column name="FD_BEGINDATE" length="10" />
+        </property>
+        <property name="enddate" type="date">
+            <column name="FD_ENDDATE" length="10" />
+        </property>
+        <property name="riskflag" type="string">
+            <column name="FD_RISKFLAG" length="10" />
+        </property>
+        <property name="businessid" type="string">
+            <column name="FD_BUSINESSID" length="32" />
+        </property>
+    </class>
+</hibernate-mapping>

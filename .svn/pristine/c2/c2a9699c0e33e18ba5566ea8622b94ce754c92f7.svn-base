@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="基础信息管理  &gt;  用户管理title" navigate="基础信息管理    &gt; 用户管理" type="call"
+	interface="false" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.bpm.getter.ProcessInstanceGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="id" desc="" edittype="text" datatype="string" size="40" xpath="/id" />
+		<Field id="userName" desc="用户名称"  edittype="text" status="F" datatype="string" size="100" xpath="/userName" />
+		<Field id="userDesc" desc="用户描述"  edittype="text" status="F" datatype="string" size="200" xpath="/userDesc" />
+		<Field id="operation" desc="操作" />
+    </Fields>
+    <Where>
+		<TextBox id="userName" desc="用户名称" edittype="text" status="F" datatype="string" size="10" index="1" />\
+    </Where>
+	<Operations>
+		<Button id="btAdd" name="btAdd" desc="新增" icon="icon-add" updateClass="#" url="#" txn="" />
+		<Button id="btnSave" name="btnSave" desc="保存" icon="icon-save" operation="asysubmit" 
+			updateClass=""
+            url="#" txn="" />
+        <Button id="btDel" name="btDel" desc="删除" icon="icon-delete" operation="asysubmit"
+			updateClass=""
+			url="" />
+	</Operations>
+</CommQry>

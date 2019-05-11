@@ -1,0 +1,46 @@
+<CommQry title="TDataOwingTaxes" navigate="TDataOwingTaxes" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.financial.analysis.getter.TDataOwingTaxesGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+        <Field id="id" desc="ID" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/id" />
+        <Field id="fdRunNum" desc="第几次执行" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdRunNum" />
+        <Field id="fdPuk" desc="数据唯一DI" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdPuk" />
+        <Field id="fdUri" desc="原链接" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdUri" />
+        <Field id="fdVersions" desc="数据版本号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdVersions" />
+        <Field id="fdUpdatetime" desc="在本数据库中的更新时间" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdUpdatetime" />
+        <Field id="fdCreatetime" desc="在本数据库中的创建时间" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdCreatetime" />
+        <Field id="fdTaskId" desc="任务ID" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdTaskId" />
+        <Field id="fdTaxPayer" desc="纳税人名称" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdTaxPayer" />
+        <Field id="fdTaxId" desc="税务登记号" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdTaxId" />
+        <Field id="fdCorporateName" desc="负责人姓名" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdCorporateName" />
+        <Field id="fdIdCard" desc="证件类型" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdIdCard" />
+        <Field id="fdIdCardNum" desc="证件号码" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdIdCardNum" />
+        <Field id="fdTaxCategory" desc="欠税类型" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdTaxCategory" />
+        <Field id="fdTotalTaxMoney" desc="欠税总额" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdTotalTaxMoney" />
+        <Field id="fdBeforeTaxMoney" desc="以前所欠余额" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdBeforeTaxMoney" />
+        <Field id="fdThisYearTaxMoney" desc="今年新欠余额" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdThisYearTaxMoney" />
+        <Field id="fdSubstation" desc="税款所属税务机关" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdSubstation" />
+        <Field id="fdJbkId" desc="解析文件id" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/fdJbkId" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

@@ -1,0 +1,39 @@
+<CommQry title="TRewL04CouNoticeDetailId" navigate="TRewL04CouNoticeDetailId" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.L04Getter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="id" desc="ID" edittype="text" datatype="string" xpath="/id" />
+        <Field id="courtName" desc="法院名称" edittype="text" datatype="string"
+        xpath="/courtName" />
+        <Field id="court2Name" desc="法庭名称" edittype="text" datatype="string"
+        xpath="/court2Name" />
+        <Field id="tryDate" desc="开庭日期" edittype="text" datatype="date"
+        xpath="/tryDate" />
+        <Field id="caseNo" desc="案号" edittype="text" datatype="string"
+        xpath="/caseNo" />
+        <Field id="caseReason" desc="案由" edittype="text" datatype="string"
+        xpath="/caseReason" />
+        <Field id="mainDept" desc="承办部门" edittype="text" datatype="string"
+        xpath="/mainDept" />
+        <Field id="tryName" desc="审判长/主审人" edittype="text" datatype="string"
+        xpath="/tryName" />
+        <Field id="accuser" desc="原告/上诉人" edittype="text" datatype="string"
+        xpath="/accuser" />
+        <Field id="defendant" desc="被告/被上诉人" edittype="text" datatype="string"
+        xpath="/defendant" />
+        <Field id="baseId" desc="关联基本信息主键" edittype="text" datatype="string"
+        xpath="/baseId" />
+        <Field id="sourceLink" desc="原链接" edittype="text" datatype="string"
+        xpath="/sourceLink" />
+        <Field id="relaId" desc="关联ID" edittype="text" datatype="string"
+        xpath="/relaId" />
+        <Field id="rowDate" desc="数据日期" edittype="text" datatype="date"
+        xpath="/rowDate" />
+        <Field id="warnId" desc="预警表ID" edittype="text" datatype="string"
+        xpath="/warnId" />
+        <Field id="dataDt" desc="数据日期" edittype="text" datatype="date"
+        xpath="/dataDt" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

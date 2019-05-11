@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="滑动菜单异步" navigate="" type="call" interface="false" pagesize="10" async="true" databusid="" transdataactionurl="/trans/TransDataAction.do" txnlogflag="true" getterclassname="com.huateng.fp.demo.getter.AccordionMenuAsycGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<Field id="id" desc="ID" xpath="/id" readonly="false" />
+		<Field id="url" desc="URL" xpath="/attributes/url" readonly="false" />
+
+		<!-- 必须属性 -->
+		<Field id="_hasChild_" desc="是否有孩子节点" xpath="/hasChild" readonly="false" />
+		<Field id="_id" xpath="/id" />
+		<Field id="_parentId" xpath="/pid" />
+		<Field id="_text" desc="" method="" xpath="/text" />
+		<!-- 扩展属性 -->
+		<Field id="_icon" desc="" method="" xpath="/iconCls" />
+	</Fields>
+	<Parameters>
+		<Parameter id="id" desc="id" />
+	</Parameters>
+</CommQry>

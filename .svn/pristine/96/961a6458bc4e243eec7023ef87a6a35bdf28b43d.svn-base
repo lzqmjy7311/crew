@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-11-27 14:24:58 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.single.entity.TCmSingleRulWarning" table="T_CM_RISK_VIEW_RUL_WARNING_V" schema="ECUSER">
+        <comment>对公-单规则预警信息</comment>
+        <id name="id" type="string">
+            <column name="FD_CUSTOMER_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+            <property name="eliminateFlag" type="string">
+                <column name="FD_ELIMINATE_FLAG" length="50" />
+            </property>
+            <property name="rulThemeCd" type="string">
+                <column name="FD_RUL_THEME_CD" length="200" />
+            </property>
+            <property name="warnCode" type="string">
+                <column name="FD_WARN_CODE" length="100" />
+            </property>
+            <property name="warnLevel" type="string">
+                <column name="FD_WARN_LEVEL" length="50" />
+            </property>
+            <property name="warnDt" type="date">
+                <column name="FD_WARN_DT" length="10" />
+            </property>
+            <property name="rulName" type="string">
+                <column name="FD_RUL_NAME" length="500" />
+            </property>
+            <property name="warnStatus" type="string">
+                <column name="FD_WARN_STATUS" length="50" />
+            </property>
+            <property name="eliminateDt" type="date">
+                <column name="FD_ELIMINATE_DT" length="10" />
+            </property>
+            <property name="warningRelieveDt" type="date">
+                <column name="FD_WARNING_RELIEVE_DT" length="10" />
+            </property>
+            <property name="handler" type="string">
+                <column name="FD_HANDLER" length="64" />
+            </property>
+    </class>
+</hibernate-mapping>

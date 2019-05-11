@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="借据列表" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.company.view.getter.TOdsCmsBorrSummaryGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<Field id= "borrowNum" desc="借据编号" xpath="/borrowNum"/>
+		<Field id= "expirationDate" desc="到期日期" xpath="/expirationDate"/>
+		<Field id= "balanceAccounts" desc="结算账号" xpath="/balanceAccounts"/>
+		<Field id= "advBal" desc="放款金额" xpath="/advBal"/>
+		<Field id= "loanBal" desc="贷款余额" xpath="/loanBal"/>
+		<Field id= "bucketP" desc="拖欠本金" xpath="/bucketP"/>
+		<Field id= "bocketI" desc="拖欠利息" xpath="/bocketI"/>
+		<Field id= "bailSum" desc="保证金金额" xpath="/bailSum"/>
+		<Field id= "fiveLevel" desc="五级分类" xpath="/fiveLevel"/>
+		<Field id= "status" desc="状态" xpath="/status"/>   
+		<Field id="customerNum" desc="客户编号"  xpath="/customerNum"/>    
+		<Field id="lendingdate" desc="放款日期"  xpath="/lendingdate"/>  
+		<Field id="loanaccount" desc="贷款账号"  xpath="/loanAcct"/>  
+	</Fields>
+	
+	<Operations>
+	</Operations>
+</CommQry>

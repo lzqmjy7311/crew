@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	  navigate:导航信息
+	  type:方式（sql|call)
+	  interface:是否显示输入条件页面(true|false)
+	  databusid:数据总线编号
+	  transdataactionurl:数据整理URL
+	  async:异步提交标志
+	  pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry
+title="审批权限设置"
+navigate="主页 &gt; 系统管理 &gt; 权限管理 &gt; 操作员审批权限设置"
+type="call"
+interface="true"
+pagesize="10"
+async="true"
+databusid="CUSTINFO_DB"
+transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.huateng.ebank.business.parammng.cqGetter.AurhoritySetCallGetter"
+>
+	<Include id="BankParam"/>
+
+	<Fields>
+	<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+	<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+
+		<Field id="tlrno" desc="操作员号" status="F" method="trimStringRS" readonly="false" require="true"
+			primary="false" type="String" size="8" default="" xpath="/tlrno" tip="操作员号"/>
+		<!-- mod by abudula at 20101119 start-->
+		<Field id="bussType" desc="流程" status="N" method="None" xpath="/bussType" translated="DATA_DIC.8800" edittype="select"
+			primary="true" type="bussType" size="4" default="" tip="流程" require="true" readonly="false" />
+
+		<Field id="bizType" desc="业务品种" status="N"  xpath="/bizType" edittype="text"
+			primary="true" type="bussType" size="4" default="" tip="业务品种" require="false" readonly="false"/>
+
+		<Field id="bizTypeName" desc="业务品种" status="N"  xpath="/bizType"  tip="业务品种" require="true" readonly="false"/>
+<!--  add by haizhou.li  列表中业务品种没解释 begin -->
+		<Field id="bizTypeName1" desc="业务品种" status="N"  xpath="/bizType"
+			edittype="select" operation="EQ" viewField="name" init="false"
+			primary="true" type="bussType" size="4" default="" tip="业务品种" require="false" readonly="false"/>
+<!--  add by haizhou.li  列表中业务品种没解释 end -->
+
+		<!-- mod by abudula at 20101119 end-->
+
+		<Field id="limitMaxamount" desc="最高审批权限金额" status="F" method="None" datatype="currency" scale ="2" colspan="4" readonly="false"
+		  	require="true" primary="false" type="String" size="20" xpath="/limitMaxamount"  tip="最高审批权限金额"/>
+		<!--mod by abudula at 20101119 start
+		<Field id="precondition" desc="前续审批条件" status="F" method="None" edittype="select" colspan="2"  require="true" readonly="false"
+			primary="false" type="String" size="20" xpath="/precondition" default="" tip="前续审批条件" translated="DATA_DIC.415"/>
+ 			mod by abudula at 20101119 end-->
+		<Field id="status" desc="有效标志" status="F" readonly="true" colspan="2"
+			method="None" primary="true" type="String" size="20" xpath="/status" default="" tip="有效标志" edittype="select" translated="DATA_DIC.444"/>
+
+		<Field id="effectdate" desc="生效日期" status="F" method="None" readonly="true" edittype="date" datetype="date"
+			primary="false" type="String" size="20" xpath="/effectdate" default="" tip="生效日期"/>
+
+		<Field id="expiredate" desc="失效日期" status="F" method="None" readonly="true" edittype="date" datetype="date"
+			primary="false" type="String" size="20" xpath="/expiredate" default="" tip="失效日期"/>
+
+		<Field id="id" desc="" status="F" method="trimStringRS"
+			primary="false" type="String" size="100" default="" xpath="/id" tip=""/>
+		<!--
+		<Field id="loantype" desc="" status="F" method="trimStringRS"
+			primary="false" type="String" size="100" default="" xpath="/loantype" tip=""/>
+ 		-->
+	   <Field id="approvemode" desc="" status="F" method="trimStringRS"
+			primary="false" type="String" size="100" default="" xpath="/approvemode" tip=""/>
+
+	</Fields>
+
+	<where>
+
+	</where>
+
+	<Operations>
+		<Button id="btNew" name="btNew" desc="增加新记录" operation="addrecord"
+			url="" txn=""/>
+		<Button id="btDelete" name="btDelete" desc="删除" operation="delrecord"
+			url="" txn=""/>
+		<Button id="btSave" name="btSave" desc="保存" operation="asysubmit"
+			updateClass="com.huateng.ebank.business.parammng.update.AuthoritySetUpdate"
+			url="#" show="0" group="o" txn=""/>
+
+	</Operations>
+
+</CommQry>

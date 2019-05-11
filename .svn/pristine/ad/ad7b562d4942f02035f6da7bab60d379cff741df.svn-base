@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.fp.demo.getter.GroupFieldsGetter">
+	<Include id="BankParam" />
+	
+	<Fields>
+        <Field id="collatName" desc="质押物名称" xpath="" />
+        <Field id="collatType" desc="类型" xpath="" />
+        <Field id="oldOwner" desc="原权属人" xpath="" />
+        <Field id="payAmt" desc="购买价(万元)" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" xpath="" default="0" />
+		<Field id="asseTolAmt" desc="评估总价(万元)" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" xpath="" default="0" />
+		<Field id="ourbankConfAmt" desc="我行确认价值(万元)" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" xpath="" default="0" />
+		<Field id="validTerm" desc="有效期限" edittype="date"
+            datatype="date" xpath="" />
+		<Field id="collatQty" desc="数量" xpath="" />
+		<Field id="collatRate" desc="质押率" xpath="" />
+		<Field id="collatCond" status="N" desc="质押物当前状况" edittype="radio" translated="LIST:1,无变化;2,有变化（有变化根据实情填写相关信息）"
+            datatype="string" xpath="" colspan="4" width="600" />
+        <Field id="collatCondDesc" desc="质押物变化情况说明" edittype="textarea" xpath="" height="100" width="300" />
+		<Field id="collatIfDevalue" status="N" desc="是否存在市场贬值" edittype="radio" translated="LIST:1,是;2,否"
+            datatype="string" xpath="" colspan="4" width="600" />
+		<Field id="collattImelIfExpire" status="N" desc="时效性是否到期" edittype="radio" translated="LIST:1,是;2,否"
+            datatype="string" xpath="" colspan="4" width="600" />
+		<Field id="collattIfLoseLawPote" status="N" desc="权利质押是否失去法律效力" edittype="radio" translated="LIST:1,是;2,否"
+            datatype="string" xpath="" colspan="4" width="600" />
+		<Field id="collatIssueAndDesc" desc="存在问题及说明" edittype="textarea" xpath="" height="100" width="300" />
+	</Fields>
+</CommQry>

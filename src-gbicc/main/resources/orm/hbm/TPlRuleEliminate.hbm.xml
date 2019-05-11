@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-11-13 15:16:28 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.person.eliminate.entity.TPlRuleEliminate" table="T_PL_RULE_ELIMINATE" schema="ECUSER">
+        <comment>规则排除表</comment>
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        
+        <many-to-one 
+			name="triggerRuleAcct" 
+			column="FD_TRIGGER_RULE_ACCT"
+            class="com.gbicc.personCommon.entity.TEdwPlsAccount" 
+			fetch="select"
+			not-null="false"
+			not-found="ignore"
+		/>
+	    
+        <property name="status" type="string">
+            <column name="FD_STATUS" length="25" />
+        </property>
+        <property name="updDate" type="date">
+            <column name="FD_UPD_DATE" length="10" />
+        </property>
+        
+        <many-to-one 
+			name="launchPer" 
+			column="FD_LAUNCH_PER"
+            class="com.huateng.ebank.entity.data.mng.TlrInfo" 
+			cascade="save-update" 
+			fetch="select"
+			not-null="false"
+			not-found="ignore"
+		/>
+	    <many-to-one 
+			name="launchOrg" 
+			column="FD_LAUNCH_ORG"
+            class="com.huateng.ebank.entity.data.mng.Bctl" 
+			cascade="save-update" 
+			fetch="select"
+			not-null="false"
+			not-found="ignore"
+		/>
+	    
+	    <property name="eliminateRuleDesc" type="string">
+            <column name="FD_ELIMINATE_RULE_DESC" length="500" />
+        </property>
+        <property name="flag" type="string">
+            <column name="FD_FLAG" length="10" />
+        </property>
+        <property name="date" type="date">
+            <column name="FD_DATE" />
+        </property>
+    </class>
+</hibernate-mapping>

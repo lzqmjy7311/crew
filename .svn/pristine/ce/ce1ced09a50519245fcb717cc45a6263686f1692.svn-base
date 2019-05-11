@@ -1,0 +1,167 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+<@CommonQueryMacro.page title="流程管理  &gt;  任务转移">
+<table>
+	<@CommonQueryMacro.CommonQuery id="TaskAfreshAssign" init="true" submitMode="selected">
+		<@CommonQueryMacro.DataTable id="taskAfreshAssignTable" toolbar="mytoolbar" readonly="true" paginationbar="btAdd" 
+		fieldStr="select,taskId[80],procName[120],taskName[150],taskDesc[400],createTime[100],assigneeDesc[200],assigneeOrg[100]" width="100%" hasFrame="true"/>
+		<@CommonQueryMacro.FloatWindow id="afreshAssignFW" modal="true" label="任务重新分配" 
+		resize="true" minimize="false" width="500" height="200" maximize="true" closure="true" show="false" defaultZoom="normal">
+		<@CommonQueryMacro.Group id="afreshAssignGroup" label="" colNm=4
+		fieldStr="organization,user"/>
+		<center>
+			<@CommonQueryMacro.Button id= "btnSubmit"/>
+		</center>
+		</@CommonQueryMacro.FloatWindow>
+		<@CommonQueryMacro.FloatWindow id="diagramFW" modal="true" label="流程图查看" 
+		resize="true" minimize="false" width="1000" height="700" maximize="true" closure="true" show="false" defaultZoom="normal">
+		<img id="img" data="${contextPath}/common/ProcessDiagramServlet">
+		</@CommonQueryMacro.FloatWindow>
+	</@CommonQueryMacro.CommonQuery>
+	<@CommonQueryMacro.ToolBar id="mytoolbar">
+		<@CommonQueryMacro.InterfaceElement elId="businessId" />
+		<@CommonQueryMacro.InterfaceElement elId="procName" />
+		<@CommonQueryMacro.InterfaceElement elId="assignee" />
+		<@CommonQueryMacro.InterfaceButton desc="btQuery" />
+	</@CommonQueryMacro.ToolBar>
+</table>
+<script>
+	function initCallGetter_post(){
+		
+	}
+	function btAdd_onClick(button){
+		//数据检查,非同一流程同一任务处理人不可一并进行任务重新分配
+		var sl=[];
+		var record=TaskAfreshAssign_dataset.getFirstRecord();
+		while(record){
+			if(record.getValue("select")==true){
+				sl.push(record);
+			}
+			record=record.getNextRecord();
+		}
+		var sl2=sl;
+		for(var i=0;i<sl.length;i++){
+			for(var k=0;k<sl2.length;k++){
+				if(sl[i].getValue("roleId")!=sl2[k].getValue("roleId")){
+					top.easyMsg.info("只能同时分配同一角色处理的任务！");
+					return;
+				}
+			}
+		}
+		if(sl.length==0){
+			top.easyMsg.info("请勾选要重新分配的任务！");
+			return;
+		}
+		
+		//检查通过，弹出窗口
+		TaskAfreshAssign_dataset.setFieldRequired("organization",true);
+		TaskAfreshAssign_dataset.setFieldRequired("user",true);
+		subwindow_afreshAssignFW.show();
+		var userId=sl[0].getValue("assignee");
+		TaskVariable.findOrgInfoByUserId(userId,function(y){
+			if(null!=y){
+				TaskAfreshAssign_dataset.setValue('organization',y.orgId);
+				TaskAfreshAssign_dataset.setValue('organizationName',y.orgName);
+			}
+		});
+		//TaskAfreshAssign_dataset.setFieldReadOnly("organization",false);
+	}
+	function afreshAssignFW_floatWindow_beforeClose(){
+		TaskAfreshAssign_dataset.setFieldRequired("organization",false);
+		TaskAfreshAssign_dataset.setFieldRequired("user",false);
+		return true;
+	}
+	function afreshAssignFW_floatWindow_beforeHide(){
+		TaskAfreshAssign_dataset.setFieldRequired("organization",false);
+		TaskAfreshAssign_dataset.setFieldRequired("user",false);
+		return true;
+	}
+	
+	//流程图
+	function btProcDiag_onClick(button) {
+		subwindow_diagramFW.show();
+		var src=$("#img").attr("data")+"?flag=runtime&executionId="+TaskAfreshAssign_dataset.getValue("procInstId")+"&t="+new Date();
+		$("#img").attr("src",src);
+	}
+	//用户
+	function user_DropDown_beforeOpen(dropDown){
+		var qServerType = TaskAfreshAssign_dataset.getString('organization');//根据第一个selectId获得第一个select值
+		if(!qServerType){
+			return "请选择所属机构!";
+		}
+		var roleId="";
+		var record=TaskAfreshAssign_dataset.getFirstRecord();
+		while(record){
+			if(record.getValue("select")==true){
+				roleId=record.getValue("roleId");
+			}
+			record=record.getNextRecord();
+		}
+		subAutoUserTree_DropDownDataset.setParameter("orgId",qServerType);
+		subAutoUserTree_DropDownDataset.setParameter("roleId",roleId);
+		subAutoUserTree_DropDownDataset.setParameter("currAssignee",null);
+		user_DropDown.cached=false;//让qGroupId不存入缓存
+	}
+	//机构打开前
+	function organization_DropDown_beforeOpen(dropDown){
+// 		var currAssignee="";
+// 		var record=TaskAfreshAssign_dataset.getFirstRecord();
+// 		while(record){
+// 			if(record.getValue("select")==true){
+// 				currAssignee=record.getValue("assignee");
+// 			}
+// 			record=record.getNextRecord();
+// 		}
+		subAutoOrgTree_DropDownDataset.setParameter("currentUserOrgId",user_info.orgId);
+	}
+	//机构
+	function organization_DropDown_onSelect(dropDown,record,editor){
+		var oldVal = TaskAfreshAssign_dataset.getValue("organization");//上一次的值
+		var newVal = record ? record.getValue('brcode') : '';//现在的值
+		if(oldVal!=newVal){
+			//判断两次的值是否相等，如果不相等把值赋空
+			TaskAfreshAssign_dataset.setValue('user','');
+			TaskAfreshAssign_dataset.setValue('userName','');
+		}
+		return true;
+	}
+	//输入机构
+	function organization_DropDown_onKeyup(val){
+		if(val.length>=0){
+			return true;
+		}
+		return false;
+	}
+	//输入客户经理
+	function user_DropDown_onKeyup(val){
+		if(val.length>=0){
+			return true;
+		}
+		return false;
+	}
+	//提交检查事件
+	function btnSubmit_onClickCheck(){
+		var user=TaskAfreshAssign_dataset.getValue("user");
+		var userName=TaskAfreshAssign_dataset.getValue("userName");
+		//if(user!=null && user!="" && user==userName){
+			//top.easyMsg.info("手工输入的用户无效，请选择下拉框中的用户！");
+			//return false;
+		//}
+		TaskAfreshAssign_dataset.setParameter("user",user);
+		TaskAfreshAssign_dataset.setParameter("op","oneSubmit");
+	}
+	//提交后关闭页面，刷新表格
+	function btnSubmit_postSubmit(button) {
+		button.url="#";
+		top.easyMsg.info("保存成功！");
+		subwindow_afreshAssignFW.close();
+		flushCurrentPage();
+	}
+	//刷新当前页
+	function flushCurrentPage() {
+		TaskAfreshAssign_dataset.flushData(TaskAfreshAssign_dataset.pageIndex);
+	}
+</script>
+<script type='text/javascript' src='${contextPath}/dwr/interface/TaskVariable.js'> </script>
+<script type="text/javascript" src="${contextPath}/gbicc-pages/jquery-form.js"></script>
+</@CommonQueryMacro.page>

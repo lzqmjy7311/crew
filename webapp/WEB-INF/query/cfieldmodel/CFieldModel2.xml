@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<FieldModels>
+	<FieldModel id="idno" name="身份证号" desc="身份证号" type="string"
+		length="30" scale="0" width="240" height="1" gen="" rule="isIDNo"
+		errormessage="错误的身份证号" />
+
+
+	<FieldModel id="idtype" name="证件种类" desc="证件种类" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isIdType"
+		errormessage="错误的证件种类" />
+
+	<FieldModel id="idtype2" name="银监会证件类型" desc="银监会证件类型" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isIdType2"
+		errormessage="错误的银监会证件类型" />
+
+	<FieldModel id="impawnType" name="质物种类" desc="质物种类" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isImpawnType"
+		errormessage="错误的质物种类" />
+
+	<FieldModel id="intAdjType" name="质物种类" desc="质物种类" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isIntAdjType"
+		errormessage="错误的质物种类" />
+<!-- ??? -->
+	<FieldModel id="intrate" name="利率" desc="利率" type="double"
+		length="9" scale="6" width="72" height="1" gen="" rule="isIntrate"
+		errormessage="错误的利率" />
+
+	<FieldModel id="intratecd" name="利率代码" desc="利率代码" type="string"
+		length="3" scale="" width="" height="1" gen="" rule="isIntratecd"
+		errormessage="错误的利率代码" />
+
+	<FieldModel id="IP" name="IP" desc="IP" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isIP"
+		errormessage="" />
+
+	<FieldModel id="limitMode" name="操作员审批控制方式" desc="操作员审批控制方式" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isLimitMode"
+		errormessage="错误的操作员审批控制方式" />
+
+	<FieldModel id="inattr" name="贷款性质" desc="贷款性质" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="IsInattr"
+		errormessage="错误的贷款性质" />
+
+	<FieldModel id="lncardno" name="贷款卡号码" desc="贷款卡号码" type="string"
+		length="30" scale="" width="240" height="1" gen="" rule="isIncardNo"
+		errormessage="错误的贷款卡号码" />
+
+	<FieldModel id="lnid" name="贷款种类" desc="贷款种类" type="string"
+		length="6" scale="" width="48" height="1" gen="" rule="isLnid"
+		errormessage="错误的贷款种类" />
+
+	<FieldModel id="lnType" name="贷款大类" desc="贷款大类" type="string"
+		length="3" scale="" width="24" height="1" gen="" rule="isInType"
+		errormessage="错误的贷款大类" />
+
+	<FieldModel id="lnuse" name="贷款用途" desc="贷款用途" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isLnUse"
+		errormessage="错误的贷款用途" />
+
+	<FieldModel id="loanLimitForm" name="合作项目额度控制方式" desc="合作项目额度控制方式" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isLoanLimitForm"
+		errormessage="错误的合作项目额度控制方式" />
+
+	<FieldModel id="marriage" name="婚姻状况" desc="婚姻状况" type="string"
+		length="2" scale="" width="16" height="1" gen="" rule="isMarriage"
+		errormessage="错误的婚姻状况" />
+
+	<FieldModel id="miscflgs" name="预留字段" desc="预留字段" type="string"
+		length="20" scale="" width="160" height="1" gen="" rule="isMiscFlgs"
+		errormessage="错误的预留字段" />
+
+	<FieldModel id="mortType" name="抵押物类型" desc="抵押物类型" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isMortType"
+		errormessage="错误的抵押物类型" />
+
+	<FieldModel id="nonEqualMode" name="不等额方式" desc="不等额方式" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isNonEqualMode"
+		errormessage="错误的不等额方式" />
+
+	<FieldModel id="occupation" name="职业" desc="职业" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isOccupation"
+		errormessage="错误的职业" />
+
+	<FieldModel id="orgType" name="机构类型" desc="机构类型" type="string"
+		length="2" scale="" width="16" height="1" gen="" rule="isOrgType"
+		errormessage="错误的机构类型" />
+
+	<FieldModel id="otherCredit" name="其他信用情况" desc="其他信用情况" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isOtherCredit"
+		errormessage="" />
+
+	<FieldModel id="param" name="参数字符串" desc="参数字符串" type="string"
+		length="80" scale="" width="640" height="1" gen="" rule="isParam"
+		errormessage="错误的参数字符串" />
+
+	<FieldModel id="payDirect" name="划款方向" desc="划款方向" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isPayDirect"
+		errormessage="错误的划款方向" />
+
+	<FieldModel id="peri" name="期数、次数" desc="" type="int"
+		length="1" scale="" width="8" height="1" gen="" rule="isNumber"
+		errormessage="错误的期数、次数" />
+
+	<FieldModel id="phaseFlag" name="阶段还款标志" desc="阶段还款标志" type="string"
+		length="1" scale="" width="" height="1" gen="" rule="isPhaseFlag"
+		errormessage="错误的阶段还款标志" />
+
+	<FieldModel id="pname" name="姓名" desc="姓名" type="string"
+		length="20" scale="" width="160" height="1" gen="" rule="isPname"
+		errormessage="错误的姓名" />
+
+	<FieldModel id="postno" name="邮政编码" desc="邮政编码" type="string"
+		length="6" scale="" width="48" height="1" gen="" rule="isPostno"
+		errormessage="错误的邮政编码" />
+
+	<FieldModel id="postProperty" name="岗位属性" desc="岗位属性" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isPostProperty"
+		errormessage="错误的岗位属性" />
+
+	<FieldModel id="prelation" name="个人关系" desc="个人关系" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isPrelation"
+		errormessage="错误的个人关系" />
+
+	<FieldModel id="prgnm" name="程序名" desc="程序名" type="string"
+		length="80" scale="" width="64" height="1" gen="" rule="isPrgnm"
+		errormessage="错误的程序名" />
+
+	<FieldModel id="processStatus" name="处置状态" desc="处置状态" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isProcessStatus"
+		errormessage="错误的处置状态" />
+
+	<FieldModel id="projectType" name="合作项目类型" desc="合作项目类型" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isProjectType"
+		errormessage="错误的合作项目类型" />
+
+	<FieldModel id="projectno" name="合作项目编号" desc="合作项目编号" type="string"
+		length="20" scale="" width="160" height="1" gen="" rule="isProjectno"
+		errormessage="错误的合作项目编号" />
+
+	<FieldModel id="punIntOpt" name="罚息率浮动选项" desc="罚息率浮动选项" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isPunIntOpt"
+		errormessage="错误的罚息率浮动选项" />
+
+	<FieldModel id="ratio" name="比例" desc="比例" type="double"
+		length="6" scale="2" width="48" height="1" gen="" rule="isRatio"
+		errormessage="错误的比例" />
+
+	<FieldModel id="reportDate" name="报表统计月份" desc="报表统计月份" type="string"
+		length="6" scale="" width="48" height="1" gen="" rule="isDate"
+		errormessage="错误的统计月份" />
+
+	<FieldModel id="roleId" name="岗位（角色）编号" desc="岗位（角色）编号" type="int"
+		length="" scale="" width="" height="1" gen="" rule="isRoleId"
+		errormessage="" />
+
+	<FieldModel id="rtnDateType" name="还款日期确定方式" desc="还款日期确定方式" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isRtnDate"
+		errormessage="错误的还款日期确定方式" />
+
+	<FieldModel id="rtnFlag" name="提前还款方式" desc="提前还款方式" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isRtnFlag"
+		errormessage="" />
+
+	<FieldModel id="rtnInterval" name="还款间隔" desc="还款间隔" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isRtnInterval"
+		errormessage="错误的还款间隔" />
+
+	<FieldModel id="rtnMode" name="还款途径" desc="还款途径" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isRtnMode"
+		errormessage="错误的还款途径" />
+
+	<FieldModel id="rtnType" name="还款方式" desc="还款方式" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isRtnType"
+		errormessage="错误的还款方式" />
+
+	<FieldModel id="rtnType2" name="组合还款方式" desc="组合还款方式" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isRtnType2"
+		errormessage="错误的组合还款方式" />
+
+	<FieldModel id="salaryClass" name="月收入水平" desc="月收入水平" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isSalaryClass"
+		errormessage="错误的月收入水平" />
+
+	<FieldModel id="seqno" name="序号" desc="序号" type="int"
+		length="" scale="" width="" height="1" gen="" rule="isSeqNo"
+		errormessage="错误的序号" />
+
+	<FieldModel id="sex" name="性别" desc="性别" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isSex"
+		errormessage="错误的性别" />
+<!-- ??? -->
+	<FieldModel id="smallCount" name="次数、笔数" desc="次数、笔数" type="int"
+		length="" scale="" width="" height="1" gen="" rule="isNumber"
+		errormessage="错误的次数、笔数" />
+
+	<FieldModel id="smallSeqno" name="小序号" desc="小序号" type="int"
+		length="" scale="" width="" height="1" gen="" rule="isSmallSeqno"
+		errormessage="错误的小序号" />
+
+	<FieldModel id="status" name="状态" desc="状态" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isStatus"
+		errormessage="错误的状态" />
+
+	<FieldModel id="supvsno" name="预警信息编号" desc="预警信息编号" type="string"
+		length="16" scale="" width="90" height="1" gen="" rule="isSupvsno"
+		errormessage="错误的预警信息编号" />
+
+	<FieldModel id="teleno" name="电话号码、传真号码" desc="电话号码、传真号码" type="string"
+		length="20" scale="" width="160" height="1" gen="" rule="isTeleno"
+		errormessage="错误的电话号码、传真号码" />
+
+	<FieldModel id="term" name="期限" desc="期限" type="string"
+		length="6" scale="" width="50" height="1" gen="" rule="isDate"
+		errormessage="错误的期限" />
+
+	<FieldModel id="termRange" name="期限范围" desc="期限范围" type="string"
+		length="2" scale="" width="20" height="1" gen="" rule="isTermRange"
+		errormessage="错误的期限范围" />
+
+	<FieldModel id="timestamp" name="TimeStamp" desc="TimeStamp" type="string"
+		length="" scale="" width="" height="1" gen="" rule="isTimeStamp"
+		errormessage="" />
+
+	<FieldModel id="title" name="职称" desc="职称" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isTitle"
+		errormessage="错误的职称" />
+
+	<FieldModel id="tlrno" name="柜员号" desc="柜员号" type="string"
+		length="8" scale="" width="70" height="1" gen="" rule="isTlrno"
+		errormessage="错误的柜员号" />
+
+	<FieldModel id="tlsrno" name="流水号" desc="流水号" type="string"
+		length="9" scale="" width="75" height="1" gen="" rule="isTlsrno"
+		errormessage="错误的流水号" />
+
+	<FieldModel id="trade" name="行业" desc="行业" type="string"
+		length="2" scale="" width="16" height="1" gen="" rule="isTrade"
+		errormessage="错误的行业" />
+
+	<FieldModel id="trmClass" name="贷款状态" desc="贷款状态" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isTrmClass"
+		errormessage="错误的贷款状态" />
+
+	<FieldModel id="txtTime" name="交易时间" desc="交易时间" type="datetime"
+		length="" scale="" width="8" height="1" gen="" rule="isDateTime"
+		errormessage="错误的交易时间" />
+
+	<FieldModel id="type1" name="1位类型" desc="1位类型" type="string"
+		length="" scale="" width="8" height="1" gen="" rule=""
+		errormessage="错误的1位类型" />
+
+	<FieldModel id="type2" name="2位标志" desc="2位标志" type="string"
+		length="" scale="" width="8" height="1" gen="" rule=""
+		errormessage="错误的标志" />
+
+	<FieldModel id="trnInterval" name="还款周期" desc="还款周期" type="string"
+		length="1" scale="" width="8" height="1" gen="" rule="isTrnInterval"
+		errormessage="" />
+
+</FieldModels>

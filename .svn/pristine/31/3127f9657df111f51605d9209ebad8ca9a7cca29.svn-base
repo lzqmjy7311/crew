@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.company.view.relevance.getter.TpRelevanceGetter">
+	<Include id="BankParam" />
+	
+	<Fields>
+		<Field id="relevanceType" desc="关联类型" xpath="/relevanceType"/>
+		<Field id="customerNum" desc="客户编号" xpath="/customerNum"/>
+		<Field id="chineseName" desc="客户名称" xpath="/chineseName"/>
+		<Field id="affiliatedCertficateNum" desc="证件号码" datatype="string" xpath="/affiliatedCertficateNum" />
+        <Field id="residence" desc="户籍所在地"  xpath="/residence"/>
+        <Field id="educationBackground" desc="学历"  xpath="/educationBackground"/>
+        <Field id="outstandingloanNum" desc="未结清贷款"  xpath="/outstandingloanNum"/>
+        <Field id="loanBal" desc="贷款余额"  xpath="/loanBal"/>
+        <Field id="creditLevel" desc="客户信用评级"  xpath="/creditLevel"/>
+        <Field id="warningLevel" desc="预警综合等级"  xpath="/warningLevel"/>   
+	</Fields>
+	
+	<Operations>
+
+	</Operations>
+</CommQry>

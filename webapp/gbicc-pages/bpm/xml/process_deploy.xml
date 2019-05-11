@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="参数管理  &gt; 产品管理" navigate="参数管理  &gt; 产品管理" type="call"
+	interface="false" pagesize="30" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.bpm.getter.ProcessDefinitionGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="deploymentId" desc="部署ID"  edittype="text" status="F" datatype="string" xpath="/deploymentId" />
+		<Field id="id" desc="流程定义ID"  edittype="text" status="F" datatype="string" xpath="/id" />
+		<Field id="name" desc="流程名称"  edittype="text" status="F" datatype="string" xpath="/name" />
+		<Field id="version" desc="版本"  edittype="text" status="F" datatype="string" xpath="/version" />
+		<Field id="key" desc="关键字"  edittype="text" status="F" datatype="string" xpath="/key" />
+		<Field id="resourceName" desc="流程资源名称"  edittype="text" status="F" datatype="string" xpath="/resourceName" />
+		<Field id="diagramResourceName" desc="图片资源名称"  edittype="text" status="F" datatype="string" xpath="/diagramResourceName" />
+    </Fields>
+	<Operations>
+		<Button id="btAdd" name="btAdd" desc="发布" icon="icon-add" updateClass="#" url="#" txn="" />
+		<Button id="btUpload" name="btUpload" desc="上传" icon="icon-add" updateClass="#" url="#" txn="" />
+		<Button id="btnSave" name="btnSave" desc="保存" icon="icon-save" operation="asysubmit" 
+			updateClass="" url="#" txn="" />
+        <Button id="btDel" name="btDel" desc="删除" icon="icon-delete" operation="asysubmit"
+			updateClass="com.gbicc.bpm.update.ProcessDeployDelUpdate" url="" />
+		<Button id="btProcDiag" name="btProcDiag" desc="流程图" icon="icon-clockwise" 
+			updateClass="#" url="" />
+	</Operations>
+</CommQry>

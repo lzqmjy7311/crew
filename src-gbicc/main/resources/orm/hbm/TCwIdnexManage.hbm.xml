@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.gbicc.warn.ComninationWarn.entity.TCwIdnexManage" table="T_CW_IDNEX_MANAGE" schema="ECUSER">
+        <comment>指标信息维护表</comment>
+        <id name="id" type="string">
+            <column name="FD_ID" length="50" />
+            <generator class="assigned" />
+        </id>
+        <property name="indexCode" type="string">
+            <column name="INDEX_CODE" length="50" not-null="true" />
+        </property>
+        <property name="indexName" type="string">
+            <column name="INDEX_NAME" length="200" />
+        </property>
+        <property name="indexType" type="string">
+            <column name="INDEX_TYPE" length="50" />
+        </property>
+        <property name="gatherType" type="string">
+            <column name="GATHER_TYPE" length="25" />
+        </property>
+        <property name="monitorRpe" type="string">
+            <column name="MONITOR_RPE" length="50" />
+        </property>
+        <property name="threshold1" type="java.lang.Double">
+            <column name="THRESHOLD1" precision="53" scale="0" />
+        </property>
+        <property name="threshold2" type="java.lang.Double">
+            <column name="THRESHOLD2" precision="53" scale="0" />
+        </property>
+        <property name="creditUser" type="string">
+            <column name="CREDIT_USER" length="25" />
+        </property>
+        <property name="updateUser" type="string">
+            <column name="UPDATE_USER" length="50" />
+        </property>
+        <property name="gatherTypeHave" type="string">
+            <column name="GATHER_TYPE_HAVE" length="50" />
+        </property>
+        <property name="updateed" type="date">
+            <column name="UPDATEED" length="10" />
+        </property>
+        <property name="credited" type="date">
+            <column name="CREDITED" length="10" />
+        </property>
+        <property name="indexType2" type="string">
+            <column name="INDEX_TYPE2" length="25" />
+        </property>
+        <property name="thresholdVersion" type="string">
+            <column name="THRESHOLD_VERSION" length="25" />
+        </property>
+        <property name="zbDescripe" type="string">
+            <column name="ZB_DESCRIPE" length="200" />
+        </property>
+    </class>
+</hibernate-mapping>

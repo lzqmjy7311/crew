@@ -1,0 +1,29 @@
+<CommQry title="财报科目趋势分析" navigate="TbCsmFinanceStatementData" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.financial.analysis.getter.FinCourseTendencyGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+    
+        <Field id="startDate" desc="起始日期"  edittype="date" multiple="false" editable="true" readonly="false" placeholder="占位符"  datatype="int" size="20" xpath="" />
+        <Field id="backQs" desc="回溯期数"  edittype="text" multiple="false" editable="true" readonly="false" placeholder="占位符"  datatype="int" size="2" rules="isNum" errmsg="请输入不超过2位整数！"  xpath="" />
+        <Field id="caliber" desc="口径类型" require="true" edittype="select" multiple="false" editable="true"  placeholder="占位符" translated="DATA_DIC.716" datatype="int" size="10" xpath="" />
+       
+
+		<Field id="project" desc="财务指标" translated="CQ:TbCsmFinanceIndexCd" require="true"  multiple="true"
+			fieldmap="project=indexCd;projectName=indexName" viewField="indexName"
+			edittype="select" dropdowntype="dynamic" primaty="true" init="true" size="10" 
+			editable="true" width="300" colspan="4"/>  
+		 <Field id="customerNum" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+         />
+         <Field id="checkBox" desc="" require="" edittype="checkbox" datatype="string" method="None" translated="LIST:1,行内均值" />		 
+       	<Field id="checkBox1" desc="" require="" edittype="checkbox" datatype="string" method="None" translated="LIST:1,上市公司行内均值" />
+    </Fields>
+    <Where>
+    	<TextBox id="jzyear" desc="年度" require="true" edittype="text" status="F" datatype="int" size="10" index="2" />
+    </Where>
+    <Operations>
+    	<Button id="btModOrAdd23" name="btModOrAdd23" desc="查询" 
+			updateClass=""
+			url="" txn="" />
+    </Operations>
+</CommQry>

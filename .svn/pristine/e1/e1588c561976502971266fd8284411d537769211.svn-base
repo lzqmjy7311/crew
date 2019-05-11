@@ -1,0 +1,660 @@
+package com.gbicc.company.warnDisposal.service;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import com.gbicc.bpm.BpmDescUtil;
+import com.gbicc.bpm.service.ProcessManagerService;
+import com.gbicc.common.CommonService;
+import com.gbicc.common.FileUpDownProperties;
+import com.gbicc.company.warnDisposal.entity.TCmCustomer;
+import com.gbicc.company.warnDisposal.entity.TCmWarnTask;
+import com.gbicc.company.warnDisposal.entity.TCmWarnTaskCount;
+import com.gbicc.company.warnDisposal.entity.TCmWarnTaskRel;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.business.common.service.BctlService;
+import com.huateng.ebank.business.datadic.service.DataDicService;
+import com.huateng.ebank.business.management.service.TlrInfoService;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.entity.data.mng.Bctl;
+import com.huateng.ebank.entity.data.mng.DataDic;
+import com.huateng.ebank.entity.data.mng.TlrInfo;
+import com.huateng.ebank.framework.exceptions.CommonException;
+import com.huateng.ebank.framework.util.ApplicationContextUtils;
+import com.huateng.ebank.framework.util.DateUtil;
+
+public class TCmWarnTaskService {
+	
+	private static final Logger log=LoggerFactory.getLogger(TCmWarnTaskService.class);
+	public TCmWarnTaskService() {
+	}
+
+	public synchronized static TCmWarnTaskService getInstance() {
+		return (TCmWarnTaskService) ApplicationContextUtils
+				.getBean(TCmWarnTaskService.class.getSimpleName());
+	}
+	
+	public ROOTDAO dao(){
+		return  ROOTDAOUtils.getROOTDAO();
+	}
+	
+	public TCmWarnTask get(String id) throws CommonException{
+		return dao().query(TCmWarnTask.class, id);
+	}
+	
+	public void save(TCmWarnTask tcmwarntask) throws CommonException{
+		tcmwarntask.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+		dao().save(tcmwarntask);
+	}
+	
+	public void update(TCmWarnTask tcmwarntask) throws CommonException{
+		tcmwarntask.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+		dao().update(tcmwarntask);
+	}
+	
+	public void delete(String id) throws CommonException{
+		dao().delete(id);
+	}
+	
+	/**
+	 * 根据客户ID 人工 启动处置预警流程
+	 * 
+	 * @param customerId
+	 * @return
+	 */
+	public Map<String, String> personStartDC(String customerId) {
+
+		Map<String, String> map = new HashMap<String, String>();
+		try {
+
+			TCmWarnTaskService taskService = TCmWarnTaskService.getInstance();
+			TCmCustomer customer = this.addODSCusomerInfo(customerId);
+			TCmWarnTask task = new TCmWarnTask();
+			task.setTaskCode(this.createTaskCode("DC"));
+			task.setStatus("0");
+			task.setTaskType("DC");
+			this.setTaskOverTime(task, "客户经理");
+			task.setNextStartTaskDate(null);
+			task.setIsContinue("0");
+			task.setOverRc("0");
+			task.setWarnLevel(customer.getCustWarnLevel());
+			TlrInfoService tlrinfoservice=TlrInfoService.getInstance();
+			if(customer.getOperator()==null||tlrinfoservice.getTlrInfoByTlrno(customer.getOperator())==null){
+				TlrInfo allUser=tlrinfoservice.getTlrInfoByTlrno(this.getDateDicName(FileUpDownProperties.readValue("task_distribute_mng_type")));
+				customer.setOperator(allUser.getTlrno());
+				customer.setOperBank(allUser.getBrcode());
+				task.setInspectors(allUser.getTlrno());
+			}else{
+				task.setInspectors(customer.getOperator());
+			}
+			task.setStartType("1");
+			TCmCustomerService.getInstance().update(customer);
+			task.settCmCustomer(customer);
+			taskService.save(task);
+			
+			ProcessManagerService pms = ProcessManagerService.getInstace();
+			Map<String, Object> processMap = new HashMap<String, Object>();
+			processMap.put("assignee", customer.getOperator());
+			processMap.put("operation", "人工发起预警处置流程");
+			processMap.put("desc", BpmDescUtil.getDesc(task.getTaskCode(), customer.getCustcode(), customer.getCustname()));
+			pms.startProcess(task.getId(), "CM_CustWranDisposalProcess",
+					customer.getOperator(), processMap);
+			// 添加任务次数
+			this.addWarnCount(task);
+			map.put("success", "true");
+			map.put("customerId", customer.getId());
+			map.put("taskId", task.getId());
+			map.put("message", "发起成功，任务编号为：" + task.getTaskCode()
+					+ "。请填写详细预警信息后进行提交审核！");
+		} catch (Exception e) {
+			map.put("success", "false");
+			map.put("message", "系统出错，请联系管理员");
+			log.error("人工 启动处置预警流程异常--------", e);
+			e.printStackTrace();
+		}
+
+		return map;
+	}
+	
+	/**
+	 * 获取ODS客户信息
+	 * @param customerId
+	 * @return
+	 * @throws CommonException
+	 */
+	public TCmCustomer addODSCusomerInfo(String customerId) throws CommonException{
+		StringBuffer sbf = new StringBuffer("");
+		sbf.append(" SELECT ");
+		sbf.append(" I.CUSTOMER_NUM AS \"custcode\",");
+		sbf.append(" C.CHINESE_NAME AS \"custname\",");
+		sbf.append(" D.WARN_M_LEVEL AS \"custWarnLevel\",");
+		sbf.append(" I.HANDLING_ORG_CD AS \"operBank\",");
+		sbf.append(" I.CUST_MANAGER_ID AS \"operator\",");
+		sbf.append(" I.ADVANCE_AMOUNT AS \"loanAmount\",");
+		sbf.append(" I.ADVANCE_BALANCE AS \"loanBalance\",");
+		sbf.append(" C.BUSINESS_LICENSE_NUM AS \"businessCode\",");
+		sbf.append(" I.CORPORATIVE  AS \"legalRep\"");
+		sbf.append(" FROM T_ODS_CMS_CORP_INDEX I LEFT JOIN T_ODS_CMS_CORPORATION C ON I.CUSTOMER_NUM=C.CUSTOMER_NUM"
+				+ " LEFT JOIN T_CM_CUSTOMER_WARN_LEV_DTL D ON I.CUSTOMER_NUM=D.CUSTOMER_NUM "
+				+ "");
+		sbf.append("  WHERE I.CUSTOMER_NUM='"+customerId+"'");
+		
+		JdbcTemplate jdbcTemplate = (JdbcTemplate) ApplicationContextUtils
+				.getBean("JdbcTemplate");
+		List<TCmCustomer> listT = jdbcTemplate.query(sbf.toString(),BeanPropertyRowMapper.newInstance(TCmCustomer.class));
+		TCmCustomerService customerService = TCmCustomerService.getInstance();
+		TCmCustomer customer=listT.get(0);
+		customer.setCredited(new Date());
+		customer.setId(null);
+		customerService.save(customer);
+		return customer;
+	}
+	
+	/**
+	 * 根据任务ID 人工 反馈  启动处置预警流程
+	 * @param taskId
+	 * @return
+	 */
+	public Map<String, String> personStartRC(String taskId){
+		
+		Map<String, String> map = new HashMap<String, String>();
+		try{
+			ProcessManagerService pms=ProcessManagerService.getInstace();
+			if("true".equals(pms.findRuningTaskByBusinessKey(taskId))){
+				map.put("success", "false");
+				map.put("message", "该任务已启动流程！");
+				return map;
+			}
+			TCmCustomerService customerService = TCmCustomerService.getInstance();
+			TCmWarnTaskService taskService = TCmWarnTaskService.getInstance();
+			TCmWarnTask task = taskService.get(taskId);
+			TCmCustomer customer = customerService.get(task.getCustomerId());
+			task.setStatus("5");
+			task.setTaskType("RC");
+			task.setOverRc("0");
+			//设置任务超时时间
+			this.setTaskOverTime(task, "客户经理");
+			task.setNextStartTaskDate(null);
+			taskService.update(task);
+			//更新预警信号状态
+			this.disposalWarnTaskRel(task);
+			Map<String, Object> processMap=new HashMap<String, Object>();
+			processMap.put("assignee", customer.getOperator());
+			processMap.put("operation","人工发起处置反馈流程");
+			processMap.put("desc", BpmDescUtil.getDesc(task.getTaskCode(), customer.getCustcode(), customer.getCustname()));
+			pms.startProcess(task.getId(),"CM_CustWranDisposalProcess",customer.getOperator(),processMap);
+			//添加任务次数
+			this.addWarnCount(task);
+			map.put("success", "true");
+			map.put("message", "发起成功，任务编号为："+task.getTaskCode()+"。请填写处置反馈信息后进行提交审核！");
+		}catch(Exception e){
+			map.put("success", "false");
+			map.put("message", "系统出错，请联系管理员");
+			log.error("人工 反馈  启动处置预警流程异常--------", e);
+			e.printStackTrace();
+		}
+		return map;
+	}
+	/**
+	 * 是否显示提交至总行选项
+	 * @param taskId
+	 * @return
+	 */
+	public Map<String, String> isSubmitNext(String taskId){
+		
+		Map<String, String> map = new HashMap<String, String>();
+		try{
+			TCmWarnTaskRelService service = TCmWarnTaskRelService.getInstance();
+			List<TCmWarnTaskRel> list = service.findByBusinessId(taskId);
+			//获取其他规则类型编号
+			String othCoce=this.getDateDicList("12600").get(0).getDataNo();
+			List<DataDic> dataDicList = this.getDateDicList("12597");
+			boolean haveOth=false;//是否有其他项
+			boolean allSM=true;//是否所有等级都小于配置等级
+			for (TCmWarnTaskRel tCmWarnTaskRel : list) {
+				try{
+					if(othCoce.equals(tCmWarnTaskRel.getWarnSubject())){//如果预警主题为其他
+						haveOth=true;
+						continue;
+					}
+					if(Integer.valueOf(tCmWarnTaskRel.getProcessLevel())>=Integer.valueOf(dataDicList.get(0).getDataNo())){
+						//如果某条规则审批等级大于等于配置等级，则结束循环且无需显示是否提交至总行选项
+						allSM=false;
+						break;
+					}
+				}catch(Exception e){
+					continue;
+				}
+			}
+			if(allSM&&haveOth){
+				map.put("showSubmitNext", "true");
+			}else{
+				map.put("showSubmitNext", "false");
+			}
+		}catch(Exception e){
+			map.put("showSubmitNext", "false");
+			map.put("success", "false");
+			log.error("是否显示提交至总行选项异常--------", e);
+			e.printStackTrace();
+		}
+		return map;
+	}
+	/**
+	 * 是否显示提交人选择窗口
+	 * @param taskId
+	 * @return
+	 */
+	public Map<String, String> isOpenNextUserWin(String[] params){
+		Map<String, String> map = new HashMap<String, String>();
+		ProcessManagerService processManagerService=ProcessManagerService.getInstace();
+		try{
+			Bctl bctl=BctlService.getInstance().getBctlByBrcode(params[1]);
+			TCmWarnTask tCmWarnTask=this.get(params[0]);
+			Map<String,String> variables=processManagerService.findTaskVariable(params[0]);
+			if("khjlqr".equals(variables.get("nowRole"))){
+				map.put("orgId",bctl.getBrcode());
+				map.put("success", "true");
+				map.put("showWin", "false");
+				return map;
+			}
+			if("fhfxjczg".equals(variables.get("nowRole"))){
+				if("1".equals(tCmWarnTask.getIsSubmitNext())){
+					map.put("orgId",bctl.getBlnUpBrcode());
+					map.put("success", "true");
+					map.put("showWin", "true");
+					return map;
+				}else{
+					map.put("orgId",bctl.getBrcode());
+					map.put("success", "true");
+					map.put("showWin", "false");
+					return map;
+				}
+			}else if("khjlzg".equals(variables.get("nowRole"))){
+				List<TCmWarnTaskRel> list=TCmWarnTaskRelService.getInstance().findByBusinessId(params[0]);
+				if(list!=null){
+					boolean flg_=true;
+					for (TCmWarnTaskRel tCmWarnTaskRel : list) {
+						if(!"1".equals(tCmWarnTaskRel.getWarnElimIs())){
+							flg_=false;
+							break;
+						}
+					}
+					if(flg_){
+						map.put("orgId",bctl.getBrcode());
+						map.put("success", "true");
+						map.put("showWin", "false");
+						return map;
+					}
+				}
+			}
+			
+			if("fhfxjczg".equals(variables.get("nowRole"))||"khjlzg".equals(variables.get("nowRole"))){
+				map.put("orgId",bctl.getBlnUpBrcode());
+			}
+			map.put("orgId",bctl.getBrcode());
+			map.put("success", "true");
+			map.put("showWin", "true");
+		}catch(Exception e){
+			e.printStackTrace();
+			map.put("showWin", "false");
+			map.put("success", "false");
+			log.error("提交人选择窗口异常--------", e);
+		}
+		return map;
+	}
+	
+	public String findTaskByCustomer(String customerId) throws CommonException{
+		String sql="select tm.FD_ID from t_cm_warn_task tm "
+				+"where exists (select * from ACT_RU_EXECUTION te where tm.FD_ID=te.BUSINESS_KEY) "
+				+"and tm.FD_CUSTOMER_ID = '"+customerId+"'";
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		Iterator it=rootdao.queryBySQL(sql);
+		String taskId = null;
+		while(it.hasNext()){
+			taskId=(String) it.next();
+		}
+		return taskId;
+		
+	}
+	
+	/**
+	 * 更新预警信号状态
+	 * @param task
+	 * @throws CommonException
+	 */
+	public void disposalWarnTaskRel(TCmWarnTask task) throws CommonException {
+		TCmWarnTaskRelService service = TCmWarnTaskRelService.getInstance();
+		List<TCmWarnTaskRel> list = service.findByBusinessId(task.getId());
+		for (TCmWarnTaskRel tCmWarnTaskRel : list) {
+			if ("4".equals(tCmWarnTaskRel.getWarnStatus())) {
+				continue;
+			}else{
+				//待处置
+				tCmWarnTaskRel.setWarnStatus("2");
+				service.update(tCmWarnTaskRel);
+			}
+		}
+
+	}
+	
+	/**
+	 * 获得TaskCode
+	 * @param head
+	 * @return
+	 * @throws Exception
+	 */
+	public String createTaskCode(String head) throws Exception{
+		String taskCode = head;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		taskCode = taskCode+sdf.format(new Date());
+		String seqStr = this.findSeqByName("FD_WRAN_DISPOSAL_SQ").toString();
+		if(Integer.valueOf(seqStr)>9999){
+			//重置序列
+			this.restartSQ("FD_WRAN_DISPOSAL_SQ");
+		}
+		for(int i=4 ; seqStr.length()<i;i=4){
+			seqStr="0"+seqStr;
+		}
+		taskCode=taskCode+seqStr;
+		return taskCode;
+	}
+	
+	
+	/**
+	 * 重置序列
+	 * @param SQname
+	 * @throws CommonException
+	 */
+	public void restartSQ(String SQname) throws CommonException{
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		rootdao.flush();
+		//更改业务状态
+		rootdao.executeSql("ALTER SEQUENCE FD_WRAN_DISPOSAL_SQ RESTART ");
+	}
+	
+	/**
+	 * 根据业务序列ID获取序列
+	 * @param userId
+	 * @return
+	 * @throws Exception
+	 */
+	@SuppressWarnings("rawtypes")
+	public Integer findSeqByName(String seqName) throws Exception{
+		String sql="select nextval for "+seqName+" from sysibm.SYSDUMMY1";
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		Iterator it=rootdao.queryBySQL(sql);
+		Integer taskId = 0;
+		while(it.hasNext()){
+			taskId=(Integer) it.next();
+		}
+		return taskId;
+	}
+	
+	/**
+	 * 设置任务超时时间
+	 * @param task
+	 */
+	public void setTaskOverTime(TCmWarnTask task,String nowRole){
+		Date nowDate = new Date();
+		task.setTaskCreatDate(nowDate);
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(nowDate);
+		try{
+			//12594  从字典表中拿到配置的超时长度
+			List<DataDic> list = this.getDateDicList("12594");
+			String length="15";
+			for (DataDic dic : list) {
+				if(nowRole.equals(dic.getDataName())){
+					length=dic.getDataNo();
+					break;
+				}
+			}
+			calendar.add(Calendar.DATE, Integer.valueOf(length));
+		}catch(Exception f){
+			calendar.add(Calendar.DATE, 15);
+			log.error("时间计算异常--------", f);
+			f.printStackTrace();
+		}
+		task.setTaskMatureDate(calendar.getTime());
+		if(task.getTaskOverran()==null){
+			task.setTaskOverran("0");
+		}
+	}
+	
+	/**
+	 * 根据字典码 找到所有数据
+	 * 12594 为超时长度编码
+	 * @param qDataTypeNo
+	 * @return
+	 */
+	public List<DataDic> getDateDicList(String qDataTypeNo){
+		DataDicService service = new DataDicService();
+		StringBuffer hql = new StringBuffer("select dd from DataDic dd where 1=1");
+		List<DataDic> list = new ArrayList<DataDic>();
+		if (StringUtils.isNotBlank(qDataTypeNo)) {
+			hql.append(" and dd.dataTypeNo=").append(qDataTypeNo);
+		}
+		try {
+			List<Object> objlist = service.list(1, 10, hql.toString()).getQueryResult();
+			for (Object objs : objlist) {
+				Object[] obj=(Object[])objs;
+				DataDic tci=(DataDic)obj[0];
+				list.add(tci);
+			}
+		} catch (CommonException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	/**
+	 * 根据字典码 与值 找到名称
+	 * @param dataTypeNo
+	 * @param dataNo
+	 * @return
+	 */
+	public String getDateDicName(String dataTypeNo){
+		
+		CommonService comService =  CommonService.getInstance();
+		List<DataDic> list = (List<DataDic>)comService.queryListHQL("from DataDic t where dataTypeNo="+dataTypeNo+" ");
+		if(list!=null&&list.size()>0){
+			DataDic dic=list.get(0);
+			return dic.getDataName();
+		}else{
+			return null;
+		}
+	}
+	
+	/**
+	 * 根据taskId  自动 跑批 启动处置预警流程
+	 * @param taskId
+	 * @return
+	 */
+	public Map<String, String> startProcessDC(String taskId){
+	
+		Map<String, String> map = new HashMap<String, String>();
+		try{
+			TCmWarnTaskService taskService = TCmWarnTaskService.getInstance();
+			
+			TCmWarnTask task = taskService.get(taskId);
+			TCmCustomer customer = task.gettCmCustomer();
+			task.setTaskCode(this.createTaskCode("DC"));
+			task.setStatus("0");
+			task.setTaskType("DC");
+			this.setTaskOverTime(task, "客户经理");
+			task.setNextStartTaskDate(null);
+			task.setIsContinue("0");
+			task.setWarnLevel(customer.getCustWarnLevel());
+			TlrInfoService tlrinfoservice=TlrInfoService.getInstance();
+			if(customer.getOperator()==null||tlrinfoservice.getTlrInfoByTlrno(customer.getOperator())==null){
+				TlrInfo allUser=tlrinfoservice.getTlrInfoByTlrno(this.getDateDicName(FileUpDownProperties.readValue("task_distribute_mng_type")));
+				customer.setOperator(allUser.getTlrno());
+				customer.setOperBank(allUser.getBrcode());
+				task.setInspectors(allUser.getTlrno());
+			}else{
+				task.setInspectors(customer.getOperator());
+			}
+			task.setStartType("0");
+			TCmWarnTaskRelService relService = TCmWarnTaskRelService.getInstance();
+			List<TCmWarnTaskRel> list = relService.findByBusinessId(taskId);
+			if(list!=null){
+				task.setWarnCunt(list.size());
+			}else{
+				task.setWarnCunt(0);
+			}
+			TCmCustomerService.getInstance().update(customer);
+			task.settCmCustomer(customer);
+			taskService.update(task);
+			ProcessManagerService pms=ProcessManagerService.getInstace();
+			Map<String, Object> processMap=new HashMap<String, Object>();
+			
+			processMap.put("assignee", customer.getOperator());
+			processMap.put("operation","自动发起预警处置流程");
+			processMap.put("desc", BpmDescUtil.getDesc(task.getTaskCode(), customer.getCustcode(), customer.getCustname()));
+			pms.startProcess(task.getId(),"CM_CustWranDisposalProcess",customer.getOperator(),processMap);
+			//添加任务次数
+			this.addWarnCount(task);
+			map.put("success", "true");
+			map.put("message", "发起成功，任务编号为："+task.getTaskCode()+"。请填写详细预警信息后进行提交审核！");
+		}catch(Exception e){
+			map.put("success", "false");
+			map.put("message", "系统出错，请联系管理员");
+			log.error("自动 跑批 启动处置预警流程--------", e);
+			e.printStackTrace();
+		}
+		
+		return map;
+	}
+	
+	/**
+	 * 自动 跑批 启动反馈预警流程
+	 * @return
+	 */
+	public  Map<String, String> startProcessRC(){
+		String sql="SELECT TASK.FD_ID FROM T_CM_WARN_TASK TASK WHERE TASK.FD_NEXTSTART_DATE=TO_DATE('"+new SimpleDateFormat("yyyy-MM-dd").format(new Date())+"','YYYY-MM-DD') AND  NOT EXISTS ( SELECT * FROM ACT_RU_EXECUTION RU_TASK WHERE RU_TASK.BUSINESS_KEY_=TASK.FD_ID)";
+		try {
+			ProcessManagerService pms=ProcessManagerService.getInstace();
+			TCmCustomerService customerService=TCmCustomerService.getInstance();
+			List<String> taskList = this.findListTaskId(sql);
+			for (String taskId : taskList) {
+				if("true".equals(pms.findRuningTaskByBusinessKey(taskId))){
+					//该任务已存在流程
+					continue;
+				}
+				TCmWarnTask task = this.get(taskId);
+				TCmCustomer customer = customerService.get(task.getCustomerId());
+				task.setStatus("5");
+				task.setTaskType("RC");
+				task.setOverRc("0");
+				//设置任务超时时间
+				this.setTaskOverTime(task, "客户经理");
+				// TODO 每次发起流程时，一定要把下次发起流程时间设置为空
+				task.setNextStartTaskDate(null);
+				this.update(task);
+				//更新预警信号状态
+				this.disposalWarnTaskRel(task);
+				Map<String, Object> processMap=new HashMap<String, Object>();
+				processMap.put("assignee", customer.getOperator());
+				processMap.put("operation","自动发起处置反馈流程");
+				processMap.put("desc", BpmDescUtil.getDesc(task.getTaskCode(), customer.getCustcode(), customer.getCustname()));
+				pms.startProcess(task.getId(),"CM_CustWranDisposalProcess",customer.getOperator(),processMap);
+				//添加任务次数
+				this.addWarnCount(task);
+			}
+			
+		} catch (CommonException e) {
+			log.error("自动 跑批 启动反馈预警流程--------", e);
+			e.printStackTrace();
+		}
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("success", "true");
+		return map;
+	}
+	
+	/**
+	 * 
+	 * @param sql
+	 * @return
+	 * @throws CommonException
+	 */
+	public List<String> findListTaskId(String sql) throws CommonException{
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		Iterator it=rootdao.queryBySQL(sql);
+		List<String> list=new ArrayList<String>();
+		while(it.hasNext()){
+			String taskId=(String) it.next();
+			if(StringUtils.isNotBlank(taskId)){
+				list.add(taskId);
+			}
+		}
+		return list;
+		
+	}
+	
+	/**
+	 * 添加任务次数
+	 * @param task
+	 */
+	public void addWarnCount(TCmWarnTask task){
+		ProcessManagerService pms=ProcessManagerService.getInstace();
+		String processId=pms.findRuningTaskIdByBusinessKey(task.getId());
+		TCmWarnTaskCount taskCount=new TCmWarnTaskCount();
+		taskCount.setTaskId(task.getId());
+		taskCount.setCustomerId(task.gettCmCustomer().getId());
+		taskCount.setProcessId(processId);
+		taskCount.setTaskType(task.getTaskType());
+		taskCount.setIsChaoshi("0");
+		taskCount.setOperator(task.gettCmCustomer().getOperator());
+		taskCount.setOrgCode(task.gettCmCustomer().getOperBank());
+		taskCount.setIsChuli("0");
+		taskCount.setCredited(new Date());
+		CommonService comService =  CommonService.getInstance();
+		try {
+			comService.save(taskCount);
+		} catch (CommonException e) {
+			log.error("添加任务次数--------", e);
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * 设置任务超时
+	 * @param taskId
+	 * @throws CommonException
+	 */
+	public void updateWarnCountIsChaoShi(String taskId) throws CommonException{
+		ProcessManagerService pms=ProcessManagerService.getInstace();
+		String processId=pms.findRuningTaskIdByBusinessKey(taskId);
+		String sql="UPDATE T_CM_WARN_TASK_COUNT SET IS_CHAOSHI='1' WHERE TASK_ID='"+taskId+"' AND PROCESS_ID='"+processId+"'";
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		rootdao.executeSql(sql);
+	}
+	
+	/**
+	 * 设置任务是否处理
+	 * @param taskId
+	 * @throws CommonException
+	 */
+	public void updateWarnCountIsChuLi(String taskId,String isChuLi) throws CommonException{
+		ProcessManagerService pms=ProcessManagerService.getInstace();
+		String processId=pms.findRuningTaskIdByBusinessKey(taskId);
+		String sql="UPDATE T_CM_WARN_TASK_COUNT SET IS_CHULI='"+isChuLi+"' WHERE TASK_ID='"+taskId+"' AND PROCESS_ID='"+processId+"'";
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		rootdao.executeSql(sql);
+	}
+}

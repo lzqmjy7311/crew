@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  
+type  枚举说明
+SL:字符串类型
+RBS:右补空字符串类型
+RBNS:右补空数字字符串类型
+N:数字类型
+LZN:左补0数字类型
+LZC:左补零数值类型
+SLZC:代符号位的左补零数值类型
+-->
+<Buffer id="CERes_Attr" name="CERes_Attr" desc="卡片参与请求消息应答">
+	<Attr id="rspcode" type="RBS" desc="code位于属性" name="rspcode" length="4"  initValue="" xpath="/rspcode"></Attr>
+	<Field id="version" type="RBS" desc="消息版本号" name="version" length="20"  initValue="" xpath="/version"/>
+	<Field id="rspcode" type="RBS" desc="应答码" name="rspcode" length="4"  initValue="" xpath="/rspcode">
+		<Attr id="rspcode" type="RBS" desc="应答码" name="rspcode" length="4"  initValue="" xpath="/rspcode"></Attr>
+	</Field>
+	<Field id="rspmsg" type="RBS" desc="应带消息" name="rspmsg" length="20"  initValue="0000" xpath="/rspmsg"/>
+	<Buffer id="Merchant" type="Buffer.Element.CERes_Merchant" desc="商户信息" name="Merchant" >
+		<Field id="acqBIN" type="RBS" desc="acqBIN" name="acqBIN" length="11"  initValue="" xpath="/merchant/acqBIN"/>
+		<Field id="merID" type="RBS" desc="merID" name="merID" length="24"  initValue="" xpath="/merchant/merID"/>
+		<Field id="password" type="RBS" desc="password" name="password" length="8"  initValue="" xpath="/merchant/password"/>
+		<Field id="name" type="RBS" desc="name" name="name" length="25" initValue="" xpath="/merchant/name"/>
+		<Field id="country" type="RBS" desc="country" name="country" length="3" initValue="" xpath="/merchant/country"/>
+	</Buffer>
+	<Array id="array" desc="数组List" name="array" xpath="/array">
+		<Buffer id="Purchase" desc="交易信息" name="Purchase" xpath="com.huateng.fs.micro.demo.bean.Purchase">
+			<Field id="purchAmount" type="LZN" desc="交易金额" name="purchAmount" length="12" xpath="/purchAmount" />
+			<Field id="currency" type="RBS" desc="交易币种" name="currency" length="3" xpath="/currency" />
+			<Field id="exponent" type="RBS" desc="货币指数" name="exponent" length="1" xpath="/exponent" />
+			<Field id="trsFeeAmount" type="LZN" desc="交易手续费" name="trsFeeAmount" length="9" xpath="trsFeeAmount" />
+		</Buffer>
+	</Array>
+</Buffer>

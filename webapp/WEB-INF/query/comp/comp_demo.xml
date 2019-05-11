@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<META>
+	<Component id="COMP_DEMO" path="/demo/comp/comp_demo.ftl"  desc="测试组件"  txn=""/>
+	<Component id="COMP_TAB" path="/demo/comp/comp_tab.ftl"  desc="测试组件"  txn=""/>
+</META>

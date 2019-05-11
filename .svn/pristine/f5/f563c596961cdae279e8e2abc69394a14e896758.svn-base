@@ -1,0 +1,65 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<@CommonQueryMacro.page title="预警处置任务触发规则">
+<@CommonQueryMacro.CommonQuery id="TPlTaskRuleTrigAll" init="true" submitMode="current" navigate="false">
+
+<table align="left" width="100%">
+
+    <tr>
+		<td>
+			<@CommonQueryMacro.PagePilot id="pagePilot1" maxpagelink="9" showArrow="true" pageCache="false"/>
+		</td>
+	</tr>
+	<tr>
+	    <td>
+	    <@CommonQueryMacro.Interface id="interface1" label="请输入查询条件" colNm=6 />
+	    </td>
+	</tr>
+	<tr>		     	    
+		<td>
+			<@CommonQueryMacro.DataTable id ="datatable1"  height="560"  paginationbar="rgyjReportUpd"  fieldStr="accId,ruleId[150],ruleCode,ruleName[190],ruleDesc,ruleRank,ruleType,ruleFor,trigDate,trigType,processDate"     readonly="true" width="100%"/></br>
+		</td>
+	</tr>
+</table>
+</@CommonQueryMacro.CommonQuery>
+<script language="JavaScript">
+
+
+   //触发确认
+  	function rgyjReportUpd_onClickCheck(button) {
+  	    var accId=TPlTaskRuleTrigAll_dataset.getValue("accId");
+  	    alert(accId)
+  	    DWREngine.setAsync(false);
+  	    if(accId==null){
+  	      top.easyMsg.info("请选择需要人工触发预警处置报表的记录！");	             
+  	      return false;
+  	      
+  	    }
+  	    bool=true;
+		TaskVariable.isProcessingByAccid(accId,function(y){
+		   if(y){
+			  bool=false;	      
+		   }
+		});
+		if(!bool){
+			 top.easyMsg.error("该记录已出发预警处置报告并且在流程中！");	
+			return false;
+		}else{
+			 return confirm("确认是否人工触发该条记录对应预警处置报告？");
+		}
+       DWREngine.setAsync(true);		
+	}
+	//删除后刷新当前页
+	function rgyjReportUpd_postSubmit(button) {
+		button.url="#";
+		top.easyMsg.info("人工触发预警报告成功！");
+		flushCurrentPage();
+	}
+	//刷新当前页
+	function flushCurrentPage() {
+		TPlTaskRuleTrigAll_dataset.flushData(TPlTaskRuleTrigAll_dataset.pageIndex);
+	}
+
+
+</script>
+<script type='text/javascript' src='${contextPath}/dwr/interface/TaskVariable.js'> </script>
+</@CommonQueryMacro.page>

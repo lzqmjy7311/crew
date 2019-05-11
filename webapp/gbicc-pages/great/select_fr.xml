@@ -1,0 +1,58 @@
+<CommQry title="TEdwPlsLegalPerson" navigate="TEdwPlsLegalPerson" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.person.great.getter.TEdwPlsLegalPersonGetter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="custid" desc="法人客户编号" edittype="text" datatype="string" readonly="true" 
+        xpath="/custid" />
+        <Field id="custname" desc="法人客户名称" edittype="text" datatype="string" readonly="true" 
+        xpath="/custname" />
+        <Field id="paperkind" desc="证件类型" edittype="text" datatype="string" readonly="true" 
+        xpath="/paperkind" />
+        <Field id="paperid" desc="证件号码" edittype="text" datatype="string" readonly="true" 
+        xpath="/paperid" />
+        <Field id="liceid" desc="营业执照号" edittype="text" datatype="string" readonly="true" 
+        xpath="/liceid" />
+        <Field id="orgaid" desc="组织机构代码" edittype="text" datatype="string" readonly="true" 
+        xpath="/orgaid" />
+        <Field id="regifund" desc="注册资金" edittype="text" datatype="string" readonly="true" 
+        xpath="/regifund" />
+        <Field id="leadcustname" desc="法人代表" edittype="text" datatype="string" readonly="true" 
+        xpath="/leadcustname" />
+        <Field id="leadcustpaperkino" desc="法人证件类型" edittype="text" datatype="string" readonly="true" 
+        xpath="/leadcustpaperkino" />
+        <Field id="leadcustpaperid" desc="法人证件号码" edittype="text" datatype="string" readonly="true" 
+        xpath="/leadcustpaperid" />
+        <Field id="factcapi" desc="实收资本金" edittype="text" datatype="string" readonly="true" 
+        xpath="/factcapi" />
+        <Field id="staffnum" desc="员工人数" edittype="text" datatype="int" readonly="true" 
+        xpath="/staffnum" />
+        <Field id="creveid" desc="税务登记证号_国税" edittype="text" datatype="string" readonly="true" 
+        xpath="/creveid" />
+        <Field id="lreveid" desc="税务登记证号_地税" edittype="text" datatype="string" readonly="true" 
+        xpath="/lreveid" />
+        <Field id="controlid" desc="实际控制人编号" edittype="text" datatype="string" readonly="true" 
+        xpath="/controlid" />
+        <Field id="controlname" desc="实际控制人名称" edittype="text" datatype="string" readonly="true" 
+        xpath="/controlname" />
+        <Field id="controlpaperkind" desc="实际控制人证件类型" edittype="text" datatype="string" readonly="true" 
+        xpath="/controlpaperkind" />
+        <Field id="controlpaperid" desc="实际控制人证件号码" edittype="text" datatype="string" readonly="true" 
+        xpath="/controlpaperid" />
+        <Field id="holdcustid" desc="最大股东编号" edittype="text" datatype="string" readonly="true" 
+        xpath="/holdcustid" />
+        <Field id="holdcustname" desc="最大股东名称" edittype="text" datatype="string" readonly="true" 
+        xpath="/holdcustname" />
+        <Field id="holdcustpaperkind" desc="最大股东证件类型" edittype="text" datatype="string" readonly="true" 
+        xpath="/holdcustpaperkind" />
+        <Field id="holdcustpaperid" desc="最大股东证件号码" edittype="text" datatype="string" readonly="true" 
+        xpath="/holdcustpaperid" />
+    </Fields>
+    <Where>
+    	<TextBox id="custid" desc="法人客户编号" edittype="text" datatype="string" index="0" />
+    	<TextBox id="custname" desc="法人客户名称" edittype="text" datatype="string" index="1" />
+    	<TextBox id="liceid" desc="营业执照号码" edittype="text" datatype="string" index="2" />
+    </Where>
+    <Operations>
+    	<Button id="btnFrConfirm" name="btnFrConfirm" desc="确定" icon="icon-save" />
+    </Operations>
+</CommQry>

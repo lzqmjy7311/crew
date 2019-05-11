@@ -1,0 +1,295 @@
+<CommQry title="中小融辅 &gt;  报告" navigate="中小融辅    &gt; 报告" type="call"
+	interface="false" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.person.zxrf.getter.TPlZxrfInfoGetter">
+	
+	<Include id="BankParam" />
+	<PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="批量下载-中小融辅信息" />
+    <Fields>
+        <Field id="id" desc="编号" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="32" scale="2" default="" xpath="/id" />
+        <Field id="custtype" desc="客户类型" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="25" scale="2" default=""
+        xpath="/custtype" />
+        <Field id="custname" desc="客户名称" require="" width="500" colspan="4" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="64" scale="2" default=""
+        xpath="/custname" />
+        <Field id="custcode" desc="客户编号" require="" width="500" colspan="4" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="32" scale="2" default=""
+        xpath="/custcode" />
+        <Field id="loanAccount" desc="贷款账户" require="" width="500" colspan="4" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="32" scale="2" default=""
+        xpath="/loanAccount" />
+        <Field id="productCode" desc="产品名称" status="F"
+			primary="false" method="None" readonly="false" type="String"
+			size="25" edittype="select" translated="CQ:AllProductSelect"
+			fieldmap="productCode=prodCode;productName=prodName"
+			viewField="prodName,prodCode" default="" xpath="/productCode"
+			require="false" tip="产品名称" />
+		<Field id="productName" desc="产品名称" status="F"
+			method="com.gbicc.common.CQMethod.getProcuctNameByProductCode"
+			width="" readonly="true" primary="true" type="String" size="150"
+			xpath="/productCode" default=""/>
+		<Field id="productType" desc="产品类型" require="" width="500" colspan="4" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="35" scale="2" default=""
+        xpath="/productType" />
+        <Field id="loanBalance" desc="贷款余额" require=""  prefix="￥" edittype="text" datatype="currency" method="None" readonly="false" type="" status="F" size="20" scale="2" default=""
+        xpath="/loanBalance" />
+        <Field id="industry" desc="行业" require="" edittype="select" translated="DATA_DIC.93" datatype="string" method="None" readonly="false" type="" status="F" size="64" scale="2" default=""
+        xpath="/industry" />
+        <Field id="loanAmount" desc="贷款金额" require=""  prefix="￥" edittype="text" datatype="currency" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/loanAmount" />
+        <Field id="grantDate" desc="发放日期" require="" edittype="text" datatype="date" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/grantDate" />
+        <Field id="overDate" desc="结束日期" require="" edittype="text" datatype="date" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/overDate" />
+        <Field id="visitway" desc="查访方式" require="" edittype="radio" translated="DATA_DIC.12585" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/visitway" />
+        <Field id="visitadd" desc="查访地点" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="200" scale="2" default=""
+        xpath="/visitadd" />
+        <Field id="leadInvestigator" desc="主调查人" width="500" colspan="4" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="64" scale="2" default=""
+        xpath="/leadInvestigator" />
+        <Field id="assInvestigator" desc="辅助调查人" width="500" colspan="4" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="64" scale="2" default=""
+        xpath="/assInvestigator" />
+        <Field id="surveydate" desc="调查日期" width="500" colspan="4" require="" edittype="text" datatype="date" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/surveydate" />
+        <Field id="surveyLength" desc="调查周期" width="500" colspan="4" require="" edittype="radio" translated="DATA_DIC.12584" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/surveyLength" />
+        <Field id="nextSurveydate" desc="下次调查日期" width="500" colspan="4" require="" edittype="text" datatype="date" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/nextSurveydate" />
+        <Field id="surveyType" desc="调查方式" width="500" colspan="4" require="" edittype="radio" translated="DATA_DIC.12583" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/surveyType" />
+        <Field id="surveyTypeinfo" desc="调查方式说明" width="500" colspan="4" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="200" scale="2" default=""
+        xpath="/surveyTypeinfo" />
+        <Field id="surveyAdd" desc="调查地点" width="500" colspan="4" require=""  edittype="radio" translated="DATA_DIC.12586" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/surveyAdd" />
+        <Field id="surveyAddinfo" desc="调查地点说明" width="500" colspan="4" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/surveyAddinfo" />
+       
+        
+        <Field id="havePer" desc="有无行内同仁一起随行?" require=""  edittype="radio" translated="DATA_DIC.12589" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/havePer" />
+         <Field id="havePerSname" desc="随行人姓名" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="64" scale="2" default=""
+        xpath="/havePerSname" />
+        <Field id="contactDiff" desc="与借款人联系是否困难?" width="500" colspan="4" require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/contactDiff" />
+        <Field id="loanperMeet" desc="是否与借款人/单位负责人见面?" width="500" colspan="4" require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/loanperMeet" />
+        <Field id="loanperCooperate" desc="借款人对检查是否配合?" width="500" colspan="4" require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/loanperCooperate" />
+        <Field id="loanperEnforce" desc="借款人是否有涉讼或财产遭假扣押或禁止处份或强制执行" width="500" colspan="4" require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15"
+        scale="2" default="" xpath="/loanperEnforce" />
+        <Field id="loanperEnforceinfo" desc="说明" width="500" colspan="4" require="" edittype="textarea" height="50" datatype="string" method="None" readonly="false" type="" status="F" size="200"
+        scale="2" default="" xpath="/loanperEnforceinfo" />
+        <Field id="perWorkstatus" desc="目前贷款户工作状态" width="500" colspan="4" require="" edittype="radio" translated="DATA_DIC.12587" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/perWorkstatus" />
+        <Field id="perWorkinfo" desc="目前贷款户工作状态说明" width="500" colspan="4" require="" edittype="textarea" height="50" datatype="string" method="None" readonly="false" type="" status="F" size="200" scale="2" default=""
+        xpath="/perWorkinfo" />
+        <Field id="perPostchange" desc="贷款户的工作岗位是否有变动" width="500" colspan="4" require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/perPostchange" />
+        <Field id="perPostinfo" desc="最新职务为" width="500" colspan="4" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="200" scale="2" default=""
+        xpath="/perPostinfo" />
+        <Field id="perNewjob" desc="贷款户是否更换新的工作单位" require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/perNewjob" />
+        <Field id="perNewjobcount" desc="当年更换次数" require="" edittype="text" datatype="int" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/perNewjobcount" />
+        <Field id="perNewjobSname" desc="新单位名称" width="500" colspan="4" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="200" scale="2" default=""
+        xpath="/perNewjobSname" />
+        <Field id="perHavework" desc="贷款户目前是否已经下岗, 且在待业中" require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2"
+        default="" xpath="/perHavework" />
+        <Field id="perNoworklength" desc="下岗月数" require="" edittype="text" datatype="int" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/perNoworklength" />
+        <Field id="perOverwages" desc="贷款户任职之企业是否有拖欠薪资状况" require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2"
+        default="" xpath="/perOverwages" />
+        <Field id="perOverlength" desc="拖欠月数" require="" edittype="text" datatype="int" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/perOverlength" />
+        <Field id="perComover" desc="贷款户任职之企业是否已有倒闭; 关厂的迹象" width="500" colspan="4" require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2"
+        default="" xpath="/perComover" />
+        <Field id="perOthfamloan" desc="贷款户家人是否在我行有其他借款或资金需求" width="500" colspan="4" require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2"
+        default="" xpath="/perOthfamloan" />
+        <Field id="perFamloancou" desc="借款人数" width="500" colspan="4" require="" edittype="text" datatype="int" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/perFamloancou" />
+        <Field id="perFamamount" desc="如果有; 资金需求多少" width="500" colspan="4" require=""  prefix="￥" edittype="text" datatype="currency" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/perFamamount" />
+        <Field id="perFamhasamount" desc="已向他行借款金额多少" width="500" colspan="4" require=""  prefix="￥" edittype="text" datatype="currency" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/perFamhasamount" />
+        <Field id="perFamhasbank" desc="已向他行借款银行名称" width="500" colspan="4"  require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="200" scale="2" default=""
+        xpath="/perFamhasbank" />
+        <Field id="perChangeadd" desc="是否已经改变住家(或公司)地址" width="500" colspan="4"   require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2"
+        default="" xpath="/perChangeadd" />
+        <Field id="perChangeaddcount" desc="改变地址次数" require="" width="500" colspan="4"  edittype="text" datatype="int" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/perChangeaddcount" />
+        <Field id="perChangeaddinfo" desc="改变住家(或公司)地址详细" width="500" colspan="4"  require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="200" scale="2"
+        default="" xpath="/perChangeaddinfo" />
+        <Field id="perHaveguarantor" desc="最近是否为其他人担保? 做保证人" width="500" colspan="4" require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2"
+        default="" xpath="/perHaveguarantor" />
+        <Field id="perGuarantorcount" desc="保证户户数" width="500" colspan="4" require="" edittype="text" datatype="int" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/perGuarantorcount" />
+        <Field id="perGuarantoramt" desc="保证总金额" width="500" colspan="4" require=""  prefix="￥" edittype="text" datatype="currency" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/perGuarantoramt" />
+        <Field id="perHralthstatus" desc="贷款户身体状况如何? 是否会影响还款能力" width="500" colspan="4" require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2"
+        default="" xpath="/perHralthstatus" />
+        <Field id="perHralthinfo" desc="贷款户身体状况如何? 是否会影响还款能力?说明：" width="500" colspan="4" require="" edittype="textarea" height="50" datatype="string" method="None" readonly="false" type="" status="F" size="1000" scale="2"
+        default="" xpath="/perHralthinfo" />
+        <Field id="perFamily" desc="贷款户家庭状况说明? 如身体? 经济? 夫妻感情...等" width="500" colspan="4"  require="" edittype="textarea" height="50" datatype="string" method="None" readonly="false" type="" status="F" size="1000" scale="2"
+        default="" xpath="/perFamily" />
+        <Field id="perFamilyinfo" desc="贷款户家庭状况说明? 如身体? 经济? 夫妻感情，说明" width="500" colspan="4"  require="" edittype="textarea" height="50" datatype="string" method="None" readonly="false" type="" status="F" size="1000"
+        scale="2" default="" xpath="/perFamilyinfo" />
+        <Field id="perLiveinfo" desc="贷款户在生活上; 经济上; 精神上是否有较大的改变" width="500" colspan="4"  require="" edittype="textarea" height="50" datatype="string" method="None" readonly="false" type="" status="F" size="1000" scale="2"
+        default="" xpath="/perLiveinfo" />
+        <Field id="perSpouseinvite" desc="贷款户或配偶是否有其他投资项目?" width="500" colspan="4"  require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2"
+        default="" xpath="/perSpouseinvite" />
+        <Field id="perSpouseinfo" desc="贷款户或配偶是否有其他投资项目?说明" width="500" colspan="4"  require="" edittype="textarea" height="50" datatype="string" method="None" readonly="false" type="" status="F" size="1000" scale="2"
+        default="" xpath="/perSpouseinfo" />
+        <Field id="perIllegal" desc="最近是否有个人私人借款行为?" width="500" colspan="4" require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/perIllegal" />
+        <Field id="perIllegalamt" desc="私人借款金额" require=""  prefix="￥" edittype="text" datatype="currency" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/perIllegalamt" />
+        <Field id="othinfo" desc="其他说明" width="500" height="60" colspan="4"  require="" edittype="textarea" datatype="string" method="None" readonly="false" type="" status="F" size="2000" scale="2" default=""
+        xpath="/othinfo" />
+        <Field id="guaRepdate" desc="保证人征信报告日期" width="500" colspan="4"  require="" edittype="text" datatype="date" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/guaRepdate" />
+        <Field id="guaContactch" desc="保证人联系是否更改" width="500" colspan="4"  require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/guaContactch" />
+        <Field id="gua1Comname" desc="工作单位" width="500" colspan="4" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="200" scale="2" default=""
+        xpath="/gua1Comname" />
+        <Field id="gua1Tel" desc="手机号码" width="500" colspan="4" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/gua1Tel" />
+        <Field id="gua1Address" desc="联络地址" width="500" colspan="4"  require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="200" scale="2" default=""
+        xpath="/gua1Address" />
+        <Field id="gua2Comname" desc="工作单位" width="500" colspan="4" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="200" scale="2" default=""
+        xpath="/gua2Comname" />
+        <Field id="gua2Tel" desc="手机号码" width="500" colspan="4" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/gua2Tel" />
+        <Field id="gua2Address" desc="联络地址" width="500" colspan="4"  require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="200" scale="2" default=""
+        xpath="/gua2Address" />
+        <Field id="guaName" desc="保证人姓名" width="500" colspan="4"  require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="32" scale="2" default=""
+        xpath="/guaName" />
+        <Field id="guaIdcard" desc="保证人身份证号" width="500" colspan="4"  require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="18" scale="2" default=""
+        xpath="/guaIdcard" />
+        <Field id="guaTel" desc="保证人联系电话" width="500" colspan="4"  require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="18" scale="2" default=""
+        xpath="/guaTel" />
+        <Field id="guaAddress" desc="保证人联系地址" width="500" colspan="4"  require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="200" scale="2" default=""
+        xpath="/guaAddress" />
+        <Field id="guaBadaccount" desc="呆帐产生" width="500" colspan="4"  require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/guaBadaccount" />
+        <Field id="guaOvercount" desc="缴款逾期次数" width="500" colspan="4"  require=""  edittype="text" datatype="int" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/guaOvercount" />
+        <Field id="guaAddfinace" desc="增加贷款金额" width="500" colspan="4"  require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="200" scale="2" default=""
+        xpath="/guaAddfinace" />
+        <Field id="guaAddloanbank" desc="新增贷款银行" width="500" colspan="4"  require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="200" scale="2" default=""
+        xpath="/guaAddloanbank" />
+        <Field id="opsChangeper" desc="最近是否有变更贷款户企业负责人" require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2"
+        default="" xpath="/opsChangeper" />
+        <Field id="opsChangecount" desc="变更次数" require="" edittype="text" datatype="int" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/opsChangecount" />
+        <Field id="opsAddboss" desc="最近是否有增加股东? 新增股东原因为何" require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2"
+        default="" xpath="/opsAddboss" />
+        <Field id="opsAddstockcount" desc="增加位数" require="" edittype="text" datatype="int" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/opsAddstockcount" />
+        <Field id="opsAddstockinfo" desc="增加说明" width="500" colspan="4"  require="" edittype="textarea" height="50" datatype="string" method="None" readonly="false" type="" status="F" size="1000" scale="2" default=""
+        xpath="/opsAddstockinfo" />
+        <Field id="opsLatelyifo" desc="最近业务发展的状况如何? 是否有增加或减少通路厂商?" width="500" colspan="4"  require="" edittype="textarea" height="50" datatype="string" method="None" readonly="false" type="" status="F" size="1000"
+        scale="2" default="" xpath="/opsLatelyifo" />
+        <Field id="opsAddstaff" desc="最近是否有新招募员工" require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/opsAddstaff" />
+        <Field id="opsAddstaffcount" desc="新招募员工数量" require="" edittype="text" datatype="int" method="None" readonly="false" type="" status="F" size="15" scale="2" default="0"
+        xpath="/opsAddstaffcount" />
+        <Field id="opsStaffcount" desc="现行员工数" require="" edittype="text" datatype="int" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/opsStaffcount" />
+        <Field id="opsStafflesscount" desc="预计减少位数" require="" edittype="text" datatype="int" method="None" readonly="false" type="" status="F" size="15" scale="2" default="0"
+        xpath="/opsStafflesscount" />
+        <Field id="opsGuacontactinfo" desc="与保证人的联络关系状况说明" width="500" colspan="4"  require="" edittype="textarea" height="50" datatype="string" method="None" readonly="false" type="" status="F" size="1000" scale="2"
+        default="" xpath="/opsGuacontactinfo" />
+        <Field id="opsMarkinfo" desc="最近产业状况如何? 市场经济状况如何" width="500" colspan="4"  require="" edittype="textarea" height="50" datatype="string" method="None" readonly="false" type="" status="F" size="1000" scale="2"
+        default="" xpath="/opsMarkinfo" />
+        <Field id="opsAddsupp" desc="主要供应商是否有增加或减少" require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/opsAddsupp" />
+        <Field id="opsAddsuppcount" desc="主要供应商增加数量" require="" edittype="text" datatype="int" method="None" readonly="false" type="" status="F" size="15" scale="2" default="0"
+        xpath="/opsAddsuppcount" />
+        <Field id="opsAdddeal" desc="主要经销商是否有增加或减少" require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/opsAdddeal" />
+        <Field id="opsAdddealcount" desc="主要经销商增加数量" require="" edittype="text" datatype="int" method="None" readonly="false" type="" status="F" size="15" scale="2" default="0"
+        xpath="/opsAdddealcount" />
+        <Field id="opsOpsamount" desc="主要关联企业/股东与本行借款人的关联交易所产生的营业额是多少金额" width="500" colspan="4"  require=""  prefix="￥" edittype="text" datatype="currency" method="None" readonly="false" type="" status="F" size="15"
+        scale="2" default="" xpath="/opsOpsamount" />
+        <Field id="opsComstop" desc="企业是否已经为歇业状态" width="500" colspan="4"  require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/opsComstop" />
+        <Field id="finNeedmoney" desc="最近是否有资金需求? 目的为何" width="500" colspan="4"  require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2"
+        default="" xpath="/finNeedmoney" />
+        <Field id="finNeedmoneyinfo" desc="资金需求说明" width="500" colspan="4"  require="" edittype="textarea" height="50" datatype="string" method="None" readonly="false" type="" status="F" size="1000" scale="2" default=""
+        xpath="/finNeedmoneyinfo" />
+        <Field id="finNeedmoneycount" desc="需要资金金额" width="500" colspan="4"  require=""  prefix="￥" edittype="text" datatype="currency" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/finNeedmoneycount" />
+        <Field id="finChangebank" desc="之前的担保品是否有改变质押银行" width="500" colspan="4"  require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2"
+        default="" xpath="/finChangebank" />
+        <Field id="finChangebankinfo" desc="改变质押银行原因" width="500" colspan="4"  require="" edittype="textarea" height="50" datatype="string" method="None" readonly="false" type="" status="F" size="1000" scale="2" default=""
+        xpath="/finChangebankinfo" />
+        <Field id="perIllegalinfo" desc="私人借款行为说明" width="500" colspan="4"  require="" edittype="textarea" height="50" datatype="string" method="None" readonly="false" type="" status="F" size="1000" scale="2" default=""
+        xpath="/perIllegalinfo" />
+        <Field id="finOthloan" desc="公司股东或配偶是否在我方商行有借款行为" width="500" colspan="4" require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2"
+        default="" xpath="/finOthloan" />
+        <Field id="finOthloancount" desc="如有借款，有几户？" width="500" colspan="4" require="" edittype="text" datatype="int" method="None" readonly="false" type="" status="F" size="15" scale="2"
+        default="" xpath="/finOthloancount" />
+        <Field id="finOthbankloan" desc="公司股东或配偶是否在共他商行或私营单位有借款行为" width="500" colspan="4"  require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15"
+        scale="2" default="" xpath="/finOthbankloan" />
+        <Field id="finOthbankloaninfo" desc="公司股东或配偶是否在共他商行或私营单位有借款行为说明" width="500" colspan="4"  require="" edittype="textarea" height="50" datatype="string" method="None" readonly="false" type="" status="F" size="1000"
+        scale="2" default="" xpath="/finOthbankloaninfo" />
+        <Field id="finStock" desc="借款人或配偶是否有投资股票的操作" require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/finStock" />
+        <Field id="finStockamt" desc="投资股票金额" require=""  prefix="￥" edittype="text" datatype="currency" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/finStockamt" />
+        <Field id="finMobthreport" desc="是否已取得贷款户每月财报" width="500" colspan="4"  require="" edittype="checkbox" translated="DATA_DIC.12591" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/finMobthreport" />
+        <Field id="finChargeamt" desc="目前为止总应收帐款总金额多少" width="500" colspan="4"  require=""  prefix="￥" edittype="text" datatype="currency" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/finChargeamt" />
+        <Field id="finChargeacomname" desc="主要应收帐的买方公司名称" width="500" colspan="4"  require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="200" scale="2"
+        default="" xpath="/finChargeacomname" />
+        <Field id="finChargeapername" desc="主要应收帐的买方公司联络姓名" width="500" colspan="4"  require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="64" scale="2"
+        default="" xpath="/finChargeapername" />
+        <Field id="finChargeapertel" desc="主要应收帐的买方公司联络电话" width="500" colspan="4"  require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="32" scale="2"
+        default="" xpath="/finChargeapertel" />
+        <Field id="taskid" desc="关联任务ID" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="32" scale="2" default=""
+        xpath="/taskid" />
+        <Field id="credited" desc="创建日期" require="" edittype="text" datatype="date" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/credited" />
+        <Field id="updated" desc="修改日期" require="" edittype="text" datatype="date" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/updated" />
+        <Field id="operator" desc="操作人" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="32" scale="2" default=""
+        xpath="/operator" />
+        <Field id="operBank" desc="操作行" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="64" scale="2" default=""
+        xpath="/operBank" />
+       <Field id="status" desc="流程状态" status="F" require="false" edittype="select"
+			datatype="string" method="None" readonly="true" primary="true" type="st"
+			translated="DATA_DIC.12581" width="500" size="30" default="" xpath="/status" tip="" />
+        <Field id="dddd" desc="" require="" edittype="radio" translated="" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/dddd" />
+        <Field id="redCount" desc="红色预警数" require="" edittype="text" datatype="int" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/redCount" />
+        <Field id="yellowCount" desc="黄色预警数" require="" edittype="text" datatype="int" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/yellowCount" />
+        <Field id="opinion" desc="审核意见" edittype="textarea" datatype="string" status="F" size="2000" colspan="4"  xpath="/opinion" height="60" width="500" />
+    </Fields>
+    <Where>
+		<TextBox id="custcode" desc="客户编号" edittype="text" datatype="string" size="10" require="" index="0" />
+		<TextBox id="custname" desc="客户名称" edittype="text" status="F" datatype="string" size="10" index="1" />\
+		<TextBox id="operator" desc="经办人" edittype="text" readonly="false" status="F" datatype="string" size="10" index="2" />\
+		<TextBox id="loanAccount" desc="贷款账号" edittype="text" status="F" datatype="string" size="10" index="3" />\					
+		<TextBox id="operBank" desc="经办行" edittype="text" readonly="false" status="F" datatype="string" size="10" index="4" />\
+		<Option id="productCode" desc="产品名称" status="N"
+	        fieldname="qdataNo" edittype="select" dropdowntype="dynamic"
+			dataType="String" readOnly="false" translated="CQ:AllProductSelect"
+			viewField="prodName,prodCode" init="true"
+			fieldmap="productName=prodName;productCode=prodCode" size="32"
+			primary="false" type="String" index="5" />\
+		<TextBox id="productName" desc="产品名称" edittype="text" status="F" datatype="string" size="32" />\
+	</Where>
+	
+	
+	<Operations>
+		<Button id="btnSave" name="btnSave" desc="保存" icon="icon-save" operation="asysubmit" 
+			updateClass="com.gbicc.person.zxrf.update.TPlZxrfInfoAddUpdate" txn=""/>
+		<Button id="btnSubmit" name="btnSubmit" desc="提交" icon="icon-ok" operation="asysubmit" 
+			updateClass="com.gbicc.person.zxrf.update.TPlZxrfInfoAddUpdate" txn=""/>
+		<Button id="calculteInfo" name="calculteInfo" desc="计算" icon="icon-tip" operation="asysubmit" 
+			updateClass="com.gbicc.person.zxrf.update.TPlZxrfInfoCalculteUpdate" txn=""/>
+		<Button id="btnBack" name="btnBack" desc="退回" icon="icon-undo" operation="asysubmit" 
+			updateClass="com.gbicc.person.zxrf.update.TPlZxrfInfoAddUpdate" txn=""/>
+		<Button id="contractBtn" name="contractBtn" desc="导出" icon="icon-download" updateClass="#" url="#" txn="" />	
+	</Operations>
+</CommQry>

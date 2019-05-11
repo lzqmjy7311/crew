@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.huateng.ebank.entity.data.mng">
+	<class
+		name="TlrBctlRel"
+		table="TLR_BCTL_REL"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="id"
+			type="string"
+			column="ID"
+		>
+			<generator class="uuid.hex" />  
+		</id>
+
+
+		<property
+			name="tlrNo"
+			column="TLR_NO"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="brNo"
+			column="BR_NO"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-11-24 10:47:46 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.person.customer.entity.TPlCustGreatEventDtl" table="T_PL_CUST_GREAT_EVENT_DTL" schema="ECUSER">
+        <comment>客户重大事件详细表</comment>
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="eventId" type="string">
+            <column name="FD_EVENT_ID" length="32" />
+        </property>
+        <property name="eventName" type="string">
+            <column name="FD_EVENT_NAME" length="500" />
+        </property>
+        <property name="eventValue" type="string">
+            <column name="FD_EVENT_VALUE" length="25" />
+        </property>
+        <property name="eventDesc" type="string">
+            <column name="FD_EVENT_DESC" length="500" />
+        </property>
+        <property name="eventLevel" type="string">
+            <column name="FD_EVENT_LEVEL" length="25" />
+        </property>
+    </class>
+</hibernate-mapping>

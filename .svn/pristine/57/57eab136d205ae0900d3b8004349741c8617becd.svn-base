@@ -1,0 +1,107 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+<script type="text/javascript" src="${contextPath}/gbicc-pages/regular/comm/common.js"></script>
+<@CommonQueryMacro.page title="基本信息">
+	<table>
+		<tr>
+			<td>
+				<@CommonQueryMacro.CommonQuery id="RiskMonitorBaseinfo" init="true" submitMode="current">
+					<@CommonQueryMacro.GroupBox id="Baseinfo" label="基本信息">
+						<@CommonQueryMacro.Group id="group12" label="" colNm=6
+						fieldStr="chineseName,customerNum,businessLicenseNum,legalrepresentative,registeredaddress,membershipgroup,businessaddress,level,orgnNum,registeredCapital,customerSizeCd,industryLevelTwoCd"/>
+					</@CommonQueryMacro.GroupBox>
+				</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+		 <tr>
+			<td>
+				<@CommonQueryMacro.CommonQuery id="RiskMontitorShareHolder" init="true" submitMode="current">
+					<@CommonQueryMacro.GroupBox id="ShareHolderinfo" label="股东信息">
+						<@CommonQueryMacro.DataTable id="Shinfo"  fieldStr="stockholderName,certificateTypeCd,certificateNum,holdingStockRate,totalInvest,investmentway"/>
+					</@CommonQueryMacro.GroupBox>
+				</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<@CommonQueryMacro.CommonQuery id="RiskMontitorCalinfo" init="true" submitMode="current">
+					<@CommonQueryMacro.GroupBox id="Calinfo" label="信贷信息">
+						<@CommonQueryMacro.Group id="group1" label="" colNm=6 fieldStr="advanceAmount,creditAmount,creditBalance,usedBalance,advanceBalance,overdueAdvanceBal,normalAdvanceBal,mentionAdvanceBal,substdAdvanceBalance,doutfulAdvanceBal,lossAdvanceBal,outsideGuaranteeAmount"/>
+					</@CommonQueryMacro.GroupBox>
+				</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>				
+		<tr>
+			<td>
+				<@CommonQueryMacro.CommonQuery id="RiskMontitorList" init="true" submitMode="current">
+					<@CommonQueryMacro.GroupBox id="listinfo" label="在本行授信业务列表">
+						<@CommonQueryMacro.DataTable id="group1"  fieldStr="contractNum,creditProductCd,guarantyNote,contractTotalAmt,comprBizContractInd,contractStatusCd,contractSignDate,expirationDate,loanTypeInstructionCd,classificationResult"/>
+					</@CommonQueryMacro.GroupBox>
+				</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<@CommonQueryMacro.CommonQuery id="RiskMontitorLendlist" init="true" submitMode="current">
+					<@CommonQueryMacro.GroupBox id="Lendlist" label="借据列表">
+						<@CommonQueryMacro.DataTable id="group1" fieldStr="borrowNum,expirationDate,balanceAccounts,advBal,loanBal,bucketP,bocketI,bailSum,fiveLevel,status,loanaccount,lendingdate"/>
+					</@CommonQueryMacro.GroupBox>
+				</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<@CommonQueryMacro.CommonQuery id="RiskMontitorAssureinfo" init="true" submitMode="current">
+					<@CommonQueryMacro.GroupBox id="Assureinfo" label="在本行担保信息列表">
+						<@CommonQueryMacro.DataTable id="assureinfo" fieldStr="debtPersonName,contractNum,creditProductCd,guarantyNote,contractTotalAmt,comprBizContractInd,contractStatusCd,contractSignDate,expirationDate,loanTypeInstructionCd,classificationResult"/>
+					</@CommonQueryMacro.GroupBox>
+				</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr> 		
+	</table>
+<script>
+
+	//页面初始化-发送post请求之前
+	function initCallGetter_post(){
+		var customerNum = "${RequestParameters["customerNum"]?default('')}";
+		RiskMonitorBaseinfo_dataset.setParameter("customerNum",customerNum);
+		RiskMontitorShareHolder_dataset.setParameter("customerNum",customerNum);
+		RiskMontitorList_dataset.setParameter("customerNum",customerNum);
+		RiskMontitorLendlist_dataset.setParameter("customerNum",customerNum);
+		RiskMontitorCalinfo_dataset.setParameter("customerNum",customerNum);
+	}  
+	function changedata(){
+		request.open("GET","",true);
+	}
+	//设置页面所有字段只读
+	function setPageReadOnlyFun(){
+		var fieldName="";
+		for(var i=0;i<RiskMonitorBaseinfo_dataset.fields.length;i++){
+			fieldName=RiskMonitorBaseinfo_dataset.fields[i].name;
+			if(fieldName.substring(0,1)!="_"){
+				RiskMonitorBaseinfo_dataset.setFieldReadOnly(fieldName,true);
+			}
+		}
+	}
+
+	//保存后关闭页面，刷新表格
+	function btnSave_postSubmit(button) {
+		button.url="#";
+		top.easyMsg.info("保存成功！");
+		window.parent.ajMonitorReportWin_close();
+	}
+	//保存后关闭页面，刷新表格
+	function btnSubmit_postSubmit(button) {
+		button.url="#";
+		top.easyMsg.info("操作成功！");
+		window.parent.ajMonitorReportWin_close();
+	}
+	//退回后关闭页面，刷新表格
+	function btnBack_postSubmit(button) {
+		button.url="#";
+		top.easyMsg.info("操作成功！");
+		window.parent.ajMonitorReportWin_close();
+	}
+</script>
+<script type='text/javascript' src='${contextPath}/dwr/interface/TaskVariable.js'> </script>
+</@CommonQueryMacro.page>

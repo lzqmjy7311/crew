@@ -1,0 +1,129 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign customerNum="${RequestParameters['customerNum']?default('')}" />
+<#assign chineseName="${RequestParameters['chineseName']?default('')}" />
+<@CommonQueryMacro.page title="账户帐页">
+<@CommonQueryMacro.LayoutPanel id="rule" inbody="false" >
+	<style>
+	.CodeMirror{
+		height:430px;
+	}
+  </style>
+  
+    <@CommonQueryMacro.LayoutWest id="1" title="请选择核心账户下的账号" width="200" split="true" >
+    <div style="border:1px">
+		<@CommonQueryMacro.CommonQuery id="TreeNode123" init="true" submitMode="current" >
+		  <@CommonQueryMacro.DynamicTree id="tree123" />
+		 
+		</@CommonQueryMacro.CommonQuery>
+    </div>
+    </@CommonQueryMacro.LayoutWest>
+    
+    <@CommonQueryMacro.LayoutCenter id="2"  >
+		<@CommonQueryMacro.CommonQuery id="ZtMmfxy1" init="true" submitMode="current">
+			<@CommonQueryMacro.Interface id="interface" fieldStr="txnDt,endbussdate" label="请输入查询条件"  showButton="false" />
+		<div style="text-align:center;margin:10px 0 10px 0">
+			<@CommonQueryMacro.Button id="btQuery"/>&nbsp;&nbsp;<@CommonQueryMacro.Button id="btCancel"/>
+		</div>
+		</@CommonQueryMacro.CommonQuery>
+		<@CommonQueryMacro.CommonQuery id="TreeNode123" init="true" submitMode="current" >
+		<div style="text-align:center">
+		<table>
+			<tr>
+				<td><@CommonQueryMacro.GroupField fId="acctType"/></td>
+				<td ><@CommonQueryMacro.GroupField fId="acctId"/></td>
+				<td valign="bottom" style="padding:0 0 3px 110px;"><!--<a href="Javascript:onclik1()"><span style="font-size:100%;">资金流向监控</span></a>--></td>
+			</tr>
+		</table>
+		</@CommonQueryMacro.CommonQuery>
+		</div>
+		<@CommonQueryMacro.CommonQuery id="ZtMmfxy" init="false" submitMode="current">
+		<table>
+			<tr>
+				<td><@CommonQueryMacro.DataTable id="ztmmfxy" fieldStr="txnDt,txnTm,chineseName,custId,debCrdInd[60],txnAmt[110],oppoCustNm,oppoAcctId,oppoBank,txnAftrBal[110],txnSerialId,txnAbstr" />
+				</td>
+			</tr>
+		</table>
+		</@CommonQueryMacro.CommonQuery>
+    </@CommonQueryMacro.LayoutCenter>   
+</@CommonQueryMacro.LayoutPanel>
+	<script type="text/javascript">
+	var account="";
+	var customerNum = "${customerNum}";
+	var chineseName = decodeURI("${chineseName}");
+	var acctType="";
+	var acctId="";
+	var clickflag="1";
+	function btQuery_onClick(){	
+		var txnDt=ZtMmfxy1_interface_dataset.getValue("txnDt");
+		var endbussdate=ZtMmfxy1_interface_dataset.getValue("endbussdate");
+		if(txnDt==''||endbussdate==''){
+			alert('请输入完整的查询条件！');
+			return false;
+		}
+		var testid='';
+		if((DynamicTree_tree123.getRoot() !=null)&&(DynamicTree_tree123.getRoot() !=undefined)){
+			testid=DynamicTree_tree123.getRoot().text;
+		}
+		ZtMmfxy_dataset.setParameter("coreCustomerNum",testid);
+		ZtMmfxy_dataset.setParameter("txnDt",txnDt);
+		ZtMmfxy_dataset.setParameter("endbussdate",endbussdate);
+		ZtMmfxy_dataset.setParameter("acctId",account);
+		ZtMmfxy1_interface_dataset.setValue("acctId",account);
+		ZtMmfxy_dataset.setValue("acctType",acctType);
+		ZtMmfxy_dataset.setParameter("roleId",user_info.roleId);
+		if(clickflag=="1"){
+			clickflag="0";
+			ZtMmfxy_dataset.flushData(ZtMmfxy_dataset.pageIndex);
+		}
+		clickflag="1"
+		TreeNode123_dataset.setValue("acctType",acctType);
+		TreeNode123_dataset.setValue("acctId",acctId);
+	}
+	function ztmmfxy_custid_onRefresh(cell,value,record){
+		if(record){
+			cell.innerHTML=customerNum;
+		}
+	}
+	function initCallGetter_post(){
+		TreeNode123_dataset.setParameter("customerNum",customerNum);
+//		load();
+	}
+	function flushDataPost(dataset){
+		alert("查询完成");
+	}
+	function btCancel_onClick(){	
+		ZtMmfxy1_interface_dataset.clearData();
+		ZtMmfxy_dataset.clearData();
+	}	
+	function onclik1(){
+		alert("该功能暂未启用");
+	}
+//	function load(){
+//		var $dtree = DynamicTree_tree123;
+//		//$dtree.expandAll();
+//		var rt = $dtree.getRoot();
+//		if(rt){
+//			$dtree.select(rt.id);
+//		}
+//	}
+	//左侧机构树点击节点
+	function DynamicTree_tree123_onSelect(e,node){
+
+		if(node.pid!=null&&node.pid!=''){
+			account= node.id;
+			acctType=node.attributes.record.getValue("acctType");
+			acctId=node.id;
+			//alert(node.pid);
+		}else{
+			account='';
+			acctId='';
+			acctType='';
+		}
+	}
+	//定位一条记录
+//	function locate(id) {
+//		var record = TreeNode123_dataset.find(["accounts"],[id]);
+		
+//	}
+	</script>
+</@CommonQueryMacro.page>

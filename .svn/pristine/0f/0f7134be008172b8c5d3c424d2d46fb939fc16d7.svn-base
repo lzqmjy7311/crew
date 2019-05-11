@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-11-27 11:18:29 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.warnDisposal.entity.TCmCustomer" table="T_CM_WARN_CUSTOMER" schema="ECUSER">
+        <comment>零售客户表</comment>
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="custcode" type="string">
+            <column name="FD_CUSTCODE" length="32" />
+        </property>
+        <property name="custname" type="string">
+            <column name="FD_CUSTNAME" length="200" />
+        </property>
+        <property name="custWarnLevel" type="string">
+            <column name="FD_CUST_WARN_LEVEL" length="25" />
+        </property>
+       
+        <property name="loanAmount" type="java.lang.Double">
+            <column name="FD_LOAN_AMOUNT" precision="53" scale="0" />
+        </property>
+        <property name="loanBalance" type="java.lang.Double">
+            <column name="FD_LOAN_BALANCE" precision="53" scale="0" />
+        </property>
+        <property name="loanAccount" type="string">
+            <column name="FD_LOAN_ACCOUNT" length="32" />
+        </property>
+        <property name="credited" type="date">
+            <column name="FD_CREDITED" length="10" />
+        </property>
+        <property name="businessCode" type="string">
+            <column name="FD_BUSINESS_CODE" length="50" />
+        </property>
+        <property name="operator" type="string">
+            <column name="FD_OPERATOR" length="50" />
+        </property>
+        <property name="operBank" type="string">
+            <column name="FD_OPER_BANK" length="50" />
+        </property>
+        <property name="legalRep" type="string">
+            <column name="FD_LEGAL_REP" length="100" />
+        </property>
+        
+    </class>
+</hibernate-mapping>

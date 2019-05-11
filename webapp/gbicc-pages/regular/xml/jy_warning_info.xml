@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.fp.demo.getter.GroupFieldsGetter">
+	<Include id="BankParam" />
+	
+	<Fields>
+        <Field id="warnCode" desc="预警编号" xpath="" />
+        <Field id="warnLeve" desc="预警级别" xpath="" />
+        <Field id="warnName" desc="预警名称" xpath="" />
+        <Field id="confirmCond" status="N" desc="查证情况" edittype="radio" translated="LIST:1,情况属实;2,其他说明"
+            datatype="string" xpath=""/>
+		<Field id="confirmDesc" desc="查证说明" edittype="textarea" xpath="" height="100" width="300" />
+		<Field id="ifNewWarn" desc="是否为新产生的预警信号" xpath="" />
+	</Fields>
+	
+	<Operations>
+		<Button id="warnUpd" name="warnUpd" desc="编辑" icon="icon-add" updateClass="#" url="#" txn="" />
+	</Operations>
+</CommQry>

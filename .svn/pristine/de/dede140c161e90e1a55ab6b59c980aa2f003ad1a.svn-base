@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="核算管理" navigate="主页 &gt; 科目管理 &gt; 利率手工录入" type="call"
+	interface="false"
+	pagesize="10"
+	async="true"
+	databusid="ACEENTRY_DB"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.ace.web.manager.IntrateManualInputGetter">
+
+	<Include id="BankParam" />
+	<ResultViewParam>
+		/fpages/management/ftl/intrateManualInput.ftl
+	</ResultViewParam>
+	<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+	<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+	<Fields>
+
+		<Field id="id" desc="id" status="F" require="" method="none" width="120" xpath="/id" datatype="long"
+			primary="false" type="String" size="" default="" />
+
+			<Field id="curcd" desc="币种" status="F" require="true" method="None" readOnly=""
+			primary="false" type="String" size="" default="CNY" tip="币种" width="120" xpath="/curcd"
+			translated="DATA_DIC.202" edittype="select"/>
+
+	 	 <!-- 	 <Field id="intratecd" desc="利率代码" status="F" edittype="text" require="true"
+			method="None" readOnly="false" primary="true" type="String" size="10"
+			default="" tip="利率代码" xpath="/intratecd" width="80"
+			translated="ACE_DATA_DIC.LNRT000001"/>-->
+
+				<Field id="intratecd" desc="利率代码" status="F" require="true" method="None" readOnly=""
+			primary="false" type="String" size="" default="CNY" tip="币种" width="80" xpath="/intratecd"
+			translated="DATA_DIC.523" edittype="select"/>
+
+		<Field id="eftdt" desc="生效日期" status="F" require="" method="none" width="120" xpath="/eftdt"
+			primary="false" type="String" datatype="date" edittype="date" size="" default="" />
+
+	<!-- 	<Field id="areacd" desc="地区码" status="F" edittype="text"
+			 readonly="true" primary="true" type="String" size="128"
+			default="000000"  tip="地区码" xpath="/areacd" width="80" require="true" /> -->
+
+		 <!-- <Field id="ratetype" desc="利率类型" status="F" edittype="text"
+			method="None" readOnly="false" primary="true" type="String" size="3"
+			default="" tip="利率类型" xpath="/ratetype" width="80" require="true" />-->
+
+				<Field id="ratetype" desc="利率类型" status="F" require="true" method="None" readOnly=""
+			primary="false" type="String" size="" default="CNY" tip="币种" width="80" xpath="/ratetype"
+			translated="DATA_DIC.524" edittype="select"/>
+
+	 	<Field id="ratename" desc="利率名称" status="F" edittype="text"
+			method="None" readOnly="false" primary="true" type="String" size="1024"
+			default="" tip="利率名称" xpath="/ratename" width="" require="true" />
+
+	 <!--<Field id="rateunit" desc="利率单位" status="F" edittype="text"
+			method="None" readOnly="false" primary="true" type="String" size="1"
+			default="" tip="利率单位" xpath="/rateunit" width="80" require="true"
+			translated="DATA_DIC.521" />-->
+
+		<Field id="rateunit" desc="利率单位" status="F" require="true" method="None" readOnly=""
+			primary="false" type="String" size="" default="CNY" tip="利率单位" width="80" xpath="/rateunit"
+			translated="DATA_DIC.521" edittype="select"/>
+
+		<Field id="ratevalue" desc="利率值(%)" status="F" require="true" width="140" method="None"
+			primary="true" type="String" size="12" datatype="float" scale="6"
+			xpath="/ratevalue" default="10" edittype="text" readOnly="false"
+			tip="" />
+
+		<Field id="deleteflag" desc="删除标志" status="F" edittype="text"
+			method="None" readOnly="false" primary="true" type="String" size="128"
+			default="" tip="删除标志" xpath="/deleteflag" width="80" require="false" />
+		<Field id="lstupdts" desc="更新日期" status="F" edittype="text"
+			method="None" readOnly="false" primary="true" type="String" size="128"
+			default="" tip="更新日期" xpath="/lstupdts" width="80" require="false" />
+	</Fields>
+	<Where>
+
+
+	</Where>
+	<Operations>
+		<Button id="btNew" name="btNew" desc="新增"
+			operation="addRecord" updateClass=""
+			url="" show="" group="" txn="" />
+		<Button id="btDel" name="btDel" desc="删除"
+			operation="delrecord"
+			url="" show="" group="" txn="" />
+		<Button id="btSave" name="btSave" desc="保存"
+			operation="asysubmit" updateClass="com.huateng.ebank.ace.web.manager.IntrateManualInputUpdate"
+			url="/fpages/management/ftl/intrateManualInput.ftl" show="" group="" txn="" />
+	</Operations>
+
+</CommQry>

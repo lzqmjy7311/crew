@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="押品小类信息维护"
+	navigate="主页 &gt; 系统管理 &gt; 押品大类信息维护 &gt; 押品小类信息维护" type="call"
+	interface="false" pagesize="5" async="true" databusid="TEST"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.management.getter.SmallGageClassGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="v_id" desc="id" status="N" require="true"
+			edittype="text" datatype="String" readonly="true" primary="true"
+			type="String" size="3" xpath="/id" />
+
+		<Field id="id" desc="押品小类代码" status="N" require="true"
+			edittype="text" datatype="String" readonly="true" primary="true"
+			type="String" size="2" xpath="/id" />
+
+		<Field id="gageName" desc="押品小类名称" status="N" require="true"
+			edittype="text" datatype="String" readonly="false" primary="true"
+			type="String" size="10" xpath="/gageName" />
+
+		<Field id="gageUpCode" desc="所属上级类型代码" status="N"
+			require="false" edittype="text" datatype="String" readonly="false"
+			primary="true" type="String" size="3" xpath="/gageUpCode" />
+
+		<Field id="gageLevle" desc="押品种类级别" status="N" require="false"
+			edittype="text" datatype="String" readonly="false" primary="true"
+			type="String" size="256" xpath="/gageLevle" />
+
+		<Field id="gageType" desc="押品类型" status="N" require="true"
+			translated="DATA_DIC.828" edittype="select" readonly="false"
+			primary="true" size="" xpath="/gageType" />
+
+		<Field id="gageSubType" desc="押品类型" status="N" require="true"
+			translated="DATA_DIC.886" edittype="select" readonly="false"
+			primary="true" size="" xpath="/gageSubType" />
+
+		<Field id="gageMaxRate" desc="押品最高抵质押率" status="N"
+			datatype="float" type="ratio" require="true" edittype="text"
+			readonly="false" primary="true" size="" xpath="/gageMaxRate" />
+
+		<Field id="lastUpdTlr" desc="最后更新操作员号" status="N"
+			require="false" edittype="text" readonly="false" primary="true"
+			size="8" xpath="/lastUpdTlr" />
+
+		<Field id="lastUpdDate" desc="最后更新时间" status="N" require="false"
+			edittype="text" readonly="false" primary="true" size="20"
+			xpath="/lastUpdDate" />
+
+		<Field id="lastUpdFunc" desc="最后更新交易号" status="N"
+			require="false" edittype="text" datatype="String" readonly="true"
+			primary="true" type="String" xpath="/lastUpdFunc" />
+
+	</Fields>
+
+	<Where>
+
+	</Where>
+	<Operations>
+		<!-- operation( addrecord:delrecord:syncsubmit:asyncqrysubmit:asyncupadasubmit ) -->
+		<Button id="btnAdd" name="btnAdd" desc="新增"
+			operation="addRecord" url="" show="" group="" txn="" />
+		<Button id="btnDel" name="btnDel" desc="删除"
+			operation="delrecord" url="" show="" group="" txn="" />
+		<Button id="back" name="back" desc="返回" operation="submitform"
+			url="/fpages/management/ftl/BigGageClass.ftl" txn="" />
+		<Button id="btSave" name="btSave" desc="保存"
+			operation="asysubmit"
+			updateClass="com.huateng.ebank.business.management.updater.SmallGageClassUpdate"
+			url="#" txn="" />
+		<Button id="btBack" name="btBack" desc="返回" operation="href"
+			url="/fpages/management/ftl/BigGageClass.ftl" txn="" />
+	</Operations>
+</CommQry>

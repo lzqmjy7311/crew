@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-12-3 15:32:36 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.view.accountpage.entity.TbCsmAccountsRelation" table="TB_CSM_ACCOUNTS_RELATION" schema="ECUSER">
+            <id name="accountsRelationId" type="string">
+                <column name="ACCOUNTS_RELATION_ID" length="32" />
+            </id>
+            <property name="coreCustomerNum" type="string">
+                <column name="CORE_CUSTOMER_NUM" length="40" />
+            </property>
+            <property name="accounts" type="string">
+                <column name="ACCOUNTS" length="40" />
+            </property>
+            <property name="accountsTypeCd" type="string">
+                <column name="ACCOUNTS_TYPE_CD" length="20" />
+            </property>
+    </class>
+</hibernate-mapping>

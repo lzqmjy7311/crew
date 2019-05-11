@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="流程管理  &gt; 任务重分配" navigate="流程管理  &gt; 任务重分配" type="call"
+	interface="false" pagesize="20" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.bpm.getter.TaskDivertPGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="select" desc="select" edittype="checkbox" xpath=""/>
+		<Field id="id" readonly="true" desc="id" xpath="/id" edittype="text" status="F" datatype="string" />
+		<Field id="roleId" readonly="true" desc="当前任务节点所属角色，截取act_ru_task表中的task_def_key_" xpath="/roleId" />
+		<Field id="taskCode" readonly="true" desc="任务编号" xpath="/taskCode" />
+		<Field id="rootFlag" readonly="true" desc="是否为首节点" xpath="/rootFlag" edittype="text" status="F" datatype="text" />
+		<Field id="taskType" readonly="true" xpath="/taskType" desc="任务类型代码" width="100" edittype="text" status="F" datatype="text" />
+		<Field id="taskTypeName" readonly="true" xpath="/taskTypeName" desc="任务类型" width="100" edittype="text" status="F" datatype="text" />
+		<Field id="custCode" readonly="true" xpath="/custCode" desc="客户编号" width="150" edittype="text" status="F" datatype="text" />
+		<Field id="custName" readonly="true" xpath="/custName" desc="客户名称" width="150" edittype="text" status="F" datatype="text" />
+		<Field id="taskStatusNo" readonly="true" xpath="/taskStatusNo" desc="任务状态编码"  edittype="text" status="F" datatype="text" />
+		<Field id="taskStatus" readonly="true" xpath="/taskStatus" desc="任务状态"  edittype="text" status="F" datatype="text" />
+		<Field id="createTime" readonly="true" xpath="/createTime" desc="任务产生时间"  edittype="text" status="F" datatype="string" />
+		<Field id="tlrInfo" readonly="true" xpath="/tlrInfo" desc="任务处理人" width="80" edittype="text" status="F" datatype="text" />
+		<Field id="tlrno" readonly="true" xpath="/tlrno" desc="处理人编号" width="80" edittype="text" status="F" datatype="text" />
+		<Field id="tlrName" readonly="true" xpath="/tlrName" desc="处理人名称" width="80" edittype="text" status="F" datatype="text" />
+		<Field id="brCode" readonly="true" xpath="/brCode" desc="机构编号" width="100" edittype="text" status="F" datatype="text" />
+		<Field id="brName" readonly="true" xpath="/brName" desc="所属机构" width="100" edittype="text" status="F" datatype="text" />
+		<Field id="brClass" readonly="true" xpath="/brClass" desc="机构等级" width="100" edittype="text" status="F" datatype="text" />
+    </Fields>
+    <Where>
+    	<TextBox id="taskCode" desc="任务编号" edittype="text" status="F" datatype="string" index="4" />
+    	<Option id="taskType" desc="任务类型" translated="LIST:DKH,单客户预警;DGZ,单规则预警" placeholder="占位符" edittype="select" datatype="string" />
+        <TextBox id="custCode" desc="客户编号" edittype="text" status="F" datatype="string" index="4" />
+        
+        <TextBox id="custName" desc="客户名称" edittype="text" status="F" datatype="string" index="4" />
+        <TextBox id="createTimeStart" desc="任务产生时间" edittype="text" datatype="date" index="1" />
+    	<TextBox id="createTimeEnd" desc="至" edittype="text" datatype="date" index="2" />
+    	
+    	<TextBox id="tlrInfo" desc="任务处理人" edittype="text" status="F" datatype="string" index="4" />
+    	<TextBox id="brName" desc="所属机构" edittype="text" status="F" datatype="string" index="4" />
+		
+    </Where>
+	<Operations>
+		<Button id="btAdd" name="btAdd" desc="任务转移" icon="icon-add" 
+			updateClass="" url="#" txn="" />
+	</Operations>
+</CommQry>

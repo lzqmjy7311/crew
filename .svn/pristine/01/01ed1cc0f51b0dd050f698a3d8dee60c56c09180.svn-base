@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="SaleLog" navigate="监控频率" type="call"
+	interface="false" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.bpm.getter.SubAutoDataDicGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<Field id="dataNo" desc="字典码" primary="false" type="String"
+			method="trimStringRS" xpath="/dataNo" />
+		<Field id="dataName" desc="字典数据名称" primary="false" type="String"
+			method="trimStringRS" xpath="/dataName"/>
+	</Fields>
+	<Parameters>
+        <Parameter id="id" desc="id" />
+    </Parameters>
+</CommQry>

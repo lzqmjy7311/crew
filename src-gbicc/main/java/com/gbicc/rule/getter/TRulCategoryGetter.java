@@ -1,0 +1,79 @@
+package com.gbicc.rule.getter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.gbicc.rule.entity.TRulCategory;
+import com.huateng.common.err.Module;
+import com.huateng.common.err.Rescode;
+import com.huateng.commquery.result.Result;
+import com.huateng.commquery.result.ResultMng;
+import com.huateng.ebank.business.common.bean.TreeNode;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.framework.web.commQuery.BaseGetter;
+import com.huateng.exception.AppException;
+
+@SuppressWarnings("unchecked")
+public class TRulCategoryGetter extends BaseGetter {
+
+	@Override
+	public Result call() throws AppException {
+		try {
+			List<TreeNode> returnList = getData();
+			ResultMng.fillResultByList(getCommonQueryBean(),
+					getCommQueryServletRequest(), returnList, getResult());
+			result.setContent(returnList);
+			result.getPage().setTotalPage(1);
+			result.init();
+		} catch (AppException appEx) {
+			throw appEx;
+		} catch (Exception ex) {
+			throw new AppException(Module.SYSTEM_MODULE,
+					Rescode.DEFAULT_RESCODE, ex.getMessage(), ex);
+		}
+		return result;
+	}
+
+	protected List<TreeNode> getData() throws Exception {
+		String is_admin = (String) getCommQueryServletRequest().getParameterMap()
+				.get("is_admin");
+		String rulType =  (String) getCommQueryServletRequest().getParameterMap()
+		.get("rulType");
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		List<TreeNode> nodeList = new ArrayList<TreeNode>();
+		StringBuffer hql = new StringBuffer("from TRulCategory t order by sno asc ");
+		if("1".equals(rulType)){
+			hql = new StringBuffer("from TRulCategory t where rulType in ('0','1') order by sno asc ");
+		}else if("2".equals(rulType)){
+			hql = new StringBuffer("from TRulCategory t where rulType in ('0','2') order by sno asc ");
+		}
+		
+		List<TRulCategory> list=rootdao.queryByCondition(hql.toString());
+		if(list!=null){
+			TreeNode treeNode = null;
+			for(TRulCategory p:list){
+				treeNode = new TreeNode();
+				treeNode.setId(p.getId());
+				treeNode.setText(p.getCategoryName());
+				treeNode.setPid(p.getParentId());
+				treeNode.setHasChild(true);
+				treeNode.setAttributes(p);
+				
+				if("T1".equals(p.getCategoryType())){
+					treeNode.setIconCls("icon-folders");
+				}else if("T2".equals(p.getCategoryType())){
+					treeNode.setIconCls("icon-zip");
+				}
+				nodeList.add(treeNode);
+			}
+			
+			TreeNode tt=new TreeNode();
+			tt.setId("Root");
+			tt.setPid(null);
+			tt.setText("规则分类列表");
+			nodeList.add(tt);
+		}
+		return nodeList;
+	}
+}

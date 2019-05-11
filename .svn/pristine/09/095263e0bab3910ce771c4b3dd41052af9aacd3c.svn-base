@@ -1,0 +1,183 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.gbicc.personCommon.entity">
+
+	<class name="TEdwPlsAccount" table="T_EDW_PLS_ACCOUNT">
+
+		<id name="loanacno" type="java.lang.String" column="LOANACNO">
+			<generator class="assigned" />
+		</id>
+
+		<property name="loanid" type="string">
+            <column name="LOANID" length="60" />
+        </property>
+        <property name="custid" type="string">
+            <column name="CUSTID" length="35" />
+        </property>
+        <property name="custname" type="string">
+            <column name="CUSTNAME" length="200" />
+        </property>
+        <property name="corpcustid" type="string">
+            <column name="CORPCUSTID" length="35" />
+        </property>
+        <property name="prodid" type="string">
+            <column name="PRODID" length="30" />
+        </property>
+        <property name="prodname" type="string">
+            <column name="PRODNAME" length="200" />
+        </property>
+        <property name="tcapi" type="big_decimal">
+            <column name="TCAPI" precision="18" />
+        </property>
+        <property name="tterm" type="java.lang.Integer">
+            <column name="TTERM" />
+        </property>
+        <property name="retukind" type="string">
+            <column name="RETUKIND" length="10" />
+        </property>
+        <property name="warrno" type="string">
+            <column name="WARRNO" length="100" />
+        </property>
+        <property name="enstroid" type="string">
+            <column name="ENSTROID" length="30" />
+        </property>
+        <property name="warrbusidate" type="date">
+            <column name="WARRBUSIDATE" length="10" />
+        </property>
+        <property name="totalMortgageValue" type="big_decimal">
+            <column name="TOTAL_MORTGAGE_VALUE" precision="18" />
+        </property>
+        <property name="payoffflag" type="string">
+            <column name="PAYOFFFLAG" length="10" />
+        </property>
+        <property name="unprofname" type="string">
+            <column name="UNPROFNAME" length="200" />
+        </property>
+        <property name="begindate" type="date">
+            <column name="BEGINDATE" length="10" />
+        </property>
+        <property name="enddate" type="date">
+            <column name="ENDDATE" length="10" />
+        </property>
+        <property name="operid" type="string">
+            <column name="OPERID" length="30" />
+        </property>
+        <property name="opername" type="string">
+            <column name="OPERNAME" length="200" />
+        </property>
+        <property name="bankid" type="string">
+            <column name="BANKID" length="20" />
+        </property>
+        <property name="bankname" type="string">
+            <column name="BANKNAME" length="200" />
+        </property>
+        <property name="assukind" type="string">
+            <column name="ASSUKIND" length="10" />
+        </property>
+        <property name="floatinterate" type="big_decimal">
+            <column name="FLOATINTERATE" precision="6" />
+        </property>
+        <property name="acflag" type="string">
+            <column name="ACFLAG" length="10" />
+        </property>
+        <property name="acflag2" type="string">
+            <column name="ACFLAG2" length="10" />
+        </property>
+        <property name="riskflag" type="string">
+            <column name="RISKFLAG" length="10" />
+        </property>
+        <property name="contno" type="string">
+            <column name="CONTNO" length="60" />
+        </property>
+        <property name="dutyid" type="string">
+            <column name="DUTYID" length="30" />
+        </property>
+        <property name="dutyid2" type="string">
+            <column name="DUTYID2" length="30" />
+        </property>
+        <property name="reckday" type="java.lang.Integer">
+            <column name="RECKDAY" />
+        </property>
+        <property name="retuday" type="java.lang.Integer">
+            <column name="RETUDAY" />
+        </property>
+        <property name="corpid" type="string">
+            <column name="CORPID" length="60" />
+        </property>
+        <property name="corpname" type="string">
+            <column name="CORPNAME" length="200" />
+        </property>
+        <property name="projid" type="string">
+            <column name="PROJID" length="60" />
+        </property>
+        <property name="corpappid" type="string">
+            <column name="CORPAPPID" length="60" />
+        </property>
+        <property name="basicinterate" type="big_decimal">
+            <column name="BASICINTERATE" precision="12" scale="8" />
+        </property>
+        <property name="interate" type="big_decimal">
+            <column name="INTERATE" precision="12" scale="8" />
+        </property>
+        <property name="goodsamt" type="big_decimal">
+            <column name="GOODSAMT" precision="18" />
+        </property>
+        <property name="loanhousecount" type="java.lang.Integer">
+            <column name="LOANHOUSECOUNT" />
+        </property>
+        <property name="familyhousecount" type="java.lang.Integer">
+            <column name="FAMILYHOUSECOUNT" />
+        </property>
+        <property name="spousecustid" type="string">
+            <column name="SPOUSECUSTID" length="35" />
+        </property>
+        <property name="bal" type="big_decimal">
+            <column name="BAL" precision="18" />
+        </property>
+        <property name="overbal" type="big_decimal">
+            <column name="OVERBAL" precision="18" />
+        </property>
+        <property name="overinte" type="big_decimal">
+            <column name="OVERINTE" precision="18" />
+        </property>
+        <property name="sumtcapi" type="big_decimal">
+            <column name="SUMTCAPI" precision="18" />
+        </property>
+        <property name="isOver" type="string">
+            <column name="IS_OVER" length="10" />
+        </property>
+        <property name="overStartDate" type="date">
+            <column name="OVER_START_DATE" length="10" />
+        </property>
+        <property name="overDays" type="java.lang.Integer">
+            <column name="OVER_DAYS" />
+        </property>
+        <property name="overCount" type="java.lang.Integer">
+            <column name="OVER_COUNT" />
+        </property>
+        <property name="overCountLast12M" type="java.lang.Integer">
+            <column name="OVER_COUNT_LAST_12_M" />
+        </property>
+        <property name="overCountMaxHis" type="java.lang.Integer">
+            <column name="OVER_COUNT_MAX_HIS" />
+        </property>
+        <property name="overCountSumHis" type="java.lang.Integer">
+            <column name="OVER_COUNT_SUM_HIS" />
+        </property>
+        <property name="isDefault" type="string">
+            <column name="IS_DEFAULT" length="10" />
+        </property>
+        <property name="defaultStartDate" type="date">
+            <column name="DEFAULT_START_DATE" length="10" />
+        </property>
+        <property name="defaultCount" type="java.lang.Integer">
+            <column name="DEFAULT_COUNT" />
+        </property>
+        <property name="defaultCountHis" type="java.lang.Integer">
+            <column name="DEFAULT_COUNT_HIS" />
+        </property>
+	</class>
+</hibernate-mapping>

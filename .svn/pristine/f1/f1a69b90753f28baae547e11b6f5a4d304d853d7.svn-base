@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+	<!--
+		title:标题 navigate:导航信息 type:方式（sql|call)
+		interface:是否显示输入条件页面(true|false) databusid:数据总线编号
+		transdataactionurl:数据整理URL async:异步提交标志 pagesize:页面显示记录数(缺省为10)
+	-->
+<CommQry title="系统状态信息" navigate="定时任务管理" type="call"
+	interface="false" pagesize="10" async="true" databusid="CUSTINFO_DB"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.monitor.scheduler.getter.JobListGetter">
+
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+	    <Field id="id" desc="" edittype="text" datatype="string"  type="string"  xpath="/id" />
+		<Field id="jobNo" desc="任务编号" edittype="text" require="true"
+			datatype="string" method="None" primary="true"  type="string" size="15"
+			scale="2" default="" status="F" xpath="/jobNo" />
+		<Field id="desc0" desc="任务描述"  edittype="text"  require="true"
+			datatype="string" method="None"  type="string" size="15"
+			scale="2" default="" xpath="/desc0" />
+		<Field id="isRunning" desc="任务状态"  edittype="select" 
+			translated="LIST:true,运行中;false,已停止" datatype="string" method="None"
+			 type="string" size="15" scale="2" default=""
+			xpath="/isRunning" />
+		<Field id="runTime" desc="执行方式" edittype="select" require="true"
+			translated="LIST:90,每日;9N,不运行;97,每月某日" datatype="string" method="None"
+			type="string" size="15" scale="2" default="" xpath="/runTime" />
+		<Field id="dayOfMonth" desc="每月某日"    edittype="text"  readonly="true" rules="isMonthDay" size="2" errmsg="请输入合法的日期"
+            xpath="/dayOfMonth" />
+            
+		<Field id="startTime" desc="开始时间"  edittype="text" require="true" rules="isTime"  errmsg="请输入符合 HH:MM:SS规则的时间"
+			 datatype="string"    xpath="/startTime" />
+		<Field id="endTime" desc="结束时间" edittype="text" require="true" rules="isTime"  errmsg="请输入符合 HH:MM:SS规则的时间"
+			 datatype="string"   xpath="/endTime" />
+		<Field id="repeatCNT" desc="日执行次数"  edittype="text" require="true"
+			translated="" datatype="string" method="None"  type="string"
+			size="15" scale="2" default="" xpath="/repeatCNT" />
+		<Field id="repeatInterval" desc="执行间隔"  edittype="text" require="true"
+			translated="" datatype="string" method="None"  type="string"
+			size="15" scale="2" default="" xpath="/repeatInterval" />
+		<Field id="processFunc" desc="执行任务类"  edittype="text" require="true"
+			translated="" datatype="string" method="None"  type="string"
+			size="256" scale="2" default="" xpath="/processFunc" />
+		<!-- <Field id="startFlag" desc="开启标识"  edittype="text" require="true"
+			translated="" datatype="string" primary="true"  method="None"  type="string"
+			size="15" scale="2" default="" xpath="/startFlag" /> -->
+
+	</Fields>
+
+	<Parameters></Parameters>
+
+	<Where>
+	</Where>
+	<Operations>
+		<Button id="btAdd" name="btAdd" desc="新增" operation="addrecord" url="" show="" group="" txn="" icon="icon-add"/>
+		<Button id="btSave" name="btSave" desc="保存" operation="asysubmit" url="#" updateClass="com.huateng.ebank.monitor.scheduler.updater.jobschedulermanager" icon="icon-save"/>
+		<Button id="btDel" name="btDel" desc="删除" operation="delrecord" updateClass="" url="#" txn="" icon="icon-remove"/>
+		<Button id="btMod" name="btMod" desc="修改" operation="" url="" show="" group="" txn="" icon="icon-edit"/>
+		<Button id="btCancel" name="btCancel" desc="取消" operation="" url="" show="" group="" txn="" icon="icon-cancel"/>
+		<Button id="btConfim" name="btConfim" desc="确定" operation="" url="" show="" group="" txn="" icon="icon-ok"/>
+	</Operations>
+
+	<Script>
+	</Script>
+
+</CommQry>
+

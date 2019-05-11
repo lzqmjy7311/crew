@@ -1,0 +1,256 @@
+package com.gbicc.person.monitor.operation;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.gbicc.bpm.BpmDescUtil;
+import com.gbicc.bpm.service.ProcessManagerService;
+import com.gbicc.common.CommonService;
+import com.gbicc.person.creditMemo.entity.TPlCreditMemo;
+import com.gbicc.person.creditMemo.service.TPlCreditMemoService;
+import com.gbicc.person.monitor.entity.TPlControlmeasure;
+import com.gbicc.person.monitor.entity.TPlDqReportXf;
+import com.gbicc.person.monitor.entity.TPlReportRelation;
+import com.gbicc.person.monitor.entity.TPlTask;
+import com.gbicc.person.monitor.service.TPlControlmeasureService;
+import com.gbicc.person.monitor.service.TPlDqMonitorService;
+import com.gbicc.person.monitor.service.TPlDqReportXfService;
+import com.gbicc.person.monitor.service.TPlTaskService;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.framework.exceptions.CommonException;
+import com.huateng.ebank.framework.operation.BaseOperation;
+import com.huateng.ebank.framework.operation.OperationContext;
+
+
+/**
+ * @author likm
+ * @time   2015年11月6日09:59:58
+ * @desc   消费类监控报告操作类
+ */
+public class TPlDqReportXfOperation extends BaseOperation {
+	public static final String ID = "TPlDqReportXfOperation";
+	public static final String CMD = "CMD";
+	public static final String CMD_QUERY = "CMD_QUERY";
+	public static final String CMD_INSERT = "CMD_INSERT";
+	public static final String CMD_UPDATE = "CMD_UPDATE";
+	public static final String CMD_DELETE = "CMD_DELETE";
+	public static final String IN_PARAM = "IN_PARAM";
+	public static final String BUSINESS_ID = "BUSINESS_ID";
+	public static final String XF = "XF";
+	public static final String LOAN_PERSION_LIST = "LOAN_PERSION_LIST";
+	public static final String GUAR_LIST = "GUAR_LIST";
+	public static final String WAIT_HZ_APPROVE_STATUS="2";//待行长审核状态
+	public static final String OPINION="OPINION";//意见
+	
+	public static final String CTRL_TYPE_LMT="1";//控制类型-授信额度控制
+	public static final String CTRL_TYPE_OTH="2";//控制类型-其他控制
+	public static final String CTRL_TYPE_APD="3";//控制类型-附加处理措施
+	
+	public static final String RISK_CTRL_OTHER="SS";//其他控制-其他措施
+	
+	@Override
+	public void afterProc(OperationContext context) throws CommonException {
+	}
+
+	@Override
+	public void beforeProc(OperationContext context) throws CommonException {
+	}
+
+	public void execute(OperationContext context) throws CommonException {
+		String cmd = (String) context.getAttribute(CMD);
+		String op = (String) context.getAttribute("op");
+		String opinion = (String) context.getAttribute(OPINION);
+		String businessId = (String) context.getAttribute(BUSINESS_ID);
+		String taskAssignee=(String) context.getAttribute("taskAssignee");
+		TPlDqReportXf xfReport = (TPlDqReportXf) context.getAttribute(IN_PARAM);
+		TPlDqReportXfService service = TPlDqReportXfService.getInstance();
+		try {
+			if (CMD_QUERY.equals(cmd)) {
+			} else if (CMD_INSERT.equals(cmd)) {
+				service.save(xfReport);
+				
+				TPlReportRelation relation=new TPlReportRelation();
+				relation.setBusinessId(businessId);
+				relation.setReportId(xfReport.getId());
+				relation.setReportType(XF);
+				
+				ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+				rootdao.getHibernateTemplate().save(relation);
+				saveCtrl(xfReport,businessId);
+			} else if (CMD_UPDATE.equals(cmd)) {
+				service.update(xfReport);
+				saveCtrl(xfReport,businessId);
+			} else if (CMD_DELETE.equals(cmd)) {
+				service.delete(xfReport);
+			}
+			if(StringUtils.isNotEmpty(op)){
+				taskComplete(businessId,op,xfReport,opinion,taskAssignee);
+				xfReport.setOpinion(null);
+				service.update(xfReport);
+			}
+		} catch(CommonException e){
+			e.printStackTrace();
+			throw new CommonException(e.getErrCode(),e.getMessage());
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new CommonException("系统异常",e.getMessage());
+		}
+	}
+	
+	//保存控制措施
+	public void saveCtrl(TPlDqReportXf xfReport,String businessId) throws CommonException{
+		CommonService.getInstance().executeHQL("delete from TPlControlmeasure where taskId='"+businessId+"' ");
+		if(StringUtils.isNotEmpty(xfReport.getLmtCtrl())){
+			List<String> lmtList=new ArrayList<String>();
+			if(xfReport.getLmtCtrl().indexOf(",")>-1){
+				String[] str=xfReport.getLmtCtrl().split(",");
+				lmtList=Arrays.asList(str);
+			}else{
+				lmtList.add(xfReport.getLmtCtrl());
+			}
+			for(String lmt:lmtList){
+				setCtrl(xfReport,lmt,CTRL_TYPE_LMT,businessId);
+			}
+		}
+		if(StringUtils.isNotEmpty(xfReport.getRiskCtrl())){
+			List<String> othList=new ArrayList<String>();
+			if(xfReport.getRiskCtrl().indexOf(",")>-1){
+				String[] str=xfReport.getRiskCtrl().split(",");
+				othList=Arrays.asList(str);
+			}else{
+				othList.add(xfReport.getRiskCtrl());
+			}
+			for(String oth:othList){
+				setCtrl(xfReport,oth,CTRL_TYPE_OTH,businessId);
+			}
+		}
+		if(StringUtils.isNotEmpty(xfReport.getAppendCtrl())){
+			List<String> apdList=new ArrayList<String>();
+			if(xfReport.getAppendCtrl().indexOf(",")>-1){
+				String[] str=xfReport.getAppendCtrl().split(",");
+				apdList=Arrays.asList(str);
+			}else{
+				apdList.add(xfReport.getAppendCtrl());
+			}
+			for(String apd:apdList){
+				setCtrl(xfReport,apd,CTRL_TYPE_APD,businessId);
+			}
+		}
+	}
+	
+	//设置控制措施并保存
+	public void setCtrl(TPlDqReportXf xfReport,String code,String type,String businessId) throws CommonException{
+		TPlControlmeasureService ctrlService=TPlControlmeasureService.getInstance();
+		TPlControlmeasure ctrl=new TPlControlmeasure();
+		ctrl.setConmeasCode(code);
+		ctrl.setCredited(new Date());
+		TPlTaskService taskService=TPlTaskService.getInstance();
+		TPlTask task=taskService.get(businessId);
+		if(task!=null){
+			ctrl.setOrgCode(task.getHandler().getBrcode());
+		}
+		ctrl.setCtrlType(type);
+		ctrl.setTaskId(businessId);
+		ctrl.setTaskType("XFBG");
+		if(type.equals(CTRL_TYPE_OTH) && code.equals(RISK_CTRL_OTHER)){
+			ctrl.setOtherCtrlDesc(xfReport.getOtherCtrlDesc());
+		}
+		ctrlService.save(ctrl);
+	}
+	
+	/**
+	 * 客户经理填报完成
+	 * @param businessId
+	 * @throws Exception 
+	 */
+	@SuppressWarnings("unchecked")
+	public void taskComplete(String businessId,String op,TPlDqReportXf xfReport,String opinion,String taskAssignee) throws Exception{
+		GlobalInfo info=GlobalInfo.getCurrentInstance();
+		String userId=info.getTlrno();
+		//String orgId=info.getBrcode();
+		ProcessManagerService processManagerService=ProcessManagerService.getInstace();
+		String taskId=processManagerService.findTaskId(businessId, userId);
+		TPlTaskService taskService=TPlTaskService.getInstance();
+		TPlTask task=taskService.get(businessId);
+		Map<String, Object> map=new HashMap<String, Object>();
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		Map<String,String> variables=processManagerService.findTaskVariable(businessId);
+		List<String> assigneeList=new ArrayList<String>();
+		if(StringUtils.isNotEmpty(taskAssignee)){
+			assigneeList.add(taskAssignee);
+		}
+		if(op.equals("submit") && variables.get("status").equals(WAIT_HZ_APPROVE_STATUS)){
+			map.put("operation","提交");
+			List<String> list=TPlDqMonitorService.getInstance().dwrFindCtrl(businessId);
+			if(null!=list && list.size()>0){
+				map.put("path", "next");
+				if(StringUtils.isNotEmpty(variables.get("nextRole"))){
+					if(assigneeList==null || assigneeList.size()==0){
+						throw new CommonException("未配置审核人","根据当前机构【"+info.getBrName()+"】查找流程下一节点未找到审核人");
+					}
+					map.put("assigneeList",assigneeList);
+				}else if(StringUtils.isNotEmpty(variables.get("nextAssignee"))){
+					map.put("assignee",task.getHandler().getTlrno());
+				}
+				
+				//根据 businessId删除历史  信贷备忘录
+				rootdao.executeSql("DELETE FROM ECUSER.T_PL_CREDIT_MEMO WHERE FD_BUSINESS_ID='"+businessId+"' ");
+				String warningSignalId=null;
+				String sql="SELECT T.id FROM TWarnSignal T WHERE T.reportId='"+xfReport.getId()+"' ";
+				List<Object> signalList=(List<Object>) rootdao.queryByCondition(sql);
+				if(signalList.size()>0){
+					warningSignalId=(String)signalList.get(0);
+				}
+				TPlCreditMemoService service = TPlCreditMemoService.getInstance();
+				//插入信贷备忘录
+				TPlCreditMemo tPlCreditMemo=new TPlCreditMemo();
+				tPlCreditMemo.setBusinessId(businessId);
+				tPlCreditMemo.setControlmeasure(xfReport.getId());
+				tPlCreditMemo.setCustname(xfReport.getCustName());
+				tPlCreditMemo.setCustcode(xfReport.getCustCode());
+				tPlCreditMemo.setLoanAccount(task.getLoanAcct());
+				tPlCreditMemo.setOperator(task.getHandler().getTlrno());
+				tPlCreditMemo.setOperBank(task.getHandler().getBrcode());
+				tPlCreditMemo.setReprotCode(warningSignalId);//预警信号id
+				tPlCreditMemo.setStartDate(task.getTaskCreatDate());
+				tPlCreditMemo.setStartType(task.getTaskType());
+				service.save(tPlCreditMemo);
+			}else{
+				map.put("path","end");
+			}
+		}else if(op.equals("back")){
+			map.put("operation","退回");
+			map.put("path","back");
+			map.put("assignee",task.getHandler().getTlrno());
+		}else if(op.equals("submit")){
+			map.put("operation","提交");
+			map.put("path","next");
+			if(StringUtils.isNotEmpty(variables.get("nextRole"))){
+				if(assigneeList==null || assigneeList.size()==0){
+					throw new CommonException("未配置审核人","根据当前机构【"+info.getBrName()+"】查找流程下一节点未找到审核人");
+				}
+				map.put("assigneeList",assigneeList);
+			}else if(StringUtils.isNotEmpty(variables.get("nextAssignee"))){
+				map.put("assignee",task.getHandler().getTlrno());
+			}
+		}
+		map.put("desc",BpmDescUtil.getDesc(xfReport.getId(),task.getLoanAcct(),xfReport.getCustName()));
+		map.put("opinion",opinion);
+		processManagerService.taskComplete(map, taskId);
+		
+		Map<String,String> newVar=processManagerService.findTaskVariable(businessId);
+		if(null!=newVar && newVar.size()>0){
+			String status=newVar.get("status");
+			//更改业务状态
+			rootdao.executeSql("UPDATE ECUSER.T_PL_TASK SET RPT_STATUS='"+status+"' WHERE FD_ID='"+businessId+"' ");
+		}
+	}
+}

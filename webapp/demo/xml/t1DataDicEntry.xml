@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="数据字典管理" navigate="数据字典" type="call"
+	interface="false" pagesize="10" async="false" databusid="FIVE"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.datadic.getter.DataDicEntryGetter">
+	<Include id="BankParam" />
+
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+
+		<Field id="id" desc="" edittype="text" datatype="int" size="10" xpath="/id" />
+		<Field id="dataTypeNo" desc="字典类型编号" edittype="text" readonly="false" datatype="int" size="10" xpath="/dataTypeNo" />
+		<Field id="dataNoLen" desc="字典长度" edittype="select" readonly="false" translated="LIST:0,10;1,20 ;2,30 ;3,40;4,50" datatype="int" size="10" xpath="/dataNoLen" />
+		<Field id="dataName" desc="数据名称"  datatype="string" readonly="false" size="4"  xpath="/dataName" />
+		<Field id="limitFlag" desc="限制标志" edittype="text" readonly="false" datatype="string" size="1" xpath="/limitFlag" />
+		<Field id="highLimit" desc="字典上限" edittype="text" readonly="false" datatype="string" size="2" xpath="/highLimit" />
+		<Field id="lowLimit" desc="字典下限" edittype="text" readonly="false" datatype="string" size="20" xpath="/lowLimit" />
+		<Field id="effectDate" desc="生效日期" edittype="text" datatype="date" xpath="/effectDate" />
+		<Field id="expireDate" desc="失效日期" edittype="text" datatype="date" xpath="" />
+		<Field id="timestamps" desc="创建时间" edittype="text" datatype="timestamp" xpath="" />
+		<Field id="dataNo" desc="字典码" status="N" fieldname="dataNo" edittype="select" dropdowntype="dynamic"
+			dataType="String" readonly="false" translated="CQ:AllDownBrcodeSelect"
+			viewField="dataNoTypeName" init="true"  fieldmap="dataNo=brcode;dataNoName=brcodeTypeName" size="20"
+			primary="false" type="String" xpath="/dataNo" />
+	    <Field id="dataTypeName" desc="字典类型名称" status="N"  translated="CQ:FunctionTree"  readonly="false"
+	        fieldmap="dataTypeName=funcid;dataTypeNameName=funcname" viewField="funcname" edittype="select" 
+	        dropdowntype="dynamictree" primary="true"  init="true" size="3" default="adas"  xpath="/dataTypeName" />
+		
+		<Field id="opr" desc="操作" edittype="text" datatype="string" xpath="/id" />
+		
+       </Fields>
+
+	<Parameters></Parameters>
+	<Where>
+		<TextBox id="qDataTypeNo" desc="字典类型编号" datatype="int" index="0" />
+		<Option id="qDataNoLen" desc="字典长度" datatype="string" edittype="select" translated="LIST:0,10;1,20 ;2,30 ;3,40;4,50" rules="isNumOrWord" errmsg="只允许输入字母或数字" index="2" />
+		<Option id="qDataNo" desc="字典码" status="N"
+	        fieldname="qdataNo" edittype="select" dropdowntype="dynamic"
+			dataType="String" readOnly="false" translated="CQ:AllDownBrcodeSelect"
+			viewField="qdataNoTypeName" init="true"
+			fieldmap="qdataNo=brcode;qdataNoName=brcodeTypeName" size="20"
+			primary="false" type="String"  />
+		 <Option id="qDataTypeName" desc="字典类型名称" status="N"  translated="CQ:FunctionTree" 
+	        fieldmap="dataTypeName=funcid;dataTypeNameName=funcname" viewField="funcname" edittype="select" 
+	        dropdowntype="dynamictree" primary="true"  init="true" size="20" default=""   />
+	</Where>
+
+	<Operations>
+		<Button id="btNew1" name="btNew" desc="新增href" operation="href" url="/fpages/sample/ftl/test1DataDicAdd.ftl?op=new" show="" group="" txn="" />
+		<Button id="btNew2" name="btNew" desc="新增addrecord" operation="addrecord" url=""  show="" group="" txn="" />
+		<Button id="btCopyNew" name="btCopyNew" desc="复制新增" operation="syncsubmit" url="/fpages/demo/ftl/DataDicAdd.ftl?op=copynew" />
+		<Button id="btDel1" name="btDel" desc="删除" operation="asysubmit" updateClass="com.huateng.fp.demo.updater.tDataDicDelUpdate" url="#" txn="" />
+		<Button id="btDel2" name="btDel" desc="删除delrecord" operation="delrecord" updateClass="" url="#" txn="" />
+		<Button id="btMod" name="btMod" desc="修改" operation="syncsubmit" url="/fpages/sample/ftl/test1DataDicAdd.ftl?op=mod" show="" group="" txn="" />
+		<Button id="btSave" name="btSave" desc="保存" operation="asysubmit" updateClass="com.huateng.fp.demo.updater.DataDicMoqdifyUpdate" url="#" show="" group="" txn="" />
+	</Operations>
+
+	<Script></Script>
+
+</CommQry>

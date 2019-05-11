@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="任务管理  &gt; 监控任务查询" navigate="任务管理  &gt; 任务清单" type="call"
+	interface="false" pagesize="20" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.person.monitor.getter.TPlAllTaskGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+			<!-- translated="CQ:AllProductSelect" 
+		<Field id="productCode" desc="产品名称" status="F"
+			primary="false" method="None" readonly="false" type="String"
+			size="20" edittype="select" translated="CQ:AllProductSelect"
+			fieldmap="productCode=prodCode;productName=prodName"
+			viewField="prodName,prodCode" default="" xpath="/productCode"
+			require="false" tip="产品名称" />
+		<Field id="productName" desc="产品名称" status="F"
+			method="com.gbicc.common.CQMethod.getProcuctNameByProductCode"
+			width="" readonly="" primary="true" type="String" size="150"
+			xpath="/productCode" default=""/>-->
+		<Field id="id" desc="" edittype="text" datatype="string" size="32" xpath="/id" />
+		<Field id="custCode" desc="客户编号" edittype="text" datatype="string" status="F" size="10" xpath="/custCode" require="true"  />
+		<Field id="custName" desc="客户名称"  edittype="text" status="F" datatype="string" size="50" xpath="/custName" />
+		<Field id="loanAccount" desc="客户账号" edittype="text" datatype="string" status="F" size="20" xpath="/loanAccount"/>
+		<Field id="warnLevel" desc="预警等级"  edittype="text" status="F" datatype="string" xpath="/warnLevel" />
+		<Field id="loanAcct" desc="贷款账号"  edittype="text" status="F" datatype="string" xpath="/loanAcct" />
+		<Field id="custName" desc="客户名称"  edittype="text" status="F" datatype="string" xpath="/custName" />
+		
+		<Field id="loanVariety" desc="产品名称" status="F"
+			primary="false" method="None" readonly="true" type="String"
+			size="25" edittype="select" translated="CQ:AllProductSelect"
+			fieldmap="productCode=prodCode;productName=prodName"
+			viewField="prodName,prodCode" default="" xpath="/loanVariety"
+			require="false" tip="产品名称" />
+		<Field id="productName" desc="产品名称" status="F"
+			method="com.gbicc.common.CQMethod.getProcuctNameByProductCode"
+			width="" readonly="true" primary="true" type="String" size="150"
+			xpath="/loanVariety" default=""/>
+		
+		<Field id="loanAmt" desc="贷款金额" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" default="0" xpath="/loanAmt"/>
+		<Field id="loanBalance" desc="贷款余额" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" default="0" xpath="/loanBalance"/>
+		<Field id="loanTerm" desc="贷款期限"  edittype="text" status="F" datatype="string" xpath="/loanTerm" />
+		<Field id="rptStatus" desc="状态" multiple="false" init="true"
+            placeholder="占位符" edittype="select" translated="DATA_DIC.102"
+            datatype="string" size="50" xpath="/rptStatus" />
+        <Field id="taskCreatDate" desc="任务创建日" width="150" edittype="text" datatype="timestamp" xpath="/taskCreatDate" />
+		<Field id="taskMatureDate" desc="任务到期日" width="150"  edittype="text" datatype="timestamp"  xpath="/taskMatureDate" />
+		<Field id="handler" desc="经办人"  edittype="text" status="F" datatype="string" xpath="/handlerName" />
+		<Field id="ifTimeout" desc="是否超时"  edittype="text" status="F" datatype="string" xpath="/ifTimeout" />
+		<Field id="reportId" desc="报告ID"  edittype="text" status="F" datatype="string" xpath="/reportId" />
+		<Field id="reportUrl" desc="报告模板Url"  edittype="text" status="F" datatype="string" xpath="/reportUrl" />
+   		<Field id="taskType" desc="任务类型" edittype="select" translated="DATA_DIC.701" xpath="/taskType" />
+    	<Field id="taskSourceType" desc="任务来源" edittype="select" translated="DATA_DIC.721" xpath="/taskSourceType" />
+    	<Field id="pageReadOnly" desc="是否只读" xpath="/pageReadOnly" />
+    	<Field id="currentUser" desc="接收人" xpath="/currentUser" />
+    </Fields>
+    <Where>
+    	<Option id="loanVariety" desc="产品名称" multiple="false" init="true"
+        placeholder="占位符" edittype="select" translated="DATA_DIC.900"
+        datatype="string" size="50" colspan="2" />
+        <Option id="taskType" desc="任务类型" multiple="false" init="true"
+        placeholder="占位符" edittype="select" translated="DATA_DIC.701"
+        datatype="string" size="50" colspan="2" />
+        <Option id="taskSourceType" desc="任务来源" multiple="false" init="true"
+        placeholder="占位符" edittype="select" translated="DATA_DIC.721"
+        datatype="string" size="50" colspan="2" />
+        <Option id="warnLevel" desc="预警等级" multiple="false" init="true"
+        placeholder="占位符" edittype="select" translated="DATA_DIC.702"
+        datatype="string" size="50" colspan="2" />		
+        <Option id="rptStatus" desc="流程状态" multiple="false" init="true"
+        placeholder="占位符" edittype="select" translated="DATA_DIC.102"
+        datatype="string" size="50" colspan="2" />	
+		<TextBox id="loanAcct" colspan="2" desc="贷款账号" edittype="text" status="F" datatype="string" size="50" index="3" />\
+		<TextBox id="custName" colspan="2" desc="客户名称" edittype="text" status="F" datatype="string" size="50" index="4" />\
+		<TextBox id="bankName" colspan="2" desc="经办行" edittype="text" status="F" datatype="string" size="50" index="5" />\
+	</Where>
+	<Operations>
+		<Button id="btnReset" name="btnReset" desc="重置" icon="icon-reset" updateClass="#" url="" txn="" />
+		<Button id="btHandle" name="btHandle" desc="处理" icon="icon-add" updateClass="#" url="" txn="" />
+	</Operations>
+</CommQry>

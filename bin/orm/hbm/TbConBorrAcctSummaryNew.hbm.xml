@@ -1,0 +1,233 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-11-30 17:00:33 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.view.entity.TbConBorrAcctSummaryNew" table="TB_CON_BORR_ACCT_SUMMARY_NEW" schema="ECUSER">
+            <id name="payoutAcctSummaryId" type="string">
+                <column name="PAYOUT_ACCT_SUMMARY_ID" length="32" />
+            </id>
+            <property name="payoutInfoDetailId" type="string">
+                <column name="PAYOUT_INFO_DETAIL_ID" length="32" />
+            </property>
+            <property name="payoutAppFormNum" type="string">
+                <column name="PAYOUT_APP_FORM_NUM" length="40" />
+            </property>
+            <property name="borrowNum" type="string">
+                <column name="BORROW_NUM" length="40" />
+            </property>
+            <property name="contractNum" type="string">
+                <column name="CONTRACT_NUM" length="40" />
+            </property>
+            <property name="customerNum" type="string">
+                <column name="CUSTOMER_NUM" length="40" />
+            </property>
+            <property name="lastRequitalSum" type="big_decimal">
+                <column name="LAST_REQUITAL_SUM" precision="22" />
+            </property>
+            <property name="expirationDate" type="date">
+                <column name="EXPIRATION_DATE" length="10" />
+            </property>
+            <property name="brNo" type="string">
+                <column name="BR_NO" length="6" />
+            </property>
+            <property name="stat" type="string">
+                <column name="STAT" length="2" />
+            </property>
+            <property name="operateBrch" type="string">
+                <column name="OPERATE_BRCH" length="6" />
+            </property>
+            <property name="balanceAccounts" type="string">
+                <column name="BALANCE_ACCOUNTS" length="40" />
+            </property>
+            <property name="storeRate" type="big_decimal">
+                <column name="STORE_RATE" precision="22" scale="8" />
+            </property>
+            <property name="actType" type="string">
+                <column name="ACT_TYPE" length="4" />
+            </property>
+            <property name="actCat" type="string">
+                <column name="ACT_CAT" length="4" />
+            </property>
+            <property name="loanAcct" type="string">
+                <column name="LOAN_ACCT" length="19" />
+            </property>
+            <property name="advBal" type="big_decimal">
+                <column name="ADV_BAL" precision="22" />
+            </property>
+            <property name="loanBal" type="big_decimal">
+                <column name="LOAN_BAL" precision="22" />
+            </property>
+            <property name="theoLoanBal" type="big_decimal">
+                <column name="THEO_LOAN_BAL" precision="22" />
+            </property>
+            <property name="bucketP" type="big_decimal">
+                <column name="BUCKET_P" precision="22" />
+            </property>
+            <property name="bocketI" type="big_decimal">
+                <column name="BOCKET_I" precision="22" />
+            </property>
+            <property name="bocketW" type="big_decimal">
+                <column name="BOCKET_W" precision="22" />
+            </property>
+            <property name="bocketA" type="big_decimal">
+                <column name="BOCKET_A" precision="22" />
+            </property>
+            <property name="bocketE" type="big_decimal">
+                <column name="BOCKET_E" precision="22" />
+            </property>
+            <property name="unpdBocketI" type="big_decimal">
+                <column name="UNPD_BOCKET_I" precision="22" />
+            </property>
+            <property name="unpdBocketW" type="big_decimal">
+                <column name="UNPD_BOCKET_W" precision="22" />
+            </property>
+            <property name="unpdBocketA" type="big_decimal">
+                <column name="UNPD_BOCKET_A" precision="22" />
+            </property>
+            <property name="unpdBocketE" type="big_decimal">
+                <column name="UNPD_BOCKET_E" precision="22" />
+            </property>
+            <property name="badDebtInd" type="string">
+                <column name="BAD_DEBT_IND" length="2" />
+            </property>
+            <property name="inOweAccounts" type="big_decimal">
+                <column name="IN_OWE_ACCOUNTS" precision="22" />
+            </property>
+            <property name="outOweAccounts" type="big_decimal">
+                <column name="OUT_OWE_ACCOUNTS" precision="22" />
+            </property>
+            <property name="totalReturnPrp" type="big_decimal">
+                <column name="TOTAL_RETURN_PRP" precision="22" />
+            </property>
+            <property name="totalBefRetnPrp" type="big_decimal">
+                <column name="TOTAL_BEF_RETN_PRP" precision="22" />
+            </property>
+            <property name="totalShouldRetnInt" type="big_decimal">
+                <column name="TOTAL_SHOULD_RETN_INT" precision="22" />
+            </property>
+            <property name="totalRelRetnInt" type="big_decimal">
+                <column name="TOTAL_REL_RETN_INT" precision="22" />
+            </property>
+            <property name="totalWriteoffPrp" type="big_decimal">
+                <column name="TOTAL_WRITEOFF_PRP" precision="22" />
+            </property>
+            <property name="totalWriteoffInInt" type="big_decimal">
+                <column name="TOTAL_WRITEOFF_IN_INT" precision="22" />
+            </property>
+            <property name="totalWriteoffOutInt" type="big_decimal">
+                <column name="TOTAL_WRITEOFF_OUT_INT" precision="22" />
+            </property>
+            <property name="totalOvdueAmt" type="big_decimal">
+                <column name="TOTAL_OVDUE_AMT" precision="22" />
+            </property>
+            <property name="totalPrimnessAmt" type="big_decimal">
+                <column name="TOTAL_PRIMNESS_AMT" precision="22" />
+            </property>
+            <property name="totalBadDebtAmt" type="big_decimal">
+                <column name="TOTAL_BAD_DEBT_AMT" precision="22" />
+            </property>
+            <property name="firstOvdueDate" type="date">
+                <column name="FIRST_OVDUE_DATE" length="10" />
+            </property>
+            <property name="firstPrimnessDate" type="date">
+                <column name="FIRST_PRIMNESS_DATE" length="10" />
+            </property>
+            <property name="firstBadDebtDate" type="date">
+                <column name="FIRST_BAD_DEBT_DATE" length="10" />
+            </property>
+            <property name="discountSign" type="string">
+                <column name="DISCOUNT_SIGN" length="20" />
+            </property>
+            <property name="bankGuaranteeType" type="string">
+                <column name="BANK_GUARANTEE_TYPE" length="20" />
+            </property>
+            <property name="bankGuaranteeState" type="string">
+                <column name="BANK_GUARANTEE_STATE" length="20" />
+            </property>
+            <property name="refundSum" type="big_decimal">
+                <column name="REFUND_SUM" precision="22" />
+            </property>
+            <property name="reSponsionWithodrawalSum" type="big_decimal">
+                <column name="RE_SPONSION_WITHODRAWAL_SUM" precision="22" />
+            </property>
+            <property name="undertakePaySum" type="big_decimal">
+                <column name="UNDERTAKE_PAY_SUM" precision="22" />
+            </property>
+            <property name="untreadSum" type="big_decimal">
+                <column name="UNTREAD_SUM" precision="22" />
+            </property>
+            <property name="addPeriodDate" type="date">
+                <column name="ADD_PERIOD_DATE" length="10" />
+            </property>
+            <property name="replacementSign" type="string">
+                <column name="REPLACEMENT_SIGN" length="20" />
+            </property>
+            <property name="commissionChargeRatio" type="big_decimal">
+                <column name="COMMISSION_CHARGE_RATIO" precision="22" scale="6" />
+            </property>
+            <property name="bailSum" type="big_decimal">
+                <column name="BAIL_SUM" precision="22" />
+            </property>
+            <property name="replacementBalance" type="big_decimal">
+                <column name="REPLACEMENT_BALANCE" precision="22" />
+            </property>
+            <property name="financingInd" type="string">
+                <column name="FINANCING_IND" length="1" />
+            </property>
+            <property name="letterOfCreditState" type="string">
+                <column name="LETTER_OF_CREDIT_STATE" length="20" />
+            </property>
+            <property name="qxRevertDate" type="date">
+                <column name="QX_REVERT_DATE" length="10" />
+            </property>
+            <property name="lastMaintainDate" type="date">
+                <column name="LAST_MAINTAIN_DATE" length="10" />
+            </property>
+            <property name="creditBalance" type="big_decimal">
+                <column name="CREDIT_BALANCE" precision="22" />
+            </property>
+            <property name="tmpAmt" type="big_decimal">
+                <column name="TMP_AMT" precision="22" />
+            </property>
+            <property name="postalOrderState" type="string">
+                <column name="POSTAL_ORDER_STATE" length="20" />
+            </property>
+            <property name="fourLevel" type="string">
+                <column name="FOUR_LEVEL" length="2" />
+            </property>
+            <property name="fiveLevel" type="string">
+                <column name="FIVE_LEVEL" length="2" />
+            </property>
+            <property name="status" type="string">
+                <column name="STATUS" length="2" />
+            </property>
+            <property name="currencyCd" type="string">
+                <column name="CURRENCY_CD" length="20" />
+            </property>
+            <property name="recState" type="string">
+                <column name="REC_STATE" length="20" />
+            </property>
+            <property name="writeOffDate" type="date">
+                <column name="WRITE_OFF_DATE" length="10" />
+            </property>
+            <property name="advAcctNo" type="string">
+                <column name="ADV_ACCT_NO" length="40" />
+            </property>
+            <property name="advAmt" type="big_decimal">
+                <column name="ADV_AMT" precision="22" />
+            </property>
+            <property name="advOutBa" type="big_decimal">
+                <column name="ADV_OUT_BA" precision="22" />
+            </property>
+            <property name="advInt" type="big_decimal">
+                <column name="ADV_INT" precision="22" />
+            </property>
+            <property name="borrowStatus" type="string">
+                <column name="BORROW_STATUS" length="20" />
+            </property>
+            <property name="billStatus" type="string">
+                <column name="BILL_STATUS" length="1" />
+            </property>
+    </class>
+</hibernate-mapping>

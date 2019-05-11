@@ -1,0 +1,33 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign id="${RequestParameters['id']?default('')}" />
+<#assign type="${RequestParameters['type']?default('')}" />
+<@CommonQueryMacro.page title="">
+<@CommonQueryMacro.CommonQuery id="TOutIndBaseInfo" init="false" submitMode="selected" navigate="false">
+	<@CommonQueryMacro.Group id="busscope" label="" colNm="2"fieldStr="busscope2"  
+		 />
+	<@CommonQueryMacro.Group id="fdInfoBeforeModify" label="" colNm="2"fieldStr="fdInfoBeforeModify2"  
+		 />
+	<@CommonQueryMacro.Group id="fdInfoAfterModify" label="" colNm="2"fieldStr="fdInfoAfterModify2"  
+		 />
+</@CommonQueryMacro.CommonQuery>
+<script language="JavaScript">
+var customerNum='${customerNum}';
+function initCallGetter_post(){
+	var id='${id}';
+	var type='${type}';
+	TOutIndBaseInfo_dataset.setParameter("id",id);
+	TOutIndBaseInfo_dataset.flushData();
+	document.getElementsByName('busscope')[0].setAttribute('hidden','hidden');
+	document.getElementsByName('fdInfoBeforeModify')[0].setAttribute('hidden','hidden');
+	document.getElementsByName('fdInfoAfterModify')[0].setAttribute('hidden','hidden');
+	if(type=='busscope'){
+		document.getElementsByName('busscope')[0].removeAttribute('hidden');
+	}else if(type=='fdInfoBeforeModify'){
+		document.getElementsByName('fdInfoBeforeModify')[0].removeAttribute('hidden');
+	}else{
+		document.getElementsByName('fdInfoAfterModify')[0].removeAttribute('hidden');
+	}
+}
+
+</script>
+</@CommonQueryMacro.page>

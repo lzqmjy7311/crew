@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="riskoverview" navigate="riskoverview" type="call" interface="false" pagesize="30" databusid="" async="true" transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.gbicc.company.view.riskoverview.getter.TRiskoverViewGetter">
+    <Include id="BankParam" />
+    <Fields>
+       <Field id="fiveCore" desc="五要素预警得分" require="" edittype="text"  status="F"  xpath="/fiveCore" readonly="true"/>
+       <Field id="importChange" desc="重大事项调整" require="" edittype="text"  status="F"  xpath="/importChange" readonly="true"/>
+       <Field id="dataCheck" desc="数据验真情况" require="" edittype="text"  status="F"  xpath="/dataCheck" readonly="true"/>
+       <Field id="riskLevel" desc="客户风险预警等级" require="" edittype="select" translated="DATA_DIC.12606"  status="F"  xpath="/riskLevel" readonly="true"/>
+       <Field id="bz" desc="备注" require="" edittype="textarea" width="200" status="F"  xpath="/bz" readonly="true"/>
+       
+    </Fields>
+    <Where>
+  		<DateTextBox id="startDt" desc="开始时间" width="100" edittype="text" datatype="string" method="None"  status="F"  /> \ 
+  		<DateTextBox id="endDt" desc="结束时间" width="100" edittype="text" datatype="string" method="None"  status="F"  /> \
+  		<Option id="koujing" desc="统计频率" width="100" require="" status="F"  edittype="select" translated="LIST:707,年;708,半年;709,季;710,月" />\
+  		<Option id="tjtype" desc="统计方式" require="" status="F"  translated="LIST:0,年;1,月" datatype="int" />\             
+    </Where>
+    <Operations>
+    	<Button id="btQuerytwo" name="btQuery" desc="查询" icon="icon-search" updateClass="#" url="" txn="" />
+    	<Button id="koujingbtQueryt" name="koujingbtQuery" desc="查询" icon="icon-search" updateClass="#" url="" txn="" />
+    	<Button id="tjtypeQueryt" name="tjtypeQuery" desc="查询" icon="icon-search" updateClass="#" url="" txn="" />
+    </Operations>
+</CommQry>

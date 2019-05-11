@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-1-18 16:11:56 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.view.entity.TCmCodeIndustryNew" table="T_CM_CODE_INDUSTRY_NEW" schema="ECUSER">
+        <comment>行业类型（新国标）</comment>
+        <id name="industryTypeId" type="string">
+            <column name="INDUSTRY_TYPE_ID" length="50" />
+            <generator class="assigned" />
+        </id>
+        <property name="typeCd" type="string">
+            <column name="TYPE_CD" length="50" />
+        </property>
+        <property name="typeValue" type="string">
+            <column name="TYPE_VALUE" length="50" />
+        </property>
+        <property name="levelCd" type="string">
+            <column name="LEVEL_CD" length="25" />
+        </property>
+    </class>
+</hibernate-mapping>

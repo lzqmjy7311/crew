@@ -1,0 +1,120 @@
+/**
+ *
+ */
+package com.huateng.ebank.business.opermng.update;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.util.StringUtils;
+
+import com.huateng.common.err.Module;
+import com.huateng.common.err.Rescode;
+import com.huateng.commquery.result.MultiUpdateResultBean;
+import com.huateng.commquery.result.UpdateResultBean;
+import com.huateng.commquery.result.UpdateReturnBean;
+import com.huateng.ebank.business.common.DAOUtils;
+import com.huateng.ebank.business.opermng.operation.OperMngOperation;
+import com.huateng.ebank.entity.data.mng.Bctl;
+import com.huateng.ebank.entity.data.mng.RoleInfo;
+import com.huateng.ebank.entity.data.mng.TlrInfo;
+import com.huateng.ebank.framework.operation.OPCaller;
+import com.huateng.ebank.framework.operation.OperationContext;
+import com.huateng.ebank.framework.web.commQuery.BaseUpdate;
+import com.huateng.exception.AppException;
+
+/**
+ * @author zhiguo.zhao
+ *
+ */
+public class OperMngModUpdate extends BaseUpdate {
+
+	public UpdateReturnBean saveOrUpdate(
+			MultiUpdateResultBean multiUpdateResultBean,
+			HttpServletRequest request, HttpServletResponse response)
+			throws AppException {
+		try {
+
+			UpdateReturnBean updateReturnBean = new UpdateReturnBean();
+			UpdateResultBean updateResultBean = multiUpdateResultBean.getUpdateResultBeanByID("operMngMod");
+			TlrInfo operator = null;
+			while (updateResultBean.hasNext()) {
+				operator = new TlrInfo();
+				Map map = updateResultBean.next();
+				mapToObject(operator, map);
+			}
+			
+			UpdateResultBean bctlUpdateResultBean = multiUpdateResultBean.getUpdateResultBeanByID("bctlMngEntry");
+			List<Bctl> bctls = new ArrayList<Bctl>();
+			Map<String,Bctl> list=new HashMap<String, Bctl>();
+			while (bctlUpdateResultBean.hasNext()) {
+				Bctl bctl = new Bctl();
+				Map map = bctlUpdateResultBean.next();
+				mapToObject(bctl, map);
+				if(bctl!=null && StringUtils.hasText( bctl.getBrname()) 
+						&& StringUtils.hasText( bctl.getBrno())){
+					list.put(bctl.getBrno(), bctl);
+				}
+			}
+			for(Map.Entry<String,Bctl> bctl:list.entrySet()){
+				bctls.add(bctl.getValue());
+			}
+			
+			//第一个机构设置为默认
+			if(bctls.size()>0){
+				operator.setBrcode(bctls.get(0).getBrno());
+			}
+			
+			UpdateResultBean roleUpdateResultBean = multiUpdateResultBean.getUpdateResultBeanByID("operMngRoleInfo");
+			List<RoleInfo> roles = new ArrayList<RoleInfo>();
+			int i=0;
+			Integer defRoleId=null;
+			Integer defRoleId2=null;
+			//是否设置了默认角色，如果没有设置，则默认每一个岗位
+			while (roleUpdateResultBean.hasNext()) {
+				Map map = roleUpdateResultBean.next();
+				RoleInfo role = new RoleInfo();
+				String roleId = (String)map.get("roleId");
+				String roleName = (String)map.get("roleName");
+				role.setId(Integer.parseInt(roleId));
+				role.setRoleName(roleName);
+				roles.add(role);
+				
+				String isDefault = (String)map.get("isDefault");//是否默认
+				if("1".equals(isDefault)){
+					defRoleId=Integer.valueOf(map.get("roleId").toString());
+				}
+				if(i==0){//将第一个设置成默认角色，如果只有一个角色。则默认
+					defRoleId2=Integer.valueOf(map.get("roleId").toString());
+				}
+				i++;
+			}
+			if(defRoleId!=null){
+				DAOUtils.getTlrRoleRelDAO()
+				.changeDefault(operator.getTlrno(), defRoleId);
+			}else{
+				DAOUtils.getTlrRoleRelDAO()
+				.changeDefault(operator.getTlrno(), defRoleId2);
+			}
+			String op = updateResultBean.getParameter("op");
+			OperationContext oc = new OperationContext();
+			oc.setAttribute(OperMngOperation.CMD, op);
+			oc.setAttribute(OperMngOperation.IN_ROLELIST, roles);
+			oc.setAttribute(OperMngOperation.IN_BCTLLIST, bctls);
+			oc.setAttribute(OperMngOperation.IN_TLRINFO, operator);
+			OPCaller.call(OperMngOperation.ID, oc);
+			return updateReturnBean;
+		} catch (AppException appEx) {
+			throw appEx;
+		} catch (Exception ex) {
+			throw new AppException(Module.SYSTEM_MODULE,
+					Rescode.DEFAULT_RESCODE, ex.getMessage(), ex);
+		}
+	}
+
+}

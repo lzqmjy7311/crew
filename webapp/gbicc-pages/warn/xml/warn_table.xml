@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="预警管理  &gt; 监控预警查询" navigate="预警管理  &gt; 监控预警查询" 
+	pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true">
+	<Include id="BankParam" />
+</CommQry>

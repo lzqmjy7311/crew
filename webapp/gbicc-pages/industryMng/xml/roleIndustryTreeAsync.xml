@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="树形表格" navigate="树形表格" type="call" interface="false"
+	pagesize="10" async="true" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.common.Industry.getter.AsyncRoleIndustryTreeGetter">
+	<Include id="BankParam" />
+	<!-- 在下拉菜单中，注意以下的域的位置顺序，必须以id,name,lastdirectory和_hasChild_的顺序来写 -->
+	<!-- 如果是在树形表格中，必须定义一个id字段，该字段只定义出来做内部处理 -->
+	<Fields>
+		<Field id="id" desc="节点编号" xpath="/id" readonly="false"  />
+		<Field id="name" desc="节点名称" xpath="/text" readonly="false"
+			size="60" require="true" />
+		<Field id="pid" desc="上级节点" xpath="/pid" readonly="false" />
+		<Field id="location" desc="菜单排版" xpath="location" readonly="false"
+			size="25" require="true" />
+
+		<Field id="showseq" desc="排序号" edittype="text" datatype="int" 
+			xpath="/showseq" size="4" require="false" />
+		<Field id="pagepath" desc="层级" edittype="text" datatype="string" 
+			xpath="/pagepath" size="4" require="false" />
+
+		<Field id="isdirectory" desc="是否为目录" xpath="/isdirectory" readonly="true"
+			require="true" multiple="false" placeholder="占位符" edittype="select"
+			translated="LIST:1,是;0,否" default="0" />
+
+		<!-- 做为下拉和普通树控件必须属性 -->
+		<Field id="_hasChild_" desc="是否有孩子节点" xpath="/hasChild"
+			readonly="false" />
+		<Field id="_id" xpath="/id" />
+		<Field id="_parentId" xpath="/pid" />
+		<!-- 做为普通树控件必须属性 -->
+		<Field id="_text" desc="" method="" xpath="/text" />
+		<!-- 做为树控件扩展属性 -->
+		<Field id="_icon" desc="" method="" xpath="/iconCls" />
+	</Fields>
+	<Parameters>
+		<!-- <Parameter id="id" desc="id" /> -->
+	</Parameters>
+	<Operations>
+		<!-- 岗位权限管理 -->
+		<Button id="btnSave" name="btnSave" desc="保存" icon="icon-save"
+			operation="asysubmit" updateClass="com.huateng.ebank.business.rolemng.update.RoleFuncUpdate"
+			url="#" txn="" />	
+		<Button id="buttonSave" name="btnSave" desc="保存" icon="icon-save"
+			operation="asysubmit" updateClass="com.huateng.ebank.business.rolemng.update.RoleFuncUpdate"
+			url="#" txn="" />	
+		<Button id="btnEdit" name="btnEdit" desc="编辑" operation=""
+			icon="icon-edit" updateClass="" url="#" show="" group="" txn="" />
+		<Button id="btnAdd" name="btnAdd" desc="新增为同级节点" operation=""
+			icon="icon-add" updateClass="" url="#" show="" group="" txn="" />
+		<Button id="btnAddAsChild" name="btnAddAsChild" desc="新增为子项"
+			icon="icon-add" operation="" updateClass="" url="#" show="" group=""
+			txn="" />
+		<Button id="btnRemove" name="btnRemove" desc="删除" icon="icon-remove"
+			operation="delrecord" updateClass=""
+			url="#" show="" group="" txn="" />
+
+	</Operations>
+</CommQry>

@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-12-15 10:28:17 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.view.accountpage.entity.TOdsEdwDepositAcctTxnDtlInfotemp" table="T_ODS_EDW_DEPOSIT_ACCT_TXN_DTL_INFO" schema="ECUSER">
+            <id name="txnSerialId" type="string">
+                <column name="TXN_SERIAL_ID" length="10" />
+            </id>
+            <property name="recdId" type="string">
+                <column name="RECD_ID" length="10" />
+            </property>
+            <property name="chineseName" type="string"
+            		  formula="(SELECT DISTINCT n1.CHINESE_NAME FROM T_ODS_CMS_CORPORATION N1 LEFT JOIN T_ODS_CMS_CUSTOMER_RELATION N ON N1.CUSTOMER_NUM=N.CUSTOMER_NUM LEFT JOIN T_EDW_CORE_PAY_ACC C ON N.CORE_CUSTOMER_NUM=C.CUSTOMER_NO LEFT JOIN T_ODS_EDW_DEPOSIT_ACCT_TXN_DTL_INFO O ON C.MEMB_CUST_AC=O.ACCT_ID WHERE C.CUSTOMER_NO IS NOT NULL AND C.MEMB_CUST_AC IS NOT NULL AND O.ACCT_ID IS NOT NULL AND O.ACCT_ID=ACCT_ID)"
+            />
+            <property name="txnDt" type="string">
+                <column name="TXN_DT"/>
+            </property>
+            <property name="inacctDt" type="string">
+                <column name="INACCT_DT" length="10" />
+            </property>
+            <property name="txnTm" type="string">
+                <column name="TXN_TM" length="10" />
+            </property>
+            <property name="acctId" type="string">
+                <column name="ACCT_ID" length="60" />
+            </property>
+            <property name="aioAccntAcctId" type="string">
+                <column name="AIO_ACCNT_ACCT_ID" length="60" />
+            </property>
+            <property name="cardId" type="string">
+                <column name="CARD_ID" length="60" />
+            </property>
+            <property name="cardTypeSelfServEquip" type="string">
+                <column name="CARD_TYPE_SELF_SERV_EQUIP" length="10" />
+            </property>
+            <property name="custId" type="string">
+                <column name="CUST_ID" length="30" />
+            </property>
+            <property name="prodId" type="string">
+                <column name="PROD_ID" length="30" />
+            </property>
+            <property name="itemId" type="string">
+                <column name="ITEM_ID" length="30" />
+            </property>
+            <property name="acctOrg" type="string">
+                <column name="ACCT_ORG" length="10" />
+            </property>
+            <property name="bal" type="big_decimal">
+                <column name="BAL" precision="18" scale="4" />
+            </property>
+            <property name="acctAttri" type="string">
+                <column name="ACCT_ATTRI" length="2" />
+            </property>
+            <property name="cardBal" type="big_decimal">
+                <column name="CARD_BAL" precision="18" scale="4" />
+            </property>
+            <property name="oppoAcctId" type="string">
+                <column name="OPPO_ACCT_ID" length="60" />
+            </property>
+            <property name="oppoCustNm" type="string">
+                <column name="OPPO_CUST_NM" length="200" />
+            </property>
+            <property name="oppoBank" type="string">
+                <column name="OPPO_BANK" length="200" />
+            </property>
+            <property name="oppoTxnCcy" type="string">
+                <column name="OPPO_TXN_CCY" length="4" />
+            </property>
+            <property name="txnOrg" type="string">
+                <column name="TXN_ORG" length="10" />
+            </property>
+            <property name="txnTlr" type="string">
+                <column name="TXN_TLR" length="8" />
+            </property>
+            <property name="authTlr" type="string">
+                <column name="AUTH_TLR" length="8" />
+            </property>
+            <property name="tmlId" type="string">
+                <column name="TML_ID" length="10" />
+            </property>
+            <property name="txnCateg" type="string">
+                <column name="TXN_CATEG" length="10" />
+            </property>
+            <property name="txnSrcSelfServEquip" type="string">
+                <column name="TXN_SRC_SELF_SERV_EQUIP" length="10" />
+            </property>
+            <property name="txnChn" type="string">
+                <column name="TXN_CHN" length="2" />
+            </property>
+            <property name="txnCd" type="string">
+                <column name="TXN_CD" length="5" />
+            </property>
+            <property name="ccy" type="string">
+                <column name="CCY" length="4" />
+            </property>
+            <property name="txnAmt" type="big_decimal">
+                <column name="TXN_AMT" precision="18" scale="4" />
+            </property>
+            <property name="txnAftrBal" type="big_decimal">
+                <column name="TXN_AFTR_BAL" precision="18" scale="4" />
+            </property>
+            <property name="txnInt" type="big_decimal">
+                <column name="TXN_INT" precision="18" scale="4" />
+            </property>
+            <property name="fee" type="big_decimal">
+                <column name="FEE" precision="18" scale="4" />
+            </property>
+            <property name="txnAbstr" type="string">
+                <column name="TXN_ABSTR" length="60" />
+            </property>
+            <property name="rvsAcctInd" type="string">
+                <column name="RVS_ACCT_IND" length="2" />
+            </property>
+            <property name="validInd" type="string">
+                <column name="VALID_IND" length="2" />
+            </property>
+            <property name="debCrdInd" type="string">
+                <column name="DEB_CRD_IND" length="2" />
+            </property>
+            <property name="curTransInd" type="string">
+                <column name="CUR_TRANS_IND" length="2" />
+            </property>
+            <property name="txnSucceInd" type="string">
+                <column name="TXN_SUCCE_IND" length="10" />
+            </property>
+            <property name="uuid" type="string">
+                <column name="UUID" length="60" />
+            </property>
+            <property name="outSysCd" type="string">
+                <column name="OUT_SYS_CD" length="10" />
+            </property>
+            <property name="chnSerialId" type="string">
+                <column name="CHN_SERIAL_ID" length="60" />
+            </property>
+            <property name="outSerialId" type="string">
+                <column name="OUT_SERIAL_ID" length="60" />
+            </property>
+            <property name="agentBank" type="string">
+                <column name="AGENT_BANK" length="2" />
+            </property>
+            <property name="nonCardPayInd" type="string">
+                <column name="NON_CARD_PAY_IND" length="2" />
+            </property>
+            <property name="withdrInd" type="string">
+                <column name="WITHDR_IND" length="2" />
+            </property>
+            <property name="fincInd" type="string">
+                <column name="FINC_IND" length="2" />
+            </property>
+            <property name="merchantTypeCd" type="string">
+                <column name="MERCHANT_TYPE_CD" length="15" />
+            </property>
+            <property name="etlProcDt" type="date">
+                <column name="ETL_PROC_DT" length="10" />
+            </property>
+    </class>
+</hibernate-mapping>

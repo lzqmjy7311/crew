@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="机构权限设置" navigate="主页 &gt; 权限管理 &gt; 机构权限设置" type="call"
+	interface="true"
+	pagesize="10"
+	async="true"
+	databusid="ACEENTRY_DB"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.management.getter.BranchManageQueryGetter">
+
+	<Include id="BankParam" />
+
+	<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+	<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+	<Fields>
+
+	<Field id="brcode" desc="机构" status="N" method="None" xpath="/brcode" readonly=""
+		 	translated="CQ:BranchInfoSelect" fieldmap="brcodeName=brcodeTypeName;brcode=brcode"
+			viewField="brcodeTypeName" edittype="select" dropdowntype="dynamic"
+			primary="true" type="String" size="20" default="" tip="机构" require=""/>
+	</Fields>
+
+	<Operations>
+		<Button id="btSave" name="btSave" desc="保存"
+			operation="" updateClass="" url="#"  show="" group="" txn="" />
+		<Button id="btSelectAll" name="btSelectAll" desc="全选"
+			operation="" updateClass="" url="#"  show="" group="" txn="" />
+		<Button id="btUnSelectAll" name="btUnSelectAll" desc="全不选"
+			operation="" updateClass="" url="#"  show="" group="" txn="" />
+		<Button id="btOpen" name="btOpen" desc="展开/合并"
+			operation="" updateClass="" url="#"  show="" group="" txn="" />
+	</Operations>
+
+</CommQry>

@@ -1,0 +1,31 @@
+package com.huateng.ebank.entity.view;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.huateng.ebank.entity.data.mng.RoleInfo;
+
+/**
+ * global info 扩展bean
+ * @author pengning
+ *
+ */
+public class ExtensBean {
+
+	private String tlrName;//用户名称
+	private List<RoleInfo> roleList = new ArrayList<RoleInfo>();//岗位列表
+	public String getTlrName() {
+		return tlrName;
+	}
+	public void setTlrName(String tlrName) {
+		this.tlrName = tlrName;
+	}
+	public List<RoleInfo> getRoleList() {
+		return roleList;
+	}
+	public void setRoleList(List<RoleInfo> roleList) {
+		this.roleList = roleList;
+	}
+	public ExtensBean() {
+	}
+}

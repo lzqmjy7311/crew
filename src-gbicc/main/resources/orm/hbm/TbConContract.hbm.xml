@@ -1,0 +1,335 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-11-30 17:00:33 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.view.entity.TbConContract" table="T_ODS_CMS_CONTRACT" schema="ECUSER">
+            <id name="contractId" type="string">
+                <column name="CONTRACT_ID" length="32" />
+            </id>
+            <property name="contractNum" type="string">
+                <column name="CONTRACT_NUM" length="40" />
+            </property>
+            <property name="contractManualNum" type="string">
+                <column name="CONTRACT_MANUAL_NUM" length="40" />
+            </property>
+            <property name="customerNum" type="string">
+                <column name="CUSTOMER_NUM" length="21" />
+            </property>
+            <property name="bizNum" type="string">
+                <column name="BIZ_NUM" length="40" />
+            </property>
+            <property name="creditLimitNum" type="string">
+                <column name="CREDIT_LIMIT_NUM" length="40" />
+            </property>
+            <property name="contractSignDate" type="string">
+                <column name="CONTRACT_SIGN_DATE" length="10" />
+            </property>
+            <property name="comprBizContractInd" type="string">
+                <column name="COMPR_BIZ_CONTRACT_IND" length="1" />
+            </property>
+            <property name="creditProductCd" type="string">
+                <column name="CREDIT_PRODUCT_CD" length="20" />
+            </property>
+            <property name="superContractNum" type="string">
+                <column name="SUPER_CONTRACT_NUM" length="40" />
+            </property>
+            <property name="currencyCd" type="string">
+                <column name="CURRENCY_CD" length="20" />
+            </property>
+            <property name="contractTotalAmt" type="big_decimal">
+                <column name="CONTRACT_TOTAL_AMT" precision="22" />
+            </property>
+            <property name="approveNum" type="string">
+                <column name="APPROVE_NUM" length="40" />
+            </property>
+            <property name="startDate" type="string">
+                <column name="START_DATE" length="10" />
+            </property>
+            <property name="expirationDate" type="string">
+                <column name="EXPIRATION_DATE" length="10" />
+            </property>
+            <property name="contractTerm" type="java.lang.Integer">
+                <column name="CONTRACT_TERM" />
+            </property>
+            <property name="contractLoanCd" type="string">
+                <column name="CONTRACT_LOAN_CD" length="20" />
+            </property>
+            <property name="contractProvidePurpose" type="string">
+                <column name="CONTRACT_PROVIDE_PURPOSE" length="2000" />
+            </property>
+            <property name="exchangeRate" type="big_decimal">
+                <column name="EXCHANGE_RATE" precision="22" scale="10" />
+            </property>
+            <property name="remitPSum" type="java.lang.Integer">
+                <column name="REMIT_P_SUM" />
+            </property>
+            <property name="contractTypeCd" type="string">
+                <column name="CONTRACT_TYPE_CD" length="20" />
+            </property>
+            <property name="contractNatureCd" type="string">
+                <column name="CONTRACT_NATURE_CD" length="20" />
+            </property>
+            <property name="contractStatusCd" type="string">
+                <column name="CONTRACT_STATUS_CD" length="20" />
+            </property>
+            <property name="contractTerminationWayCd" type="string">
+                <column name="CONTRACT_TERMINATION_WAY_CD" length="20" />
+            </property>
+            <property name="lowRiskInd" type="string">
+                <column name="LOW_RISK_IND" length="1" />
+            </property>
+            <property name="lowRiskBizTypeCd" type="string">
+                <column name="LOW_RISK_BIZ_TYPE_CD" length="20" />
+            </property>
+            <property name="contractCycleInd" type="string">
+                <column name="CONTRACT_CYCLE_IND" length="1" />
+            </property>
+            <property name="contractTerminationDate" type="string">
+                <column name="CONTRACT_TERMINATION_DATE" length="10" />
+            </property>
+            <property name="handlingOrgCd" type="string">
+                <column name="HANDLING_ORG_CD" length="20" />
+            </property>
+            <property name="handlingUserNum" type="string">
+                <column name="HANDLING_USER_NUM" length="40" />
+            </property>
+            <property name="disbOrgCd" type="string">
+                <column name="DISB_ORG_CD" length="20" />
+            </property>
+            <property name="transferedToWrInd" type="string">
+                <column name="TRANSFERED_TO_WR_IND" length="1" />
+            </property>
+            <property name="ifCorpHoustLoan" type="string">
+                <column name="IF_CORP_HOUST_LOAN" length="1" />
+            </property>
+            <property name="wrOrgCd" type="string">
+                <column name="WR_ORG_CD" length="20" />
+            </property>
+            <property name="classificationResult" type="string">
+                <column name="CLASSIFICATION_RESULT" length="20" />
+            </property>
+            <property name="originalGuarantyContractNum" type="string">
+                <column name="ORIGINAL_GUARANTY_CONTRACT_NUM" length="512" />
+            </property>
+            <property name="topGuarantyInd" type="string">
+                <column name="TOP_GUARANTY_IND" length="1" />
+            </property>
+            <property name="originalContractManualNum" type="string">
+                <column name="ORIGINAL_CONTRACT_MANUAL_NUM" length="512" />
+            </property>
+            <property name="extendField" type="string">
+                <column name="EXTEND_FIELD" length="100" />
+            </property>
+            <property name="extendFlagField" type="string">
+                <column name="EXTEND_FLAG_FIELD" length="1" />
+            </property>
+            <property name="partyId" type="string">
+                <column name="PARTY_ID" length="32" />
+            </property>
+            <property name="creditLimitId" type="string">
+                <column name="CREDIT_LIMIT_ID" length="32" />
+            </property>
+            <property name="bizId" type="string">
+                <column name="BIZ_ID" length="32" />
+            </property>
+            <property name="freezenInd" type="string">
+                <column name="FREEZEN_IND" length="1" />
+            </property>
+            <property name="lcNum" type="string">
+                <column name="LC_NUM" length="40" />
+            </property>
+            <property name="lastMaintainDate" type="string">
+                <column name="LAST_MAINTAIN_DATE" length="10" />
+            </property>
+            <property name="loanTypeInstructionCd" type="string">
+                <column name="LOAN_TYPE_INSTRUCTION_CD" length="20" />
+            </property>
+            <property name="debtReformTypeCd" type="string">
+                <column name="DEBT_REFORM_TYPE_CD" length="20" />
+            </property>
+            <property name="postPonementTypeCd" type="string">
+                <column name="POST_PONEMENT_TYPE_CD" length="20" />
+            </property>
+            <property name="contractSignPlace" type="string">
+                <column name="CONTRACT_SIGN_PLACE" length="100" />
+            </property>
+            <property name="contractOtherCondition" type="string">
+                <column name="CONTRACT_OTHER_CONDITION" length="2000" />
+            </property>
+            <property name="contractSupplement" type="string">
+                <column name="CONTRACT_SUPPLEMENT" length="2000" />
+            </property>
+            <property name="payDiscountAmt" type="big_decimal">
+                <column name="PAY_DISCOUNT_AMT" precision="22" />
+            </property>
+            <property name="topFinancingStartDate" type="string">
+                <column name="TOP_FINANCING_START_DATE" length="10" />
+            </property>
+            <property name="topFinancingEndDate" type="string">
+                <column name="TOP_FINANCING_END_DATE" length="10" />
+            </property>
+            <property name="shortOperationMatureTerm" type="java.lang.Integer">
+                <column name="SHORT_OPERATION_MATURE_TERM" />
+            </property>
+            <property name="firstPayStartTerm" type="string">
+                <column name="FIRST_PAY_START_TERM" length="10" />
+            </property>
+            <property name="tipFinancingAmtTerm" type="java.lang.Integer">
+                <column name="TIP_FINANCING_AMT_TERM" />
+            </property>
+            <property name="mainSuretyMode" type="string">
+                <column name="MAIN_SURETY_MODE" length="20" />
+            </property>
+            <property name="mainSuertySubchild" type="string">
+                <column name="MAIN_SUERTY_SUBCHILD" length="20" />
+            </property>
+            <property name="otherBankSuertyMode" type="string">
+                <column name="OTHER_BANK_SUERTY_MODE" length="20" />
+            </property>
+            <property name="otherBankSuertySubchild" type="string">
+                <column name="OTHER_BANK_SUERTY_SUBCHILD" length="20" />
+            </property>
+            <property name="suertyCd" type="string">
+                <column name="SUERTY_CD" length="20" />
+            </property>
+            <property name="prerequisitionComment" type="string">
+                <column name="PREREQUISITION_COMMENT" length="4000" />
+            </property>
+            <property name="guarantyNote" type="string">
+                <column name="GUARANTY_NOTE" length="4000" />
+            </property>
+            <property name="guarantyType" type="string">
+                <column name="GUARANTY_TYPE" length="30" />
+            </property>
+            <property name="reportSuertyMode" type="string">
+                <column name="REPORT_SUERTY_MODE" length="20" />
+            </property>
+            <property name="reportSuertySubchild" type="string">
+                <column name="REPORT_SUERTY_SUBCHILD" length="20" />
+            </property>
+            <property name="contractChangeInd" type="string">
+                <column name="CONTRACT_CHANGE_IND" length="1" />
+            </property>
+            <property name="guarantyRate" type="big_decimal">
+                <column name="GUARANTY_RATE" precision="22" scale="6" />
+            </property>
+            <property name="widthTerm" type="java.lang.Integer">
+                <column name="WIDTH_TERM" />
+            </property>
+            <property name="promisesAmt" type="big_decimal">
+                <column name="PROMISES_AMT" precision="22" />
+            </property>
+            <property name="promisesAmtCollectionType" type="string">
+                <column name="PROMISES_AMT_COLLECTION_TYPE" length="20" />
+            </property>
+            <property name="yhCurrencyCd" type="string">
+                <column name="YH_CURRENCY_CD" length="20" />
+            </property>
+            <property name="termEndDate" type="string">
+                <column name="TERM_END_DATE" length="10" />
+            </property>
+            <property name="relaBizNum" type="string">
+                <column name="RELA_BIZ_NUM" length="40" />
+            </property>
+            <property name="payoutApproveLevel" type="string">
+                <column name="PAYOUT_APPROVE_LEVEL" length="1" />
+            </property>
+            <property name="gdTemp1" type="string">
+                <column name="GD_TEMP1" length="20" />
+            </property>
+            <property name="gdTemp2" type="string">
+                <column name="GD_TEMP2" length="20" />
+            </property>
+            <property name="oldContractDetailId" type="string">
+                <column name="OLD_CONTRACT_DETAIL_ID" length="32" />
+            </property>
+            <property name="originalContractExpDate" type="string">
+                <column name="ORIGINAL_CONTRACT_EXP_DATE" length="10" />
+            </property>
+            <property name="postponementInd" type="string">
+                <column name="POSTPONEMENT_IND" length="1" />
+            </property>
+            <property name="oldBizDetailId" type="string">
+                <column name="OLD_BIZ_DETAIL_ID" length="32" />
+            </property>
+            <property name="bankTeamRole" type="string">
+                <column name="BANK_TEAM_ROLE" length="20" />
+            </property>
+            <property name="noteCustomerNum" type="string">
+                <column name="NOTE_CUSTOMER_NUM" length="15" />
+            </property>
+            <property name="peasantLoanType" type="string">
+                <column name="PEASANT_LOAN_TYPE" length="20" />
+            </property>
+            <property name="payoutInd" type="string">
+                <column name="PAYOUT_IND" length="1" />
+            </property>
+            <property name="reformLoanInd" type="string">
+                <column name="REFORM_LOAN_IND" length="1" />
+            </property>
+            <property name="representModalityInd" type="string">
+                <column name="REPRESENT_MODALITY_IND" length="1" />
+            </property>
+            <property name="industryLevelTwoCd" type="string">
+                <column name="INDUSTRY_LEVEL_TWO_CD" length="20" />
+            </property>
+            <property name="restrictIndustryInd" type="string">
+                <column name="RESTRICT_INDUSTRY_IND" length="1" />
+            </property>
+            <property name="realtyLoanType" type="string">
+                <column name="REALTY_LOAN_TYPE" length="20" />
+            </property>
+            <property name="realtyLoanTypeInd" type="string">
+                <column name="REALTY_LOAN_TYPE_IND" length="1" />
+            </property>
+            <property name="agriForeAnimFishLoanType" type="string">
+                <column name="AGRI_FORE_ANIM_FISH_LOAN_TYPE" length="20" />
+            </property>
+            <property name="govCreditType" type="string">
+                <column name="GOV_CREDIT_TYPE" length="20" />
+            </property>
+            <property name="loanLendSourceType" type="string">
+                <column name="LOAN_LEND_SOURCE_TYPE" length="10" />
+            </property>
+            <property name="affordableHouseType" type="string">
+                <column name="AFFORDABLE_HOUSE_TYPE" length="10" />
+            </property>
+            <property name="exportPresentNum" type="string">
+                <column name="EXPORT_PRESENT_NUM" length="40" />
+            </property>
+            <property name="assureAddAmt" type="big_decimal">
+                <column name="ASSURE_ADD_AMT" precision="22" />
+            </property>
+            <property name="assureEndDate" type="string">
+                <column name="ASSURE_END_DATE" length="10" />
+            </property>
+            <property name="exportCurrencyCd" type="string">
+                <column name="EXPORT_CURRENCY_CD" length="20" />
+            </property>
+            <property name="exportAmt" type="big_decimal">
+                <column name="EXPORT_AMT" precision="22" />
+            </property>
+            <property name="paymentBank" type="string">
+                <column name="PAYMENT_BANK" length="100" />
+            </property>
+            <property name="ourbankBuyAmt" type="big_decimal">
+                <column name="OURBANK_BUY_AMT" precision="22" />
+            </property>
+            <property name="forfaitingType" type="string">
+                <column name="FORFAITING_TYPE" length="20" />
+            </property>
+            <property name="assureAddAmtMod" type="big_decimal">
+                <column name="ASSURE_ADD_AMT_MOD" precision="22" />
+            </property>
+            <property name="adjustInd" type="string">
+                <column name="ADJUST_IND" length="1" />
+            </property>
+            <property name="focusIndustryCd" type="string">
+                <column name="FOCUS_INDUSTRY_CD" length="40" />
+            </property>
+            <property name="freeTradeInd" type="string">
+                <column name="FREE_TRADE_IND" length="1" />
+            </property>
+    </class>
+</hibernate-mapping>

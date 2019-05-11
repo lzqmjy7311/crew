@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+<beans>
+
+	<!-- 日志查询 -->
+	<bean id="logger.OperLoggerQueryOP"
+		class="com.huateng.ebank.business.logger.operation.OperLoggerQueryOP">
+	</bean>
+	<bean id="parammng.TlrInfoOperation"
+		class="com.huateng.ebank.business.parammng.operation.TlrInfoOperation">
+	</bean>
+
+	<bean id="parammng.TlrInfoUpdaterOperation"
+		class="com.huateng.ebank.business.parammng.operation.TlrInfoUpdaterOperation">
+	</bean>
+
+	<!-- 批量步骤 -->
+	<bean id="parammng.bhProcStepOP"
+		class="com.huateng.ebank.business.parammng.operation.BhProcStepOperation">
+	</bean>
+
+	<!-- 批量步骤新增 -->
+	<bean id="parammng.BhProcStepAddOperationNew"
+		class="com.huateng.ebank.business.parammng.operation.BhProcStepAddOperationNew">
+	</bean>
+
+	<!-- 数据字典 -->
+	<bean id="DataDicOperation"
+		class="com.huateng.ebank.business.datadic.operation.DataDicOperation">
+	</bean>
+
+	<bean id="Management.LoginManagerOP"
+		class="com.gbicc.override.MyLoginManagerOP">
+	</bean>
+	<bean id="Management.ChangePwdOP"
+		class="com.huateng.ebank.business.management.operation.ChangePwdOP">
+	</bean>
+	<bean id="Management.PasswordResetOP"
+		class="com.huateng.ebank.business.management.operation.PasswordResetOP">
+	</bean>
+	<bean id="Management.CustRoleMngOperation"
+		class="com.huateng.ebank.business.management.operation.CustRoleMngOperation">
+	</bean>
+
+	<bean id="Management.TlrInfoExOperation"
+		class="com.huateng.ebank.business.management.operation.TlrInfoExOperation">
+	</bean>
+	<bean id="Management.BranchManageUpdateOperation"
+		class="com.huateng.ebank.business.management.operation.BranchManageUpdateOperation">
+	</bean>
+
+	<bean id="Management.TlrInfoOperation"
+		class="com.huateng.ebank.business.management.operation.TlrInfoOperation">
+	</bean>
+
+	<!-- shen_antonio modify by 20081106 -->
+	<bean id="Common.GetSeqnoOperation"
+		class="com.huateng.ebank.business.common.operator.GetSeqnoOperation">
+	</bean>
+
+	<!-- 节假日维护 -->
+	<bean id="Management.HolidayAllQueryOperation"
+		class="com.huateng.ebank.business.management.operation.HolidayAllQueryOperation">
+	</bean>
+	<bean id="Management.HolidayDetailQueryOperation"
+		class="com.huateng.ebank.business.management.operation.HolidayDetailQueryOperation">
+	</bean>
+	<bean id="Management.HolidayDetailUpdateOperation"
+		class="com.huateng.ebank.business.management.operation.HolidayDetailUpdateOperation">
+	</bean>
+	<bean id="Management.SystemParamOperation"
+		class="com.huateng.ebank.business.management.operation.SystemParamOperation">
+	</bean>
+
+	<!-- lilinfeng add 岗位权限设置管理 -->
+
+	<bean id="parammng.roleInfoOP"
+		class="com.huateng.ebank.business.management.operation.RoleInfoOperation">
+	</bean>
+
+	<bean id="Management.PswdValidteOP"
+		class="com.huateng.ebank.business.common.operator.PswdValidteOP">
+	</bean>
+	<bean id="management.OperMngOperation"
+		class="com.huateng.ebank.business.opermng.operation.OperMngOperation">
+	</bean>
+	<bean id="management.RoleMngOperation"
+		class="com.huateng.ebank.business.rolemng.operation.RoleMngOperation">
+	</bean>
+	<bean id="management.BranchMngOperation"
+		class="com.huateng.ebank.business.branchmng.operation.BranchMngOperation">
+	</bean>
+	<bean id="management.RoleMngApplyOperation"
+		class="com.huateng.ebank.business.management.operation.RoleMngApplyOperation">
+	</bean>
+	<!-- add by zhiyang.he 双岗复核改造 2012-09-03 end -->
+
+
+	<bean id="systemmng.FunctionInfoMngOperation"
+		class="com.huateng.ebank.business.management.operation.FunctionInfoMngOperation">
+	</bean>
+
+	<bean
+		id="com.huateng.ebank.business.management.service.FunctionInfoService"
+		class="com.huateng.ebank.business.management.service.FunctionInfoService">
+	</bean>
+
+	<!-- 币种信息维护 -->
+	<bean id="CurrencyManOperation"
+		class="com.huateng.ebank.business.management.operation.CurrencyManOperation">
+	</bean>
+	<!-- 汇率信息维护 -->
+	<bean id="CurrrateMngOperation" class="com.huateng.ebank.business.management.operation.CurrrateMngOperation" />
+	<!-- 国家/地区维护Operation -->
+	<bean id="biNationregionOperation"
+		class="com.huateng.ebank.business.management.operation.BiNationregionOperation">
+	</bean>
+	<bean id="TaskListOperation"
+		class="com.huateng.ebank.business.approve.operation.TaskListOperation">
+	</bean>
+	<bean id="Parameter.SecParameterOperation"
+		class="com.huateng.ebank.business.approve.operation.SecParameterOperation">
+	</bean>
+    <!-- 页面模板管理 -->
+
+	<bean id="FPPageItemOperation"
+		class="com.huateng.ebank.business.pages.operator.FPPageItemOperation">
+	</bean>
+	<bean id="FPPageDetailOperation"
+		class="com.huateng.ebank.business.pages.operator.FPPageDetailOperation">
+	</bean>
+	<bean id="FPPageOptItemOperation"
+		class="com.huateng.ebank.business.pages.operator.FPPageOptItemOperation">
+	</bean>
+	<bean id="FPPageTypeOperation"
+		class="com.huateng.ebank.business.pages.operator.FPPageTypeOperation">
+	</bean>
+	<bean id="FPPageOptDetailOperation"
+		class="com.huateng.ebank.business.pages.operator.FPPageOptDetailOperation">
+	</bean>
+	<bean id="FileUploadSevice"
+		class="com.gbicc.common.filemng.FileUploadSevice">
+	</bean>
+</beans>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	txnlogflag:true记录日志
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="国家/地区代码维护" navigate="基础信息管理    &gt; 国家/地区代码维护" type="call"
+	interface="false" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.huateng.ebank.business.management.getter.BiNationregionEntryDetailGetter">
+	<Include id="BankParam" />
+	<!-- 
+	<PageQryExp type="CSV" limit="true" encoding="GBK" url="/trans/qryExp.do" directory="F:/upload"/>
+	-->
+	<PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="批量下载-国家/地区代码" maxPage="20" perfecth="20" />
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+
+		<Field id="old_id" desc="国家/地区代码" edittype="text" datatype="string" status="F" size="10" xpath="/old_binationregion/id" readonly="true" require="true" />
+		<Field id="id" desc="国家/地区代码" edittype="text" datatype="string" status="F" size="10" xpath="/binationregion/id" readonly="true" require="true" />
+		
+		<Field id="old_chinaName" desc="中文全称"  edittype="text" status="F" datatype="string" size="64" readonly="true" xpath="/old_binationregion/chinaName" />
+		<Field id="chinaName" desc="中文全称"  edittype="text" status="F" datatype="string" size="64" readonly="true" xpath="/binationregion/chinaName" />
+		
+		<Field id="old_nationregionNumber" desc="国家/地区数字代码" edittype="text" status="F" datatype="string" size="10" readonly="true" xpath="/old_binationregion/nationregionNumber" rules="isNum" />
+		<Field id="nationregionNumber" desc="国家/地区数字代码" edittype="text" status="F" datatype="string" size="10" readonly="true" xpath="/binationregion/nationregionNumber" rules="isNum" />
+		
+		<Field id="old_chinaShortName" desc="中文简称"  edittype="text" status="F" datatype="string" size="64" readonly="true" xpath="/old_binationregion/chinaShortName" />
+		<Field id="chinaShortName" desc="中文简称"  edittype="text" status="F" datatype="string" size="64" readonly="true" xpath="/binationregion/chinaShortName" />
+		
+		<Field id="old_engName" desc="英文全称"  edittype="text" status="F" datatype="string" size="64" readonly="true" xpath="/old_binationregion/engName" />
+		<Field id="engName" desc="英文全称"  edittype="text" status="F" datatype="string" size="64" readonly="true" xpath="/binationregion/engName" />
+		
+		<Field id="old_engShortName" desc="英文简称"  edittype="text" status="F" datatype="string" size="64" readonly="true" xpath="/old_binationregion/engShortName" />
+		<Field id="engShortName" desc="英文简称"  edittype="text" status="F" datatype="string" size="64" readonly="true" xpath="/binationregion/engShortName" />
+		
+		
+		
+    </Fields>
+<Operations>
+   <Button id="btClose" name="btClose" desc="返回" operation="syncsubmit"
+			url="#" txn="" />    
+    </Operations>
+	
+</CommQry>

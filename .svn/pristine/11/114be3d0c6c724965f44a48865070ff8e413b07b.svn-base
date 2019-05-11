@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.company.view.accountpage.getter.ZtxMmfxyGetter">
+	<Include id="BankParam" />
+	<PageQryExp type= "XLS" limit="true" encoding="UTF-8" url="/trans/qryExp.do" desc="流水清单" title="流水清单 .xls" perfetch="10" maxpage="3" directory="F:/upload"/>
+	<Fields>
+		<Field id="fxyid" desc="业务流水号" status="F" xpath="/fxyid"/>
+		<Field id="jyfx" desc="借/贷" status="F" xpath="/jyfx"/>
+		<Field id="bussdate" desc="交易起始时间" edittype="date" datatype="string" placeholder="yyyy-MM-dd" status="F" xpath="/bussdate"/>    
+		<Field id="sfje" desc="金额" status="F" xpath="/sfje"/>
+		<Field id="CustomerNum" desc="客户编号" xpath="/CustomerNum" status="F" />
+		<Field id="dsfZjzh" desc="交易对手账号" status="F" xpath="/dsfZjzh"/>
+		<Field id="dsfHm" desc="对方行名" status="F" xpath="/dsfHm"/>
+		<Field id="bz" desc="备注" status="F" xpath="/bz"/>
+		<Field id="endbussdate" desc="交易结束时间"  edittype="date" datatype="string" placeholder="yyyy-MM-dd" status="F" xpath="/endbussdate"/>
+		<Field id="bussdate1" desc="交易起始时间"  edittype="date" datatype="string" placeholder="yyyy-MM-dd" status="F" xpath="/bussdate1"/>
+		<Field id="BankAccount" desc="银行账号"  status="F" xpath="/bankAccount" readonly="true"/>
+		<Field id="accountType" desc="账户类型"  status="F" xpath="/accountType" readonly="true"/>
+	</Fields>
+	<Where>
+		 
+		<DateTextBox id="bussdate" desc="交易起始日期"  status="F" datatype="string" placeholder="yyyy-MM-dd" index="1"/>\
+        <DateTextBox id="endbussdate" desc="交易结束日期"  satas="F" datatype="string"  placeholder="yyyy-MM-dd" />\
+    
+	</Where>	
+	<Operations>
+		<Button id="btQuery" name="btQuery" desc="查询"   url="#" txn="" />
+		<Button id="btCancel" name="btCancel" desc="重置"   url="#" txn="" />
+	</Operations>
+</CommQry>

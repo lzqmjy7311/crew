@@ -1,0 +1,236 @@
+package com.gbicc.warn.getter;
+
+import java.util.Iterator;
+import java.util.List;
+
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.util.StringUtils;
+
+import com.gbicc.person.monitor.service.TPlTaskService;
+import com.gbicc.person.riskrulelist.entity.RiskruleList;
+import com.gbicc.task.entity.TTask;
+import com.gbicc.warn.entity.TWarning;
+import com.huateng.common.err.Module;
+import com.huateng.common.err.Rescode;
+import com.huateng.commquery.result.Result;
+import com.huateng.commquery.result.ResultMng;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.business.common.PageQueryResult;
+import com.huateng.ebank.business.common.service.BctlService;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.framework.util.ApplicationContextUtils;
+import com.huateng.ebank.framework.web.commQuery.BaseGetter;
+import com.huateng.exception.AppException;
+
+/**
+ * 
+ * @author xudongdong
+ *
+ * 版本：2015年10月30日 下午1:41:33
+ * 类说明：任务查询类
+ */
+@SuppressWarnings("unchecked")
+public class TWarningEntryGetter extends BaseGetter {
+	@Override
+	public Result call() throws AppException {
+		try {
+			PageQueryResult pageResult = getData();
+			ResultMng.fillResultByList(getCommonQueryBean(),
+					getCommQueryServletRequest(), pageResult.getQueryResult(),
+					getResult());
+			result.setContent(pageResult.getQueryResult());
+			result.getPage().setTotalPage(
+					pageResult.getPageCount(getResult().getPage()
+							.getEveryPage()));
+			result.init();
+			return result;
+		} catch (AppException appEx) {
+			throw appEx;
+		} catch (Exception ex) {
+			throw new AppException(Module.SYSTEM_MODULE,
+					Rescode.DEFAULT_RESCODE, ex.getMessage(), ex);
+		}
+	}
+	
+	
+	protected PageQueryResult getData() throws Exception {
+		
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		GlobalInfo info=GlobalInfo.getCurrentInstance();
+		String userId=info.getTlrno();
+		String brcode= info.getBrcode();
+		StringBuffer hq2 = new StringBuffer("select  ROLE_ID from TLR_ROLE_REL  t where 1=1 ");
+		StringBuffer hql = new StringBuffer("SELECT                                                                 "
+				+"     CUST.CUSTNAME        AS custName,                                 "
+				+"     CUST.CUSTID          AS custCode,                                 "
+				+"     ACC.LOANACNO      AS loanAccount,                                 "
+				+"	CASE                                                                 "
+				+"		WHEN C.COUN>1                                                      "
+				+"		THEN 0                                                             "
+				+"		ELSE 1                                                             "
+				+"	END AS isNewCustomer,                                                "
+				+"            R.FD_RULE_ID ruleId,                                       "
+				+"            R.FD_RULE_CODE ruleCode,                                   "
+				+"            R.FD_RULE_NAME ,                                           "
+				+"            R.FD_RULE_DESC ruleDesc,                                   "
+				+"            RA.FD_RANK_FINAL ruleLevel,                                "
+				+"            R.FD_TRIG_DATE createDate,                                 "
+				+"            R.FD_TRIG_DATE staChangeDate,                              "
+				+"            ACC.PRODNAME      AS productCode,                          "
+				+"            ACC.TCAPI         AS loanAmount,                           "
+				+"            ACC.BAL           AS loanBalance ,                         "
+				+"            ACC.OPERNAME  AS operator,                                 "
+				+"            ACC.BANKNAME AS operBank  ,ACC.TTERM     AS loanPeriod                                 "
+				+"	                                                                     "
+				+"FROM	                                                                 "
+				+"			T_PL_TASK_RULE_TRIG R,T_PL_TASK_RISK_RANK RA,                    "
+				+"	(	SELECT                                                             "
+				+"			T1.FD_ACC_ID FD_ACC_ID,                                          "
+				+"			COUNT(T1.FD_ACC_ID) COUN                                         "
+				+"		FROM                                                               "
+				+"			T_PL_TASK_RULE_TRIG T1                                           "
+				+"		GROUP BY                                                           "
+				+"			FD_ACC_ID )C ,T_EDW_PLS_ACCOUNT ACC,T_EDW_PLS_CUST CUST          "
+				+"WHERE                                                                  "
+				+"    RA.FD_ACC_ID=R.FD_ACC_ID(+) AND                                    "
+				+"    ACC.LOANACNO(+)=RA.FD_ACC_ID AND                                   "
+				+"	RA.FD_ACC_ID=C.FD_ACC_ID(+) AND                                      "
+				+"    ACC.CUSTID=CUST.CUSTID (+)                                      ");
+		hq2.append(" and t.TLRNO = '"+userId+"'");
+		Integer roleId=0;
+		String operator=null;
+		String bankName=null;
+		Iterator it =rootdao.queryBySQL(hq2.toString());
+		
+		//获得岗位代码
+		boolean flag=false;
+		while(it.hasNext()){
+			roleId=(Integer)it.next();
+			if(roleId==222){
+				operator=userId;
+				if(StringUtils.hasText(operator)){
+					hql.append(" and ACC.DUTYID  = '"+operator+"'");
+					flag=true;
+				}
+			}else if(roleId==557||roleId==558||roleId==111)
+			{
+				bankName = (String) getCommQueryServletRequest().getParameterMap().get("bankName");
+				flag=true;
+			}
+		}
+		if(flag==false){
+				BctlService bctlService = BctlService.getInstance();
+				String brcodes=bctlService.getAllSubListStr(brcode);
+				hql = new StringBuffer("SELECT                                                   "
+						+"     CUST.CUSTNAME        AS custName,                                 "
+						+"     CUST.CUSTID          AS custCode,                                 "
+						+"     ACC.LOANACNO      AS loanAccount,                                 "
+						+"	CASE                                                                 "
+						+"		WHEN C.COUN>1                                                      "
+						+"		THEN 0                                                             "
+						+"		ELSE 1                                                             "
+						+"	END AS isNewCustomer,                                                "
+						+"            R.FD_RULE_ID ruleId,                                       "
+						+"            R.FD_RULE_CODE ruleCode,                                   "
+						+"            R.FD_RULE_NAME ,                                           "
+						+"            R.FD_RULE_DESC ruleDesc,                                   "
+						+"            RA.FD_RANK_FINAL ruleLevel,                                "
+						+"            R.FD_TRIG_DATE createDate,                                 "
+						+"            R.FD_TRIG_DATE staChangeDate,                              "
+						+"            ACC.PRODNAME      AS productCode,                          "
+						+"            ACC.TCAPI         AS loanAmount,                           "
+						+"            ACC.BAL           AS loanBalance ,                         "
+						+"            ACC.OPERNAME  AS operator,                                 "
+						+"            ACC.BANKNAME AS operBank  ,ACC.TTERM     AS loanPeriod                                  "
+						+"	                                                                     "
+						+"FROM	                                                                 "
+						+"			T_PL_TASK_RULE_TRIG R,T_PL_TASK_RISK_RANK RA,                    "
+						+"	(	SELECT                                                             "
+						+"			T1.FD_ACC_ID FD_ACC_ID,                                          "
+						+"			COUNT(T1.FD_ACC_ID) COUN                                         "
+						+"		FROM                                                               "
+						+"			T_PL_TASK_RULE_TRIG T1                                           "
+						+"		GROUP BY                                                           "
+						+"			FD_ACC_ID )C ,T_EDW_PLS_ACCOUNT ACC,T_EDW_PLS_CUST CUST          "
+						+"WHERE                                                                  "
+						+"    RA.FD_ACC_ID=R.FD_ACC_ID(+) AND                                    "
+						+"    ACC.LOANACNO(+)=RA.FD_ACC_ID AND                                   "
+						+"	RA.FD_ACC_ID=C.FD_ACC_ID(+) AND                                      "
+						+"    ACC.CUSTID=CUST.CUSTID (+)  AND                                    "
+						+"    ACC.DUTYID IN                                                      ");
+				TPlTaskService tts=TPlTaskService.getInstance();
+				String userIds=tts.getUserIdsByBrcodes(brcodes)	;
+				hql.append("("+userIds+")");
+		}		
+		String id = (String) getCommQueryServletRequest().getParameterMap().get("id");
+		String customerId = (String) getCommQueryServletRequest().getParameterMap().get("customerId");
+		String ruleLevel = (String) getCommQueryServletRequest().getParameterMap().get("ruleLevel");
+		String createDate = (String) getCommQueryServletRequest().getParameterMap().get("createDate");
+		String custName = (String) getCommQueryServletRequest().getParameterMap().get("custName");
+		String operator1 = (String) getCommQueryServletRequest().getParameterMap().get("operator");
+		String loanAccount = (String) getCommQueryServletRequest().getParameterMap().get("loanAccount");
+		String productCode = (String) getCommQueryServletRequest().getParameterMap().get("productCode");
+		String operBank = (String) getCommQueryServletRequest().getParameterMap().get("operBank");
+		
+		//分页大小
+		int pageSize = getResult().getPage().getEveryPage();
+		//页码
+		int pageIndex = getResult().getPage().getCurrentPage();
+				
+		
+
+		if(StringUtils.hasText(id)){
+			hql.append(" and ACC.LOAN_ACCOUNT = '"+id+"'");
+		}
+		if(StringUtils.hasText(customerId)){
+			hql.append(" and CUST.CUSTID = '"+customerId+"'");
+		}
+		if(StringUtils.hasText(ruleLevel)){
+			hql.append(" and RA.FD_RANK_FINAL ='"+ruleLevel+"'");
+		}
+		if(StringUtils.hasText(createDate)){
+			hql.append(" and R.FD_TRIG_DATE = '"+createDate+"'");
+		}
+		if(StringUtils.hasText(custName)){
+			hql.append(" and CUST.CUSTNAME = '"+custName+"'");
+		}
+		if(StringUtils.hasText(operator1)){
+			hql.append(" and ACC.OPERNAME='"+operator1+"'");
+		}
+		if(StringUtils.hasText(loanAccount)){
+			hql.append(" and ACC.LOANACNO ='"+loanAccount+"'");
+		}
+		if(StringUtils.hasText(productCode)){
+			hql.append(" and  ACC.PRODNAME ='"+productCode+"'");
+		}
+		if(StringUtils.hasText(operBank)){
+			hql.append(" and ACC.BANKNAME like '"+operBank+"'");
+		}
+
+
+		
+
+		hql.append(" order by R.FD_PROCESS_DATE");
+		
+		StringBuffer sqlp=new StringBuffer("select t0.* from ( ");
+		sqlp.append("select t.*,row_number() over() as rnum from ( ");
+		sqlp.append(hql);
+		sqlp.append(") t ) t0 where t0.rnum>"+(pageIndex-1)*pageSize+" ");
+		sqlp.append("fetch first "+pageSize+" rows only ");
+		StringBuffer sqll=new StringBuffer("select count(1) from ( ");
+		sqll.append(hql);
+		sqll.append(" )");
+		Integer totalCount=(Integer)rootdao.querySqlOne(sqll.toString());
+		 JdbcTemplate jdbcTemplate=(JdbcTemplate) ApplicationContextUtils.getBean("JdbcTemplate");
+		 List<TWarning> listT=jdbcTemplate.query(sqlp.toString(), BeanPropertyRowMapper.newInstance(TWarning.class));
+		PageQueryResult pageQueryResult = new PageQueryResult();
+		pageQueryResult.setQueryResult(listT);
+		pageQueryResult.setTotalCount(totalCount);
+        
+
+		return pageQueryResult;
+	}
+
+}

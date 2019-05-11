@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="" navigate="主页 &gt; 机构管理 &gt; 机构管理" type="call"
+	interface="false" pagesize="10" async="false" databusid="FIVE"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.management.getter.BranchManageQueryGetter">
+	<Include id="BankParam" />
+	<InterfaceViewParam>
+		/fpages/management/ftl/BranchMge.ftl
+	</InterfaceViewParam>
+	<ResultViewParam>
+		/fpages/management/ftl/BranchMge.ftl
+	</ResultViewParam>
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+
+		<Field id="brcode" desc="机构号" status="F" primary="false"
+			method="None" readonly="true" type="String" size="20" default=""
+			xpath="/brcode" require="false" tip="机构号" />
+
+		<Field id="brno" desc="机构代码" status="F" primary="false"
+			edittype="" method="None" type="String" size="12" require="true"
+			readonly="false" default="false" xpath="/brno" tip="机构代码" rules="isBrNo"/>
+
+		<Field id="brname" desc="机构名称" status="F" primary="false"
+			method="None" readonly="false" type="String" size="40" default=""
+			xpath="/brname" require="true" tip="机构名称" />
+
+		<Field id="brclass" desc="机构级别" status="F" edittype="select" require="true"
+			method="None" primary="false" type="String" default="false"
+			xpath="/brclass" tip="机构级别" translated="DATA_DIC.401" />
+
+		<Field id="postno" desc="邮政编码" status="F" method="None" rule="isNum"
+			primary="false" type="String" require="true" default="false" size="6"
+			xpath="/postno" tip="邮政编码" />
+
+		<Field id="teleno" desc="联系电话" status="F" method="None" size="14"
+			primary="false" type="String" require="true" default="false"
+			xpath="/teleno" tip="联系电话" />
+
+		<Field id="address" desc="机构地址" status="F" method="None"
+			primary="false" type="String" require="true" size="100"
+			default="false" xpath="/address" tip="机构地址" />
+			
+			
+				<!-- 根据对比需求增加的字段 -->
+			
+			<Field id="st" desc="记录状态" status="F" require="false" edittype="select"
+			datatype="string" method="None" readonly="true" primary="true" type="st"
+			translated="DATA_DIC.3001" size="30" default="" xpath="/st" tip="" />
+		<Field id="lock" desc="是否锁定" edittype="text" datatype="string" status="F" size="1" xpath="/lock"/>
+		<Field id="del" desc="是否已删除" edittype="text" datatype="string" status="F" size="1" xpath="/del"/>
+
+		<!-- 根据成商需求增加的要显示的字段 -->
+
+<!-- translated="CQ:HeadBranch" -->
+<!--
+		<Field id="blnBranchBrcode" desc="归属分行" status="F"
+			primary="false" method="None" readonly="false" type="String"
+			size="20" edittype="select"  translated="CQ:AllBranchSelect"
+			fieldmap="blnBranchBrcode=brcode;blnBranchBrcodeName=brcodeTypeName"
+			viewField="brcodeTypeName" default="" xpath="/blnBranchBrcode"
+			require="false" tip="归属分行" />
+ -->
+		<Field id="blnBranchBrcode" desc="归属分行" status="F"
+			primary="false" method="None" readonly="false" type="String"
+			size="20" edittype="text" default="" xpath="/blnBranchBrcode"
+			require="false" tip="归属分行" />
+<!-- translated="CQ:CenterBrcodeSelect" -->
+
+		<Field id="blnUpBrcode" desc="上级机构" status="F" primary="false"
+			method="None" readonly="false" type="String" size="20" default=""
+			edittype="select" translated="CQ:AllBranchSelect"
+			fieldmap="blnUpBrcode=brcode;blnUpBrcodeName=brcodeTypeName"
+			viewField="brcodeTypeName" xpath="/blnUpBrcode" require="true"
+			tip="上级机构" />
+
+		<Field id="blnUpBrcodeName" desc="上级机构" status="F"
+			method="com.huateng.ebank.business.common.CQMethod.getBrhNameByBrno"
+			width="" readonly="" primary="true" type="String" size="150"
+			xpath="/blnUpBrcode" default=""/>
+
+<!-- translated="CQ:CenterBrcodeSelect2" -->
+		<Field id="blnManageBrcode" desc="账务机构" status="F"
+			primary="false" method="None" readonly="false" type="String"
+			size="20" edittype="select" translated="CQ:AllBranchSelect"
+			fieldmap="blnManageBrcode=brcode;blnManageBrcodeName=brcodeTypeName"
+			viewField="brcodeTypeName" default="" xpath="/blnManageBrcode"
+			require="false" tip="账务机构" />
+
+		<Field id="blnManageBrcodeName" desc="账务机构" status="F"
+			method="com.huateng.ebank.business.common.CQMethod.getBrhNameByBrno"
+			width="" readonly="" primary="true" type="String" size="150"
+			xpath="/blnManageBrcode" default=""/>
+
+<!-- translated="CQ:PlCenterBrcodeSelect" -->
+		<Field id="txnBrcode" desc="归属分行个贷中心" status="F" primary="false"
+			method="None" type="String" size="20" require="" edittype="select"
+			translated="CQ:AllBranchSelect"
+			fieldmap="txnBrcode=brcode;txnBrcodeName=brcodeTypeName"
+			viewField="brcodeTypeName" default="" xpath="/txnBrcode"
+			tip="归属分行个贷中心" />
+
+		<Field id="brattr" desc="机构属性" status="F" primary="false"
+			edittype="select" translated="DATA_DIC.455" method="None"
+			type="String" size="20" require="" default="" xpath="/brattr"
+			tip="机构属性" />
+
+		<Field id="otherAreaFlag" desc="异地行标志" status="F" method="None"
+			edittype="select" translated="DATA_DIC.457" primary="false"
+			type="String" default="" xpath="/otherAreaFlag" tip="异地行标志" />
+
+		<Field id="miscflgs" desc="" status="F" method="None"
+			primary="false" type="String" default="false" xpath="/miscflgs"
+			tip="" />
+
+		<Field id="status" desc="有效标志" status="F" edittype="select"
+			method="None" primary="false" type="String" default=""
+			xpath="/status" tip="有效标志" translated="LIST:1,1-有效;0,0-无效" />
+
+		<Field id="timestamps" desc="" status="F" method="None"
+			primary="false" type="String" default="" xpath="/timestamps"
+			tip="" />
+
+		<!-- add by zhaozhiguo 2012/2/16 begin -->
+		<Field id="opr" desc="操作" status="N" method="None" xpath=""
+			primary="true" type="" size="20" default="" tip="操作" require=""/>
+		<!-- add by zhaozhiguo 2012/2/16 end -->
+	</Fields>
+	<Where>
+		<!-- add by zhaozhiguo 2012/2/16 FPP-9 用户,岗位及机构的管理页面优化调整 begin -->
+		<TextBox id="brhNo" tablename="bo" fieldname="brhNo"
+			type="" dataType="" operation="EQ" size="20" desc="机构代码"
+			tip="机构代码" method="genLikeP" index="1" function=""
+						default="" scale="" require="" readOnly="" rules="" errmsg="" />
+		<TextBox id="brhName" tablename="bo" fieldname="brhName"
+			type="" dataType="" operation="EQ" size="20" desc="机构名称"
+			tip="机构名称" method="genLikeP" index="1" function=""
+						default="" scale="" require="" readOnly="" rules="" errmsg="" />
+						
+		<Option id="st"  default="" desc="记录状态" type="st" tip="" method="None" index="2" translated="DATA_DIC.3001"/>
+		<!-- add by zhaozhiguo 2012/2/16 FPP-9 用户,岗位及机构的管理页面优化调整 end -->
+	</Where>
+	<Operations>
+	
+	    <Button id="btAdd" name="btAdd" desc="新增" 
+			operation="addrecord" url="#" show="" group="" txn=""  icon="icon-add"/>
+		
+		<Button id="btnDel" name="btnDel" desc="删除"
+			operation="delrecord" url="" show="" group="" txn="" />
+		<Button id="btSave" name="btSave" desc="保存"
+			operation="asysubmit"
+			updateClass="com.huateng.ebank.business.management.updater.BranchManageUpdate"
+			url="/fpages/management/ftl/BranchMge.ftl" txn="" />
+
+	 	<!-- add by zhaozhiguo 2012/2/15 FPP-9 用户,岗位及机构的管理页面优化调整 begin -->
+		<Button id="btStatus" name="btStatus" desc="有效/无效" operation="asysubmit"
+			updateClass="com.huateng.ebank.business.branchmng.update.BranchStatusChgUpdate"
+			url="#" txn="" icon="icon-set"/>
+		<!-- add by zhaozhiguo 2012/2/15 FPP-9 用户,岗位及机构的管理页面优化调整 end -->
+		<Button id="btnShowDetail" name="btnShowDetail" desc="编辑"
+			icon="icon-edit" operation="" url="" show="" group="" txn="" />
+	</Operations>
+</CommQry>

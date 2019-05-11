@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.huateng.ebank.entity.data.mng">
+	<class
+		name="TlrLoginLog"
+		table="TLR_LOGIN_LOG"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="id"
+			type="string"
+			column="LOG_ID"
+		>
+		</id>
+
+		<property
+			name="tlrNo"
+			column="TLR_NO"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="brNo"
+			column="BR_NO"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="loginSucTm"
+			column="LOGIN_SUC_TM"
+			type="string"
+			not-null="false"
+			length="14"
+		/>
+		<property
+			name="loginOutTm"
+			column="LOGIN_OUT_TM"
+			type="string"
+			not-null="false"
+			length="14"
+		/>
+		<property
+			name="loginFailTm"
+			column="LOGIN_FAIL_TM"
+			type="string"
+			not-null="false"
+			length="14"
+		/>
+		<property
+			name="loginAddr"
+			column="LOGIN_ADDR"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="loginRemark"
+			column="LOGIN_REMARK"
+			type="string"
+			not-null="false"
+			length="256"
+		/>
+		<property
+			name="sessionId"
+			column="SESSION_ID"
+			type="string"
+			not-null="false"
+			length="256"
+		/>
+		<property
+			name="crtTm"
+			column="CRT_TM"
+			type="string"
+			not-null="false"
+			length="14"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

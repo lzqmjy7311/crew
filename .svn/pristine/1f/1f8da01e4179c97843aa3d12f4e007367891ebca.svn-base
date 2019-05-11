@@ -1,0 +1,122 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+<@CommonQueryMacro.page title="信贷资产监测指标展示">
+<style>
+div.form1{
+	width:90%;
+	height:250px;
+	text-align:center;
+	border:1px solid #0099CC;
+	float:left;
+	margin:5px 2px 2px 2px;
+	margin-left: 40px;
+	}
+div.form2{
+	width:45%;
+	height:250px;
+	text-align:center;
+	border:1px solid #0099CC;
+	float:left;
+	margin:5px 2px 2px 2px;
+	margin-left: 40px;
+	}
+</style>
+
+<table align="left" style="width: 100%"><tr><td>
+<@CommonQueryMacro.DynamicTabSet id="demotab" hasMenu="true" height="600" fit="true" selected="t1">
+			    <@CommonQueryMacro.DynamicTab id="t1" title="全行" url=""> 
+			    	<table>
+			    	<tr><td>
+      				<div id="report1" class="form1">无数据</div>
+			    	</td></tr>
+      				<tr><td>
+      				<@CommonQueryMacro.CommonQuery id="TCwCreditAssetsMonitor3" init="false" submitMode="current">
+						<@CommonQueryMacro.DataTable id="datatable1" paginationbar="" maxRow="3" fieldStr="INDEX_CODE,INDEX_NAME,ORG_CODE,COLO,MONITOR_FRE,GATHER_TYPE,PRODUCT_CODE,INDUSTRY_CODE,NOW_VAL,TOP_VAL,YC_VAL,BSQ,BYC,THRESHOLD1,THRESHOLD2"  width="100%" hasFrame="true"/>
+					</@CommonQueryMacro.CommonQuery>
+					</td></tr>
+					</table>
+			    </@CommonQueryMacro.DynamicTab>
+			    <@CommonQueryMacro.DynamicTab id="t2" title="上海地区" url="">
+			        <table>
+			        <tr><td>
+			        <div id="report2" class="form1">无数据</div> 
+			        </td></tr>
+			    	<tr><td>
+			    	<@CommonQueryMacro.CommonQuery id="TCwCreditAssetsMonitor4" init="false" submitMode="current">
+						<@CommonQueryMacro.DataTable id="datatable2" paginationbar="" maxRow="3" fieldStr="INDEX_CODE,INDEX_NAME,ORG_CODE,COLO,MONITOR_FRE,GATHER_TYPE,PRODUCT_CODE,INDUSTRY_CODE,NOW_VAL,TOP_VAL,YC_VAL,BSQ,BYC,THRESHOLD1,THRESHOLD2"  width="100%" hasFrame="true"/>
+					</@CommonQueryMacro.CommonQuery>
+					</td></tr>
+					</table>
+			    </@CommonQueryMacro.DynamicTab>
+	</@CommonQueryMacro.DynamicTabSet>
+</td></tr>
+</table>
+<script type="text/javascript" src="${contextPath}/gbicc-pages/jquery-form.js"></script>
+<script src="${contextPath}/templets/ui/js/chart/highcharts.js"></script>
+<script src="${contextPath}/templets/ui/js/chart/highcharts-more.js"></script>
+
+<script language="JavaScript">
+function creditRepotType1(id,dname,xlist,valList,defaultSeriesType){
+	$(id).highcharts({  
+        chart:{  
+             defaultSeriesType: defaultSeriesType,//图表的显示类型（line,spline,scatter,splinearea bar,pie,area,column）  
+             marginRight: 125,//上下左右空隙  
+             marginBottom: 25 //上下左右空隙  
+        },  
+        title:{  
+            text: dname,//主表题  
+                x: -20 //center  
+        },  
+        credits:{text:"www.gbicc.net"},
+        xAxis: {   //横坐表  
+        	//             categories: dataJson.listXdata 动态解析
+        	categories:xlist
+        },  
+           yAxis: {  
+           title: {  
+             text: '数值' //纵坐表  
+               },  
+               plotLines: [{  //表线属性  
+            value: -100,  
+             width: 1,  
+             color: 'yellow'  
+                }]  
+              },  
+             tooltip: { //数据点的提示框  
+ 				valueSuffix:''
+        },  
+        legend: {  
+              layout: 'vertical',  
+              align: 'right',  
+              verticalAlign: 'middle',   
+              borderWidth: 0  
+             },   
+         series:valList//动态解析
+  			
+         });
+}
+
+function initCallGetter_post(){
+	
+	TCwCreditAssetsMonitor3_dataset.setParameter("GATHER_TYPE","5");
+	TCwCreditAssetsMonitor3_dataset.flushData(TCwCreditAssetsMonitor3_dataset.pageIndex);
+	TCwCreditAssetsMonitor4_dataset.setParameter("GATHER_TYPE","6");
+	TCwCreditAssetsMonitor4_dataset.flushData(TCwCreditAssetsMonitor4_dataset.pageIndex);
+	
+	////ORG_CODE, PRODUCT_CODE, INDEX_CODE, INDUSTRY_CODE, GATHER_TYPE,String THRESHOLD_TYPE,
+	
+	AComninationWarnDAjax.warnValDDZXT("5",function(y){
+		if(y.success=="true"){
+			creditRepotType1('div#report1',"一般行业集中度",y.jsonData1.listXdata,y.jsonData1.data,'line');
+		}
+	});
+	AComninationWarnDAjax.warnValDDZXT("6",function(y){
+		if(y.success=="true"){
+			creditRepotType1('div#report2',"一般行业集中度",y.jsonData1.listXdata,y.jsonData1.data,'line');
+		}
+	});
+	
+}
+</script>
+<script type='text/javascript' src='${contextPath}/dwr/interface/AComninationWarnDAjax.js'> </script>
+</@CommonQueryMacro.page>

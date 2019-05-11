@@ -1,0 +1,555 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC_CN"/>
+<title>CPU资源监控</title>
+<link rel="stylesheet" type="text/css" href="../../../templets/ui/themes/blue/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../../templets/ui/themes/icon.css">
+<script type="text/javascript" src="../../../templets/ui/js/jquery-1.8.2.js"></script>
+<script type="text/javascript" src="../../../templets/ui/js/basic.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../templets/ui/js/chart/highcharts.js"></script>
+<script type="text/javascript" src="../../../templets/ui/js/chart/highcharts-more.js"></script>
+<script type="text/javascript" src="../../../templets/ui/js/uicore-min.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../templets/ui/js/uirender-min.js" charset="utf-8"></script>
+<script type="text/javascript" src='../../../dwr/engine.js'> </script>
+<script type="text/javascript" src='../../../dwr/util.js'> </script>  
+<script type='text/javascript' src='../../../dwr/interface/SysMonitor.js'> </script>	
+<style type="text/css">  
+body,html {  
+    margin: 0;  
+    padding: 0;  
+    width: 100%;  
+    font-size: 14px;  
+    font-family: arial;  
+} 
+#charts{
+     position: relative;
+} 
+#grid {
+    padding: 5px;  
+    width: 80%;  
+    margin: 8px auto 0;
+    position: relative;
+}
+#cpuuser {  
+    padding: 5px; 
+    float:left; 
+    width: 45%;  
+	font-size: 12px;
+	font-family: "Microsoft YaHei";
+}  
+#cpufree {  
+    padding: 5px;  
+    float:right;
+    width: 45%;  
+	font-size: 12px;
+	font-family: "Microsoft YaHei";
+} 
+</style>  
+<script>
+$(function () {
+    $('#cpuuser').highcharts({
+	
+	    chart: {
+	        type: 'gauge',
+	        plotBackgroundColor: null,
+	        plotBackgroundImage: null,
+	        plotBorderWidth: 0,
+	        plotShadow: false
+	    },
+	    
+	    title: {
+	        text: 'CPU使用率'
+	    },
+	    
+	    pane: {
+	        startAngle: -150,
+	        endAngle: 150,
+	        background: [{
+	            backgroundColor: {
+	                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+	                stops: [
+	                    [0, '#FFF'],
+	                    [1, '#333']
+	                ]
+	            },
+	            borderWidth: 0,
+	            outerRadius: '109%'
+	        }, {
+	            backgroundColor: {
+	                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+	                stops: [
+	                    [0, '#333'],
+	                    [1, '#FFF']
+	                ]
+	            },
+	            borderWidth: 1,
+	            outerRadius: '107%'
+	        }, {
+	            // default background
+	        }, {
+	            backgroundColor: '#DDD',
+	            borderWidth: 0,
+	            outerRadius: '105%',
+	            innerRadius: '103%'
+	        }]
+	    },
+	       
+	    // the value axis
+	    yAxis: {
+	        min: 0,
+	        max: 100,
+	        
+	        minorTickInterval: 'auto',
+	        minorTickWidth: 1,
+	        minorTickLength: 10,
+	        minorTickPosition: 'inside',
+	        minorTickColor: '#666',
+	
+	        tickPixelInterval: 30,
+	        tickWidth: 2,
+	        tickPosition: 'inside',
+	        tickLength: 10,
+	        tickColor: '#666',
+	        labels: {
+	            step: 2,
+	            rotation: 'auto'
+	        },
+	        title: {
+	            text: ''
+	        },
+	        plotBands: [{
+	            from: 0,
+	            to: 50,
+	            color: '#55BF3B' // green
+	        }, {
+	            from: 50,
+	            to: 80,
+	            color: '#DDDF0D' // yellow
+	        }, {
+	            from: 80,
+	            to: 100,
+	            color: '#DF5353' // red
+	        }]        
+	    },
+	
+	    series: [{
+	        name: 'Speed',
+	        data: [0],
+	        tooltip: {
+	            valueSuffix: ' km/h'
+	        }
+	    }]
+	
+	}, 
+	// Add some life
+	function (chart) {
+		if (!chart.renderer.forExport) {
+		    setInterval(function () {
+		        SysMonitor.getCpuUser(function(list){ 
+		        	if(list!=null){
+		        		var point = chart.series[0].points[0];
+                       point.update(list[0]);
+		        	}
+                 }); 
+		    }, 5000);
+		}
+	});
+});
+
+$(function () {
+    $('#cpufree').highcharts({
+	
+	    chart: {
+	        type: 'gauge',
+	        plotBackgroundColor: null,
+	        plotBackgroundImage: null,
+	        plotBorderWidth: 0,
+	        plotShadow: false
+	    },
+	    
+	    title: {
+	        text: 'CPU空闲率'
+	    },
+	    
+	    pane: {
+	        startAngle: -150,
+	        endAngle: 150,
+	        background: [{
+	            backgroundColor: {
+	                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+	                stops: [
+	                    [0, '#FFF'],
+	                    [1, '#333']
+	                ]
+	            },
+	            borderWidth: 0,
+	            outerRadius: '109%'
+	        }, {
+	            backgroundColor: {
+	                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+	                stops: [
+	                    [0, '#333'],
+	                    [1, '#FFF']
+	                ]
+	            },
+	            borderWidth: 1,
+	            outerRadius: '107%'
+	        }, {
+	            // default background
+	        }, {
+	            backgroundColor: '#DDD',
+	            borderWidth: 0,
+	            outerRadius: '105%',
+	            innerRadius: '103%'
+	        }]
+	    },
+	       
+	    // the value axis
+	    yAxis: {
+	        min: 0,
+	        max: 100,
+	        
+	        minorTickInterval: 'auto',
+	        minorTickWidth: 1,
+	        minorTickLength: 10,
+	        minorTickPosition: 'inside',
+	        minorTickColor: '#666',
+	
+	        tickPixelInterval: 30,
+	        tickWidth: 2,
+	        tickPosition: 'inside',
+	        tickLength: 10,
+	        tickColor: '#666',
+	        labels: {
+	            step: 2,
+	            rotation: 'auto'
+	        },
+	        title: {
+	            text: ''
+	        },
+	        plotBands: [{
+	            from: 0,
+	            to: 50,
+	            color: '#55BF3B' // green
+	        }, {
+	            from: 50,
+	            to: 80,
+	            color: '#DDDF0D' // yellow
+	        }, {
+	            from: 80,
+	            to: 100,
+	            color: '#DF5353' // red
+	        }]        
+	    },
+	
+	    series: [{
+	        name: 'Speed',
+	        data: [0],
+	        tooltip: {
+	            valueSuffix: ' km/h'
+	        }
+	    }]
+	
+	}, 
+	// Add some life
+	function (chart) {
+		if (!chart.renderer.forExport) {
+		    setInterval(function () {
+		        SysMonitor.getCpuUser(function(list){
+		        	if(list!=null){
+		        		var point = chart.series[0].points[0];
+                       point.update(list[3]);
+		        	}
+                 }); 
+		    }, 5000);
+		}
+	});
+});
+
+$(function () {
+    $('#cpusys').highcharts({
+	
+	    chart: {
+	        type: 'gauge',
+	        plotBackgroundColor: null,
+	        plotBackgroundImage: null,
+	        plotBorderWidth: 0,
+	        plotShadow: false
+	    },
+	    
+	    title: {
+	        text: 'CPU系统使用率'
+	    },
+	    
+	    pane: {
+	        startAngle: -150,
+	        endAngle: 150,
+	        background: [{
+	            backgroundColor: {
+	                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+	                stops: [
+	                    [0, '#FFF'],
+	                    [1, '#333']
+	                ]
+	            },
+	            borderWidth: 0,
+	            outerRadius: '109%'
+	        }, {
+	            backgroundColor: {
+	                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+	                stops: [
+	                    [0, '#333'],
+	                    [1, '#FFF']
+	                ]
+	            },
+	            borderWidth: 1,
+	            outerRadius: '107%'
+	        }, {
+	            // default background
+	        }, {
+	            backgroundColor: '#DDD',
+	            borderWidth: 0,
+	            outerRadius: '105%',
+	            innerRadius: '103%'
+	        }]
+	    },
+	       
+	    // the value axis
+	    yAxis: {
+	        min: 0,
+	        max: 100,
+	        
+	        minorTickInterval: 'auto',
+	        minorTickWidth: 1,
+	        minorTickLength: 10,
+	        minorTickPosition: 'inside',
+	        minorTickColor: '#666',
+	
+	        tickPixelInterval: 30,
+	        tickWidth: 2,
+	        tickPosition: 'inside',
+	        tickLength: 10,
+	        tickColor: '#666',
+	        labels: {
+	            step: 2,
+	            rotation: 'auto'
+	        },
+	        title: {
+	            text: ''
+	        },
+	        plotBands: [{
+	            from: 0,
+	            to: 50,
+	            color: '#55BF3B' // green
+	        }, {
+	            from: 50,
+	            to: 80,
+	            color: '#DDDF0D' // yellow
+	        }, {
+	            from: 80,
+	            to: 100,
+	            color: '#DF5353' // red
+	        }]        
+	    },
+	
+	    series: [{
+	        name: 'Speed',
+	        data: [0],
+	        tooltip: {
+	            valueSuffix: ' km/h'
+	        }
+	    }]
+	
+	}, 
+	// Add some life
+	function (chart) {
+		if (!chart.renderer.forExport) {
+		    setInterval(function () {
+		        SysMonitor.getCpuUser(function(list){
+		        	if(list!=null){
+		        		var point = chart.series[0].points[0];
+                       point.update(list[1]);
+		        	}
+                 }); 
+		    }, 5000);
+		}
+	});
+});
+
+$(function () {
+    $('#cpuid').highcharts({
+	
+	    chart: {
+	        type: 'gauge',
+	        plotBackgroundColor: null,
+	        plotBackgroundImage: null,
+	        plotBorderWidth: 0,
+	        plotShadow: false
+	    },
+	    
+	    title: {
+	        text: 'CPU用户使用率'
+	    },
+	    
+	    pane: {
+	        startAngle: -150,
+	        endAngle: 150,
+	        background: [{
+	            backgroundColor: {
+	                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+	                stops: [
+	                    [0, '#FFF'],
+	                    [1, '#333']
+	                ]
+	            },
+	            borderWidth: 0,
+	            outerRadius: '109%'
+	        }, {
+	            backgroundColor: {
+	                linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1 },
+	                stops: [
+	                    [0, '#333'],
+	                    [1, '#FFF']
+	                ]
+	            },
+	            borderWidth: 1,
+	            outerRadius: '107%'
+	        }, {
+	            // default background
+	        }, {
+	            backgroundColor: '#DDD',
+	            borderWidth: 0,
+	            outerRadius: '105%',
+	            innerRadius: '103%'
+	        }]
+	    },
+	       
+	    // the value axis
+	    yAxis: {
+	        min: 0,
+	        max: 100,
+	        
+	        minorTickInterval: 'auto',
+	        minorTickWidth: 1,
+	        minorTickLength: 10,
+	        minorTickPosition: 'inside',
+	        minorTickColor: '#666',
+	
+	        tickPixelInterval: 30,
+	        tickWidth: 2,
+	        tickPosition: 'inside',
+	        tickLength: 10,
+	        tickColor: '#666',
+	        labels: {
+	            step: 2,
+	            rotation: 'auto'
+	        },
+	        title: {
+	            text: ''
+	        },
+	        plotBands: [{
+	            from: 0,
+	            to: 50,
+	            color: '#55BF3B' // green
+	        }, {
+	            from: 50,
+	            to: 80,
+	            color: '#DDDF0D' // yellow
+	        }, {
+	            from: 80,
+	            to: 100,
+	            color: '#DF5353' // red
+	        }]        
+	    },
+	
+	    series: [{
+	        name: 'Speed',
+	        data: [0],
+	        tooltip: {
+	            valueSuffix: ' km/h'
+	        }
+	    }]
+	
+	}, 
+	// Add some life
+	function (chart) {
+		if (!chart.renderer.forExport) {
+		     setInterval(function () {
+		        SysMonitor.getCpuUser(function(list){  
+		        	if(list!=null){
+		          		var point = chart.series[0].points[0];
+                       	point.update(list[2]);
+                    }
+                 }); 
+		    }, 5000);
+		}
+	});
+});
+</script>
+</head>
+<body>
+<div id="charts">
+<CENTER>
+<table><tr><td>
+<div id="cpuuser" style="min-width: 160px; max-width: 200px; height: 200px; margin: 0 auto"></div>
+</td><td>
+<div id="cpusys" style="min-width: 160px; max-width: 200px; height: 200px; margin: 0 auto"></div>
+</td><td>
+<div id="cpuid" style="min-width: 160px; max-width: 200px; height: 200px; margin: 0 auto"></div>
+</td><td>
+<div id="cpufree" style="min-width: 160px; max-width: 200px; height: 200px; margin: 0 auto"></div>
+</td></tr>
+</table>
+</CENTER>
+</div>
+<div id="grid">
+<table id="pg" class="easyui-propertygrid" style="" showGroup="true" scrollbarSize="0" data-options="columns: mycolumns">
+</div>
+<script type="text/javascript">
+var mycolumns = [[
+            {field:'name',title:'参数名',width:200,sortable:true},
+               {field:'value',title:'参数值',width:300,resizable:true}
+        ]];
+SysMonitor.getCpuInfo(function(list){
+     var rows = new Array();
+	for(var i=0;i<list.length;i++){
+	   var cpu = list[i];
+	   var groupName = '';
+       var j=0;
+	   for(var property in cpu){ 
+        if(cpu[property]=='GROUP'){
+          groupName = property;
+        }else{
+     	   var row = { name:property, value:cpu[property], group:groupName};
+     	   rows[i*10 + j]=row;
+     	   j++;
+	    }
+      }
+   }
+   $('#pg').propertygrid();
+   $("#pg").propertygrid('loadData', rows);
+});
+ setInterval(function(){  
+ SysMonitor.getCpuInfo(function(list){
+     var rows = new Array();
+	for(var i=0;i<list.length;i++){
+	   var cpu = list[i];
+	   var groupName = '';
+       var j=0;
+	   for(var property in cpu){ 
+        if(cpu[property]=='GROUP'){
+          groupName = property;
+        }else{
+     	   var row = { name:property, value:cpu[property], group:groupName};
+     	   rows[i*10 + j]=row;
+     	   j++;
+	    }
+      }
+   }
+   $('#pg').propertygrid();
+   $("#pg").propertygrid('loadData', rows);
+});
+},5000);
+</script>
+</body>
+</html>

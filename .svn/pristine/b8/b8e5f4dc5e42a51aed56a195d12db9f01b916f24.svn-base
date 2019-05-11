@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-1-10 16:58:47 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.warnDisposal.entity.TCmWarnTaskCount" table="T_CM_WARN_TASK_COUNT" schema="ECUSER">
+        <comment>单客户任务记录</comment>
+        <id name="id" type="string">
+            <column name="FD_ID" length="50" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="taskId" type="string">
+            <column name="TASK_ID" length="50" />
+        </property>
+        <property name="customerId" type="string">
+            <column name="CUSTOMER_ID" length="50" />
+        </property>
+        <property name="processId" type="string">
+            <column name="PROCESS_ID" length="50" />
+        </property>
+        <property name="taskType" type="string">
+            <column name="TASK_TYPE" length="50" />
+        </property>
+        <property name="isChaoshi" type="string">
+            <column name="IS_CHAOSHI" length="100" />
+        </property>
+        <property name="operator" type="string">
+            <column name="FD_OPERATOR" length="100" />
+        </property>
+        <property name="orgCode" type="string">
+            <column name="ORG_CODE" length="100" />
+        </property>
+        <property name="isChuli" type="string">
+            <column name="IS_CHULI" length="25" />
+        </property>
+        <property name="credited" type="date">
+            <column name="CREDITED" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

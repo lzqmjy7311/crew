@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.company.view.getter.TbCsmCorporationGetter">
+	<Include id="BankParam" />
+	
+	<Fields>
+		<Field id="customerNum" desc="客户编号" status="F" require="true"
+				method="None" readonly="false" primary="true" type="String"
+				default="" xpath="/customerNum" />
+		<Field id="chineseName" desc="客户名称" xpath="/chineseName"/>
+		<Field id="businessLicenseNum" desc="营业执照号" xpath="/businessLicenseNum"/>
+        <Field id="orgnNum" desc="组织机构代码" xpath="/orgnNum"/>
+		<Field id="registeredCapital" desc="注册资本" xpath="/registeredCapital"/>
+		<Field id="customerSizeCd" desc="企业规模" xpath="/customerSizeCd"/>
+		<Field id="industryLevelTwoCd" desc="行业分类" xpath="/industryLevelTwoCd"/>
+	</Fields>
+	
+	<Operations>
+	<Button id="btHandle" name="btHandle" desc="处理" icon="icon-add" updateClass="#" url="" txn="" />
+	</Operations>
+</CommQry>

@@ -1,0 +1,185 @@
+package com.gbicc.override;
+
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+
+import com.gbicc.common.FileUpDownProperties;
+import com.huateng.ebank.business.authority.UserAuthority;
+import com.huateng.ebank.business.common.BaseDAOUtils;
+import com.huateng.ebank.business.common.CommonFunctions;
+import com.huateng.ebank.business.common.DAOUtils;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.business.common.UserSessionInfo;
+import com.huateng.ebank.business.common.service.BctlService;
+import com.huateng.ebank.business.common.service.CommonService;
+import com.huateng.ebank.business.management.service.UserMgrService;
+import com.huateng.ebank.entity.dao.mng.GlobalinfoDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.entity.data.mng.Bctl;
+import com.huateng.ebank.entity.data.mng.DataDic;
+import com.huateng.ebank.entity.data.mng.Globalinfo;
+import com.huateng.ebank.entity.data.mng.RoleInfo;
+import com.huateng.ebank.entity.data.mng.TlrInfo;
+import com.huateng.ebank.entity.data.mng.TlrRoleRel;
+import com.huateng.ebank.entity.view.ExtensBean;
+import com.huateng.ebank.framework.exceptions.CommonException;
+import com.huateng.ebank.framework.operation.BaseOperation;
+import com.huateng.ebank.framework.operation.OperationContext;
+import com.huateng.ebank.framework.util.DataFormat;
+import com.huateng.ebank.framework.util.DateUtil;
+import com.huateng.ebank.framework.util.ExceptionUtil;
+
+/**
+ * 重写LoginManagerOP
+ * @date    2016年1月4日
+ * @author  tangdu
+ * @desc
+ */
+public class MyLoginManagerOP extends BaseOperation {
+	private static final Logger logger = Logger.getLogger(MyLoginManagerOP.class);
+	public static final String ID = "Management.LoginManagerOP";
+	public static final String IN_TLR_NO = "TLR_NO";
+	public static final String IN_TLR_PWD = "TLR_PWD";
+	public static final String IN_GLOBALINFO = "IN_GLOBALINFO";
+	public static final String OUT_USER_SESSION_INFO = "USER_SESSION_INFO";
+	public static final String OUT_GLOBALINFO_INFO = "GLOBALINFO";
+	public static final String CONTEXT_PATH = "CONTEXT_PATH";
+	public static final String OUT_TREE = "TREE_FUNCTION";
+	public static final String OUT_MENU = "MENU_FUNCTION";
+	public static final String IN_TLR_BRNO = "IN_TLR_BRNO";
+	public static final String IN_TLR_SECRET = "IN_TLR_SECRET";
+	public static final String IN_TLR_SOURCE = "IN_TLR_SOURCE";
+
+	public void beforeProc(OperationContext context) throws CommonException {
+		GlobalinfoDAO globalinfoDAO = BaseDAOUtils.getGlobalinfoDAO();
+		Globalinfo gi = globalinfoDAO.query(Integer.valueOf(1));
+		String batchStatus = DataFormat.trim(gi.getStatus());
+		if (!batchStatus.equals("0")) {
+			ExceptionUtil.throwCommonException("系统处于批量状态, 请等待批量结束后再试.",
+					"GD0105");
+		}
+
+		Date currentdate = DateUtil.getTbsDay();
+		Date lastDate = DateUtil.getBhDate();
+		GlobalInfo globalInfo = (GlobalInfo) context
+				.getAttribute("IN_GLOBALINFO");
+		globalInfo.setTxdate(DataFormat.trsUtilDateToSqlDate(currentdate));
+		globalInfo.setFileDate(DateUtil.dateToNumber(currentdate));
+
+		globalInfo.setLastDate(lastDate);
+		GlobalInfo.setCurrentInstance(globalInfo);
+	}
+
+	public void execute(OperationContext context) throws CommonException {
+		GlobalInfo globalInfo = GlobalInfo.getCurrentInstance();
+
+		String userID = (String) context.getAttribute("TLR_NO");
+		String userBrno = (String) context.getAttribute("IN_TLR_BRNO");
+		String secret = (String) context.getAttribute(IN_TLR_SECRET);
+		String source = (String)context.getAttribute(IN_TLR_SOURCE);
+
+		if (StringUtils.isBlank(userBrno)) {
+			List li = BaseDAOUtils.getHQLDAO().queryByQL2List(
+					"select brcode from TlrInfo where tlrno='" + userID + "'");
+			if (li.size() > 0) {
+				String rel = (String) li.get(0);
+				globalInfo.setBrcode(rel);
+				List foo = BaseDAOUtils.getHQLDAO().queryByQL2List(
+						"select brno from Bctl where brcode='" + rel + "'");
+				if (foo.size() == 1) {
+					context.setAttribute("IN_TLR_BRNO", foo.get(0));
+					userBrno = (String) foo.get(0);
+				} else {
+					ExceptionUtil.throwCommonException("该用户没有设置机构");
+				}
+			}
+		}
+		String userPwd = (String) context.getAttribute("TLR_PWD");
+		UsernamePasswordToken userToken=null;
+		if(StringUtils.isBlank(secret)){
+			userToken = new MyUsernamePasswordToken(userID,
+				userPwd);
+			userToken.setHost(userBrno);
+		}else{
+			userToken=new MyUsernamePasswordToken(userID, userBrno, secret);
+			userToken.setHost(userBrno);
+		}
+		
+		try {
+			SecurityUtils.getSubject().login(userToken);
+		} catch (AuthenticationException e) {
+			if(e.getMessage().contains("GD0108")){
+				throw new CommonException("错误","用户名或密码错误!");
+			}
+			throw new CommonException("错误",e.getMessage());
+		} 
+		UserSessionInfo sessionInfo = (UserSessionInfo) SecurityUtils
+				.getSubject().getPrincipal();
+		UserMgrService userMgrService = UserMgrService.getInstance();
+		sessionInfo.setTxDate(globalInfo.getTxdate());
+		userMgrService.setLoginInInfo(userID);
+		globalInfo.setBrcode(sessionInfo.getBrCode());
+
+		BctlService bctlService = BctlService.getInstance();
+		Bctl bctl = bctlService.getBctlByBrcode(globalInfo.getBrcode());
+		globalInfo.setBranchBrcode(bctl.getBlnBranchBrcode());
+		globalInfo.setBrClass(bctl.getBrclass());
+		globalInfo.setBrno(bctl.getBrno());
+		globalInfo.setBrName(bctl.getBrname());
+		globalInfo.setTlrno(userID);
+		globalInfo.setSContextPath((String) context
+				.getAttribute("CONTEXT_PATH"));
+
+		String saveQeuryLog = CommonService.getInstance().getSysParamDef(
+				"PSWD", "SAVE_QUERY_LOG", "0");
+		globalInfo.setSaveQueryLog(saveQeuryLog);
+
+		List userRoleFunclist = UserAuthority.create(userMgrService,
+				globalInfo, userID);
+
+		context.setAttribute("USER_SESSION_INFO", sessionInfo);
+		context.setAttribute("GLOBALINFO", globalInfo);
+		if (logger.isDebugEnabled()) {
+			logger.debug("logicProc() - end");
+		}
+
+		StringBuffer tree = new StringBuffer();
+		StringBuffer menu = new StringBuffer();
+		List confrimList = userMgrService.getApproveUserFunc(userRoleFunclist);
+		globalInfo.setConfrimCodeList(confrimList);
+		globalInfo.setAllFunctions(CommonFunctions
+				.transToHashtableByFunc(userRoleFunclist));
+
+		ExtensBean exbean = new ExtensBean();
+
+		List roleList = BaseDAOUtils.getHQLDAO()
+				.queryByQL2List("select ri from RoleInfo ri,TlrRoleRel trr "
+					+ "	where ri.id=trr.roleId and ri.status='1' and trr.tlrno='"
+					+ userID + "'");
+		exbean.setRoleList(roleList);
+
+		TlrInfo tlrInfo = (TlrInfo) ROOTDAOUtils.getROOTDAO().query(
+				TlrInfo.class, userID);
+		if (tlrInfo != null) {
+			exbean.setTlrName(tlrInfo.getTlrName());
+		}
+		globalInfo.setWorkflowRoleId(String.valueOf(tlrInfo.getRoleid()));
+		RoleInfo info=DAOUtils.getRoleInfoDAO().findById(tlrInfo.getRoleid());
+		exbean.setRoleSysType(info.getRoleSysType());
+		globalInfo.setExtensbean(exbean);
+		if("1".equals(bctl.getBrclass())){
+			globalInfo.setHeadBrcode(true);
+		}
+		globalInfo.setExtensbean(exbean);
+		GlobalInfo.setCurrentInstance(globalInfo);
+	}
+
+	public void afterProc(OperationContext context) throws CommonException {
+	}
+}

@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="WebApp_ID" version="2.4"
+	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+	<display-name>crew</display-name>
+	<description>crew</description>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+     	 	classpath*:spring/*.xml,
+      		classpath*:spring/**/*.xml
+		</param-value>
+	</context-param>
+	<context-param>
+		<param-name>errorMessage</param-name>
+		<param-value>resources/errorcode.properties</param-value>
+	</context-param>
+	
+	<!-- 20140523 struts class loader filter -->
+	<filter>
+		<filter-name>strutsFilter</filter-name>
+		<filter-class>com.huateng.ebank.framework.filter.StrutsSecurityFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>strutsFilter</filter-name>
+		<url-pattern>*.do</url-pattern>
+	</filter-mapping>
+	<!-- 20140523 struts class loader filter -->
+	<filter>
+		<filter-name>shiroFilter</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+		<init-param>
+			<param-name>targetFilterLifecycle</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>shiroFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>GBK</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<!-- 为访问权限加的过滤器 -->
+	<filter>
+		<filter-name>urlFilter</filter-name>
+		<filter-class>com.huateng.ebank.framework.filter.UrlAuthorizationFilter</filter-class>
+	</filter>
+	<!-- 响应头属性添加的过滤器，可根据需要进行自定义添加 -->
+	<filter>
+		<filter-name>addHeaderFilter</filter-name>
+		<filter-class>com.huateng.ebank.framework.web.AddHeaderFilter</filter-class>
+		<init-param>
+			<!-- 为静态资源添加缓存周期 -->
+			<param-name>Cache-Control</param-name>
+			<param-value>max-age=604800,public</param-value>
+		</init-param>
+	</filter>
+	<!-- 为gzip 添加的过滤器 
+	<filter>
+		<filter-name>GZIPFilter</filter-name>
+		<filter-class>com.huateng.ebank.framework.gzipfilter.GZIPFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>GZIPFilter</filter-name>
+		<url-pattern>*.js</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>GZIPFilter</filter-name>
+		<url-pattern>*.ftl</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>GZIPFilter</filter-name>
+		<url-pattern>*.css</url-pattern>
+	</filter-mapping>-->
+	<!-- <filter-mapping> -->
+	<!-- <filter-name>GZIPFilter</filter-name> -->
+	<!-- <url-pattern>*.do</url-pattern> -->
+	<!-- </filter-mapping> -->
+	<!-- 静态资源 -->
+	<filter-mapping>
+		<filter-name>addHeaderFilter</filter-name>
+		<url-pattern>*.js</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>addHeaderFilter</filter-name>
+		<url-pattern>*.jpg</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>addHeaderFilter</filter-name>
+		<url-pattern>*.png</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>addHeaderFilter</filter-name>
+		<url-pattern>*.css</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>addHeaderFilter</filter-name>
+		<url-pattern>*.gif</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter-mapping>
+		<filter-name>urlFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>
+			com.huateng.ebank.framework.servlet.listener.ContextLoaderListener
+		</listener-class>
+	</listener>
+
+	<listener>
+		<listener-class>
+			com.huateng.ebank.framework.servlet.listener.ApplicationListener
+		</listener-class>
+	</listener>
+	<listener>
+		<listener-class>
+			com.huateng.ebank.business.remote.base.SessionListener
+		</listener-class>
+	</listener>
+
+	<servlet>
+		<servlet-name>action</servlet-name>
+		<servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
+		<init-param>
+			<param-name>config</param-name>
+			<param-value>
+				/WEB-INF/struts-config.xml,
+				/WEB-INF/struts-config/commQuery.xml
+			</param-value>
+		</init-param>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>4</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet>
+		<servlet-name>CommQueryInterfaceServlet</servlet-name>
+		<servlet-class>
+			com.huateng.ebank.framework.web.commQuery.BankCommQueryInterfaceServlet
+		</servlet-class>
+		<init-param>
+			<param-name>errorPage</param-name>
+			<param-value>/common/errorPage.ftl</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet>
+		<servlet-name>CommQueryResultServlet</servlet-name>
+		<servlet-class>
+			com.huateng.ebank.framework.web.commQuery.BankCommQueryResultServlet
+		</servlet-class>
+		<init-param>
+			<param-name>errorPage</param-name>
+			<param-value>/common/errorPage.ftl</param-value>
+		</init-param>
+	</servlet>
+
+	<servlet>
+		<servlet-name>commQuery</servlet-name>
+		<servlet-class>
+			com.huateng.ebank.framework.web.commQuery.BankCommQueryServlet
+		</servlet-class>
+		<init-param>
+			<param-name>CommonQueryConfigLocation</param-name>
+			<param-value>
+				/WEB-INF/query/meta/CommQryMeta.xml,
+				/WEB-INF/query/meta/managementMeta.xml,
+				/WEB-INF/query/meta/batchMonitorMeta.xml,
+				/WEB-INF/query/meta/parammng.xml,
+				/WEB-INF/query/meta/sysMngMeta.xml,
+				/WEB-INF/query/meta/demo.xml,
+	            /WEB-INF/query/meta/systemMeta.xml,
+				/WEB-INF/query/meta/basisinfoMeta.xml,
+				/WEB-INF/query/comp/comp_demo.xml,
+				/WEB-INF/query/gbicc-meta/personMeta.xml,
+				/WEB-INF/query/gbicc-meta/companyMeta.xml,
+				/WEB-INF/query/gbicc-meta/reportMeta.xml
+			</param-value>
+		</init-param>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+
+	<!--1 FreeMarker view servlet (to replace JSP) -->
+	<servlet>
+		<servlet-name>freemarker</servlet-name>
+		<servlet-class>
+			com.huateng.ebank.framework.servlet.BankHTFreemarkServlet
+		</servlet-class>
+
+		<!-- FreemarkerServlet settings: -->
+		<init-param>
+			<param-name>TemplatePath</param-name>
+			<param-value>/</param-value>
+		</init-param>
+		<init-param>
+			<param-name>NoCache</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<init-param>
+			<param-name>ContentType</param-name>
+			<param-value>text/html</param-value>
+		</init-param>
+
+		<!-- FreeMarker settings: -->
+		<init-param>
+			<param-name>template_update_delay</param-name>
+			<param-value>9</param-value><!-- 0 is for development only! Use higher 
+				value otherwise. -->
+		</init-param>
+		<init-param>
+			<param-name>default_encoding</param-name>
+			<param-value>GBK</param-value>
+		</init-param>
+		<init-param>
+			<param-name>number_format</param-name>
+			<param-value>0.##########</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet>
+		<servlet-name>dwr-invoker</servlet-name>
+		<servlet-class>org.directwebremoting.servlet.DwrServlet</servlet-class>
+		<!-- Added by HuangWeijing Rule Engine 20100906 Begin -->
+		<init-param>
+			<param-name>config-0</param-name>
+			<param-value>/WEB-INF/dwr.xml</param-value>
+		</init-param>
+		<init-param>
+			<param-name>crossDomainSessionSecurity</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<init-param>
+			<param-name>allowScriptTagRemoting</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>debug</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		<init-param>
+			<param-name>activeReverseAjaxEnabled</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<!-- dwr push beign -->
+		<init-param>
+			<param-name>pollAndCometEnabled</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<!-- dwr push end -->
+		<init-param>
+			<param-name>initApplicationScopeCreatorsAtStartup</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>maxWaitAfterWrite</param-name>
+			<param-value>500</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dwr-invoker</servlet-name>
+		<url-pattern>/dwr/*</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>freemarker</servlet-name>
+		<url-pattern>*.ftl</url-pattern>
+	</servlet-mapping>
+	<!-- Common Query -->
+	<servlet-mapping>
+		<servlet-name>commQuery</servlet-name>
+		<url-pattern>/trans/CommQueryServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>CommQueryInterfaceServlet</servlet-name>
+		<url-pattern>/trans/CommQueryInterfaceServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>CommQueryResultServlet</servlet-name>
+		<url-pattern>/trans/CommQueryResultServlet</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>action</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	<welcome-file-list>
+		<welcome-file>/login/login.jsp</welcome-file>
+	</welcome-file-list>
+	<!-- 20140911 用户权限导出  start-->
+	<servlet>
+        <servlet-name>UserAuthorityExcel</servlet-name>
+        <servlet-class>com.huateng.ebank.business.rolemng.update.UserAuthorityExcel</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserAuthorityExcel</servlet-name>
+        <url-pattern>/excel</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>UserAuthorityPdf</servlet-name>
+        <servlet-class>com.huateng.ebank.business.rolemng.update.UserAuthorityPdf</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserAuthorityPdf</servlet-name>
+        <url-pattern>/pdf</url-pattern>
+    </servlet-mapping>
+	<!-- 20140911 用户权限导出  end-->
+	
+	<!-- 流程部署servlet -->
+	<servlet>
+		<servlet-name>ProcessDeployServlet</servlet-name>
+		<servlet-class>
+			com.gbicc.bpm.servlet.ProcessDeployServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+        <servlet-name>ProcessDeployServlet</servlet-name>
+        <url-pattern>/common/ProcessDeployServlet</url-pattern>
+    </servlet-mapping>
+ 
+     <servlet>
+		<servlet-name>TestOutServlet</servlet-name>
+		<servlet-class>
+			com.gbicc.testOut.servlet.TestOutServlet
+		</servlet-class>
+	</servlet>    
+ 	<servlet-mapping>
+        <servlet-name>TestOutServlet</servlet-name>
+        <url-pattern>/char/TestOutServlet</url-pattern>
+    </servlet-mapping>
+    
+  
+    
+    
+    <!-- TXT上传servlet -->
+	<servlet>
+		<servlet-name>TxtImportServlet</servlet-name>
+		<servlet-class>
+			com.gbicc.bpm.servlet.TxtImportServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+        <servlet-name>TxtImportServlet</servlet-name>
+        <url-pattern>/common/TxtImportServlet</url-pattern>
+    </servlet-mapping>
+    <servlet>
+		<servlet-name>TxtImportpersonServlet</servlet-name>
+		<servlet-class>
+			com.gbicc.bpm.servlet.TxtImportpersonServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+        <servlet-name>TxtImportpersonServlet</servlet-name>
+        <url-pattern>/tis/TxtImportpersonServlet</url-pattern>
+    </servlet-mapping>
+    
+   <!-- Excel数据导入servlet -->
+	<servlet>
+		<servlet-name>ImportExcelServlet</servlet-name>
+		<servlet-class>
+			com.gbicc.bpm.servlet.ImportExcelServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+        <servlet-name>ImportExcelServlet</servlet-name>
+        <url-pattern>/this/ImportExcelServlet</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+		<servlet-name>HbImportExcelServlet</servlet-name>
+		<servlet-class>
+			com.gbicc.bpm.servlet.HbImportExcelServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+        <servlet-name>HbImportExcelServlet</servlet-name>
+        <url-pattern>/this/HbImportExcelServlet</url-pattern>
+    </servlet-mapping>
+    
+    
+   <!-- Excel数据导入servlet -->
+	<servlet>
+		<servlet-name>DonloadWordServlet</servlet-name>
+		<servlet-class>
+			com.gbicc.bpm.servlet.DonloadWordServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+        <servlet-name>DonloadWordServlet</servlet-name>
+        <url-pattern>/common/donloadWord</url-pattern>
+    </servlet-mapping>
+    
+    <!-- 流程图查看servlet -->
+	<servlet>
+		<servlet-name>ProcessDiagramServlet</servlet-name>
+		<servlet-class>
+			com.gbicc.bpm.servlet.ProcessDiagramServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+        <servlet-name>ProcessDiagramServlet</servlet-name>
+        <url-pattern>/common/ProcessDiagramServlet</url-pattern>
+    </servlet-mapping>
+    <!-- highchar图表servlet -->
+	<servlet>
+		<servlet-name>GetHighCharServlet</servlet-name>
+		<servlet-class>
+			com.gbicc.highChar.servlet.GetHigtCharServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+        <servlet-name>GetHighCharServlet</servlet-name>
+        <url-pattern>/char/GetHighCharServlet</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+		<servlet-name>financialIndexAnalsisHigtCharServlet</servlet-name>
+		<servlet-class>
+			com.gbicc.highChar.servlet.financialIndexAnalsisHigtCharServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+        <servlet-name>financialIndexAnalsisHigtCharServlet</servlet-name>
+        <url-pattern>/char/financialIndexAnalsisHigtCharServlet</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+		<servlet-name>ZxinfoGetHigtCharServlet</servlet-name>
+		<servlet-class>
+			com.gbicc.highChar.servlet.ZxinfoGetHigtCharServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+        <servlet-name>ZxinfoGetHigtCharServlet</servlet-name>
+        <url-pattern>/char/ZxinfoGetHigtCharServlet</url-pattern>
+    </servlet-mapping>
+    
+        <servlet>
+		<servlet-name>riskoverviewHigtCharServlet</servlet-name>
+		<servlet-class>
+			com.gbicc.highChar.servlet.riskoverviewHigtCharServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+        <servlet-name>riskoverviewHigtCharServlet</servlet-name>
+        <url-pattern>/char/riskoverviewHigtCharServlet</url-pattern>
+    </servlet-mapping>
+
+    <!--通用 的文件上传类-->
+    <servlet>
+		<servlet-name>FileHandlerServlet</servlet-name>
+		<servlet-class>
+			com.gbicc.common.filemng.FileHandlerServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+        <servlet-name>FileHandlerServlet</servlet-name>
+        <url-pattern>/common/fileupload</url-pattern>
+    </servlet-mapping>
+
+	<!--规则调用接口-->
+	<servlet>
+		<servlet-name>RuleServlet</servlet-name>
+		<servlet-class>
+			com.gbicc.rule.servlet.RuleServlet
+		</servlet-class>
+	</servlet>
+	<servlet-mapping>
+        <servlet-name>RuleServlet</servlet-name>
+        <url-pattern>/common/rule</url-pattern>
+    </servlet-mapping>
+    
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+
+	<error-page>
+		<error-code>404</error-code>
+		<location>/common/404.jsp</location>
+	</error-page>
+	<!-- 20140523 struts class loader filter,response 500 -->
+	<error-page>
+		<error-code>500</error-code>
+		<location>/common/500.jsp</location>
+	</error-page>
+	<!-- 20140523 struts class loader filter,response 500-->
+	<jsp-config>
+		<taglib>
+			<taglib-uri>/tags/application-tags</taglib-uri>
+			<taglib-location>/WEB-INF/app.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>/tags/struts-bean</taglib-uri>
+			<taglib-location>/WEB-INF/struts-bean.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>/tags/struts-html</taglib-uri>
+			<taglib-location>/WEB-INF/struts-html.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>/tags/struts-logic</taglib-uri>
+			<taglib-location>/WEB-INF/struts-logic.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>/tags/struts-template</taglib-uri>
+			<taglib-location>/WEB-INF/struts-template.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>/tags/struts-tiles</taglib-uri>
+			<taglib-location>/WEB-INF/struts-tiles.tld</taglib-location>
+		</taglib>
+		<taglib>
+			<taglib-uri>/tags/struts-nested</taglib-uri>
+			<taglib-location>/WEB-INF/struts-nested.tld</taglib-location>
+		</taglib>
+	</jsp-config>
+</web-app>

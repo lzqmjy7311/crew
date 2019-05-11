@@ -1,0 +1,23 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign customerNum="${RequestParameters['customerNum']?default('')}" />
+<#assign chineseName="${RequestParameters['chineseName']?default('')}" />
+<#assign loanCardNum="${RequestParameters['loanCardNum']?default('')}" />
+<@CommonQueryMacro.page title="标签页">
+	<@CommonQueryMacro.DynamicTabSet id="demotab1" hasMenu="true" height="" selected="t11">
+		<@CommonQueryMacro.DynamicTab id="t11" title="客户风险预警等级统计趋势"
+			url="/gbicc-com-pages/overriskview/ftl/overview1.ftl">
+		</@CommonQueryMacro.DynamicTab>
+		</@CommonQueryMacro.DynamicTabSet>
+	<script>
+		var loanCardNum='${loanCardNum}';
+		var customerNum='${customerNum}';
+		var chineseName='${chineseName}';
+		chineseName=decodeURI(chineseName);
+		function initCallGetter_post(){
+			demotab1_tabset.add({id:"t211",title:"触警客户数统计分析",url:"/gbicc-com-pages/overriskview/ftl/overview2.ftl"});
+
+			
+			demotab1_tabset.select("t11");
+		}
+	</script>
+</@CommonQueryMacro.page>

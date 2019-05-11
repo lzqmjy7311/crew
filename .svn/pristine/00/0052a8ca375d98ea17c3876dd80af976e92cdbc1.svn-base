@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	  navigate:导航信息
+	  type:方式（sql|call)
+	  interface:是否显示输入条件页面(true|false)
+	  databusid:数据总线编号
+	  transdataactionurl:数据整理URL
+	  async:异步提交标志
+	  pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry
+title="流程超时配置"
+navigate="主页 &gt; 系统管理 &gt; 岗位权限设置"
+type="call"
+interface="false"
+pagesize="5"
+async="true"
+databusid="DEMO"
+transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.huateng.ebank.business.management.getter.FunctionInfoGetter"
+>
+	<Include id="BankParam"/>
+	<ResultViewParam>
+		/fpages/management/ftl/RoleInfo1.ftl
+	</ResultViewParam>
+	<Fields>
+	<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+	<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="roleid" desc="岗位编号" status="N" require="true"
+			method="None" readonly="true" primary="true" type="String" size="4"
+			default="false" xpath="/roleid" />
+		<Field id="rolename" desc="岗位名称" status="N" require="true"
+			width="160" method="None" readonly="true" primary="true" type="String"
+			size="20" xpath="/rolename" default="false" />
+		<Field id="select" desc="选择" status="N"  method="None" readonly="" primary="true" type="String" edittype="checkbox" size="20" xpath="/select" default="false" />
+		<Field id="funccode" desc="交易代码" status="N"  method="None" readonly="true" primary="true" type="String" size="20" xpath="/funccode" default="false" />
+		<Field id="funcname" desc="交易名称" status="N" width="200" method="None" readonly="true" primary="true" type="String" size="20" xpath="/funcname" default="false" />
+		<!--
+		<Field id="rolename" desc="岗位名称" status="N" width="200" method="None" readonly="true" primary="true" type="String" size="20" xpath="/rolename" default="false" />
+		<Field id="roleid" desc="岗位号" status="N" width="200" method="None" readonly="true" primary="true" type="String" size="20" xpath="/roleid" default="false" />
+		-->
+	</Fields>
+
+	<Where>
+
+   </Where>
+	<Operations>
+			<!-- operation( addrecord:delrecord:syncsubmit:asyncqrysubmit:asyncupadasubmit ) -->
+		<Button id="btSave" name="btSave" desc="保存" operation="asysubmit"
+		updateClass="com.huateng.ebank.business.management.updater.RoleInfo1Update"
+		url="" txn=""/>
+		<Button id="back" name="back" desc="返回" operation="submitform"
+			url="/fpages/management/ftl/RoleInfo.ftl" txn="MSYSMOV002"/>
+
+	</Operations>
+	<Sql>
+		<![CDATA[
+				select
+				role_id,
+				role_name,
+				status,
+				workflow_role,
+				role_type
+				from role_info as ri
+    	]]>
+	</Sql>
+</CommQry>

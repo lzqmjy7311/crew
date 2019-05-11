@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="参数管理  &gt; 产品管理" navigate="参数管理  &gt; 产品管理" type="call"
+	interface="false" pagesize="30" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.bpm.getter.ProcessInstanceGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="id" desc="流程实例ID"  edittype="text" status="F" datatype="string" xpath="/id" width="100"/>
+		<Field id="processName" desc="流程定义名称"  edittype="text" status="F" datatype="string" xpath="/processName" width="200"/>
+		<Field id="businessKey" desc="业务主键"  edittype="text" status="F" datatype="string" xpath="/businessKey" width="220"/>
+		<Field id="processDefinitionId" desc="流程定义ID"  edittype="text" status="F" datatype="string" xpath="/processDefinitionId" width="220"/>
+		<Field id="status" desc="当前状态"  edittype="text" status="F" datatype="string" xpath="/status" width="80"/>
+		<Field id="statusDesc" desc="当前状态"  edittype="text" status="F" datatype="string" xpath="/statusDesc" width="80"/>
+		<Field id="startUserId" desc="创建者"  edittype="text" status="F" datatype="string" xpath="/startUserId" width="100"/>
+		<Field id="startTime" desc="启动时间"  edittype="text" status="F" datatype="string" xpath="/startTime" width="100"/>
+		<Field id="assignee" desc="当前任务节点操作人"  edittype="text" status="F" datatype="string" xpath="/assignee" />
+    </Fields>
+	<Operations>
+		<Button id="btAdd" name="btAdd" desc="挂起/激活" icon="icon-add" operation="asysubmit"
+			updateClass="com.gbicc.bpm.update.ProcessInstanceSupOrActUpdate" url="#" txn="" />
+		<Button id="btDel" name="btDel" desc="强制终止" icon="icon-delete" operation="asysubmit"
+			updateClass="com.gbicc.bpm.update.ProcessInstanceDelUpdate" url="" />
+		<Button id="btProcDiag" name="btProcDiag" desc="流程图" icon="icon-clockwise"
+			updateClass="" url="" />
+	</Operations>
+</CommQry>

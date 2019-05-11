@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-3-28 16:07:14 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.rule.entity.TPubRulIndustryValue" table="T_PUB_RUL_INDUSTRY_VALUE" schema="ECUSER">
+        <comment>规则行业阀值</comment>
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="rulCode" type="string">
+            <column name="FD_RUL_CODE" length="10" />
+        </property>
+        <property name="rulName" type="string">
+            <column name="FD_RUL_NAME" length="200" />
+        </property>
+        <property name="industryCode" type="string">
+            <column name="FD_INDUSTRY_CODE" length="30" />
+        </property>
+        <property name="valueDesc" type="string">
+            <column name="FD_VALUE_DESC" length="500" />
+        </property>
+        <property name="valueCode" type="string">
+            <column name="FD_VALUE_CODE" length="10" />
+        </property>
+        <property name="value" type="big_decimal">
+            <column name="FD_VALUE" precision="15" scale="5" />
+        </property>
+        <property name="updateUser" type="string">
+            <column name="FD_UPDATE_USER" length="32" />
+        </property>
+        <property name="updateDt" type="date">
+            <column name="FD_UPDATE_DT" length="10" />
+        </property>
+        <property name="desc" type="string">
+            <column name="FD_DESC" length="500" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="zxinfo" navigate="zxinfo" type="call" interface="false" pagesize="30" databusid="" async="true" transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.gbicc.company.view.accountpage.getter.ZtxMmfxyGetter">
+    <Include id="BankParam" />
+	<Fields>
+		<Field id="fdAcctId" desc="客户编号" xpath="/fdAcctId" readonly="false"/>
+		<Field id="fdReportdate" desc="报告日期" xpath="/fdReportdate" readonly="false"/>
+		<Field id="indexId" desc="ID号" xpath="/indexId" readonly="false"/>
+		<Field id="indexName" desc="指标名称" xpath="/indexName" readonly="false"/>
+		<Field id="indexValue" desc="指标值" xpath="/indexValue" readonly="false"/>
+		
+		<Field id="jzyear" desc="年度" require="true" edittype="text" status="F" datatype="int" size="10" index="2" />
+        <Field id="caliber" desc="口径类型" require="true" edittype="select" multiple="false" editable="true" readonly="false" placeholder="占位符" translated="DATA_DIC.723" datatype="int" size="10" xpath="" />
+        <Field id="repno" desc="期数" 
+			viewField="dataName"  require="true" translated="CQ:repnoSelect" fieldmap="repno=dataNo;repnoName=dataName"
+			edittype="select" />
+	</Fields>
+	<Operations>
+		<Button id="btnQuery" name="btnQuery" desc="查询" />
+    </Operations>
+</CommQry>

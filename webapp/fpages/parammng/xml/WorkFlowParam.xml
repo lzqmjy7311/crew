@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="流程超时配置" navigate="主页 &gt; 系统管理 &gt; 工作流参数配置" type="call"
+	interface="false" pagesize="20" async="true" databusid="DEMO"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.workflow.getter.WorkFlowParamGetter">
+	<Include id="BankParam" />
+	<ResultViewParam>/fpages/parammng/ftl/WorkFlowParam.ftl</ResultViewParam>
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+
+<!--		<Field id="v_id" desc="" status="N" require="" edittype="text" datatype="int"-->
+<!--			method="None" readonly="true" primary="true" type="String" size="4" default="false" xpath="/v_id" />-->
+		<Field id="id" desc="编 号" status="N" require="false" datatype="int"
+			method="None" readonly="true" width="60" primary="true" type="String" size="4" default="" xpath="/id" />
+
+         <Field id="processTemplate" desc="工作流模板名" status="F" width="130"
+			edittype="select" translated="CQ:WfpTemplateSelect" require="true"
+			fieldmap="processTemplate=processTemplate;processTemplateName=processTemplateName"
+			viewField="processTemplateName" method="None" primary="false"
+			readonly="true" type="String" size="100" default=""
+			xpath="/processTemplate" tip="工作流模板名" dropdowntype="dynamic" init="false" />
+
+		<Field id="processTemplateName" desc="工作流模板名" status="F" width="130"
+			method="None" primary="false" type="String" size="100" default=""
+			xpath="/processTemplateName" tip="工作流模板名" />
+
+        <Field id="taskName" desc="任务名" status="F" width="130"
+			edittype="select" translated="CQ:WfpTaskSelect" require="true"
+			fieldmap="taskName=taskName;taskNameName=taskNameLable"
+			viewField="taskNameLable" method="None" primary="false"
+			readonly="" type="String" size="100" default=""
+			xpath="/taskName" tip="任务名" dropdowntype="dynamic" init="false" />
+
+       <Field id="taskNameName" desc="任务名" status="F" width="130"
+			method="None" primary="false" type="String" size="100" default=""
+			xpath="/taskNameName" tip="任务名" />
+
+		<Field id="apptype" desc="申请类型" status="F" width="130"
+			edittype="select" translated="CQ:WfpappTypeSelect" require="true"
+			fieldmap="apptype=appType;apptypeName=appTypeName"
+			viewField="appTypeName" method="None" primary="false"
+			readonly="" type="String" size="100" default=""
+			xpath="/apptype" tip="申请类型" dropdowntype="dynamic" init="false" />
+
+		<Field id="appTypeName" desc="申请类型" status="F" width="130"
+			method="None" primary="false" type="String" size="100" default=""
+			xpath="/appTypeName" tip="申请类型" />
+			
+<!--		<Field id="brclass" desc="机构级别" status="F" edittype="select" require="true"-->
+<!--			method="None" primary="false" type="String" default="false"-->
+<!--			xpath="/brclass" tip="机构级别" translated="DATA_DIC.401" />-->
+
+		<Field id="brclass" desc="机构级别" status="F" width="130"
+			edittype="select" translated="CQ:WfpbrclassSelect" require="true"
+			fieldmap="brclass=brclass;brclassName=brclassName"
+			viewField="brclassName" method="None" primary="false"
+			readonly="" type="String" size="100" default=""
+			xpath="/brclass" tip="机构级别" dropdowntype="dynamic" init="false" />
+
+		<Field id="brclassName" desc="机构级别" status="F" width="130"
+			method="None" primary="false" type="String" size="100" default=""
+			xpath="/brclassName" tip="机构级别" />
+
+		<Field id="bizClass" desc="审批类型" status="F" width="130"
+			edittype="select" translated="CQ:WfpbizClassNameSelect" require="true"
+			fieldmap="bizClass=bizClass;bizClassName=bizClassName"
+			viewField="bizClassName" method="None" primary="false"
+			readonly="" type="String" size="100" default=""
+			xpath="/bizClass" tip="审批类型" dropdowntype="dynamic" init="false" />
+
+       <Field id="bizClassName" desc="审批类型" status="F" width="130"
+			method="None" primary="false" type="String" size="100" default=""
+			xpath="/bizClassName" tip="审批类型" />
+
+	  <Field id="bizSubclass" desc="贷款品种类型" status="F" width="130"
+			edittype="select" translated="CQ:WfpbizSubclassNameSelect" require="true"
+			fieldmap="bizSubclass=bizSubclass;bizSubclassName=bizSubclassName"
+			viewField="bizSubclassName" method="None" primary="false"
+			readonly="true" type="String" size="100" default=""
+			xpath="/bizSubclass" tip="贷款品种类型" dropdowntype="dynamic" init="false" />
+
+       <Field id="bizSubclassName" desc="贷款品种类型" status="F" width="130"
+			method="None" primary="false" type="String" size="100" default=""
+			xpath="/bizSubclassName" tip="贷款品种类型" />
+
+       <Field id="brcodeType" desc="机构指定标志" datatype="String" require="" status="F"  method="None" width="100"
+		    readonly=""  type="String" size="1" xpath="/brcodeType" edittype="select"  translated="LIST:0,0-不指定到机构;1,1-指定机构"  default="0"/>
+<!--edittype="textarea"-->
+		<Field id="brcodeList" desc="指定机构号列表" require="" status="F" method="None" width="" readonly="true" primary="true" type="String" edittype="textarea" size="1024" xpath="/brcodeList" default="" />
+
+		<Field id="actBrcode" desc="指定机构号" status="F" width="130"
+                        edittype="select" translated="CQ:AllBranchSelect" require=""
+                        fieldmap="actBrcode=brcode;actBrcodeName=brcodeTypeName"
+                        viewField="brcodeTypeName" method="None" primary="false"
+                        type="String" size="20" default="" xpath="" tip="机构号"
+                        readonly="true" dropdowntype="dynamic" init="false" />
+                        
+        <Field id="actBrcodeName" desc="指定机构号" status="F" width="130"
+			method="None" primary="false" type="String" size="20" default=""
+			xpath="" tip="机构号" />
+
+		<Field id="assignType" desc="任务分配原则" datatype="String" require="" status="F"  method="None"
+		    readonly=""  type="String" size="1" xpath="/assignType" edittype="select"  translated="LIST:0,0-指定到操作员列表;1,1-指定到岗位;2,2-指定到上传人"  default="0"/>
+
+        <Field id="tlrnoList" desc="操作员列表" status="N" require="false" readonly="true" method="None" datatype="String"
+			primary="true" type="String" size="1024" xpath="/tlrnoList" default="" />
+
+		<Field id="amtType" desc="金额策略" status="N" require="false" readonly="" method="None"
+			 type="String" size="1" xpath="/amtType" edittype="select" datatype="string" translated="LIST:0,0-按金额权限;1,1-不按金额权限"  default="0" />
+
+		<Field id="workflowRole" desc="岗位类型" datatype="String" require="" status="F"  edittype="select" dropdowntype="dynamic" init="false"
+			translated="CQ:AllRoleSelect" fieldmap="workflowRole=roleId;workflowRoleName=roleName" viewField="roleName" 
+		 	method="None" width="" readonly="true" primary="true" type="String" size="10" xpath="/workflowRole"  />
+		 	
+		<Field id="workflowRoleName"  desc="岗位类型" status="F" width="130"
+			method="None" primary="false" type="String" size="10" default=""
+			xpath="/workflowRoleName" tip="岗位类型" />
+		    
+		<Field id="assignMode" desc="工作分配模式" datatype="String" require="" status="F"  method="None" width="100"
+		    readonly=""  type="String" size="1" xpath="/assignMode" edittype="select"  translated="LIST:0,0-抢件模式;1,1-分配到人;2,2-完全随机分配"  default="0"/>
+
+		<Field id="pass" desc="结点操作标志" datatype="String" require="" status="F"  method="None" width="100"
+		    readonly="true"  type="String" size="1" xpath="/pass"  edittype="select"  translated="LIST:0,0-执行节点;1,1-跳过节点" default="0"/>
+
+	</Fields>
+
+	<Where>
+
+	</Where>
+	<Operations>
+		<!-- operation( addrecord:delrecord:syncsubmit:asyncqrysubmit:asyncupadasubmit ) -->
+		<Button id="btNew" name="btNew" desc="新增工作流任务"
+			operation="addrecord" url="" txn="" />
+		<Button id="btDelete" name="btDelete" desc="删除工作流任务"
+			operation="delrecord" url="" txn="" />
+		<Button id="btSave" name="btSave" desc="保存"
+			operation="asysubmit"
+			updateClass="com.huateng.ebank.business.parammng.update.WorkFlowParamUpdate"
+			url="#" txn="" />
+	</Operations>
+
+</CommQry>

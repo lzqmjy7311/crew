@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-2-24 17:16:04 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.financial.analysis.entity.TWbdataTest" table="T_WB_TEST_V" schema="ECUSER">
+            <id name="id" type="string">
+                <column name="FD_ID" length="30" />
+            </id>
+            <property name="type" type="string">
+                <column name="FD_TYPE" length="50" />
+            </property>
+            <property name="desc" type="string">
+                <column name="FD_DESC" length="25" />
+            </property>
+            <property name="data" type="timestamp">
+                <column name="FD_DATA" length="30" />
+            </property>
+            <property name="typeid" type="string">
+                <column name="FD_TYPEID" length="25" />
+            </property>
+            <property name="customerNum" type="string">
+                <column name="FD_CUSTOMERNUM" length="25" />
+            </property>
+    </class>
+</hibernate-mapping>

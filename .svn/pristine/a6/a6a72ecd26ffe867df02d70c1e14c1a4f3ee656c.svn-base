@@ -1,0 +1,20 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+
+<#assign warningId=RequestParameters["warningId"]?default("")>
+
+<@CommonQueryMacro.page title="个人征信信息">
+<table>
+	<@CommonQueryMacro.CommonQuery id="L12" init="true" submitMode="current">
+		<@CommonQueryMacro.DataTable id="L12Table" readonly="true" fitColumns="false"
+		fieldStr="fdCustname,fdCreditcardtype,fdCreditcard,fd24monMaxloanOverstatus,fdMaxloanOvernum,fdSumloanOvercount,fdCreditCardStatus,fd24monMaxcreditOverstatus,fd12monMaxcreditOvernum,fdCreditcardOverdraftAmt,fdMaxscreditcardOvernum,fdMaxcreditcardOvernum,fdMaxscreditcardOversum,fdMaxcreditcardOversum,fdMaxlfjyloanOversum,fdMaxjyloanOversum,fdFzamtsum,fdReportdate,fdHascredit,fdMaxloanstate,fdCreditlevel,fd3monBadLoanoverState,fd3yearBadLoanState" width="100%" hasFrame="true"/>
+	</@CommonQueryMacro.CommonQuery>
+</table>
+<script>
+	//页面初始化
+	function initCallGetter_post(){
+		var warningId='${warningId}';
+		L12_dataset.setParameter("warningId",warningId);
+	}
+</script>
+</@CommonQueryMacro.page>

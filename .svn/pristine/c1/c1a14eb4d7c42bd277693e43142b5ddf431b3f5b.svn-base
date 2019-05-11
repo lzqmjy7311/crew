@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="参数管理  &gt; 产品管理" navigate="参数管理  &gt; 产品管理" type="call"
+	interface="false" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.person.monitor.getter.TPlDqReportAjByIdGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="id" desc="" edittype="text" datatype="string" size="32" xpath="/id" />
+		<Field id="loanVariety" desc="贷款品种" xpath="/loanVariety" size="100" readOnly="true" colspan="4" width="722" />
+		<Field id="custName" desc="客户姓名" xpath="/custName" size="100" readOnly="true" colspan="4" width="722" />
+		<Field id="custCode" desc="客户编号" xpath="/custCode" size="50" readOnly="true" colspan="4" width="722" />
+		<Field id="certType" desc="证件类型" xpath="/certType" edittype="select" translated="DATA_DIC.21" size="50" readOnly="true" width="250" />
+		<Field id="certCode" desc="证件号码" xpath="/certCode" size="100" readOnly="true" width="250" />
+		<Field id="coopObj" desc="合作商" xpath="/coopObj" size="100" readOnly="true" width="250"/>
+		<Field id="coopObjName" desc="合作商名称" xpath="/coopObjName" size="100" readOnly="true" width="250"/>
+		<Field id="loanAmt" desc="贷款金额" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" xpath="/loanAmt" readOnly="true" default="0" width="250"/>
+		<Field id="loanBalance" desc="贷款余额" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" xpath="/loanBalance" readOnly="true" default="0" width="250"/>
+		<Field id="issueDate" desc="发放日期" edittype="date"
+            datatype="date" xpath="/issueDate" readOnly="true" width="250"/>
+		<Field id="completeDate" desc="完成日期" edittype="date"
+            datatype="date" xpath="/completeDate" readOnly="true" width="250"/>
+		<Field id="issueAmt" desc="已发放金额" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" xpath="/issueAmt" readOnly="true" default="0" width="250"/>
+		<Field id="lendCode" desc="借据编号" xpath="/lendCode" size="50" readOnly="true" width="250"/>
+		<Field id="guarWay" desc="担保方式" xpath="/guarWay" edittype="select" translated="DATA_DIC.123" size="50" readOnly="true" width="250"/>
+		<Field id="gageCode" desc="押品入库编号" xpath="/gageCode" size="50" readOnly="true" width="250"/>
+		<Field id="arrearAmt" desc="拖欠本金" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" xpath="/arrearAmt" readOnly="true" default="0" width="250"/>
+		<Field id="arrearInte" desc="拖欠利息" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" xpath="/arrearInte" readOnly="true" default="0" width="250"/>
+		<Field id="riskStatus" desc="风险状态" xpath="/riskStatus" edittype="select" translated="DATA_DIC.122" size="50" readOnly="true" width="250"/>
+		<Field id="acctStatus" desc="账户状态" xpath="/acctStatus" edittype="select" translated="DATA_DIC.120" size="50" readOnly="true" width="250"/>
+		<Field id="checkPerCode" desc="检查责任人工号" xpath="/checkPerCode" size="50" readOnly="true" width="250"/>
+		<Field id="checkWay" desc="检查方式" edittype="radio" translated="LIST:1,现场;2,非现场"
+            datatype="string" xpath="/checkWay" width="250" />
+		<Field id="checkPlace" xpath="/checkPlace" desc="检查场所" size="200" status="N" method="None" width="250"/>
+		<Field id="checkDate" status="N" desc="检查时间" edittype="date"
+            datatype="date" xpath="/checkDate" width="250"/>
+		<Field id="checkType" status="N" desc="检查方式" edittype="radio" translated="LIST:1,征信;2,电话;3,报表分析;4,其他"
+            datatype="string" xpath="/checkType" colspan="4" width="722" />
+            
+        <Field id="coopItem" desc="合作商/合作项目名称（可多选）" xpath="/coopItem" edittype="checkbox" translated="LIST:1,楼盘开发商;2,中介公司;3,担保公司;4,其他" />
+		<Field id="devComp" desc="楼盘开发商" xpath="/devComp" size="100"/>
+		<Field id="mediumComp" desc="中介公司" xpath="/mediumComp" size="100"/>
+		<Field id="guarComp" desc="担保公司" xpath="/guarComp" size="100"/>
+		<Field id="projectEvolve" status="N" desc="楼盘工程进度" edittype="radio" translated="LIST:1,正常;2,异常"
+            datatype="string" xpath="/projectEvolve" />
+        <Field id="exceDesc" desc="异常情况说明" xpath="/exceDesc" size="500"/>
+        <Field id="deliverCond" status="N" desc="楼盘交付情况（预售房合同交付日期为准）" edittype="radio" translated="LIST:1,正常;2,延期"
+            datatype="string" xpath="/deliverCond" />
+        <Field id="postpDesc" desc="延期情况说明" xpath="/postpDesc" size="500"/>
+        <Field id="tranCardCond" status="N" desc="楼盘他证办证情况" edittype="radio" translated="LIST:1,已办理;2,未办理;3,长期无法办理"
+            datatype="string" xpath="/tranCardCond" />
+        <Field id="tranCardCondDesc" desc="情况说明" xpath="/tranCardCondDesc" size="500"/>
+        
+        <Field id="lmtCtrl" status="N" desc="授信额度控制" edittype="radio" translated="DATA_DIC.113"
+            datatype="string" xpath="/lmtCtrl" />
+        <Field id="riskCtrl" status="N" desc="其他控制" edittype="radio" translated="DATA_DIC.114"
+            datatype="string" xpath="/riskCtrl" />
+        <Field id="otherCtrlDesc" desc="其他措施说明" xpath="/otherCtrlDesc" size="500"/>
+        <Field id="appendCtrl" desc="附加处理措施（可多选）" xpath="/appendCtrl" edittype="checkbox" translated="DATA_DIC.115" />
+        <Field id="applyOpin" desc="申报意见" xpath="/applyOpin"  size="500" edittype="textarea" height="100" width="300" />
+        <Field id="frequency" desc="监控频率" xpath="/frequency" translated="CQ:subAutoDataDic" 
+			   fieldmap="frequency=dataNo;frequencyName=dataName" viewField="dataName"
+			   edittype="select" dropdowntype="dynamic" init="true" size="10" />
+        
+        <Field id="healthCond" status="N" desc="健康状况" edittype="select" translated="LIST:1,良好;2,较差;3,死亡"
+            datatype="string" xpath="/healthCond" width="250"/>
+		<Field id="marriageCond" status="N" desc="婚姻状况" edittype="select" translated="LIST:1,未婚;2,已婚;3,离异"
+            datatype="string" xpath="/marriageCond" width="250"/>
+		<Field id="contactWay" status="N" desc="联系方式变化" edittype="select" translated="LIST:1,无变化;2,已变更"
+            datatype="string" xpath="/contactWay" width="250"/>
+        <Field id="contactWayUpd" desc="地址/电话更新" xpath="/contactWayUpd" size="200" width="250"/>
+        <Field id="profession" status="N" desc="职业变化" edittype="select" translated="LIST:1,无变化;2,已变更"
+            datatype="string" xpath="/profession" width="250"/>
+        <Field id="professionUpd" desc="单位更新" xpath="/professionUpd" size="200" width="250"/>
+        <Field id="property" status="N" desc="资产" edittype="select" translated="LIST:1,无变化;2,减少;3,增加"
+            datatype="string" xpath="/property" width="250"/>
+        <Field id="income" status="N" desc="收入" edittype="select" translated="LIST:1,无变化;2,减少;3,增加"
+            datatype="string" xpath="/income" width="250"/>
+		<Field id="liabilities" status="N" desc="负债" edittype="select" translated="LIST:1,无变化;2,减少;3,增加"
+            datatype="string" xpath="/liabilities" width="250"/>
+		<Field id="ifinflrepmt" status="N" desc="变化情况是否对于还款付息具有较大影响（如存在较大影响请在最后的检查意见中具体说明）" edittype="select" translated="LIST:1,是;2,否"
+            datatype="string" xpath="/ifinflrepmt" width="250"/>
+            
+        <Field id="pledgeAddr" desc="抵押物地址" xpath="/pledgeAddr" size="200" width="250"/>
+        <Field id="pledgeStatus" status="N" desc="抵押物物理状态" edittype="select" translated="LIST:1,完好;2,残损;3,灭失"
+            datatype="string" xpath="/pledgeStatus" width="250"/>
+        <Field id="pledgeValueChange" status="N" desc="抵押物价值变化" edittype="select" translated="LIST:1,未变;2,减少;3,增加"
+            datatype="string" xpath="/pledgeValueChange" width="250"/>
+        <Field id="pledgeValue" desc="抵押物目前价值" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" xpath="/pledgeValue" readOnly="true" default="0" width="250"/>
+        <Field id="pledgeOwner" status="N" desc="抵押物权属变动" edittype="select" translated="LIST:1,正常;2,查封;3,被二次及以上抵押;4,其他异常"
+            datatype="string" xpath="/pledgeOwner" width="250"/>
+        <Field id="pledgeOwnerDesc" desc="抵押物权属变动具体说明" xpath="/pledgeOwnerDesc" size="500" width="250"/>
+        <Field id="guarPerson" status="N" desc="保证人情况" edittype="select" translated="LIST:1,无变动;2,变动"
+            datatype="string" xpath="/guarPerson" width="250"/>
+        <Field id="guarPerName" desc="保证人姓名/名称" xpath="/guarPerName" size="100" width="250"/>
+        <Field id="guarPerPhone" desc="保证人地址/电话" xpath="/guarPerPhone" size="100" width="250"/>
+        <Field id="guarPerLia" status="N" desc="保证人融资负债情况（征信/中证码）" edittype="select" translated="LIST:1,未变;2,减少;3,增加"
+            datatype="string" xpath="/guarPerLia" width="250"/>
+        <Field id="guarPerLiaAmt" desc="负债变化金额（万元）" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥"  xpath="/guarPerLiaAmt" default="0" width="250"/>
+		<Field id="guarAbility" status="N" desc="保证人担保能力" edittype="select" translated="LIST:1,强;2,中;3,弱;4,无"
+            datatype="string" xpath="/guarAbility" width="250"/>
+        
+		<Field id="opinion" desc="审核意见" xpath="/opinion" size="500" edittype="textarea"  height="100" width="500" />
+		<Field id="measCompleteDate" status="N" desc="措施完成时间" edittype="postdate"
+            datatype="date" xpath="/measCompleteDate" />
+    </Fields>
+    
+    <Operations>
+		<Button id="btnSave" name="btnSave" desc="保存" icon="icon-save" operation="asysubmit" 
+			updateClass="com.gbicc.person.monitor.update.TPlDqReportAjUpdate" url="#" txn="" />
+		<Button id="btnSubmit" name="btnSubmit" desc="提交" icon="icon-ok"/>
+		<Button id="btnSubmitTrue" name="btnSubmitTrue" desc="提交" icon="icon-ok" operation="asysubmit" 
+			updateClass="com.gbicc.person.monitor.update.TPlDqReportAjUpdate" url="#" txn="" />
+		<Button id="btnBack" name="btnBack" desc="退回" icon="icon-back" operation="asysubmit" 
+			updateClass="com.gbicc.person.monitor.update.TPlDqReportAjUpdate" url="#" txn="" />
+		<Button id="btnPrint" name="btnPrint" desc="打印" icon="icon-print" />
+	</Operations>
+</CommQry>

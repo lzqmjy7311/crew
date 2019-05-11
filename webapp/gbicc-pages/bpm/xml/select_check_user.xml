@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="流程管理  &gt; 任务重分配" navigate="流程管理  &gt; 任务重分配" type="call"
+	interface="false" pagesize="20" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.bpm.getter.SelectCheckUserGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<Field id="select" desc="select" edittype="checkbox" xpath="" />
+		<Field id="brcode" xpath="/brcode" desc="机构号" edittype="text" datatype="string" 
+			readonly="true" />
+		<Field id="brname" xpath="/brname" desc="机构名称" edittype="text" datatype="string" 
+			readonly="true" />
+		<Field id="tlrno" xpath="/tlrno" desc="操作员号" edittype="text" datatype="string" 
+			readonly="true" />
+		<Field id="tlrname" xpath="/tlrname" desc="操作员名" edittype="text" datatype="string" 
+			readonly="true" />
+    </Fields>
+</CommQry>

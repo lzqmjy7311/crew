@@ -1,0 +1,87 @@
+<CommQry title="TRewL11CompanyCreditIndexId" navigate="TRewL11CompanyCreditIndexId" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.L11Getter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="id" desc="" edittype="text" datatype="string" xpath="/id" />
+        <Field id="fdRegistAmt" desc="注册资金" edittype="text" datatype="string"
+        xpath="/fdRegistAmt" />
+        <Field id="fdCapitalCent" desc="资本集中度" edittype="text" datatype="string"
+        xpath="/fdCapitalCent" />
+        <Field id="fdCapitalAvg" desc="平均出资金额" edittype="text" datatype="string"
+        xpath="/fdCapitalAvg" />
+        <Field id="fdCapitalNum" desc="出资方数量" edittype="text" datatype="int"
+        xpath="/fdCapitalNum" />
+        <Field id="fdNosettTbal" desc="未结清信用总余额（合计）" edittype="text" datatype="string"
+        xpath="/fdNosettTbal" />
+        <Field id="fdNosettTnum" desc="未结清信用业务笔数（合计）" edittype="text" datatype="int"
+        xpath="/fdNosettTnum" />
+        <Field id="fdNosettGzTbal" desc="未结清关注类信用总余额（合计）" edittype="text" datatype="string" 
+        xpath="/fdNosettGzTbal" />
+        <Field id="fdNosettGzTnum" desc="未结清关注类信用业务笔数（合计）" edittype="text" datatype="int"
+        xpath="/fdNosettGzTnum" />
+        <Field id="fdNosettTloanbal" desc="未结清信用总余额（贷款）" edittype="text" datatype="string"
+        xpath="/fdNosettTloanbal" />
+        <Field id="fdNosettTloannum" desc="未结清信用业务笔数（贷款）" edittype="text" datatype="int"
+        xpath="/fdNosettTloannum" />
+        <Field id="fdNosettBlTbal" desc="未结清不良类信贷信用总余额（合计）" edittype="text" datatype="string" 
+        xpath="/fdNosettBlTbal" />
+        <Field id="fdNosettBlTnum" desc="未结清不良类信用业务笔数（合计）" edittype="text" datatype="int"
+        xpath="/fdNosettBlTnum" />
+        <Field id="fdNosettBlTloanbal" desc="未结清不良类信贷信用总余额（贷款）" edittype="text" datatype="string" 
+        xpath="/fdNosettBlTloanbal" />
+        <Field id="fdNosettBlTloannum" desc="未结清不良类信用业务笔数（贷款）" edittype="text" datatype="int" 
+        xpath="/fdNosettBlTloannum" />
+        <Field id="fdSettGzTnum" desc="已结清关注类信用业务笔数（合计）" edittype="text" datatype="int"
+        xpath="/fdSettGzTnum" />
+        <Field id="fdSettTnum" desc="已结清信用业务笔数（合计）" edittype="text" datatype="int"
+        xpath="/fdSettTnum" />
+        <Field id="fdSettTloannum" desc="已结清信用业务笔数（贷款）" edittype="text" datatype="int"
+        xpath="/fdSettTloannum" />
+        <Field id="fdSettGzTloannum" desc="已结清关注类信用业务笔数（贷款）" edittype="text" datatype="int" 
+        xpath="/fdSettGzTloannum" />
+        <Field id="fdSettBlTnum" desc="已结清不良信用业务笔数（合计）" edittype="text" datatype="int"
+        xpath="/fdSettBlTnum" />
+        <Field id="fdSettBlTloannum" desc="已结清不良信用业务笔数（贷款）" edittype="text" datatype="int"
+        xpath="/fdSettBlTloannum" />
+        <Field id="fdHisBlTnum" desc="历史累计不良业务笔数（合计）" edittype="text" datatype="int"
+        xpath="/fdHisBlTnum" />
+        <Field id="fdHisBlTloannum" desc="历史累计不良业务笔数（贷款）" edittype="text" datatype="int"
+        xpath="/fdHisBlTloannum" />
+        <Field id="fdGuatTnum" desc="担保笔数合计" edittype="text" datatype="int"
+        xpath="/fdGuatTnum" />
+        <Field id="fdGuatTamt" desc="担保金额合计" edittype="text" datatype="string"
+        xpath="/fdGuatTamt" />
+        <Field id="fdGuatGzTbal" desc="对外担保关注类业务余额" edittype="text" datatype="string"
+        xpath="/fdGuatGzTbal" />
+        <Field id="fdGuatBlTbal" desc="对外担保不良类业务余额" edittype="text" datatype="string"
+        xpath="/fdGuatBlTbal" />
+        <Field id="fdReportid" desc="报告编号" edittype="text" datatype="string"
+        xpath="/fdReportid" />
+        <Field id="fdReportdate" desc="报告日期" edittype="text" datatype="date"
+        xpath="/fdReportdate" />
+        <Field id="fdLoancardno" desc="贷款卡号" edittype="text" datatype="string"
+        xpath="/fdLoancardno" />
+        <Field id="fdWl3mloannum" desc="未来3个月即将到期信用笔数贷款合计" edittype="text" datatype="int"
+        xpath="/fdWl3mloannum" />
+        <Field id="fdWl3mloanbal" desc="未来3个月即将到期信用笔数贷款余额合计" edittype="text" datatype="string" 
+        xpath="/fdWl3mloanbal" />
+        <Field id="fdWl3mchengnum" desc="未来3个月即将到期信用笔数承兑合计" edittype="text" datatype="int"
+        xpath="/fdWl3mchengnum" />
+        <Field id="fdWl3mchengbal" desc="未来3个月即将到期信用笔数承兑余额合计" edittype="text" datatype="string" 
+        xpath="/fdWl3mchengbal" />
+        <Field id="fd3year5lnum" desc="近3年已结清业务为五级分类后三类的计数" edittype="text" datatype="int"
+        xpath="/fd3year5lnum" />
+        <Field id="fdValid" desc="1当前有效一期" edittype="text" datatype="string"
+        xpath="/fdValid" />
+        <Field id="fdNosettGzTloanbal" desc="未结清关注类信用总余额_贷款" edittype="text" datatype="string" 
+        xpath="/fdNosettGzTloanbal" />
+        <Field id="fdNosettGzTloannum" desc="未结清关注类信用业务笔数_贷款" edittype="text" datatype="int" 
+        xpath="/fdNosettGzTloannum" />
+        <Field id="fdWarnId" desc="预警表ID" edittype="text" datatype="string"
+        xpath="/fdWarnId" />
+        <Field id="fdDataDt" desc="数据日期" edittype="text" datatype="date"
+        xpath="/fdDataDt" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

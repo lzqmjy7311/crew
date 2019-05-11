@@ -1,0 +1,775 @@
+package com.gbicc.util;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.HSSFColor;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.util.CellRangeAddress;
+
+import com.gbicc.bpm.entity.TlrInfoForExcel;
+import com.gbicc.company.financial.analysis.entity.FinanceIndexData;
+import com.gbicc.company.view.zxinfo.entity.TCmCompanyCreditIndexView;
+
+public class DataToExcel {
+	/**
+	 * 文件全路径
+	 */
+	private String fullPath = "";
+	/**
+	 * 文件所在路径
+	 */
+	private String filePath = "D:\\TestDataToExcel\\";
+	/**
+	 * 文件名称
+	 */
+	private String fileName = "财务诊断书_";
+	/**
+	 * 文件类型
+	 */
+	private String fileType = "xls";
+
+	/**
+	 * 默认构造函数 初始化变量
+	 */
+	public DataToExcel() {
+
+	}
+
+	/**
+	 * 获取文件全路径
+	 * 
+	 * @return
+	 */
+	public String getFullPath() {
+		return fullPath;
+	}
+
+	/**
+	 * 设置文件全路径 默认：当前文件夹下
+	 * 
+	 * @return
+	 */
+	public void setFullPath(String fullPath) {
+		this.fullPath = fullPath;
+	}
+
+	/**
+	 * 获取文件所在路径
+	 * 
+	 * @return
+	 */
+	public String getFilePath() {
+		return filePath;
+	}
+
+	/**
+	 * 设置文件所在路径
+	 * 
+	 * @return
+	 */
+	public void setFilePath(String filePath) {
+		File file = new File(filePath);
+		if (!file.exists()) {
+			file.mkdir();
+		} else if (!file.isDirectory()) {
+			file.mkdir();
+		}
+		this.filePath = filePath;
+	}
+
+	/**
+	 * 获取文件名称
+	 * 
+	 * @return
+	 */
+	public String getFileName() {
+		return fileName;
+	}
+
+	/**
+	 * 设置文件名称
+	 * 
+	 * @param fileName
+	 */
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
+	/**
+	 * 获取文件后缀类型
+	 * 
+	 * @return
+	 */
+	public String getFileType() {
+		return fileType;
+	}
+
+	/**
+	 * 设置文件后缀类型 默认:"xls"
+	 * 
+	 * @param fileType
+	 */
+	public void setFileType(String fileType) {
+		this.fileType = fileType;
+	}
+
+	/**
+	 * 生成全路径
+	 */
+	private void generateFullPath() {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+		String temp = fileName;
+		fileName = temp + dateFormat.format(new Date());
+		Random random = new Random(System.currentTimeMillis());
+		String seedStr = Long.toString(random.nextLong());
+		fullPath = filePath + fileName + seedStr + "." + fileType;
+	}
+
+	/**
+	 * 生成"操作员"Excel表格
+	 * 
+	 * @param list
+	 * @return
+	 */
+	public String generateTlrInfoExcel(List<TlrInfoForExcel> list) {
+		try {
+			// 设置文件名前缀
+			this.fileName = "操作员信息_";
+			// 动态生成文件全路径
+			generateFullPath();
+			// 判断文件是否存在
+			// 如果存在，删除历史文件
+			File file = new File(fullPath);
+			if (file.exists()) {
+				file.delete();
+			}
+			// 创建文件输出流
+			FileOutputStream outputStream = new FileOutputStream(fullPath, true);
+			// 1-60000行
+			int pageSize = 60000;
+			int pages = list.size() / 60000 + 1;
+			// 创建HSSFWorkbook对象
+			HSSFWorkbook excel = new HSSFWorkbook();
+			for (int currPage = 0; currPage < pages; currPage++) {
+				int currPageSize=pageSize<list.size()?pageSize:list.size();
+				// 分页写入
+				// 创建页签名称
+				String sheetName = "操作员信息" + (currPage + 1);
+				// 创建该页面标题
+				String title = "操作员信息";
+				// 创建HSSFSheet对象
+				HSSFSheet sheet = excel.createSheet(sheetName);
+				// 创建HSSFRow对象
+				HSSFRow titleRow = sheet.createRow(0);
+				// 创建HSSFCell对象
+				HSSFCell titleCell = titleRow.createCell(0);
+				// 设置单元格的值
+				titleCell.setCellValue(title);
+				// 添加样式
+				// 创建样式对象
+				HSSFFont titleFont = excel.createFont();
+				HSSFCellStyle titleStyle = excel.createCellStyle();
+				// 设置字体样式
+				titleFont.setFontName("宋体");
+				// 设置字体高度
+				titleFont.setFontHeightInPoints((short) 25);
+				// 设置字体颜色
+				titleFont.setColor(HSSFColor.BLACK.index);
+				// 设置粗体
+				titleFont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+				titleStyle.setFont(titleFont);
+				titleStyle.setAlignment(CellStyle.ALIGN_CENTER);
+				titleStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+				titleCell.setCellStyle(titleStyle);
+				// 合并单元格CellRangeAddress构造参数依次表示起始行,截至行,起始列, 截至列
+				sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 6));
+				// 文件主体内容
+				// 主体标题
+				HSSFRow bodyHeaderRow = sheet.createRow(1);
+				HSSFCell bodyHeaderCell0 = bodyHeaderRow.createCell(0);
+				bodyHeaderCell0.setCellValue("操作员号");
+				HSSFCell bodyHeaderCell1 = bodyHeaderRow.createCell(1);
+				bodyHeaderCell1.setCellValue("操作员名称");
+				HSSFCell bodyHeaderCell2 = bodyHeaderRow.createCell(2);
+				bodyHeaderCell2.setCellValue("有效状态");
+				HSSFCell bodyHeaderCell3 = bodyHeaderRow.createCell(3);
+				bodyHeaderCell3.setCellValue("机构");
+				HSSFCell bodyHeaderCell4 = bodyHeaderRow.createCell(4);
+				bodyHeaderCell4.setCellValue("角色");
+				HSSFCell bodyHeaderCell5 = bodyHeaderRow.createCell(5);
+				bodyHeaderCell5.setCellValue("最近登录时间");
+				HSSFCell bodyHeaderCell6 = bodyHeaderRow.createCell(6);
+				bodyHeaderCell6.setCellValue("最近签退时间");
+				// 创建样式对象
+				HSSFCellStyle headerStyle = excel.createCellStyle();
+				HSSFFont headerFont = excel.createFont();
+				sheet.setColumnWidth(0, 500 * 10);
+				sheet.setColumnWidth(1, 500 * 10);
+				sheet.setColumnWidth(2, 500 * 10);
+				sheet.setColumnWidth(3, 500 * 14);
+				sheet.setColumnWidth(4, 500 * 12);
+				sheet.setColumnWidth(5, 500 * 14);
+				sheet.setColumnWidth(6, 500 * 14);
+				// 添加样式
+				headerStyle = excel.createCellStyle();
+				// 设置字体样式
+				headerFont.setFontName("宋体");
+				// 设置字体高度
+				headerFont.setFontHeightInPoints((short) 15);
+				// 设置字体颜色
+				headerFont.setColor(HSSFColor.BLACK.index);
+				// 设置粗体
+				headerFont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+				headerStyle.setFont(headerFont);
+				// 设置填充方式(填充图案)
+				headerStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+				// 设置前景色
+				headerStyle
+						.setFillForegroundColor(HSSFColor.LIGHT_YELLOW.index);
+				// 设置上下左右居中
+				headerStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+				headerStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+				// 设置边框
+				headerStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+				headerStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+				headerStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+				headerStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+				bodyHeaderCell0.setCellStyle(headerStyle);
+				bodyHeaderCell1.setCellStyle(headerStyle);
+				bodyHeaderCell2.setCellStyle(headerStyle);
+				bodyHeaderCell3.setCellStyle(headerStyle);
+				bodyHeaderCell4.setCellStyle(headerStyle);
+				bodyHeaderCell5.setCellStyle(headerStyle);
+				bodyHeaderCell6.setCellStyle(headerStyle);
+				HSSFCellStyle bodyStyle = generateBodyStyle(excel);
+				if (currPageSize <= 0) {
+
+				} else {
+					//
+					for (int i = 2; i < currPageSize + 2; i++) {
+						// 创建当前工作行
+						HSSFRow workRow = sheet.createRow(i);
+						for (int j = 0; j < 7; j++) {
+							// 创建当前行下的当前列
+							HSSFCell workCell = workRow.createCell(j);
+							if (j == 0) {
+								if (null != list.get(i - 2).getTlrNo()) {
+									workCell.setCellValue(list.get(i - 2)
+											.getTlrNo());
+								} else {
+									workCell.setCellValue("");
+								}
+							} else if (j == 1) {
+								if (null != list.get(i - 2).getTlrName()) {
+									workCell.setCellValue(list.get(i - 2)
+											.getTlrName());
+								} else {
+									workCell.setCellValue("");
+								}
+							} else if (j == 2) {
+								if (null != list.get(i - 2).getStatus()) {
+									if (list.get(i - 2).getStatus().equals("1")) {
+										workCell.setCellValue("有效");
+									} else {
+										workCell.setCellValue("无效");
+									}
+								} else {
+									workCell.setCellValue("");
+								}
+							} else if (j == 3) {
+								if (null != list.get(i - 2).getBrName()) {
+									workCell.setCellValue(list.get(i - 2)
+											.getBrName());
+								} else {
+									workCell.setCellValue("");
+								}
+							} else if (j == 4) {
+								if (null != list.get(i - 2).getRoleName()) {
+									workCell.setCellValue(list.get(i - 2)
+											.getRoleName());
+								} else {
+									workCell.setCellValue("");
+								}
+							} else if (j == 5) {
+								if (null != list.get(i - 2).getLastLoginTime()) {
+									String login = list.get(i - 2)
+											.getLastLoginTime();
+									workCell.setCellValue(login.substring(0, 4)
+											+ "-" + login.substring(4, 6) + "-"
+											+ login.substring(6, 8) + " "
+											+ login.substring(8, 10) + ":"
+											+ login.substring(10, 12) + ":"
+											+ login.substring(12));
+								} else {
+									workCell.setCellValue("");
+								}
+							} else if (j == 6) {
+								if (null != list.get(i - 2).getLastLogoutTime()) {
+									String logout = list.get(i - 2)
+											.getLastLogoutTime();
+									workCell.setCellValue(logout
+											.substring(0, 4)
+											+ "-"
+											+ logout.substring(4, 6)
+											+ "-"
+											+ logout.substring(6, 8)
+											+ " "
+											+ logout.substring(8, 10)
+											+ ":"
+											+ logout.substring(10, 12)
+											+ ":"
+											+ logout.substring(12));
+								} else {
+									workCell.setCellValue("");
+								}
+							}
+
+							workCell.setCellStyle(bodyStyle);
+						}
+					}
+				}
+				// 合并大类
+				int start = 2;
+				String currentStr = "";
+				currentStr = list.get(0).getTlrNo();
+				for (int i = 2; i < currPageSize + 2; i++) {
+					if (currentStr.equals(list.get(i - 2).getTlrNo())) {
+						continue;
+					} else {
+						//合并"操作员号"列、"操作员名称"列、"有效状态"列
+						if (i - start > 1) {
+							// 合并单元格CellRangeAddress构造参数依次表示起始行,截至行,起始列, 截至列
+							sheet.addMergedRegion(new CellRangeAddress(start,
+									i - 1, 0, 0));
+							sheet.addMergedRegion(new CellRangeAddress(start,
+									i - 1, 1, 1));
+							sheet.addMergedRegion(new CellRangeAddress(start,
+									i - 1, 2, 2));
+						}
+						start = i;
+						currentStr = list.get(i - 2).getTlrNo();
+					}
+				}
+				if (list.size() + 1 - start > 0) {
+					// 合并单元格CellRangeAddress构造参数依次表示起始行,截至行,起始列, 截至列
+					sheet.addMergedRegion(new CellRangeAddress(start,currPageSize + 1, 0, 0));
+				}
+			}
+			// 输出Excel文件
+			// 将excel对象写入文件
+			excel.write(outputStream);
+			outputStream.flush();
+			outputStream.close();
+			return fullPath;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * 生成"征信信息"Excel表格
+	 * 
+	 * @param list
+	 * @return
+	 */
+	public String generateZXInfoExcel(List<TCmCompanyCreditIndexView> list) {
+		try {
+			// 设置文件名前缀
+			this.fileName = "征信信息_";
+			// 动态生成文件全路径
+			generateFullPath();
+			// 判断文件是否存在
+			// 如果存在，删除历史文件
+			File file = new File(fullPath);
+			if (file.exists()) {
+				file.delete();
+			}
+			// 创建文件输出流
+			FileOutputStream outputStream = new FileOutputStream(fullPath,
+					false);
+			// 创建页签名称
+			String sheetName = "征信信息";
+			// 创建该页面标题
+			String title = "单一客户风险分析--征信信息";
+			// 创建HSSFWorkbook对象
+			HSSFWorkbook excel = new HSSFWorkbook();
+			// 创建HSSFSheet对象
+			HSSFSheet sheet = excel.createSheet(sheetName);
+			// 创建HSSFRow对象
+			HSSFRow titleRow = sheet.createRow(0);
+			// 创建HSSFCell对象
+			HSSFCell titleCell = titleRow.createCell(0);
+			// 设置单元格的值
+			titleCell.setCellValue(title);
+			// 添加样式
+			// 创建样式对象
+			HSSFFont titleFont = excel.createFont();
+			HSSFCellStyle titleStyle = excel.createCellStyle();
+			// 设置字体样式
+			titleFont.setFontName("宋体");
+			// 设置字体高度
+			titleFont.setFontHeightInPoints((short) 25);
+			// 设置字体颜色
+			titleFont.setColor(HSSFColor.BLACK.index);
+			// 设置粗体
+			titleFont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+			titleStyle.setFont(titleFont);
+			titleStyle.setAlignment(CellStyle.ALIGN_CENTER);
+			titleStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+			titleCell.setCellStyle(titleStyle);
+			// 合并单元格CellRangeAddress构造参数依次表示起始行,截至行,起始列, 截至列
+			sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 2));
+			// 文件主体内容
+			// 主体标题
+			HSSFRow bodyHeaderRow = sheet.createRow(1);
+			HSSFCell bodyHeaderCell0 = bodyHeaderRow.createCell(0);
+			bodyHeaderCell0.setCellValue("指标名称");
+			HSSFCell bodyHeaderCell1 = bodyHeaderRow.createCell(1);
+			bodyHeaderCell1.setCellValue("指标值");
+			HSSFCell bodyHeaderCell2 = bodyHeaderRow.createCell(2);
+			bodyHeaderCell2.setCellValue("报告日期");
+			// 创建样式对象
+			HSSFCellStyle headerStyle = excel.createCellStyle();
+			HSSFFont headerFont = excel.createFont();
+			sheet.setColumnWidth(0, 500 * 20);
+			sheet.setColumnWidth(1, 500 * 20);
+			sheet.setColumnWidth(2, 500 * 20);
+			// 添加样式
+			headerStyle = excel.createCellStyle();
+			// 设置字体样式
+			headerFont.setFontName("宋体");
+			// 设置字体高度
+			headerFont.setFontHeightInPoints((short) 15);
+			// 设置字体颜色
+			headerFont.setColor(HSSFColor.BLACK.index);
+			// 设置粗体
+			headerFont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+			headerStyle.setFont(headerFont);
+			// 设置填充方式(填充图案)
+			headerStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+			// 设置前景色
+			headerStyle.setFillForegroundColor(HSSFColor.LIGHT_YELLOW.index);
+			// 设置上下左右居中
+			headerStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+			headerStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+			// 设置边框
+			headerStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+			headerStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+			headerStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+			headerStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+			bodyHeaderCell0.setCellStyle(headerStyle);
+			bodyHeaderCell1.setCellStyle(headerStyle);
+			bodyHeaderCell2.setCellStyle(headerStyle);
+			HSSFCellStyle bodyStyle = generateBodyStyle(excel);
+			if (list.size() <= 0) {
+
+			} else {
+				//
+				for (int i = 2; i < list.size() + 2; i++) {
+					// 创建当前工作行
+					HSSFRow workRow = sheet.createRow(i);
+					for (int j = 0; j < 3; j++) {
+						// 创建当前行下的当前列
+						HSSFCell workCell = workRow.createCell(j);
+						if (j == 0) {
+							if (null != list.get(i - 2).getIndexName()) {
+								workCell.setCellValue(list.get(i - 2)
+										.getIndexName());
+							} else {
+								workCell.setCellValue("");
+							}
+						} else if (j == 1) {
+							if (null != list.get(i - 2).getIndexValue()) {
+								workCell.setCellValue(list.get(i - 2)
+										.getIndexValue().toString());
+							} else {
+								workCell.setCellValue("");
+							}
+						} else if (j == 2) {
+							if(null!=list.get(i-2).getReportdate()){
+								workCell.setCellValue(list.get(i-2).getReportdate().toString().substring(0, 10));
+							}else{
+								workCell.setCellValue("");
+							}
+						}
+						workCell.setCellStyle(bodyStyle);
+					}
+				}
+			}
+			// 输出Excel文件
+			// 将excel对象写入文件
+			excel.write(outputStream);
+			outputStream.flush();
+			outputStream.close();
+			return fullPath;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	private HSSFCellStyle generateBodyStyle(HSSFWorkbook excel) {
+		// 创建样式对象
+		HSSFCellStyle bodyStyle = excel.createCellStyle();
+		HSSFFont bodyFont = excel.createFont();
+		// 添加样式
+		bodyStyle = excel.createCellStyle();
+		// 设置字体样式
+		bodyFont.setFontName("宋体");
+		// 设置字体高度
+		bodyFont.setFontHeightInPoints((short) 10);
+		// 设置字体颜色
+		bodyFont.setColor(HSSFColor.BLACK.index);
+		bodyStyle.setFont(bodyFont);
+		// 设置上下左右居中
+		bodyStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		bodyStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		// 设置边框
+		bodyStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+		bodyStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+		bodyStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+		bodyStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+		return bodyStyle;
+	}
+
+	/**
+	 * 生成"财务诊断分析"Excel表格
+	 * 
+	 * @param list
+	 * @return
+	 */
+	public String generateFinIndexExcel(List<FinanceIndexData> list) {
+		try {
+			// 动态生成文件全路径
+			generateFullPath();
+			// 判断文件是否存在
+			// 如果存在，删除历史文件
+			File file = new File(fullPath);
+			if (file.exists()) {
+				file.delete();
+			}
+			// 创建文件输出流
+			FileOutputStream outputStream = new FileOutputStream(fullPath,
+					false);
+			// 创建页签名称
+			String sheetName = "财务诊断分析";
+			// 创建该页面标题
+			String title = "财务诊断分析";
+			// 创建HSSFWorkbook对象
+			HSSFWorkbook excel = new HSSFWorkbook();
+			// 创建HSSFSheet对象
+			HSSFSheet sheet = excel.createSheet(sheetName);
+			// 创建HSSFRow对象
+			HSSFRow titleRow = sheet.createRow(0);
+			// 创建HSSFCell对象
+			HSSFCell titleCell = titleRow.createCell(0);
+			// 设置单元格的值
+			titleCell.setCellValue(title);
+			// 添加样式
+			// 创建样式对象
+			HSSFFont titleFont = excel.createFont();
+			HSSFCellStyle titleStyle = excel.createCellStyle();
+			// 设置字体样式
+			titleFont.setFontName("宋体");
+			// 设置字体高度
+			titleFont.setFontHeightInPoints((short) 50);
+			// 设置字体颜色
+			titleFont.setColor(HSSFColor.BLACK.index);
+			// 设置粗体
+			titleFont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+			titleStyle.setFont(titleFont);
+			titleStyle.setAlignment(CellStyle.ALIGN_CENTER);
+			titleStyle.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
+			titleCell.setCellStyle(titleStyle);
+			// 合并单元格CellRangeAddress构造参数依次表示起始行,截至行,起始列, 截至列
+			sheet.addMergedRegion(new CellRangeAddress(0, 0, 0, 7));
+			// 文件主体内容
+			// 主体标题
+			HSSFRow bodyHeaderRow = sheet.createRow(1);
+			HSSFCell bodyHeaderCell0 = bodyHeaderRow.createCell(0);
+			bodyHeaderCell0.setCellValue("指标类别");
+			HSSFCell bodyHeaderCell1 = bodyHeaderRow.createCell(1);
+			bodyHeaderCell1.setCellValue("名称");
+			HSSFCell bodyHeaderCell2 = bodyHeaderRow.createCell(2);
+			bodyHeaderCell2.setCellValue("指标解释");
+			HSSFCell bodyHeaderCell3 = bodyHeaderRow.createCell(3);
+			bodyHeaderCell3.setCellValue("当前值");
+			HSSFCell bodyHeaderCell4 = bodyHeaderRow.createCell(4);
+			bodyHeaderCell4.setCellValue("上期值");
+			HSSFCell bodyHeaderCell5 = bodyHeaderRow.createCell(5);
+			bodyHeaderCell5.setCellValue("上二期值");
+			HSSFCell bodyHeaderCell6 = bodyHeaderRow.createCell(6);
+			bodyHeaderCell6.setCellValue("历史均值");
+			HSSFCell bodyHeaderCell7 = bodyHeaderRow.createCell(7);
+			bodyHeaderCell7.setCellValue("升／降");
+			// 创建样式对象
+			HSSFCellStyle headerStyle = excel.createCellStyle();
+			HSSFFont headerFont = excel.createFont();
+			// 添加样式
+			headerStyle = excel.createCellStyle();
+			// 设置字体样式
+			headerFont.setFontName("宋体");
+			// 设置字体高度
+			headerFont.setFontHeightInPoints((short) 15);
+			// 设置字体颜色
+			headerFont.setColor(HSSFColor.BLACK.index);
+			// 设置粗体
+			headerFont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);
+			headerStyle.setFont(headerFont);
+			// 设置填充方式(填充图案)
+			headerStyle.setFillPattern(HSSFCellStyle.SOLID_FOREGROUND);
+			// 设置前景色
+			headerStyle.setFillForegroundColor(HSSFColor.LIGHT_YELLOW.index);
+			// 设置上下左右居中
+			headerStyle.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+			headerStyle.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+			// 设置边框
+			headerStyle.setBorderTop(HSSFCellStyle.BORDER_THIN);
+			headerStyle.setBorderBottom(HSSFCellStyle.BORDER_THIN);
+			headerStyle.setBorderLeft(HSSFCellStyle.BORDER_THIN);
+			headerStyle.setBorderRight(HSSFCellStyle.BORDER_THIN);
+			// 填充标题样式
+			bodyHeaderCell0.setCellStyle(headerStyle);
+			bodyHeaderCell1.setCellStyle(headerStyle);
+			bodyHeaderCell2.setCellStyle(headerStyle);
+			bodyHeaderCell3.setCellStyle(headerStyle);
+			bodyHeaderCell4.setCellStyle(headerStyle);
+			bodyHeaderCell5.setCellStyle(headerStyle);
+			bodyHeaderCell6.setCellStyle(headerStyle);
+			bodyHeaderCell7.setCellStyle(headerStyle);
+			HSSFCellStyle bodyStyle = generateBodyStyle(excel);
+			if (list.size() <= 0) {
+
+			} else {
+				//
+				for (int i = 2; i < list.size() + 2; i++) {
+					// 创建当前工作行
+					HSSFRow workRow = sheet.createRow(i);
+					for (int j = 0; j < 8; j++) {
+						// 创建当前行下的当前列
+						HSSFCell workCell = workRow.createCell(j);
+						if (j == 0) {
+							if (null != list.get(i - 2).getIndexTypeName()) {
+								workCell.setCellValue(list.get(i - 2)
+										.getIndexTypeName());
+							} else {
+								workCell.setCellValue("");
+							}
+						} else if (j == 1) {
+							if (null != list.get(i - 2).getIndexName()) {
+								workCell.setCellValue(list.get(i - 2)
+										.getIndexName());
+							} else {
+								workCell.setCellValue("");
+							}
+						} else if (j == 2) {
+							if (null != list.get(i - 2).getIndexDisp()) {
+								workCell.setCellValue(list.get(i - 2)
+										.getIndexDisp());
+							} else {
+								workCell.setCellValue("");
+							}
+						} else if (j == 3) {
+							if (null != list.get(i - 2).getStringType()) {
+								workCell.setCellValue(list.get(i - 2)
+										.getStringType().toString());
+							} else {
+								workCell.setCellValue("");
+							}
+						} else if (j == 4) {
+							if (null != list.get(i - 2).getsStringType()) {
+								workCell.setCellValue(list.get(i - 2)
+										.getsStringType());
+							} else {
+								workCell.setCellValue("");
+							}
+						} else if (j == 5) {
+							if (null != list.get(i - 2).getSsStringType()) {
+								workCell.setCellValue(list.get(i - 2)
+										.getSsStringType());
+							} else {
+								workCell.setCellValue("");
+							}
+						} else if (j == 6) {
+							if (null != list.get(i - 2).getAvgStringType()) {
+								workCell.setCellValue(list.get(i - 2)
+										.getAvgStringType());
+							} else {
+								workCell.setCellValue("");
+							}
+						} else if (j == 7) {
+							if ("S".equals(list.get(i - 2).getUpDown())) {
+								workCell.setCellValue("升");
+							} else if ("J".equals(list.get(i - 2).getUpDown())) {
+								workCell.setCellValue("降");
+							} else {
+								workCell.setCellValue("-");
+							}
+						}
+						workCell.setCellStyle(bodyStyle);
+					}
+				}
+				// 合并大类
+				int start = 2;
+				String currentStr = "";
+				currentStr = list.get(0).getIndexTypeName();
+				for (int i = 2; i < list.size() + 2; i++) {
+					if (currentStr.equals(list.get(i - 2).getIndexTypeName())) {
+						continue;
+					} else {
+						if (i - start > 1) {
+							// 合并单元格CellRangeAddress构造参数依次表示起始行,截至行,起始列, 截至列
+							sheet.addMergedRegion(new CellRangeAddress(start,
+									i - 1, 0, 0));
+						}
+						start = i;
+						currentStr = list.get(i - 2).getIndexTypeName();
+					}
+					// if(i==list.size()+1){
+					// if(i-start>1){
+					// // 合并单元格CellRangeAddress构造参数依次表示起始行,截至行,起始列, 截至列
+					// sheet.addMergedRegion(new CellRangeAddress(start, i, 0,
+					// 0));
+					// }
+					// }
+				}
+				if (list.size() + 1 - start > 0) {
+					// 合并单元格CellRangeAddress构造参数依次表示起始行,截至行,起始列, 截至列
+					sheet.addMergedRegion(new CellRangeAddress(start, list
+							.size() + 1, 0, 0));
+				}
+			}
+			// 输出Excel文件
+			// 将excel对象写入文件
+			excel.write(outputStream);
+			outputStream.flush();
+			outputStream.close();
+			return fullPath;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+}

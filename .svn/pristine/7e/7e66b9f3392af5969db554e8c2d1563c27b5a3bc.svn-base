@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-11-10 15:05:12 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.person.monitor.entity.TPlYtReport" table="T_PL_YT_REPORT" schema="ECUSER">
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="lendCode" type="string">
+            <column name="FD_LEND_CODE" length="50" />
+        </property>
+        <property name="checkWay" type="string">
+            <column name="FD_CHECK_WAY" length="100" />
+        </property>
+        <property name="riskCtrl" type="string">
+            <column name="FD_RISK_CTRL" length="100" />
+        </property>
+        <property name="otherCtrlDesc" type="string">
+            <column name="FD_OTHER_CTRL_DESC" length="100" />
+        </property>
+        <property name="appendCtrl" type="string">
+            <column name="FD_APPEND_CTRL" length="50" />
+        </property>
+        <property name="applyOpin" type="string">
+            <column name="FD_APPLY_OPIN" length="50" />
+        </property>
+         <property name="loanNo" type="string">
+            <column name="FD_LOAN_NO" length="50" />
+        </property>
+        <property name="loanVariety" type="string">
+            <column name="FD_LOAN_VARIETY" length="50" />
+        </property>
+        <property name="custName" type="string">
+            <column name="FD_CUST_NAME" length="50" />
+        </property>
+        <property name="custCode" type="string">
+            <column name="FD_CUST_CODE" length="50" />
+        </property>
+        <property name="loanAmt" type="java.lang.Double">
+            <column name="FD_LOAN_AMT" precision="53" scale="0" />
+        </property>
+        <property name="loanBalance" type="java.lang.Double">
+            <column name="FD_LOAN_BALANCE" precision="53" scale="0" />
+        </property>
+        <property name="measCompleteDate" type="date">
+            <column name="FD_MEAS_COMPLETE_DATE" length="10" />
+        </property>
+        <property name="mainSurvPer" type="string">
+            <column name="FD_MAIN_SURV_PER" length="50" />
+        </property>
+        <property name="assistSurvPer" type="string">
+            <column name="FD_ASSIST_SURV_PER" length="50" />
+        </property>
+        <property name="checkAddress" type="string">
+            <column name="FD_CHECK_ADDRESS" length="50" />
+        </property>
+        <property name="custTrade" type="string">
+            <column name="FD_CUST_TRADE" length="50" />
+        </property>
+        <property name="surveyDate" type="date">
+            <column name="FD_SURVEY_DATE" length="10" />
+        </property>
+        <property name="productCode" type="string">
+            <column name="FD_PRODUCT_CODE" length="50" />
+        </property>
+        <property name="operResult" type="string">
+            <column name="FD_OPER_RESULT" length="10" />
+        </property>
+        <property name="buesResult" type="string">
+            <column name="FD_BUES_RESULT" length="10" />
+        </property>
+        <property name="guarResult" type="string">
+            <column name="FD_GUAR_RESULT" length="10" />
+        </property>
+        <property name="earnResult" type="string">
+            <column name="FD_EARN_RESULT" length="10" />
+        </property>
+         <property name="loanResult" type="string">
+            <column name="FD_LOAN_RESULT" length="10" />
+        </property>
+        <property name="hasCert" type="string">
+            <column name="FD_HAS_CERT" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

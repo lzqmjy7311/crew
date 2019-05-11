@@ -1,0 +1,170 @@
+package com.gbicc.bpm.getter;
+
+import java.util.List;
+
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.util.StringUtils;
+
+import com.gbicc.bpm.entity.TaskDivertP;
+import com.huateng.common.err.Module;
+import com.huateng.common.err.Rescode;
+import com.huateng.commquery.result.Result;
+import com.huateng.commquery.result.ResultMng;
+import com.huateng.ebank.business.common.PageQueryResult;
+import com.huateng.ebank.business.common.service.BctlService;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.framework.exceptions.CommonException;
+import com.huateng.ebank.framework.util.ApplicationContextUtils;
+import com.huateng.ebank.framework.web.commQuery.BaseGetter;
+import com.huateng.exception.AppException;
+
+public class TaskDivertPGetter extends BaseGetter {
+
+	@Override
+	public Result call() throws AppException {
+		try {
+			PageQueryResult pageResult = getData();
+			ResultMng.fillResultByList(getCommonQueryBean(),
+					getCommQueryServletRequest(), pageResult.getQueryResult(),
+					getResult());
+			result.setContent(pageResult.getQueryResult());
+			result.getPage().setTotalPage(
+					pageResult.getPageCount(getResult().getPage()
+							.getEveryPage()));
+			result.init();
+			return result;
+		} catch (AppException appEx) {
+			throw appEx;
+		} catch (Exception ex) {
+			throw new AppException(Module.SYSTEM_MODULE,
+					Rescode.DEFAULT_RESCODE, ex.getMessage(), ex);
+		}
+	}
+
+	protected PageQueryResult getData() throws CommonException {
+		//
+		BctlService bctlService = BctlService.getInstance();
+		// get parameters
+		String taskCode = (String) getCommQueryServletRequest()
+				.getParameterMap().get("taskCode");
+		String taskType = (String) getCommQueryServletRequest()
+				.getParameterMap().get("taskType");
+		String custCode = (String) getCommQueryServletRequest()
+				.getParameterMap().get("custCode");
+		String custName = (String) getCommQueryServletRequest()
+				.getParameterMap().get("custName");
+		String createTimeStart = (String) getCommQueryServletRequest()
+				.getParameterMap().get("createTimeStart");
+		String createTimeEnd = (String) getCommQueryServletRequest()
+				.getParameterMap().get("createTimeEnd");
+		String tlrInfo = (String) getCommQueryServletRequest()
+				.getParameterMap().get("tlrInfo");
+		String brName = (String) getCommQueryServletRequest().getParameterMap()
+				.get("brName");
+		String brCode = (String) getCommQueryServletRequest().getParameterMap()
+				.get("brCode");
+		// query main sql
+		StringBuffer mainSql = new StringBuffer(
+						" SELECT WT.FD_ID AS ID,WT.TASK_CODE AS TASKCODE,CASE WHEN T.TASK_DEF_KEY_ = 'R601_1' THEN 'true' ELSE 'flase' END AS ROOTFLAG,'DKH' AS TASKTYPE,'单客户预警' AS TASKTYPENAME,C.FD_CUSTCODE AS CUSTCODE,C.FD_CUSTNAME AS CUSTNAME,DD.DATA_TYPE_NO AS TASKSTATUSNO,DD.DATA_NAME AS TASKSTATUS,T.CREATE_TIME_ AS CREATETIME,TLR.TLRNO AS TLRNO,TLR.TLR_NAME AS TLRNAME,TLR.TLR_NAME||'('||TLR.TLRNO||')' AS TLRINFO,T.TASK_DEF_KEY_ AS ROLEID,B.BRCODE AS BRCODE,B.BRNAME AS BRNAME,B.BRCLASS AS BRCLASS "
+						+ " FROM ACT_RU_TASK T "
+						+ " JOIN ACT_RU_EXECUTION E ON T.PROC_INST_ID_=E.PROC_INST_ID_ "
+						+ " JOIN T_CM_WARN_TASK WT ON E.BUSINESS_KEY_=WT.FD_ID "
+						+ " LEFT JOIN T_CM_WARN_CUSTOMER C ON WT.FD_CUSTOMER_ID=C.FD_ID "
+						+ " LEFT JOIN DATA_DIC DD ON WT.FD_STATUS=DD.DATA_NO AND DATA_TYPE_NO='12593' "
+						+ " LEFT JOIN TLR_INFO TLR ON T.ASSIGNEE_=TLR.TLRNO "
+						+ " LEFT JOIN BCTL B ON WT.FD_TASK_ORG=B.BRCODE "
+						+ " WHERE T.PROC_DEF_ID_ LIKE 'CM_%' "
+						+ " UNION "
+						+ " SELECT SW.FD_ID AS ID,SW.FD_TASK_CODE AS TASKCODE,CASE WHEN T.TASK_DEF_KEY_ = 'R560_1'  OR T.TASK_DEF_KEY_ = 'R603_1' THEN 'true' ELSE 'false' END AS ROOTFLAG ,'DGZ' AS TASKTYPE,'单规则预警' AS TASLTYPENAME,SW.FD_FCETTYPECODE AS CUSTCODE,SW.FD_FCETNAME  AS CUSTNAME,DD.DATA_TYPE_NO AS TASKSTATUSNO,DD.DATA_NAME AS TASKSTATUS,T.CREATE_TIME_ AS CREATETIME,TLR.TLRNO AS TLRNO,TLR.TLR_NAME AS TLRNAME,TLR.TLR_NAME||'('||TLR.TLRNO||')' AS TLRINFO,T.TASK_DEF_KEY_ AS ROLEID,B.BRCODE,B.BRNAME AS BRNAME,B.BRCLASS AS BRCLASS "
+						+ " FROM ACT_RU_TASK T "
+						+ " JOIN ACT_RU_EXECUTION E ON T.PROC_INST_ID_=E.PROC_INST_ID_ "
+						+ " JOIN T_CM_SINGLE_RUL_WARNING SW ON E.BUSINESS_KEY_=SW.FD_ID "
+						+ " LEFT JOIN DATA_DIC DD ON SW.FD_WARN_STATUS=DD.DATA_NO AND DATA_TYPE_NO='105' "
+						+ " LEFT JOIN TLR_INFO TLR ON T.ASSIGNEE_=TLR.TLRNO "
+						+ " LEFT JOIN BCTL B ON SW.FD_TASK_ORG=B.BRCODE "
+						+ " WHERE T.PROC_DEF_ID_ LIKE 'CM_%' ");
+		// query sql
+		StringBuffer sql = new StringBuffer(
+				" SELECT ID AS ID, "
+				+ " TASKCODE AS TASKCODE, "
+				+ " ROOTFLAG AS ROOTFLAG, "
+				+ " TASKTYPE AS TASKTYPE, "
+				+ " TASKTYPENAME AS TASKTYPENAME, "
+				+ " CUSTCODE AS CUSTCODE, "
+				+ " CUSTNAME AS CUSTNAME, "
+				+ " TASKSTATUSNO AS TASKSTATUSNO, "
+				+ " TASKSTATUS AS TASKSTATUS, "
+				+ " CREATETIME AS CREATETIME, " 
+				+ " TLRNO AS TLRNO, "
+				+ " TLRNAME AS TLRNAME,"
+				+ " TLRINFO AS TLRINFO, "
+				+ " ROLEID AS ROLEID, "
+				+ " BRCODE AS BRCODE, " 
+				+ " BRNAME AS BRNAME, "
+				+ " BRCLASS AS BRCLASS "
+				+ " FROM　( ");
+		sql.append(mainSql);
+		sql.append(" ) ");
+		sql.append(" WHERE 1=1 ");
+		// query appending condition
+		if (StringUtils.hasText(taskCode)) {
+			sql.append(" AND TASKCODE LIKE '%" + taskCode + "%' ");
+		}
+		if (StringUtils.hasText(custCode)) {
+			sql.append(" AND CUSTCODE LIKE '%" + custCode + "%' ");
+		}
+		if (StringUtils.hasText(custName)) {
+			sql.append(" AND CUSTNAME LIKE '%" + custName + "%' ");
+		}
+		if (StringUtils.hasText(tlrInfo)) {
+			sql.append(" AND TLRINFO LIKE '%" + tlrInfo + "%' ");
+		}
+		if (StringUtils.hasText(createTimeStart)) {
+			sql.append(" AND TO_CHAR(CREATETIME,'YYYYMMDD')>='"
+					+ createTimeStart + "' ");
+		}
+		if (StringUtils.hasText(createTimeEnd)) {
+			sql.append(" AND TO_CHAR(CREATETIME,'YYYYMMDD')<='"
+					+ createTimeEnd + "' ");
+		}
+		if (StringUtils.hasText(taskType)) {
+			sql.append(" AND TASKTYPE LIKE '" + taskType + "%' ");
+		}
+		if (StringUtils.hasText(brName)) {
+			sql.append(" AND BRNAME LIKE '%" + brName + "%' ");
+		}
+		if (StringUtils.hasText(brCode) && (!"00001".equals(brCode))) {
+			String brCodes = bctlService.getAllSubListStr(brCode);
+			sql.append(" AND BRCODE IN (" + brCodes + ") ");
+		}
+		// 每页粒度大小
+		Integer pageSize = getResult().getPage().getEveryPage();
+		// 当前页数
+		Integer pageIndex = getResult().getPage().getCurrentPage();
+		// 分页
+		StringBuffer sqlp = new StringBuffer("SELECT T0.* FROM ( ");
+		sqlp.append("SELECT T.*,ROW_NUMBER() OVER() AS RNUM FROM ( ");
+		sqlp.append(sql);
+		sqlp.append(") T ) T0 WHERE T0.RNUM>" + (pageIndex - 1) * pageSize
+				+ " ");
+		sqlp.append("FETCH FIRSt " + pageSize + " ROWS ONLY ");
+		// 统计总数目
+		StringBuffer sqll = new StringBuffer("SELECT COUNT(1) FROM ( ");
+		sqll.append(sql);
+		sqll.append(" )");
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		Integer totalCount = (Integer) rootdao.querySqlOne(sqll.toString());
+		//
+		JdbcTemplate jdbcTemplate = (JdbcTemplate) ApplicationContextUtils
+				.getBean("JdbcTemplate");
+		List<TaskDivertP> listT = jdbcTemplate.query(sqlp.toString(),
+				BeanPropertyRowMapper.newInstance(TaskDivertP.class));
+		PageQueryResult pageQueryResult = new PageQueryResult();
+		pageQueryResult.setQueryResult(listT);
+		pageQueryResult.setTotalCount(totalCount);
+		return pageQueryResult;
+	}
+
+}

@@ -1,0 +1,128 @@
+package com.gbicc.company.financial.analysis.entity;
+
+import java.sql.Clob;
+import java.util.Date;
+
+public class TOutCouJudgmentDetail {
+	   /*
+	    * ID.
+	    */
+	    private String id;
+	    /*
+	    * 企业名称/姓名.
+	    */
+	    private String companyAnme;
+	    /*
+	    * 案件大类.
+	    */
+	    private String caseType;
+	    /*
+	    * 文书编号.
+	    */
+	    private String writNo;
+	    /*
+	    * 文书标题.
+	    */
+	    private String writTitle;
+	    /*
+	    * 判决法院.
+	    */
+	    private String judgCourt;
+	    /*
+	    * 判决时间.
+	    */
+	    private Date judgDate;
+	    /*
+	    * 原始文档.
+	    */
+	    private Clob content;
+	    /*
+	    * 原链接.
+	    */
+	    private String sourceLink;
+	    /*
+	    * 关联基本信息主键.
+	    */
+	    private String baseId;
+	    /*
+	    * 关联ID.
+	    */
+	    private String relaId;
+	    /*
+	    * 数据日期.
+	    */
+	    private Date rowDate;
+		public String getId() {
+			return id;
+		}
+		public void setId(String id) {
+			this.id = id;
+		}
+		public String getCompanyAnme() {
+			return companyAnme;
+		}
+		public void setCompanyAnme(String companyAnme) {
+			this.companyAnme = companyAnme;
+		}
+		public String getCaseType() {
+			return caseType;
+		}
+		public void setCaseType(String caseType) {
+			this.caseType = caseType;
+		}
+		public String getWritNo() {
+			return writNo;
+		}
+		public void setWritNo(String writNo) {
+			this.writNo = writNo;
+		}
+		public String getWritTitle() {
+			return writTitle;
+		}
+		public void setWritTitle(String writTitle) {
+			this.writTitle = writTitle;
+		}
+		public String getJudgCourt() {
+			return judgCourt;
+		}
+		public void setJudgCourt(String judgCourt) {
+			this.judgCourt = judgCourt;
+		}
+		public Date getJudgDate() {
+			return judgDate;
+		}
+		public void setJudgDate(Date judgDate) {
+			this.judgDate = judgDate;
+		}
+		public Clob getContent() {
+			return content;
+		}
+		public void setContent(Clob content) {
+			this.content = content;
+		}
+		public String getSourceLink() {
+			return sourceLink;
+		}
+		public void setSourceLink(String sourceLink) {
+			this.sourceLink = sourceLink;
+		}
+		public String getBaseId() {
+			return baseId;
+		}
+		public void setBaseId(String baseId) {
+			this.baseId = baseId;
+		}
+		public String getRelaId() {
+			return relaId;
+		}
+		public void setRelaId(String relaId) {
+			this.relaId = relaId;
+		}
+		public Date getRowDate() {
+			return rowDate;
+		}
+		public void setRowDate(Date rowDate) {
+			this.rowDate = rowDate;
+		}
+
+}

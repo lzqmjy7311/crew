@@ -1,0 +1,40 @@
+package com.gbicc.bpm;
+
+import java.util.Iterator;
+
+import org.activiti.engine.delegate.DelegateTask;
+import org.activiti.engine.delegate.TaskListener;
+
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+
+/**
+ * 创建任务监听器
+ * @date    2016年1月18日
+ * @author  tangdu
+ * @desc
+ */
+public class CustomCreateTaskListener implements TaskListener {
+	private static final long serialVersionUID = 778346114733476743L;
+
+	@Override
+	@SuppressWarnings("rawtypes")
+	public void notify(DelegateTask task) {
+		try {
+			/*
+			 * 任务退回后再次提交系统中的代码会随机发送给角色中的一个用户，
+			 * 该监听器会先查找历史表中是否已经存在审批人，存在则更改。
+			 */
+			ROOTDAO rootDao=ROOTDAOUtils.getROOTDAO();
+			String sql="select assignee_ from ACT_HI_TASKINST where proc_inst_id_='"+task.getProcessInstanceId()+"' "+ 
+			" and task_def_key_='"+task.getTaskDefinitionKey()+"' order by end_time_ desc";
+			Iterator it=rootDao.queryBySQL(sql);
+			if(it.hasNext()){
+				String assignee=(String) it.next();
+				task.setAssignee(assignee);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}

@@ -1,0 +1,48 @@
+<CommQry title="TRewJ09EmpId" navigate="TRewJ09EmpId" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.J09Getter">
+    <Include id="BankParam" />
+    <Fields>
+    	<Field id="usrCode" desc="员工号" edittype="text" datatype="string"
+        xpath="/usrCode" />
+        <Field id="usrName" desc="员工姓名" edittype="text" datatype="string"
+        xpath="/usrName" />
+        <Field id="idCardNo" desc="身份证号" edittype="text" datatype="string"
+        xpath="/idCardNo" />
+        <Field id="depName" desc="当前岗位名称" edittype="text" datatype="string"
+        xpath="/depName" />
+        
+        <!--
+        <Field id="seq" desc="" edittype="text" datatype="string" xpath="/seq" />
+        <Field id="optType" desc="" edittype="text" datatype="string"
+        xpath="/optType" />
+        <Field id="optTime" desc="" edittype="text" datatype="string"
+        xpath="/optTime" />
+        <Field id="usrPinyin" desc="" edittype="text" datatype="string"
+        xpath="/usrPinyin" />
+        <Field id="orgCode" desc="" edittype="text" datatype="string"
+        xpath="/orgCode" />
+        <Field id="orgName" desc="" edittype="text" datatype="string"
+        xpath="/orgName" />
+        <Field id="depCode" desc="" edittype="text" datatype="string"
+        xpath="/depCode" />
+        <Field id="tel" desc="" edittype="text" datatype="string" xpath="/tel" />
+        <Field id="mobile" desc="" edittype="text" datatype="string" xpath="/mobile" />
+        <Field id="workType" desc="" edittype="text" datatype="string"
+        xpath="/workType" />
+        <Field id="roleid" desc="" edittype="text" datatype="string" xpath="/roleid" />
+        <Field id="rolename" desc="" edittype="text" datatype="string"
+        xpath="/rolename" />
+        <Field id="itemCode" desc="" edittype="text" datatype="string"
+        xpath="/itemCode" />
+        <Field id="itemName" desc="" edittype="text" datatype="string"
+        xpath="/itemName" />
+        <Field id="orgCodeShrcc" desc="" edittype="text" datatype="string"
+        xpath="/orgCodeShrcc" />
+        <Field id="warnId" desc="预警表ID" edittype="text" datatype="string"
+        xpath="/warnId" />
+        <Field id="dataDt" desc="数据日期" edittype="text" datatype="date"
+        xpath="/dataDt" />-->
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

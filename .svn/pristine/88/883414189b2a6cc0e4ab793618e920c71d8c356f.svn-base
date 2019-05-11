@@ -1,0 +1,164 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<@CommonQueryMacro.page title="标签页">
+<style>
+	div.divform1{
+		border:1px solid black;
+		min-width:1200px;
+		min-height:800px;
+		margin:20px 20px 20px 20px;
+		float:none;
+		clear:both;
+	}
+	div.divform2{
+		width:80%;
+		height:400px;
+		margin:20px auto;
+		text-align:center;
+		border:1px solid #416AA3;
+		padding:30px 10px 10px 10px;
+	}
+	div.divform3{
+		width:46%;
+		height:260px;
+		float:left;
+		text-align:left;
+		margin: 0 0 0 50px;
+		padding:60px 0 0 0
+	}
+	div.divform4{
+		width:32.5%;
+		height:360px;
+		float:left;
+		border:1px solid #416AA3;
+		margin:20px 0 10px 5px;
+		text-align:center;
+		padding:15px 0 30px 0
+	}
+	span.form{
+		font-size:140%;
+		font-weight:bold;
+		margin-left:30px;
+	}
+	div.fxsm{
+		margin:0px 10px 0 0;
+		width:280px;
+	}
+	div.tjqj{
+		margin:0 0 0 20px;
+	}
+	div.hrdiv{
+		width:1100px;
+		height:1px;
+		border-top:1px solid #E5E5E5;
+		margin-bottom:5px
+	}	
+</style>
+	<@CommonQueryMacro.CommonQuery id="in2" init="true" submitMode="current" >
+			<@CommonQueryMacro.Interface id="interface" label="请输入查询条件" colNm=4 fieldStr="deptName,customerManagerName,startDt,rulTheme,endDt" showButton="false" />
+			<center><@CommonQueryMacro.Button id="btQuery"/>&nbsp;&nbsp;&nbsp;&nbsp;<@CommonQueryMacro.Button id="btRest"/></center>
+ 	</@CommonQueryMacro.CommonQuery>
+ 		<!-- javascript -->
+	<script type="text/javascript" src="${contextPath}/gbicc-pages/jquery-form.js"></script>
+	<script src="${contextPath}/templets/ui/js/chart/highcharts.js"></script>
+	<script src="${contextPath}/templets/ui/js/chart/highcharts-more.js"></script>
+ 	<div id="1" class="divform2">触警客户数量统计分析</div>
+	<script>
+		function initCallGetter_post(){
+			if(user_info.roleId=="601"){
+				in2_interface_dataset.setFieldReadOnly("customerManagerName",true);
+				in2_interface_dataset.setFieldReadOnly("deptName",true);
+			}
+			var deptCd;
+			var startDt;
+			var endDt;
+			var warnLevel;
+			var customerManager;
+			drawpict(startDt,endDt,customerManager,deptCd,warnLevel);
+
+		}
+		function customerManagerName_DropDown_beforeOpen(dropDown){
+
+			var deptCd = in2_interface_dataset.getValue('deptCd');//根据第一个selectId获得第一个select值
+			if(!deptCd){in2_interface_dataset.setValue('customerManagerName',''); in2_interface_dataset.setValue('customerManager','');return "请选择机构!";}//判断第一个select的值是否为空，如果为空直接返回一个字符串
+			if(user_info.roleId=="601"){
+				TlrInfo_DropDownDataset.setParameter("tlrno",user_info.userId); 
+			}
+			TlrInfo_DropDownDataset.setParameter("brcode",deptCd); 
+			TlrInfo_DropDownDataset.setParameter("flag","yes");
+			customerManagerName_DropDown.cached=false;//让qGroupId不存入缓存
+		}
+		function deptName_DropDown_onSelect(dropDown,record,editor){
+			in2_interface_dataset.setValue('customerManagerName','');
+			in2_interface_dataset.setValue('customerManager','');
+			return true;
+		}
+		function btRest_onClick(button){
+			in2_interface_dataset.clearData();
+		}
+		function btQuery_onClick(button){
+			var deptCd;
+			var startDt;
+			var endDt;
+			var warnLevel;
+			var customerManager;
+			deptCd=in2_interface_dataset.getValue("deptCd");
+			startDt=in2_interface_dataset.getValue("startDt");
+			endDt=in2_interface_dataset.getValue("endDt");
+			rulTheme=in2_interface_dataset.getValue("rulTheme");
+			customerManager=in2_interface_dataset.getValue("customerManager");
+			if(startDt>endDt){
+				alert("请输入正确的日期范围");
+				return false;
+			}
+			drawpict(startDt,endDt,customerManager,deptCd,rulTheme);
+			// console.log(deptCd+"--"+rulTheme+"--"+startDt+"--"+endDt+"--"+customerManager);
+		}
+		function drawpict(startDt,endDt,customerManager,deptCd,rulTheme){
+			$.messager.progress({title:'请稍候',msg:'正在载入...'});
+			$.ajax({
+				url :"${contextPath}/char/overriskviewHigtCharServlet",
+		        type : "post",
+				data:{
+					customerManager:customerManager,
+					deptCd:deptCd,
+					startDt:startDt,
+					endDt:endDt,
+					rulTheme:rulTheme,
+					flag:'o2',
+					roleId:user_info.roleId,
+					orgId:user_info.orgId,
+					userId:user_info.userId
+				},
+				success:function(data){
+					var dataJson=eval("("+data+")");
+					$('div#1').highcharts({  
+				        chart:{  
+				          	type:'line'
+				        },  
+				        credits:{
+				        	text:'',
+				        },
+				        title:{  
+				            text: '触警客户数量统计分析',						//主表题  
+				        }, 
+				        credits:{text:"www.gbicc.net"},
+				        xAxis:{   										//横坐表  
+				        	categories: dataJson.listXdata,  			//动态解析
+				        	lineWidth:0
+				        },  
+				     	yAxis:{  
+							lineWidth:0,
+							min:0
+				       	},
+				      	tooltip: { 										//数据点的提示框  
+				        },  
+				        legend: {  
+				       	},   
+				        series:dataJson.data  							//动态解析
+					 });
+					$.messager.progress('close');
+				}
+			});
+		}
+	</script>
+</@CommonQueryMacro.page>

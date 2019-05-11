@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-3-3 15:11:20 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+	<class name="com.gbicc.log.entity.TEtlDetailLog" table="T_ETL_DETAIL_LOG">
+		<comment>日志明细表</comment>
+		<id name="etlDetailLogId" type="string">
+            <column name="ETL_DETAIL_LOG_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+		<property name="dataDate" type="string">
+            <column name="DATA_DATE" length="8" />
+        </property>		
+        <property name="procName" type="string">
+            <column name="PROC_NAME" length="100" />
+        </property>	
+        <property name="tableName" type="string">
+            <column name="TABLE_NAME" length="100" />
+        </property>
+        <property name="loadRowsCount" type="java.lang.Integer">
+            <column name="LOAD_ROWS_COUNT" />
+        </property>
+        <property name="startTimestamp" type="string">
+            <column name="START_TIMESTAMP" length="19" />
+        </property>
+        <property name="endTimestamp" type="string">
+            <column name="END_TIMESTAMP" length="19" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="账户开关信息" navigate="数据查询&gt; 定时任务执行日志查询"
+	type="call"
+	interface="true"
+	pagesize="10"
+	async="true"
+	databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.dataquery.getter.TblCronTaskJobLogGetter">
+	<Include id="BankParam" />
+
+	<PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="批量下载-定时任务日志信息" maxPage="20" perfecth="20" />
+
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="id" desc="主键" require="" edittype="text" datatype="string" method="None"
+			readonly="false" size="32" status="N" default="" primary="true" xpath="/id" />
+
+		<Field id="jobno" desc="任务编号" require="" edittype="text" datatype="string" method="None"
+			readonly="false" size="32"  status="N" default="" xpath="/jobno" />
+
+		<Field id="subProceFunction" desc="任务类" require="" edittype="text" datatype="string" method="None"
+			readonly="false" size="256"  status="F" default="" xpath="/subProceFunction" />
+
+		<Field id="excuteTime" desc="执行时间" require="" edittype="date" datatype="timestamp" method="None"
+			readonly="false" size="32"  status="F" default="" xpath="/excuteTime" />
+
+		<Field id="excuteResult" desc="执行结果" require="" edittype="select" translated="LIST:0,成功;1,失败" method="None"
+			readonly="false"  status="F" width="" default="" xpath="/excuteResult" />
+
+		<Field id="excuteOwn" desc="执行人" require="" edittype="text" datatype="string" method="None"
+			readonly="false"  xpath="/excuteOwn" />
+
+		<Field id="failFlag" desc="失败标志" require="" edittype="select" translated="LIST:0,未失败;1,失败" method="None"
+			readonly="false" size="256" status="F" default="" xpath="/failFlag" />
+
+	 	<Field id="sucFlag" desc="成功标志" require="" edittype="select" translated="LIST:0,未成功;1,成功" method="None"
+	 	  readonly="false"  xpath="/sucFlag" />
+	 	  
+	 	<Field id="exceptionMsg" desc="失败信息" require="" edittype="text" datatype="string" method="None" 
+	 	  readonly="false" size="512" status="N" default="" xpath="/exceptionMsg" />
+
+        <Field id="endExcuteFlag" desc="是否已结束当日执行" require="" edittype="select" datatype="string" method="None"
+	 	  readonly="false" size="32" status="N" default="" xpath="/endExcuteFlag" translated="LIST:0,否;1,是" />
+	</Fields>
+
+	<Where>
+
+		<DateTextBox id="qstartDate" desc="执行时间开始" tip="执行时间"
+			require="false" status="F" edittype="date" datatype="timestamp" method="None" size="150" width=""
+			primary="false" index="0" type="String" />
+
+		<DateTextBox id="qendDate" desc="执行时间结束" tip="执行时间结束"
+			require="false" status="F" datatype="timestamp" method="None" size="150" width=""
+			primary="false" index="1" type="String" />
+
+		<Option id="qQuartzResult" desc="执行结果" tip="定时任务结果"
+			require="" edittype="select" datatype="String" method="None"
+			readonly="false" size="2" translated="LIST:0,成功;1,失败" status="F" default="" xpath="" index="2"  />
+
+
+	</Where>
+
+	<Operations>
+	</Operations>
+	<Sql>
+	</Sql>
+</CommQry>

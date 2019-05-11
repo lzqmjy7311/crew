@@ -1,0 +1,75 @@
+<CommQry title="TRulDefinitionId" navigate="TRulDefinitionId" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+	transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.rule.getter.TRulDefinitionGetter">
+	<Include id="BankParam" />
+	<PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+	<Fields>
+		<Field id="id" desc="" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default="" xpath="/id" />
+		<Field id="ruleCode" desc="规则编号" width="350" require="true" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="20" scale="2" default=""
+			xpath="/ruleCode" />
+		<Field id="ruleName" desc="规则名称" width="350" require="true" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="200" scale="2" default=""
+			xpath="/ruleName" />
+		<Field id="ruleContent" desc="规则内容" require="" edittype="textarea" datatype="string" method="None" readonly="false" type="" status="F" width="960" height="540" size="15" scale="2" default=""
+			xpath="/ruleContent" />
+		<Field id="ruleCreateddate" desc="规则创建时间" require="" edittype="timestamp" datatype="timestamp" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+			xpath="/ruleCreateddate" />
+		<Field id="ruleUpdateddate" desc="规则修改时间" require="" edittype="timestamp" datatype="timestamp" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+			xpath="/ruleUpdateddate" />
+		<Field id="ruleVersion" desc="规则版本" require="" edittype="text" datatype="int" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+			xpath="/ruleVersion" />
+		<Field id="categoryId" desc="分类目录" require="true" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+			xpath="/categoryId" />
+		<Field id="ruleStatus" desc="规则状态" require="" edittype="select"  translated="DATA_DIC.103"  datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+			xpath="/ruleStatus" />
+			
+		<Field id="triggerType" desc="触发类型" edittype="select" datatype="string" xpath="/triggerType" translated="DATA_DIC.197" default="T2"  />
+		<Field id="triggerPeriodInterval" desc="触发周期间隔" width="350" edittype="number" datatype="number" scale="0"
+			xpath="/triggerPeriodInterval" />
+		<Field id="triggerPeriodUnit" desc="触发周期单位" width="350" edittype="select" datatype="string" translated="DATA_DIC.198"
+			xpath="/triggerPeriodUnit" />
+			
+		<Field id="ruleType" desc="规则类型" width="350" require="" edittype="select" translated="DATA_DIC.199" xpath="/ruleType" />
+		
+		<Field id="ruleLevel" desc="等级" width="350" require="" edittype="select" translated="DATA_DIC.200" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+			xpath="/ruleLevel" />
+		<Field id="ruleApplyobj" desc="适用对象" width="350" require="" edittype="select" translated="DATA_DIC.201" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+			xpath="/ruleApplyobj" />
+		<Field id="ruleRemark" desc="备注" require="" width="350" height="70" edittype="textarea" datatype="string" method="None" readonly="false" type="" status="F" size="200" scale="2" default=""
+			xpath="/ruleRemark" />
+			
+		<Field id="enable" desc="状态" require="" edittype="select" translated="DATA_DIC.196" 
+			xpath="/enable" />
+		<Field id="opr" desc="操作" edittype="text" datatype="string" xpath="/id" />
+	</Fields>
+	<Where></Where>
+	<Operations>
+		<Button id="DbtnAdd" name="DbtnAdd" desc="修改" icon="icon-edit" 
+			updateClass="#" url="#" txn="" />	
+		<!--复制发布版本-->
+		<Button id="DbtnCopy" name="DbtnCopy" desc="修改" icon="icon-edit" operation="asysubmit" 
+			updateClass="com.gbicc.rule.update.TRuleDefinitionUpdate" url="#" txn="" />
+		<!--保存form-->
+		<Button id="DbtnUpt" name="DbtnUpt" desc="保存" icon="icon-save" operation="asysubmit" 
+			updateClass="com.gbicc.rule.update.TRuleDefinitionUpdate" url="#" txn="" />	
+		<!--保存脚本内容-->
+		<Button id="CDbtnUpt" name="CDbtnUpt" desc="保存" icon="icon-save" operation="asysubmit" 
+			updateClass="com.gbicc.rule.update.TRuleDefinitionUpdate" url="#" txn="" />	
+		<!--发布-->
+		<Button id="DbtnUpload" name="DbtnUpload" desc="发布" icon="icon-default" 
+			updateClass="#" url="#" txn="" />
+		<!--禁用启用-->
+		<Button id="DbtnEnabled" name="DbtnEnabled" desc="启用/禁用" icon="icon-edit"  operation="asysubmit" 
+			updateClass="com.gbicc.rule.update.TRuleDefinitionUpdate" url="#" txn="" />
+			
+		<Button id="CDbtnUpload" name="CDbtnUpload" desc="保存" icon="icon-save" operation="asysubmit" 
+			updateClass="com.gbicc.rule.update.TRuleDefinitionUpdate" url="#" txn="" />	
+		<!--删除-->	
+		<Button id="DbtnDel" name="DbtnDel" desc="删除" icon="icon-remove" operation="asysubmit" 
+			updateClass="com.gbicc.rule.update.TRuleDefinitionUpdate" url="#" txn="" />			
+		<!--规则验证-->
+		<Button id="DbtnCheck" name="DbtnCheck" desc="语法验证" icon="icon-default" operation="asysubmit" 
+			updateClass="com.gbicc.rule.update.TRuleDefinitionCheck" url="#" txn="" />	
+		<!--规则执行-->
+		<Button id="DbtnExcute" name="DbtnExcute" desc="执行" icon="icon-rules" operation="asysubmit" 
+			updateClass="com.gbicc.rule.update.TRuleDefinitionCheck" url="#" txn="" />	
+	</Operations>
+</CommQry>

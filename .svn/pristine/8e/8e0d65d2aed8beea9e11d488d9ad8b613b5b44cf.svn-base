@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CommQry title="我的下载" navigate="批量下载 &gt; 我的下载 " type="call"
+	interface="false" pagesize="10" async="true"
+	databusid="DOWNLOAD"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.pageqryexp.getter.MyPageQryExpGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示 brcode -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		
+		<Field id="id" desc="ID" xpath="/id" />
+		<Field id="tskNm" desc="任务名称" xpath="/tskNm"/>
+		<Field id="taskDesc" desc="任务描述" xpath="/taskDesc"/>
+		<Field id="tskStartTms" desc="下载开始时间" datatype="timestamp" xpath="/tskStartTms"/>
+		<Field id="tskEndTms" desc="处理结束时间" datatype="timestamp" xpath="/tskEndTms"/>
+		<Field id="expRcdNum" desc="已处理记录笔数" datatype="long" xpath="/expRcdNum"/>
+		<Field id="expRcdSumNum" desc="记录总笔数" datatype="long" xpath="/expRcdSumNum"/>
+		<Field id="expFileSize" desc="文件大小(Byte)" datatype="long" xpath="/expFileSize"/>
+		<Field id="tskStat" desc="任务状态" edittype="select" translated="LIST:0,初始状态;1,准备执行 ;2,正在执行 ;3,任务完成;4,执行失败" xpath="/tskStat"/>
+		<Field id="expFileNm" desc="文件路径" xpath="/expFileNm"/>
+		<Field id="fileNm" desc="文件名" xpath="/taskDesc"/>
+		<Field id="op" desc="操作" xpath="/id"/>
+	</Fields>
+	<Where>
+		<TextBox id="qFileNm"   desc="文件名称" datatype="string" index="0" />
+		<Option  id="qTskStat" desc="任务状态" datatype="string" index="1" translated="LIST:0,初始状态;1,准备执行 ;2,正在执行 ;3,任务完成;4,执行失败"/>
+		<TextBox id="qTskStartDt"   desc="下载日期" datatype="date" index="3" />
+	</Where>
+	<Operations>
+	</Operations>
+</CommQry>

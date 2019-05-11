@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="" navigate="预警处置    &gt; 预警处置" type="call" interface="false" pagesize="10" async="true" databusid="" transdataactionurl="/trans/TransDataAction.do" txnlogflag="true" getterclassname="com.gbicc.warn.ComninationWarn.getter.TCwFinancialValMonitorGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+        <Field id="INDEX_NAME" desc="指标名称" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/INDEX_NAME" />
+        <Field id="INDEX_CODE" desc="指标编号" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/INDEX_CODE" />
+        <Field id="DATA_TYPE" desc="数据类型" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/DATA_TYPE" />
+        <Field id="MONITOR_FRE" desc="监控频率" require="" edittype="select" datatype="string" method="None" readonly="false" primary="true" type="st" status="F" translated="DATA_DIC.12604" size="30" scale="2" default=""
+        xpath="/MONITOR_FRE" />
+        <Field id="INDUSTRY_CODE" desc="行业code" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/INDUSTRY_CODE" />
+        <Field id="INDUSTRY_NAME" desc="新国标行业" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/INDUSTRY_NAME" />
+        <Field id="INDUSTRY_TYPE" desc="行业类型" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/INDUSTRY_TYPE" />
+        <Field id="INDUSTRY_PARENT" desc="行业父级" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/INDUSTRY_PARENT" />
+        
+        <Field id="NY_VAL" desc="比去年同期" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/NY_VAL" />
+        
+        <Field id="NOW_VAL_1" desc="本期值" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/NOW_VAL_1" />
+        <Field id="TOP_VAL_1" desc="上期值" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/TOP_VAL_1" />
+        <Field id="YC_VAL_1" desc="去年同期" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/YC_VAL_1" />
+        
+        <Field id="NOW_VAL_2" desc="本期值" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/NOW_VAL_2" />
+        <Field id="TOP_VAL_2" desc="上期值" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/TOP_VAL_2" />
+        <Field id="YC_VAL_2" desc="去年同期" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/YC_VAL_2" />
+        
+        <Field id="NOW_VAL_3" desc="本期值" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/NOW_VAL_3" />
+        <Field id="TOP_VAL_3" desc="上期值" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/TOP_VAL_3" />
+        <Field id="YC_VAL_3" desc="去年同期" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/YC_VAL_3" />
+        
+        <Field id="NOW_VAL_4" desc="本期值" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/NOW_VAL_4" />
+        <Field id="TOP_VAL_4" desc="上期值" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/TOP_VAL_4" />
+        <Field id="YC_VAL_4" desc="去年同期" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/YC_VAL_4" />
+        
+        <Field id="NOW_VAL_5" desc="本期值" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/NOW_VAL_5" />
+        <Field id="TOP_VAL_5" desc="上期值" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/TOP_VAL_5" />
+        <Field id="YC_VAL_5" desc="去年同期" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/YC_VAL_5" />
+        
+        <Field id="NOW_VAL_6" desc="本期值" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/NOW_VAL_6" />
+        <Field id="TOP_VAL_6" desc="上期值" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/TOP_VAL_6" />
+        <Field id="YC_VAL_6" desc="去年同期" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/YC_VAL_6" />
+        
+        <Field id="NOW_VAL_7" desc="本期值" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/NOW_VAL_7" />
+        <Field id="TOP_VAL_7" desc="上期值" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/TOP_VAL_7" />
+        <Field id="YC_VAL_7" desc="去年同期" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/YC_VAL_7" />
+        
+        
+        <Field id="opr" desc="图形展示" edittype="text" datatype="string" xpath="/id" />
+        
+        
+        <Field id="dateType" desc="数值类型" require="true" edittype="select" datatype="string" method="None" readonly="false" primary="true" type="st" status="F"
+         	   translated="DATA_DIC.12603" size="30" scale="2" default="4" xpath="" />
+    </Fields>
+    <Where>
+    </Where>
+    <Operations>
+    	<Button id="btHandle" name="btHandle" desc="查询" icon="icon-add" updateClass="#" url="" txn="" />
+    </Operations>
+</CommQry>

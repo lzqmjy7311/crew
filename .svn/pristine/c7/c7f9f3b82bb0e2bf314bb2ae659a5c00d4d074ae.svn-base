@@ -1,0 +1,190 @@
+package com.gbicc.person.monitor.getter;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.util.StringUtils;
+
+import com.gbicc.bpm.SpringContextHolder;
+import com.gbicc.person.monitor.entity.TPlTask;
+import com.gbicc.person.monitor.service.TPlTaskService;
+import com.gbicc.person.monitor.service.TaskType;
+import com.huateng.common.err.Module;
+import com.huateng.common.err.Rescode;
+import com.huateng.commquery.result.Result;
+import com.huateng.commquery.result.ResultMng;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.business.common.PageQueryResult;
+import com.huateng.ebank.business.common.service.BctlService;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.framework.web.commQuery.BaseGetter;
+import com.huateng.exception.AppException;
+
+/**
+ * 工作台流程查询
+ * 菜单 调查任务
+ * @date    2016年1月16日
+ * @author  tangdu
+ * @desc
+ */
+public class TPlTaskGetter extends BaseGetter {
+	@Override
+	public Result call() throws AppException {
+		try {
+			PageQueryResult pageResult = getData();
+			ResultMng.fillResultByList(getCommonQueryBean(),
+					getCommQueryServletRequest(), pageResult.getQueryResult(),
+					getResult());
+			result.setContent(pageResult.getQueryResult());
+			result.getPage().setTotalPage(
+					pageResult.getPageCount(getResult().getPage()
+							.getEveryPage()));
+			result.init();
+			return result;
+		} catch (AppException appEx) {
+			throw appEx;
+		} catch (Exception ex) {
+			throw new AppException(Module.SYSTEM_MODULE,
+					Rescode.DEFAULT_RESCODE, ex.getMessage(), ex);
+		}
+	}
+	
+	protected PageQueryResult getData() throws Exception {
+		String type = (String) getCommQueryServletRequest().getParameterMap().get("type");
+		String warnLevel = (String) getCommQueryServletRequest().getParameterMap().get("warnLevel");
+		String loanAcct = (String) getCommQueryServletRequest().getParameterMap().get("loanAcct");
+		String custName = (String) getCommQueryServletRequest().getParameterMap().get("custName");
+		String loanVariety = (String) getCommQueryServletRequest().getParameterMap().get("loanVariety");
+		String loanTerm = (String) getCommQueryServletRequest().getParameterMap().get("loanTerm");
+		String taskTypeStr= (String) getCommQueryServletRequest().getParameterMap().get("taskType");
+		String rptStatus=(String) getCommQueryServletRequest().getParameterMap().get("rptStatus");
+		String taskSourceType=(String) getCommQueryServletRequest().getParameterMap().get("taskSourceType");
+		String bankID=(String) getCommQueryServletRequest().getParameterMap().get("bankID");
+		String handler=(String) getCommQueryServletRequest().getParameterMap().get("handler");
+		String taskCreatDate=(String) getCommQueryServletRequest().getParameterMap().get("taskCreatDate");
+		String taskMatureDate=(String) getCommQueryServletRequest().getParameterMap().get("taskMatureDate");
+		String bankName=(String) getCommQueryServletRequest().getParameterMap().get("bankName");
+		////任务监控-不需要当前用户过滤////
+		String monitor = (String) getCommQueryServletRequest().getParameterMap().get("monitor");
+		
+		PageQueryResult pageQueryResult = new PageQueryResult();
+		GlobalInfo info=GlobalInfo.getCurrentInstance();
+		String userId=info.getTlrno();
+		String roleId=info.getWorkflowRoleId();
+		TPlTaskService tPlTaskService=TPlTaskService.getInstance();
+		int pageSize = getResult().getPage().getEveryPage();
+		int pageIndex = getResult().getPage().getCurrentPage();
+		String brcode= info.getBrcode();//TODO 机构
+		JdbcTemplate jdbcTemplate=SpringContextHolder.getBean(JdbcTemplate.class);
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		StringBuilder wh=new StringBuilder();//task where 条件 
+		TaskType taskType=TaskType.getTaskType(type);
+		if(taskType!=null){
+			if(taskType.equals(TaskType.OVERTASK)){
+				SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+				String ntime = dateFormat.format(new Date());
+				wh.append(" and to_char(TASK_MATURE_DATE,'yyyyMMdd')< '").append(ntime).append("'");
+			}
+		}
+		if(StringUtils.hasText(warnLevel)){
+			wh.append(" and WARN_LEVEL = '").append(warnLevel).append("'");
+		}
+		if(StringUtils.hasText(taskSourceType)){
+			wh.append(" and TASK_SOURCE_TYPE = '").append(taskSourceType).append("'");
+		}
+		if(StringUtils.hasText(loanAcct)){
+			wh.append(" and LOAN_ACCT like '%").append(loanAcct).append("%'");
+		}
+		if(StringUtils.hasText(custName)){
+			wh.append(" and CUST_NAME like '").append(custName).append("%'");
+		}
+		if(StringUtils.hasText(loanVariety)){
+			wh.append(" and LOAN_VARIETY = '").append(loanVariety).append("'");
+		}
+		if(StringUtils.hasText(loanTerm)){
+			wh.append(" and LOAN_TERM = '").append(loanTerm).append("'");
+		}
+		if(StringUtils.hasText(taskTypeStr)){
+			wh.append(" and TASK_TYPE  = '").append(taskTypeStr).append("'");
+		}
+		if(StringUtils.hasText(handler)){
+			wh.append(" and HANDLER_NAME  like '%").append(handler).append("%'");
+		}
+		if(StringUtils.hasText(taskCreatDate)){
+			wh.append(" and to_char(TASK_CREAT_DATE,'yyyyMMdd')>= '").append(taskCreatDate).append("'");
+		}
+		if(StringUtils.hasText(taskMatureDate)){
+			wh.append(" and to_char(TASK_MATURE_DATE,'yyyyMMdd')<= '").append(taskMatureDate).append("'");
+		}
+		if(StringUtils.hasText(bankName)){
+			wh.append(" and BRNAME  like '%").append(bankName).append("%'");
+		}
+		
+		///////////任务监控查询不需要对用户 进行过滤 总行权限
+		boolean headerOrg=info.isHeadBrcode();
+		if(StringUtils.hasText(monitor)){
+			userId=null;
+		}
+		if(headerOrg){
+			userId=null;
+		}
+		//找出用户 当前机构  20160928修改
+		String orgs=BctlService.getInstance().findChildOrgs(brcode);
+		StringBuffer sql=tPlTaskService.getQueryAllStr(userId, roleId,brcode);
+		if(StringUtils.hasText(rptStatus)){//TODO 
+			wh.append(" and RPT_STATUS = '").append(rptStatus).append("'");
+		}
+		
+		sql.append(wh);
+		//构造分页
+		StringBuffer sqlp=new StringBuffer("select t0.* from ( ");
+		sqlp.append("select t.*,row_number() over(order by CREATE_TIME_ desc,TASK_TYPE desc) as rnum from ( ");
+		sqlp.append(sql);
+
+		if(!headerOrg){
+			if(orgs.length()>0){
+				sqlp.append(" and bank_id in ("+orgs+") ");
+			}else {
+				sqlp.append(" and 1=0 ");
+			}
+		}else{
+			if(StringUtils.hasText(bankID)){
+				sqlp.append(" and bank_id = '"+bankID+"' ");
+			}
+		}
+		//////////TODO 根据用户当前机构过滤//////////////
+		sqlp.append(") t ) t0 where t0.rnum>"+(pageIndex-1)*pageSize+" ");
+		sqlp.append("fetch first "+pageSize+" rows only ");
+		
+		List<TPlTask> tasks=jdbcTemplate.query(sqlp.toString(), 
+				BeanPropertyRowMapper.newInstance(TPlTask.class));
+		//构造数据量
+		StringBuffer sqll=new StringBuffer("select count(1) from ( ");
+		sqll.append(sql);
+		if(StringUtils.hasText(rptStatus)){//TODO 
+			wh.append(" and RPT_STATUS = '").append(rptStatus).append("'");
+		}
+		//////////TODO 根据用户当前机构过滤//////////////	
+		if(!headerOrg){
+			if(orgs.length()>0){
+				sqll.append(" and bank_id in ("+orgs+") ");
+			}else {
+				sqll.append(" and 1=0 ");
+			}
+		}else{
+			if(StringUtils.hasText(bankID)){
+				sqll.append(" and bank_id = '"+bankID+"' ");
+			}
+		}
+		sqll.append(" )");
+		//set
+		Integer totalCount=(Integer)rootdao.querySqlOne(sqll.toString());
+		pageQueryResult.setQueryResult(tasks);
+		pageQueryResult.setTotalCount(totalCount);
+		return pageQueryResult;
+	}
+}

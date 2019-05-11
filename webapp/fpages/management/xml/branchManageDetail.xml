@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="" navigate="主页 &gt; 机构管理 &gt; 机构管理" type="call"
+	interface="false" pagesize="10" async="false" databusid="FIVE"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.management.getter.branchManageDetailGetter">
+	<Include id="BankParam" />
+
+	<Fields>
+	<Field id="old_brno" desc="机构代码" status="F" primary="false"
+			edittype="" method="None" type="String" size="12" require="true"
+			readonly="true" default="false" xpath="/old_bctl/brno" tip="机构代码" rules="isBrNo"/>
+				<Field id="brno" desc="机构代码" status="F" primary="false"
+			edittype="" method="None" type="String" size="12" require="true"
+			readonly="true" default="false" xpath="/bctl/brno" tip="机构代码" rules="isBrNo"/>
+			
+			<Field id="old_brname" desc="机构名称" status="F" primary="false"
+			method="None" readonly="true" type="String" size="40" default=""
+			xpath="/old_bctl/brname" require="true" tip="机构名称" />
+			<Field id="brname" desc="机构名称" status="F" primary="false"
+			method="None" readonly="true" type="String" size="40" default=""
+			xpath="/bctl/brname" require="true" tip="机构名称" />
+			
+			<Field id="old_address" desc="机构地址" status="F" method="None" readonly="true"
+			primary="false" type="String" require="true" size="100"
+			default="false" xpath="/old_bctl/address" tip="机构地址" />
+			<Field id="address" desc="机构地址" status="F" method="None"  readonly="true"
+			primary="false" type="String" require="true" size="100"
+			default="false" xpath="/bctl/address" tip="机构地址" />
+			
+			<Field id="old_postno" desc="邮政编码" status="F" method="None" rule="isNum"
+			primary="false" type="String" require="true" default="false" size="6" readonly="true"
+			xpath="/old_bctl/postno" tip="邮政编码" />
+			<Field id="postno" desc="邮政编码" status="F" method="None" rule="isNum"
+			primary="false" type="String" require="true" default="false" size="6" readonly="true"
+			xpath="/bctl/postno" tip="邮政编码" />
+			
+			
+			<Field id="old_teleno" desc="联系电话" status="F" method="None" size="14"
+			primary="false" type="String" require="true" default="false" readonly="true"
+			xpath="/old_bctl/teleno" tip="联系电话" />
+			<Field id="teleno" desc="联系电话" status="F" method="None" size="14"
+			primary="false" type="String" require="true" default="false" readonly="true"
+			xpath="/bctl/teleno" tip="联系电话" />
+			
+			
+			<Field id="old_brclass" desc="机构级别" status="F" edittype="select" require="true"
+			method="None" primary="false" type="String" default="false" readonly="true"
+			xpath="/old_bctl/brclass" tip="机构级别" translated="DATA_DIC.401" />
+			<Field id="brclass" desc="机构级别" status="F" edittype="select" require="true"
+			method="None" primary="false" type="String" default="false" readonly="true"
+			xpath="/bctl/brclass" tip="机构级别" translated="DATA_DIC.401" />
+			
+			<Field id="blnUpBrcode" desc="上级机构" status="F" primary="false"
+			method="None" readonly="true" type="String" size="20" default=""
+			edittype="select" translated="CQ:AllBranchSelect"
+			fieldmap="blnUpBrcode=brcode;blnUpBrcodeName=brcodeTypeName"
+			viewField="brcodeTypeName" xpath="/bctl/blnUpBrcode" require="true"
+			tip="上级机构" />
+			<Field id="old_blnUpBrcode" desc="上级机构" status="F" primary="false"
+			method="None" readonly="true" type="String" size="20" default=""
+			edittype="select" translated="CQ:AllBranchSelect"
+			fieldmap="blnUpBrcode=brcode;blnUpBrcodeName=brcodeTypeName"
+			viewField="brcodeTypeName" xpath="/old_bctl/blnUpBrcode" require="true"
+			tip="上级机构" />
+			
+			
+			<Field id="old_blnManageBrcode" desc="账务机构" status="F"
+			primary="false" method="None" readonly="true" type="String"
+			size="20" edittype="select" translated="CQ:AllBranchSelect"
+			fieldmap="blnManageBrcode=brcode;blnManageBrcodeName=brcodeTypeName"
+			viewField="brcodeTypeName" default="" xpath="/old_bctl/blnManageBrcode"
+			require="false" tip="账务机构" />
+			<Field id="blnManageBrcode" desc="账务机构" status="F"
+			primary="false" method="None" readonly="true" type="String"
+			size="20" edittype="select" translated="CQ:AllBranchSelect"
+			fieldmap="blnManageBrcode=brcode;blnManageBrcodeName=brcodeTypeName"
+			viewField="brcodeTypeName" default="" xpath="/bctl/blnManageBrcode"
+			require="false" tip="账务机构" />
+			
+			<Field id="old_brattr" desc="机构属性" status="F" primary="false"
+			edittype="select" translated="DATA_DIC.455" method="None" readonly="true"
+			type="String" size="20" require="" default="" xpath="/old_bctl/brattr"
+			tip="机构属性" />
+			<Field id="brattr" desc="机构属性" status="F" primary="false"
+			edittype="select" translated="DATA_DIC.455" method="None"  readonly="true"
+			type="String" size="20" require="" default="" xpath="/bctl/brattr"
+			tip="机构属性" />
+			
+			<Field id="old_otherAreaFlag" desc="异地行标志" status="F" method="None"
+			edittype="select" translated="DATA_DIC.457" primary="false"  readonly="true"
+			type="String" default="" xpath="/old_bctl/otherAreaFlag" tip="异地行标志" />
+			<Field id="otherAreaFlag" desc="异地行标志" status="F" method="None"
+			edittype="select" translated="DATA_DIC.457" primary="false"  readonly="true"
+			type="String" default="" xpath="/bctl/otherAreaFlag" tip="异地行标志" />
+			
+			
+			<Field id="old_status" desc="有效标志" status="F" edittype="select"
+			method="None" primary="false" type="String" default="" readonly="true"
+			xpath="/old_bctl/status" tip="有效标志" translated="LIST:1,1-有效;0,0-无效" />
+
+				<Field id="status" desc="有效标志" status="F" edittype="select"  readonly="true"
+			method="None" primary="false" type="String" default=""
+			xpath="/bctl/status" tip="有效标志" translated="LIST:1,1-有效;0,0-无效" />
+			
+	
+</Fields>
+<Operations>
+<Button id="btClose" name="btClose" desc="返回" operation="syncsubmit"
+			url="#" txn="" />    
+    </Operations>
+</CommQry>

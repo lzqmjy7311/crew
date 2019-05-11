@@ -1,0 +1,233 @@
+package com.gbicc.highChar.service;
+
+
+import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import net.sf.json.JSONObject;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.util.StringUtils;
+
+import com.gbicc.bpm.service.ProcessManagerService;
+import com.gbicc.common.CommonService;
+import com.gbicc.person.collection.dao.TCollectionInfoDAO;
+import com.gbicc.person.collection.entity.TCollectionInfo;
+import com.gbicc.util.DateUtils;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.framework.exceptions.CommonException;
+import com.huateng.ebank.framework.util.ApplicationContextUtils;
+import com.gbicc.highChar.entity.Highcharts;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+
+
+public class GetHighCharDataService {
+	protected GetHighCharDataService() {
+	}
+
+	public synchronized static GetHighCharDataService getInstance() {
+		return (GetHighCharDataService) ApplicationContextUtils
+				.getBean(GetHighCharDataService.class.getSimpleName());
+	}
+	
+	private static String COURSE="course";
+	private static String INDEX="index";
+	
+
+	public JSONObject getPlusCharts(String caliber,String[] projects,String customerNum,String type,String startDate,String backQs) throws CommonException { 
+		int size=projects.length;
+        List<Highcharts> dataList = new ArrayList<Highcharts>();  //highchar  数据集合
+        
+        Map<String, Object> projectNames = new HashMap<String,Object>(); 
+
+
+        List<ArrayList<BigDecimal>> projectList=new ArrayList<ArrayList<BigDecimal>>();
+        for(int i=0;i<size;i++){
+        	ArrayList<BigDecimal> project1= new ArrayList<BigDecimal>();
+        	Highcharts highCharts=new Highcharts();
+        	projectList.add(project1);
+        	dataList.add(highCharts);
+        }
+        
+       
+     
+
+        List<String> xdataList = new ArrayList<String>();  //x轴数据 list
+
+        JSONObject jsonData = new JSONObject();  
+        
+
+   
+      String sixDeadlines= getSixDeadline(startDate,backQs,caliber,customerNum);
+        
+      
+      StringBuffer sql=null;
+      StringBuffer sqlp=null;
+		      if(type.equals(INDEX)){//指标统计
+		    	   sql=new StringBuffer(" SELECT DISTINCT T1.DEADLINE AS DEADLINE,  T1.INDEX_VALUE_DATA_TYPE AS VAL1" );
+		          for(int i=2;i<=size;i++){
+		        	 sql.append("  , T"+i+".INDEX_VALUE_DATA_TYPE AS VAL"+i ); 
+		          }
+		          sql.append("  from  FIN_INDEX_V T1 ");
+		          for(int i=2;i<=size;i++){
+		        	     sql.append(" LEFT JOIN    FIN_INDEX_V T"+i ); 
+			        	 sql.append(" ON  T1.DEADLINE=T"+i+".DEADLINE"  ); 
+			        	 sql.append(" AND  T1.CUSTOMER_NUM=T"+i+".CUSTOMER_NUM"  ); 
+			        	 sql.append(" AND  T1.REPORT_TYPE=T"+i+".REPORT_TYPE"  ); 
+			        	 sql.append(" AND  T"+i+".INDEX_CD='"+projects[i-1]+"'"  ); 
+		        	  
+		          }
+		          sql.append("  WHERE T1.INDEX_CD='"+projects[0]+"' ");		       
+		          sql.append("   AND T1.CUSTOMER_NUM='"+customerNum+"'");
+		          sql.append("   AND T1.REPORT_TYPE='"+caliber+"'");
+		          sql.append("  AND T1.DEADLINE IN("+sixDeadlines+")");
+		          sql.append("  ORDER BY T1.DEADLINE");
+		          
+		          //组织查询 统计项目sql
+		          sqlp=new StringBuffer("SELECT T1.INDEX_NAME AS NA1 ");
+		          for(int i=2;i<=size;i++){
+		        	  sqlp.append("  , T"+i+".INDEX_NAME  AS NA"+i );          	  
+		           }
+		          sqlp.append("  from  T_CM_FINANCE_INDEX_CD T1 ");
+		          for(int i=2;i<=size;i++){
+		        	  sqlp.append("  , T_CM_FINANCE_INDEX_CD T"+i ); 
+		        	  
+		          }
+		          sqlp.append("  WHERE T1.INDEX_CD='"+projects[0]+"' ");
+		          for(int i=2;i<=size;i++){
+		        	  sqlp.append(" AND  T"+i+".INDEX_CD='"+projects[i-1]+"'"  );     	  
+		          }
+		          
+		 }else if(type.equals(COURSE)){//财报科目统计
+		   	   sql=new StringBuffer(" SELECT DISTINCT T1.DEADLINE AS DEADLINE,  T1.PROJECT_VALUE AS VAL1" );
+		       for(int i=2;i<=size;i++){
+		     	 sql.append("  , T"+i+".PROJECT_VALUE AS VAL"+i ); 
+		     	  
+		       }
+		       sql.append("  from  FIN_COURSE_V T1 ");
+		       for(int i=2;i<=size;i++){
+		     	  sql.append("  LEFT JOIN  FIN_COURSE_V T"+i ); 
+		     	  sql.append(" ON  T1.DEADLINE=T"+i+".DEADLINE"  ); 
+		     	  sql.append(" AND  T1.CUSTOMER_NUM=T"+i+".CUSTOMER_NUM"  ); 
+		     	  sql.append(" AND  T"+i+".PROJECT_CD='"+projects[i-1]+"'"  );
+		     	  sql.append(" AND  T1.CALIBER_CD=T"+i+".CALIBER_CD"  ); 
+		     	  
+		       }
+		       sql.append("  WHERE T1.PROJECT_CD='"+projects[0]+"' ");		     
+		       sql.append("   AND T1.CUSTOMER_NUM='"+customerNum+"'");
+		       sql.append("  AND T1.DEADLINE IN("+sixDeadlines+")");
+		       sql.append("   AND T1.CALIBER_CD='"+caliber+"'");
+		       sql.append("  ORDER BY T1.DEADLINE");
+		       
+		       //组织查询 统计项目sql
+		       sqlp=new StringBuffer("SELECT T1.PROJECT_NAME AS NA1 ");
+		       for(int i=2;i<=size;i++){
+		     	  sqlp.append("  , T"+i+".PROJECT_NAME  AS NA"+i );          	  
+		        }
+		       sqlp.append("  from  T_CM_FINANCE_STATEMENT_CODE T1 ");
+		       for(int i=2;i<=size;i++){
+		     	  sqlp.append("  , T_CM_FINANCE_STATEMENT_CODE T"+i ); 
+		     	  
+		       }
+		       sqlp.append("  WHERE T1.PROJECT_CD='"+projects[0]+"' ");
+		       for(int i=2;i<=size;i++){
+		     	  sqlp.append(" AND  T"+i+".PROJECT_CD='"+projects[i-1]+"'"  );     	  
+		       }
+		       
+	}
+    
+		
+      
+      JdbcTemplate jdbcTemplate=(JdbcTemplate) ApplicationContextUtils.getBean("JdbcTemplate");
+		 List<Map<String,Object>> list=jdbcTemplate.queryForList(sql.toString());
+		 for(Map<String,Object> en:list){
+			   
+			   String val=null;//字段别名
+	            xdataList.add((String)en.get("DEADLINE")); 
+	            for(int i=0;i<size;i++){//行转列 
+	            	val="VAL"+(i+1);
+	            	projectList.get(i).add((BigDecimal) en.get(val));
+	            	
+	            }
+
+
+		 }
+//统计项目名称
+      List<Map<String,Object>> pnList=jdbcTemplate.queryForList(sqlp.toString());
+      for(Map<String,Object> en:pnList){
+    	  projectNames=en;
+    	  
+      }
+		
+//设置higheCharList  每个highchar对象的 data 及name 
+      String na="";
+      for(int j=0;j<size;j++){
+    	  na="NA"+(j+1);
+    	  dataList.get(j).setData(projectList.get(j));
+    	  dataList.get(j).setName((String)projectNames.get(na));
+    	  
+      }
+					
+
+	      
+	  //封装highchar json        
+	        jsonData.put("data", dataList);  
+	        jsonData.put("listXdata", xdataList);  
+	          
+	        return jsonData;    
+	}
+	
+	/**
+	 * 默认返回 制定口径下 当前前六期日期 字符串集合  如：年报（201212,201312,201412）
+	 * @param caliber
+	 * @param customerNum
+	 * @return
+	 */
+	public String getSixDeadline(String startdate,String backQs, String caliber,String customerNum){
+		String sixDeadLine=""; //默认当前前六期 截止日期
+		Boolean isTrue=false;
+		DateUtils dataUtils=new DateUtils();
+		int repnos=6;//默认期数
+		if(backQs!=null&&!"".equals(backQs)){//回溯期数不为空
+			repnos=Integer.valueOf(backQs);
+		}
+	
+		String firstDeadLines=dataUtils.getDeadlineByStratDate(startdate,caliber, 1);
+//		String sql="select count(0) from T_CM_CUSTOMER_FINANCE   where  CUSTOMER_NUM='"+customerNum+"'  and FINANCE_STATEMENT_DEADLINE ='"+firstDeadLines+"' ";
+//		ROOTDAO rootDao=ROOTDAOUtils.getROOTDAO();
+//		try {
+//			Integer count=0;
+//			Iterator<Integer> it= rootDao.queryBySQL(sql);
+//			while(it.hasNext()){
+//				count= (Integer)it.next();
+//			}
+//			if(count>0){
+//				isTrue=true;
+//			}
+//		} catch (CommonException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		if(isTrue){
+			for(int i=1;i<=repnos;i++){
+				sixDeadLine+=dataUtils.getDeadlineByStratDate(startdate,caliber, i)+",";
+			}
+		}else{
+			for(int i=2;i<=repnos+1;i++){
+				sixDeadLine+=dataUtils.getDeadlineByStratDate(startdate,caliber, i)+",";
+			}
+		}
+		sixDeadLine=sixDeadLine.substring(0, sixDeadLine.length()-1);
+		return sixDeadLine;
+		
+	}
+		
+}

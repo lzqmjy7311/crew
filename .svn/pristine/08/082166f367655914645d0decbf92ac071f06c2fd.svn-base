@@ -1,0 +1,187 @@
+package com.gbicc.person.zxrf.opration;
+
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.gbicc.bpm.BpmDescUtil;
+import com.gbicc.bpm.service.ProcessManagerService;
+import com.gbicc.common.FileUpDownProperties;
+import com.gbicc.company.warnDisposal.service.TCmWarnTaskService;
+import com.gbicc.person.monitor.entity.TPlTask;
+import com.gbicc.person.monitor.service.TPlTaskService;
+import com.gbicc.person.zxrf.entity.TPlZxrfInfo;
+import com.gbicc.person.zxrf.service.TPlZxrfInfoService;
+import com.gbicc.warn.entity.TWarnSignal;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.framework.exceptions.CommonException;
+import com.huateng.ebank.framework.operation.BaseOperation;
+import com.huateng.ebank.framework.operation.OperationContext;
+
+
+/**
+ * 
+ * @author liufei
+ *
+ * 版本：2015年11月12日 上午17:34:19
+ * 类说明：中小融辅操作类
+ */
+public class TPlZxrfInfoOperation extends BaseOperation {
+	
+	private static final Logger log=LoggerFactory.getLogger(TPlZxrfInfoOperation.class);
+	public static final String ID = "TPlZxrfInfoOperation";
+	public static final String CMD = "CMD";
+	public static final String OP = "op";
+	public static final String CMD_QUERY = "CMD_QUERY";
+	public static final String CMD_INSERT = "CMD_INSERT";
+	public static final String CMD_UPDATE = "CMD_UPDATE";
+	public static final String CMD_DELETE = "CMD_DELETE";
+	public static final String IN_PARAM = "IN_PARAM";
+	public static final String WARNING_SIGNALS="WARNING_SIGNALS";
+	public static final String BUSINESS_ID = "BUSINESS_ID";
+	public static final String OPINION = "opinion";
+	
+//	public static final String WAIT_HZ_APPROVE_STATUS="2";//待行长审核状态
+//	public static final String WAIT_DHGL_EXAMINE_STATUS="3";//待审查状态
+//	public static final String WAIT_DHZG_APPROVE_STATUS="4";//待主管审核状态
+//	public static final String APPROVE_PASS_STATUS="5";//审核通过
+//	public static final String BACK_STATUS="6";//退回状态
+//	public static final String HANDLE_COMPLETE_STATUS="7";//处理完成状态
+	
+	
+	@Override
+	public void afterProc(OperationContext context) throws CommonException {
+	}
+
+	@Override
+	public void beforeProc(OperationContext context) throws CommonException {
+	}
+
+	@Override
+	public void execute(OperationContext context) throws CommonException {
+		String cmd = (String) context.getAttribute(CMD);
+		String op  =(String) context.getAttribute(OP);
+		String taskAssignee  =(String) context.getAttribute("taskAssignee");
+		String opinion  =(String) context.getAttribute(OPINION);
+		String businessId = (String) context.getAttribute(BUSINESS_ID);
+		TPlZxrfInfo domain = (TPlZxrfInfo) context.getAttribute(IN_PARAM);
+		List<TWarnSignal> WarnSignals=(List<TWarnSignal>)context.getAttribute(WARNING_SIGNALS);
+		TPlZxrfInfoService service = TPlZxrfInfoService.getInstance();
+		if (CMD_QUERY.equals(cmd)) {
+		} else if (CMD_INSERT.equals(cmd)) {
+			service.save(domain);
+		} else if (CMD_UPDATE.equals(cmd)) {
+			if(!StringUtils.isNotEmpty(op)){
+				service.update(domain);
+				//保存预警信号
+			}
+			saveWarnSigalS(WarnSignals, domain);
+		} else if (CMD_DELETE.equals(cmd)) {
+			service.delete(domain);
+		}
+		
+		if(StringUtils.isNotEmpty(op)){
+			try {
+				taskComplete(businessId,op,domain,opinion,taskAssignee);
+			} catch (Exception e) {
+				log.error("中小融辅流程调用异常--------", e);
+				throw new CommonException("系统异常",e.getMessage());
+			}
+		}
+	}
+	
+	/**
+	 * 
+	 * @param WarnSignals
+	 * @param zxrfInfo
+	 */
+	public void saveWarnSigalS(List<TWarnSignal> WarnSignals,TPlZxrfInfo zxrfInfo ){
+		ROOTDAO rootdao=ROOTDAOUtils.getROOTDAO();
+		String reportId=zxrfInfo.getId();
+		int redCount=0;
+		int yellowCount=0;
+		try {
+			if(WarnSignals!=null){
+				for(TWarnSignal warnSignal: WarnSignals){
+					//预警等级，统计
+					if(FileUpDownProperties.readValue("WARNING_SIGNALS_LEVEL_TYPE_RED").equals(warnSignal.getWarnLEvel())){
+						redCount++;
+					}else if(FileUpDownProperties.readValue("WARNING_SIGNALS_LEVEL_TYPE_YELLOW").equals(warnSignal.getWarnLEvel())){
+						yellowCount++;
+					}
+					warnSignal.setReportId(reportId);
+					warnSignal.setLoanAccount(zxrfInfo.getLoanAccount());
+					rootdao.update(warnSignal);
+				}
+				zxrfInfo.setRedCount(redCount);
+				zxrfInfo.setYellowCount(yellowCount);
+			}
+		} catch (CommonException e) {
+			log.error("中小融辅保存规则异常--------", e);
+			e.printStackTrace();
+		}
+		
+	}
+
+	
+	/**
+	 * 客户经理填报完成
+	 * @param businessId
+	 * @throws Exception 
+	 */
+	public void taskComplete(String businessId,String op,TPlZxrfInfo domain,String opinion,String taskAssignee) throws Exception{
+		GlobalInfo info=GlobalInfo.getCurrentInstance();
+		String userId=info.getTlrno();
+		ProcessManagerService processManagerService=ProcessManagerService.getInstace();
+		String taskId=processManagerService.findTaskId(businessId, userId);
+		TPlTaskService taskService=TPlTaskService.getInstance();
+		TPlTask task=taskService.get(businessId);
+		Map<String, Object> map=new HashMap<String, Object>();
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		Map<String,String> variables=processManagerService.findTaskVariable(businessId);
+		List<String> assigneeList=new ArrayList<String>();
+		if(StringUtils.isNotBlank(taskAssignee)){
+			assigneeList.add(taskAssignee);
+		}
+		if(op.equals("back")){
+			map.put("operation","退回");
+			map.put("path","back");
+			map.put("assignee",task.getHandler().getTlrno());
+		}else if(op.equals("submit")){
+			map.put("operation","提交");
+			//获取触发数量
+			map.put("yellowCount", domain.getYellowCount());
+			map.put("redCount", domain.getRedCount());
+			map.put("path","next");
+			if(StringUtils.isNotEmpty(variables.get("nextRole"))){
+//				List<String> assigneeList=processManagerService.findUserIdByRoleidAndCurrOrgid(variables.get("nextRole"),info.getBrcode());
+				if(assigneeList==null || assigneeList.size()<1){
+					throw new CommonException("未配置审核人","根据当前机构【"+info.getBrName()+"】查找流程下一节点未找到审核人");
+				}
+				map.put("assigneeList",assigneeList);
+			}else if(StringUtils.isNotEmpty(variables.get("nextAssignee"))){
+				map.put("assignee",task.getHandler().getTlrno());
+			}
+		}
+		map.put("opinion",opinion);
+		map.put("desc", BpmDescUtil.getDesc(businessId, task.getCustCode(), task.getCustName()));
+		processManagerService.taskComplete(map, taskId);
+		
+		Map<String,String> newVar=processManagerService.findTaskVariable(businessId);
+		if(null!=newVar && newVar.size()>0){
+			String status=newVar.get("status");
+			//更改业务状态
+			rootdao.executeSql("UPDATE ECUSER.T_PL_TASK SET RPT_STATUS='"+status+"' WHERE FD_ID='"+businessId+"' ");
+		}
+	}
+	
+	
+}

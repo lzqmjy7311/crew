@@ -1,0 +1,47 @@
+<CommQry title="TPlTrigFrequencyAcctV" navigate="TPlTrigFrequencyAcctV" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.person.frequency.getter.TPlTrigFrequencyAcctVGetter">
+    <Include id="BankParam" />
+    
+    <Fields>
+        <Field id="productCode" desc="产品名称" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="28" scale="2" default=""
+        xpath="/productCode" />
+        <Field id="loanAccount" desc="贷款账号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="28" scale="2" default=""
+        xpath="/loanAccount" />
+        <Field id="custcode" desc="客户编号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="28" scale="2" default=""
+        xpath="/custcode" />
+        <Field id="custname" desc="客户名称" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="28" scale="2" default=""
+        xpath="/custname" />
+        <Field id="loanAmount" desc="贷款金额" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="28" scale="2" default=""
+        xpath="/loanAmount" />
+        <Field id="loanBalance" desc="贷款余额" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="28" scale="2" default=""
+        xpath="/loanBalance" />
+        <Field id="floatinterate" desc="浮动利率" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="28" scale="2" default=""
+        xpath="/floatinterate" />
+        <Field id="loanPeriod" desc="贷款期限" require="" edittype="text" datatype="int" method="None" readonly="true" type="" status="F" size="28" scale="2" default=""
+        xpath="/loanPeriod" />
+        <Field id="operator" desc="经办人" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="28" scale="2" default=""
+        xpath="/operator" />
+        <Field id="operBank" desc="经办行" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="28" scale="2" default=""
+        xpath="/operBank" />
+        <Field id="trigRate" desc="系统触发频率" require="" edittype="text" datatype="double" method="None" readonly="true" type="" status="F" size="28" scale="2" default=""
+        xpath="/trigRate" />
+        <Field id="rankFinal" desc="预警等级" multiple="false" init="true" 
+        placeholder="占位符" edittype="select" translated="DATA_DIC.702"
+        datatype="string" size="50"
+        xpath="/rankFinal" />
+    </Fields>
+    <Where>
+    	<TextBox id="loanAccount" desc="贷款账号" require="" edittype="text" datatype="string" method="None"  type="" status="F" size="28" scale="2" default=""
+         />
+        <TextBox id="custname" desc="客户名称" require="" edittype="text" datatype="string" method="None"  type="" status="F" size="28" scale="2" default=""
+        />
+        <TextBox id="rankFinal" desc="预警等级" require="" edittype="text" datatype="string" method="None"  type="" status="F" size="28" scale="2" default=""
+        />
+        <TextBox id="operator" desc="经办人" require="" edittype="text" datatype="string" method="None"  type="" status="F" size="28" scale="2" default=""
+        />
+      
+    </Where>
+    <Operations>
+    	<Button id="chanceAcc" name="chanceAcc" desc="选取" operation="" url="#" show="" group="" txn="" icon="icon-add"/>
+    </Operations>
+</CommQry>

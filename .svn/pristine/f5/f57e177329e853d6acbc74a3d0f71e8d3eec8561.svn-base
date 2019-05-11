@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.person.monitor.getter.TPlDqReportJyCreditBusinGetter">
+	<Include id="BankParam" />
+	
+	<Fields>
+		<Field id="id" desc="" xpath="/id"/>
+        <Field id="contno" desc="合同号" xpath="/contno"/>
+        <Field id="assukind" desc="担保方式" xpath="/assukind"/>
+        <Field id="tcapi" desc="贷款金额" xpath="/tcapi" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" default="0" />
+		<Field id="bal" desc="贷款余额" xpath="/bal" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" default="0" />
+		<Field id="issueDate" desc="发放日期" xpath="begindate" edittype="date"
+            datatype="date" />
+		<Field id="matureDate" desc="到期日期" xpath="/enddate" edittype="date"
+            datatype="date"/>
+		<Field id="riskflag" desc="五级分类" xpath="riskflag" edittype="date"
+            datatype="date"/>
+	</Fields>
+</CommQry>

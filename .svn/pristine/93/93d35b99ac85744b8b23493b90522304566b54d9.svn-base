@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	txnlogflag:true记录日志
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+
+<CommQry title="币种信息维护title" navigate="基础信息管理  &gt; 币种信息维护"
+    type="call" interface = "false" pagesize="10" async="true" databusid=""
+    transdataactionurl="/trans/TransDataAction.do" txnlogflag="true"
+    getterclassname="com.huateng.ebank.business.management.getter.CurrencyManEntryDetailGetter" >
+<Include id="BankParam" />
+
+<PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="批量下载-数据字典" maxPage="20" perfecth="20" />
+<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+
+		<Field id="old_id" desc="币种货币代码" edittype="text" require="true" size="6" errmsg="币种代码不能为空！"  datatype="string" readonly="true" status="F" xpath="old_currency/id"  />
+		<Field id="id" desc="币种货币代码" edittype="text" require="true" size="6" errmsg="币种代码不能为空！"  datatype="string"  readonly="true" status="F" xpath="currency/id"  />
+
+		<Field id="old_cnname" desc="币种中文名称" edittype="text" size="52" require="true" errmsg="币种名称不能为空！" datatype="string" readonly="true" status="F" xpath="old_currency/cnname" />
+		<Field id="cnname" desc="币种中文名称" edittype="text" size="52" require="true" errmsg="币种名称不能为空！" datatype="string"  readonly="true" status="F" xpath="currency/cnname" />
+
+		<Field id="old_enname" desc="币种英文名称" rules="" require="true" errmsg="" size="20" default="2"  edittype="text" datatype="string" readonly="true" status="F" xpath="old_currency/enname" />
+		<Field id="enname" desc="币种英文名称" rules="" require="true" errmsg="" size="20" default="2"  edittype="text" datatype= "string"  readonly="true" status="F" xpath="currency/enname" />
+
+		<Field id="old_curno" desc="外部币种代码" edittype="text" require="true" size="6" errmsg="币种代码不能为空！" datatype="string" status="F" xpath="old_currency/enname" />
+		<Field id="curno" desc="外部币种代码" edittype="text" require="true" size="6" errmsg="币种代码不能为空！" datatype="string" status="F" xpath="currency/enname" />
+
+		<Field id="old_curedicd" desc="EDI币种代码" readonly="true" edittype="text" require="false" size="6" errmsg="" datatype="string" status="F" xpath="old_currency/curedicd" />
+		<Field id="curedicd" desc="EDI币种代码" readonly="true" edittype="text" require="false" size="6" errmsg="" datatype="string" status="F" xpath="currency/curedicd" />
+
+		<Field id="old_curediname" desc="EDI币种名称" readonly="true" edittype="text" require="false" size="6" errmsg="" datatype="string" status="F" xpath="old_currency/curediname" />
+		<Field id="curediname" desc="EDI币种名称" readonly="true" edittype="text" require="false" size="6" errmsg="" datatype="string" status="F" xpath="currency/curediname" />
+
+		<Field id="old_baseunit" desc="基本单位" readonly="true" edittype="text" size="52" require="false" errmsg="" datatype="string" status="F" xpath="old_currency/baseunit" />
+		<Field id="baseunit" desc="基本单位" readonly="true" edittype="text" size="52" require="false" errmsg="" datatype="string" status="F" xpath="currency/baseunit" />
+
+		<Field id="old_minunit" desc="最小单位" readonly="true" edittype="text" size="52" require="false" errmsg="" datatype="string" status="F" xpath="old_currency/minunit" />
+		<Field id="minunit" desc="最小单位" readonly="true" edittype="text" size="52" require="false" errmsg="" datatype="string" status="F" xpath="currency/minunit" />
+
+		<Field id="old_cursymBol" desc="币种符号" status="F" require="true" method="None" primary="true" readonly="true" rules="" errmsg="内容不能为空或者空格" type="String" size="3" default="" xpath="old_currency/cursymBol" />
+		<Field id="cursymBol" desc="币种符号" status="F" require="true" method="None" primary="true" readonly="true" rules="" errmsg="内容不能为空或者空格" type="String" size="3" default="" xpath="currency/cursymBol" />
+
+		<Field id="old_isUsd" desc="有效状态" status="N" require="true" edittype="select" datatype="string" method="None" readonly="true" primary="true" type="st" translated="DATA_DIC.80" size="30" default="" xpath="old_currency/isUsd" tip="" />
+		<Field id="isUsd" desc="有效状态" status="N" require="true" edittype="select" datatype="string" method="None" readonly="true" primary="true" type="st" translated="DATA_DIC.80" size="30" default="" xpath="currency/isUsd" tip="" />
+
+		<Field id="old_dratedays" desc="日利息计算天数" status="N" require="true" edittype="select" datatype="string" method="None" readonly="true" primary="true" type="st" translated="DATA_DIC.360" size="30" default="" xpath="old_currency/dratedays" tip="" />
+		<Field id="dratedays" desc="日利息计算天数" status="N" require="true" edittype="select" datatype="string" method="None" readonly="true" primary="true" type="st" translated="DATA_DIC.360" size="30" default="" xpath="currency/dratedays" tip="" />
+
+		<Field id="old_showSeq" desc="显示顺序" status="N" require="true" edittype="String" datatype="string" method="None" readonly="true" primary="true" type="st"  size="30" default="" xpath="old_currency/showSeq" tip="" />
+		<Field id="showSeq" desc="显示顺序" status="N" require="true" edittype="String" datatype="string" method="None" readonly="true" primary="true" type="st" size="30" default="" xpath="currency/showSeq" tip="" />
+
+</Fields>
+
+<Operations>
+   <Button id="btClose" name="btClose" desc="返回" operation="syncsubmit"
+			url="#" txn="" />
+
+    </Operations>
+
+	<Script></Script>
+ </CommQry>

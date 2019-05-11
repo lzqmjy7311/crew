@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+
+	<!--建立-->
+	<form-beans>
+		<form-bean name="commonForm"
+			type="org.apache.struts.action.DynaActionForm">
+		</form-bean>
+	</form-beans>
+
+	<action-mappings>
+		<action name="commonForm" path="/trans/CommonQueryInterface"
+			type="com.huateng.ebank.framework.web.commQuery.CommonQueryInterfaceAction">
+		</action>
+		<action name="commonForm" path="/trans/CommonQueryResult"
+			type="com.huateng.ebank.framework.web.commQuery.CommonQueryResultAction">
+		</action>
+		<action name="commonForm" path="/trans/TransDataAction"
+			type="com.huateng.ebank.framework.web.commQuery.TransDataAction">
+		</action>
+		<action name="commonForm" path="/trans/CommonQueryParam"
+			type="com.huateng.ebank.framework.web.commQuery.CommonQueryParamAction">
+		</action>
+	</action-mappings>
+</struts-config>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="信贷备忘录  &gt;  信贷备忘录" navigate="催收管理    &gt; 催收2" type="call"
+	interface="false" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.person.creditMemo.getter.TPlCreditMemoGetter">
+	
+	<Include id="BankParam" />
+	<PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="批量下载-催收信息" />
+    <Fields>
+        <Field id="id" desc="编号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/id" />
+        <Field id="startDate" desc="发生日期" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/startDate" />
+        <Field id="custcode" desc="客户编号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/custcode" />
+        <Field id="custname" desc="客户名称" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/custname" />
+        <Field id="loanAccount" desc="贷款账号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/loanAccount" />
+        <Field id="reprotCode" desc="报警编号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/reprotCode" />
+        <Field id="startRemark" desc="发起原因" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/startRemark" />
+        <Field id="controlmeasure" desc="控制措施" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/controlmeasure" />
+        <Field id="operator" desc="操作人" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/operator" />
+        <Field id="operBank" desc="操作行" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/operBank" />
+        <Field id="startType" desc="发起类型" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/startType" />
+        <Field id="businessId" desc="业务ID" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/businessId" />
+    </Fields>
+    
+     <Where>
+     	<Option id="oneBrcode" desc="一级机构" status="N"
+	        fieldname="blnUpBrcode" edittype="select" dropdowntype="dynamic"
+			dataType="String" readOnly="false" translated="CQ:AllBranchSelect"
+			viewField="brcodeTypeName" init="true"
+			fieldmap="oneBrcode=brcode;oneBrcodeName=brcodeTypeName" size="20"
+			primary="false" type="String" editable="true" index="1" />\
+     	<Option id="isAll" desc="是否包含所有辖属行" edittype="radio" translated="DATA_DIC.10004" readonly="false" status="F" datatype="string" size="10" index="2" />\
+     	<Option id="twoBrcode" desc="二级机构" status="N"
+	        fieldname="blnUpBrcode" edittype="select" dropdowntype="dynamic"
+			dataType="String" readOnly="false" translated="CQ:AllBranchSelect"
+			viewField="brcodeTypeName" init="true"
+			fieldmap="twoBrcode=brcode;twoBrcodeName=brcodeTypeName" size="20"
+			primary="false" type="String" editable="true" index="3" />\
+     	
+		<TextBox id="custname" desc="客户名称" edittype="text" readonly="false" status="F" datatype="string" size="10" index="4" />\
+		<TextBox id="loanAccount" desc="贷款账号" edittype="text" readonly="false" status="F" datatype="string" size="10" index="5" />\					
+		<TextBox id="operator" desc="经办人" edittype="text" readonly="false" status="F" datatype="string" size="10" index="6" />\
+		<TextBox id="startSdate" desc="发生日期，起："  edittype="text" readonly="false" status="F" datatype="date" size="10" index="7" />\
+		<TextBox id="startEdate" desc="发生日期，至："  edittype="text" readonly="false" status="F" datatype="date" size="10" index="8" />\
+	</Where>
+    <Operations></Operations>
+</CommQry>

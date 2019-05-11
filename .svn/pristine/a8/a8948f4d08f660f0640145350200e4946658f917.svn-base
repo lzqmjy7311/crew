@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-12-18 9:58:44 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.person.monitor.entity.TPlControlmeasure" table="T_PL_CONTROLMEASURE" schema="ECUSER">
+        <comment>控制措施表</comment>
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="conmeasCode" type="string">
+            <column name="FD_CONMEAS_CODE" length="200" />
+        </property>
+        <property name="conmeasDesc" type="string">
+            <column name="FD_CONMEAS_DESC" length="1000" />
+        </property>
+        <property name="taskId" type="string">
+            <column name="FD_TASK_ID" length="32" />
+        </property>
+        <property name="ctrlType" type="string">
+            <column name="FD_CTRL_TYPE" length="25" />
+        </property>
+        <property name="monitorRate" type="java.lang.Double">
+            <column name="FD_MONITOR_RATE" />
+        </property>
+        <property name="otherCtrlDesc" type="string">
+            <column name="FD_OTHER_CTRL_DESC" length="500" />
+        </property>
+        <property name="orgCode" type="string">
+            <column name="FD_ORGCODE" length="25" />
+        </property>
+        <property name="credited" type="date">
+            <column name="FD_CREDITED" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

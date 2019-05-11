@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="单客户预警处置  &gt;  预警处置" navigate="预警处置    &gt; 预警处置" type="call" interface="false" pagesize="10" async="true" databusid="" transdataactionurl="/trans/TransDataAction.do" txnlogflag="true" getterclassname="com.gbicc.company.warnDisposal.getter.TCmWarnControlmeasureGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+        <Field id="id" desc="ID" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default="" xpath="/id" />
+        <Field id="conmeasCode" desc="风控措施" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/conmeasCode" />
+        <Field id="conmeasDesc" desc="风控说明" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/conmeasDesc" />
+        <Field id="taskId" desc="任务编号" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/taskId" />
+        <Field id="taskType" desc="任务类型" require="" edittype="text" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/taskType" />
+    </Fields>
+    <Where></Where>
+    <Operations>
+    	<Button id="addContBtn" name="addBtn" desc="新增" icon="icon-add" updateClass="#" url="" txn="" />
+		<Button id="delContBtn" name="delBtn" desc="删除" icon="icon-remove" operation="delrecord" updateClass="#" url="#" txn="" />
+    </Operations>
+</CommQry>

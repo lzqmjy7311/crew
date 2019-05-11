@@ -1,0 +1,31 @@
+<CommQry title="TCmSingleRulCasesDutyinfo" navigate="TCmSingleRulCasesDutyinfo" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.getter.TCmSingleRulCasesDutyinfoGetter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="id" desc="ID主键" edittype="text" datatype="string" xpath="/id" />
+        <Field id="casesId" desc="案例ID" edittype="text" datatype="string"
+        xpath="/casesId" />
+        
+        <Field id="duty" desc="责任人" xpath="/duty" translated="CQ:subAutoUserAndOrg" 
+			   fieldmap="duty=tlrno;dutyName=tlrName" viewField="tlrName"
+			   edittype="select" dropdowntype="dynamic" primaty="true" init="true" size="10" 
+			   editable="true" />
+        <Field id="dutyOrg" desc="责任机构" xpath="/dutyOrg" edittype="select" translated="CQ:branchTree" 
+			fieldmap="dutyOrg=id;dutyOrgName=name" viewField="name" dropdowntype="dynamictree"
+            primary="true" init="false" />
+        
+        <Field id="desc" desc="详细说明" edittype="textarea" datatype="string" size="1000" xpath="/desc" />
+        
+        <Field id="tempDutyName" desc="责任人名称" edittype="text" datatype="string"
+        xpath="/tempDutyName" />
+        <Field id="tempDutyOrgName" desc="责任机构名称" edittype="text" datatype="string"
+        xpath="/tempDutyOrgName" />
+    </Fields>
+    <Where></Where>
+    <Operations>
+    	<Button id="btnAddDuty" name="btnAddDuty" desc="新增" icon="icon-add" />
+    	<Button id="btnSubmitDuty" name="btnSubmitDuty" desc="提交" icon="icon-ok" operation="asysubmit" 
+			updateClass="com.gbicc.company.single.update.TCmSingleRulCasesDutyinfoUpdate" />
+		<Button id="btnCancelDuty" name="btnCancelDuty" desc="取消" icon="icon-cancel" />
+    </Operations>
+</CommQry>

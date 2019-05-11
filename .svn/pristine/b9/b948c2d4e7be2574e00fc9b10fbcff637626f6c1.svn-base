@@ -1,0 +1,12 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+<@CommonQueryMacro.page title="任务管理  &gt; 风险清单工作台">
+	<@CommonQueryMacro.CommonQuery id="TRiskruleList" init="true" submitMode="current" >
+			<@CommonQueryMacro.DataTable paginationbar="moreHandle" id="QualityTable" width="600" fieldStr="warnSignal,ruleID,ruleDesc,warningLevel,lounAcc,custName,productName,loanAmt,loanBalance,operator,bankName,changeDate,warnDate,isNewcust" width="100%" hasFrame="true"/>
+ 	</@CommonQueryMacro.CommonQuery>
+ 	<script>
+	function moreHandle_onClick(){
+		parent.parent.parent.GTab.addTab('TRiskruleList',"风险清单",'/gbicc-pages/riskrulelist/ftl/RiskruleList.ftl?flag=desk');
+	}
+	</script>
+</@CommonQueryMacro.page>

@@ -1,0 +1,101 @@
+<CommQry title="TRewA30FrimId" navigate="TRewA30FrimId" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.A30Getter">
+    <Include id="BankParam" />
+    <PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+        <Field id="socNo" desc="银行号" edittype="text" datatype="string" readonly="true" 
+		xpath="/socNo" />
+        <Field id="acctNo" desc="账号" edittype="text" datatype="string" readonly="true"
+        xpath="/acctNo" />
+        <Field id="postDate" desc="交易日期" edittype="text" datatype="string" readonly="true"
+        xpath="/postDate" />
+        <Field id="jrnlNo" desc="流水号" edittype="text" datatype="string" readonly="true"
+        xpath="/jrnlNo" />
+        <Field id="businessType" desc="业务种类" edittype="text" datatype="string" readonly="true"
+        xpath="/businessType" />
+        <Field id="postTime" desc="交易时间" edittype="text" datatype="int" readonly="true"
+        xpath="/postTime" />
+        <Field id="seqNo" desc="冻结轮顺序号" edittype="text" datatype="int" readonly="true" 
+		xpath="/seqNo" />
+        <Field id="tellerNo" desc="经办柜员" edittype="text" datatype="string" readonly="true"
+        xpath="/tellerNo" />
+        <Field id="branchNo" desc="经办机构" edittype="text" datatype="string" readonly="true"
+        xpath="/branchNo" />
+        <Field id="supTellerNo" desc="授权柜员" edittype="text" datatype="string" readonly="true"
+        xpath="/supTellerNo" />
+        <Field id="status" desc="状态" edittype="text" datatype="string" readonly="true"
+        xpath="/status" />
+        <Field id="customerName" desc="账户名称" edittype="text" datatype="string" readonly="true"
+        xpath="/customerName" />
+        <Field id="governmentAgency" desc="有权机关全称" edittype="text" datatype="string" readonly="true"
+        xpath="/governmentAgency" />
+        <Field id="lawEnforceOfir" desc="执法人员姓名" edittype="text" datatype="string" readonly="true"
+        xpath="/lawEnforceOfir" />
+        <Field id="officerIdName" desc="客户证件名称" edittype="text" datatype="string" readonly="true"
+        xpath="/officerIdName" />
+        <Field id="officerIdNo" desc="客户证件编号" edittype="text" datatype="string" readonly="true"
+        xpath="/officerIdNo" />
+        <Field id="legalDocName" desc="法律文书名称" edittype="text" datatype="string" readonly="true"
+        xpath="/legalDocName" />
+        <Field id="noticeNo" desc="通知书编号" edittype="text" datatype="string" readonly="true"
+        xpath="/noticeNo" />
+        <Field id="freezeType" desc="冻结种类" edittype="text" datatype="string" readonly="true"
+        xpath="/freezeType" />
+        <Field id="freezeReason" desc="冻结原因" edittype="text" datatype="string" readonly="true"
+        xpath="/freezeReason" />
+        <Field id="odInd" desc="账户透支标识" edittype="text" datatype="string" readonly="true"
+        xpath="/odInd" />
+        <Field id="freezeAmount" desc="冻结金额" edittype="text" datatype="string" readonly="true"
+        xpath="/freezeAmount" />
+        <Field id="oriFreezeJrnlNo" desc="原冻结流水号" edittype="text" datatype="string" readonly="true"
+        xpath="/oriFreezeJrnlNo" />
+        <Field id="oriFreezeDate" desc="原冻结日期" edittype="text" datatype="string" readonly="true"
+        xpath="/oriFreezeDate" />
+        <Field id="freezeMatDate" desc="冻结到期日" edittype="text" datatype="string" readonly="true"
+        xpath="/freezeMatDate" />
+        <Field id="trfType" desc="扣划种类" edittype="text" datatype="string" readonly="true"
+        xpath="/trfType" />
+        <Field id="trfAmount" desc="扣划金额" edittype="text" datatype="string" readonly="true"
+        xpath="/trfAmount" />
+        <Field id="receiveAcctNo" desc="收款人账号" edittype="text" datatype="string" readonly="true"
+        xpath="/receiveAcctNo" />
+        <Field id="receiveCustName" desc="收款人名称" edittype="text" datatype="string" readonly="true"
+        xpath="/receiveCustName" />
+        <Field id="receiveBankName" desc="收款人行名" edittype="text" datatype="string" readonly="true"
+        xpath="/receiveBankName" />
+        <Field id="trfSrnNo" desc="扣划销账码" edittype="text" datatype="string" readonly="true"
+        xpath="/trfSrnNo" />
+        <Field id="enquiryContent" desc="查询内容及结果" edittype="text" datatype="string" readonly="true"
+        xpath="/enquiryContent" />
+        <Field id="remark" desc="备注" edittype="text" datatype="string" readonly="true"
+        xpath="/remark" />
+        <Field id="subType" desc="子账户类别" edittype="text" datatype="string" readonly="true"
+        xpath="/subType" />
+        <Field id="volumeNo" desc="册号" edittype="text" datatype="string" readonly="true"
+        xpath="/volumeNo" />
+        <Field id="sequenceNo" desc="序号" edittype="text" datatype="string" readonly="true"
+        xpath="/sequenceNo" />
+        <Field id="priorityNo" desc="扣划优先级" edittype="text" datatype="string" readonly="true"
+        xpath="/priorityNo" />
+        <Field id="acctBalance" desc="账户余额" edittype="text" datatype="string" readonly="true"
+        xpath="/acctBalance" />
+        <Field id="availAmt" desc="可冻金额" edittype="text" datatype="string" readonly="true"
+        xpath="/availAmt" />
+        <Field id="othGovFreeAmt" desc="已被其他有权机关冻结金额" edittype="text" datatype="string" readonly="true"
+        xpath="/othGovFreeAmt" />
+        <Field id="marFreeAmt" desc="已被保证金冻结金额" edittype="text" datatype="string" readonly="true"
+        xpath="/marFreeAmt" />
+        <Field id="pleFreeFlg" desc="质押冻结标识" edittype="text" datatype="string" readonly="true"
+        xpath="/pleFreeFlg" />
+        <Field id="realFreezeAmt" desc="实际冻结金额" edittype="text" datatype="string" readonly="true"
+        xpath="/realFreezeAmt" />
+        <Field id="origFreezeAmt" desc="原冻结金额" edittype="text" datatype="string" readonly="true"
+        xpath="/origFreezeAmt" />
+        <Field id="warnId" desc="预警表ID" edittype="text" datatype="string" readonly="true"
+        xpath="/warnId" />
+        <Field id="dataDt" desc="数据日期" edittype="text" datatype="date" readonly="true"
+        xpath="/dataDt" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

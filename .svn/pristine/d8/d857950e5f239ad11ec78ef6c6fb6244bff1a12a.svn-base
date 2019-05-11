@@ -1,0 +1,30 @@
+<CommQry title="TPubRulExecuteLog" navigate="TPubRulExecuteLog" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+	transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.job.getter.TPubRulExecuteLogGetter">
+	<Include id="BankParam" />
+	<PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" directory="D:/templet" />
+	<Fields>
+		<Field id="execId" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/execId" />
+		<Field id="ruleId" desc="规则日期" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+			xpath="/ruleId" />
+		<Field id="ruleCode" desc="规则编号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+			xpath="/ruleCode" />
+		<Field id="startTime" desc="开始日期" require="" edittype="text" datatype="timestamp" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+			xpath="/startTime" />
+		<Field id="endTime" desc="结束日期" require="" edittype="text" datatype="timestamp" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+			xpath="/endTime" />
+		<Field id="execTime" desc="执行时间" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+			xpath="/execTime" />
+		<Field id="isSuccess" desc="执行标识" require="" edittype="select" translated="LIST:1,成功;0,失败;-1,正在执行" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+			xpath="/isSuccess" />
+		<Field id="errorMsg" desc="错误信息" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+			xpath="/errorMsg" />
+		<Field id="rowDate" desc="数据日期" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+			xpath="/rowDate" />
+	</Fields>
+	<Where>
+		<DateTextBox id="rowDate" desc="日期" edittype="select" datatype="date" placeholder="yyyyMMdd"/>
+		<Option id="isSuccess" desc="执行标识" edittype="select"  translated="LIST:1,成功;0,失败;-1,正在执行"  datatype="string"  />
+	</Where>
+	<Operations>
+	</Operations>
+</CommQry>

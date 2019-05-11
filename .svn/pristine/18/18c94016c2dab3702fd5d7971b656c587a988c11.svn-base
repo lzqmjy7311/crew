@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.huateng.ebank.entity.data.mng">
+	<class
+		name="RoleFuncRel"
+		table="ROLE_FUNC_REL"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="id"
+			type="string"
+			column="ID"
+		>
+			<generator class="uuid.hex" />  
+		</id>
+
+		<property
+			name="roleId"
+			column="ROLE_ID"
+			type="integer"
+			not-null="false"
+			length="22"
+		/>
+		<property
+			name="funcid"
+			column="FUNCID"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+
+
+	</class>
+</hibernate-mapping>

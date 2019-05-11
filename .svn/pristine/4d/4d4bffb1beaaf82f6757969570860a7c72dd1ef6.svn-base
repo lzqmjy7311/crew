@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<META>
+	<Query id="BatchStepList" path="/fpages/batchmonitor/xml/BatchStepList.xml" txn="" desc="批量步骤列表"/>
+</META>

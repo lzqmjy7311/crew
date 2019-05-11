@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="树形表格" navigate="树形表格" type="call" interface="false"
+	pagesize="10" async="true" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.huateng.ebank.business.rolemng.getter.RoleFuncTreeGetter">
+	<Include id="BankParam" />
+	<!-- 在下拉菜单中，注意以下的域的位置顺序，必须以id,name,lastdirectory和_hasChild_的顺序来写 -->
+	<!-- 如果是在树形表格中，必须定义一个id字段，该字段只定义出来做内部处理 -->
+	<Fields>
+		<Field id="select" desc="" xpath="/id" />
+		<Field id="id" desc="节点编号" xpath="/id" readonly="false" require="true" />
+		<Field id="name" desc="节点名称" xpath="/text" readonly="false" size="25"
+			require="true" />
+		<Field id="pid" desc="上级节点" xpath="/pid" readonly="false" />
+		<Field id="pagepath" desc="页面路径" xpath="/pagepath" readonly="false" colspan="4" width="360"
+			size="250" />
+		<Field id="location" desc="菜单排版" xpath="/location" multiple="false" require="true"
+			placeholder="占位符" edittype="select" translated="LIST:1,左侧树菜单;2,上面导航条"
+			default="2" />
+		<Field id="status" desc="状态" xpath="/status" multiple="false" readonly="true"
+			placeholder="占位符" edittype="select" translated="LIST:1,有效;0,无效"
+			default="1" />
+		<!-- <Field id="location" desc="位置" xpath="/location" readonly="false" 
+			/> -->
+		<Field id="desc" desc="描述" edittype="textarea" width="380" size="100" colspan='4' xpath="/desc" readonly="false" />
+		<Field id="iconCls" desc="图标" size="25" xpath="/iconCls" readonly="false" />
+		<Field id="isdirectory" desc="是否为目录" xpath="/isdirectory" require="true"
+			multiple="false" placeholder="占位符" edittype="select" translated="LIST:1,是;0,否"
+			default="0" />
+
+		<!-- 做为下拉和普通树控件必须属性 -->
+		<Field id="_hasChild_" desc="是否有孩子节点" xpath="/hasChild"
+			readonly="false" />
+		<Field id="_id" xpath="/id" />
+		<Field id="_parentId" xpath="/pid" />
+		<!-- 做为普通树控件必须属性 -->
+		<Field id="_text" desc="" method="" xpath="/text" />
+		<Field id="_checked" desc="" method="" xpath="/checked" />
+		<!-- 做为树控件扩展属性 -->
+		<Field id="_icon" desc="" method="" xpath="/iconCls" />
+	</Fields>
+	<Parameters>
+		<!-- <Parameter id="id" desc="id" /> -->
+	</Parameters>
+	<Operations>
+		<!-- 岗位权限管理 -->
+		<Button id="btnSave" name="btnSave" desc="保存" icon="icon-save"
+			operation="asysubmit" updateClass="com.huateng.ebank.business.rolemng.update.RoleFuncUpdate"
+			url="#" txn="" />
+		<Button id="btnEdit" name="btnEdit" desc="编辑" operation=""
+			icon="icon-edit" updateClass="" url="#" show="" group="" txn="" />
+		<Button id="btnAdd" name="btnAdd" desc="新增为同级节点" operation=""
+			icon="icon-add" updateClass="" url="#" show="" group="" txn="" />
+		<Button id="btnAddAsChild" name="btnAddAsChild" desc="新增为子项"
+			icon="icon-add" operation="" updateClass="" url="#" show="" group=""
+			txn="" />
+		<Button id="btnRemove" name="btnRemove" desc="删除" icon="icon-remove"
+			operation="delrecord" updateClass="com.huateng.ebank.business.rolemng.update.RoleFuncUpdate"
+			url="#" show="" group="" txn="" />
+
+	</Operations>
+</CommQry>

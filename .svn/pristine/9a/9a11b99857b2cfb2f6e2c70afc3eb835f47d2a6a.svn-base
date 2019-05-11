@@ -1,0 +1,274 @@
+package com.gbicc.company.single.operation;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang.StringUtils;
+
+import com.gbicc.bpm.service.ProcessManagerService;
+import com.gbicc.common.CommonService;
+import com.gbicc.common.FileUpDownProperties;
+import com.gbicc.common.filemng.FileUploadSevice;
+import com.gbicc.company.single.entity.TCmSingleRulCases;
+import com.gbicc.company.single.entity.TCmSingleRulInveRelWarning;
+import com.gbicc.company.single.entity.TCmSingleRulInvestigation;
+import com.gbicc.company.single.service.TCmSingleRulCasesService;
+import com.gbicc.company.single.service.TCmSingleRulInveRelWarningService;
+import com.gbicc.company.single.service.TCmSingleRulInvestigationService;
+import com.gbicc.company.single.update.TCmSingleRulInvestigationUpdate;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.business.common.service.BctlService;
+import com.huateng.ebank.business.management.service.TlrInfoService;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.framework.exceptions.CommonException;
+import com.huateng.ebank.framework.operation.BaseOperation;
+import com.huateng.ebank.framework.operation.OperationContext;
+
+public class TCmSingleRulInvestigationOperation extends BaseOperation {
+
+	public static final String ID = TCmSingleRulInvestigationOperation.class.getSimpleName();
+	public static final String CMD = "CMD";
+	public static final String CMD_QUERY = "CMD_QUERY";
+	public static final String CMD_INSERT = "CMD_INSERT";
+	public static final String CMD_UPDATE = "CMD_UPDATE";
+	public static final String CMD_DELETE = "CMD_DELETE";
+	public static final String IN_PARAM = "IN_PARAM";
+	
+	public static final String OP_SAVE_INVE="saveInve";//保存协查操作
+	public static final String OP_DELETE_INVE="deleteInve";//删除协查操作
+	public static final String OP_SUBMIT_INVE="submitInve";//提交协查任务（发起协查）操作
+	public static final String OP_INVE_COMPLETE="inveComplete";//完成协查任务操作
+	public static final String OP_AGAIN_INVE_SUBMIT="againInveSubmit";//重调查提交操作
+	
+	public static final String STATUS_INVEING="5";//协查中
+	public static final String STATUS_WAIT_SUBMIT="1";//待提交
+	public static final String STATUS_WAIT_INVE="2";//待协查
+	public static final String STATUS_ALREADY_INVE="3";//已协查
+	public static final String STATUS_WAIT_AGAIN_INVE="4";//待重新协查
+	
+	public static final String SINGLE_RULE_INVE_PROCESS="single_rule_inve_process";
+	public static final String SINGLE_RULE_INVE_PROCESS_BRANCH="single_rule_inve_process_branch";
+	public static final String HEAD_FLAG="head";
+	
+	public static final String ROLE_SUBBRANCH_FXJC="subbranch_fxjc";//分支行风险监测岗
+	public static final String ROLE_COM_KHJL="com_khjl";//对公客户经理岗
+	
+	@Override
+	public void afterProc(OperationContext context) throws CommonException {
+	}
+
+	@Override
+	public void beforeProc(OperationContext context) throws CommonException {
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public void execute(OperationContext context) throws CommonException {
+		TCmSingleRulInvestigation investigation = (TCmSingleRulInvestigation) context.getAttribute("investigation");
+		TCmSingleRulCases cases=(TCmSingleRulCases) context.getAttribute("cases");
+		String op=(String) context.getAttribute("op");
+		String warningIds=(String) context.getAttribute("warningIds");
+		String inveId=(String) context.getAttribute("inveId");
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		try {
+			if(op.equals(OP_SAVE_INVE)){
+				if(StringUtils.isEmpty(investigation.getInveCode())){
+					String sql="SELECT 'XC'||to_char(current date,'YYYYMMDD')||substr('000'||SINGLE_RUL_INVE_NO.nextval,length('000'||SINGLE_RUL_INVE_NO.nextval)-2) FROM dual";
+					Iterator it=rootdao.queryBySQL(sql);
+					while(it.hasNext()){
+						investigation.setInveCode(it.next().toString());
+					}
+				}
+				saveInve(investigation,cases,warningIds);
+			}else if(op.equals(OP_DELETE_INVE)){
+				deleteInve(inveId);
+			}else if(op.equals(OP_SUBMIT_INVE)){
+				if(StringUtils.isEmpty(investigation.getInveCode())){
+					String sql="SELECT 'XC'||to_char(current date,'YYYYMMDD')||substr('000'||SINGLE_RUL_INVE_NO.nextval,length('000'||SINGLE_RUL_INVE_NO.nextval)-2) FROM dual";
+					Iterator it=rootdao.queryBySQL(sql);
+					while(it.hasNext()){
+						investigation.setInveCode(it.next().toString());
+					}
+				}
+				saveInve(investigation,cases,warningIds);//先保存
+				submitInve(investigation,cases,STATUS_WAIT_INVE);//启动流程
+			}else if(op.equals(OP_INVE_COMPLETE)){
+				if(investigation.getInveNumb()>1){
+					//重调查的提交，保存本次协查内容，2016-03-08提出的需求：分派的协查如第三次分派重新调查的任务，建议重新调查的界面要显示前1次重新调查的内容（灰色，不可更改）。
+					String delSql="delete T_CM_SINGLE_RUL_INVE_HIST where FD_INVE_ID='"+investigation.getId()+"' ";
+					rootdao.executeSql(delSql);
+					String insertSql="insert into T_CM_SINGLE_RUL_INVE_HIST select uuid(),fd_id,FD_CHECK_EMPH,FD_INVE_WAY,FD_PART_USER,FD_INVE_FEED_DT,FD_INVE_CONC from t_cm_single_rul_investigation where FD_ID='"+investigation.getId()+"' ";
+					rootdao.executeSql(insertSql);
+				}
+				saveInve(investigation,cases,warningIds);//先保存
+				inveComplete(investigation,cases);//完成协查任务
+			}else if(op.equals(OP_AGAIN_INVE_SUBMIT)){
+				saveInve(investigation,cases,warningIds);//先保存
+				submitInve(investigation,cases,STATUS_WAIT_AGAIN_INVE);//启动流程
+				
+				//重调查，协查次数加1
+				investigation.setInveNumb(investigation.getInveNumb()+1);
+				TCmSingleRulInvestigationService.getInstance().update(investigation);
+			}
+		}catch(CommonException e){
+			e.printStackTrace();
+			throw new CommonException(e.getErrCode(),e.getMessage());
+		}catch (Exception e) {
+			e.printStackTrace();
+			throw new CommonException("系统异常",e.getMessage());
+		}
+		if(null!=investigation){
+			TCmSingleRulInvestigationUpdate.entityId=investigation.getId();
+		}
+	}
+	
+	/**
+	 * 保存协查任务
+	 * @param investigation
+	 * @param cases
+	 * @param warningIds
+	 * @throws Exception
+	 */
+	public void saveInve(TCmSingleRulInvestigation investigation,TCmSingleRulCases cases,String warningIds) throws Exception{
+		TCmSingleRulInvestigationService service = TCmSingleRulInvestigationService.getInstance();
+		TCmSingleRulInveRelWarningService inveRelService=TCmSingleRulInveRelWarningService.getInstance();
+		if(StringUtils.isNotEmpty(investigation.getId())){
+			service.update(investigation);
+		}else{
+			GlobalInfo info=GlobalInfo.getCurrentInstance();
+			String userId=info.getTlrno();
+			String orgId=info.getBrcode();
+			investigation.setInveNumb(1);
+			investigation.setCreateDt(new Date());
+			investigation.setCreateOrg(BctlService.getInstance().getBctlByBrcode(orgId));
+			investigation.setCreateUser(TlrInfoService.getInstance().getTlrInfoByTlrno(userId));
+			investigation.setCasesId(cases.getId());
+			investigation.setStatus(STATUS_WAIT_SUBMIT);
+			service.save(investigation);
+			if(StringUtils.isNotEmpty(warningIds) && !(warningIds.equals("0"))){
+				String[] str=warningIds.split(",");
+				for(String s:str){
+					//保存关联预警信号表
+					TCmSingleRulInveRelWarning inveRel=new TCmSingleRulInveRelWarning();
+					inveRel.setInveId(investigation.getId());
+					inveRel.setWarningId(s);
+					inveRel.setId(null);
+					inveRelService.save(inveRel);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * 删除协查任务
+	 * @param inveId
+	 * @throws Exception
+	 */
+	public void deleteInve(String inveId) throws Exception{
+		//1.删除关联预警信号表
+		CommonService service=CommonService.getInstance();
+		service.executeHQL("delete from TCmSingleRulInveRelWarning where inveId='"+inveId+"' ");
+		//2.删除附件
+		FileUploadSevice fuService=FileUploadSevice.getInstance();
+		fuService.deleteByRelaID(inveId);
+		//3.删除协查任务表
+		service.executeHQL("delete from TCmSingleRulInvestigation where id='"+inveId+"' ");
+	}
+	
+	/**
+	 * 提交协查任务
+	 * @param investigation
+	 * @param cases
+	 * @throws Exception
+	 */
+	public void submitInve(TCmSingleRulInvestigation investigation,TCmSingleRulCases cases,String status) throws Exception{
+		TCmSingleRulInvestigationService service = TCmSingleRulInvestigationService.getInstance();
+		TCmSingleRulCasesService casesService = TCmSingleRulCasesService.getInstance();
+		
+		startWarningInveProcess(investigation,cases);
+		
+		investigation.setStatus(status);
+		service.update(investigation);
+		cases.setCasesStatus(STATUS_INVEING);
+		casesService.update(cases);
+	}
+	
+	/**
+	 * 完成案例任务
+	 * @param cases
+	 * @throws Exception
+	 */
+	public void casesTaskComplete(TCmSingleRulCases cases) throws Exception{
+		GlobalInfo info=GlobalInfo.getCurrentInstance();
+		String userId=info.getTlrno();
+		ProcessManagerService processManagerService=ProcessManagerService.getInstace();
+		String taskId=processManagerService.findTaskId(cases.getId(),userId);
+		Map<String,Object> map=new HashMap<String, Object>();
+		map.put("desc","业务ID:"+cases.getId()+",案例编号:"+cases.getCasesCode()+",案例名称:"+cases.getCasesName());
+		map.put("assignee",userId+"_");//流程走到虚拟节点,任务不发送给任何人。
+		map.put("operation","预警协查");
+		map.put("path","next");
+		processManagerService.taskComplete(map, taskId);
+	}
+	
+	/**
+	 * 启动预警协查流程
+	 * @param investigation
+	 * @throws Exception
+	 */
+	public void startWarningInveProcess(TCmSingleRulInvestigation investigation,TCmSingleRulCases cases) throws Exception{
+		GlobalInfo info=GlobalInfo.getCurrentInstance();
+		String userId=info.getTlrno();
+		ProcessManagerService processManagerService=ProcessManagerService.getInstace();
+		
+		String roleId=FileUpDownProperties.readValue(ROLE_COM_KHJL);
+		String procKey=FileUpDownProperties.readValue(SINGLE_RULE_INVE_PROCESS_BRANCH);
+		if(cases.getHandleOrgFlag().equals(HEAD_FLAG)){
+			roleId=FileUpDownProperties.readValue(ROLE_SUBBRANCH_FXJC);
+			procKey=FileUpDownProperties.readValue(SINGLE_RULE_INVE_PROCESS);
+		}
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("desc","业务ID:"+investigation.getId()+",协查编号:"+investigation.getInveCode()+",协查名称:"+investigation.getInveName());
+		
+		//根据处理机构获取处理角色,然后获得用户
+		//List<String> assigneeList=processManagerService.findUserIdByRoleidAndCurrOrgid(roleId,investigation.getInveOrg().getBrcode());
+		
+		List<String> assigneeList=new ArrayList<String>();
+		assigneeList.add(investigation.getInveUser().getTlrno());
+		map.put("assigneeList",assigneeList);
+		if(assigneeList.size()==0){
+			throw new CommonException("协查机构下未配置协查人员", "机构号："+investigation.getInveOrg().getBrcode()+",机构名称："+investigation.getInveOrg().getBrname());
+		}
+		processManagerService.startProcess(investigation.getId(),procKey,userId,map);
+	}
+	
+	/**
+	 * 完成协查任务
+	 * @param investigation
+	 * @throws Exception
+	 */
+	public void inveComplete(TCmSingleRulInvestigation investigation,TCmSingleRulCases cases) throws Exception{
+		GlobalInfo info=GlobalInfo.getCurrentInstance();
+		String userId=info.getTlrno();
+		ProcessManagerService processManagerService=ProcessManagerService.getInstace();
+		String taskId=processManagerService.findTaskId(investigation.getId(),userId);
+		Map<String,Object> map=new HashMap<String, Object>();
+		processManagerService.taskComplete(map, taskId);
+		
+		investigation.setStatus(STATUS_ALREADY_INVE);
+		TCmSingleRulInvestigationService.getInstance().update(investigation);
+		
+		//查询当前协查任务是否全部完成，全部完成更改案例状态。
+		Object obj=CommonService.getInstance().queryOneHQL("select count(id) from TCmSingleRulInvestigation where casesId='"+investigation.getCasesId()+"' and status!='"+STATUS_ALREADY_INVE+"' ");
+		Long l=(Long) obj;
+		if(l.intValue()==0){
+			cases.setCasesStatus(TCmSingleRulCasesOperation.STATUS_WAIT_FILING);
+			TCmSingleRulCasesService.getInstance().update(cases);
+		}
+	}
+}

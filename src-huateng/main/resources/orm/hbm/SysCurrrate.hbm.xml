@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.huateng.ebank.entity.data.mng" >
+  <class name="SysCurrrate" table="SYS_CURRRATE" lazy="false" >
+	<meta attribute="sync-DAO" inherit="true">false</meta>
+	<id name="id" type="string" column="ID">
+		<generator class="uuid.hex" />
+	</id>
+    <property column="BUY_RATE" length="15" name="buyrate" not-null="false" type="big_decimal"/>
+    <property column="EXCHG_RATE" length="15" name="exchgrate" not-null="false" type="big_decimal"/>
+    <property column="SELL_RATE" length="15" name="sellrate" not-null="false" type="big_decimal"/>
+    <property column="TO_CURCD" length="3" name="tocurcd" not-null="false" type="string"/>
+    <property name="currrateDate" column="CURRRATE_DATE" type="string"/>
+    <property name="curcd" column="CURCD" type="string" not-null="false" />
+    <property name="lastUpdTlr" column="LAST_UPD_TLR" type="string" not-null="false" />
+    <property name="lastUpdDate" column="LAST_UPD_DATE" type="string" not-null="false"/>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,147 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+
+<@CommonQueryMacro.page title="流程管理  &gt;  部署管理">
+	<script type="text/javascript" src="${contextPath}/gbicc-pages/regular/comm/common.js"></script>
+	<script type='text/javascript' src='${contextPath}/dwr/interface/TaskVariable.js'> </script>
+	<@CommonQueryMacro.CommonQuery id="MonitorReportList" init="true" submitMode="current">
+		<@CommonQueryMacro.DataTable  id="monitorReportTable" readonly="true" paginationbar="btHandle,moreHandle" 
+		fieldStr="warnLevel[80],loanAcct[165],custName[120],loanVariety[150],loanAmt[120],loanBalance[120],loanTerm[80],rptStatus[90],taskType[90],taskCreatDate[90],taskMatureDate[90],handler[70],ifTimeout[15]" width="100%" hasFrame="true"/>
+	</@CommonQueryMacro.CommonQuery>
+	
+	<br/>
+	
+	<@CommonQueryMacro.CommonQuery id="TCollectionInfo" init="true" submitMode="current">
+				<@CommonQueryMacro.DataTable id="datatable1"  nowrap="true" readonly="true" paginationbar="registInfoBtn"
+				fieldStr="loanAccount[120],custCode[100],custName[60],productName[140],riskStatus[70],loanBalance[70],arrearAmt[70],arrearInterests[70],arrearCount[80],matureDate[90],collectionType[140],status[60]"  width="100%" hasFrame="true"/>
+	</@CommonQueryMacro.CommonQuery>
+	
+<script type="text/javascript">
+	function moreHandle_onClick(){
+		parent.parent.parent.GTab.addTab('ajMonitorReportWin',"我的待办任务",'/gbicc-pages/regular/ftl/monitor_report_desk_list.ftl?flag=desk&type=todoTask');
+	}
+	var ajMonitorReportWin;
+	function ajMonitorReportWin_close(){
+		ajMonitorReportWin.close();
+		MonitorReportList_dataset.flushData(MonitorReportList_dataset.pageIndex);
+	}
+	
+	function monitorReportTable_onDbClick(){
+		btHandle_onClick();
+	}
+	
+	function btHandle_onClick(button) {
+		var businessId=MonitorReportList_dataset.getValue("id");
+		var rptStatus=MonitorReportList_dataset.getValue("rptStatus");
+		var custName=MonitorReportList_dataset.getValue("custName");
+		var loanAcct=MonitorReportList_dataset.getValue("loanAcct");
+		var reportUrl=MonitorReportList_dataset.getValue("reportUrl");
+		var taskType=MonitorReportList_dataset.getValue("taskType");
+
+		var title="任务处理";
+		
+		if(taskType==TASK_TYPE.DQ&&rptStatus==REPORT_STATUS.wait_fill_report){
+			title="填写定期监控报告("+custName+"【"+loanAcct+"】)";
+		}else if(taskType==TASK_TYPE.DQ&&(rptStatus==REPORT_STATUS.wait_hz_approve || rptStatus==REPORT_STATUS.wait_dhzg_approve)){
+			title="审核定期监控报告("+custName+"【"+loanAcct+"】)";
+		}else if(taskType==TASK_TYPE.DQ&&rptStatus==REPORT_STATUS.back){
+			title="定期监控报告被退回("+custName+"【"+loanAcct+"】)";
+		}else if(taskType==TASK_TYPE.DQ&&rptStatus==REPORT_STATUS.wait_examine){
+			title="审查定期监控报告("+custName+"【"+loanAcct+"】)";
+		}else if(taskType==TASK_TYPE.DQ&&rptStatus==REPORT_STATUS.approve_pass){
+			title="定期监控报告审核通过，待填写措施完成时间("+custName+"【"+loanAcct+"】)";
+		}
+		else if(taskType==TASK_TYPE.YJ&&rptStatus==REPORT_STATUS.wait_fill_report){
+			title="填写预警处置报告("+custName+"【"+loanAcct+"】)";
+		}else if(taskType==TASK_TYPE.YJ&&(rptStatus==REPORT_STATUS.wait_hz_approve || rptStatus==REPORT_STATUS.wait_dhzg_approve)){
+			title="审核预警处置报告("+custName+"【"+loanAcct+"】)";
+		}else if(taskType==TASK_TYPE.YJ&&rptStatus==REPORT_STATUS.back){
+			title="预警处置报告被退回("+custName+"【"+loanAcct+"】)";
+		}else if(taskType==TASK_TYPE.YJ&&rptStatus==REPORT_STATUS.wait_examine){
+			title="审查预警处置报告("+custName+"【"+loanAcct+"】)";
+		}else if(taskType==TASK_TYPE.YJ&&rptStatus==REPORT_STATUS.approve_pass){
+			title="预警处置报告审核通过，待填写措施完成时间("+custName+"【"+loanAcct+"】)";
+		}
+		else if(taskType==TASK_TYPE.RF&&rptStatus==REPORT_STATUS.wait_fill_report){
+			title="填写中小融辅报告("+custName+"【"+loanAcct+"】)";
+		}else if(taskType==TASK_TYPE.RF&&(rptStatus==REPORT_STATUS.wait_hz_approve || rptStatus==REPORT_STATUS.wait_dhzg_approve)){
+			title="审核中小融辅报告("+custName+"【"+loanAcct+"】)";
+		}else if(taskType==TASK_TYPE.RF&&rptStatus==REPORT_STATUS.back){
+			title="中小融辅报告被退回("+custName+"【"+loanAcct+"】)";
+		}else if(taskType==TASK_TYPE.RF&&rptStatus==REPORT_STATUS.wait_examine){
+			title="审查中小融辅报告("+custName+"【"+loanAcct+"】)";
+		}else if(taskType==TASK_TYPE.RF&&rptStatus==REPORT_STATUS.approve_pass){
+			title="中小融辅报告审核通过，待填写措施完成时间("+custName+"【"+loanAcct+"】)";
+		}
+		
+		else if(taskType==TASK_TYPE.YT&&rptStatus==REPORT_STATUS.wait_fill_report){
+			title="填写用途监控报告("+custName+"【"+loanAcct+"】)";
+		}else if(taskType==TASK_TYPE.YT&&(rptStatus==REPORT_STATUS.wait_hz_approve || rptStatus==REPORT_STATUS.wait_dhzg_approve)){
+			title="审核用途监控报告("+custName+"【"+loanAcct+"】)";
+		}else if(taskType==TASK_TYPE.YT&&rptStatus==REPORT_STATUS.back){
+			title="用途监控报告被退回("+custName+"【"+loanAcct+"】)";
+		}else if(taskType==TASK_TYPE.YT&&rptStatus==REPORT_STATUS.wait_examine){
+			title="审查中用途监控报告("+custName+"【"+loanAcct+"】)";
+		}else if(taskType==TASK_TYPE.YT&&rptStatus==REPORT_STATUS.approve_pass){
+			title="用途监控报告审核通过，待填写措施完成时间("+custName+"【"+loanAcct+"】)";
+		}
+		parent.parent.parent.GTab.addTab('ajMonitorReportWin',title,reportUrl+"?businessId="+businessId+"&rptStatus="+rptStatus);
+	}
+	
+	
+	//定位一行记录
+	function locate(id) {
+		var record = TCollectionInfo_dataset.find(["id"],[id]);
+		if(record) {
+			TCollectionInfo_dataset.setRecord(record);
+		}
+	}
+	
+	 function btCancel_onClickCheck(button){
+	     jobschedulermanage_dataset.cancelRecord();
+	     subwindow_detailFW.close();
+	  }  
+	var tCollectionInfoWin;
+	var tCollectionInfoCheckWin;
+	function registInfoBtn_onClick(button) {
+		var businessId=TCollectionInfo_dataset.getValue("id");
+		if(businessId){
+			TaskVariable.findTaskVariable(businessId,function(y){
+				var title="审核";
+					var custName=TCollectionInfo_dataset.getValue("custName");
+					var loanAccount=TCollectionInfo_dataset.getValue("loanAccount");
+				if(y.nowRoleName=="ejzhhz"){
+					title="审核";
+					//tCollectionInfoCheckWin=openSubWin("TCollectionInfoCheckWin",title,"/gbicc-pages/collectionManage/ftl/TCollectionInfoCheckWin.ftl?id="+businessId,"1000","700");
+//					tCollectionInfoWin=openSubWin("TCollectionInfoWin",title,"/gbicc-pages/collectionManage/ftl/TCollectionInfoWin.ftl?id="+businessId+"&businessId="+businessId,"1000","700");
+					parent.parent.parent.GTab.addTab('ajMonitorReportWin',title,"/gbicc-pages/collectionManage/ftl/TCollectionInfoWin.ftl?id="+businessId+"&businessId="+businessId);
+				}else{
+					title="催收登记";
+//					tCollectionInfoWin=openSubWin("TCollectionInfoWin",title,"/gbicc-pages/collectionManage/ftl/TCollectionInfoWin.ftl?queryType=registBtn&id="+businessId+"&businessId="+businessId,"1000","700");
+					parent.parent.parent.GTab.addTab('ajMonitorReportWin',title,"/gbicc-pages/collectionManage/ftl/TCollectionInfoWin.ftl?queryType=registBtn&id="+businessId+"&businessId="+businessId);
+				}
+				
+			});
+		}else{
+			top.easyMsg.info("请选择一行！");
+		}
+	}
+	function datatable1_onDbClick(){
+		registInfoBtn.click();
+	}
+
+	function checkBtn_onClick(button) {
+		
+		var businessId=TCollectionInfo_dataset.getValue("id");
+		var custName=TCollectionInfo_dataset.getValue("custName");
+		var title="审核";
+		//tCollectionInfoCheckWin=openSubWin("TCollectionInfoWin",title,"/gbicc-pages/collectionManage/ftl/TCollectionInfoCheckWin.ftl?id="+businessId,"1000","700");
+		parent.parent.parent.GTab.addTab('ajMonitorReportWin',title,"/gbicc-pages/collectionManage/ftl/TCollectionInfoWin.ftl?id="+businessId+"&businessId="+businessId);
+	}
+	
+	//刷新当前页
+	function flushCurrentPage() {
+		TCollectionInfo_dataset.flushData(TCollectionInfo_dataset.pageIndex);
+	}
+</script>
+</@CommonQueryMacro.page>

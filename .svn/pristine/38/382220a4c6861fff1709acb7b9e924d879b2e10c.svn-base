@@ -1,0 +1,46 @@
+/*container*/
+#ym-window{
+	overflow:hidden;
+	font-size:12px;font-family:'宋体'
+}
+
+.ym-tl{padding-left:5px;background: url(images/header_left.gif) no-repeat 0 0}
+.ym-tr{padding-right:5px;background: url(images/header_right.gif) no-repeat right 0;}
+.ym-tc{background: url(images/header_middle.gif) repeat-x 0 0;overflow:hidden;height:21px;line-height:21px;}
+.ym-ttc{height:3px}
+.ym-header-text{font-size:12px;font-weight:bold;color:#fff;margin-left:10px;margin-top:2px;float:left}
+.ym-header-tools{float:right;margin-top:3px}
+.ym-header-tools strong{display:none}
+
+/*body*/
+.ym-ml{background:#455d7c;padding-left:1px}
+.ym-mr{background:#455d7c;padding-right:1px}
+.ym-mc{background:#fff; padding:0}
+.ym-body{overflow:auto;padding:0;font-size:12px;}
+
+/*button*/
+.ym-btn{background:#fff;text-align:center;}
+
+/*footer*/
+.ym-bl{background:#455d7c;padding-left:1px}
+.ym-br{background:#455d7c;padding-right:1px}
+.ym-bc{border-top:1px solid #455d7c;}
+
+/*图标公共定义*/
+.ym-header-tools div{
+	cursor:pointer;
+	width:15px;height:15px;float:left;margin:0 0px;
+	background:url(images/ico.gif) no-repeat 0 0;
+}
+.ymPrompt_close{
+	background-position:-45px 0 !important;
+}
+.ymPrompt_max{
+	background-position:0 0 !important;
+}
+.ymPrompt_min{
+	background-position:-30px 0 !important;
+}
+.ymPrompt_normal{
+	background-position:-15px 0 !important;
+}

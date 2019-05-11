@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	  navigate:导航信息
+	  type:方式（sql|call)
+	  interface:是否显示输入条件页面(true|false)
+	  databusid:数据总线编号
+	  transdataactionurl:数据整理URL
+	  async:异步提交标志
+	  pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry
+title="客户账号选择"
+navigate="客户账号选择"
+type="call"
+interface="false"
+pagesize="10"
+async="true"
+databusid="DEMO"
+transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.huateng.ebank.business.common.getter.EbankCustomerAccountSelect"
+>
+	<Include id="BankParam"/>
+	<Fields>
+	<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+	<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="bankId" desc="银行号" status="F" readOnly="false"
+			method="None" primary="true" type="String" size="300" default="" xpath="/bankId"
+			tip="银行号"/>
+		<Field id="accountId" desc="签约账号" status="F" readOnly="false"
+			method="None" primary="true" type="String" size="300" default="" xpath="/accountId"
+			tip="签约账号"/>
+		<Field id="bankNm" desc="银行名称" status="F" readOnly="false"
+			method="None" primary="true" type="String" size="300" default="" xpath="/bankNm"
+			tip="签约账号"/>
+	</Fields>
+	<Operations>
+	</Operations>
+</CommQry>

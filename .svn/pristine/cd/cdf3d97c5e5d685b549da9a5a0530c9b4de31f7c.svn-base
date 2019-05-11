@@ -1,0 +1,129 @@
+package com.huateng.ebank.business.management.updater;
+
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import com.huateng.commquery.result.MultiUpdateResultBean;
+import com.huateng.commquery.result.UpdateResultBean;
+import com.huateng.commquery.result.UpdateReturnBean;
+import com.huateng.ebank.business.common.BaseDAOUtils;
+import com.huateng.ebank.business.common.DAOUtils;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.business.management.operation.RoleMngApplyOperation;
+import com.huateng.ebank.entity.dao.mng.RoleInfoDAO;
+import com.huateng.ebank.entity.data.mng.RoleInfo;
+import com.huateng.ebank.framework.operation.OPCaller;
+import com.huateng.ebank.framework.operation.OperationContext;
+import com.huateng.ebank.framework.util.DataFormat;
+import com.huateng.ebank.framework.util.ExceptionUtil;
+import com.huateng.ebank.framework.web.commQuery.BaseUpdate;
+import com.huateng.exception.AppException;
+
+/**
+ * @Description: 企业岗位增删改
+ * @Package: com.huateng.ebank.business.custadmin.updater
+ * @author: fubo
+ * @date: 2010-7-30 下午11:07:43
+ * @Copyright: Copyright (c) 2010
+ * @Company: Shanghai Huateng Software Systems Co., Ltd.
+ */
+public class CustRoleSaveUpdater extends BaseUpdate {
+	private final static String DATASET_ID = "ebankCustRoleMng";
+	
+
+	@Override
+	public UpdateReturnBean saveOrUpdate(MultiUpdateResultBean arg0,
+			HttpServletRequest arg1, HttpServletResponse arg2)
+			throws AppException {
+		GlobalInfo gi = GlobalInfo.getCurrentInstance();
+		UpdateReturnBean updateReturnBean = new UpdateReturnBean();
+		UpdateResultBean updateResultBean = multiUpdateResultBean
+				.getUpdateResultBeanByID(DATASET_ID);
+		RoleInfoDAO roleInfoDAO = BaseDAOUtils.getRoleInfoDAO();
+		List updateList = new ArrayList();
+		List insertList = new ArrayList();
+		Date txdate = null;
+		try {
+			txdate = new SimpleDateFormat("yyyy-MM-dd").parse(gi.getTxdate()
+					.toString());
+		} catch (ParseException e) {
+			ExceptionUtil.throwCommonException("日期转换错误");
+		}
+		while (updateResultBean.hasNext()) {
+			RoleInfo bean = new RoleInfo();
+			Map<String,String> map = updateResultBean.next();
+			mapToObject(bean, map);
+			bean.setRoleList(updateResultBean.getParameter("funcStr"));
+			//mod by zhaozhiguo 2012/2/16 FPP-9 用户,岗位及机构的管理页面优化调整 end
+			switch (updateResultBean.getRecodeState()) {
+			case UpdateResultBean.INSERT:
+				RoleInfo insertBean=new RoleInfo();
+				Iterator it = DAOUtils.getHQLDAO().queryByQL("select max(id) from RoleInfo");
+				int id = 100;
+				if (it.hasNext()) {
+					Number num = (Number) it.next();
+					id = num.intValue() + 1;
+				}
+				insertBean.setId(id);
+				// mod by zhaozhiguo 2012/2/16 FPP-9 用户,岗位及机构的管理页面优化调整 end
+				insertBean.setEffectDate(bean.getEffectDate());
+				insertBean.setExpireDate(bean.getExpireDate());
+				//默认有效
+				insertBean.setStatus("1");
+				insertBean.setRoleName(bean.getRoleName());
+				insertBean.setFucUrl(bean.getFucUrl());
+				insertBean.setBrclass(bean.getBrclass());
+				insertBean.setMisc("");
+				insertBean.setMiscflgs("");
+				insertBean.setSt("1");
+				insertBean.setIsLock("1");
+				insertBean.setRoleSysType(bean.getRoleSysType());
+				insertBean.setRoleList(bean.getRoleList());
+				insertList.add(insertBean);
+				break;
+			case UpdateResultBean.MODIFY:
+				RoleInfo updateBean=new RoleInfo();
+				updateBean = roleInfoDAO.findById(bean.getId());
+			if(!DataFormat.isEmpty(bean.getEffectDate())){
+				updateBean.setEffectDate(bean.getEffectDate());
+			}
+			if(!DataFormat.isEmpty(bean.getExpireDate())){
+				updateBean.setExpireDate(bean.getExpireDate());
+			}
+				updateBean.setRoleName(bean.getRoleName());
+				String status2=bean.getStatus();
+				if(status2==null||status2.equals("")){
+					//donothing
+				}
+				else{
+					//这儿说明是点击了有效无效按钮
+					updateBean.setStatus(status2);
+				}
+				updateBean.setBrclass(bean.getBrclass());
+				updateBean.setRoleList(bean.getRoleList());
+				updateBean.setSt("2");
+				updateBean.setFucUrl(bean.getFucUrl());
+				updateBean.setIsLock("1");
+				updateList.add(updateBean);
+				break;
+			default:
+				break;
+			}
+		}
+		OperationContext oc = new OperationContext();
+		oc.setAttribute(RoleMngApplyOperation.IN_INSERT, insertList);
+		oc.setAttribute(RoleMngApplyOperation.IN_UPDATE, updateList);
+		OPCaller.call(RoleMngApplyOperation.ID, oc);
+		return updateReturnBean;
+	}
+
+}

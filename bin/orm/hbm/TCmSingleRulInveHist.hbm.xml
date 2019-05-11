@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-12-1 17:43:53 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.single.entity.TCmSingleRulInveHist" table="T_CM_SINGLE_RUL_INVE_HIST" schema="ECUSER">
+        <comment>协查历史表</comment>
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="inveId" type="string">
+            <column name="FD_INVE_ID" length="32" />
+        </property>
+        <property name="checkEmph" type="string">
+            <column name="FD_CHECK_EMPH" length="500" />
+        </property>
+        <property name="inveWay" type="string">
+            <column name="FD_INVE_WAY" length="50" />
+        </property>
+        <property name="partUser" type="string">
+            <column name="FD_PART_USER" length="32" />
+        </property>
+        <property name="inveFeedDt" type="date">
+            <column name="FD_INVE_FEED_DT" length="10" />
+        </property>
+        <property name="inveConc" type="string">
+            <column name="FD_INVE_CONC" length="500" />
+        </property>
+    </class>
+</hibernate-mapping>

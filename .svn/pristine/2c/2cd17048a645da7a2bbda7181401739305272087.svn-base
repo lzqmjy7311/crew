@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CommQry title="日志查询" navigate="主页 &gt;系统信息&gt;日志查询" type="call"
+	interface="true" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.dataquery.getter.TblCsBizLogGetter">
+	<Include id="BankParam" />
+	<ResultViewParam>
+		/fpages/management/ftl/TblCsBizLogQuery.ftl
+	</ResultViewParam>
+	
+	<PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="批量下载-系统操作日志" perfetch="15"  directory="E:/upload1" />
+	
+	<Fields>
+		<!-- 日志信息 -->
+		<Field id="id" desc="日志编号" status="F" require="" edittype="text"
+			datatype="int" method="None" readonly="" primary="true" type="日志编号"
+			size="8" default="" xpath="/id" tip="日志编号" />
+		<Field id="txnDate" desc="操作日期" status="F" require="" edittype="text"
+			datatype="string" method="None" readonly="" primary="true" type="操作日期"
+			size="30" default="" xpath="/txnDate" tip="操作日期" />
+		<Field id="txnStartTime" desc="操作开始时间" status="F" require=""
+			edittype="text" datatype="string" method="None" readonly="" primary=""
+			type="操作开始时间" size="30" default="" xpath="/txnStartTime" tip="操作开始时间" />
+		<Field id="txnEndTime" desc="操作结束时间" status="F" require=""
+			edittype="text" datatype="string" method="None" readonly="" primary="true"
+			type="操作结束时间" size="30" default="" xpath="/txnEndTime" tip="操作结束时间" />
+		<Field id="txnEndTime" desc="操作结束时间" status="F" require=""
+			edittype="text" datatype="string" method="None" readonly="" primary="true"
+			type="操作结束时间" size="30" default="" xpath="/txnEndTime" tip="操作结束时间" />
+
+		<Field id="ipAdr" desc="操作员IP" status="F" require=""
+			edittype="text" datatype="string" method="None" readonly="" primary="true"
+			type="操作员IP" size="30" default="" xpath="/ipAdr" tip="操作员IP" />
+
+		<Field id="oprCode" desc="操作员" status="F" require="" edittype="text"
+			datatype="string" method="None" readonly="" primary="true" type="操作员"
+			size="30" default="" xpath="/oprCode" tip="操作员" />
+		<Field id="tlrName" desc="操作员名称" status="N" method="None"
+			width="50" readonly="" primary="true" type="String" size="20"
+			xpath="/tlrName" default="" />
+
+		<Field id="misc" desc="操作机构" status="N" method="None"
+			width="50" readonly="" primary="true" type="String" size="50"
+			xpath="/misc" default="" />
+		<Field id="txnBizLog1" desc="操作详情" status="F" require=""
+			edittype="text" datatype="string" method="None" readonly="" primary="true"
+			type="操作详情" size="100" default="" xpath="/txnBizLog1" tip="操作详情" />
+
+
+
+
+	</Fields>
+	<Where>
+		<DateTextBox id="startDate" desc="开始日期" tip="开始日期"
+			require="false" status="F" datatype="date" method="None" size="150"
+			width="" primary="false" index="1" type="String" />
+		<DateTextBox id="endDate" desc="结束日期" tip="结束日期" require="false"
+			status="F" datatype="date" method="None" size="150" width="" primary="false"
+			index="1" type="String" />
+		<TextBox id="oprcode1" tablename="rn" fieldname="oprcode1"
+			type="String" dataType="" operation="EQ" size="30" desc="操作员名称" tip="操作员名称"
+			method="None" index="0" function="" width="" default="" scale=""
+			require="" readOnly="" rules="" />
+	</Where>
+	<Operations>
+
+
+	</Operations>
+</CommQry>

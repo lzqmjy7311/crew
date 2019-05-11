@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-12-31 14:43:01 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.warn.ComninationWarn.entity.TCwThresholdversion" table="T_CW_THRESHOLDVERSION" schema="ECUSER">
+        <id name="id" type="string">
+            <column name="FD_ID" length="25" />
+            <generator class="assigned" />
+        </id>
+        <property name="version" type="string">
+            <column name="FD_VERSION" length="25" />
+        </property>
+        <property name="yellow" type="string">
+            <column name="FD_YELLOW" length="25" />
+        </property>
+        <property name="red" type="string">
+            <column name="FD_RED" length="25" />
+        </property>
+        <property name="updatetime" type="date">
+            <column name="FD_UPDATETIME" length="10" />
+        </property>
+        <property name="operator" type="string">
+            <column name="FD_OPERATOR" length="25" />
+        </property>
+        <property name="indexCode" type="string">
+            <column name="FD_INDEX_CODE" length="25" />
+        </property>
+    </class>
+</hibernate-mapping>

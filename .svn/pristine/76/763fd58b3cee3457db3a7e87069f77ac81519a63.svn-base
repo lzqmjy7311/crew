@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-12-25 20:27:35 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.personCommon.entity.TPlTaskRuleTrig" table="T_PL_TASK_RULE_TRIG" schema="ECUSER">
+        <comment>预警处置任务触发规则表</comment>
+	         <id name="id" type="string">
+	            <column name="FD_ID" length="32" />
+	        </id>
+            <property name="accId" type="string">
+                <column name="FD_ACC_ID" length="32" />
+            </property>
+            <property name="ruleId" type="string">
+                <column name="FD_RULE_ID" length="32" />
+            </property>
+            <property name="ruleCode" type="string">
+                <column name="FD_RULE_CODE" length="32" />
+            </property>
+            <property name="ruleName" type="string">
+                <column name="FD_RULE_NAME" />
+            </property>
+            <property name="ruleDesc" type="string">
+                <column name="FD_RULE_DESC" />
+            </property>
+            <property name="ruleRank" type="string">
+                <column name="FD_RULE_RANK" length="10" />
+            </property>
+            <property name="ruleType" type="string">
+                <column name="FD_RULE_TYPE" length="10" />
+            </property>
+            <property name="ruleFor" type="string">
+                <column name="FD_RULE_FOR" length="10" />
+            </property>
+            <property name="ruleTrigType" type="string">
+                <column name="FD_RULE_TRIG_TYPE" length="10" />
+            </property>
+            <property name="ruleTrigPeriod" type="java.lang.Integer">
+                <column name="FD_RULE_TRIG_PERIOD" />
+            </property>
+            <property name="ruleTrigUnit" type="string">
+                <column name="FD_RULE_TRIG_UNIT" length="10" />
+            </property>
+            <property name="trigDate" type="date">
+                <column name="FD_TRIG_DATE" length="10" />
+            </property>
+            <property name="trigType" type="java.lang.Integer">
+                <column name="FD_TRIG_TYPE" />
+            </property>
+            <property name="processDate" type="date">
+                <column name="FD_PROCESS_DATE" length="10" />
+            </property>
+    </class>
+</hibernate-mapping>

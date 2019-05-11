@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-11-26 13:49:05 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.common.filemng.FileUpload" table="T_PUB_FILE_UPLOAD" schema="ECUSER">
+        <comment>通用的文件上传记录表</comment>
+        <id name="id" type="string">
+            <column name="FD_ID" length="50" />
+            <generator class="uuid.hex" />  
+        </id>
+        <property name="fileName" type="string">
+            <column name="FD_FILE_NAME" length="100" not-null="true" />
+        </property>
+        <property name="fileSuffix" type="string">
+            <column name="FD_FILE_SUFFIX" length="50" />
+        </property>
+        <property name="relaID" type="string">
+            <column name="FD_RELA_ID" length="50" />
+        </property>
+        <property name="fileRealName" type="string">
+            <column name="FD_FILE_REAL_NAME" length="50" />
+        </property>
+        <property name="relaType" type="string">
+            <column name="FD_RELA_TYPE" length="25" />
+        </property>
+        <property name="filePath" type="string">
+            <column name="FD_FILE_PATH" length="100" />
+        </property>
+        <property name="fileSize" type="java.lang.Integer">
+            <column name="FD_FILE_SIZE" />
+        </property>
+        <property name="uploadTime" type="timestamp">
+            <column name="FD_UPLOAD_TIME" length="26" />
+        </property>
+        <property name="sno" type="java.lang.Integer">
+            <column name="FD_SNO" />
+        </property>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,163 @@
+<CommQry title="TRewC01BorrSummaryId" navigate="TRewC01BorrSummaryId" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.C01Getter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="loanBal" desc="贷款余额" edittype="text" datatype="currency" xpath="/loanBal" />
+    	
+    	<Field id="customerNum" desc="CMIS客户编号" edittype="text" datatype="string" 
+        xpath="/customerNum" />
+	<!--<Field id="aa" desc="客户名" edittype="text" datatype="string" xpath="/aa" />-->
+		<Field id="borrowNum" desc="借据号" edittype="text" datatype="string" 
+        xpath="/borrowNum" />
+        <Field id="contractNum" desc="主合同编号" edittype="text" datatype="string" 
+        xpath="/contractNum" />
+        <Field id="loanAcct" desc="贷款账号" edittype="text" datatype="string" 
+        xpath="/loanAcct" />
+	<!--<Field id="aaa" desc="放款日期" edittype="text" datatype="string" xpath="/aa" />-->
+		<Field id="operateBrch" desc="贷款账户行" edittype="text" datatype="string" 
+        xpath="/operateBrch" />
+	<!--<Field id="aaaa" desc="授信品种代码" edittype="text" datatype="string" xpath="/aa" />-->
+		<Field id="storeRate" desc="利率" edittype="text" datatype="float" scale="5" 
+        xpath="/storeRate" />
+        <Field id="creditBalance" desc="当前授信余额" edittype="text" datatype="currency" 
+        xpath="/creditBalance" />
+        <Field id="bucketP" desc="拖欠本金（桶子P）" edittype="text" datatype="currency" 
+        xpath="/bucketP" />
+        <Field id="bocketI" desc="拖欠利息（桶子I）" edittype="text" datatype="currency" 
+        xpath="/bocketI" />
+        <Field id="inOweAccounts" desc="表内欠息" edittype="text" datatype="currency" 
+        xpath="/inOweAccounts" />
+        <Field id="outOweAccounts" desc="表外欠息" edittype="text" datatype="currency" 
+        xpath="/outOweAccounts" />
+        <Field id="totalReturnPrp" desc="累计收回本金" edittype="text" datatype="currency" 
+        xpath="/totalReturnPrp" />
+        <Field id="firstOvdueDate" desc="首次转逾期日期" edittype="text" datatype="date" 
+        xpath="/firstOvdueDate" />
+        <Field id="firstPrimnessDate" desc="首次转呆滞日期" edittype="text" datatype="date" 
+        xpath="/firstPrimnessDate" />
+        <Field id="firstBadDebtDate" desc="首次转呆账日期" edittype="text" datatype="date" 
+        xpath="/firstBadDebtDate" />
+        <Field id="addPeriodDate" desc="转展期日期" edittype="text" datatype="date" 
+        xpath="/addPeriodDate" />
+        <Field id="bailSum" desc="保证金金额" edittype="text" datatype="currency" 
+        xpath="/bailSum" />
+        <Field id="qxRevertDate" desc="欠息还款日期" edittype="text" datatype="date" 
+        xpath="/qxRevertDate" />
+        <Field id="fourLevel" desc="四级分类" edittype="select" translated="DATA_DIC.2034" init="true" multiple="false" datatype="string" 
+        xpath="/fourLevel" />
+        <Field id="fiveLevel" desc="五级分类" edittype="select" translated="DATA_DIC.2006" init="true" multiple="false" datatype="string" 
+        xpath="/fiveLevel" />
+        <Field id="discountSign" desc="贴现标志" edittype="select" translated="DATA_DIC.2045" init="true" datatype="string" 
+        xpath="/discountSign" />
+        <Field id="bankGuaranteeType" desc="保函种类" edittype="select" translated="DATA_DIC.2031" init="true" multiple="false" datatype="string" 
+        xpath="/bankGuaranteeType" />
+        <Field id="bankGuaranteeState" desc="保函状态" edittype="select" translated="DATA_DIC.2032" init="true" multiple="false" datatype="string" 
+        xpath="/bankGuaranteeState" />
+        <Field id="refundSum" desc="索偿金额" edittype="text" datatype="currency" 
+        xpath="/refundSum" />
+        <Field id="reSponsionWithodrawalSum" desc="反担保收回金额" edittype="text" datatype="currency" 
+        xpath="/reSponsionWithodrawalSum" />
+        <Field id="undertakePaySum" desc="承付金额" edittype="text" datatype="currency" 
+        xpath="/undertakePaySum" />
+        <Field id="untreadSum" desc="退回金额" edittype="text" datatype="currency" 
+        xpath="/untreadSum" />
+        <Field id="financingInd" desc="是否资金买入" edittype="select" translated="LIST:0,否;1,是" datatype="string" 
+        xpath="/financingInd" />
+        <Field id="letterOfCreditState" desc="信用证状态" edittype="select" translated="DATA_DIC.2037" init="true" datatype="string" 
+        xpath="/letterOfCreditState" />
+        <Field id="postalOrderState" desc="汇票状态" edittype="select" translated="DATA_DIC.2032" init="true" multiple="false" datatype="string" 
+        xpath="/postalOrderState" />
+        <Field id="writeOffDate" desc="销户日期" edittype="text" datatype="date" 
+        xpath="/writeOffDate" />
+        <Field id="expirationDate" desc="到期日期" edittype="text" datatype="date" 
+        xpath="/expirationDate" />
+        <Field id="payoutInfoDetailId" desc="支用明细ID" edittype="text" datatype="text" 
+        xpath="/payoutInfoDetailId" />
+	<!--<Field id="aaaaa" desc="汇票凭证编号" edittype="text" datatype="string" xpath="/aa" />-->
+		
+		<!--
+        <Field id="payoutAcctSummaryId" desc="" edittype="text" datatype="string" 
+        xpath="/payoutAcctSummaryId" />
+        <Field id="payoutInfoDetailId" desc="" edittype="text" datatype="string" 
+        xpath="/payoutInfoDetailId" />
+        <Field id="payoutAppFormNum" desc="" edittype="text" datatype="string" 
+        xpath="/payoutAppFormNum" />
+        <Field id="lastRequitalSum" desc="" edittype="text" datatype="string" 
+        xpath="/lastRequitalSum" />
+        <Field id="expirationDate" desc="" edittype="text" datatype="date" 
+        xpath="/expirationDate" />
+        <Field id="brNo" desc="" edittype="text" datatype="string"  xpath="/brNo" />
+        <Field id="stat" desc="" edittype="text" datatype="string"  xpath="/stat" />
+        <Field id="balanceAccounts" desc="" edittype="text" datatype="string" 
+        xpath="/balanceAccounts" />
+        <Field id="actType" desc="" edittype="text" datatype="string" 
+        xpath="/actType" />
+        <Field id="actCat" desc="" edittype="text" datatype="string"  xpath="/actCat" />
+        <Field id="theoLoanBal" desc="" edittype="text" datatype="string" 
+        xpath="/theoLoanBal" />
+        <Field id="bocketW" desc="" edittype="text" datatype="string" 
+        xpath="/bocketW" />
+        <Field id="bocketA" desc="" edittype="text" datatype="string" 
+        xpath="/bocketA" />
+        <Field id="bocketE" desc="" edittype="text" datatype="string" 
+        xpath="/bocketE" />
+        <Field id="unpdBocketI" desc="" edittype="text" datatype="string" 
+        xpath="/unpdBocketI" />
+        <Field id="unpdBocketW" desc="" edittype="text" datatype="string" 
+        xpath="/unpdBocketW" />
+        <Field id="unpdBocketA" desc="" edittype="text" datatype="string" 
+        xpath="/unpdBocketA" />
+        <Field id="unpdBocketE" desc="" edittype="text" datatype="string" 
+        xpath="/unpdBocketE" />
+        <Field id="badDebtInd" desc="" edittype="text" datatype="string" 
+        xpath="/badDebtInd" />
+        <Field id="totalBefRetnPrp" desc="" edittype="text" datatype="string" 
+        xpath="/totalBefRetnPrp" />
+        <Field id="totalShouldRetnInt" desc="" edittype="text" datatype="string" 
+        xpath="/totalShouldRetnInt" />
+        <Field id="totalRelRetnInt" desc="" edittype="text" datatype="string" 
+        xpath="/totalRelRetnInt" />
+        <Field id="totalWriteoffPrp" desc="" edittype="text" datatype="string" 
+        xpath="/totalWriteoffPrp" />
+        <Field id="totalWriteoffInInt" desc="" edittype="text" datatype="string" 
+        xpath="/totalWriteoffInInt" />
+        <Field id="totalWriteoffOutInt" desc="" edittype="text" datatype="string" 
+        xpath="/totalWriteoffOutInt" />
+        <Field id="totalOvdueAmt" desc="" edittype="text" datatype="string" 
+        xpath="/totalOvdueAmt" />
+        <Field id="totalPrimnessAmt" desc="" edittype="text" datatype="string" 
+        xpath="/totalPrimnessAmt" />
+        <Field id="totalBadDebtAmt" desc="" edittype="text" datatype="string" 
+        xpath="/totalBadDebtAmt" />
+        <Field id="replacementSign" desc="" edittype="text" datatype="string" 
+        xpath="/replacementSign" />
+        <Field id="commissionChargeRatio" desc="" edittype="text" datatype="string" 
+        xpath="/commissionChargeRatio" />
+        <Field id="replacementBalance" desc="" edittype="text" datatype="string" 
+        xpath="/replacementBalance" />
+        <Field id="lastMaintainDate" desc="" edittype="text" datatype="date" 
+        xpath="/lastMaintainDate" />
+        <Field id="tmpAmt" desc="" edittype="text" datatype="string"  xpath="/tmpAmt" />
+        <Field id="status" desc="" edittype="text" datatype="string"  xpath="/status" />
+        <Field id="currencyCd" desc="" edittype="text" datatype="string" 
+        xpath="/currencyCd" />
+        <Field id="recState" desc="" edittype="text" datatype="string" 
+        xpath="/recState" />
+        <Field id="advAcctNo" desc="" edittype="text" datatype="string" 
+        xpath="/advAcctNo" />
+        <Field id="advAmt" desc="" edittype="text" datatype="string"  xpath="/advAmt" />
+        <Field id="advOutBa" desc="" edittype="text" datatype="string" 
+        xpath="/advOutBa" />
+        <Field id="advInt" desc="" edittype="text" datatype="string"  xpath="/advInt" />
+        <Field id="borrowStatus" desc="" edittype="text" datatype="string" 
+        xpath="/borrowStatus" />
+        <Field id="billStatus" desc="" edittype="text" datatype="string" 
+        xpath="/billStatus" />
+        <Field id="warnId" desc="预警表ID" edittype="text" datatype="string" 
+        xpath="/warnId" />
+        <Field id="dataDt" desc="数据日期" edittype="text" datatype="date" 
+        xpath="/dataDt" />-->
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

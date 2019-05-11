@@ -1,0 +1,104 @@
+package com.gbicc.bpm.getter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.lang.StringUtils;
+
+import com.huateng.commquery.result.Result;
+import com.huateng.commquery.result.ResultMng;
+import com.huateng.ebank.business.common.BaseDAOUtils;
+import com.huateng.ebank.business.common.service.BctlService;
+import com.huateng.ebank.entity.dao.mng.BctlDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.entity.data.mng.Bctl;
+import com.huateng.ebank.framework.exceptions.CommonException;
+import com.huateng.ebank.framework.web.commQuery.BaseGetter;
+import com.huateng.exception.AppException;
+
+/**
+ * 本机构及下属机构
+ * 2015年11月18日19:12:57
+ *
+ */
+@SuppressWarnings("unchecked")
+public class SubAutoOrgTreeGetter extends BaseGetter {
+	public Result call() throws CommonException {
+		List<Bctl> returnList = new ArrayList<Bctl>();		
+		List<Bctl> list = new ArrayList<Bctl>();
+		try {
+			String val = this.getCommQueryServletRequest().getParameter("value");
+			String currentUserOrgId=this.getCommQueryServletRequest().getParameter("currentUserOrgId");
+			if (StringUtils.isNotBlank(val)) {
+				list = this.getBctls(val,currentUserOrgId);
+			} else {
+				list = this.getAllSubList(currentUserOrgId);
+			}
+			returnList = getList(list);
+			ResultMng.fillResultByList(getCommonQueryBean(),getCommQueryServletRequest(),returnList,getResult());
+		} catch (AppException e) {
+			e.printStackTrace();
+		}
+		result.setContent(returnList);
+		int pageSize = result.getPage().getEveryPage();
+		int pageCount = (list.size() - 1) / pageSize + 1;
+		result.getPage().setTotalPage(pageCount);
+		result.init();
+		return result;
+	}
+
+	@SuppressWarnings("rawtypes")
+	public List getAllSubList(String currentUserOrgId) throws CommonException {
+		    BctlDAO bctlDAO = ROOTDAOUtils.getBctlDAO();
+		    String hql=" 1=1 ";
+		    if(StringUtils.isNotBlank(currentUserOrgId)){
+		    	Bctl bctl=BctlService.getInstance().getBctlByBrcode(currentUserOrgId);
+		    	if(bctl.getBrclass().equals("2")){//一级支行
+		    		hql+=" and (po.brcode='"+currentUserOrgId+"' or po.brcode in (select brcode from Bctl where blnUpBrcode='"+currentUserOrgId+"')) ";
+		    	}else if(bctl.getBrclass().equals("3")){//二级支行
+		    		hql+=" and po.brcode='"+currentUserOrgId+"' ";
+		    	}
+		    	//hql+=" and po.brclass='"+orgLevel+"' ";
+		    }
+			List list = bctlDAO.queryByCondition(hql);
+		return list;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public List getBctls(String brname,String currentUserOrgId) throws CommonException {
+		BctlDAO bctlDAO = BaseDAOUtils.getBctlDAO();
+		List list = new ArrayList();
+		String sql = " 1=1";
+		if (StringUtils.isNotBlank(brname)) {
+			sql += " and po.brname like '%" + brname.trim() + "%'";
+		}
+		if(StringUtils.isNotBlank(currentUserOrgId)){
+			Bctl bctl=BctlService.getInstance().getBctlByBrcode(currentUserOrgId);
+	    	if(bctl.getBrclass().equals("2")){//一级支行
+	    		sql+=" and (po.brcode='"+currentUserOrgId+"' or po.brcode in (select brcode from Bctl where blnUpBrcode='"+currentUserOrgId+"')) ";
+	    	}else if(bctl.getBrclass().equals("3")){//二级支行
+	    		sql+=" and po.brcode='"+currentUserOrgId+"' ";
+	    	}
+	    }
+		list = bctlDAO.queryByCondition(sql,new Object[] {  }, null);
+		return list;
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public List getList(List list) {
+		int pageSize = this.getResult().getPage().getEveryPage();
+		int pageIndex = this.getResult().getPage().getCurrentPage();
+		int startRow = (pageIndex - 1) * pageSize;
+		int endRow = startRow + pageSize;
+		List bctls = new ArrayList();
+		if (list != null && !list.isEmpty()) {
+			for (; startRow < endRow; startRow++) {
+				bctls.add(list.get(startRow));
+				if (startRow == list.size() - 1) {
+					break;
+				}
+			}
+		}
+		return bctls;
+	}
+}

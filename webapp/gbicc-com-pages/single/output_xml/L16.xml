@@ -1,0 +1,33 @@
+<CommQry title="TRewL16CompanyCreditLoaninfoId" navigate="TRewL16CompanyCreditLoaninfoId" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.L16Getter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="fdId" desc="" edittype="text" datatype="string" xpath="/fdId"/>
+        <Field id="fdFinancecode" desc="授信机构" edittype="text" datatype="string" 
+        xpath="/fdFinancecode" />
+        <Field id="fdContractcode" desc="业务编号" edittype="text" datatype="string" 
+        xpath="/fdContractcode" />
+        <Field id="fdLoankindcode" desc="种类" edittype="text" datatype="string" 
+        xpath="/fdLoankindcode" />
+        <Field id="fdCurrency" desc="币种" edittype="text" datatype="string" 
+        xpath="/fdCurrency" />
+        <Field id="fdDuebillsum" desc="借据金额" edittype="text" datatype="currency" 
+        xpath="/fdDuebillsum" />
+        <Field id="fdDuebilltakeoutdate" desc="放款日期" edittype="text" datatype="string" 
+        xpath="/fdDuebilltakeoutdate" />
+        <Field id="fdDuebillterminatedate" desc="到期日期" edittype="text" datatype="string" 
+        xpath="/fdDuebillterminatedate" />
+        <Field id="fdSettlementdate" desc="结清日期" edittype="text" datatype="string" 
+        xpath="/fdSettlementdate" />
+        <Field id="fdRepaytype" desc="还款方式" edittype="text" datatype="string" 
+        xpath="/fdRepaytype" />
+        <Field id="fdFiveclasscode" desc="五级分类" edittype="text" datatype="string" 
+        xpath="/fdFiveclasscode" />
+        <Field id="fdIndexId" desc="" edittype="text" datatype="string" 
+        xpath="/fdIndexId" />
+        <Field id="fdIsbad" desc="是否正常" edittype="text" datatype="string" xpath="/fdIsbad" />
+        <Field id="fdWarnId" desc="" edittype="text" datatype="string" xpath="/fdWarnId" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

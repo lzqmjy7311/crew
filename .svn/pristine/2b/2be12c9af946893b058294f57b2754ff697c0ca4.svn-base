@@ -1,0 +1,59 @@
+<CommQry title="TPlTriggerFrequencyAcct" navigate="TPlTriggerFrequencyAcct" type="call"  interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.person.frequency.getter.TPlTriggerFrequencyAcctTaskGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+        <Field id="id" desc="" require="" edittype="text" datatype="string" method="None"  type="" readonly="true" status="F" size="15" scale="2" default="" xpath="/id" />
+        <Field id="loanAcct" desc="贷款账号" require="" edittype="text" datatype="string" method="None"  readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/loanAcct" />
+        <Field id="custName" desc="客户名称" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="50" scale="2" default=""
+        xpath="/custName" />
+        <Field id="warnLevel" desc="预警等级" multiple="false" init="true"  readonly="true"
+        placeholder="占位符" edittype="select" translated="DATA_DIC.702"
+        datatype="string" size="50"
+        xpath="/warnLevel" />
+        <Field id="warnDate" desc="预警时间" require="" edittype="text" datatype="date" method="None" readonly="true"  type="" status="F" size="15" scale="2" default=""
+        xpath="/warnDate" />
+        <Field id="loanVariety" desc="贷款产品" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/loanVariety" />
+       <Field id="frequency" desc="调整频率" multiple="false" init="true" 
+        placeholder="占位符" edittype="select" translated="DATA_DIC.703"
+        datatype="string" size="50" xpath="/frequency" />
+       <Field id="status" desc="业务状态" multiple="false" init="true" 
+        placeholder="占位符" edittype="select" translated="DATA_DIC.705"  readonly="true"
+        datatype="string" size="50" xpath="/status" />
+        <Field id="loanAmt" desc="贷款金额" require="" edittype="text" datatype="double" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/loanAmt" />
+        <Field id="loanBalance" desc="贷款余额" require="" edittype="text" datatype="double" method="None"  readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/loanBalance" />
+        <Field id="loanTerm" desc="贷款期限" require="" edittype="text" datatype="string" method="None"  readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/loanTerm" />
+        <Field id="sysFrequency" edittype="text" datatype="string" method="None"  readonly="true"  desc="系统监控频率"  xpath="/sysFrequency" />
+  	   <Field id="launchPer" desc="经办人" require="" edittype="text" datatype="string" method="None"  readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/launchPer" />
+        <Field id="launchBank" desc="经办行" require="" edittype="text" datatype="string" method="None"  readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/launchBank" /> 
+    </Fields>
+    <Where>
+       	<TextBox id="loanAccount" desc="贷款账号" require="" edittype="text" datatype="string" method="None"  type="" status="F" size="50" scale="2" default=""
+         />
+        <TextBox id="custname" desc="客户名称" require="" edittype="text" datatype="string" method="None"  type="" status="F" size="50" scale="2" default=""
+        />
+      
+        <Option id="rankFinal" desc="预警等级" multiple="false" init="true" 
+        placeholder="占位符" edittype="select" translated="DATA_DIC.702"
+        datatype="string" size="50"/>
+        <TextBox id="operator" desc="经办人" require="" edittype="text" datatype="string" method="None"  type="" status="F" size="50" scale="2" default=""
+        />
+
+    </Where>
+    <Operations>
+    	<Button id="btnAdd" name="btnAdd" desc="调整监控频率" icon="icon-add" updateClass="#" url="#" txn="" />
+    	
+		<Button id="btnSubmit" name="btnSubmit" desc="提交" icon="icon-ok" operation="asysubmit" 
+			updateClass="com.gbicc.person.frequency.update.TPlTriggerFrequencyAcctTaskUpdate" url="#" txn="" />
+		<Button id="btnBack" name="btnBack" desc="退回" icon="icon-back" operation="asysubmit" 
+			updateClass="com.gbicc.person.frequency.update.TPlTriggerFrequencyAcctTaskUpdate" url="#" txn="" />
+   		<Button id="moreHandle" name="moreHandle" desc="更多" icon="icon-sys-search-org" updateClass="#" url="" txn="" />
+    </Operations>
+</CommQry>

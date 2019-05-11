@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="机构权限设置" navigate="主页 &gt; 系统维护 &gt; 工作日期维护" 
+	type="form"
+	interface="false"
+	pagesize="10"
+	async="true"
+	databusid="ACEENTRY_DB"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.approve.getter.BiWorkDateYearSelectGetter">
+
+	<Include id="BankParam" />
+
+	<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+	<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+	<Fields>
+		<Field id="biYear" desc="" status="F"
+			primary="false" method="None" readonly="false" type="String"
+			size="20" edittype="select" translated="CQ:BiWorkDateYearSelect" init="true"
+			fieldmap="biYear=yr;biYearName=yr" viewField="yr" default="" xpath="/biYear"
+			require="false" tip="年份" />
+	</Fields>
+
+	<Operations>
+		<Button id="btSave" name="btSave" desc="保存"
+			operation="" updateClass="" url="#"  show="" group="" txn="" />
+	</Operations>
+
+</CommQry>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<META>
+
+
+<!-- 操作员审核权限设置 -->
+	<Query id="parammng_AuthoritySet2" path="/fpages/parammng/xml/AuthoritySet2.xml" desc="" />
+	<Query id="parammng_AuthoritySet3" path="/fpages/parammng/xml/AuthoritySet3.xml" desc="" />
+
+
+	<!-- 操作员管理 -->
+	<Query id="parammng_TlrInfo1" path="/fpages/parammng/xml/TlrInfo1.xml" txn="90103" desc="操作员管理"/>
+	<Query id="parammng_TlrInfo2" path="/fpages/parammng/xml/TlrInfo2.xml" txn="90103,90104" desc="操作员管理"/>
+	<Query id="parammng_TlrInfo3" path="/fpages/parammng/xml/TlrInfo3.xml" txn="90103,90104" desc="操作员管理"/>
+	
+	<!-- 任务移交-->
+	<Query id="ForwardTask" path="/fpages/parammng/xml/ForwardTask.xml" txn="" desc="任务移交"/>
+	<Query id="ForwardTaskSubmit" path="/fpages/parammng/xml/ForwardTaskSubmit.xml" txn="" desc="任务移交"/>
+
+
+	<!-- 工作流参数配置 -->
+	<Query id="parammng_WorkFlowParam" path="/fpages/parammng/xml/WorkFlowParam.xml" txn="" desc="工作流参数配置"/>
+	<Query id="parammng_WorkFlowParam1" path="/fpages/parammng/xml/WorkFlowParam1.xml" txn="" desc="工作流参数配置"/>
+	
+	<!-- 批处理参数设置 -->
+	<Query id="parammng_BhProcStep" path="/fpages/parammng/xml/BhProcStep.xml" txn="90601" desc="批量参数设置设置"/>
+    <!-- 批量告警信息查询 -->
+	<Query id="parammng_WarningLog" path="/fpages/parammng/xml/WarningLog.xml" txn="90602" desc="批量告警信息"/>
+	<!-- 批处理状态信息 -->
+	<Query id="parammng_BhProcLog" path="/fpages/parammng/xml/BhProcLog.xml" txn="90604" desc="批处理状态信息"/>
+
+	<Query id="DataDicEntry" path="/fpages/datadic/xml/DataDicEntry.xml" txn="" desc=""/>
+	<Query id="DataDicInfo" path="/fpages/datadic/xml/DataDicInfo.xml" txn="" desc=""/>
+	
+	<Query id="AppTypeSelect" path="/fpages/datadic/dropdownxml/AppAndFileTypeSelect.xml" txn="" desc=""/>
+	<Query id="FileTypeSelect" path="/fpages/datadic/dropdownxml/AppAndFileTypeSelect.xml" txn="" desc=""/>
+
+	<Query id="DataDicTreeSelect" path="/fpages/datadic/dropdownxml/DataDicTreeSelect.xml" txn="" desc=""/>
+	<Query id="DataDicTreeSelectCor" path="/fpages/datadic/dropdownxml/DataDicTreeSelect.xml" txn="" desc=""/>
+	<Query id="DataDicTreeSelectChangType" path="/fpages/datadic/dropdownxml/DataDicTreeSelect.xml" txn="" desc=""/>
+	
+	<Query id="MtsInOutCodeTreeSelect" path="/fpages/datadic/dropdownxml/MtsInOutCodeTreeSelect.xml" txn="" desc=""/>
+	<Query id="MtsInOutCodeTreeSelectTwo" path="/fpages/datadic/dropdownxml/MtsInOutCodeTreeSelect.xml" txn="" desc=""/>
+	
+</META>

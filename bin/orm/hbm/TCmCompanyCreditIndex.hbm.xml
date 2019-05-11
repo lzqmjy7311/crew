@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-12-8 10:25:00 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.view.zxinfo.entity.TCmCompanyCreditIndex" table="T_CM_COMPANY_CREDIT_INDEX" schema="ECUSER">
+        <comment>对公征信指标</comment>
+        <id name="id" type="string">
+            <column name="FD_ID" length="50" />
+            <generator class="assigned" />
+        </id>
+        <property name="acctId" type="string">
+            <column name="FD_ACCT_ID" length="50" />
+        </property>
+        <property name="custId" type="string">
+            <column name="FD_CUST_ID" length="50" />
+        </property>
+        <property name="registAmt" type="big_decimal">
+            <column name="FD_REGIST_AMT" precision="10" />
+        </property>
+        <property name="capitalCent" type="big_decimal">
+            <column name="FD_CAPITAL_CENT" precision="10" />
+        </property>
+        <property name="capitalAvg" type="big_decimal">
+            <column name="FD_CAPITAL_AVG" precision="10" />
+        </property>
+        <property name="capitalNum" type="java.lang.Integer">
+            <column name="FD_CAPITAL_NUM" />
+        </property>
+        <property name="nosettTbal" type="big_decimal">
+            <column name="FD_NOSETT_TBAL" precision="10" />
+        </property>
+        <property name="nosettTnum" type="java.lang.Integer">
+            <column name="FD_NOSETT_TNUM" />
+        </property>
+        <property name="nosettGzTbal" type="big_decimal">
+            <column name="FD_NOSETT_GZ_TBAL" precision="10" />
+        </property>
+        <property name="nosettGzTnum" type="java.lang.Integer">
+            <column name="FD_NOSETT_GZ_TNUM" />
+        </property>
+        <property name="nosettTloanbal" type="big_decimal">
+            <column name="FD_NOSETT_TLOANBAL" precision="10" />
+        </property>
+        <property name="nosettTloannum" type="java.lang.Integer">
+            <column name="FD_NOSETT_TLOANNUM" />
+        </property>
+        <property name="nosettBlTbal" type="big_decimal">
+            <column name="FD_NOSETT_BL_TBAL" precision="10" />
+        </property>
+        <property name="nosettBlTnum" type="java.lang.Integer">
+            <column name="FD_NOSETT_BL_TNUM" />
+        </property>
+        <property name="nosettBlTloanbal" type="big_decimal">
+            <column name="FD_NOSETT_BL_TLOANBAL" precision="10" />
+        </property>
+        <property name="nosettBlTloannum" type="java.lang.Integer">
+            <column name="FD_NOSETT_BL_TLOANNUM" />
+        </property>
+        <property name="settGzTnum" type="java.lang.Integer">
+            <column name="FD_SETT_GZ_TNUM" />
+        </property>
+        <property name="settTnum" type="java.lang.Integer">
+            <column name="FD_SETT_TNUM" />
+        </property>
+        <property name="settTloannum" type="java.lang.Integer">
+            <column name="FD_SETT_TLOANNUM" />
+        </property>
+        <property name="settGzTloannum" type="java.lang.Integer">
+            <column name="FD_SETT_GZ_TLOANNUM" />
+        </property>
+        <property name="settBlTnum" type="java.lang.Integer">
+            <column name="FD_SETT_BL_TNUM" />
+        </property>
+        <property name="settBlTloannum" type="java.lang.Integer">
+            <column name="FD_SETT_BL_TLOANNUM" />
+        </property>
+        <property name="hisBlTnum" type="java.lang.Integer">
+            <column name="FD_HIS_BL_TNUM" />
+        </property>
+        <property name="hisBlTloannum" type="java.lang.Integer">
+            <column name="FD_HIS_BL_TLOANNUM" />
+        </property>
+        <property name="guatTnum" type="java.lang.Integer">
+            <column name="FD_GUAT_TNUM" />
+        </property>
+        <property name="guatTamt" type="big_decimal">
+            <column name="FD_GUAT_TAMT" precision="10" />
+        </property>
+        <property name="guatGzTbal" type="big_decimal">
+            <column name="FD_GUAT_GZ_TBAL" precision="10" />
+        </property>
+        <property name="guatBlTbal" type="big_decimal">
+            <column name="FD_GUAT_BL_TBAL" precision="10" />
+        </property>
+        <property name="reportid" type="string">
+            <column name="FD_REPORTID" length="50" />
+        </property>
+        <property name="reportdate" type="timestamp">
+            <column name="FD_REPORTDATE" length="26" />
+        </property>
+    </class>
+</hibernate-mapping>

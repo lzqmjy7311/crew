@@ -1,0 +1,119 @@
+package com.gbicc.person.customer.getter;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.util.StringUtils;
+
+import com.gbicc.bpm.SpringContextHolder;
+import com.gbicc.person.customer.entity.TCustomer;
+import com.huateng.common.err.Module;
+import com.huateng.common.err.Rescode;
+import com.huateng.commquery.result.Result;
+import com.huateng.commquery.result.ResultMng;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.business.common.PageQueryResult;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.framework.web.commQuery.BaseGetter;
+import com.huateng.exception.AppException;
+
+/**
+ * 
+ * @author xudongdong
+ *
+ * 版本：2015年10月21日 上午11:22:00
+ * 类说明：客户 查询类
+ */
+public class TCustomerMngEntryGetter extends BaseGetter {
+
+	@Override
+	public Result call() throws AppException {
+		try {
+			
+			PageQueryResult pageResult = getData();
+			ResultMng.fillResultByList(getCommonQueryBean(),
+					getCommQueryServletRequest(), pageResult.getQueryResult(),
+					getResult());
+			result.setContent(pageResult.getQueryResult());
+			result.getPage().setTotalPage(
+					pageResult.getPageCount(getResult().getPage()
+							.getEveryPage()));
+			result.init();
+			return result;
+		} catch (AppException appEx) {
+			throw appEx;
+		} catch (Exception ex) {
+			throw new AppException(Module.SYSTEM_MODULE,
+					Rescode.DEFAULT_RESCODE, ex.getMessage(), ex);
+		}
+	}
+
+	protected PageQueryResult getData() throws Exception {
+		GlobalInfo info=GlobalInfo.getCurrentInstance();
+		String userId=info.getTlrno();
+		
+		String id = (String) getCommQueryServletRequest().getParameterMap().get("id");
+		String custCode = (String) getCommQueryServletRequest().getParameterMap().get("custCode");
+		String custName = (String) getCommQueryServletRequest().getParameterMap().get("custName");
+		String operator = (String) getCommQueryServletRequest().getParameterMap().get("operator");
+		String loanAccount = (String) getCommQueryServletRequest().getParameterMap().get("loanAccount");
+		String productCode = (String) getCommQueryServletRequest().getParameterMap().get("productCode");
+		String productName = (String) getCommQueryServletRequest().getParameterMap().get("productName");
+		String operBank = (String) getCommQueryServletRequest().getParameterMap().get("operBank");
+		//分页大小
+		int pageSize = getResult().getPage().getEveryPage();
+		//页码
+		int pageIndex = getResult().getPage().getCurrentPage();
+				
+		StringBuffer sql = new StringBuffer("SELECT CUSTCODE AS custCode,CUSTNAME AS custName,LOAN_ACCOUNT AS loanAccount,PRODUCT_CODE AS productCode,");
+        sql.append(" LOAN_AMOUNT AS loanAmount,LOAN_BALANCE AS loanBalance,LOAN_PERIOD AS loanPeriod ,OPER_BANK AS operBank  FROM T_PL_CUSTOMER_V  where 1=1 ");
+		if(StringUtils.hasText(custCode)){
+			sql.append(" and CUSTCODE like '"+custCode+"%'");
+		}
+		if(StringUtils.hasText(custName)){
+			sql.append(" and CUSTNAME like '"+custName+"%'");
+		}
+		if(StringUtils.hasText(operator)){
+			sql.append(" and OPERATOR like '"+operator+"%'");
+		}
+		if(StringUtils.hasText(loanAccount)){
+			sql.append(" and LOAN_ACCOUNT like '"+loanAccount+"%'");
+		}
+		if(StringUtils.hasText(productCode)){
+			sql.append(" and PRODUCT_CODE like '"+productName+"%'");
+		}
+		if(StringUtils.hasText(operBank)){
+			sql.append(" and OPER_BANK like '"+operBank+"%'");
+		}
+		if(StringUtils.hasText(userId)){
+			sql.append(" and DUTYID = '"+userId+"'");
+					
+		}
+		
+		
+		String orderby="";
+		//构造分页
+		StringBuffer sqlp=new StringBuffer("select t0.* from ( ");
+		sqlp.append("select t.*,row_number() over("+orderby+") as rnum from ( ");
+		sqlp.append(sql);
+		sqlp.append(") t ) t0 where t0.rnum>"+(pageIndex-1)*pageSize+" ");
+		sqlp.append("fetch first "+pageSize+" rows only ");
+		
+		JdbcTemplate jdbcTemplate=SpringContextHolder.getBean(JdbcTemplate.class);
+		List<Map<String,Object>> resultList=jdbcTemplate.queryForList(sqlp.toString());
+		//构造数据量
+		StringBuffer sqll=new StringBuffer("select count(1) from ( ");
+		sqll.append(sql);
+		sqll.append(" )");
+		//set
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		Integer totalCount=(Integer)rootdao.querySqlOne(sqll.toString());
+		
+		PageQueryResult result = new PageQueryResult();
+		result.setQueryResult(resultList);
+		result.setTotalCount(totalCount);
+		return result;
+	}
+}

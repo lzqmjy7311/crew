@@ -1,0 +1,127 @@
+<CommQry title="TRewA38BgdfId" navigate="TRewA38BgdfId" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.A38Getter">
+    <Include id="BankParam" />
+    <Fields>
+    	<Field id="draftNo" desc="汇票号" edittype="text" datatype="string"
+        xpath="/draftNo" />
+        <Field id="draftType" desc="汇票类型" edittype="text" datatype="string"
+        xpath="/draftType" />
+	<!--<Field id="aa" desc="出票人账户" edittype="text" datatype="string" xpath="/aa" />-->
+		<Field id="bgdfCurrency" desc="汇票币种" edittype="text" datatype="string"
+        xpath="/bgdfCurrency" />
+         <Field id="draftAmt" desc="汇票金额" edittype="text" datatype="string"
+        xpath="/draftAmt" />
+	<!--<Field id="aaa" desc="收款人名称" edittype="text" datatype="string" xpath="/aa" />-->
+        <Field id="payeeName" desc="收款人名称" edittype="text" datatype="string"
+        xpath="/payeeName" />
+	<!--<Field id="aaaa" desc="收款人账号" edittype="text" datatype="string" xpath="/aa" />-->
+	<!--<Field id="aaaaa" desc="收款行名称" edittype="text" datatype="string" xpath="/aa" />-->
+	<!--<Field id="aaaaaa" desc="签发日期" edittype="text" datatype="string" xpath="/aa" />-->
+		<Field id="paymentDate" desc="支付日" edittype="text" datatype="string"
+        xpath="/paymentDate" />
+        <Field id="draftStatus" desc="汇票状态" edittype="text" datatype="string"
+        xpath="/draftStatus" />
+        <Field id="contractNo" desc="合同号" edittype="text" datatype="string"
+        xpath="/contractNo" />
+	<!--<Field id="aaaaaaa" desc="借据号" edittype="text" datatype="string" xpath="/aa" />-->
+		<Field id="advanceAcctNo" desc="贷款账号" edittype="text" datatype="string"
+        xpath="/advanceAcctNo" />
+        <Field id="advanceAmount" desc="贷款金额" edittype="text" datatype="string"
+        xpath="/advanceAmount" />
+        <Field id="advanceDate" desc="贷款日期" edittype="text" datatype="string"
+        xpath="/advanceDate" />
+        <Field id="remAcctNo" desc="账号" edittype="text" datatype="string"
+        xpath="/remAcctNo" />
+	<!--<Field id="aaaaaaaa" desc="机构名称" edittype="text" datatype="string" xpath="/aa" />-->
+		
+        <!--
+        <Field id="instNo" desc="" edittype="text" datatype="string" xpath="/instNo" />
+        <Field id="branchNumber" desc="" edittype="text" datatype="string"
+        xpath="/branchNumber" />
+        <Field id="provincePreCode" desc="" edittype="text" datatype="string"
+        xpath="/provincePreCode" />
+        <Field id="contractType" desc="" edittype="text" datatype="string"
+        xpath="/contractType" />
+        <Field id="sequenceNo" desc="" edittype="text" datatype="string"
+        xpath="/sequenceNo" />
+        <Field id="bankId" desc="" edittype="text" datatype="string" xpath="/bankId" />
+        <Field id="payBankAcctno" desc="" edittype="text" datatype="string"
+        xpath="/payBankAcctno" />
+        <Field id="draftIssueDt" desc="" edittype="text" datatype="string"
+        xpath="/draftIssueDt" />
+        <Field id="draftMatDt" desc="" edittype="text" datatype="string"
+        xpath="/draftMatDt" />
+        <Field id="ctaAcctNo" desc="" edittype="text" datatype="string"
+        xpath="/ctaAcctNo" />
+        <Field id="acceptanceDate" desc="" edittype="text" datatype="string"
+        xpath="/acceptanceDate" />
+        <Field id="tranType" desc="" edittype="text" datatype="string"
+        xpath="/tranType" />
+        <Field id="existingDraftNo" desc="" edittype="text" datatype="string"
+        xpath="/existingDraftNo" />
+        <Field id="transferId" desc="" edittype="text" datatype="string"
+        xpath="/transferId" />
+        <Field id="draftVerType" desc="" edittype="text" datatype="string"
+        xpath="/draftVerType" />
+        <Field id="reissueMark" desc="" edittype="text" datatype="string"
+        xpath="/reissueMark" />
+        <Field id="reissueReason" desc="" edittype="text" datatype="string"
+        xpath="/reissueReason" />
+        <Field id="remAcctNo" desc="账号" edittype="text" datatype="string"
+        xpath="/remAcctNo" />
+        <Field id="payingBankNo" desc="" edittype="text" datatype="string"
+        xpath="/payingBankNo" />
+        <Field id="actBankSlNo" desc="" edittype="text" datatype="string"
+        xpath="/actBankSlNo" />
+        <Field id="advanceMark" desc="" edittype="text" datatype="string"
+        xpath="/advanceMark" />
+        <Field id="impBlankDocSt" desc="" edittype="text" datatype="string"
+        xpath="/impBlankDocSt" />
+        <Field id="settlementMode" desc="" edittype="text" datatype="string"
+        xpath="/settlementMode" />
+        <Field id="bgdfCipher" desc="" edittype="text" datatype="string"
+        xpath="/bgdfCipher" />
+        <Field id="holderName" desc="" edittype="text" datatype="string"
+        xpath="/holderName" />
+        <Field id="holdAccountNo" desc="" edittype="text" datatype="string"
+        xpath="/holdAccountNo" />
+        <Field id="holdDepBkNo" desc="" edittype="text" datatype="string"
+        xpath="/holdDepBkNo" />
+        <Field id="discountBkNo" desc="" edittype="text" datatype="string"
+        xpath="/discountBkNo" />
+        <Field id="payReflReason" desc="" edittype="text" datatype="string"
+        xpath="/payReflReason" />
+        <Field id="discDraftStatus" desc="" edittype="text" datatype="string"
+        xpath="/discDraftStatus" />
+        <Field id="amtFromSecAcct" desc="" edittype="text" datatype="string"
+        xpath="/amtFromSecAcct" />
+        <Field id="amtFromDepAcct" desc="" edittype="text" datatype="string"
+        xpath="/amtFromDepAcct" />
+        <Field id="holdReason" desc="" edittype="text" datatype="string"
+        xpath="/holdReason" />
+        <Field id="holdUnholdNarr" desc="" edittype="text" datatype="string"
+        xpath="/holdUnholdNarr" />
+        <Field id="courtAdviseNo" desc="" edittype="text" datatype="string"
+        xpath="/courtAdviseNo" />
+        <Field id="cipherType" desc="" edittype="text" datatype="string"
+        xpath="/cipherType" />
+        <Field id="bgdHoldDate" desc="" edittype="text" datatype="string"
+        xpath="/bgdHoldDate" />
+        <Field id="tellerNo" desc="" edittype="text" datatype="string"
+        xpath="/tellerNo" />
+        <Field id="rmitrMcaSubTyp" desc="" edittype="text" datatype="string"
+        xpath="/rmitrMcaSubTyp" />
+        <Field id="holderBankName" desc="" edittype="text" datatype="string"
+        xpath="/holderBankName" />
+        <Field id="lastMaintDate" desc="" edittype="text" datatype="string"
+        xpath="/lastMaintDate" />
+        <Field id="lastMaintStat" desc="" edittype="text" datatype="string"
+        xpath="/lastMaintStat" />
+        <Field id="warnId" desc="预警表ID" edittype="text" datatype="string"
+        xpath="/warnId" />
+        <Field id="dataDt" desc="数据日期" edittype="text" datatype="date"
+        xpath="/dataDt" />-->
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

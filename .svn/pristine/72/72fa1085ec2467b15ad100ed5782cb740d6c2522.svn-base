@@ -1,0 +1,191 @@
+/**
+ *
+ */
+package com.huateng.ebank.business.opermng.update;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
+import org.springframework.beans.BeanUtils;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import com.gbicc.user.entity.TModifiedRoleid;
+import com.gbicc.user.service.TModifiedRoleidService;
+import com.huateng.common.err.Module;
+import com.huateng.common.err.Rescode;
+import com.huateng.commquery.result.MultiUpdateResultBean;
+import com.huateng.commquery.result.UpdateResultBean;
+import com.huateng.commquery.result.UpdateReturnBean;
+import com.huateng.ebank.business.common.DAOUtils;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.business.opermng.operation.OperMngOperation;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.entity.data.mng.Bctl;
+import com.huateng.ebank.entity.data.mng.RoleInfo;
+import com.huateng.ebank.entity.data.mng.TlrInfo;
+import com.huateng.ebank.entity.data.mng.UserOrgRoleRel;
+import com.huateng.ebank.framework.operation.OPCaller;
+import com.huateng.ebank.framework.operation.OperationContext;
+import com.huateng.ebank.framework.util.ApplicationContextUtils;
+import com.huateng.ebank.framework.web.commQuery.BaseUpdate;
+import com.huateng.exception.AppException;
+
+/**
+ * @author zhiguo.zhao
+ *
+ */
+public class OperMngModUpdate extends BaseUpdate {
+
+	public UpdateReturnBean saveOrUpdate(
+			MultiUpdateResultBean multiUpdateResultBean,
+			HttpServletRequest request, HttpServletResponse response)
+			throws AppException {
+		try {
+			UpdateReturnBean updateReturnBean = new UpdateReturnBean();
+			//step1:用户信息
+			UpdateResultBean updateResultBean = multiUpdateResultBean.getUpdateResultBeanByID("operMngMod");
+			TlrInfo operator = null;
+			while (updateResultBean.hasNext()) {
+				operator = new TlrInfo();
+				Map map = updateResultBean.next();
+				mapToObject(operator, map);
+			}
+			String brcode1="";
+			String tlrno1="";
+			String brnametemp1="";
+			//step2:用户机构岗位
+			UpdateResultBean roleUpdateResultBean = multiUpdateResultBean.getUpdateResultBeanByID("operMngRoleInfo");
+			String myselects=roleUpdateResultBean.getParameter("myselects");
+			JSONObject json=JSONObject.fromObject(myselects);
+			Iterator<String> kesy=json.keys();
+			List<UserOrgRoleRel> orgRoleRels=new ArrayList<UserOrgRoleRel>();
+			Map<String,String> dicRoles=new HashMap<String, String>();
+			Map<String,String> dicOrgs=new HashMap<String, String>();
+			String defaultOrgId=null;//默认机构，默认岗位
+			String defaultRoleId=null;
+			int num=0;
+			while(kesy.hasNext()){
+				String orgId=kesy.next();
+				JSONArray j=json.getJSONArray(orgId);
+				if(j!=null){
+					for(int i=0;i<j.size();i++){
+						UserOrgRoleRel orgRoleRel=new UserOrgRoleRel();
+						if(num==0){
+							defaultOrgId=orgId;
+							defaultRoleId=j.getString(i);
+						}
+						orgRoleRel.setOrgId(orgId);
+						orgRoleRel.setRoleId(j.getString(i));
+						orgRoleRel.setUserId(operator.getTlrno());
+						orgRoleRels.add(orgRoleRel);
+						dicRoles.put(orgRoleRel.getRoleId(), orgRoleRel.getRoleId());
+						dicOrgs.put(orgId, orgId);
+						num++;
+					}
+				}
+			}
+			//step3:用户拥有的机构
+			UpdateResultBean bctlUpdateResultBean = multiUpdateResultBean.getUpdateResultBeanByID("bctlMngEntry");
+			while (bctlUpdateResultBean.hasNext()) {
+				Map map = bctlUpdateResultBean.next();
+				if(map.get("brcodetemp")!=null&&!map.get("brcodetemp").equals("")){
+					brcode1=(String) map.get("brcodetemp");
+					tlrno1=(String) map.get("tlrNo");
+					brnametemp1=(String) map.get("brname");
+				}
+				
+			}
+			List<Bctl> bctls = new ArrayList<Bctl>();
+			for(Map.Entry<String, String> en:dicOrgs.entrySet()){
+				Bctl btcl =DAOUtils.getBctlDAO().queryById(en.getKey());
+				Bctl btcl2 = new Bctl();
+				BeanUtils.copyProperties(btcl, btcl2);
+				bctls.add(btcl2);
+			}
+			
+			//TODO 第一个机构设置为默认
+			if(bctls.size()>0){
+				operator.setBrcode(defaultOrgId);
+				operator.setRoleid(Integer.valueOf(defaultRoleId));
+			}
+			
+			//step4:用户角色
+			List<RoleInfo> roles = new ArrayList<RoleInfo>();
+			for(Map.Entry<String, String> en:dicRoles.entrySet()){
+				RoleInfo role =DAOUtils.getRoleInfoDAO().findById(Integer.valueOf(en.getKey()));
+				RoleInfo role2 = new RoleInfo();
+				BeanUtils.copyProperties(role, role2);
+				roles.add(role2);
+			}
+			GlobalInfo globalInfo = GlobalInfo.getCurrentInstance();
+			String roleId=globalInfo.getWorkflowRoleId();
+			TModifiedRoleid tmr=new TModifiedRoleid();
+			if(!roleId.equals("611")&&!roleId.equals("612")&&!roleId.equals("111")){
+				JdbcTemplate jt=(JdbcTemplate) ApplicationContextUtils.getBean("JdbcTemplate");
+				List<RoleInfo> list = new ArrayList<RoleInfo>();
+				StringBuffer sb=new StringBuffer();
+				String sql="select o.* from T_USER_ORGROLE_REL l, ROLE_INFO o  where l.F_USER_ID='"+tlrno1+"' and l.F_ORG_ID='"+brcode1+"' and  l.F_ROLE_ID=o.ROLE_ID";
+				list=jt.query(sql, BeanPropertyRowMapper.newInstance(RoleInfo.class));
+				
+				if(list!=null && !list.isEmpty()){
+					StringBuilder sf=new StringBuilder();
+					for(RoleInfo info:list){
+						sf.append(info.getRoleName()).append("<br>");
+					}
+					tmr.setFdRoleidb(sf.toString());
+				}
+			}
+			String op = updateResultBean.getParameter("op");
+			OperationContext oc = new OperationContext();
+			oc.setAttribute(OperMngOperation.CMD, op);
+			oc.setAttribute(OperMngOperation.IN_RELLIST, orgRoleRels);
+			oc.setAttribute(OperMngOperation.IN_ROLELIST, roles);
+			oc.setAttribute(OperMngOperation.IN_BCTLLIST, bctls);
+			oc.setAttribute(OperMngOperation.IN_TLRINFO, operator);
+			OPCaller.call(OperMngOperation.ID, oc);
+			if(!roleId.equals("611")&&!roleId.equals("612")&&!roleId.equals("111")){
+				ROOTDAO rootdao=ROOTDAOUtils.getROOTDAO();
+				JdbcTemplate jt=(JdbcTemplate) ApplicationContextUtils.getBean("JdbcTemplate");
+				List<RoleInfo> list = new ArrayList<RoleInfo>();
+				StringBuffer sb=new StringBuffer();
+				String sql="select o.* from T_USER_ORGROLE_REL l, ROLE_INFO o  where l.F_USER_ID='"+tlrno1+"' and l.F_ORG_ID='"+brcode1+"' and  l.F_ROLE_ID=o.ROLE_ID";
+				list=jt.query(sql, BeanPropertyRowMapper.newInstance(RoleInfo.class));
+				if(list!=null && !list.isEmpty()){
+					StringBuilder sf=new StringBuilder();
+					for(RoleInfo info:list){
+						sf.append(info.getRoleName()).append("<br>");
+					}
+					tmr.setFdRoleida(sf.toString());
+				}
+				TModifiedRoleidService trs=TModifiedRoleidService.getInstance();
+				tmr.setFdChangedate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+				tmr.setFdOperid(globalInfo.getTlrno());
+				tmr.setFdOrgid(brcode1);
+				tmr.setFdUserid(operator.getTlrno());
+				tmr.setFdOrgname(brnametemp1);
+				trs.save(tmr);
+			}
+
+			return updateReturnBean;
+		} catch (AppException appEx) {
+			throw appEx;
+		} catch (Exception ex) {
+			throw new AppException(Module.SYSTEM_MODULE,
+					Rescode.DEFAULT_RESCODE, ex.getMessage(), ex);
+		}
+	}
+
+}

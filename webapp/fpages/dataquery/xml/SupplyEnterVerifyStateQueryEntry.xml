@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	txnlogflag:true记录日志
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="" navigate="数据查询    &gt; 补录审核情况查询"
+	type="call"
+	interface="false"
+	pagesize="10"
+	async="true"
+	databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.huateng.ebank.business.dataquery.getter.SupplyEnterVerifyStateQueryEntryGetter">
+	<Include id="BankParam" />
+	<!--
+	<PageQryExp type="CSV" limit="true" encoding="GBK" url="/trans/qryExp.do" directory="F:/upload"/>
+	-->
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+
+		<Field id="workDate" desc="工作日期" edittype="date" status="F" datatype="date" size="10" xpath="/workDate" />
+
+		<Field id="brNo" desc="机构号" require="" edittype="text" datatype="string" method="None"
+			readonly="false" size="32" status="F" default="" xpath="/brNo" />
+		<Field id="brNoName" desc="机构名称" status="F"
+			method="com.huateng.ebank.business.common.CQMethod.getBrnoName"
+			width="" readonly="" primary="true" type="String" size="150"
+			xpath="/brNo" default=""/>
+
+		<Field id="apptype" desc="应用类型" require="" edittype="select" datatype="string" method="None"
+			readonly="false" size="3" status="F" default="" xpath="/apptype" translated="DATA_DIC.17"/>
+
+		<Field id="currentfile" desc="文件类型代码" require="" edittype="text" datatype="string"
+		          status="F" default=""  xpath="/currentfile" />
+
+		<Field id="fileType" desc="文件类型" require="" edittype="text" datatype="string" method="com.huateng.ebank.business.common.CQMethod.getCurrentFile"
+		  readonly="false" size="20" status="F" default="" primary="true" xpath="/apptype|'_'|/currentfile" />
+
+		<Field id="noedit" desc="可编辑" edittype="text" datatype="string" status="F" size="23" xpath="/noedit" />
+		<Field id="editWaitConfirm" desc="待补录确认" edittype="text" datatype="string" status="F" size="23" xpath="/editWaitConfirm" />
+		<Field id="confirmWaitAudit" desc="等待审核" edittype="text" datatype="string" status="F" size="23" xpath="/confirmWaitAudit" />
+		<Field id="auditWaitConfirm" desc="待审核确认" edittype="text" datatype="string" status="F" size="23" xpath="/auditWaitConfirm" />
+		<Field id="confirmPass" desc="已审核确认" edittype="text" datatype="string" status="F" size="23" xpath="/confirmPass" />
+		<Field id="sendreport" desc="已上报" edittype="text" datatype="string" status="F" size="23" xpath="/sendreport" />
+
+	</Fields>
+
+	<Where>
+
+    	<TextBox id="qworkDateStart" desc="工作日期开始" edittype="text" datatype="date" size="10" index="4" />
+    	<TextBox id="qworkDateEnd" desc="工作日期结束" edittype="text" datatype="date" size="10" index="5" />
+		<Option id="qbusiType" desc="业务类型" datatype="string" require="true" index="0" translated="DATA_DIC.35" />
+		<Option id="qappType" operationb="EQ" size="" index="1" desc="应用类型" tip="应用类型" type="string" viewField="dataName" translated="CQ:AppTypeSelect"
+			ropdowntype="dynamic" fieldmap="qappTypeName=dataName;qappType=dataNo" init="true" require="false" readOnly=""/>
+		<Option id="qfileType" operationb="EQ" size="" index="2" desc="文件类型" tip="文件类型" type="string" translated="CQ:FileTypeSelect" viewField="dataNoName"
+			fieldmap="qfileTypeName=dataName;qfileType=dataNo" dropdowntype="dynamic" init="true" require="false"/>
+		<Option id="qbrNo" operation="EQ" size="" desc="所属机构" tip="机构号" type="string" translated="CQ:BctlAllSelect"
+    		fieldmap="qbrNo=brno;qbrNoName=brcodeTypeName" require="false" readOnly="" index="3"
+    		viewField="brcodeTypeName" dropdowntype="dynamic" init="true" />
+    </Where>
+
+    <Operations>
+    </Operations>
+</CommQry>

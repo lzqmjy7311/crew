@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-12-15 10:28:17 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.view.entity.TOdsCmsCorpIndex" table="T_ODS_CMS_CORP_INDEX" schema="ECUSER">
+            <id name="customerNum" type="string">
+                <column name="CUSTOMER_NUM" length="21" />
+            </id>
+            <property name="advanceAmount" type="big_decimal">
+                <column name="ADVANCE_AMOUNT" precision="18" />
+            </property>
+            <property name="advanceBalance" type="big_decimal">
+                <column name="ADVANCE_BALANCE" precision="18" />
+            </property>
+            <property name="groupCustomerNum" type="string">
+                <column name="GROUP_CUSTOMER_NUM" length="21" />
+            </property>
+            <property name="lastMSalAmount" type="big_decimal">
+                <column name="LAST_M_SAL_AMOUNT" precision="18" />
+            </property>
+            <property name="last2MSalAmount" type="big_decimal">
+                <column name="LAST2_M_SAL_AMOUNT" precision="18" />
+            </property>
+            <property name="last3MSalAmount" type="big_decimal">
+                <column name="LAST3_M_SAL_AMOUNT" precision="18" />
+            </property>
+            <property name="lastMPubAmount" type="big_decimal">
+                <column name="LAST_M_PUB_AMOUNT" precision="18" />
+            </property>
+            <property name="last2MPubAmount" type="big_decimal">
+                <column name="LAST2_M_PUB_AMOUNT" precision="18" />
+            </property>
+            <property name="last3MPubAmount" type="big_decimal">
+                <column name="LAST3_M_PUB_AMOUNT" precision="18" />
+            </property>
+            <property name="coreCustomerNum" type="string">
+                <column name="CORE_CUSTOMER_NUM" />
+            </property>
+            <property name="creditAmount" type="big_decimal">
+                <column name="CREDIT_AMOUNT" precision="18" />
+            </property>
+            <property name="creditBalance" type="big_decimal">
+                <column name="CREDIT_BALANCE" precision="18" />
+            </property>
+            <property name="normalAdvanceBal" type="big_decimal">
+                <column name="NORMAL_ADVANCE_BAL" precision="18" />
+            </property>
+            <property name="mentionAdvanceBal" type="big_decimal">
+                <column name="MENTION_ADVANCE_BAL" precision="18" />
+            </property>
+            <property name="substdAdvanceBalance" type="big_decimal">
+                <column name="SUBSTD_ADVANCE_BALANCE" precision="18" />
+            </property>
+            <property name="doutfulAdvanceBal" type="big_decimal">
+                <column name="DOUTFUL_ADVANCE_BAL" precision="18" />
+            </property>
+            <property name="lossAdvanceBal" type="big_decimal">
+                <column name="LOSS_ADVANCE_BAL" precision="18" />
+            </property>
+            <property name="custManagerId" type="string">
+                <column name="CUST_MANAGER_ID" length="21" />
+            </property>
+            <property name="overdueAdvanceBal" type="big_decimal">
+                <column name="OVERDUE_ADVANCE_BAL" precision="18" />
+            </property>
+            <property name="outsideGuaranteeAmount" type="big_decimal">
+                <column name="OUTSIDE_GUARANTEE_AMOUNT" precision="18" />
+            </property>
+            <property name="outstandingAdvanceCount" type="java.lang.Integer">
+                <column name="OUTSTANDING_ADVANCE_COUNT" />
+            </property>
+    </class>
+</hibernate-mapping>

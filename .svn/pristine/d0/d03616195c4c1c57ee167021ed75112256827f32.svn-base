@@ -1,0 +1,66 @@
+package com.gbicc.person.monitor.service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import com.gbicc.person.monitor.dao.TPlDqMonitorDAO;
+import com.gbicc.person.monitor.entity.TPlControlmeasure;
+import com.gbicc.person.monitor.entity.TPlDqMonitor;
+import com.gbicc.util.JsonUtils;
+import com.huateng.ebank.framework.exceptions.CommonException;
+import com.huateng.ebank.framework.util.ApplicationContextUtils;
+
+/**
+ * 
+ * @author likm
+ * @time   2015年11月6日09:56:40
+ * @desc   定期监控报告服务类
+ */
+public class TPlDqMonitorService {
+	public TPlDqMonitorService() {
+	}
+
+	public synchronized static TPlDqMonitorService getInstance() {
+		return (TPlDqMonitorService) ApplicationContextUtils
+				.getBean(TPlDqMonitorService.class.getName());
+	}
+	
+	private TPlDqMonitorDAO getDao(){
+		return (TPlDqMonitorDAO) ApplicationContextUtils.getBean("TPlDqMonitorDAO");
+	}
+	
+	public TPlDqMonitor get(String id) throws CommonException{
+		TPlDqMonitorDAO dao=getDao();
+		return dao.getHibernateTemplate().get(TPlDqMonitor.class,id);
+	}
+	
+	public void save(TPlDqMonitor monitor) throws CommonException{
+		TPlDqMonitorDAO dao=getDao();
+		dao.getHibernateTemplate().save(monitor);
+	}
+	
+	public void update(TPlDqMonitor monitor)throws CommonException{
+		TPlDqMonitorDAO dao=getDao();
+		dao.getHibernateTemplate().update(monitor);
+	}
+	
+	public void delete(TPlDqMonitor monitor)throws CommonException{
+		TPlDqMonitorDAO dao=getDao();
+		dao.getHibernateTemplate().delete(monitor);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public List<String> dwrFindCtrl(String businessId){
+		List<String> arrs=new ArrayList<String>();
+		try {
+			List list=getDao().getHibernateTemplate().find("from TPlControlmeasure where taskId='"+businessId+"'");
+			for(int i=0;i<list.size();i++){
+				TPlControlmeasure ctrl= (TPlControlmeasure) list.get(i);
+				arrs.add(JsonUtils.toString(ctrl));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return arrs;
+	}
+}

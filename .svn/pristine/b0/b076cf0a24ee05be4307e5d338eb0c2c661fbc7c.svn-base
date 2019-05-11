@@ -1,0 +1,90 @@
+<CommQry title="TRewJ17SubcontractId" navigate="TRewJ17SubcontractId" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.J17Getter">
+    <Include id="BankParam" />
+    <Fields>
+    	<Field id="customerNum" desc="对公客户编号" edittype="text" datatype="string"
+        xpath="/customerNum" />
+        <Field id="contractNum" desc="主合同编号" edittype="text" datatype="string"
+        xpath="/contractNum" />
+        <Field id="subcontractNum" desc="从合同编号" edittype="text" datatype="string"
+        xpath="/subcontractNum" />
+        <Field id="subcontractTypeCd" desc="从合同类型代码" edittype="text" datatype="string"
+        xpath="/subcontractTypeCd" />
+        <Field id="superTopGuarantyId" desc="关联最高额担保合同编号" edittype="text" datatype="string"
+        xpath="/superTopGuarantyId" />
+        <Field id="currencyCd" desc="币种代码" edittype="text" datatype="string"
+        xpath="/currencyCd" />
+        <Field id="subContractAmt" desc="从合同金额" edittype="text" datatype="string"
+        xpath="/subContractAmt" />
+        <Field id="guarantyAmt" desc="本次担保金额" edittype="text" datatype="string"
+        xpath="/guarantyAmt" />
+        <Field id="topGuarantyAmt" desc="最高担保金额" edittype="text" datatype="string"
+        xpath="/topGuarantyAmt" />
+        <Field id="topCumulateGuarantyAmt" desc="最高额累计担保金额" edittype="text" datatype="string"
+        xpath="/topCumulateGuarantyAmt" />
+        <Field id="guaranteeTypeCd" desc="保证方式" edittype="text" datatype="string"
+        xpath="/guaranteeTypeCd" />
+        <Field id="guarantCustomerNum" desc="抵押质押保证人客户编号" edittype="text" datatype="string"
+        xpath="/guarantCustomerNum" />
+        <Field id="warrantorName" desc="抵押质押保证人名称" edittype="text" datatype="string"
+        xpath="/warrantorName" />
+        <Field id="guarantyRate" desc="抵押质押率" edittype="text" datatype="string"
+        xpath="/guarantyRate" />
+        <Field id="collateralTypeCd" desc="抵质押物类型代码" edittype="text" datatype="string"
+        xpath="/collateralTypeCd" />
+        <Field id="subContractSignDate" desc="签约日期" edittype="text" datatype="string"
+        xpath="/subContractSignDate" />
+        <Field id="startDate" desc="起始日期" edittype="text" datatype="string"
+        xpath="/startDate" />
+        <Field id="expirationDate" desc="到期日" edittype="text" datatype="string"
+        xpath="/expirationDate" />
+        <Field id="registerOrg" desc="登记机关" edittype="text" datatype="string"
+        xpath="/registerOrg" />
+        
+    	<!--
+        <Field id="subcontractId" desc="" edittype="text" datatype="string"
+        xpath="/subcontractId" />
+        <Field id="contractId" desc="" edittype="text" datatype="string"
+        xpath="/contractId" />
+        <Field id="topGuarantyStartDate" desc="" edittype="text" datatype="string"
+        xpath="/topGuarantyStartDate" />
+        <Field id="topGuarantyExpirationDate" desc="" edittype="text" datatype="string"
+        xpath="/topGuarantyExpirationDate" />
+        <Field id="subContractSignPlace" desc="" edittype="text" datatype="string"
+        xpath="/subContractSignPlace" />
+        <Field id="subcontractStatusCd" desc="" edittype="text" datatype="string"
+        xpath="/subcontractStatusCd" />
+        <Field id="handlingOrgCd" desc="" edittype="text" datatype="string"
+        xpath="/handlingOrgCd" />
+        <Field id="otherPromise" desc="" edittype="text" datatype="string"
+        xpath="/otherPromise" />
+        <Field id="handlingUserNum" desc="" edittype="text" datatype="string"
+        xpath="/handlingUserNum" />
+        <Field id="guarantyUseAmtCount" desc="" edittype="text" datatype="string"
+        xpath="/guarantyUseAmtCount" />
+        <Field id="subContRate" desc="" edittype="text" datatype="string"
+        xpath="/subContRate" />
+        <Field id="debtCustomerNum" desc="" edittype="text" datatype="string"
+        xpath="/debtCustomerNum" />
+        <Field id="subcontractManualNum" desc="" edittype="text" datatype="string"
+        xpath="/subcontractManualNum" />
+        <Field id="debtPersonName" desc="" edittype="text" datatype="string"
+        xpath="/debtPersonName" />
+        <Field id="topUseGuarantyAmt" desc="" edittype="text" datatype="string"
+        xpath="/topUseGuarantyAmt" />
+        <Field id="ifTopGuaranty" desc="" edittype="text" datatype="string"
+        xpath="/ifTopGuaranty" />
+        <Field id="collateralRemark" desc="" edittype="text" datatype="string"
+        xpath="/collateralRemark" />
+        <Field id="importInd" desc="" edittype="text" datatype="string"
+        xpath="/importInd" />
+        <Field id="printSubcontractType" desc="" edittype="text" datatype="string"
+        xpath="/printSubcontractType" />
+        <Field id="warnId" desc="预警表ID" edittype="text" datatype="string"
+        xpath="/warnId" />
+        <Field id="dataDt" desc="数据日期" edittype="text" datatype="date"
+        xpath="/dataDt" />-->
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

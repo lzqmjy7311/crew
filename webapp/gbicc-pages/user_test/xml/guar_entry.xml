@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.fp.demo.getter.GroupFieldsGetter">
+	<Include id="BankParam" />
+	
+	<Fields>
+        <Field id="pledgeAddr" desc="抵押物地址" xpath=""/>
+        <Field id="pledgeStatus" status="N" desc="抵押物物理状态" edittype="radio" translated="LIST:1,完好;2,残损;3,灭失"
+            datatype="string" xpath="" />
+        <Field id="pledgeValueChange" status="N" desc="抵押物价值变化" edittype="radio" translated="LIST:1,未变;2,减少;3,增加"
+            datatype="string" xpath="" />
+        <Field id="pledgeValue" desc="抵押物目前价值" xpath=""/>
+        <Field id="pledgeOwner" status="N" desc="抵押物权属变动" edittype="radio" translated="LIST:1,正常;2,查封;3,被二次及以上抵押;4,其他异常"
+            datatype="string" xpath="" />
+        <Field id="pledgeOwnerDesc" desc="抵押物权属变动具体说明" xpath=""/>
+        <Field id="guarPer" status="N" desc="保证人情况" edittype="radio" translated="LIST:1,无变动;2,变动"
+            datatype="string" xpath="" />
+        <Field id="guarPerName" desc="保证人姓名/名称" xpath=""/>
+        <Field id="guarPerPhone" desc="保证人地址/电话" xpath=""/>
+        <Field id="guarPerLia" status="N" desc="保证人融资负债情况（征信/中证码）" edittype="radio" translated="LIST:1,未变;2,减少;3,增加"
+            datatype="string" xpath="" />
+        <Field id="guarPerLiaAmt" desc="负债变化金额（万元）" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥"  xpath="" default="0" />
+		<Field id="guarAbility" status="N" desc="保证人担保能力" edittype="radio" translated="LIST:1,强;2,中;3,弱;4,无"
+            datatype="string" xpath="" />
+	</Fields>
+	
+	<Operations>
+		<Button id="guarAdd" name="guarAdd" desc="新增" icon="icon-add" updateClass="#" url="#" txn="" />
+		<Button id="guarUpd" name="guarUpd" desc="编辑" icon="icon-add" updateClass="#" url="#" txn="" />
+		<Button id="guarDel" name="guarDel" desc="删除" icon="icon-delete" operation="delrecord" updateClass="#" url="" />
+		<Button id="guarConfirm" name="guarConfirm" desc="确定" icon="icon-save" updateClass="#" url="#" txn="" />
+	</Operations>
+</CommQry>

@@ -1,0 +1,151 @@
+package com.gbicc.person.frequency.getter;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.util.StringUtils;
+
+import com.gbicc.bpm.SpringContextHolder;
+import com.gbicc.person.monitor.service.TPlTaskService;
+import com.huateng.common.err.Module;
+import com.huateng.common.err.Rescode;
+import com.huateng.commquery.result.Result;
+import com.huateng.commquery.result.ResultMng;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.business.common.PageQueryResult;
+import com.huateng.ebank.business.common.service.BctlService;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.framework.web.commQuery.BaseGetter;
+import com.huateng.exception.AppException;
+
+@SuppressWarnings("unchecked")
+public class TPlTrigFrequencyAcctVGetter extends BaseGetter {
+
+	@Override
+	public Result call() throws AppException {
+		try {
+			PageQueryResult pageResult = getData();
+			ResultMng.fillResultByList(getCommonQueryBean(),
+					getCommQueryServletRequest(), pageResult.getQueryResult(),
+					getResult());
+			result.setContent(pageResult.getQueryResult());
+			result.getPage().setTotalPage(
+					pageResult.getPageCount(getResult().getPage()
+							.getEveryPage()));
+			result.init();
+			return result;
+		} catch (AppException appEx) {
+			throw appEx;
+		} catch (Exception ex) {
+			throw new AppException(Module.SYSTEM_MODULE,
+					Rescode.DEFAULT_RESCODE, ex.getMessage(), ex);
+		}
+	}
+
+	protected PageQueryResult getData() throws Exception {
+		
+		
+		GlobalInfo info=GlobalInfo.getCurrentInstance();
+		String userId=info.getTlrno();
+		String  roleId= info.getWorkflowRoleId();
+		String brcode=info.getBrcode();
+		
+		String loanAccount = (String) getCommQueryServletRequest().getParameterMap()
+				.get("loanAccount");
+		String custname = (String) getCommQueryServletRequest().getParameterMap()
+				.get("custname");
+		String rankFinal = (String) getCommQueryServletRequest().getParameterMap()
+				.get("rankFinal");
+		String operator = (String) getCommQueryServletRequest().getParameterMap()
+				.get("operator");
+		PageQueryResult pageQueryResult = new PageQueryResult();
+		// 分页大小
+		int pageSize = getResult().getPage().getEveryPage();
+		// 页码
+		int pageIndex = getResult().getPage().getCurrentPage();
+
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		StringBuffer hql = new StringBuffer("SELECT                                      "
+											+"    ACC.PRODNAME      AS productCode,      "
+											+"	ACC.LOANACNO      AS loanAccount,        "
+											+"	ACC.CUSTID          AS custcode,            "
+											+"	ACC.CUSTNAME        AS custname,            "
+											+"	ACC.TCAPI         AS loanAmount,         "
+											+"	ACC.BAL           AS loanBalance ,       "
+											+"	ACC.FLOATINTERATE AS floatinterate,       "
+											+"    ACC.TTERM        AS loanPeriod ,       "
+											+"    ACC.OPERNAME  AS operator,              "
+											+"    ACC.BANKNAME AS operBank,              "
+											+"    M.FD_TRIG_RATE AS trigRate,         "
+											+"    R.FD_RANK_FINAL AS rankFinal        "
+											+"FROM                                        "
+											+"	T_EDW_PLS_ACCOUNT_V ACC ,                   "
+										
+											+"    T_PL_TASK_RISK_RANK R,                  "
+											+"    T_PL_TASK_ROUTINE_MONI M                "
+											+"WHERE                                       "
+											
+											+" ACC.LOANACNO=R.FD_ACC_ID(+)             "
+											+"AND ACC.LOANACNO=M.FD_ACC_ID(+)             ");
+		if(StringUtils.hasText(loanAccount)){
+			hql.append(" and ACC.LOANACNO = '"+loanAccount+"'");
+		}
+		if(StringUtils.hasText(custname)){
+			hql.append(" and C.CUSTNAME = '"+custname+"'");
+		}
+		if(StringUtils.hasText(rankFinal)){
+			hql.append(" and R.FD_RANK_FINAL = '"+rankFinal+"'");
+		}
+		if(StringUtils.hasText(operator)){
+			hql.append(" and ACC.OPERNAME = '"+operator+"'");
+		}
+		//排除产品为（组合） 已结清 
+		hql.append(" AND ACC.PAYOFFFLAG='00' AND ACC.PRODID NOT IN ('93010200','96010200','96010100','93010100') ");
+		String operator1=null;
+		//获得岗位代码
+				boolean flag=false;
+				
+				  if(roleId.equals("222")){//客户经理
+						operator1=userId;
+						if(StringUtils.hasText(operator1)){
+							hql.append(" and ACC.DUTYID  = '"+operator1+"'");
+							flag=true;
+						}
+					}else if(roleId.equals("557")||roleId.equals("558")||roleId.equals("111"))//总行机构
+					{
+						flag=true;
+					}
+		if(!flag){
+			BctlService bctlService = BctlService.getInstance();
+			String brcodes=bctlService.getAllSubListStr(brcode);
+			hql.append(" AND   ACC.DUTYID IN                                                      ");
+			TPlTaskService tts=TPlTaskService.getInstance();
+			String userIds=tts.getUserIdsByBrcodes(brcodes)	;
+			hql.append("("+userIds+")");
+		}
+		
+		String orderby="";
+		//构造分页
+		StringBuffer sqlp=new StringBuffer("select t0.* from ( ");
+		sqlp.append("select t.*,row_number() over("+orderby+") as rnum from ( ");
+		sqlp.append(hql);
+		sqlp.append(") t ) t0 where t0.rnum>"+(pageIndex-1)*pageSize+" ");
+		sqlp.append("fetch first "+pageSize+" rows only ");
+		
+		JdbcTemplate jdbcTemplate=SpringContextHolder.getBean(JdbcTemplate.class);
+		List<Map<String,Object>> resultList=jdbcTemplate.queryForList(sqlp.toString());
+		//构造数据量
+		StringBuffer sqll=new StringBuffer("select count(1) from ( ");
+		sqll.append(hql);
+		sqll.append(" )");
+		//set
+		Integer totalCount=(Integer)rootdao.querySqlOne(sqll.toString());
+		
+		PageQueryResult result = new PageQueryResult();
+		result.setQueryResult(resultList);
+		result.setTotalCount(totalCount);
+		return result;
+	}
+}

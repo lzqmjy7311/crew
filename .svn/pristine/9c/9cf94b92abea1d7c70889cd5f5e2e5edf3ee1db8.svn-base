@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="基础信息管理  &gt;  我的客户title" navigate="基础信息管理    &gt; 我的客户" type="call"
+	interface="false" pagesize="20" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.person.customer.getter.TCustomerMngEntryGetter">
+	<Include id="BankParam" />
+	<!--
+	<PageQryExp type="CSV" limit="true" encoding="GBK" url="/trans/qryExp.do" directory="F:/upload"/>
+	
+	<PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="批量下载-客户信息" />-->
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		
+		<Field id="custCode" desc="客户编号" edittype="text" datatype="string" status="F" size="10" xpath="custCode" require="true"  />
+		<Field id="custName" desc="客户名称"  edittype="text" status="F" datatype="string" size="50" xpath="/custName" />
+		<Field id="loanAccount" desc="客户账号" edittype="text" datatype="string" status="F" size="20" xpath="/loanAccount"/>
+		<!-- translated="CQ:AllProductSelect" -->
+		<!--<Field id="productCode" desc="产品名称" status="F"
+			primary="false" method="None" readonly="false" type="String"
+			size="20" edittype="select" translated="CQ:AllProductSelect"
+			fieldmap="productCode=prodCode;productName=prodName"
+			viewField="prodName,prodCode" default="" xpath="/productCode"
+			require="false" tip="产品名称" />
+		<Field id="productName" desc="产品名称" status="F"
+			method="com.gbicc.common.CQMethod.getProcuctNameByProductCode"
+			width="" readonly="" primary="true" type="String" size="150"
+			xpath="/productCode" default=""/>-->
+	   <Field id="productCode" desc="产品名称" status="F"			
+			width="" readonly="" primary="true" type="String" size="150"
+			xpath="/productCode" default=""/>		
+			
+		<Field id="loanAmount" desc="贷款金额" prefix="￥" edittype="text" datatype="double" status="F" size="100" xpath="/loanAmount"/>
+		<Field id="loanBalance" desc="贷款余额" prefix="￥" edittype="text" datatype="double" status="F" size="100" xpath="/loanBalance"/>
+		<Field id="loanPeriod" desc="贷款期限" edittype="text" datatype="int" status="F" size="100" xpath="/loanPeriod"/>
+		<Field id="operator" desc="经办人" edittype="text" datatype="string" status="F" size="100" xpath="/operator"/>
+		<Field id="operBank" desc="经办行" edittype="text" datatype="string" status="F" size="100" xpath="/operBank"/>
+		
+    </Fields>
+    <Where>
+    	<TextBox id="custCode" desc="客户编号" edittype="text" datatype="string" size="30" require="" index="0" />
+		<TextBox id="custName" desc="客户名称" edittype="text" status="F" datatype="string" size="30" index="1" />\
+		<TextBox id="operator" desc="经办人" edittype="text" status="F" datatype="string" size="30" index="2" />\
+		<TextBox id="loanAccount" desc="贷款账号" edittype="text" status="F" datatype="string" size="30" index="3" />\					
+		<TextBox id="operBank" desc="经办行" edittype="text" status="F" datatype="string" size="30" index="4" />\
+		<Option id="productCode" desc="产品名称" status="N"
+	        fieldname="qdataNo" edittype="select" dropdowntype="dynamic"
+			dataType="String" readOnly="false" translated="CQ:AllProductSelect"
+			viewField="prodName,prodCode" init="true"
+			fieldmap="productName=prodName;productCode=prodCode" size="32"
+			primary="false" type="String" index="5" />\
+		<TextBox id="productName" desc="产品名称" edittype="text" status="F" datatype="string" size="32" />\
+
+    </Where>
+	<Operations>
+		<Button id="btModOrAdd" name="btModOrAdd" desc="保存" operation="asysubmit"
+			updateClass="com.gbicc.person.customer.update.TCustomerMngAddUpdate"
+			url="" txn="" />
+		<Button id="btDel" name="btDel" desc="删除" operation="asysubmit"
+			updateClass="com.gbicc.person.customer.update.TCustomerMngDelUpdate"
+			url="" />
+		<Button id="btCancel" name="btCancel" desc="取消" operation="href" url="" />
+		<Button id="btAdd" name="btAdd" desc="新增" operation="" url="#" show="" group="" txn="" icon="icon-add"/>
+		<Button id="dktz" name="dktz" desc="贷款台账" operation="" url="#" show="" group="" txn="" icon="icon-view-detail"/>
+		<Button id="custinfo" name="custinfo" desc="客户信息" operation="" url="#" show="" group="" txn="" icon="icon-view-detail"/>
+		<Button id="taskinfo" name="taskinfo" desc="任务信息" operation="" url="#" show="" group="" txn="" icon="icon-view-detail"/>
+		<Button id="ruleinfo" name="ruleinfo" desc="预警清单" operation="" url="#" show="" group="" txn="" icon="icon-view-detail"/>
+		
+		
+	</Operations>
+</CommQry>

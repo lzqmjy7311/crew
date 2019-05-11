@@ -1,0 +1,60 @@
+<CommQry title="TPlTriggerRuleAcct" navigate="TPlTriggerRuleAcct" type="call" interface="false" pagesize="20" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.bpm.getter.TLoanAccountGetter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="loanacno" xpath="/loanacno" desc="贷款账号" edittype="text" status="F" datatype="string" 
+			   readonly="true" width="250" />
+		<Field id="loanid" xpath="/loanid" desc="业务编号" edittype="text" status="F" datatype="string" />
+		<Field id="custid" xpath="/custid" desc="客户编号" edittype="text" status="F" datatype="string" 
+			   readonly="true" width="250" />
+		<Field id="custname" xpath="/custname" desc="客户名称" edittype="text" status="F" datatype="string" 
+			   readonly="true" width="250" />
+		<Field id="corpcustid" xpath="/corpcustid" desc="法人客户编号" edittype="text" status="F" datatype="string" />
+		<Field id="prodid" xpath="/prodid" desc="产品类型" edittype="text" status="F" datatype="string" 
+			   readonly="true" width="250" />
+		<Field id="prodname" xpath="/prodname" desc="产品名称" edittype="text" status="F" datatype="string" 
+			   readonly="true" width="250" />
+		<Field id="tcapi" desc="贷款金额" xpath="/tcapi" edittype="text" datatype="currency" 
+			   size="20" scale="2" prefix="￥"  readOnly="false" default="0" />
+		<Field id="tterm" xpath="/tterm" desc="贷款期限" edittype="date"
+			   datatype="date" readOnly="false" />
+		<Field id="retukind" xpath="/retukind" desc="还款方式" edittype="text" status="F" datatype="string" />
+		<Field id="storagedate" xpath="/storagedate" desc="权证入库日期" edittype="date"
+			   datatype="date" readOnly="false" />
+		<Field id="projid" xpath="/projid" desc="楼盘项目编号" edittype="text" status="F" datatype="string" />
+		<Field id="payoffflag" xpath="/payoffflag" desc="是否结清" edittype="text" status="F" datatype="string" />
+		<Field id="unprofname" xpath="/unprofname" desc="联保小组名称" edittype="text" status="F" datatype="string" />
+		<Field id="begindate" xpath="/begindate" desc="开户日期" edittype="date"
+			   datatype="date" readOnly="false" />
+		<Field id="enddate" xpath="/enddate" desc="到期日期" edittype="date"
+			   datatype="date" readOnly="false" />
+		<Field id="operidId" xpath="/operid" desc="经办人Id" edittype="text" status="F" datatype="string" />
+		<Field id="operidName" xpath="/opername" desc="经办人" edittype="text" status="F" datatype="string" />
+		<Field id="bankidId" xpath="/bankid" desc="经办行Id" edittype="text" status="F" datatype="string"/>
+		<Field id="bankidName" xpath="/bankname" desc="经办行" edittype="text" status="F" datatype="string" 
+			   readonly="true" width="250" />
+		<Field id="dutyid" xpath="/dutyid" desc="责任人" edittype="text" status="F" datatype="string" />
+		<Field id="assukind" xpath="/assukind" desc="担保方式" edittype="text" status="F" datatype="string" />
+		<Field id="floatinterate" desc="浮动比例" xpath="/floatinterate" edittype="text" datatype="double" 
+			   size="20" scale="2" />
+		<Field id="acflag" xpath="/acflag" desc="账户状态" edittype="select" translated="DATA_DIC.120" status="F" datatype="string" 
+			   readonly="true" width="250" />
+		<Field id="riskflag" xpath="/riskflag" desc="风险状态" edittype="select" translated="DATA_DIC.122" status="F" datatype="string" 
+			   readonly="true" width="250" />
+		<Field id="acflag2" xpath="/acflag2" desc="应计非应计" edittype="select" translated="DATA_DIC.121" status="F" datatype="string" />
+		<Field id="contno" xpath="/contno" desc="合同编号" edittype="text" status="F" datatype="string" />
+		
+		<Field id="dutyInfo" xpath="/dutyInfo" desc="贷后检查人" edittype="text" status="F" datatype="string" />
+		
+		<Field id="overbal" xpath="/overbal" desc="拖欠本金" edittype="text" datatype="currency" 
+			   size="20" scale="2" prefix="￥" readOnly="false" default="0"/>
+    </Fields>
+    <Where>
+    	<TextBox id="loanacno" desc="贷款账号" edittype="text" status="F" datatype="string" index="0" />
+    	<TextBox id="custname" desc="客户名称" edittype="text" status="F" datatype="string" index="1" />
+    </Where>
+    <Operations>
+    	<Button id="btnAdd" name="btnAdd" desc="规则排除/恢复" icon="icon-add" updateClass="#" url="#" txn="" />
+    	<Button id="btnRead" name="btnRead" desc="查看" icon="icon-smile" updateClass="#" url="#" txn="" />
+    </Operations>
+</CommQry>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="信贷信息" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.company.view.getter.TOdsCmsCorpIndexGetter">
+	<Include id="BankParam" />
+	
+	<Fields>
+		<Field id="advanceAmount" desc="合同金额" xpath="/advanceAmount" readonly="true"/>
+		<Field id="creditAmount" desc="授信额度" xpath="/creditAmount" readonly="true"/>
+		<Field id="creditBalance" desc="授信可用余额" xpath="/creditBalance" readonly="true"/>
+		<Field id="usedBalance" desc="授信已用额度" xpath="/usedBalance" readonly="true"/>
+		<Field id="advanceBalance" desc="贷款余额" xpath="/advanceBalance" readonly="true"/>
+		<Field id="overdueAdvanceBal" desc="逾期贷款余额" xpath="/overdueAdvanceBal" readonly="true"/>
+		<Field id="normalAdvanceBal" desc="正常类贷款余额" xpath="/normalAdvanceBal" readonly="true"/>
+		<Field id="mentionAdvanceBal" desc="关注类贷款余额" xpath="/mentionAdvanceBal" readonly="true"/>
+		<Field id="substdAdvanceBalance" desc="次级类贷款余额" xpath="/substdAdvanceBalance" readonly="true"/>
+		<Field id="doutfulAdvanceBal" desc="可疑贷款余额" xpath="/doutfulAdvanceBal" readonly="true"/>
+		<Field id="lossAdvanceBal" desc="损失类贷款余额" xpath="/lossAdvanceBal" readonly="true"/>
+		<Field id="outsideGuaranteeAmount" desc="对外担保合同余额" xpath="/outsideGuaranteeAmount" readonly="true"/> 
+		<Field id="customerNum" desc="客户ID" xpath="/CUSTOMER_NUM" readonly="true"/> 
+	</Fields>
+	
+	<Operations>
+	</Operations>
+</CommQry>

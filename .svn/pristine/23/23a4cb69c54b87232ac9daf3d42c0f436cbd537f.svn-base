@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Services>
+	<!-- 定义作为服务方的服务，id:调用服务表示,type:调用服务类型，一般服务都为common , impClass:调用服务实现类 desc:服务描述  -->
+	<Service id="TestService" type="common" impClass="com.huateng.fs.micro.demo.services.TestService" desc="简单测试服务" >
+	<Methods>
+	<!-- 定义调用服务方法名，每个方法作为独立的服务映射单元，id为方法名，与代码中实现一致；desc为服务描述  -->
+		<Method id="testAdd" desc="测试添加1001">
+			<!-- 定义方法输入数据结构，type为对应数据结构类型，与Buffer XML对应；impClass为程序代码中对应JavaBean，需要实现空构造方法，desc为描述  -->
+			<Param id="IN" type="CEReq" impClass="com.huateng.fs.micro.demo.bean.TestInputBean" desc="输入报文信息" />
+	<!-- 定义方法输出数据结构，type为对应数据结构类型，与Buffer XML对应；impClass为程序代码中对应JavaBean，需要实现空构造方法，desc为描述  -->
+			<Param id="OUT" type="CERes" impClass="com.huateng.fs.micro.demo.bean.TestOutputBean" desc="输出报文信息" />
+		</Method>
+		<Method id="testQuery" desc="测试查询1002">
+	<!-- 定义方法输入数据结构，type为对应数据结构类型，与Buffer XML对应；impClass为程序代码中对应JavaBean，需要实现空构造方法，desc为描述  -->
+			<Param id="IN" type="CEReq" impClass="com.huateng.fs.micro.demo.bean.TestInputBean" desc="输入报文信息" />
+	<!-- 定义方法输出数据结构，type为对应数据结构类型，与Buffer XML对应；impClass为程序代码中对应JavaBean，需要实现空构造方法，desc为描述  -->
+			<Param id="OUT" type="CERes" impClass="com.huateng.fs.micro.demo.bean.TestOutputBean" desc="输出报文信息" />
+		</Method>
+		<!-- 定义调用服务方法名，每个方法作为独立的服务映射单元，id为方法名，与代码中实现一致；desc为服务描述  -->
+		<Method id="test" desc="测试方法">
+	<!-- 定义方法输入数据结构，type为对应数据结构类型，与Buffer XML对应；impClass为程序代码中对应JavaBean，需要实现空构造方法，desc为描述  -->
+			<Param id="IN" type="CEReq" impClass="com.huateng.fs.micro.demo.bean.TestInputBean" desc="输入报文信息" />
+	<!-- 定义方法输出数据结构，type为对应数据结构类型，与Buffer XML对应；impClass为程序代码中对应JavaBean，需要实现空构造方法，desc为描述  -->
+			<Param id="OUT" type="CERes" impClass="com.huateng.fs.micro.demo.bean.TestOutputBean" desc="输出报文信息" />
+		</Method>	
+		<!-- 不带返回值 -->
+		<Method id="testNoRet" desc="测试方法">
+			<Param id="IN" type="CEReq" impClass="test.com.huateng.flowswitch.micro.server.TestInputBean" desc="输入报文信息" />
+		</Method>	
+		<!-- 不带返回值 -->
+		<Method id="testNoRet" desc="测试方法">
+			<Param id="IN" type="CEReq" impClass="com.huateng.fs.micro.demo.bean.TestInputBean" desc="输入报文信息" />
+		</Method>
+		<!-- 定义调用服务方法名，每个方法作为独立的服务映射单元，id为方法名，与代码中实现一致；desc为服务描述  -->
+		<Method id="testNoDeal" desc="测试方法">
+	<!-- 定义方法输入数据结构，type为对应数据结构类型，与Buffer XML对应；impClass为程序代码中对应JavaBean，需要实现空构造方法，desc为描述  -->
+			<Param id="IN" type="CEReq" impClass="com.huateng.fs.micro.demo.bean.TestInputBean" desc="输入报文信息" />
+	<!-- 定义方法输出数据结构，type为对应数据结构类型，与Buffer XML对应；impClass为程序代码中对应JavaBean，需要实现空构造方法，desc为描述  -->
+			<Param id="OUT" type="CERes" impClass="com.huateng.fs.micro.demo.bean.TestOutputBean" desc="输出报文信息" />
+		</Method>
+	</Methods>
+	</Service>
+</Services>

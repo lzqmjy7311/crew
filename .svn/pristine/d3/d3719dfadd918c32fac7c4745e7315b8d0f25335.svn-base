@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-2-22 17:53:17 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.view.entity.TCmFinanceIndexHyFw" table="T_CM_FINANCE_INDEX_HY_FW" schema="ECUSER">
+        <comment>财务指标行业标准范围</comment>
+            <id name="id" type="string">
+                <column name="FD_ID" length="32" />
+            </id>
+            <property name="indexCd" type="string">
+                <column name="INDEX_CD" length="32" />
+            </property>
+            <property name="upValue" type="big_decimal">
+                <column name="UP_VALUE" precision="15" scale="5" />
+            </property>
+            <property name="downValue" type="big_decimal">
+                <column name="DOWN_VALUE" precision="15" scale="5" />
+            </property>
+    </class>
+</hibernate-mapping>

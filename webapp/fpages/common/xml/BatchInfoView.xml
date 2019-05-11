@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="出票申请" navigate="网银交易->信息汇总" type="call" interface="true"
+	pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.common.getter.BatchInfoViewGetter">
+	<Include id="BankParam" />
+<!-- id,draftType,draftAmount,remitDate,maturityDate,remitterName,payeeAccount -->
+	<Fields>
+	     <Field id="select" desc="请选择" require="false" edittype="checkbox"
+			datatype="boolean" method="None" readonly="false" size="20"
+			default="" xpath="" />
+		<Field id="id" desc="电子票据号码" require="false"
+			edittype="text" datatype="string" method="None" readonly="true"
+			default="" xpath="/id" />
+
+		<Field id="draftType" desc="票据类型" require="false"
+			edittype="select" translated="LIST:AC01,AC01-银承;AC02,AC02-商承"
+			datatype="string" method="None" readonly="true" size="4" default=""
+			xpath="/draftType" />
+
+		<Field id="draftAmount" desc="票面金额" require="false"
+			edittype="text" datatype="currency" method="None" readonly="true"
+			size="10" scale="2" default="" xpath="/draftAmount" />
+
+		<Field id="remitDate" desc="出票日" require="false" datatype="date"
+			method="None" readonly="true" size="8" default=""
+			xpath="/remitDate" />
+
+		<Field id="maturityDate" desc="到期日" require="false" datatype="date"
+			method="None" readonly="true" size="8" default=""
+			xpath="/maturityDate" />
+
+		<Field id="remitterName" desc="出票人" require="false"
+			edittype="text" datatype="string" method="None" readonly="true"
+			size="350" default="" xpath="/remitterName" />
+
+		<Field id="payeeName" desc="收款人" require="false"
+			edittype="text" datatype="string" method="None" readonly="true"
+			size="60" default="" xpath="/payeeName" />
+
+		<Field id="remitterAccount" desc="出票人帐户" require="false"
+			edittype="text" datatype="string" method="None" readonly="true"
+			size="32" default="" xpath="/remitterAccount" />
+
+		<Field id="payeeAccount" desc="收款人帐户" require="false"
+			edittype="text" datatype="string" method="None" readonly="true"
+			size="32" default="" xpath="/payeeAccount" />
+
+		<Field id="remitterBankId" desc="出票人开户行" require="false"
+			edittype="text" datatype="string" method="None" readonly="true"
+			size="32" default="" xpath="/remitterBankId" />
+
+		<Field id="payeeBankId" desc="收款人开户行" require="false"
+			method="None" readOnly="true" primary="false" type="payeeBankId"
+			size="20" default="" tip="收款人开户行" xpath="/payeeBankId" />
+
+		<Field id="acceptorName" desc="承兑人" require="false"
+			edittype="text" datatype="string" method="None" readonly="true"
+			size="60" default="" xpath="/acceptorName" />
+
+		<Field id="acceptorAccount" desc="承兑人账户" require="false"
+			edittype="text" datatype="integer" method="None" readonly="true"
+			size="32" default="" xpath="/acceptorAccount" />
+
+		<Field id="acceptorBankId" desc="承兑人开户行" require="false" colspan="4"
+			method="None" readOnly="true" primary="false" type="acceptorBankId"
+			size="20" default="" tip="承兑人开户行" xpath="/acceptorBankId" />
+
+		<Field id="consignmentCode" desc="到期无条件支付委托" require="false"
+			edittype="select" datatype="string" method="None" readonly="true"
+			size="4" translated="LIST:CC00,CC00" default="" xpath="/consignmentCode" />
+
+		<Field id="transferFlag" desc="允许背书" require="false"
+			edittype="select" datatype="string" method="None" readonly="true"
+			size="4" translated="LIST:EM00,00-EM00可再转让;EM01,01-EM01不得转让"
+			default="" xpath="/transferFlag" />
+
+		<Field id="remark" desc="申请备注" require="false"
+			edittype="textarea" datatype="String" method="None" readonly="true"
+			size="256" default="" xpath="/remark" />
+
+	</Fields>
+
+	<Parameters></Parameters>
+
+	<Where></Where>
+	<Operations>
+		<Button id="btBack" name="btBack" desc="返回"
+			operation="" url="#" show="" group="" txn="" />
+	</Operations>
+
+	<Script></Script>
+
+</CommQry>

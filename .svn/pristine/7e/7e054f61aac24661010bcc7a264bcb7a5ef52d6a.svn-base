@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.gbicc.common.Industry.entity">
+	<class
+		name="IndustryInfo"
+		table="VIEW_T_CM_INDUSTRY"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="id"
+			type="string"
+			column="INDUSTRY"
+		>
+			<generator class="assigned"/>
+		</id>
+
+		<property
+			name="funcname"
+			column="INDUSTRY_NAME"
+			type="string"
+			not-null="false"
+			length="60"
+		/>
+		<property
+			name="pagepath"
+			column="INDUSTRY_TYPE"
+			type="string"
+			not-null="false"
+			length="100"
+		/>
+		<property
+			name="lastdirectory"
+			column="INDUSTRY_PARENT"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,10 @@
+<CommQry title="TPlTriggerRuleAcct" navigate="TPlTriggerRuleAcct" type="call" interface="false" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.person.eliminate.getter.TriggerWarningRuleGetter">
+    <Include id="BankParam" />
+    <Fields>
+    	<Field id="select" desc="select" edittype="checkbox" xpath="" />
+    	<Field id="id" xpath="/id" edittype="text" datatype="string" readonly="true" />
+        <Field id="ruleCode" desc="规则编号" xpath="/ruleCode" width="100" edittype="text" datatype="string" readonly="true" />
+        <Field id="ruleName" desc="规则名称" xpath="/ruleName" edittype="text" datatype="string" readonly="true" />
+    </Fields>
+</CommQry>

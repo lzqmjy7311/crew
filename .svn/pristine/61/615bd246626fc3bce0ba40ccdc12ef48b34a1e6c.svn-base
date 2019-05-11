@@ -1,0 +1,324 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+
+<#assign customerNum=RequestParameters["customerNum"]?default("")>
+
+<@CommonQueryMacro.page title="财务指标分析">
+<style>
+div.form1{width:34%;
+	height:300px;
+	text-align:center;
+	border:1px solid #0099CC;
+	float:left;
+	margin:5px 2px 2px 2px;
+	}
+div.form2{width:24%;
+	height:210px;
+	text-align:left;
+	border:1px solid black;
+	float:left;
+	margin:25px 2px 2px 6px;
+	padding:50px 10px 0 10px;
+	line-height:130%;
+	}
+div.form3{width:12%;
+	height:250px;
+	text-align:left;
+	border:1px solid green;
+	float:left;
+	margin:14px 5px 2px 2px;
+	padding:35px 0 0 10px;
+	line-height:130%;
+	}
+div.form4{
+	text-align:center;
+	width:100%;
+	font-size:140%;
+	font-weight:bold
+	}
+div.clear{
+	clear:both;
+	}
+span.style1{
+	color:red;
+}
+</style>
+
+<@CommonQueryMacro.CommonQuery id="financialIndexAnalsis" init="true" submitMode="current">
+	<@CommonQueryMacro.Group id="group22" label="" colNm=6  
+	fieldStr="jzyear,caliber,repno"/>
+	<center>
+	<@CommonQueryMacro.Button id="btnQuery" />
+	</center>
+</@CommonQueryMacro.CommonQuery>
+
+<@CommonQueryMacro.GroupBox id="CapitalLiabilitiesBox" label="计算差异">
+	<@CommonQueryMacro.CommonQuery id="CapitalLiabilities" init="true" submitMode="current">
+		<div>执行重要性水平参考值: <@CommonQueryMacro.SingleField fId="reference_value"/></div>
+		<@CommonQueryMacro.DataTable id="CapitalLiabilitiesTable" pageCache="false" pagination="false" maxRow="1000" 
+		fieldStr="project_name,project_value,project_value_2,amt,rate,excep_flag,excep_flag_2" width="100%" hasFrame="true"/>
+	</@CommonQueryMacro.CommonQuery>
+	<@CommonQueryMacro.CommonQuery id="Profit" init="true" submitMode="current">
+		<@CommonQueryMacro.DataTable id="ProfitTable" pageCache="false" pagination="false" maxRow="1000" 
+		fieldStr="project_name,project_value,project_value_2,amt,rate,excep_flag,excep_flag_2" width="100%" hasFrame="true"/>
+	</@CommonQueryMacro.CommonQuery>
+</@CommonQueryMacro.GroupBox>
+
+<div style="clear:both;float:none;min-width:1200px;margin:0 0 0 10px">
+	<div style="marign:20px 0 20px 0">&nbsp;</div>
+	<table style="width:100%">
+		<tr>
+			<td style="width:70%" valign="bottom">
+				<div class="form4">应收应付周转期变化量情况</div>
+			</td>
+			<td style="text-align:center">
+				指标合理取值范围需要按照胡瑶跑出的数据界定,即：<br/>
+				<span style="color:red">a1</span>=25分位数-（75分位数-25分位数）*1.5<br/>
+				<span style="color:red">a2</span>=75分位数+（75分位数-25分位数）*1.5<br/>
+			</td>
+		</tr>
+	</table>
+	<div id="1" class="form1">1</div>
+	<div id="2" class="form1">2</div>
+	<div class="form2">
+		<span class="style1">
+			周转期指标参考取值范围：【a1,a2】</br>
+			周转期变化度指标参考取值范围：【b1,b2】</br></br>
+			指标说明：</br>
+			这是衡量企业与上下游交易时资金使用状况是否出现异常的指标。指标值过大说明企业出现收款异常或是下游客户出现破产等情况；指标值过小说明企业出现支付异常，或无法筹措资金。
+		</span>
+	</div>
+	<div class="clear"></div>
+	<div style="margin:20px 0 40px 0"></div>
+	<table style="width:100%">
+		<tr>
+			<td style="width:35%;">
+				<div class="form4">金融债务状况水平和变化量情况</div>
+			</td>
+			<td style="width:13%;">
+				<div class="form4">&nbsp;</div>
+			</td>
+			<td style="width:35%;">
+				<div class="form4">实物性资产周转变化值</div>
+			</td>
+			<td style="width:15%;">
+				<div class="form4">&nbsp;</div>
+			</td>
+		</tr>
+	</table>
+	<div id="4" class="form1"">4</div>
+	<div class="form3"">
+		<span class="style1">
+			金融债务状况的水平评价参考取值范围：【c1,c2】</br>
+			金融债务变化度参考取值范围:【d1,d2】</br></br>
+			指标说明：</br>
+			这是衡量企业与上下游交易时资金使用状况是否出现异常的指标。指标值过大说明企业出现收款异常或是下游客户出现破产等情况；指标值过小说明企业出现支付异常，或无法筹措资金。
+		</span>
+	</div>
+	<div id="6" class="form1"">6</div>
+	<div class="form3"">
+		<span class="style1">
+			存货周转期变化度参考取值范围：【e1,e2】</br>
+			固定资产周转期变化度参考取值范围：【f1,f2】</br></br>
+			指标说明：</br>
+			这是分析通过企业本期和多年期存货或固定资产变化对比，分析企业是否出现存货效率异常的指标。指标值过大说明与客户交易环境恶化引发滞销；指标值过小说明企业资金周转恶化。
+		</span>
+	</div>
+	<div class="clear"></div>
+	<div style="margin:20px 0 40px 0"></div>
+	<table style="width:100%;">
+		<tr>
+			<td style="width:35%;">
+				<div class="form4">经常收支合理性分析</div>
+			</td>
+			<td style="width:13%;">
+				<div class="form4">&nbsp;</div>
+			</td>
+			<td style="width:35%;">
+				<div class="form4">资产系数</div>
+			</td>
+			<td style="width:15%;">
+				<div class="form4">&nbsp;</div>
+			</td>
+		</tr>
+	</table>
+	<div  id="8" class="form1"">8</div>
+	<div class="form3"">
+		<span class="style1">
+			当年经常收支状况参考取值范围：【g1,g2】</br>
+			三年平均经常收支参考取值范围：【h1,h2】</br></br>
+			指标说明：</br>
+			这是分析本期和近三期经常性活动的现金流入与现金流出的指标。一般行业在100%以上为正常。当期指标值低于80%为极度危险企业；三期指标值低于90%为极度危险企业。
+		</span>
+	</div>
+	<div  id="10" class="form1"">10</div>
+	<div class="form3"">
+		<span class="style1">
+			资产系数参考取值范围：【i1,i2】</br></br>
+			指标说明：</br>
+			这是分析企业资产与销售关系及资产安全性的多维分析指标。指标值过大说明存在资产泡沫化和系统性风险；指标值过小说明企业抗风险能力差。 一般行业在0.75－1左右为正常。
+		</span>
+	</div>
+</div>
+
+<!-- javascript -->
+<script type="text/javascript" src="${contextPath}/gbicc-pages/jquery-form.js"></script>
+<script src="${contextPath}/templets/ui/js/chart/highcharts.js"></script>
+<script src="${contextPath}/templets/ui/js/chart/highcharts-more.js"></script>
+
+<script language="JavaScript">
+var customerNum='${customerNum}';
+function btnQuery_onClick(){
+	var jzyear =financialIndexAnalsis_dataset.getValue('jzyear');
+	var caliber=financialIndexAnalsis_dataset.getValue('caliber');
+	var repno  =financialIndexAnalsis_dataset.getValue('repno');
+	if((jzyear==null)||(jzyear=='')){
+		easyMsg.info('年度不能为空！');
+		return;
+	}else if(caliber==''){
+		easyMsg.info('口径不能为空！');
+		return;
+	}else if(repno==''){
+		easyMsg.info('期数不能为空！');
+		return;
+	}
+	CapitalLiabilities_dataset.setParameter("customerNum",customerNum);
+	CapitalLiabilities_dataset.setParameter("jzyear",jzyear);
+	CapitalLiabilities_dataset.setParameter("caliber",caliber);
+	CapitalLiabilities_dataset.setParameter("repno",repno);
+	CapitalLiabilities_dataset.setParameter("tableCd","01");
+	CapitalLiabilities_dataset.flushData();
+	
+	Profit_dataset.setParameter("customerNum",customerNum);
+	Profit_dataset.setParameter("jzyear",jzyear);
+	Profit_dataset.setParameter("caliber",caliber);
+	Profit_dataset.setParameter("repno",repno);
+	Profit_dataset.setParameter("tableCd","03");
+	Profit_dataset.flushData();
+	var date=new Date();
+	var monthflag=date.getMonth();
+	var yearflag=date.getFullYear();
+	if(caliber=='709'){
+		if(jzyear==yearflag){
+			if(repno==1){
+				  month=3
+			  }else if(repno==2){
+				  month=6;
+			  }else if(repno==3){
+				  month=9;
+			  }else if(repno==4){
+				  month=12;
+			  }
+			 var monthflag=date.getMonth();
+			 if(month>=monthflag){
+				 alert("请输入正确的期数");
+				 return false;
+			 }
+		}
+	}else{
+		if(jzyear==yearflag){
+			 alert("无法查询当年年报！");
+			 return false;
+		}
+	}
+	//异步提交表单
+	$.ajax({								
+		url :"${contextPath}/char/financialIndexAnalsisHigtCharServlet",
+		type : "post",
+		data:{
+				caliber:caliber,
+				jzyear:jzyear,
+				customerNum:customerNum,
+				repno:repno,
+				type:'index'	
+			},
+			success:function(data){
+				var dataJson=eval("("+data+")");
+				$.messager.progress({title:'请稍候',msg:'正在载入...'});
+				//此处构建曲线  
+				drawPict('div#1',dataJson.listXdata,dataJson.data,'column','天');
+				drawPict('div#2',dataJson.listXdata1,dataJson.data1,'line','%');
+				drawPict('div#4',dataJson.listXdata2,dataJson.data2,'line','');
+				drawPict('div#6',dataJson.listXdata3,dataJson.data3,'line','');
+				drawPict('div#8',dataJson.listXdata4,dataJson.data4,'line','');
+				drawPict('div#10',dataJson.listXdata5,dataJson.data5,'line','');
+				$.messager.progress('close');
+			}
+		});
+}
+function drawPict(id,listXdata,data,linetype,unit){
+	$(id).highcharts({  
+		chart:{  
+           	type: linetype,//图表的显示类型（line,spline,scatter,splinearea bar,pie,area,column）  
+       	},  
+       	title:{  
+           	text: '',//主表题  
+       	},  
+   		xAxis: {   //横坐表  
+       		categories: listXdata, //动态解析
+       	
+       	},  
+   		yAxis: {
+   			title:{text: '指标值'},
+	        min:0
+        },  
+		tooltip: { //数据点的提示框   
+			valueSuffix:unit
+       	}, 
+	    credits:{
+	        text:'',
+	        href:''
+	   	},
+      	plotOptions:{
+       		column:{
+	       		pointPadding:0.2,
+	       		borderWidth:0
+       		}
+       	},
+        series:data
+      });	
+}
+function repno_DropDown_beforeOpen(dropDown){
+	var caliber = financialIndexAnalsis_dataset.getValue('caliber');//根据第一个selectId获得第一个select值
+	if(!caliber) return "请选择口径!";//判断第一个select的值是否为空，如果为空直接返回一个字符串
+	repnoSelect_DropDownDataset.setParameter("dataTypeNo",caliber);
+	repno_DropDown.cached=false;//让qGroupId不存入缓存
+}
+function caliber_DropDown_onSelect(dropDown,record,editor){
+	var oldVal = financialIndexAnalsis_dataset.getValue("caliber");//上一次的值
+    
+    var newVal = record ? record.getValue('data') : '';//现在的值
+	if(oldVal!=newVal){
+	//判断两次的值是否相等，如果不想等把值赋空
+		financialIndexAnalsis_dataset.setValue('repno','');
+		financialIndexAnalsis_dataset.setValue('repnoName','');
+	}
+	return true;
+}
+function initCallGetter_post(){
+	var dat=new Date();
+	$.messager.progress({title:'请稍候',msg:'正在载入...'});
+	$.ajax({								
+		url :"${contextPath}/char/financialIndexAnalsisHigtCharServlet",
+		type : "post",
+		data:{
+				caliber:'707',
+				jzyear:dat.getFullYear(),
+				customerNum:customerNum,
+				repno:'1',
+				type:'index'	
+			},
+		success:function(data){
+			var dataJson=eval("("+data+")");
+			//此处构建曲线  
+			drawPict('div#1',dataJson.listXdata,dataJson.data,'column','天');
+			drawPict('div#2',dataJson.listXdata1,dataJson.data1,'line','%');
+			drawPict('div#4',dataJson.listXdata2,dataJson.data2,'line','');
+			drawPict('div#6',dataJson.listXdata3,dataJson.data3,'line','');
+			drawPict('div#8',dataJson.listXdata4,dataJson.data4,'line','');
+			drawPict('div#10',dataJson.listXdata5,dataJson.data5,'line','');
+			$.messager.progress('close');
+		}
+	});
+}
+</script>
+</@CommonQueryMacro.page>

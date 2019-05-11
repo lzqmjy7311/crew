@@ -1,0 +1,168 @@
+<CommQry title="TRewC06PayoutInfoDetailId" navigate="TRewC06PayoutInfoDetailId" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+	transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.C06Getter">
+	<Include id="BankParam" />
+	<Fields>
+		<Field id="extendDate" desc="放款日期" edittype="text" datatype="string" 
+			xpath="/extendDate" readonly="true"/>
+		<Field id="creditProductCd" desc="授信品种代码" multiple="false" init="true" readonly="true"
+			placeholder="占位符" edittype="select" translated="DATA_DIC.2000"
+			datatype="string"
+			xpath="/creditProductCd" />
+    	
+		<Field id="amt" desc="金额" edittype="text" datatype="currency"  xpath="/amt" readonly="true"/>
+		<Field id="currencyCd" desc="币种代码" multiple="false" init="true" edittype="select" placeholder="占位符" readonly="true" translated="DATA_DIC.2002" datatype="string" 
+			xpath="/currencyCd" />
+		<Field id="handlingOrgCd" desc="经办机构代码" edittype="text" datatype="string" 
+			xpath="/handlingOrgCd" readonly="true"/>
+		<Field id="draftCd" desc="汇票凭证编号" edittype="text" datatype="string" 
+			xpath="/draftCd" readonly="true"/>
+		<Field id="issuerName" desc="出票人名称" edittype="text" datatype="string" 
+			xpath="/issuerName" readonly="true"/>
+		<Field id="acceptorName" desc="承兑人名称" edittype="text" datatype="string" 
+			xpath="/acceptorName" readonly="true"/>
+		<Field id="discountExpirationDate" desc="票据到期日期" edittype="text" datatype="string" 
+			xpath="/discountExpirationDate" readonly="true"/>
+		<Field id="payeeName" desc="收款人名称" edittype="text" datatype="string" 
+			xpath="/payeeName" readonly="true"/>
+		<Field id="acceptorBankName" desc="承兑人开户银行" edittype="text" datatype="string" 
+			xpath="/acceptorBankName" readonly="true"/>
+		<Field id="collectorAccount" desc="收款人帐号" edittype="text" datatype="string" 
+			xpath="/collectorAccount" readonly="true"/>
+		<Field id="discountAmt" desc="汇票金额" edittype="text" datatype="currency" 
+			xpath="/discountAmt" readonly="true"/>
+		<Field id="payeeBankName" desc="收款人开户行" edittype="text" datatype="string" 
+			xpath="/payeeBankName" readonly="true"/>
+		<Field id="discountStartDate" desc="出票日期" edittype="text" datatype="string" 
+			xpath="/discountStartDate" readonly="true"/>
+		<Field id="lcCd" desc="信用证编号" edittype="text" datatype="string"  xpath="/lcCd" readonly="true"/>
+		<Field id="lcAmt" desc="信用证金额" edittype="text" datatype="currency"  xpath="/lcAmt" readonly="true"/>
+		<Field id="guaranteeNum" desc="保函编号" edittype="text" datatype="string" 
+			xpath="/guaranteeNum" readonly="true"/>
+		<Field id="beneficiary" desc="受益人名称" edittype="text" datatype="string" 
+			xpath="/beneficiary" readonly="true"/>
+		<Field id="suitInd" desc="是否我行标准格式" edittype="select" init="true" translated="LIST:0,否;1,是" datatype="string" 
+			xpath="/suitInd" readonly="true"/>
+		<Field id="unassumePeople" desc="反担保人" edittype="text" datatype="string" 
+			xpath="/unassumePeople" readonly="true"/>
+		<Field id="bankGuaranteeTypeCd" desc="保函类型" edittype="select" translated="DATA_DIC.2031" init="true" multiple="false" datatype="string" 
+			xpath="/bankGuaranteeTypeCd" readonly="true"/>
+		<Field id="baseConCd" desc="基础合同编号" edittype="text" datatype="string" 
+			xpath="/baseConCd" readonly="true"/>
+		<Field id="consignPeople" desc="委托人" edittype="text" datatype="string" 
+			xpath="/consignPeople" readonly="true"/>
+		<Field id="invoiceAmt" desc="发票金额" edittype="text" datatype="currency" 
+			xpath="/invoiceAmt" readonly="true"/>
+		<Field id="invoiceCd" desc="发票号码" edittype="text" datatype="string" 
+			xpath="/invoiceCd" readonly="true"/>
+		<Field id="pickupNum" desc="提单号" edittype="text" datatype="string" 
+			xpath="/pickupNum" readonly="true"/>
+		<Field id="purchaseName" desc="买方名称" edittype="text" datatype="string" 
+			xpath="/purchaseName" readonly="true"/>
+		<Field id="singleAmt" desc="单笔账款" edittype="text" datatype="currency" 
+			xpath="/singleAmt" readonly="true"/>
+		<Field id="singleRate" desc="单笔应收帐款保理融资比例" edittype="text" datatype="string" 
+			xpath="/singleRate" readonly="true"/>
+		<Field id="postPonementInd" desc="是否借据展期" edittype="select" translated="LIST:0,否;1,是" datatype="string" 
+			xpath="/postPonementInd" readonly="true"/>
+		<Field id="remitAcctNo" desc="出票人银行帐号" edittype="text" datatype="string" 
+			xpath="/remitAcctNo" readonly="true"/>
+		<Field id="payAcctNo" desc="付款人帐号" edittype="text" datatype="string" 
+			xpath="/payAcctNo" readonly="true"/>
+		<Field id="discountAcctNo" desc="付款人全称" edittype="text" datatype="string" 
+			xpath="/discountAcctNo" readonly="true"/>
+		<Field id="importContractNum" desc="贴现人帐号" edittype="text" datatype="string" 
+			xpath="/importContractNum" readonly="true"/>
+		<Field id="remitTypeCd" desc="进口合同编号" edittype="text" datatype="string" 
+			xpath="/remitTypeCd" readonly="true"/>
+		<Field id="payPersonName" desc="汇票类型代码" edittype="select" readonly="true" multiple="false" placeholder="占位符" init="true"  translated="DATA_DIC.2017" datatype="string" 
+			xpath="/payPersonName" />
+		<Field id="outAcct" desc="出票人帐号" edittype="text" datatype="string" 
+			xpath="/outAcct" readonly="true"/>
+		<Field id="outBank" desc="出票人开户银行" edittype="text" datatype="string" 
+			xpath="/outBank" readonly="true"/>
+		<Field id="remitBankName" desc="承兑银行全称" edittype="text" datatype="string" 
+			xpath="/remitBankName" readonly="true"/>
+		<Field id="payPersonOpenBank" desc="付款人开户银行" edittype="text" datatype="string" 
+			xpath="/payPersonOpenBank" readonly="true"/>
+		<Field id="payoutInfoDetailId" desc="支用明细ID" edittype="text" datatype="text" 
+			xpath="/payoutInfoDetailId" readonly="true"/>
+		<!--
+			<Field id="payoutInfoDetailId" desc="" edittype="text" datatype="string" 
+			xpath="/payoutInfoDetailId" />
+			<Field id="payoutNoticeNum" desc="" edittype="text" datatype="string" 
+			xpath="/payoutNoticeNum" />
+			<Field id="contractNum" desc="" edittype="text" datatype="string" 
+			xpath="/contractNum" />
+			<Field id="quoteDetailId" desc="" edittype="text" datatype="string" 
+			xpath="/quoteDetailId" />
+			<Field id="term" desc="" edittype="text" datatype="int"  xpath="/term" />
+			<Field id="termUnitCd" desc="" edittype="text" datatype="string" 
+			xpath="/termUnitCd" />
+			<Field id="startDate" desc="" edittype="text" datatype="string" 
+			xpath="/startDate" />
+			<Field id="payoutAppFormNum" desc="" edittype="text" datatype="string" 
+			xpath="/payoutAppFormNum" />
+			<Field id="expirationDate" desc="" edittype="text" datatype="string" 
+			xpath="/expirationDate" />
+			<Field id="payoutInfoId" desc="" edittype="text" datatype="string" 
+			xpath="/payoutInfoId" />
+			<Field id="accountantKindCd" desc="" edittype="text" datatype="string" 
+			xpath="/accountantKindCd" />
+			<Field id="bizSymbolCd" desc="" edittype="text" datatype="string" 
+			xpath="/bizSymbolCd" />
+			<Field id="handlingUserNum" desc="" edittype="text" datatype="string" 
+			xpath="/handlingUserNum" />
+			<Field id="payoutDetailStatusCd" desc="" edittype="text" datatype="string" 
+			xpath="/payoutDetailStatusCd" />
+			<Field id="shipFirm" desc="" edittype="text" datatype="string" 
+			xpath="/shipFirm" />
+			<Field id="shortOverLoadRate" desc="" edittype="text" datatype="string" 
+			xpath="/shortOverLoadRate" />
+			<Field id="overLoadAmt" desc="" edittype="text" datatype="string" 
+			xpath="/overLoadAmt" />
+			<Field id="lcType" desc="" edittype="text" datatype="string"  xpath="/lcType" />
+			<Field id="widthTermEnd" desc="" edittype="text" datatype="string" 
+			xpath="/widthTermEnd" />
+			<Field id="modifyExplain" desc="" edittype="text" datatype="string" 
+			xpath="/modifyExplain" />
+			<Field id="repayTuneCd" desc="" edittype="text" datatype="string" 
+			xpath="/repayTuneCd" />
+			<Field id="payoutType" desc="" edittype="text" datatype="string" 
+			xpath="/payoutType" />
+			<Field id="invoiceCurrencyCd" desc="" edittype="text" datatype="string" 
+			xpath="/invoiceCurrencyCd" />
+			<Field id="exchangeRate" desc="" edittype="text" datatype="string" 
+			xpath="/exchangeRate" />
+			<Field id="abroadPayBank" desc="" edittype="text" datatype="string" 
+			xpath="/abroadPayBank" />
+			<Field id="revertCd" desc="" edittype="text" datatype="string" 
+			xpath="/revertCd" />
+			<Field id="guaranteeContent" desc="" edittype="text" datatype="string" 
+			xpath="/guaranteeContent" />
+			<Field id="repayDay" desc="" edittype="text" datatype="int"  xpath="/repayDay" />
+			<Field id="firstRepayInterest" desc="" edittype="text" datatype="string" 
+			xpath="/firstRepayInterest" />
+			<Field id="recalculationMode" desc="" edittype="text" datatype="string" 
+			xpath="/recalculationMode" />
+			<Field id="bjPreferentialDay" desc="" edittype="text" datatype="string" 
+			xpath="/bjPreferentialDay" />
+			<Field id="intPreferentialDay" desc="" edittype="text" datatype="string" 
+			xpath="/intPreferentialDay" />
+			<Field id="isAgentOthbankPay" desc="" edittype="text" datatype="string" 
+			xpath="/isAgentOthbankPay" />
+			<Field id="capitalProtocolNum" desc="" edittype="text" datatype="string" 
+			xpath="/capitalProtocolNum" />
+			<Field id="openLcAmt" desc="" edittype="text" datatype="string" 
+			xpath="/openLcAmt" />
+			<Field id="excessAcceptAmt" desc="" edittype="text" datatype="string" 
+			xpath="/excessAcceptAmt" />
+			<Field id="excessFlag" desc="" edittype="text" datatype="string" 
+			xpath="/excessFlag" />
+			<Field id="warnId" desc="预警表ID" edittype="text" datatype="string" 
+			xpath="/warnId" />
+			<Field id="dataDt" desc="数据日期" edittype="text" datatype="date" 
+			xpath="/dataDt" />-->
+	</Fields>
+	<Where></Where>
+	<Operations></Operations>
+</CommQry>

@@ -1,0 +1,328 @@
+package com.gbicc.warn.ComninationWarn.getter;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import com.gbicc.util.DateUtils;
+import com.gbicc.warn.ComninationWarn.entity.TCwCreditAssetsMonitor;
+import com.huateng.common.err.Module;
+import com.huateng.common.err.Rescode;
+import com.huateng.commquery.result.Result;
+import com.huateng.commquery.result.ResultMng;
+import com.huateng.ebank.business.common.DAOUtils;
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.business.common.PageQueryCondition;
+import com.huateng.ebank.business.common.PageQueryResult;
+import com.huateng.ebank.framework.operation.orm.HQLDAO;
+import com.huateng.ebank.framework.util.ApplicationContextUtils;
+import com.huateng.ebank.framework.web.commQuery.BaseGetter;
+import com.huateng.exception.AppException;
+
+@SuppressWarnings("unchecked")
+public class TCwIndexINDUSTRYGetter extends BaseGetter {
+
+	@Override
+	public Result call() throws AppException {
+		try {
+			PageQueryResult pageResult = getData();
+			ResultMng.fillResultByList(getCommonQueryBean(),getCommQueryServletRequest(), pageResult.getQueryResult(),getResult());
+			result.setContent(pageResult.getQueryResult());
+			result.getPage().setTotalPage(pageResult.getPageCount(getResult().getPage().getEveryPage()));
+			result.init();
+			return result;
+		} catch (AppException appEx) {
+			throw appEx;
+		} catch (Exception ex) {
+			throw new AppException(Module.SYSTEM_MODULE,Rescode.DEFAULT_RESCODE, ex.getMessage(), ex);
+		}
+	}
+
+	public PageQueryResult getData() throws Exception {
+		
+		GlobalInfo info=GlobalInfo.getCurrentInstance();
+		
+		                                                                                  
+		int pageSize = getResult().getPage().getEveryPage();// 分页大小
+		int pageIndex = getResult().getPage().getCurrentPage();// 页码
+		Map<String,Object> map =  getCommQueryServletRequest().getParameterMap();
+		Date nowDate=new Date();
+		StringBuffer sbf = new StringBuffer("");
+		sbf.append(" SELECT ROWNUMBER() OVER()  AS ROWNUM,T.* FROM (");
+		sbf.append(" 	SELECT * FROM T_CW_CREDIT_INDEX_VAL T WHERE T.DATA_DATE='"+DateUtils.formatDate(nowDate)+"' AND T.MONITOR_FRE='D'");
+		sbf.append(" 	UNION ALL");
+		sbf.append(" 	SELECT * FROM T_CW_CREDIT_INDEX_VAL T WHERE T.MONITOR_FRE='M'");
+		//测试时  注释 有数据
+		sbf.append(" 	AND T.DATA_DATE=TO_CHAR(LAST_DAY(DATE('"+DateUtils.formatDate(nowDate)+"')-1 MONTHS),'YYYY-MM-DD')  ");
+		sbf.append(" 	UNION ALL");
+		sbf.append(" 	SELECT * FROM T_CW_CREDIT_INDEX_VAL T WHERE  T.MONITOR_FRE='Q' ");
+		//测试时  注释 有数据//为测试有数据 注释
+		sbf.append(" 	AND T.DATA_DATE=TO_CHAR(DATE('"+DateUtils.getNowDateLastQ(new Date())+"')-1 DAYS,'YYYY-MM-DD') ");
+		sbf.append(" 	) T INNER JOIN T_CW_IDNEX_MANAGE TI ON T.INDEX_CODE=TI.INDEX_CODE and T.GATHER_TYPE=TI.INDEX_TYPE2");
+		sbf.append(" 	WHERE 1=1 ");
+		if(map.get("INDEX_CODE")!=null){
+			sbf.append(" 	AND T.INDEX_CODE='"+(String)map.get("INDEX_CODE")+"' ");
+		}
+		sbf.append(" 	AND T.ORG_CODE='0' ");
+		sbf.append(" 	AND T.PRODUCT_CODE='0' ");
+		if(map.get("INDUSTRY_PARENT")!=null){
+			sbf.append(" 	AND T.INDUSTRY_PARENT='"+(String)map.get("INDUSTRY_PARENT")+"'  ");
+		}else{
+			sbf.append(" 	AND T.INDUSTRY_CODE='0'  ");
+		}
+		if(map.get("INDUSTRY_TYPE")!=null){
+			sbf.append(" 	AND T.INDUSTRY_TYPE='"+(String)map.get("INDUSTRY_TYPE")+"'  ");
+		}else{
+			sbf.append(" 	AND T.INDUSTRY_TYPE='"+(String)map.get("INDUSTRY_TYPE")+"'  ");
+		}
+		String countSql=sbf.toString();
+		sbf.append(" AND ROWNUM>="+((pageIndex-1)*pageSize+1)+" AND ROWNUM<="+(pageIndex*pageSize));
+		
+		String sql= sbf.toString();
+		
+		PageQueryCondition queryCondition = new PageQueryCondition();
+		queryCondition.setPageIndex(pageIndex);
+		queryCondition.setPageSize(pageSize);
+		queryCondition.setQueryString(countSql);
+		HQLDAO hqlDAO = DAOUtils.getHQLDAO();
+		System.out.println("总列表查询------------"+sql);
+		JdbcTemplate jdbcTemplate=(JdbcTemplate) ApplicationContextUtils.getBean("JdbcTemplate");
+		List<TCwCreditAssetsMonitor> listT=jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(TCwCreditAssetsMonitor.class));
+		PageQueryResult pageQueryResult=hqlDAO.pageQueryBySQL(queryCondition);
+		pageQueryResult.setQueryResult(listT);
+		return pageQueryResult;
+	}
+	
+	/**
+	 * 
+	 * @param info
+	 * @param nowDate
+	 * @return
+	 */
+	
+	
+	
+	private String creditSQL(GlobalInfo info,Date nowDate,int pageSize,int pageIndex){
+		
+				
+		
+				
+//		+" WITH MAINOBJECT AS ( "
+//		+" SELECT ROWNUMBER() OVER()  AS ROWNUM,CC.*,TIM.THRESHOLD1,TIM.THRESHOLD2,TIM.INDEX_TYPE2 FROM ("
+//		+" SELECT DM.INDEX_CODE,DM.INDEX_NAME,DM.INDEX_TYPE,DM.MONITOR_FRE,DM.ORGCODE,DM.ORG_PRT,DM.PRODUCT,DM.INDUSTRY,DM.INDUSTRY_PRT,DM.GATHER_TYPE,DM.PRODUCT_TYPE,"
+//		+" max(DECODE(DM.GRPTYPE,'当前日',DM.FD_VAL,0)) AS \"ND\","
+//		+" max(DECODE(DM.GRPTYPE,'当前月',DM.FD_VAL,0)) AS \"NM\","
+//		+" max(DECODE(DM.GRPTYPE,'当前季',DM.FD_VAL,0)) AS \"NQ\","
+//		+" max(DECODE(DM.GRPTYPE,'前一天',DM.FD_VAL,0)) AS \"D1\","
+//		+" max(DECODE(DM.GRPTYPE,'前一月',DM.FD_VAL,0)) AS \"M1\","
+//		+" max(DECODE(DM.GRPTYPE,'前一季',DM.FD_VAL,0)) AS \"Q1\","
+//		+" max(DECODE(DM.GRPTYPE,'年初',DM.FD_VAL,0)) AS \"YC\""
+//		+" FROM ("
+//		+" SELECT '当前日' \"GRPTYPE\" ,T.* FROM T_CW_CREDIT_ASS_MON T,T_CW_IDNEX_MANAGE T2"
+//		+" WHERE T.INDEX_CODE=T2.INDEX_CODE "
+//		+" AND T.GATHER_TYPE=T2.GATHER_TYPE"
+//		+" AND DATA_DATE='"+DateUtils.formatDate(nowDate)+"'"
+//		+" AND T.MONITOR_FRE='D'"
+//		+" AND ORGCODE='0'"
+//		+" AND PRODUCT='0'"
+//		+" AND INDUSTRY='0'"
+//		+" UNION ALL "
+//		+" SELECT '当前月' \"GRPTYPE\" ,T.* FROM T_CW_CREDIT_ASS_MON T,T_CW_IDNEX_MANAGE T2"
+//		+" WHERE T.INDEX_CODE=T2.INDEX_CODE "
+//		+" AND T.GATHER_TYPE=T2.GATHER_TYPE"
+//		+" AND DATA_DATE='"+DateUtils.getNowDateLastM(nowDate)+"'"
+//		+" AND T.MONITOR_FRE='M'"
+//		+" AND ORGCODE='0'"
+//		+" AND PRODUCT='0'"
+//		+" AND INDUSTRY='0'"
+//		+" UNION ALL "
+//		+" SELECT '当前季' \"GRPTYPE\" ,T.* FROM T_CW_CREDIT_ASS_MON T,T_CW_IDNEX_MANAGE T2"
+//		+" WHERE T.INDEX_CODE=T2.INDEX_CODE" 
+//		+" AND T.GATHER_TYPE=T2.GATHER_TYPE"
+//		+" AND DATA_DATE='"+DateUtils.getNowDateLastQ(nowDate)+"'"
+//		+" AND T.MONITOR_FRE='Q'"
+//		+" AND ORGCODE='0'"
+//		+" AND PRODUCT='0'"
+//		+" AND INDUSTRY='0'"
+//		+" UNION ALL" 
+//		+" SELECT '前一天' \"GRPTYPE\" ,T.* FROM T_CW_CREDIT_ASS_MON T,T_CW_IDNEX_MANAGE T2"
+//		+" WHERE T.INDEX_CODE=T2.INDEX_CODE" 
+//		+" AND T.GATHER_TYPE=T2.GATHER_TYPE"
+//		+" AND DATA_DATE='"+DateUtils.getNowDateLastD(nowDate)+"'"
+//		+" AND T.MONITOR_FRE='D'"
+//		+" AND ORGCODE='0'"
+//		+" AND PRODUCT='0'"
+//		+" AND INDUSTRY='0'"
+//		+" UNION ALL" 
+//		+" SELECT '前一月' \"GRPTYPE\" ,T.* FROM T_CW_CREDIT_ASS_MON T,T_CW_IDNEX_MANAGE T2"
+//		+" WHERE T.INDEX_CODE=T2.INDEX_CODE" 
+//		+" AND T.GATHER_TYPE=T2.GATHER_TYPE"
+//		+" AND DATA_DATE='"+DateUtils.getNowDateLastLastM(nowDate,1)+"'" 
+//		+" AND T.MONITOR_FRE='M'"
+//		+" AND ORGCODE='0'"
+//		+" AND PRODUCT='0'"
+//		+" AND INDUSTRY='0'"
+//		+" UNION ALL" 
+//		+" SELECT '前一季' \"GRPTYPE\" ,T.* FROM T_CW_CREDIT_ASS_MON T,T_CW_IDNEX_MANAGE T2"
+//		+" WHERE T.INDEX_CODE=T2.INDEX_CODE" 
+//		+" AND T.GATHER_TYPE=T2.GATHER_TYPE"
+//		+" AND DATA_DATE='"+DateUtils.getNowDateLastLastQ(nowDate,1)+"'"
+//		+" AND T.MONITOR_FRE='Q'"
+//		+" AND ORGCODE='0'"
+//		+" AND PRODUCT='0'"
+//		+" AND INDUSTRY='0'"
+//		+" UNION ALL "
+//		+" SELECT '年初' \"TYPE\" ,T.* FROM T_CW_CREDIT_ASS_MON T,T_CW_IDNEX_MANAGE T2"
+//		+" WHERE T.INDEX_CODE=T2.INDEX_CODE" 
+//		+" AND T.GATHER_TYPE=T2.GATHER_TYPE"
+//		+" AND DATA_DATE='"+DateUtils.getNowDateYEARFirstDate(nowDate)+"'"
+//		+" AND ORGCODE='0'"
+//		+" AND PRODUCT='0'"
+//		+" AND INDUSTRY='0'"
+//		+" ) DM group by DM.INDEX_CODE,DM.INDEX_NAME,DM.INDEX_TYPE,DM.MONITOR_FRE,DM.ORGCODE,DM.ORG_PRT,DM.PRODUCT,DM.INDUSTRY,DM.INDUSTRY_PRT,DM.GATHER_TYPE,DM.PRODUCT_TYPE"
+//		+" ) CC LEFT JOIN T_CW_IDNEX_MANAGE TIM ON CC.INDEX_CODE=TIM.INDEX_CODE "
+//		+ "WHERE ROWNUM>="+((pageIndex-1)*pageSize+1)+" AND ROWNUM<="+(pageIndex*pageSize)
+//		+" )"
+//		
+//		
+//		
+//		+" SELECT" 
+//		+" TF.INDEX_CODE,TF.INDEX_NAME,TF.INDEX_TYPE,TF.MONITOR_FRE,TF.ORGCODE,TF.ORG_PRT,TF.PRODUCT,TF.INDUSTRY,TF.INDUSTRY_PRT,TF.GATHER_TYPE,TF.PRODUCT_TYPE,"
+//		+" CASE" 
+//		+" WHEN TF.THRESHOLD1 is null THEN '0'"
+//		+" WHEN TF.THRESHOLD2 is null THEN '0'"
+//		+" WHEN TF.INDEX_TYPE2='0'  THEN "
+//		+" CASE WHEN TF.NOW_VAL>TF.THRESHOLD2 THEN 'LV3' "
+//	    +"      WHEN TF.NOW_VAL<=TF.THRESHOLD1 THEN 'LV1'"
+//	    +"      ELSE 'LV2' END "
+//	    +"    ELSE"
+//	    +" CASE WHEN TF.NOW_VAL>=TF.THRESHOLD2 THEN 'LV1' "
+//	    +"     WHEN TF.NOW_VAL<TF.THRESHOLD1 THEN 'LV3' "
+//	    +"      ELSE 'LV2' END"
+//	    +" END  AS \"COLO\","
+//		+" TF.NOW_VAL,TF.TOP_VAL,TF.YC,TF.THRESHOLD1,TF.THRESHOLD2,TF.INDEX_TYPE2"
+//		+"  FROM ("
+//		+" SELECT CASE" 
+//		+" WHEN MONITOR_FRE='D ' THEN TT.ND" 
+//		+" WHEN MONITOR_FRE='M ' THEN TT.NM" 
+//		+" WHEN MONITOR_FRE='Q ' THEN TT.NQ"
+//		+" ELSE 0 "
+//		+" END AS \"NOW_VAL\",CASE "
+//		+" WHEN MONITOR_FRE='D ' THEN TT.D1 "
+//		+" WHEN MONITOR_FRE='M ' THEN TT.M1 "
+//		+" WHEN MONITOR_FRE='Q ' THEN TT.Q1"
+//		+" ELSE 0 END AS \"TOP_VAL\",TT.*"
+//		+" FROM MAINOBJECT TT"
+//		+" ) TF";
+
+
+
+//		2   5
+		
+		return "";
+	}
+	
+	public static void main(String[] args) throws ParseException {
+		System.out.println(DateUtils.getNowDateLastQ(new Date()));
+		
+	}
+	
+	
+	private static String ssString(double 阀值1,double 阀值2,String index_Type,double 数据){
+		if(index_Type=="0"){//递减
+//			if(阀值1>阀值2){
+//				if(数据>阀值1){
+//					return "绿色";
+//				}else if(数据<=阀值2){
+//					return "红色";
+//				}else{
+//					return "黄色";
+//				}
+//			}else{
+				if(数据>阀值2){
+					return "绿色";
+				}else if(数据<=阀值1){
+					return "红色";
+				}else{
+					return "黄色";
+				}
+//			}
+		}else{//递增
+//			if(阀值1>阀值2){
+//				if(数据>=阀值1){
+//					return "红色";
+//				}else if(数据<阀值2){
+//					return "绿色";
+//				}else{
+//					return "黄色";
+//				}
+//			}else{
+				if(数据>=阀值2){
+					return "红色";
+				}else if(数据<阀值1){
+					return "绿色";
+				}else{
+					return "黄色";
+				}
+//			}
+		}
+		
+		
+//		if(index_Type=="0"){//递减
+////			if(阀值1>阀值2){
+////				if(数据>阀值1){
+////					return "绿色";
+////				}else if(数据<=阀值2){
+////					return "红色";
+////				}else{
+////					return "黄色";
+////				}
+////			}else{
+//				if(数据>阀值2){
+//					return "绿色";
+//				}else if(数据<=阀值1){
+//					return "红色";
+//				}else{
+//					return "黄色";
+//				}
+////			}
+//		}else{//递增
+////			if(阀值1>阀值2){
+////				if(数据>=阀值1){
+////					return "红色";
+////				}else if(数据<阀值2){
+////					return "绿色";
+////				}else{
+////					return "黄色";
+////				}
+////			}else{
+//				if(数据>=阀值2){
+//					return "红色";
+//				}else if(数据<阀值1){
+//					return "绿色";
+//				}else{
+//					return "黄色";
+//				}
+////			}
+//		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+	
+}

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	  navigate:导航信息
+	  type:方式（sql|call)
+	  interface:是否显示输入条件页面(true|false)
+	  databusid:数据总线编号
+	  transdataactionurl:数据整理URL
+	  async:异步提交标志
+	  pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry
+title=""
+navigate=""
+type="call"
+interface="false"
+pagesize="20"
+async="true"
+databusid="TEST"
+transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.huateng.ebank.business.management.getter.PlCenterSelectGetter"
+>
+	<Include id="BankParam"/>
+
+	<Fields>
+
+		<Field id="brcode" primary="false" type="String"  method="trimStringRS" xpath="/brcode"/>
+
+		<Field id="brcodeTypeName" method="trimStringRS" xpath="/brcodeTypeName"/>
+
+	</Fields>
+	<Parameters>
+		<parameter>
+		</parameter>
+	</Parameters>
+	<Where>
+	</Where>
+	<Sql>
+	</Sql>
+	<Script>
+	</Script>
+</CommQry>

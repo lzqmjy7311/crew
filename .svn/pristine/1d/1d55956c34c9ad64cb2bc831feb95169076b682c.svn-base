@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="账户开关信息" navigate="数据查询&gt; 定时任务执行日志查询"
+	type="call"
+	interface="true"
+	pagesize="10"
+	async="true"
+	databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.dataquery.getter.BiQuartzJobLogGetter">
+	<Include id="BankParam" />
+
+	<PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="批量下载-定时任务日志信息" perfetch="15" />
+
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="id" desc="主键" require="" edittype="text" datatype="string" method="None"
+			readonly="false" size="32" status="N" default="" primary="true" xpath="/id" />
+
+		<Field id="quartzId" desc="定时任务id" require="" edittype="text" datatype="string" method="None"
+			readonly="false" size="32"  status="N" default="" xpath="/quartzId" />
+
+		<Field id="execTm" desc="定时任务执行时间" require="" edittype="text" datatype="timestamp" method="None"
+			readonly="false" size="32"  status="F" default="" xpath="/execTm" />
+
+		<Field id="endTm" desc="结束时间" require="" edittype="text" datatype="timestamp" method="None"
+			readonly="false" size="32"  status="F" default="" xpath="/endTm" />
+
+		<Field id="quartzName" desc="定时任务名称" require="" edittype="text" datatype="string" method="None"
+			readonly="false" size="128" status="F" width="" default="" xpath="/quartzName" />
+
+		<Field id="quartzResult" desc="定时任务执行结果" require="" edittype="select" datatype="string" method="None"
+			readonly="false" size="2" translated="DATA_DIC.91" status="F" default="" xpath="/quartzResult" />
+
+		<Field id="remark" desc="备注" require="" edittype="text" datatype="string" method="None"
+			readonly="false" size="256" status="F" default="" xpath="/remark" />
+
+
+	 	<Field id="opr" desc="操作" require="" edittype="text" datatype="string" method="None"
+	 	  readonly="false" size="32" status="N" default="" xpath="" />
+
+	</Fields>
+
+	<Where>
+
+		<DateTextBox id="qstartDate" desc="执行时间开始" tip="执行时间开始"
+			require="false" status="F" datatype="date" method="None" size="150" width=""
+			primary="false" index="0" type="String" />
+
+		<DateTextBox id="qEndDate" desc="执行时间结束" tip="执行时间结束"
+			require="false" status="F" datatype="date" method="None" size="150" width=""
+			primary="false" index="1" type="String" />
+
+		<Option id="qQuartzResult" desc="定时任务结果" tip="定时任务结果"
+			require="" edittype="select" datatype="String" method="None"
+			readonly="false" size="2" translated="DATA_DIC.91" status="F" default="" xpath="" index="2"  />
+
+
+	</Where>
+
+	<Operations>
+	</Operations>
+	<Sql>
+	</Sql>
+</CommQry>

@@ -1,0 +1,64 @@
+<CommQry title="TTaskDivert" navigate="TTaskDivert" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true" transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.gbicc.company.single.getter.TCmSingleRulWarningByCasesGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+    	<Field id="taskOrg" desc="任务机构" edittype="text" datatype="string" readonly="true" 
+        xpath="/taskOrg" />
+    	<Field id="fcettypecode" desc="客户编号" edittype="text" datatype="string" readonly="true" 
+        xpath="/fcettypecode" width="250"/>
+    	<Field id="fcetname" desc="客户名称" edittype="text" datatype="string" readonly="true" 
+        xpath="/fcetname" width="250"/>
+        <Field id="halfresult" desc="输出结果" edittype="text" datatype="string" readonly="true" 
+        xpath="/halfresult" width="250"/>
+        <Field id="taskMatureDt" desc="任务到期日" edittype="text" datatype="date" readonly="true"
+        xpath="/taskMatureDt" width="100"/>
+        
+    	<Field id="select" desc="select" edittype="checkbox" xpath="" />
+       	<Field id="id" desc="ID主键" edittype="text" datatype="string" readonly="true" 
+       	xpath="/id" />
+        <Field id="warnCode" desc="预警编号" edittype="text" datatype="string" readonly="true"
+        xpath="/warnCode" width="100"/>
+        <Field id="warnDt" desc="预警时间" edittype="text" datatype="date" readonly="true"
+        xpath="/warnDt" width="100"/>
+        <Field id="warnLevel" desc="预警等级" edittype="text" datatype="string" readonly="true"
+        xpath="/warnLevel" />
+        <Field id="warnStatus" desc="预警处理状态" xpath="/warnStatus" multiple="false" init="true" readonly="true"
+            placeholder="占位符" edittype="select" translated="DATA_DIC.105"
+            datatype="string" width="100"/>
+        <Field id="warnDesc" desc="预警描述" edittype="textarea" datatype="string" readonly="true"
+        xpath="/warnDesc" />
+        <Field id="rulCode" desc="规则编号" edittype="text" datatype="string" readonly="true"
+        xpath="/rulCode" />
+        <Field id="rulName" desc="规则名称" edittype="text" datatype="string" readonly="true"
+        xpath="/rulName" width="200"/>
+        <Field id="rulType" desc="规则类型" edittype="text" datatype="string" readonly="true"
+        xpath="/rulType" width="150"/>
+        <Field id="eliminateFlag" desc="是否排除" edittype="text" datatype="string" readonly="true"
+        xpath="/eliminateFlag" />
+        <Field id="eliminateDesc" desc="排除说明" size="500" edittype="textarea" datatype="string" readonly="false"
+        xpath="/eliminateDesc" />
+        <Field id="eliminateDt" desc="排除时间" edittype="text" datatype="date" readonly="true"
+        xpath="/eliminateDt" />
+        <Field id="mainOrgId" desc="主责机构" edittype="text" datatype="string" readonly="true"
+        xpath="/mainOrg/brcode" width="150"/>
+        <Field id="mainOrg" desc="主责机构" edittype="text" datatype="string" readonly="true"
+        xpath="/mainOrg/brname" />
+        <Field id="casesId" desc="案例ID" edittype="text" datatype="string" readonly="true"
+        xpath="/casesId" />
+        <Field id="handleOrgFlag" desc="处理机构标识" edittype="text" datatype="string" readonly="true"
+        xpath="/handleOrgFlag" />
+        <Field id="rulDesc" desc="规则描述" edittype="text" datatype="string" readonly="true"
+        xpath="/rulDesc" width="200"/>
+        <Field id="opinion" desc="审核意见" xpath="/opinion" size="500" edittype="textarea" />
+        <Field id="warningRelieve" desc="预警解除" xpath="/warningRelieve" multiple="false" init="true" readonly=""
+            placeholder="占位符" edittype="select" translated="DATA_DIC.8000"
+            datatype="string" width="100"/>
+    </Fields>
+    <Operations>
+    	<Button id="btRemove" name="btRemove" desc="移除" icon="icon-form-del" operation="asysubmit" 
+    		updateClass="com.gbicc.company.single.update.TCmSingleRulRemoveWarningUpdate"/>
+    	<Button id="btLaunchInve" name="btLaunchInve" desc="发起协查" icon="icon-add" updateClass="#" url="" txn="" />
+    	<Button id="btnShow" name="btnShow" desc="查看" icon="icon-tip"/>
+    </Operations>
+</CommQry>

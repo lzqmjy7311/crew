@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-27 13:30:38 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.gbicc.company.financial.analysis.entity.TOutTaxItemDetail" table="T_OUT_TAX_ITEM_DETAIL" schema="ECUSER">
+		<comment>税务机关-欠缴税款</comment>
+		<id name="id" type="string">
+			<column name="ID" length="50" />
+		</id>
+		<property name="companyName" type="string">
+			<column name="COMPANY_NAME" length="50" />
+		</property>
+		<property name="taxEnterNo" type="string">
+			<column name="TAX_ENTER_NO" length="50" />
+		</property>
+		<property name="legalName" type="string">
+			<column name="LEGAL_NAME" length="50" />
+		</property>
+		<property name="legalCertNo" type="string">
+			<column name="LEGAL_CERT_NO" length="50" />
+		</property>
+		<property name="taxType" type="string">
+			<column name="TAX_TYPE" length="50" />
+		</property>
+		<property name="newTaxAmt" type="string">
+			<column name="NEW_TAX_AMT" length="100" />
+		</property>
+		<property name="sumTaxAmt" type="string">
+			<column name="SUM_TAX_AMT" length="100" />
+		</property>
+		<property name="belongOrg" type="string">
+			<column name="BELONG_ORG" length="50" />
+		</property>
+		<property name="relaId" type="string">
+			<column name="RELA_ID" length="50" />
+		</property>
+		<property name="rowDate" type="date">
+			<column name="ROW_DATE" length="10" />
+		</property>
+	</class>
+</hibernate-mapping>

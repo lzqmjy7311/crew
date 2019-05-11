@@ -1,0 +1,44 @@
+<CommQry title="TOutIndBaseInfoId" navigate="TOutIndBaseInfoId" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.financial.analysis.getter.TOutIndBaseInfoGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+        <Field id="id" desc="ID" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/id" />
+        <Field id="companyName" desc="企业名称" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/companyName" />
+        <Field id="registorNo" desc="注册号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/registorNo" />
+        <Field id="legalName" desc="法定代表人" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/legalName" />
+        <Field id="certNo" desc="证件号码" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/certNo" />
+        <Field id="cancelDate" desc="注销日期/吊销日期" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/cancelDate" />
+        <Field id="enterStatus" desc="登记状态" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/enterStatus" />
+        <Field id="busstartDate" desc="经营期限起始日" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/busstartDate" />
+        <Field id="busendDate" desc="经营期限结束日" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/busendDate" />
+        <Field id="busscope" desc="经营范围" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/busscope" />
+        <Field id="registorAmt" desc="注册资本" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/registorAmt" />
+        <Field id="enterOrg" desc="登记机关" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/enterOrg" />
+        <Field id="address" desc="住所" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/address" />
+        <Field id="checkDate" desc="核准日期" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/checkDate" />
+        <Field id="shareHolder" desc="股东" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/shareHolder" />
+        <Field id="sourceLink" desc="原链接" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/sourceLink" />
+        <Field id="rowDate" desc="数据日期" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/rowDate" />
+        <Field id="relaId" desc="关联ID" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/relaId" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

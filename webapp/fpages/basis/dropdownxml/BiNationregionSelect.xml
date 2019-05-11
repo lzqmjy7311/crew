@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry
+title=""
+navigate=""
+type="call"
+interface="false"
+pagesize="10"
+async="true"
+databusid=""
+transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.huateng.ebank.business.management.getter.BiNationregionSelectGetter">
+	<Include id="BankParam"/>
+    <Fields>
+		<Field id="nationregionId" primary="false" type="String"   xpath="/id" />
+		<Field id="nationregionName" primary="false" type="String"   xpath="/chinaShortName" />
+		<Field id="chinaName" primary="false" type="String"   xpath="/chinaName" />
+		<Field id="nationregionIdName" method="trimStringRS" xpath="/nationregionIdName"/>
+	</Fields>
+	<Parameters>
+		<Parameter id="value1" desc="代码"  value=""/>
+		<Parameter id="value2" desc="简称"  value=""/>
+	</Parameters>
+   	<Where>
+	</Where>
+	<Sql>
+	</Sql>
+	<Script>
+	</Script>
+</CommQry>

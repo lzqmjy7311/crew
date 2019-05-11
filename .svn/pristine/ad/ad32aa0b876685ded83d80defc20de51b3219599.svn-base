@@ -1,0 +1,27 @@
+<CommQry title="TRewC11EndorsementInfoId" navigate="TRewC11EndorsementInfoId" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.C11Getter">
+    <Include id="BankParam" />
+    <Fields>
+    	<Field id="draftId" desc="票据ID" edittype="text" datatype="int" xpath="/draftId" />
+    	<Field id="contractId" desc="买入业务ID" edittype="text" datatype="int"
+        xpath="/contractId" />
+        <Field id="endorsementValue" desc="背书人名称" edittype="text" datatype="string"
+        xpath="/endorsementValue" />
+		<Field id="branchId" desc="机构ID" edittype="text" datatype="int" xpath="/branchId" />
+    	
+    	<!--
+        <Field id="id" desc="" edittype="text" datatype="int" xpath="/id" />
+        <Field id="endorsementCount" desc="" edittype="text" datatype="int"
+        xpath="/endorsementCount" />
+        <Field id="misc0" desc="" edittype="text" datatype="string" xpath="/misc0" />
+        <Field id="misc1" desc="" edittype="text" datatype="string" xpath="/misc1" />
+        <Field id="lastUpdTime" desc="" edittype="text" datatype="string"
+        xpath="/lastUpdTime" />
+        <Field id="warnId" desc="预警表ID" edittype="text" datatype="string"
+        xpath="/warnId" />
+        <Field id="dataDt" desc="数据日期" edittype="text" datatype="date"
+        xpath="/dataDt" />-->
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

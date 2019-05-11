@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-12-3 15:32:36 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.view.accountpage.entity.ZtxMmfxy" table="ZTX_MMFXY" schema="ECUSER">
+            <id name="id" type="string">
+                <column name="ID" length="32" />
+            </id>
+            <property name="htbh" type="string">
+                <column name="HTBH" length="16" />
+            </property>
+            <property name="fxyid" type="string">
+                <column name="FXYID" length="10" />
+            </property>
+            <property name="jyfx" type="string">
+                <column name="JYFX" length="1" />
+            </property>
+            <property name="ll" type="string">
+                <column name="LL" length="24" />
+            </property>
+            <property name="qxr" type="string">
+                <column name="QXR" length="8" />
+            </property>
+            <property name="zqs" type="string">
+                <column name="ZQS" length="1" />
+            </property>
+            <property name="pmje" type="string">
+                <column name="PMJE" length="24" />
+            </property>
+            <property name="zs" type="string">
+                <column name="ZS" length="10" />
+            </property>
+            <property name="lxje" type="string">
+                <column name="LXJE" length="24" />
+            </property>
+            <property name="sfje" type="string">
+                <column name="SFJE" length="24" />
+            </property>
+            <property name="dsfDm" type="string">
+                <column name="DSF_DM" length="8" />
+            </property>
+            <property name="dsfMc" type="string">
+                <column name="DSF_MC" length="60" />
+            </property>
+            <property name="dsfTgzh" type="string">
+                <column name="DSF_TGZH" length="30" />
+            </property>
+            <property name="dsfKhh" type="string">
+                <column name="DSF_KHH" length="60" />
+            </property>
+            <property name="dsfHm" type="string">
+                <column name="DSF_HM" length="60" />
+            </property>
+            <property name="dsfZjzh" type="string">
+                <column name="DSF_ZJZH" length="30" />
+            </property>
+            <property name="jsyid" type="string">
+                <column name="JSYID" length="8" />
+            </property>
+            <property name="jsymc" type="string">
+                <column name="JSYMC" length="32" />
+            </property>
+            <property name="jssj" type="string">
+                <column name="JSSJ" length="8" />
+            </property>
+            <property name="qsyid" type="string">
+                <column name="QSYID" length="8" />
+            </property>
+            <property name="qsymc" type="string">
+                <column name="QSYMC" length="32" />
+            </property>
+            <property name="qssj" type="string">
+                <column name="QSSJ" length="8" />
+            </property>
+            <property name="hsyid" type="string">
+                <column name="HSYID" length="8" />
+            </property>
+            <property name="hsymc" type="string">
+                <column name="HSYMC" length="32" />
+            </property>
+            <property name="hssj" type="string">
+                <column name="HSSJ" length="8" />
+            </property>
+            <property name="yxzt" type="string">
+                <column name="YXZT" length="4" />
+            </property>
+            <property name="jieshubz" type="string">
+                <column name="JIESHUBZ" length="1" />
+            </property>
+            <property name="jieshusj" type="string">
+                <column name="JIESHUSJ" length="8" />
+            </property>
+            <property name="bz" type="string">
+                <column name="BZ" length="500" />
+            </property>
+            <property name="fhrid" type="string">
+                <column name="FHRID" length="8" />
+            </property>
+            <property name="fhrmc" type="string">
+                <column name="FHRMC" length="32" />
+            </property>
+            <property name="fhsj" type="string">
+                <column name="FHSJ" length="8" />
+            </property>
+            <property name="qsfxid" type="string">
+                <column name="QSFXID" length="8" />
+            </property>
+            <property name="qsfxmc" type="string">
+                <column name="QSFXMC" length="32" />
+            </property>
+            <property name="qsfxsj" type="string">
+                <column name="QSFXSJ" length="8" />
+            </property>
+            <property name="jsfxid" type="string">
+                <column name="JSFXID" length="8" />
+            </property>
+            <property name="jsfxmc" type="string">
+                <column name="JSFXMC" length="32" />
+            </property>
+            <property name="jsfxsj" type="string">
+                <column name="JSFXSJ" length="8" />
+            </property>
+            <property name="xzzt" type="string">
+                <column name="XZZT" length="1" />
+            </property>
+            <property name="pjid" type="string">
+                <column name="PJID" length="10" />
+            </property>
+            <property name="yjbsfje" type="string">
+                <column name="YJBSFJE" length="24" />
+            </property>
+            <property name="mdywbz" type="string">
+                <column name="MDYWBZ" length="1" />
+            </property>
+            <property name="tsczsj" type="string">
+                <column name="TSCZSJ" length="8" />
+            </property>
+            <property name="sjbh" type="string">
+                <column name="SJBH" length="20" />
+            </property>
+            <property name="zcpc" type="string">
+                <column name="ZCPC" length="1" />
+            </property>
+            <property name="dsfKhhbh" type="string">
+                <column name="DSF_KHHBH" length="60" />
+            </property>
+            <property name="cwsx" type="string">
+                <column name="CWSX" length="10" />
+            </property>
+            <property name="ecjysj" type="string">
+                <column name="ECJYSJ" length="8" />
+            </property>
+            <property name="bankAccount" type="string">
+                <column name="BANKACCOUNT" length="50" />
+            </property>
+            <property name="bussdate" type="date">
+                <column name="BUSSDATE" length="10" />
+            </property>
+    </class>
+</hibernate-mapping>

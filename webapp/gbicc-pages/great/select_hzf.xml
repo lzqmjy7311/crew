@@ -1,0 +1,24 @@
+<CommQry title="TEdwPlsBuildingId" navigate="TEdwPlsBuildingId" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.person.great.getter.TEdwPlsBuildingGetter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="projid" desc="项目编号" require="" edittype="text" datatype="string" 
+        xpath="/projid" />
+        <Field id="corpid" desc="合作方编号" require="" edittype="text" datatype="string" 
+        xpath="/corpid" />
+        <Field id="corpname" desc="合作商名称" require="" edittype="text" datatype="string" 
+        xpath="/corpname" />
+        <Field id="projname" desc="项目名称" require="" edittype="text" datatype="string" 
+        xpath="/projname" />
+        <Field id="liceno" desc="销售许可证" require="" edittype="text" datatype="string" 
+        xpath="/liceno" />
+    </Fields>
+    <Where>
+    	<TextBox id="projid" desc="项目编号" edittype="text" datatype="string" require="" index="0" />
+    	<TextBox id="projname" desc="项目名称" edittype="text" datatype="string" require="" index="1" />
+    	<TextBox id="corpname" desc="合作商名称" edittype="text" datatype="string" require="" index="2" />
+    </Where>
+    <Operations>
+    	<Button id="btnHzfConfirm" name="btnHzfConfirm" desc="确定" icon="icon-save" />
+    </Operations>
+</CommQry>

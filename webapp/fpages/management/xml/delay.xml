@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="顺延方式设置" navigate="主页 &gt; 业务参数管理 &gt; 顺延方式设置" type="call"
+	interface="true"
+	pagesize="10"
+	async="true"
+	databusid="ACEENTRY_DB"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.management.getter.DelayQueryGetter">
+
+	<Include id="BankParam" />
+
+	<ResultViewParam>
+		/fpages_ace/manager/ftl/delay.ftl
+	</ResultViewParam>
+	<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+	<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+	<Fields>
+
+	  <Field id="delaytype" desc="顺延方式" require="true" status="F" colspan="2"
+			edittype="select" method="None" readOnly="" width="" primary="true"
+			type="String" size="32" default="" tip="顺延方式" datatype=""
+			translated="DATA_DIC.20000" xpath="/delaytype" />
+
+	   <Field id="check1" desc="到期日在非工作日是否顺延到第一个工作日？" status="N"  method="None" readonly="false" colspan="2"
+		primary="true" type="String" edittype="checkbox" size="32" xpath="/check1" />
+
+		 <Field id="check2" desc="异地票据是否顺延？" status="N"  method="None" readonly="false" colspan="2"
+		primary="true" type="String" edittype="checkbox" size="32" xpath="/check2"  />
+
+       <!--    <Field id="delaydays" desc="天"   method="None" readonly="false"
+		primary="true" type="String"  size="20" xpath="/delaydays" />-->
+     <Field id="delaydays" desc="顺延天数" status="F"   compositeIndex="start" rules="isNum"
+			method="None" primary="false" type="String" size="32" xpath="/delaydays" default="" width="25" colspan="2"
+			tip="顺延天数"/>
+
+		 <Field id="check3" desc="异地顺延后若还在非工作日是否顺延到第一个工作日？" status="N"  method="None" readonly="false" colspan="2"
+		primary="true" type="String" edittype="checkbox" size="32" xpath="/check3"  />
+
+
+
+
+
+
+	</Fields>
+
+	<Operations>
+
+		<Button id="btSave" name="btSave" desc="保存"
+			operation="asysubmit" updateClass="com.huateng.ebank.business.management.updater.DelayUpdate"
+			url="/common/success.jsp"  show="" group="" txn="" />
+
+	</Operations>
+
+</CommQry>

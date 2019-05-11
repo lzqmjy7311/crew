@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="操作员审批阀值设置" navigate="主页 &gt; 系统管理 &gt; 操作员审批阀值设置" type="call"
+	interface="true" pagesize="20" async="true" databusid="MANAGEMENTTLR"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.management.getter.TlrWorkloadSetGetter">
+	<Include id="BankParam" />
+	<ResultViewParam>/fpages/management/ftl/TlrWorkloadSet.ftl</ResultViewParam>
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="brcode" desc="机构号" status="N" readonly="true"
+			primary="true" type="String" size="20" xpath="/brcode" />
+
+		<Field id="tlrno" desc="操作员号" status="N" readonly="true"
+			primary="true" type="String" size="20" xpath="/tlrno" />
+
+		<Field id="tlrName" desc="操作员名" status="N" width="100"
+			readonly="true" primary="true" type="String" size="30"
+			xpath="/tlrName" />
+
+		<Field id="maxWl" desc="审批阀值" require="true" status="F"
+			readonly="false" edittype="text" datatype="int" method="None"
+			width="90" primary="false"
+			type="String" size="10" xpath="/maxWl" />
+
+
+	</Fields>
+
+	<Where>
+		<Option id="brcode1" tablename="bctl" dataType="String"
+			fieldname="brcode" edittype="String" size="20" desc="机构号"
+			tip="机构号" translated="CQ:AllDownBrcodeSelect" operation="EQ"
+			fieldmap="brcode1=brcode;brcode1Name=brcodeTypeName"
+			viewField="brcodeTypeName" dropdowntype="dynamic" init="false"
+			method="None" index="0" width="150" height="400" require="false" readOnly="false" />
+
+		<TextBox id="tlrno1" tablename="" fieldname="tlrno1"
+			type="tlrno" rules="isTlrno" errmsg="操作员号必须为8位数字" dataType="String" operation="EQ" size="8" desc="操作员号"
+			tip="操作员号" method="" index="1" width="150" require="false"
+			readOnly="false" />
+	</Where>
+
+	<Operations>
+		<Button id="btSave" name="btSave" desc="确定"
+			operation="asysubmit"
+			updateClass="com.huateng.ebank.business.management.updater.TlrWorkloadSetUpdater"
+			url="#" txn="" />
+	</Operations>
+	<Sql></Sql>
+</CommQry>

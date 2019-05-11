@@ -1,0 +1,102 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign result = "[{'id':1,'text':'delete','seperator':false,'iconCls':'','attributes':'','href':'','children':[]}]">
+<#assign customerNum="${RequestParameters['customerNum']?default('')}" />
+<@CommonQueryMacro.page title="规则配置">
+<@CommonQueryMacro.LayoutPanel id="rule" inbody="false" >
+	<style>
+	.CodeMirror{
+		height:430px;
+	}
+  </style>
+  
+    <@CommonQueryMacro.LayoutWest id="1" title="请选择核心账户下的账号" width="200" split="true" >
+    <div style="border:1px">
+		<@CommonQueryMacro.CommonQuery id="TreeNode123" init="true" submitMode="current" >
+		  <@CommonQueryMacro.DynamicTree id="tree123" />
+		 
+		</@CommonQueryMacro.CommonQuery>
+    </div>
+    </@CommonQueryMacro.LayoutWest>
+    
+    <@CommonQueryMacro.LayoutCenter id="2" title=""  >
+		<@CommonQueryMacro.CommonQuery id="ZtMmfxy" init="true" submitMode="current">
+			<@CommonQueryMacro.Interface id="interface" fieldStr="txnDt,endbussdate" label="请输入查询条件"  showButton="false" />
+		<div style="text-align:center;margin:10px 0 10px 0">
+			<@CommonQueryMacro.Button id="btQuery"/>&nbsp;&nbsp;<@CommonQueryMacro.Button id="btCancel"/>
+		</div>
+		</@CommonQueryMacro.CommonQuery>
+		<@CommonQueryMacro.CommonQuery id="TreeNode123" init="true" submitMode="current" >
+		<div style="text-align:center">
+		<table><tr>
+			<td><@CommonQueryMacro.GroupField fId="acctType"/></td>
+			<td ><@CommonQueryMacro.GroupField fId="acctId"/></td>
+			<td valign="bottom" style="padding:0 0 3px 110px;"><a href="Javascript:onclik1()"><span style="font-size:100%;">资金流向监控</span></a></td>
+		</tr></table>
+		</@CommonQueryMacro.CommonQuery>
+		</div>
+		<@CommonQueryMacro.CommonQuery id="ZtMmfxy" init="true" submitMode="current">
+		<table>
+			<tr><td><@CommonQueryMacro.DataTable id="table23" fieldStr="txnSerialId,debCrdInd,txnDt,txnTm,txnAmt,custId,oppoAcctId,oppoBank,txnCateg,txnAbstr" hasFrame="true"/>
+		 </@CommonQueryMacro.CommonQuery>
+			</td></tr>
+		</table>
+				<div style="margin:10px 10px 10px 10px">备注：客户经理可以查询一个月的流水信息，总分支行风险监测岗、管理岗可以查询三个月的流水信息。</div>
+    </@CommonQueryMacro.LayoutCenter>   
+</@CommonQueryMacro.LayoutPanel>
+	<script type="text/javascript">
+	var account="";
+	var customerNum = "${customerNum}";
+	var acctType="";
+	var acctId="";
+	function btQuery_onClick(){	
+		var txnDt=ZtMmfxy_interface_dataset.getValue("txnDt");
+		var endbussdate=ZtMmfxy_interface_dataset.getValue("endbussdate");
+		if(txnDt==''||endbussdate==''){
+			alert('请输入完整的查询条件！');
+			return false;
+		}
+		ZtMmfxy_dataset.setParameter("txnDt",txnDt);
+		ZtMmfxy_dataset.setParameter("endbussdate",endbussdate);
+		ZtMmfxy_dataset.setParameter("acctId",account);
+		ZtMmfxy_dataset.setValue("acctType",acctType);
+		ZtMmfxy_dataset.flushData(ZtMmfxy_dataset.pageIndex);
+		TreeNode123_dataset.setValue("acctType",acctType);
+		TreeNode123_dataset.setValue("acctId",acctId);
+	}
+	function initCallGetter_post(){
+		TreeNode123_dataset.setParameter("customerNum",customerNum);
+//		load();
+	}
+	function flushDataPost(dataset){
+		alert("查询完成");
+	}
+	function btCancel_onClick(){	
+		ZtMmfxy_interface_dataset.setValue("acctId","");
+		ZtMmfxy_interface_dataset.setValue("endbussdate","");
+		ZtMmfxy_dataset.flushData(ZtMmfxy_dataset.pageIndex);
+	}	
+	function onclik1(){
+		alert("该功能暂未启用");
+	}
+//	function load(){
+//		var $dtree = DynamicTree_tree123;
+//		//$dtree.expandAll();
+//		var rt = $dtree.getRoot();
+//		if(rt){
+//			$dtree.select(rt.id);
+//		}
+//	}
+	//左侧机构树点击节点
+	function DynamicTree_tree123_onSelect(e,node){
+		account= node.id;
+		acctType=node.attributes.record.getValue("acctType");
+		acctId=node.id;
+
+	}
+	//定位一条记录
+//	function locate(id) {
+//		var record = TreeNode123_dataset.find(["accounts"],[id]);
+		
+//	}
+	</script>
+</@CommonQueryMacro.page>

@@ -1,0 +1,116 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign customerNum=RequestParameters["customerNum"]?default("")>
+<#assign loanCardNum=RequestParameters["loanCardNum"]?default("")>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+<@CommonQueryMacro.page title="单规则预警处置任务列表">
+	<@CommonQueryMacro.CommonQuery id="zxinfo" init="true" submitMode="current">
+		<@CommonQueryMacro.DataTable id="datatable2"   readonly="true"  fieldStr="indexName,indexValue"/>
+	</@CommonQueryMacro.CommonQuery>
+	
+	<@CommonQueryMacro.CommonQuery id="zxinfodata" init="false" submitMode="selected" navigate="false">
+			<#assign jzyear=''>
+			<#assign caliber=''>
+			<#assign repno=''>
+			<table align="left" width="100%">
+			    <tr>
+					<td>
+						<@CommonQueryMacro.Group id="group22" label="" colNm=4  
+						fieldStr="fdReportdate,indexName"/>
+					</td>
+				</tr>
+			</table>
+	</@CommonQueryMacro.CommonQuery>
+	
+	
+	<script type="text/javascript" src="${contextPath}/gbicc-pages/jquery-form.js"></script>
+	<script src="${contextPath}/templets/ui/js/chart/highcharts.js"></script>
+	<script src="${contextPath}/templets/ui/js/chart/highcharts-more.js"></script>
+
+	<div id="container" style="width: 800px; height: 300px; margin: 0 auto"></div>	
+
+	<script language="JavaScript">
+	var indexId;
+	var fdReportdate;
+	var indexName;
+	function initCallGetter_post(){
+		var loanCardNum='${loanCardNum}';
+		zxinfodata_dataset.setFieldReadOnly("fdReportdate",true);
+		zxinfodata_dataset.setFieldReadOnly("indexName",true);
+	}
+	
+	function  datatable2_onDbClick(record,index){
+		indexId=record.getValue("indexId");
+		fdReportdate=record.getValue("fdReportdate");
+		indexName=record.getValue("indexName");
+		zxinfodata_dataset.setValue("fdReportdate",fdReportdate);
+		zxinfodata_dataset.setValue("indexName",indexName);
+		zxinfodata_dataset.setValue("indexId",indexId);
+		DBCheck();
+	}
+
+	function DBCheck(){
+		 var customerNum='${customerNum}';
+		 $.messager.progress({title:'请稍候',msg:'正在上传...'});
+		 	//异步提交表单
+				$.ajax({								
+					url :"${contextPath}/char/ZxinfoGetHigtCharServlet",
+			        type : "post",
+					data:{
+						fdReportdate:fdReportdate,
+						indexId:indexId,
+						customerNum:customerNum,
+						indexName:indexName,
+					},
+					
+					success:function(data){
+					var dataJson=eval("("+data+")");
+					   
+						 //此处构建曲线  
+	                     $('#container').highcharts({  
+					        chart:{  
+					             defaultSeriesType: 'line',//图表的显示类型（line,spline,scatter,splinearea bar,pie,area,column）  
+					             marginRight: 125,//上下左右空隙  
+					             marginBottom: 25 //上下左右空隙  
+					        },  
+					        title:{  
+					            text: '征信信息视图',//主标题  
+					                x: -20 //center  
+					        },  
+					        xAxis: {   //横坐标  
+					               categories: dataJson.listXdata //动态解析
+					        },  
+					            yAxis: {  
+					           title: {  
+					             text: '' //纵坐标  
+					               },  
+					               plotLines: [{  //标线属性  
+					            value: 0,  
+					             width: 1,  
+					             color: 'red'  
+					                }]  
+					              },  
+					             tooltip: { //数据点的提示框  
+					             formatter: function() { //formatter格式化函数  
+					             return '<b>'+ this.series.name +'</b><br/>'+  
+					             this.x +': '+ this.y;  
+					            }  
+					        },  
+					        legend: {  
+					              layout: 'vertical',  
+					              align: 'right',  
+					              verticalAlign: 'top',  
+					              x: -10,  
+					              y: 100,  
+					              borderWidth: 0  
+					             },   
+					         series:dataJson.data//动态解析
+					         });
+	                     $.messager.progress('close');
+					}
+				});
+	     
+	 
+	  }
+
+	</script>
+</@CommonQueryMacro.page>

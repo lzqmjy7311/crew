@@ -1,0 +1,320 @@
+.icon-blank{
+	background:url('icons/blank.gif') no-repeat;
+}
+.icon-add{
+	background:url('icons/edit_add.png') no-repeat;
+}
+.icon-edit{
+	background:url('icons/pencil.png') no-repeat;
+}
+.icon-remove{
+	background:url('icons/edit_remove.png') no-repeat;
+}
+.icon-save{
+	background:url('icons/filesave.png') no-repeat;
+}
+.icon-cut{
+	background:url('icons/cut.png') no-repeat;
+}
+.icon-ok{
+	background:url('icons/ok.png') no-repeat;
+}
+.icon-no{
+	background:url('icons/no.png') no-repeat;
+}
+.icon-cancel{
+	background:url('icons/cancel.png') no-repeat;
+}
+.icon-reload{
+	background:url('icons/reload.png') no-repeat;
+}
+.icon-search{
+	background:url('icons/search.png') no-repeat;
+}
+.icon-print{
+	background:url('icons/print.png') no-repeat;
+}
+.icon-help{
+	background:url('icons/help.png') no-repeat;
+}
+.icon-undo{
+	background:url('icons/undo.png') no-repeat;
+}
+.icon-redo{
+	background:url('icons/redo.png') no-repeat;
+}
+.icon-back{
+	background:url('icons/back.png') no-repeat;
+}
+.icon-sum{
+	background:url('icons/sum.png') no-repeat;
+}
+.icon-tip{
+	background:url('icons/tip.png') no-repeat;
+}
+.icon-clear{
+	background:url('icons/clear.png') no-repeat;
+}
+.icon-expout{
+	background:url('icons/exp_out.png') no-repeat;
+}
+
+.icon-impin{
+	background:url('icons/imp_in.png') no-repeat;
+}
+
+.icon-lock{
+	background:url('icons/lock.png') no-repeat;
+}
+
+.icon-unlock{
+	background:url('icons/unlock.png') no-repeat;
+}
+
+.icon-set{
+	background:url('icons/set.png') no-repeat;
+}
+
+.icon-mini-add{
+	background:url('icons/mini_add.png') no-repeat 2px 2px;
+}
+.icon-mini-edit{
+	background:url('icons/mini_edit.png') no-repeat 2px 2px;
+}
+.icon-mini-refresh{
+	background:url('icons/mini_refresh.png') no-repeat 3px 2px;
+}
+
+
+
+.icon-export-xls{
+	background:url('icons/xls_image_export.gif') no-repeat 1px -1px;
+}
+.icon-export-csv{
+	background:url('icons/csv_image_export.gif') no-repeat 1px -1px;
+}
+.icon-export-pdf{
+	background:url('icons/pdf_image_export.gif') no-repeat 1px -1px;
+}
+
+
+.icon-delete{
+	background:url('icons/edit_remove.png') no-repeat;
+}
+
+.icon-setting2{background:url('icons/advanced_setting.png') no-repeat;}
+.icon-app{background:url('icons/application.png') no-repeat;}
+.icon-app-dd{background:url('icons/application_add.png') no-repeat;}
+.icon-app-cascade{background:url('icons/application_cascade.png') no-repeat;}
+.icon-app-double{background:url('icons/application_double.png') no-repeat;}
+.icon-app-edit{background:url('icons/application_edit.png') no-repeat;}
+.icon-flash{background:url('icons/application_flash.gif') no-repeat;}
+.icon-app-form{background:url('icons/application_form.png') no-repeat;}
+.icon-form-add{background:url('icons/application_form_add.png') no-repeat;}
+.icon-form-del{background:url('icons/application_form_delete.png') no-repeat;}
+.icon-form-edit{background:url('icons/application_form_edit.png') no-repeat;}
+.icon-form-search{background:url('icons/application_form_search.png') no-repeat;}
+.icon-form-storage{background:url('icons/application_from_storage.png') no-repeat;}
+.icon-app-home{background:url('icons/application_home.png') no-repeat;}
+.icon-app-key{background:url('icons/application_key.png') no-repeat;}
+.icon-app-link{background:url('icons/application_link.png') no-repeat;}
+.icon-app-sidebox{background:url('icons/application_side_boxes.png') no-repeat;}
+.icon-side-contract{background:url('icons/application_side_contract.png') no-repeat;}
+.icon-side-list{background:url('icons/application_side_list.png') no-repeat;}
+.icon-title-vertical{background:url('icons/application_tile_vertical.png') no-repeat;}
+.icon-view-detail{background:url('icons/application_view_detail.png') no-repeat;}
+.icon-view-gallery{background:url('icons/application_view_gallery.png') no-repeat;}
+.icon-view-icons{background:url('icons/application_view_icons.png') no-repeat;}
+.icon-view-list{background:url('icons/application_view_list.png') no-repeat;}
+.icon-view-title{background:url('icons/application_view_tile.png') no-repeat;}
+.icon-xp-terminal{background:url('icons/application_xp_terminal.png') no-repeat;}
+.icon-calc{background:url('icons/application_calc.png') no-repeat;}
+.icon-documents{background:url('icons/application_documents.png') no-repeat;}
+.icon-exit{background:url('icons/application_exit.png') no-repeat;}
+.icon-export{background:url('icons/application_export.png') no-repeat;}
+.icon-icon{background:url('icons/application_icon.png') no-repeat;}
+.icon-img{background:url('icons/application_image.png') no-repeat;}
+.icon-info{background:url('icons/application_information.png') no-repeat;}
+.icon-ppt{background:url('icons/applicationms_powerpoint.png') no-repeat;}
+.icon-word{background:url('icons/applicationms_word.png') no-repeat;}
+.icon-presentatio{background:url('icons/application_presentatio.png') no-repeat;}
+.icon-proprietary{background:url('icons/application_proprietary.png') no-repeat;}
+.icon-development{background:url('icons/applications_development.png') no-repeat;}
+.icon-result{background:url('icons/application_search_result.png') no-repeat;}
+.icon-collapse{background:url('icons/application_sidebar_collapse.png') no-repeat;}
+.icon-siderbar-list{background:url('icons/application_sidebar_list.png') no-repeat;}
+.icon-multimedia{background:url('icons/applications_multimedia.png') no-repeat;}
+.icon-office{background:url('icons/applications_office.png') no-repeat;}
+.icon-other{background:url('icons/applications_other.png') no-repeat;}
+.icon-setting{background:url('icons/applications_systema.png') no-repeat;}
+.icon-sun-xml{background:url('icons/application_sun_xml.png') no-repeat;}
+.icon-task{background:url('icons/application_task.png') no-repeat;}
+.icon-template{background:url('icons/application_template.png') no-repeat;}
+.icon-bittorrent{background:url('icons/application_x_bittorrent.png') no-repeat;}
+.icon-file-refresh{background:url('icons/application_x_bittorrents.png') no-repeat;}
+.icon-zip{background:url('icons/application_x_bzip.png') no-repeat;}
+.icon-compressed{background:url('icons/application_x_compressed_tar.png') no-repeat;}
+.icon-designer{background:url('icons/application_x_designer.png') no-repeat;}
+.icon-executable-script{background:url('icons/application_x_executable_script.png') no-repeat;}
+.icon-exten-info{background:url('icons/application_x_extension_nfo.png') no-repeat;}
+.icon-saved-searh{background:url('icons/application_x_gnome_saved_search.png') no-repeat;}
+.icon-xhtml{background:url('icons/application_xhtmlxml.png') no-repeat;}
+.icon-java{background:url('icons/application_x_java.png') no-repeat;}
+.icon-java-applet{background:url('icons/application_x_java_applet.png') no-repeat;}
+.icon-java-archive{background:url('icons/application_x_java_archive.png') no-repeat;}
+.icon-js{background:url('icons/application_x_javascript.png') no-repeat;}
+.icon-kcsrc{background:url('icons/application_x_kcsrc.png') no-repeat;}
+.icon-download{background:url('icons/application_x_kgetlist.png') no-repeat;}
+.icon-marble{background:url('icons/application_x_marble.png') no-repeat;}
+.icon-at{background:url('icons/application_x_mimearchive.png') no-repeat;}
+.icon-xml{background:url('icons/application_xml.png') no-repeat;}
+.icon-xmltemplate{background:url('icons/application_xmltemplate.png') no-repeat;}
+.icon-ms-write{background:url('icons/application_x_mswrite.png') no-repeat;}
+.icon-object{background:url('icons/application_x_object.png') no-repeat;}
+.icon-perl{background:url('icons/application_x_perl.png') no-repeat;}
+.icon-by-code{background:url('icons/application_x_python_bytecode.png') no-repeat;}
+.icon-rar-box{background:url('icons/application_x_rar.png') no-repeat;}
+.icon-ruby{background:url('icons/application_x_ruby.png') no-repeat;}
+.icon-shell-script{background:url('icons/application_x_shellscript.png') no-repeat;}
+.icon-skwave-flash{background:url('icons/application_x_shockwave_flash.png') no-repeat;}
+.icon-theme{background:url('icons/application_x_theme.png') no-repeat;}
+.icon-trash{background:url('icons/application_x_trash.png') no-repeat;}
+.icon-zero-file{background:url('icons/application_x_zerosize.png') no-repeat;}
+.icon-zip{background:url('icons/application_zip.png') no-repeat;}
+.icon-arrow-forward{background:url('icons/arrow_forward.png') no-repeat;}
+.icon-avidemux{background:url('icons/avidemux_icon.png') no-repeat;}
+.icon-design{background:url('icons/banner_design.png') no-repeat;}
+.icon-building{background:url('icons/business_tower_o.png') no-repeat;}
+.icon-calendar{background:url('icons/calendar.png') no-repeat;}
+.icon-configure{background:url('icons/configure.png') no-repeat;}
+.icon-gnome{background:url('icons/dia_gnome_icon.png') no-repeat;}
+.icon-disk{background:url('icons/disksfilesystems.png') no-repeat;}
+.icon-upload{background:url('icons/document_small_upload.png') no-repeat;}
+.icon-docu-share{background:url('icons/document_share.png') no-repeat;}
+.icon-hardisk{background:url('icons/drive_harddisk_system.png') no-repeat;}
+.icon-smile{background:url('icons/emoticon_smile.png') no-repeat;}
+.icon-global{background:url('icons/epiphany_icon.png') no-repeat;}
+.icon-tray{background:url('icons/exaile_tray_icon.png') no-repeat;}
+.icon-folders{background:url('icons/folders.png') no-repeat;}
+.icon-fusion{background:url('icons/fusion_icon.png') no-repeat;}
+.icon-cup{background:url('icons/gazpacho_icon.png') no-repeat;}
+.icon-loading{background:url('icons/gnome_fs_loading_icon.png') no-repeat;}
+.icon-clock{background:url('icons/gnome_fs_loading_icong.png') no-repeat;}
+.icon-paf{background:url('icons/gnome_mime_application_pdf.png') no-repeat;}
+.icon-ncrypted{background:url('icons/gnome_mime_application_pgp_encrypted.png') no-repeat;}
+.icon-archive{background:url('icons/gnome_mime_application_x_archive.png') no-repeat;}
+.icon-glade{background:url('icons/gnome_mime_application_x_glade.png') no-repeat;}
+.icon-keyword{background:url('icons/gnome_mime_application_x_kword.png') no-repeat;}
+.icon-app-rar{background:url('icons/gnome_mime_application_x_rar.png') no-repeat;}
+.icon-mime-ppt{background:url('icons/gnome_mimems_powerpoint.png') no-repeat;}
+.icon-search2{background:url('icons/gnome_searchtool.png') no-repeat;}
+.icon-default{background:url('icons/gnome_settings_default_applications.png') no-repeat;}
+.icon-system-setting{background:url('icons/gnome_system.png') no-repeat;}
+.icon-monitor{background:url('icons/gnome_system_monitor.png') no-repeat;}
+.icon-text-web{background:url('icons/gnome_text_web.png') no-repeat;}
+.icon-online{background:url('icons/gnutella.png') no-repeat;}
+.icon-file-docu{background:url('icons/ic_app_icon_file_document.png') no-repeat;}
+.icon-file-docu-org{background:url('icons/icon2_file_document.png') no-repeat;}
+.icon-file-docu-gray{background:url('icons/icon4_file_document.png') no-repeat;}
+.icon-file-docu-blue{background:url('icons/icon5_file_document.png') no-repeat;}
+.icon-clockwise{background:url('icons/icon_clockwise.png') no-repeat;}
+.icon-file{background:url('icons/icon_file.png') no-repeat;}
+.icon-inbox{background:url('icons/icon_inbox.png') no-repeat;}
+.icon-key{background:url('icons/icon_key.png') no-repeat;}
+.icon-play{background:url('icons/icon_play.png') no-repeat;}
+.icon-book{background:url('icons/icons_book.png') no-repeat;}
+.icon-cmp-files{background:url('icons/icons_files.png') no-repeat;}
+.icon-folders-pink{background:url('icons/icontexto_aurora_folders_close.png') no-repeat;}
+.icon-folders-link{background:url('icons/icontexto_aurora_folders_links.png') no-repeat;}
+.icon-folders-movie{background:url('icons/icontexto_aurora_folders_movies.png') no-repeat;}
+.icon-chat{background:url('icons/irc_online.png') no-repeat;}
+.icon-java{background:url('icons/java_icon.png') no-repeat;}
+.icon-jokosher{background:url('icons/jokosher_icon.png') no-repeat;}
+.icon-app-finder{background:url('icons/kappfinder.png') no-repeat;}
+.icon-sys-setting{background:url('icons/kcmsystem.png') no-repeat;}
+.icon-setting-multi{background:url('icons/kcmsystem_three.png') no-repeat;}
+.icon-service-setting{background:url('icons/kservices_one.png') no-repeat;}
+.icon-service-settings{background:url('icons/kservices_settwo.png') no-repeat;}
+.icon-kservice-setting{background:url('icons/kservices_three.png') no-repeat;}
+.icon-ksystem{background:url('icons/ksystem.png') no-repeat;}
+.icon-flag{background:url('icons/Map_Marker_Chequered_Flag_Left_Azure.png') no-repeat;}
+.icon-pin{background:url('icons/Map_Marker_Push_Pin_Chartreuse.png') no-repeat;}
+.icon-sys-pkg{background:url('icons/package_system.png') no-repeat;}
+.icon-syt-mgt{background:url('icons/package_systemmgt.png') no-repeat;}
+.icon-smliles{background:url('icons/package_toys.png') no-repeat;}
+.icon-user-password{background:url('icons/preferences_desktop_user_password.png') no-repeat;}
+.icon-mail-account{background:url('icons/preferences_mail_accounts.png') no-repeat;}
+.icon-preference{background:url('icons/preferences_system.png') no-repeat;}
+.icon-network{background:url('icons/preferences_system_network_proxys.png') no-repeat;}
+.icon-sharing{background:url('icons/preferences_system_network_sharing.png') no-repeat;}
+.icon-preference-sys{background:url('icons/preferences_systems.png') no-repeat;}
+.icon-sys-session{background:url('icons/preferences_system_session.png') no-repeat;}
+.icon-sys-session-org{background:url('icons/preferences_system_sessions.png') no-repeat;}
+.icon-win-action{background:url('icons/preferences_system_windows_actions.png') no-repeat;}
+.icon-win-move{background:url('icons/preferences_system_windows_move.png') no-repeat;}
+.icon-sys-window{background:url('icons/preferences_system_windowss.png') no-repeat;}
+.icon-file-ps{background:url('icons/ps_appicon 2_file_document.png') no-repeat;}
+.icon-sys-tray{background:url('icons/ps_system_tray.png') no-repeat;}
+.icon-rules{background:url('icons/rules.png') no-repeat;}
+.icon-share-green{background:url('icons/share.png') no-repeat;}
+.icon-color-panel{background:url('icons/swatches.png') no-repeat;}
+.icon-system{background:url('icons/system.png') no-repeat;}
+.icon-sys-monitor{background:url('icons/system_monitor.png') no-repeat;}
+.icon-sys-preference{background:url('icons/System_Preferences.png') no-repeat;}
+.icon-sys-time{background:url('icons/system_time.png') no-repeat;}
+.icon-config-firewall{background:url('icons/system_config_firewall.png') no-repeat;}
+.icon-kickstart{background:url('icons/system_config_kickstart.png') no-repeat;}
+.icon-password{background:url('icons/system_config_rootpassword.png') no-repeat;}
+.icon-soundcard{background:url('icons/system_config_soundcard.png') no-repeat;}
+.icon-users{background:url('icons/system_config_users.png') no-repeat;}
+.icon-file-manage{background:url('icons/system_file_manager.png') no-repeat;}
+.icon-file-org{background:url('icons/system_file_managerfs.png') no-repeat;}
+.icon-files-mgt{background:url('icons/system_file_managertwo.png') no-repeat;}
+.icon-sys-file{background:url('icons/System_filex.png') no-repeat;}
+.icon-floppy{background:url('icons/system_floppy.png') no-repeat;}
+.icon-folder-x{background:url('icons/SystemFolderIcon.png') no-repeat;}
+.icon-sys-help{background:url('icons/system_help.png') no-repeat;}
+.icon-installer{background:url('icons/system_installer.png') no-repeat;}
+.icon-lock-screen{background:url('icons/system_lock_screen.png') no-repeat;}
+.icon-lock-screen-slk{background:url('icons/system_lock_screenslk.png') no-repeat;}
+.icon-logout{background:url('icons/system_log_out.png') no-repeat;}
+.icon-monitor-arrow{background:url('icons/system_monitor_arrow.png') no-repeat;}
+.icon-monitor-warn{background:url('icons/system_monitor_exclamation.png') no-repeat;}
+.icon-monitor-medium{background:url('icons/system_monitor_medium.png') no-repeat;}
+.icon-monitor-minus{background:url('icons/system_monitor_minus.png') no-repeat;}
+.icon-monitor-network{background:url('icons/system_monitor_network.png') no-repeat;}
+.icon-monitor-pencil{background:url('icons/system_monitor_pencil.png') no-repeat;}
+.icon-monitor-plus{background:url('icons/system_monitor_plus.png') no-repeat;}
+.icon-restart{background:url('icons/system_restart.png') no-repeat;}
+.icon-restart-panel{background:url('icons/system_restart_panel.png') no-repeat;}
+.icon-sys-run{background:url('icons/system_run.png') no-repeat;}
+.icon-sys-search{background:url('icons/system_search.png') no-repeat;}
+.icon-sys-search-org{background:url('icons/system_searchs.png') no-repeat;}
+.icon-sys-setting{background:url('icons/system_set.png') no-repeat;}
+.icon-sys-settings{background:url('icons/systemsettings.png') no-repeat;}
+.icon-sys-shutdown{background:url('icons/system_shutdown.png') no-repeat;}
+.icon-software-installer{background:url('icons/system_software_installer.png') no-repeat;}
+.icon-installer-disc{background:url('icons/system_software_installerdisc.png') no-repeat;}
+.icon-installer-box{background:url('icons/system_software_installers.png') no-repeat;}
+.icon-software-update{background:url('icons/system_software_update.png') no-repeat;}
+.icon-global-update{background:url('icons/system_software_updateblue.png') no-repeat;}
+.icon-software-update-grn{background:url('icons/system_software_updatemore.png') no-repeat;}
+.icon-software-update-gb{background:url('icons/system_software_updates.png') no-repeat;}
+.icon-sys-tray{background:url('icons/systemtray.png') no-repeat;}
+.icon-setting-upgrade{background:url('icons/system_upgrade.png') no-repeat;}
+.icon-users-gr{background:url('icons/system_users.png') no-repeat;}
+.icon-users-clr{background:url('icons/system_usersclors.png') no-repeat;}
+.icon-tor{background:url('icons/tor_icon.png') no-repeat;}
+.icon-transmission{background:url('icons/transmission_tray_icon.png') no-repeat;}
+.icon-scroll{background:url('icons/ui_scroll_pane_icon.png') no-repeat;}
+.icon-update-warn{background:url('icons/update_icon.png') no-repeat;}
+.icon-sys-monitor{background:url('icons/utilities_system_monitor.png') no-repeat;}
+.icon-view-item{background:url('icons/view_icons.png') no-repeat;}
+.icon-process-sys{background:url('icons/view_process_system.png') no-repeat;}
+.icon-sys-exit{background:url('icons/xfce_system_exits.png') no-repeat;}
+.icon-xfce-setting{background:url('icons/xfce_system_settings.png') no-repeat;}
+.icon-picon{background:url('icons/picons28.png') no-repeat;}
+.icon-file-document{background:url('icons/pr_app_icons_file_document.png') no-repeat;}
+.icon-perferences{background:url('icons/preferences.png') no-repeat;}
+.icon-app-default{background:url('icons/preferences_desktop_default_applications.png') no-repeat;}
+.icon-desktop{background:url('icons/preferences_desktop_icons.png') no-repeat;}

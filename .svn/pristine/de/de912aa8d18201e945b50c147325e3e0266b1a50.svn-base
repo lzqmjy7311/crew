@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="参数管理  &gt; 产品管理" navigate="参数管理  &gt; 产品管理" type="call"
+	interface="false" pagesize="20" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.person.monitor.getter.TPlTaskDeskGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="id" desc="" edittype="text" datatype="string" size="32" xpath="/id" />
+		<Field id="warnLevel" desc="预警等级"  edittype="text" status="F" datatype="string" xpath="/warnLevel" />
+		<Field id="loanAcct" desc="贷款账号"  edittype="text" status="F" datatype="string" xpath="/loanAcct" />
+		<Field id="custName" desc="客户名称"  edittype="text" status="F" datatype="string" xpath="/custName" />
+		<Field id="loanVariety" desc="产品名称" status="F"
+			primary="false" method="None" readonly="true" type="String"
+			size="25" edittype="select" translated="CQ:AllProductSelect"
+			fieldmap="productCode=prodCode;productName=prodName"
+			viewField="prodName,prodCode" default="" xpath="/loanVariety"
+			require="false" tip="产品名称" />
+		<Field id="productName" desc="产品名称" status="F"
+			method="com.gbicc.common.CQMethod.getProcuctNameByProductCode"
+			width="" readonly="true" primary="true" type="String" size="150"
+			xpath="/loanVariety" default=""/>
+			
+		<Field id="loanAmt" desc="贷款金额" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" default="0" xpath="/loanAmt"/>
+		<Field id="loanBalance" desc="贷款余额" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" default="0" xpath="/loanBalance"/>
+		<Field id="loanTerm" desc="贷款期限"  edittype="text" status="F" datatype="string" xpath="/loanTerm" />
+		<Field id="rptStatus" desc="状态" multiple="false" init="true"
+            placeholder="占位符" edittype="select" translated="DATA_DIC.102"
+            datatype="string" size="50" xpath="/rptStatus" />
+        <Field id="taskCreatDate" desc="任务创建日" width="150" edittype="text" datatype="timestamp" xpath="/taskCreatDate" />
+		<Field id="taskMatureDate" desc="任务到期日" width="150"  edittype="text" datatype="timestamp" xpath="/taskMatureDate" />
+		<Field id="handler" desc="经办人"  edittype="text" status="F" datatype="string" xpath="/handlerName" />
+		<Field id="ifTimeout" desc="是否超时"  edittype="text" status="F" datatype="string" xpath="/ifTimeout" />
+		<Field id="reportId" desc="报告ID"  edittype="text" status="F" datatype="string" xpath="/reportId" />
+		<Field id="reportUrl" desc="报告模板Url"  edittype="text" status="F" datatype="string" xpath="/reportUrl" />
+		<Field id="taskType" desc="任务类型" edittype="select" translated="DATA_DIC.701" xpath="/taskType" />
+   		<Field id="taskSourceType" desc="任务来源" edittype="select" translated="DATA_DIC.721" xpath="/taskSourceType" />
+    </Fields>
+    
+	<Operations>
+		<Button id="btHandle" name="btHandle" desc="处理" icon="icon-add" updateClass="#" url="" txn="" />
+		<Button id="moreHandle" name="moreHandle" desc="更多" icon="icon-sys-search-org" updateClass="#" url="" txn="" />
+	</Operations>
+</CommQry>

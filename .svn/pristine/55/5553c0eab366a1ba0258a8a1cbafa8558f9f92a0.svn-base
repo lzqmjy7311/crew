@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">  
+<html>  
+<head>  
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=GB18030">
+<title>JVM实时内存</title>  
+<script type="text/javascript" src="../../../templets/ui/js/jquery-1.8.2.js"></script>  
+<script type="text/javascript" src="../../../templets/ui/js/chart/highcharts.js"></script>
+<script type="text/javascript" src='../../../dwr/engine.js'> </script>
+<script type="text/javascript" src='../../../dwr/util.js'> </script>  
+<script type='text/javascript' src='../../../dwr/interface/SysMonitor.js'> </script>		
+<style type="text/css">  
+body,html {  
+    margin: 0;  
+    padding: 0;  
+    width: 100%;  
+    font-size: 14px;  
+    font-family: arial;  
+}  
+  
+#dynamicMemory {  
+    margin: 20px auto 0;  
+    padding: 5px;  
+    width: 80%;  
+    height: 250px;  
+    border: 1px solid #ccc;  
+    border-radius: 10px;  
+}  
+  
+#memory {  
+    padding: 5px;  
+    width: 80%;  
+    margin: 8px auto 0;  
+    line-height: 16px;
+    border: 1px solid #D3A608;
+	background-color: #FDFCC2;
+	font-size: 12px;
+	font-family: "Microsoft YaHei";
+}  
+</style>  
+<script type="text/javascript">  
+    function quickAjaxPost(url, data, async){  
+        var res;  
+        $.ajax({  
+            async : async,  
+            type : 'post',  
+            url : url,  
+            data : data,  
+            success : function(result){  
+                res = result;  
+            },  
+            error : function(result){  
+                res = "timeout";  
+            }  
+        });  
+        return res;  
+    }  
+    $(document).ready(function(){  
+        Highcharts.setOptions({  
+            global: {  
+                useUTC: false  
+            }  
+        });  
+        var chart = new Highcharts.Chart({  
+            chart : {  
+                renderTo : 'dynamicMemory',  
+                type : 'spline',  
+                events : {  
+                    load : function(){  
+                        var series = this.series[0];  
+                        setInterval(function(){  
+                            var x = (new Date()).getTime();  
+                            SysMonitor.getJVMAvailableMem(function(y){  
+                            	$('#available').html(y); 
+                            	series.addPoint([x, parseFloat(y)], true, true); 
+                            	});
+                        }, 3000);  
+                    }  
+                }  
+            },  
+            title : {  
+                text : 'JVM实时内存'  
+            },  
+            xAxis : {  
+                type : 'datetime',  
+                tickPixelInterval: 100,  
+                title : {  
+                    text : '时间'  
+                }  
+            },  
+            yAxis : {  
+                title : {  
+                    text : '可用内存'  
+                }  
+            },  
+            tooltip : {  
+                formatter : function(){  
+                    return '<b>' + this.series.name + '</b><br/>' + Highcharts.dateFormat('%Y-%m-%d %H:%M:%S', this.x) + '<br/>' + Highcharts.numberFormat(this.y, 2);  
+                }  
+            },  
+            legend : {  
+                enabled : false  
+            },  
+            exporting : {  
+                enabled : false  
+            },  
+            series : [{  
+                name : 'jvm可用内存',  
+                data : (function(){  
+                    var data = [];  
+                    var time = (new Date()).getTime();  
+                    for (var i = -15; i <= 0; i++) {  
+                        data.push({  
+                            x: time + i * 1000,  
+                            y: 90  
+                        });  
+                    }  
+                return data;  
+                })()  
+            }]  
+        });  
+    });  
+</script>  
+</head>  
+<body>  
+    <div id="dynamicMemory"></div>
+	<div id="memory">  
+    </div>  
+<script type="text/javascript">
+	SysMonitor.getJVMMemInfo(function(list){
+	   $("#memory").html("<li>最大内存 maxMemory()：………………… " + list[0] + "MB" + "<li>当前已使用内存 totalMemory()：………… " + list[1] + "MB"+"<li>空闲内存 freeMemory()：………………… " + list[2]+"MB"+"<li>实际可用内存 availableMemory：………… <span id='available'>" + list[3] + "</span>MB</span>");
+	});
+</script>
+</body>  
+</html> 

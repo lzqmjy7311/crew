@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.gbicc.person.product.entity">
+	<class name="Product" table="T_PL_PARAM_PRODUCT" lazy="false">
+		<meta attribute="sync-DAO">false</meta>
+	
+		<id name="id" column="id" type="string">
+			<generator class="uuid.hex" />  
+		</id>
+		
+		<property
+			name="prodCode"
+			column="prod_code"
+			type="string"
+			not-null="false"
+			length="50"
+		/>
+		<property
+			name="prodName"
+			column="prod_name"
+			type="string"
+			not-null="false"
+			length="100"
+		/>
+		<property
+			name="prodType"
+			column="prod_type"
+			type="string"
+			not-null="false"
+			length="50"
+		/>
+	</class>
+</hibernate-mapping>

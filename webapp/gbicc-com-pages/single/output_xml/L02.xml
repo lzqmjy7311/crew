@@ -1,0 +1,23 @@
+<CommQry title="TRewL02IndChangeDetailId" navigate="TRewL02IndChangeDetailId" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.L02Getter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="id" desc="ID" edittype="text" datatype="string" xpath="/id" />
+        <Field id="itemName" desc="变更事项" edittype="text" datatype="string"
+        xpath="/itemName" />
+        <Field id="itemChBefore" desc="变更前内容" edittype="text" datatype="string"
+        xpath="/itemChBefore" />
+        <Field id="itemChAfter" desc="变更后内容" edittype="text" datatype="string"
+        xpath="/itemChAfter" />
+        <Field id="itemChDate" desc="变更日期" edittype="text" datatype="date"
+        xpath="/itemChDate" />
+        <Field id="baseId" desc="关联基本信息主键" edittype="text" datatype="string"
+        xpath="/baseId" />
+        <Field id="warnId" desc="预警表ID" edittype="text" datatype="string"
+        xpath="/warnId" />
+        <Field id="dataDt" desc="数据日期" edittype="text" datatype="date"
+        xpath="/dataDt" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

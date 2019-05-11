@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-1-18 10:20:17 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.person.customer.entity.TEdwPlsSocietalRelV" table="T_EDW_PLS_SOCIETAL_REL_V" schema="ECUSER">
+        
+                     
+            <id name="custid" type="java.lang.String" column="CUSTID">
+			<generator class="assigned" />
+		    </id>
+            <property name="keyno" type="string">
+                <column name="KEYNO" length="35" />
+            </property>
+
+            <property name="relasign" type="string">
+                <column name="RELASIGN" length="2" />
+            </property>
+            <property name="familycustid" type="string">
+                <column name="FAMILYCUSTID" length="35" />
+            </property>
+            <property name="familycustname" type="string">
+                <column name="FAMILYCUSTNAME" length="60" />
+            </property>
+            <property name="paperkind" type="string">
+                <column name="PAPERKIND" length="2" />
+            </property>
+            <property name="paperid" type="string">
+                <column name="PAPERID" length="30" />
+            </property>
+            <property name="operid" type="string">
+                <column name="OPERID" length="10" />
+            </property>
+        
+    </class>
+</hibernate-mapping>

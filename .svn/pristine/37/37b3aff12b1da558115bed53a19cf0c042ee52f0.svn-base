@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="流程管理  &gt; 任务重分配" navigate="流程管理  &gt; 任务重分配" type="call"
+	interface="false" pagesize="20" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.bpm.getter.TLoanAccountDutyDistributeGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="id" xpath="/id" desc="" edittype="text" datatype="string" 
+			   readonly="true" />
+		<Field id="loanacnoId" xpath="/loanacno/loanacno" desc="" edittype="text" datatype="string" 
+			   readonly="true" />
+		<Field id="oldCheckUser" xpath="/oldCheckUser" desc="分派前检查人" edittype="text" datatype="string" 
+			   readonly="true" width="250" />
+			   
+		<Field id="oldCheckUserTemp" xpath="/oldCheckUserTemp" desc="分派前检查人" edittype="text" datatype="string" 
+			   readonly="true" width="250" />
+		<Field id="checkUserTemp" xpath="/checkUserTemp" desc="分派后检查人" edittype="text" datatype="string" 
+			   readonly="true" width="250" />	
+			   
+		<Field id="checkUser" desc="分派后检查人" xpath="/checkUser" translated="CQ:subAutoUserAndOrg" 
+			   fieldmap="checkUser=tlrno;checkUserName=tlrName" viewField="tlrName"
+			   edittype="select" dropdowntype="dynamic" primaty="true" init="true" size="10" 
+			   editable="true" width="250" />
+		<Field id="checkUserDesc" xpath="/checkUserDesc" desc="分派后检查人" edittype="text" datatype="string" 
+			   readonly="true" width="250" />
+		<Field id="distDt" xpath="/distDt" desc="分派日期" edittype="date" datatype="date" 
+			   readOnly="true" colspan="4" width="250" />
+        <Field id="remark" desc="备注" require="false" edittype="textarea" datatype="string" 
+			   xpath="/remark" size="500" colspan="4" height="100" width="690" />
+		<Field id="distFlag" desc="任务分派标识" xpath="/distFlag" multiple="false" init="true" require="" readonly="true"
+			   placeholder="占位符" edittype="select" translated="DATA_DIC.112"
+			   datatype="string" size="50" width="250"/>
+		<Field id="distType" xpath="/distType" desc="任务分派类型" edittype="text" datatype="string" 
+			   readonly="true" />
+		<Field id="aplUser" xpath="/aplUser" desc="审核人" edittype="text" datatype="string" 
+			   readonly="true" />
+		<Field id="status" desc="状态" xpath="/status" multiple="false" init="true" require="" readonly="true"
+			   placeholder="占位符" edittype="select" translated="DATA_DIC.110"
+			   datatype="string" size="50" width="250"/>
+		<Field id="distPrinciple" desc="分派原则" xpath="/distPrinciple" multiple="false" init="true" require=""
+			   placeholder="占位符" edittype="select" translated="DATA_DIC.111"
+			   datatype="string" size="50" width="250"/>
+		<Field id="distQuantity" desc="分派笔数" xpath="/distQuantity" edittype="text" datatype="int" 
+			   readonly="true" width="250" />
+		<Field id="operOrgId" xpath="/operOrg/brcode" desc="操作行ID" edittype="text" datatype="string" 
+        	   readonly="true" width="250" />
+        <Field id="operOrgName" xpath="/operOrg/brname" desc="操作行" edittype="text" datatype="string" 
+        	   readonly="true" width="250" />
+		<Field id="operUserId" xpath="/operUser/tlrno" desc="操作人ID" edittype="text" datatype="string" 
+        	   readonly="true" width="250" />
+        <Field id="operUserName" xpath="/operUser/tlrName" desc="操作人" edittype="text" datatype="string" 
+        	   readonly="true" width="250" />
+        	   
+		<Field id="loanacnos" xpath="/loanacnos" desc="" edittype="text" datatype="string" 
+			   readonly="true" />
+		<Field id="orgId" xpath="/orgId" desc="" edittype="text" datatype="string" 
+			   readonly="true" />
+        	   
+      	<Field id="opinion3" desc="审核意见" require="false" edittype="textarea" datatype="string" 
+			   xpath="/opinion3" size="500" colspan="4" height="100" width="690" />
+		<Field id="opinion2" desc="审核意见" require="false" edittype="textarea" datatype="string" 
+			   xpath="/opinion2" size="500" colspan="4" height="100" width="690" />
+    </Fields>
+	<Operations>
+		<Button id="btnSubmit" name="btnSubmit" desc="提交" icon="icon-default"/>
+		<Button id="btnSubmitTrue" name="btnSubmitTrue" desc="提交" icon="icon-default" operation="asysubmit" 
+			updateClass="com.gbicc.bpm.update.LoanAccountDutyDistributeUpdate" url="#" txn="" />
+		<Button id="btnCancel" name="btnCancel" desc="取消" icon="icon-cancel" updateClass="#" url="" txn="" />
+		
+		<Button id="btnMuchSubmit" name="btnMuchSubmit" desc="提交" icon="icon-default"/>
+		<Button id="btnMuchSubmitTrue" name="btnMuchSubmitTrue" desc="提交" icon="icon-default" operation="asysubmit" 
+			updateClass="com.gbicc.bpm.update.LoanAccountDutyDistributeUpdate" />
+		<Button id="btnMuchSubmitAll" name="btnMuchSubmitAll" desc="提交" icon="icon-default"/>
+		<Button id="btnMuchSubmitAllTrue" name="btnMuchSubmitAllTrue" desc="提交" icon="icon-default" operation="asysubmit" 
+			updateClass="com.gbicc.bpm.update.LoanAccountDutyDistributeAllUpdate" />
+		<Button id="btnMuchCancel" name="btnMuchCancel" desc="取消" icon="icon-cancel" updateClass="#" url="" txn="" />
+		
+		<Button id="btnHandle" name="btnHandle" desc="处理" icon="icon-add" />
+		<Button id="btnDel" name="btnDel" desc="删除" icon="icon-delete" operation="asysubmit"
+			updateClass="com.gbicc.bpm.update.LoanAccountDutyDistributeDeleteUpdate" />
+		<Button id="btnRead" name="btnRead" desc="查看" icon="icon-form-search" />
+		<Button id="btnAgree" name="btnAgree" desc="同意" icon="icon-default" operation="asysubmit" 
+			updateClass="com.gbicc.bpm.update.LoanAccountDutyDistributeUpdate"/>
+		<Button id="btnBack" name="btnBack" desc="拒绝" icon="icon-back" operation="asysubmit" 
+			updateClass="com.gbicc.bpm.update.LoanAccountDutyDistributeUpdate"/>
+			
+		<Button id="btnMuchAgree" name="btnMuchAgree" desc="同意" icon="icon-default" operation="asysubmit" 
+			updateClass="com.gbicc.bpm.update.LoanAccountDutyDistributeUpdate"/>
+		<Button id="btnMuchBack" name="btnMuchBack" desc="拒绝" icon="icon-back" operation="asysubmit" 
+			updateClass="com.gbicc.bpm.update.LoanAccountDutyDistributeUpdate"/>
+		<Button id="btnTaskMuchSubmit" name="btnMuchSubmit" desc="提交" icon="icon-default" operation="asysubmit" 
+			updateClass="com.gbicc.bpm.update.LoanAccountDutyDistributeUpdate" />
+		<Button id="btnTaskMuchCancel" name="btnMuchCancel" desc="取消" icon="icon-cancel" updateClass="#" url="" txn="" />
+	</Operations>
+</CommQry>

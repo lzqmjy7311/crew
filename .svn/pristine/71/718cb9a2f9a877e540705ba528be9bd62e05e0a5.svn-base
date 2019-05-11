@@ -1,0 +1,378 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-11-12 20:22:18 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.person.zxrf.entity.TPlZxrfInfo" table="T_PL_ZXRF_INFO" schema="ECUSER">
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="custtype" type="string">
+            <column name="FD_CUSTTYPE" length="25" />
+        </property>
+        <property name="custname" type="string">
+            <column name="FD_CUSTNAME" length="64" />
+        </property>
+        <property name="custcode" type="string">
+            <column name="FD_CUSTCODE" length="50" />
+        </property>
+        <property name="loanAccount" type="string">
+            <column name="FD_LOAN_ACCOUNT" length="50" />
+        </property>
+        <property name="productCode" type="string">
+            <column name="FD_PRODUCT_CODE" length="25" />
+        </property>
+        <property name="loanBalance" type="java.lang.Double">
+            <column name="FD_LOAN_BALANCE" precision="53"  />
+        </property>
+        <property name="industry" type="string">
+            <column name="FD_INDUSTRY" length="64" />
+        </property>
+        <property name="loanAmount" type="java.lang.Double">
+            <column name="FD_LOAN_AMOUNT" precision="53"  />
+        </property>
+        <property name="grantDate" type="date">
+            <column name="FD_GRANT_DATE" length="10" />
+        </property>
+        <property name="overDate" type="date">
+            <column name="FD_OVER_DATE" length="10" />
+        </property>
+        <property name="visitway" type="string">
+            <column name="FD_VISITWAY" length="50" />
+        </property>
+        <property name="visitadd" type="string">
+            <column name="FD_VISITADD" length="200" />
+        </property>
+        <property name="leadInvestigator" type="string">
+            <column name="FD_LEAD_INVESTIGATOR" length="64" />
+        </property>
+        <property name="assInvestigator" type="string">
+            <column name="FD_ASS_INVESTIGATOR" length="64" />
+        </property>
+        <property name="surveydate" type="date">
+            <column name="FD_SURVEYDATE" length="10" />
+        </property>
+        <property name="surveyLength" type="string">
+            <column name="FD_SURVEY_LENGTH" length="25" />
+        </property>
+        <property name="nextSurveydate" type="date">
+            <column name="FD_NEXT_SURVEYDATE" length="10" />
+        </property>
+        <property name="surveyType" type="string">
+            <column name="FD_SURVEY_TYPE" length="50" />
+        </property>
+        <property name="surveyTypeinfo" type="string">
+            <column name="FD_SURVEY_TYPEINFO" length="200" />
+        </property>
+        <property name="surveyAdd" type="string">
+            <column name="FD_SURVEY_ADD" length="50" />
+        </property>
+        <property name="surveyAddinfo" type="string">
+            <column name="FD_SURVEY_ADDINFO" length="200" />
+        </property>
+        <property name="havePer" type="string">
+            <column name="FD_HAVE_PER" length="50" />
+        </property>
+        <property name="havePerSname" type="string">
+            <column name="FD_HAVE_PERNAME" length="200" />
+        </property>
+        <property name="contactDiff" type="string">
+            <column name="FD_CONTACT_DIFF" length="50" />
+        </property>
+        <property name="loanperMeet" type="string">
+            <column name="FD_LOANPER_MEET" length="50" />
+        </property>
+        <property name="loanperCooperate" type="string">
+            <column name="FD_LOANPER_COOPERATE" length="50" />
+        </property>
+        <property name="loanperEnforce" type="string">
+            <column name="FD_LOANPER_ENFORCE" length="50" />
+        </property>
+        <property name="loanperEnforceinfo" type="string">
+            <column name="FD_LOANPER_ENFORCEINFO" length="200" />
+        </property>
+        <property name="perWorkstatus" type="string">
+            <column name="FD_PER_WORKSTATUS" length="50" />
+        </property>
+        <property name="perWorkinfo" type="string">
+            <column name="FD_PER_WORKINFO" length="200" />
+        </property>
+        <property name="perPostchange" type="string">
+            <column name="FD_PER_POSTCHANGE" length="50" />
+        </property>
+        <property name="perPostinfo" type="string">
+            <column name="FD_PER_POSTINFO" length="200" />
+        </property>
+        <property name="perNewjob" type="string">
+            <column name="FD_PER_NEWJOB" length="50" />
+        </property>
+        <property name="perNewjobcount" type="java.lang.Integer">
+            <column name="FD_PER_NEWJOBCOUNT" />
+        </property>
+        <property name="perNewjobSname" type="string">
+            <column name="FD_PER_NEWJOBNAME" length="200" />
+        </property>
+        <property name="perHavework" type="string">
+            <column name="FD_PER_HAVEWORK" length="50" />
+        </property>
+        <property name="perNoworklength" type="java.lang.Integer">
+            <column name="FD_PER_NOWORKLENGTH" />
+        </property>
+        <property name="perOverwages" type="string">
+            <column name="FD_PER_OVERWAGES" length="50" />
+        </property>
+        <property name="perOverlength" type="java.lang.Integer">
+            <column name="FD_PER_OVERLENGTH" />
+        </property>
+        <property name="perComover" type="string">
+            <column name="FD_PER_COMOVER" length="50" />
+        </property>
+        <property name="perOthfamloan" type="string">
+            <column name="FD_PER_OTHFAMLOAN" length="50" />
+        </property>
+        <property name="perFamloancou" type="java.lang.Integer">
+            <column name="FD_PER_FAMLOANCOU" />
+        </property>
+        <property name="perFamamount" type="java.lang.Double">
+            <column name="FD_PER_FAMAMOUNT" precision="53"  />
+        </property>
+        <property name="perFamhasamount" type="java.lang.Double">
+            <column name="FD_PER_FAMHASAMOUNT" precision="53"  />
+        </property>
+        <property name="perFamhasbank" type="string">
+            <column name="FD_PER_FAMHASBANK" length="200" />
+        </property>
+        <property name="perChangeadd" type="string">
+            <column name="FD_PER_CHANGEADD" length="50" />
+        </property>
+        <property name="perChangeaddcount" type="java.lang.Integer">
+            <column name="FD_PER_CHANGEADDCOUNT" />
+        </property>
+        <property name="perChangeaddinfo" type="string">
+            <column name="FD_PER_CHANGEADDINFO" length="200" />
+        </property>
+        <property name="perHaveguarantor" type="string">
+            <column name="FD_PER_HAVEGUARANTOR" length="50" />
+        </property>
+        <property name="perGuarantorcount" type="java.lang.Integer">
+            <column name="FD_PER_GUARANTORCOUNT" />
+        </property>
+        <property name="perGuarantoramt" type="java.lang.Double">
+            <column name="FD_PER_GUARANTORAMT" precision="53"  />
+        </property>
+        <property name="perHralthstatus" type="string">
+            <column name="FD_PER_HRALTHSTATUS" length="50" />
+        </property>
+        <property name="perHralthinfo" type="string">
+            <column name="FD_PER_HRALTHINFO" length="50" />
+        </property>
+        <property name="perFamily" type="string">
+            <column name="FD_PER_FAMILY" length="50" />
+        </property>
+        <property name="perFamilyinfo" type="string">
+            <column name="FD_PER_FAMILYINFO" length="1000" />
+        </property>
+        <property name="perLiveinfo" type="string">
+            <column name="FD_PER_LIVEINFO" length="1000" />
+        </property>
+        <property name="perSpouseinvite" type="string">
+            <column name="FD_PER_SPOUSEINVITE" length="50" />
+        </property>
+        <property name="perSpouseinfo" type="string">
+            <column name="FD_PER_SPOUSEINFO" length="1000" />
+        </property>
+        <property name="perIllegal" type="string">
+            <column name="FD_PER_ILLEGAL" length="50" />
+        </property>
+        <property name="perIllegalamt" type="java.lang.Double">
+            <column name="FD_PER_ILLEGALAMT" precision="53"  />
+        </property>
+        <property name="othinfo" type="string">
+            <column name="FD_OTHINFO" length="2000" />
+        </property>
+        <property name="guaRepdate" type="date">
+            <column name="FD_GUA_REPDATE" length="10" />
+        </property>
+        <property name="guaContactch" type="string">
+            <column name="FD_GUA_CONTACTCH" length="50" />
+        </property>
+        <property name="gua1Comname" type="string">
+            <column name="FD_GUA1_COMNAME" length="200" />
+        </property>
+        <property name="gua1Tel" type="string">
+            <column name="FD_GUA1_TEL" length="50" />
+        </property>
+        <property name="gua1Address" type="string">
+            <column name="FD_GUA1_ADDRESS" length="200" />
+        </property>
+        <property name="gua2Comname" type="string">
+            <column name="FD_GUA2_COMNAME" length="200" />
+        </property>
+        <property name="gua2Tel" type="string">
+            <column name="FD_GUA2_TEL" length="50" />
+        </property>
+        <property name="gua2Address" type="string">
+            <column name="FD_GUA2_ADDRESS" length="200" />
+        </property>
+        <property name="guaName" type="string">
+            <column name="FD_GUA_NAME" length="200" />
+        </property>
+        <property name="guaIdcard" type="string">
+            <column name="FD_GUA_IDCARD" length="50" />
+        </property>
+        <property name="guaTel" type="string">
+            <column name="FD_GUA_TEL" length="50" />
+        </property>
+        <property name="guaAddress" type="string">
+            <column name="FD_GUA_ADDRESS" length="200" />
+        </property>
+        <property name="guaBadaccount" type="string">
+            <column name="FD_GUA_BADACCOUNT" length="50" />
+        </property>
+        <property name="guaOvercount" type="string">
+            <column name="FD_GUA_OVERCOUNT"  length="35" />
+        </property>
+        <property name="guaAddfinace" type="string">
+            <column name="FD_GUA_ADDFINACE" length="200" />
+        </property>
+        <property name="guaAddloanbank" type="string">
+            <column name="FD_GUA_ADDLOANBANK" length="200" />
+        </property>
+        <property name="opsChangeper" type="string">
+            <column name="FD_OPS_CHANGEPER" length="50" />
+        </property>
+        <property name="opsChangecount" type="java.lang.Integer">
+            <column name="FD_OPS_CHANGECOUNT" />
+        </property>
+        <property name="opsAddboss" type="string">
+            <column name="FD_OPS_ADDBOSS" length="50" />
+        </property>
+        <property name="opsAddstockcount" type="java.lang.Integer">
+            <column name="FD_OPS_ADDSTOCKCOUNT" />
+        </property>
+        <property name="opsAddstockinfo" type="string">
+            <column name="FD_OPS_ADDSTOCKINFO" length="1000" />
+        </property>
+        <property name="opsLatelyifo" type="string">
+            <column name="FD_OPS_LATELYIFO" length="1000" />
+        </property>
+        <property name="opsAddstaff" type="string">
+            <column name="FD_OPS_ADDSTAFF" length="50" />
+        </property>
+        <property name="opsAddstaffcount" type="java.lang.Integer">
+            <column name="FD_OPS_ADDSTAFFCOUNT" />
+        </property>
+        <property name="opsStaffcount" type="java.lang.Integer">
+            <column name="FD_OPS_STAFFCOUNT" />
+        </property>
+        <property name="opsStafflesscount" type="java.lang.Integer">
+            <column name="FD_OPS_STAFFLESSCOUNT" />
+        </property>
+        <property name="opsGuacontactinfo" type="string">
+            <column name="FD_OPS_GUACONTACTINFO" length="1000" />
+        </property>
+        <property name="opsMarkinfo" type="string">
+            <column name="FD_OPS_MARKINFO" length="1000" />
+        </property>
+        <property name="opsAddsupp" type="string">
+            <column name="FD_OPS_ADDSUPP" length="50" />
+        </property>
+        <property name="opsAddsuppcount" type="java.lang.Integer">
+            <column name="FD_OPS_ADDSUPPCOUNT" />
+        </property>
+        <property name="opsAdddeal" type="string">
+            <column name="FD_OPS_ADDDEAL" length="50" />
+        </property>
+        <property name="opsAdddealcount" type="java.lang.Integer">
+            <column name="FD_OPS_ADDDEALCOUNT" />
+        </property>
+        <property name="opsOpsamount" type="java.lang.Double">
+            <column name="FD_OPS_OPSAMOUNT" precision="53"  />
+        </property>
+        <property name="opsComstop" type="string">
+            <column name="FD_OPS_COMSTOP" length="50" />
+        </property>
+        <property name="finNeedmoney" type="string">
+            <column name="FD_FIN_NEEDMONEY" length="50" />
+        </property>
+        <property name="finNeedmoneyinfo" type="string">
+            <column name="FD_FIN_NEEDMONEYINFO" length="1000" />
+        </property>
+        <property name="finNeedmoneycount" type="java.lang.Double">
+            <column name="FD_FIN_NEEDMONEYCOUNT" precision="53"  />
+        </property>
+        <property name="finChangebank" type="string">
+            <column name="FD_FIN_CHANGEBANK" length="50" />
+        </property>
+        <property name="finChangebankinfo" type="string">
+            <column name="FD_FIN_CHANGEBANKINFO" length="1000" />
+        </property>
+        <property name="perIllegalinfo" type="string">
+            <column name="FD_PER_ILLEGALINFO" length="1000" />
+        </property>
+        <property name="finOthloan" type="string">
+            <column name="FD_FIN_OTHLOAN" length="50" />
+        </property>
+        <property name="finOthloancount" type="java.lang.Integer">
+            <column name="FD_FIN_OTHLOANCOUNT" />
+        </property>
+        <property name="finOthbankloan" type="string">
+            <column name="FD_FIN_OTHBANKLOAN" length="50" />
+        </property>
+        <property name="finOthbankloaninfo" type="string">
+            <column name="FD_FIN_OTHBANKLOANINFO" length="1000" />
+        </property>
+        <property name="finStock" type="string">
+            <column name="FD_FIN_STOCK" length="50" />
+        </property>
+        <property name="finStockamt" type="java.lang.Double">
+            <column name="FD_FIN_STOCKAMT" precision="53"  />
+        </property>
+        <property name="finMobthreport" type="string">
+            <column name="FD_FIN_MOBTHREPORT" length="50" />
+        </property>
+        <property name="finChargeamt" type="java.lang.Double">
+            <column name="FD_FIN_CHARGEAMT" precision="53"  />
+        </property>
+        <property name="finChargeacomname" type="string">
+            <column name="FD_FIN_CHARGEACOMNAME" length="200" />
+        </property>
+        <property name="finChargeapername" type="string">
+            <column name="FD_FIN_CHARGEAPERNAME" length="200" />
+        </property>
+        <property name="finChargeapertel" type="string">
+            <column name="FD_FIN_CHARGEAPERTEL" length="200" />
+        </property>
+        <property name="taskid" type="string">
+            <column name="FD_TASKID" length="64" />
+        </property>
+        <property name="credited" type="date">
+            <column name="FD_CREDITED" length="10" />
+        </property>
+        <property name="updated" type="date">
+            <column name="FD_UPDATED" length="10" />
+        </property>
+        <property name="operator" type="string">
+            <column name="FD_OPERATOR" length="64" />
+        </property>
+        <property name="operBank" type="string">
+            <column name="FD_OPER_BANK" length="64" />
+        </property>
+        <property name="status" type="string">
+            <column name="FD_STATUS" length="10" />
+        </property>
+        
+        
+        <property name="productType" type="string">
+            <column name="FD_PRODUCT_TYPE" length="35" />
+        </property>
+        <property name="redCount" type="java.lang.Integer">
+            <column name="FD_RED_COUNT" />
+        </property>
+        <property name="yellowCount" type="java.lang.Integer">
+            <column name="FD_YELLOW_COUNT" />
+        </property>
+        
+    </class>
+</hibernate-mapping>

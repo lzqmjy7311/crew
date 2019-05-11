@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="100" async="false" databusid="FIVE" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.fp.demo.getter.SwitchGetter">
+	<Include id="BankParam" />
+	
+	<Fields>
+		<Field id="pan" desc="卡号" edittype="text" datatype="string" xpath="/pan" size="19" />
+		<Field id="purchAmount" desc="交易金额" edittype="text" datatype="currency" xpath="/purchAmount" size="18" scale="2" prefix="$" />
+		<Field id="currency" desc="交易币种"  edittype="select" translated="LIST:CNY,人民币"  datatype="string" xpath="/currency" size="4"  />
+		<Field id="exponent" desc="货币指数"  edittype="text"  datatype="int" xpath="/exponent" size="1"  />
+		<Field id="trsFeeAmount" desc="交易手续费" edittype="text" datatype="currency" xpath="/trsFeeAmount" size="9" scale="4" prefix="$" />
+	</Fields>
+	<Where>
+		<TextBox id="qpan" desc="卡号" datatype="string" index="0"  require="true"/>
+	</Where>
+	<Operations>
+	</Operations>
+</CommQry>

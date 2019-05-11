@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="核算管理" navigate="主页 &gt; 科目管理 &gt; 汇率查询" type="call"
+	interface="true"
+	pagesize="10"
+	async="true"
+	databusid="ACEENTRY_DB"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.ace.web.manager.ExchangeRateManualQueryGetter">
+
+	<Include id="BankParam" />
+	<ResultViewParam>
+		/fpages/management/ftl/exchangeRateManualQuery.ftl
+	</ResultViewParam>
+	<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+	<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+	<Fields>
+
+		<Field id="id" desc="id" status="F" require="" method="none" width="120" xpath="/id"
+			primary="false" type="String" size="" default="" />
+
+		<Field id="curcd" desc="币种" status="F" require="false" method="None" readOnly=""
+			primary="false" type="String" size="" default="CNY" tip="币种" width="120" xpath="/id/curcd"
+			translated="DATA_DIC.202" edittype="select"/>
+
+		<Field id="currrate" desc="汇率" status="F" require="false" width="140" method="None"
+			primary="true" type="String" size="12" datatype="float" scale="6"
+			xpath="/currrate" default="10" edittype="text" readOnly="false"
+			tip="" />
+
+		<Field id="date" desc="汇率日期" status="F" require="" method="none" width="120" xpath="/id/currrateDate"
+			primary="false" type="String" datatype="date" edittype="date" size="" default="" />
+
+
+	</Fields>
+	<Where>
+		<DateTextBox id="bgDate" tablename="ci" fieldname="bgDate"
+			 type="String" dataType="date" operation="EQ" size="10" desc="起始日期" tip="起始日期"
+			 method="" index="6" function="" width="" default="" colspan="1"
+			 scale="" require="false"  readOnly="" rules="" errmsg=""
+			/>
+
+		<Reserve id="and2" value="and"/>
+
+		<DateTextBox id="edDate" tablename="ci" fieldname="edDate"
+			 type="String" dataType="date" operation="EQ" size="10" desc="结束日期" tip="结束日期"
+			 method="" index="7" function="" width="" default="" colspan="1"
+			 scale="" require="false"  readOnly="" rules=""
+			 errmsg=""
+			/>
+
+	</Where>
+	<Operations>
+<!--		<Button id="btNew" name="btNew" desc="新增"-->
+<!--			operation="addRecord" updateClass=""-->
+<!--			url="" show="" group="" txn="" />-->
+<!--		<Button id="btDel" name="btDel" desc="删除"-->
+<!--			operation="delrecord"-->
+<!--			url="" show="" group="" txn="" />-->
+<!--		<Button id="btSave" name="btSave" desc="保存"-->
+<!--			operation="asysubmit" updateClass="com.huateng.ebank.ace.web.manager.ExchangeRateManualInputUpdate"-->
+<!--			url="/fpages_ace/manager/ftl/exchangeRateManualInput.ftl" show="" group="" txn="" />-->
+	</Operations>
+
+</CommQry>

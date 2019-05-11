@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-12-7 14:12:44 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.financial.analysis.entity.TCmFinanceIndexData" table="T_CM_FINANCE_INDEX_DATA" schema="ECUSER">
+	       <id name="indexDataId" type="string">
+	            <column name="INDEX_DATA_ID" length="32" />
+	            <generator class="assigned" />
+	        </id>        	
+          
+            <property name="customerFinanceId" type="string">
+                <column name="CUSTOMER_FINANCE_ID" length="32" />
+            </property>
+            <property name="indexValueDataType" type="big_decimal">
+                <column name="INDEX_VALUE_DATA_TYPE" precision="22" scale="6" />
+            </property>
+            <property name="stringType" type="string">
+                <column name="STRING_TYPE" length="30" />
+            </property>
+            <property name="indexDisp" type="string">
+                <column name="INDEX_DISP" length="100" />
+            </property>
+            <property name="indexCd" type="string">
+                <column name="INDEX_CD" length="32" />
+            </property>
+    </class>
+</hibernate-mapping>

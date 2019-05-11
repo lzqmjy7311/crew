@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+
+<CommQry title="DataDicEntry.title" navigate="数据字典" type="call"
+	interface="false" pagesize="40" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.huateng.ebank.business.buttonmng.getter.PagePathGetter">
+	<Include id="BankParam" />
+
+	<Fields>
+		<Field id="id" desc="节点" method="" xpath="/id" readonly="false"/>
+		<Field id="text" desc="节点名称" method="" xpath="/text" readonly="false"/>
+		<Field id="pid" desc="上级节点" method="" xpath="/pid" readonly="false"/>
+		
+		<Field id="_hasChild_" desc="是否有孩子结点" method="" xpath="/hasChild" readonly="false"/>
+        <Field id="_id" desc="" method="" xpath="/id" />
+        <Field id="_parentId" desc="" method="" xpath="/pid" />
+        
+        <!-- 做为树控件属性 -->
+        <!-- 做为树控件扩展属性 -->
+        <Field id="_icon" desc="" method="" xpath="/iconCls" />
+        <Field id="_text" desc="" method="" xpath="/text" />
+	</Fields>
+	<Where></Where>
+	<Parameters>
+		<Parameter id="value1" desc="id"  value=""  width="" height=""/>
+		<Parameter id="value2" desc="功能名字"  value="" width="" height=""/>
+	</Parameters>
+</CommQry>

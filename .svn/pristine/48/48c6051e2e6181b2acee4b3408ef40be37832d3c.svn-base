@@ -1,0 +1,30 @@
+<CommQry title="TEtlJobDefine" navigate="TEtlJobDefine" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.job.getter.TEtlMonitorLogGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+    	<Field id="monitorLogID" desc="监控日志ID" datatype="string" xpath="/monitorLogID" />
+    	<Field id="hostName" desc="IP地址" datatype="string" xpath="/hostName" />
+    	<Field id="etlID" desc="etlID" datatype="string" xpath="/etlID" />
+    	
+    	<Field id="etlName"  desc="etl名称" datatype="string" xpath="/etlName" />
+    
+    	<Field id="dateTime"  desc="日志时间" datatype="string" xpath="/dateTime" />
+    	
+    	<Field id="result"  desc="解决标识" datatype="string" xpath="/result" />
+    	
+    	<Field id="businessDate"  desc="业务时间"  datatype="string"  xpath="/businessDate" />
+    
+    </Fields>
+    <Where>
+    	<TextBox id="monitorLogID" desc="监控日志ID" edittype="text"   datatype="string"  />
+		<TextBox id="hostName" desc="IP地址" edittype="text"    datatype="string"  />
+    	<TextBox id="etlID" desc="etlID" edittype="text"  datatype="string"  />
+    	<TextBox id="etlName"  desc="etl名称"  edittype="text"  datatype="string"  />
+		<Option id="result"  desc="解决标识"  edittype="select"  translated="LIST:0,失败;1,成功"  datatype="string"  />
+    	<TextBox id="startTime"  desc="开始时间"  edittype="text" datatype="date"  />
+    	<TextBox id="endTime"   desc="结束时间"  edittype="text" datatype="date"  />
+    </Where>
+    <Operations>
+    </Operations>
+</CommQry>

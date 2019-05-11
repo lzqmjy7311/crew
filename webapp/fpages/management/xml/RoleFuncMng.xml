@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+	<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+	<!--
+		title:标题 navigate:导航信息 type:方式（sql|call)
+		interface:是否显示输入条件页面(true|false) databusid:数据总线编号
+		transdataactionurl:数据整理URL async:异步提交标志 pagesize:页面显示记录数(缺省为10)
+	-->
+<CommQry title="企业岗位权限管理" navigate="主页 &gt; 权限管理 &gt; 岗位管理 &gt; 权限设置"
+	type="call" interface="false" pagesize="200" async="true" databusid="DEMO"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.management.getter.RoleFuncRelMngGetter">
+	<Include id="BankParam" />
+	<ResultViewParam>
+		/fpages/custadmin/ftl/ebankCustRoleMng.ftl
+	</ResultViewParam>
+	<Fields>
+		<!-- 岗位信息-->
+		<Field id="id" desc="岗位编号" status="F" require="false" edittype="text"
+			datatype="string" method="None" readonly="true" primary="true" type="岗位ID"
+			size="8" default="" xpath="/id" tip="岗位ID" />
+		<Field id="roleName" desc="岗位名称" status="F" require="true" edittype="text"
+			datatype="string" method="None" readonly="true" primary="true" type="岗位名字"
+			size="30" default="" xpath="/roleName" tip="岗位名字" />
+			<Field id="status" desc="有效/无效" status="F" require="true" edittype="text"
+			datatype="string" method="None" readonly="true" primary="true" type="有效/无效"
+			size="6" default="" xpath="/status" tip="有效/无效" />
+		<Field id="roleList" desc="岗位权限" status="F" require="false" edittype="text"
+			datatype="string" method="None" readonly="true" primary="true" type="岗位名字"
+			size="1000" default="" xpath="/roleList" tip="岗位名字" />
+		<Field id="fucUrl" desc="首页路径" type="String" size="100" xpath="/fucUrl" width="300" />
+		<Field id="roleSysType" desc="角色类型" edittype="select" translated="DATA_DIC.901"
+            datatype="string"  size="50" xpath="/roleSysType" />
+	</Fields>
+	<Where>
+	</Where>
+	<Operations>
+	    <!-- save:com.huateng.ebank.business.management.updater.CustRoleSaveUpdater-->
+	   <Button id="btSave" name="btSave" desc="保存"
+			operation="" updateClass=""
+			url="#"  show="" group="" txn="" />
+		<Button id="btSelectAll" name="btSelectAll" desc="全选"
+			operation="" updateClass="" url="#"  show="" group="" txn="" />
+		<Button id="btUnSelectAll" name="btUnSelectAll" desc="全不选"
+			operation="" updateClass="" url="#"  show="" group="" txn="" />
+		<Button id="btOpen" name="btOpen" desc="展开/合并"
+			operation="" updateClass="" url="#"  show="" group="" txn="" />
+	    <Button id="btCancel" name="btCancel" desc="返回" operation="submitform"
+			url="/fpages/regonization/ftl/RoleMngEntry.ftl" txn="" />
+
+	</Operations>
+</CommQry>

@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-3-3 15:11:20 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.view.externaldata.entity.TCmOutCheckV" table="T_CM_OUT_CHECK_V" schema="ECUSER">
+           	<id name="id" type="string">
+                <column name="FD_ID" length="21" />
+            </id>
+            <property name="customerNum" type="string">
+                <column name="CUSTOMER_NUM" length="21" />
+            </property>
+            <property name="indexName" type="string">
+                <column name="INDEX_NAME" length="12" />
+            </property>
+            <property name="xyVal" type="string">
+                <column name="XY_VAL" length="100" />
+            </property>
+            <property name="gsVal" type="string">
+                <column name="GS_VAL" length="50" />
+            </property>
+            <property name="zxVal" type="string">
+                <column name="ZX_VAL" length="100" />
+            </property>
+            <property name="yzVal" type="string">
+                <column name="YZ_VAL" length="1" />
+            </property>
+    </class>
+</hibernate-mapping>

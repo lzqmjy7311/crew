@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-2-25 17:00:15 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.financial.analysis.entity.TOutCouJudgmentDetail" table="T_DATA_JUDGE_V" schema="ECUSER">
+        <comment>开庭公告</comment>
+            <id name="id" type="string">
+                <column name="FD_RUN_NUM" length="50" />
+            </id>
+            <property name="companyAnme" type="string">
+                <column name="CHINESE_NAME" length="50" />
+            </property>
+            <property name="caseType" type="string">
+                <column name="FD_TYPE" length="50" />
+            </property>
+            <property name="writNo" type="string">
+                <column name="FD_USAGE_ID" length="50" />
+            </property>
+            <property name="writTitle" type="string">
+                <column name="FD_NAME" length="50" />
+            </property>
+            <property name="judgCourt" type="string">
+                <column name="FD_COURT_NAME" length="50" />
+            </property>
+            <property name="judgDate" type="timestamp">
+                <column name="FD_SENTENCE_TIME" length="26" />
+            </property>
+            <property name="content" type="clob">
+                <column name="FD_CONTENT" />
+            </property>
+            <property name="sourceLink" type="string">
+                <column name="FD_URI" length="100" />
+            </property>
+            <property name="relaId" type="string">
+                <column name="FD_JBK_ID" length="50" />
+            </property>
+            <property name="rowDate" type="date">
+                <column name="FD_CREATETIME" length="10" />
+            </property>
+    </class>
+</hibernate-mapping>

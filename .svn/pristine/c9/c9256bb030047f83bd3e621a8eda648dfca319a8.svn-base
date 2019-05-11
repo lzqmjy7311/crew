@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="股东信息" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.company.view.getter.TbCsmFstStockStatusGetter">
+	<Include id="BankParam" />
+	
+	<Fields>
+		<Field id="stockholderName" desc="姓名" xpath="/stockholderName"/>
+		<Field id="certificateTypeCd" desc="证件类型" xpath="/certificateTypeCd"/>
+		<Field id="certificateNum" desc="证件号码" xpath="/certificateNum"/>
+		<Field id="holdingStockRate" desc="持股比例" datatype="string" xpath="/holdingStockRate" />
+        <Field id="totalInvest" desc="投资金额" edittype="textarea" xpath="/totalInvest"/>
+        <Field id="customerNum" desc="客户编号"  xpath="/customerNum"/> 
+        <Field id="investmentway" desc="投资方式"  xpath="/investmentway"/> 
+        
+	</Fields>
+	
+	<Operations>
+	<Button id="btHandle1" name="btHandle" desc="处理" icon="icon-add" updateClass="#" url="" txn="" />
+	</Operations>
+</CommQry>

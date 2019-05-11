@@ -1,0 +1,204 @@
+<CommQry title="TRewJ18CorporationId" navigate="TRewJ18CorporationId" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.J18Getter">
+    <Include id="BankParam" />
+    <Fields>
+    	<Field id="customerNum" desc="对公客户编号" edittype="text" datatype="string"
+        xpath="/customerNum" />
+        <Field id="chineseName" desc="中文名称" edittype="text" datatype="string"
+        xpath="/chineseName" />
+        <Field id="englishName" desc="英文名称" edittype="text" datatype="string"
+        xpath="/englishName" />
+        <Field id="businessLicenseNum" desc="营业执照号码" edittype="text" datatype="string"
+        xpath="/businessLicenseNum" />
+        <Field id="orgnNum" desc="组织机构代码" edittype="text" datatype="string"
+        xpath="/orgnNum" />
+        <Field id="pbcIndustryCd" desc="人行行业类型代码" edittype="text" datatype="string"
+        xpath="/pbcIndustryCd" />
+        <Field id="loanCardNum" desc="贷款卡号码" edittype="text" datatype="string"
+        xpath="/loanCardNum" />
+        <Field id="corporativeCertification" desc="法人证书号" edittype="text" datatype="string"
+        xpath="/corporativeCertification" />
+        <Field id="nationalTaxRegistrationNum" desc="税务登记号（国税）" edittype="text" datatype="string"
+        xpath="/nationalTaxRegistrationNum" />
+        <Field id="foundedDate" desc="成立日期" edittype="text" datatype="string"
+        xpath="/foundedDate" />
+        <Field id="registeredCapital" desc="注册资本" edittype="text" datatype="currency"
+        xpath="/registeredCapital" />
+        <Field id="customerSizeCd" desc="客户规模代码" edittype="select" init="true" multiple="false"  translated="DATA_DIC.2010" datatype="string"
+        xpath="/customerSizeCd" />
+        <Field id="listedCompanyInd" desc="是否上市公司" edittype="select" translated="LIST:0,否;1,是"  datatype="string"
+        xpath="/listedCompanyInd" />
+        <Field id="groupCustomerInd" desc="是否属于集团客户" edittype="select" translated="LIST:0,否;1,是" datatype="string"
+        xpath="/groupCustomerInd" />
+        <Field id="basicAcctBank" desc="基本帐户开户行" edittype="text" datatype="string"
+        xpath="/basicAcctBank" />
+        <Field id="openDate" desc="开户日期" edittype="text" datatype="string"
+        xpath="/openDate" />
+        <Field id="ourBankNplRecord" desc="我行不良记录情况" edittype="text" datatype="string"
+        xpath="/ourBankNplRecord" />
+        <Field id="debtTransferStockCustInd" desc="是否总行准入类客户" edittype="select" translated="LIST:0,否;1,是" datatype="string"
+        xpath="/debtTransferStockCustInd" />
+        <Field id="creditCustomerInd" desc="是否授信客户" edittype="select" translated="LIST:0,否;1,是" datatype="string"
+        xpath="/creditCustomerInd" />
+        <Field id="industryLevelTwoCd" desc="行业类型代码" edittype="text" datatype="string"
+        xpath="/industryLevelTwoCd" />
+        <Field id="customerStatusCd" desc="客户状态代码" edittype="select" init="true" multiple="false" translated="DATA_DIC.2011" datatype="string"
+        xpath="/customerStatusCd" />
+        <Field id="crbCustomerSizeCd" desc="农商行规模代码" edittype="select" translated="DATA_DIC.2013" init="true" datatype="string"
+        xpath="/crbCustomerSizeCd" />
+        <Field id="corpImpLevel" desc="企业重要性等级" edittype="text" datatype="string"
+        xpath="/corpImpLevel" />
+        <Field id="myStockholderInd" desc="是否我行股东" edittype="select" translated="LIST:0,否;1,是" datatype="string"
+        xpath="/myStockholderInd" />
+        <Field id="economyType" desc="经济类型" edittype="select" translated="DATA_DIC.2009" init="true" datatype="string"
+        xpath="/economyType" />
+        <Field id="corpNature" desc="企业性质" edittype="select" init="true" multiple="false" translated="DATA_DIC.2014" datatype="string"
+        xpath="/corpNature" />
+        <Field id="profAssureCorp" desc="专业担保公司标志" edittype="select" init="true" translated="DATA_DIC.2015" multiple="false" datatype="string"
+        xpath="/profAssureCorp" />
+        <Field id="farmingIndustrySign" desc="农业产业化标志" edittype="select" translated="DATA_DIC.2016" multiple="false" init="true" datatype="string"
+        xpath="/farmingIndustrySign" />
+        <Field id="imexManaInd" desc="是否有自营进出口权" edittype="select" translated="LIST:0,否;1,是" datatype="string"
+        xpath="/imexManaInd" />
+        <Field id="loanRelationDate" desc="与我行建立信贷关系时间" edittype="text" datatype="string"
+        xpath="/loanRelationDate" />
+        <Field id="cooperationBankInd" desc="是否我行关联方" edittype="select" translated="LIST:0,否;1,是" datatype="string"
+        xpath="/cooperationBankInd" />
+        <Field id="guaCustomerInd" desc="是否担保客户" edittype="select" translated="LIST:0,否;1,是" datatype="string"
+        xpath="/guaCustomerInd" />
+        <Field id="bizLicExpirationDate" desc="营业执照到期日" edittype="text" datatype="string"
+        xpath="/bizLicExpirationDate" />
+        <Field id="industryNum" desc="行业许可证编号" edittype="text" datatype="string"
+        xpath="/industryNum" />
+        <Field id="financeLicenceNum" desc="金融许可证编号" edittype="text" datatype="string"
+        xpath="/financeLicenceNum" />
+        <Field id="corScientificInd" desc="是否为科技型企业" edittype="select" translated="LIST:1,是;0,否" init="true" datatype="string"
+        xpath="/corScientificInd" />
+        <Field id="corShutInd" desc="是否已为关停企业" edittype="select" translated="LIST:0,否;1,是" datatype="string"
+        xpath="/corShutInd" />
+        <Field id="govFinanceFlat" desc="政府融资平台" edittype="text" datatype="string"
+        xpath="/govFinanceFlat" />
+	<!--<Field id="aa" desc="是否小额贷款公司" edittype="text" datatype="string" xpath="/aa" />-->
+        <Field id="pawnLoanInd" desc="是否典当机构贷款" edittype="select" translated="LIST:0,否;1,是" datatype="string"
+        xpath="/pawnLoanInd" />
+        <Field id="govFinanceType" desc="地方政府融资平台类型" edittype="select" translated="DATA_DIC.2041" init="true" datatype="string"
+        xpath="/govFinanceType" />
+        <Field id="cooperateType" desc="公司类型" edittype="select" init="true" translated="DATA_DIC.2049" datatype="string"
+        xpath="/cooperateType" />
+        <Field id="smallCorporationInd" desc="微小企业标示" edittype="select" translated="LIST:0,否;1,是" datatype="string"
+        xpath="/smallCorporationInd" />
+    	 <Field id="loanRelationDate" desc="首建信贷关系日" edittype="text" datatype="string"
+        xpath="/loanRelationDate" />
+    	<!--
+        <Field id="partyId" desc="" edittype="text" datatype="string"
+        xpath="/partyId" />
+        <Field id="customerTypeCd" desc="" edittype="text" datatype="string"
+        xpath="/customerTypeCd" />
+        <Field id="chineseShortName" desc="" edittype="text" datatype="string"
+        xpath="/chineseShortName" />
+        <Field id="englishShortName" desc="" edittype="text" datatype="string"
+        xpath="/englishShortName" />
+        <Field id="businessLicenseCheckDate" desc="" edittype="text" datatype="string"
+        xpath="/businessLicenseCheckDate" />
+        <Field id="loanCardCheckDate" desc="" edittype="text" datatype="string"
+        xpath="/loanCardCheckDate" />
+        <Field id="localTaxRegistrationCum" desc="" edittype="text" datatype="string"
+        xpath="/localTaxRegistrationCum" />
+        <Field id="ownershipTypeCd" desc="" edittype="text" datatype="string"
+        xpath="/ownershipTypeCd" />
+        <Field id="orgTypeCd" desc="" edittype="text" datatype="string"
+        xpath="/orgTypeCd" />
+        <Field id="deadlineFinancialYear" desc="" edittype="text" datatype="string"
+        xpath="/deadlineFinancialYear" />
+        <Field id="registerCapitalCurrencyCd" desc="" edittype="text" datatype="string"
+        xpath="/registerCapitalCurrencyCd" />
+        <Field id="launchCurrencyCd" desc="" edittype="text" datatype="string"
+        xpath="/launchCurrencyCd" />
+        <Field id="launchAmt" desc="" edittype="text" datatype="string"
+        xpath="/launchAmt" />
+        <Field id="regCapitalReceivedRate" desc="" edittype="text" datatype="string"
+        xpath="/regCapitalReceivedRate" />
+        <Field id="supervisingDept" desc="" edittype="text" datatype="string"
+        xpath="/supervisingDept" />
+        <Field id="customerRunStatusCd" desc="" edittype="text" datatype="string"
+        xpath="/customerRunStatusCd" />
+        <Field id="customerCreditPolicyCd" desc="" edittype="text" datatype="string"
+        xpath="/customerCreditPolicyCd" />
+        <Field id="financialIncomeSourceCd" desc="" edittype="text" datatype="string"
+        xpath="/financialIncomeSourceCd" />
+        <Field id="staffNum" desc="" edittype="text" datatype="int" xpath="/staffNum" />
+        <Field id="basicAcctNum" desc="" edittype="text" datatype="string"
+        xpath="/basicAcctNum" />
+        <Field id="firstLoanDate" desc="" edittype="text" datatype="string"
+        xpath="/firstLoanDate" />
+        <Field id="otherBankNplRecord" desc="" edittype="text" datatype="string"
+        xpath="/otherBankNplRecord" />
+        <Field id="ourBankDepositRevenueSettl" desc="" edittype="text" datatype="string"
+        xpath="/ourBankDepositRevenueSettl" />
+        <Field id="basicCustomerInd" desc="" edittype="text" datatype="string"
+        xpath="/basicCustomerInd" />
+        <Field id="badAssetsPeeledCustomerInd" desc="" edittype="text" datatype="string"
+        xpath="/badAssetsPeeledCustomerInd" />
+        <Field id="badAssetsPeeledBank" desc="" edittype="text" datatype="string"
+        xpath="/badAssetsPeeledBank" />
+        <Field id="ccbEstablishmentInd" desc="" edittype="text" datatype="string"
+        xpath="/ccbEstablishmentInd" />
+        <Field id="legalCorporateRepresentative" desc="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2"
+        default="" xpath="/legalCorporateRepresentative" />
+        <Field id="transferedRWDeptInd" desc="" edittype="text" datatype="string"
+        xpath="/transferedRWDeptInd" />
+        <Field id="customerMaintStatCd" desc="" edittype="text" datatype="string"
+        xpath="/customerMaintStatCd" />
+        <Field id="industryLevelOneCd" desc="" edittype="text" datatype="string"
+        xpath="/industryLevelOneCd" />
+        <Field id="lastMaintainDate" desc="" edittype="text" datatype="string"
+        xpath="/lastMaintainDate" />
+        <Field id="maintainUserNum" desc="" edittype="text" datatype="string"
+        xpath="/maintainUserNum" />
+        <Field id="districtCd" desc="" edittype="text" datatype="string"
+        xpath="/districtCd" />
+        <Field id="deptCd" desc="" edittype="text" datatype="string" xpath="/deptCd" />
+        <Field id="transferStatusCd" desc="" edittype="text" datatype="string"
+        xpath="/transferStatusCd" />
+        <Field id="industryDesc" desc="" edittype="text" datatype="string"
+        xpath="/industryDesc" />
+        <Field id="cooperateInd" desc="" edittype="text" datatype="string"
+        xpath="/cooperateInd" />
+        <Field id="bpBusinessNum" desc="" edittype="text" datatype="string"
+        xpath="/bpBusinessNum" />
+        <Field id="collectivityTypeCd" desc="" edittype="text" datatype="string"
+        xpath="/collectivityTypeCd" />
+        <Field id="loanCardPwd" desc="" edittype="text" datatype="string"
+        xpath="/loanCardPwd" />
+        <Field id="registeredTypeCd" desc="" edittype="text" datatype="string"
+        xpath="/registeredTypeCd" />
+        <Field id="capitalLandCurrencyCd" desc="" edittype="text" datatype="string"
+        xpath="/capitalLandCurrencyCd" />
+        <Field id="mybankStockRate" desc="" edittype="text" datatype="string"
+        xpath="/mybankStockRate" />
+        <Field id="busCheckYear" desc="" edittype="text" datatype="string"
+        xpath="/busCheckYear" />
+        <Field id="financingBuyInd" desc="" edittype="text" datatype="string"
+        xpath="/financingBuyInd" />
+        <Field id="newEvalResult" desc="" edittype="text" datatype="string"
+        xpath="/newEvalResult" />
+        <Field id="holdingEnterpriseType" desc="" edittype="text" datatype="string"
+        xpath="/holdingEnterpriseType" />
+        <Field id="newCustomerInd" desc="" edittype="text" datatype="string"
+        xpath="/newCustomerInd" />
+        <Field id="directorUnitInd" desc="" edittype="text" datatype="string"
+        xpath="/directorUnitInd" />
+        <Field id="farmerMarktLinkInd" desc="" edittype="text" datatype="string"
+        xpath="/farmerMarktLinkInd" />
+        <Field id="joinSmesInd" desc="" edittype="text" datatype="string"
+        xpath="/joinSmesInd" />
+        <Field id="steelTradeInd" desc="" edittype="text" datatype="string"
+        xpath="/steelTradeInd" />
+        <Field id="warnId" desc="预警表ID" edittype="text" datatype="string"
+        xpath="/warnId" />
+        <Field id="dataDt" desc="数据日期" edittype="text" datatype="date"
+        xpath="/dataDt" />-->
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

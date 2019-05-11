@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-11-13 15:16:28 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.person.eliminate.entity.TPlRuleEliminateDtl" table="T_PL_RULE_ELIMINATE_DTL" schema="ECUSER">
+        <comment>规则排除明细表</comment>
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="ruleElimId" type="string">
+            <column name="FD_RULE_ELIM_ID" length="32" />
+        </property>
+        <property name="ruleId" type="string">
+            <column name="FD_RULE_ID" length="50" />
+        </property>
+        <property name="flag" type="string">
+            <column name="FD_FLAG" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

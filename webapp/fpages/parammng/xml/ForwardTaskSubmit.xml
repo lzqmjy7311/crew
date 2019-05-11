@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	  navigate:导航信息
+	  type:方式（sql|call)
+	  interface:是否显示输入条件页面(true|false)
+	  databusid:数据总线编号
+	  transdataactionurl:数据整理URL
+	  async:异步提交标志
+	  pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry
+title="任务移交"
+navigate="主页 &gt; 系统管理 &gt; 任务移交"
+type="call"
+interface="false"
+pagesize="20"
+async="true"
+databusid=""
+getterclassname=""
+transdataactionurl="/trans/TransDataAction.do"
+>
+	<Include id="BankParam"/>
+
+	<Fields>
+
+		<Field id="forwardTlrno" desc="移交操作员" readonly="false" type="String" require="true"
+			colspan="4" size="8" edittype="text" datatype="string"  xpath="/userName"/>
+
+		<Field id="forwardType" desc="移交方式" readonly="false" type="String" require=""
+			colspan="4" size="20" edittype="select" datatype="string"  translated="LIST:1,单个任务;0,所有任务"
+			xpath=""/>
+	</Fields>
+
+	<Where>
+
+	</Where>
+	<Operations>
+
+		<Button id="btForwardTask" desc="移交工作" operation="asysubmit"
+		updateclass="com.huateng.ebank.business.parammng.update.ForwardTaskUpdate"
+		url="/common/success.jsp" show="" group="" txn=""/>
+	</Operations>
+
+
+</CommQry>

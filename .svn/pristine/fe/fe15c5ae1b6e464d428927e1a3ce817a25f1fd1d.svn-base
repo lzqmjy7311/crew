@@ -1,0 +1,47 @@
+package com.gbicc.person.monitor.service;
+
+import com.gbicc.person.monitor.dao.TPlYjReportDAO;
+import com.gbicc.person.monitor.entity.TPlYjReport;
+import com.huateng.ebank.framework.exceptions.CommonException;
+import com.huateng.ebank.framework.util.ApplicationContextUtils;
+
+/**
+ * 
+ * @author xudongdong
+ *
+ * 版本：2015年11月7日 下午12:10:53
+ * 类说明：预警处置service
+ */
+public class TPlYjReportService {
+	protected TPlYjReportService() {
+	}
+
+	public synchronized static TPlYjReportService getInstance() {
+		return (TPlYjReportService) ApplicationContextUtils
+				.getBean(TPlYjReportService.class.getName());
+	}
+	
+	private TPlYjReportDAO getDao(){
+		return (TPlYjReportDAO) ApplicationContextUtils.getBean("TPlYjReportDAO");
+	}
+	
+	public TPlYjReport get(String id) throws CommonException{
+		TPlYjReportDAO dao=getDao();
+		return dao.getHibernateTemplate().get(TPlYjReport.class,id);
+	}
+	
+	public void save(TPlYjReport ajReport) throws CommonException{
+		TPlYjReportDAO dao=getDao();
+		dao.getHibernateTemplate().save(ajReport);
+	}
+	
+	public void update(TPlYjReport ajReport)throws CommonException{
+		TPlYjReportDAO dao=getDao();
+		dao.getHibernateTemplate().update(ajReport);
+	}
+	
+	public void delete(TPlYjReport ajReport)throws CommonException{
+		TPlYjReportDAO dao=getDao();
+		dao.getHibernateTemplate().delete(ajReport);
+	}
+}

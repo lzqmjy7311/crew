@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-11-27 11:18:29 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.warnDisposal.entity.TCmWarnTask" table="T_CM_WARN_TASK" schema="ECUSER">
+        <comment>客户预警任务信息表</comment>
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="warnLevel" type="string">
+            <column name="FD_WARN_LEVEL" length="50" />
+        </property>
+        <property name="warnCunt" type="java.lang.Integer">
+            <column name="FD_WARN_CUNT" />
+        </property>
+        <property name="status" type="string">
+            <column name="FD_STATUS" length="50" />
+        </property>
+        <property name="taskType" type="string">
+            <column name="TASK_TYPE" length="50" />
+        </property>
+        <property name="taskCreatDate" type="date">
+            <column name="TASK_CREAT_DATE" length="10" />
+        </property>
+        <property name="taskMatureDate" type="date">
+            <column name="TASK_MATURE_DATE" length="10" />
+        </property>
+        <property name="taskOverran" type="string">
+            <column name="TASK_OVERRAN" length="50" />
+        </property>
+        <property name="inspeMethod" type="string">
+            <column name="FD_INSPE_METHOD" length="100" />
+        </property>
+        <property name="inspeDate" type="date">
+            <column name="FD_INSPE_DATE" length="10" />
+        </property>
+        <property name="inspeInfo" type="string">
+            <column name="FD_INSPE_INFO" length="1000" />
+        </property>
+        <property name="inspeCitDate" type="date">
+            <column name="FD_INSPE_CIT_DATE" length="10" />
+        </property>
+        <property name="disposalDate" type="date">
+            <column name="FD_DISPOSAL_DATE" length="10" />
+        </property>
+        <property name="disposalInfo" type="string">
+            <column name="FD_DISPOSAL_INFO" length="1000" />
+        </property>
+        <property name="dispoCitDate" type="date">
+            <column name="FD_DISPO_CIT_DATE" length="10" />
+        </property>
+        <property name="taskCode" type="string">
+            <column name="TASK_CODE" length="50" />
+        </property>
+        <property name="contMeasure" type="string">
+            <column name="FD_CONTORL_MEASURE" length="200" />
+        </property>
+        <property name="contOth" type="string">
+            <column name="FD_CONTORL_OTH" length="1000" />
+        </property>
+        <property name="contDesc" type="string">
+            <column name="FD_CONTORL_DESC" length="2000" />
+        </property>
+        <property name="isContinue" type="string">
+            <column name="FD_IS_CONTINUE" length="25" />
+        </property>
+                <property name="startType" type="string">
+            <column name="FD_START_TYPE" length="25" />
+        </property>
+        <property name="disposalEndDate" type="date">
+            <column name="FD_DISPOSAL_ENDDATE" length="10" />
+        </property>
+        <property name="overDesc" type="string">
+            <column name="FD_OVER_DESC" length="2000" />
+        </property>
+        <property name="overRc" type="string">
+            <column name="FD_OVER_RC" length="25" />
+        </property>
+        <property name="processLevel" type="string">
+            <column name="FD_PROCESS_LEVEL" length="50" />
+        </property>
+        <property name="isSubmitNext" type="string">
+            <column name="FD_SUBMIT_NEXT" length="50" />
+        </property>
+        <property name="isOver" type="string">
+            <column name="FD_IS_OVER" length="25" />
+        </property>
+        <property name="nextStartTaskDate" type="date">
+            <column name="FD_NEXTSTART_DATE" length="10" />
+        </property>
+        <property name="inspeEndDate" type="date">
+            <column name="FD_INSPE_END_DATE" length="10" />
+        </property>
+        <property name="creditDate" type="date">
+            <column name="FD_CREDIT_DATE" length="10" />
+        </property>
+        <many-to-one 
+			name="tCmCustomer" 
+			column="FD_CUSTOMER_ID"
+            class="com.gbicc.company.warnDisposal.entity.TCmCustomer" 
+			fetch="join"
+			lazy="false"
+			not-null="false"
+	    />
+	    <many-to-one 
+			name="inspectorsEntity" 
+			column="FD_INSPECTORS"
+            class="com.huateng.ebank.entity.data.mng.TlrInfo" 
+			fetch="join"
+			lazy="false"
+			not-null="false"
+	    />
+	    <many-to-one 
+			name="disposalPerEntity" 
+			column="FD_DISPOSAL_PER"
+            class="com.huateng.ebank.entity.data.mng.TlrInfo" 
+			fetch="join"
+			lazy="false"
+			not-null="false"
+	    />
+	    
+    </class>
+</hibernate-mapping>

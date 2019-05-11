@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "/WEB-INF/dtd/spring-beans-2.0.dtd">
+<beans>
+	<!--
+	<bean id="defaultDataSource"
+		class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>java:comp/env/jdbc/sems</value>
+		</property>
+	</bean>
+	-->
+	<bean id="placeholderConfiger" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>classpath:/init.properties</value>
+		</property>
+	</bean>
+	<bean id="defaultDataSource"
+		class="com.huateng.ebank.framework.proxool.FPProxoolDataSource">
+		<property name="driver">
+			<value>${datasource.driverClassName}</value>
+		</property>
+        <property name="driverUrl">
+			<value>${datasource.url}</value>
+		</property>
+		<property name="user">
+			<value>${datasource.user}</value>
+		</property>
+		<property name="password">
+			<value>${datasource.password}</value>
+		</property>
+		<property name="passwdEncrypted">
+			<value>${datasource.passwdEncrypted}</value>
+		</property>
+		<!-- 最少保持的空闲连接数 （默认5个）-->
+   		<property name="prototypeCount">
+   			<value>${datasource.prototypeCount}</value>
+   		</property>
+		<!-- 设置连接池内生成的最大连接数/在连接池中所有数据库连接的最大数目（默认15个） -->
+	    <property name="maximumConnectionCount">
+	    	<value>${datasource.maxPoolSize}</value>
+	    </property>
+		<!-- 设置连接池内生成的最小连接数/在连接池中可用的数据库连接的最少数目（默认5个）-->
+	    <property name="minimumConnectionCount">
+	    	<value>${datasource.minPoolSize}</value>
+	    </property>
+		<!-- 在Consonl中显示sql -->
+	    <property name="trace">
+	    	<value>${datasource.trace}</value>
+	    </property>
+	    <property name="maximumActiveTime">
+	    	<value>${datasource.maximumActiveTime}</value>
+	    </property>
+	    <property name="verbose">
+	    	<value>${datasource.verbose}</value>
+	    </property>
+	</bean>
+
+	<bean id="entityInterceptor"
+		class="com.huateng.ebank.framework.util.HibernateInterceptor">
+	</bean>
+	<!-- Choose the dialect that matches your "dataSource" definition -->
+	<bean id="mySessionFactory"
+		class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+		<!--  -->
+		<property name="entityInterceptor">
+			<ref local="entityInterceptor" />
+		</property>
+		<property name="dataSource">
+			<ref bean="defaultDataSource" />
+		</property>
+		<property name="mappingLocations">
+			<list>
+				<value>classpath:/orm/hbm/*.xml</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">
+					${datasource.hibernate.dialect}
+				</prop>
+				<prop key="hibernate.show_sql">${datasource.hibernate.show_sql}</prop>
+				<prop key="hibernate.cache.use_second_level_cache">${datasource.hibernate.cache.use_second_level_cache}</prop>
+				<prop key="hibernate.cache.use_query_cache">${datasource.hibernate.cache.use_query_cache}</prop>
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+				<prop key="hibernate.query.factory_class">org.hibernate.hql.ast.ASTQueryTranslatorFactory</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->
+	<bean id="myTransactionManager"
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory">
+			<ref local="mySessionFactory" />
+		</property>
+	</bean>
+	<!-- Operation Caller Target的配置 -->
+	<bean id="CallerTarget"
+		class="com.huateng.ebank.framework.operation.OPCaller">
+	</bean>
+	<!--Operation Caller的配置, 使用transaction对Call方法来进行保护。-->
+	<bean id="operationCaller" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="myTransactionManager" />
+		</property>
+		<property name="target">
+			<ref bean="CallerTarget" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="doLog">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="doTlsrno">PROPAGATION_REQUIRED,-Exception</prop>
+				<prop key="callOperation">PROPAGATION_REQUIRED,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!--Operation Caller的配置, 使用transaction对Call方法来进行保护。-->
+	<bean id="singleCaller" class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="myTransactionManager" />
+		</property>
+		<property name="target">
+			<bean id="SingleCallerTarget"
+				class="com.huateng.ebank.framework.operation.SingleOPCaller">
+		</bean>
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="callOperation">PROPAGATION_REQUIRES_NEW,-Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+
+	<!-- SWT  TransactionInterceptor-->
+	<bean id="TransactionInterceptor"
+		class="org.springframework.transaction.interceptor.TransactionInterceptor">
+		<property name="transactionManager">
+			<ref bean="myTransactionManager" />
+		</property>
+		<property name="transactionAttributeSource">
+			<value>
+				com.huateng.ebank.monitor.scheduler.service.ITaskJobScheduler.*=PROPAGATION_REQUIRED,-Exception
+			</value>
+		</property>
+	</bean>
+	
+</beans>

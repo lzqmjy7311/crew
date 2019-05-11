@@ -1,0 +1,436 @@
+package com.gbicc.highChar.service;
+
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import java.util.List;
+import java.util.Map;
+
+import net.sf.json.JSONObject;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+
+
+import com.gbicc.util.DateUtils;
+import com.huateng.ebank.framework.exceptions.CommonException;
+import com.huateng.ebank.framework.util.ApplicationContextUtils;
+import com.gbicc.highChar.entity.Highcharts;
+
+
+public class GetHighCharDataService {
+	protected GetHighCharDataService() {
+	}
+
+	public synchronized static GetHighCharDataService getInstance() {
+		return (GetHighCharDataService) ApplicationContextUtils
+				.getBean(GetHighCharDataService.class.getSimpleName());
+	}
+	
+	private static String COURSE="course";
+	private static String INDEX="index";
+	
+
+	public JSONObject getPlusCharts(String caliber,String[] projects,String customerNum,String type,String startDate,String backQs,String checkBox,String checkBox1) throws CommonException { 
+		int size=projects.length;
+        List<Highcharts> dataList = new ArrayList<Highcharts>();  //highchar  数据集合
+        
+        Map<String, Object> projectNames = new HashMap<String,Object>(); 
+
+        List<ArrayList<BigDecimal>> projectList=new ArrayList<ArrayList<BigDecimal>>();
+        int jflag=0;
+        if(caliber.equals("3")&&type.equals(INDEX)){
+        	jflag=1;
+        }
+        if(checkBox!=null&&checkBox1!=null&&(checkBox.equals("1")&&!(checkBox1.equals("1")))||(checkBox!=null&&checkBox1!=null&&!(checkBox.equals("1"))&&checkBox1.equals("1"))){
+        	for(int i=0;i<(size*(2+jflag));i++){
+            	ArrayList<BigDecimal> project1= new ArrayList<BigDecimal>();
+            	Highcharts highCharts=new Highcharts();
+            	projectList.add(project1);
+            	dataList.add(highCharts);
+            }
+        }else if(checkBox!=null&&checkBox1!=null&&(checkBox.equals("1")&&(checkBox1.equals("1")))){
+            for(int i=0;i<(size*(3+jflag));i++){
+            	ArrayList<BigDecimal> project1= new ArrayList<BigDecimal>();
+            	Highcharts highCharts=new Highcharts();
+            	projectList.add(project1);
+            	dataList.add(highCharts);
+            }
+        }else{
+            for(int i=0;i<(size*(1+jflag));i++){
+            	ArrayList<BigDecimal> project1= new ArrayList<BigDecimal>();
+            	Highcharts highCharts=new Highcharts();
+            	projectList.add(project1);
+            	dataList.add(highCharts);
+            }
+        }
+             
+
+        List<String> xdataList = new ArrayList<String>();  //x轴数据 list
+
+        JSONObject jsonData = new JSONObject();  
+        
+
+   
+      String sixDeadlines= getSixDeadline(startDate,backQs,caliber,customerNum);
+        
+      
+      StringBuffer sql=null;
+      StringBuffer sqlp=null;
+      String tablename="";
+      String insertStr="";
+      String insertStr1="";
+		      if(type.equals(INDEX)){//指标统计
+		          if(caliber.equals("1")){
+		        	  tablename="FIN_INDEX_V_Y";
+		        	  insertStr="行内均值(年)";
+		        	  insertStr1="上市公司均值(年)";
+		          }else if(caliber.equals("3")){
+		        	  tablename="FIN_INDEX_V_Q";
+		        	  insertStr="行内均值(季)";
+		          }else if(caliber.equals("4")){
+		        	  tablename="FIN_INDEX_V_M";
+		        	  insertStr="行内均值(月)";
+		          }
+		          if(caliber.equals("3")){
+		        	  sql=new StringBuffer(" SELECT DISTINCT T1.DEADLINE AS DEADLINE,  T1.INDEX_VALUE_DATA_TYPE AS VAL1,t1.QYVALUE as QYVALUE1,t1.FD_AVERAGEVALUE as averagevalue1,t1.FD_VALUE as CPAVERAGEVALUE1" );
+			          for(int i=2;i<=size;i++){
+				        	 sql.append("  , T"+i+".INDEX_VALUE_DATA_TYPE AS VAL"+i ); 
+				        	 sql.append("  , T"+i+".QYVALUE AS QYVAL"+i ); 
+				        	 sql.append("  , T"+i+".FD_AVERAGEVALUE AS averagevalue"+i ); 
+				        	 sql.append("  , T"+i+".FD_VALUE AS CPAVERAGEVALUE1"+i );
+				          }
+		          }else{
+		        	  sql=new StringBuffer(" SELECT DISTINCT T1.DEADLINE AS DEADLINE,  T1.INDEX_VALUE_DATA_TYPE AS VAL1,t1.FD_AVERAGEVALUE as averagevalue1,t1.FD_VALUE as CPAVERAGEVALUE1" );
+			          for(int i=2;i<=size;i++){
+				        	 sql.append("  , T"+i+".INDEX_VALUE_DATA_TYPE AS VAL"+i ); 
+				        	 sql.append("  , T"+i+".FD_AVERAGEVALUE AS averagevalue"+i ); 
+				        	 sql.append("  , T"+i+".FD_VALUE AS CPAVERAGEVALUE1"+i );
+				          }
+		          }		    	   
+		          sql.append("  from  "+tablename+" T1 ");
+		          for(int i=2;i<=size;i++){
+		        	     sql.append(" LEFT JOIN    "+tablename+" T"+i ); 
+			        	 sql.append(" ON  T1.DEADLINE=T"+i+".DEADLINE"  ); 
+			        	 sql.append(" AND  T1.CUSTOMER_NUM=T"+i+".CUSTOMER_NUM"  ); 
+			        	 sql.append(" AND  T1.REPORT_TYPE=T"+i+".REPORT_TYPE"  ); 
+			        	 sql.append(" AND  T"+i+".INDEX_CD='"+projects[i-1]+"'"  ); 
+		        	  
+		          }
+		          sql.append("  WHERE T1.INDEX_CD='"+projects[0]+"' ");		       
+		          sql.append("   AND T1.CUSTOMER_NUM='"+customerNum+"'");
+		          sql.append("   AND T1.REPORT_TYPE='"+caliber+"'");
+		          sql.append("  AND T1.DEADLINE IN("+sixDeadlines+")");
+		          sql.append("  ORDER BY T1.DEADLINE");
+		          
+		          //组织查询 统计项目sql
+		          sqlp=new StringBuffer("SELECT T1.INDEX_NAME AS NA1 ");
+		          for(int i=2;i<=size;i++){
+		        	  sqlp.append("  , T"+i+".INDEX_NAME  AS NA"+i );
+		           }
+			          sqlp.append(",'行内均值' AS NA"+(size+1));  
+
+
+		          sqlp.append("  from  T_CM_FINANCE_INDEX_CD T1 ");
+		          for(int i=2;i<=size;i++){
+		        	  sqlp.append("  , T_CM_FINANCE_INDEX_CD T"+i ); 
+		        	  
+		          }
+		          
+		          sqlp.append("  WHERE T1.INDEX_CD='"+projects[0]+"' ");
+		          for(int i=2;i<=size;i++){
+		        	  sqlp.append(" AND  T"+i+".INDEX_CD='"+projects[i-1]+"'"  );     	  
+		          }
+		          
+		 }else if(type.equals(COURSE)){//财报科目统计
+		      if(caliber.equals("1")){
+		    	  tablename="FIN_COURSE_V_Y";
+		    	  insertStr="行内均值(年)";
+		      }else if(caliber.equals("3")){
+		    	  tablename="FIN_COURSE_V_Q";
+		    	  insertStr="行内均值(季)";
+		      }else if(caliber.equals("4")){
+		    	  tablename="FIN_COURSE_V_M";
+		    	  insertStr="行内均值(月)";
+		      }
+		   	   sql=new StringBuffer(" SELECT DISTINCT T1.DEADLINE AS DEADLINE,  T1.PROJECT_VALUE AS VAL1,t1.FD_VALUE as averagevalue1" );
+		       for(int i=2;i<=size;i++){
+		     	 sql.append("  , T"+i+".PROJECT_VALUE AS VAL"+i ); 
+		     	 sql.append("  , T"+i+".FD_VALUE AS averagevalue"+i ); 
+		       }
+		       sql.append("  from  "+tablename+" T1 ");
+		       for(int i=2;i<=size;i++){
+		     	  sql.append("  LEFT JOIN  "+tablename+" T"+i ); 
+		     	  sql.append(" ON  T1.DEADLINE=T"+i+".DEADLINE"  ); 
+		     	  sql.append(" AND  T1.CUSTOMER_NUM=T"+i+".CUSTOMER_NUM"  ); 
+		     	  sql.append(" AND  T"+i+".PROJECT_CD='"+projects[i-1]+"'"  );
+		     	  sql.append(" AND  T1.CALIBER_CD=T"+i+".CALIBER_CD"  ); 
+		     	  
+		       }
+		       sql.append("  WHERE T1.PROJECT_CD='"+projects[0]+"' ");		     
+		       sql.append("   AND T1.CUSTOMER_NUM='"+customerNum+"'");
+		       sql.append("  AND T1.DEADLINE IN("+sixDeadlines+")");
+		       sql.append("   AND T1.CALIBER_CD='"+caliber+"'");
+		       sql.append("  ORDER BY T1.DEADLINE");
+		       
+		       //组织查询 统计项目sql
+		       sqlp=new StringBuffer("SELECT T1.PROJECT_NAME AS NA1 ");
+		       for(int i=2;i<=size;i++){
+		     	  sqlp.append("  , T"+i+".PROJECT_NAME  AS NA"+i );          	  
+		        }
+		       sqlp.append("  from  T_CM_FINANCE_STATEMENT_CODE T1 ");
+		       for(int i=2;i<=size;i++){
+		     	  sqlp.append("  , T_CM_FINANCE_STATEMENT_CODE T"+i ); 
+		     	  
+		       }
+		       sqlp.append("  WHERE T1.PROJECT_CD='"+projects[0]+"' ");
+		       for(int i=2;i<=size;i++){
+		     	  sqlp.append(" AND  T"+i+".PROJECT_CD='"+projects[i-1]+"'"  );     	  
+		       }
+		       
+	}
+      
+      JdbcTemplate jdbcTemplate=(JdbcTemplate) ApplicationContextUtils.getBean("JdbcTemplate");
+      List<Map<String,Object>> list=jdbcTemplate.queryForList(sql.toString());
+      if(caliber.equals("3")&&type.equals(INDEX)){
+    	  for(Map<String,Object> en:list){			   
+			   String val=null;//字段别名
+	            xdataList.add((String)en.get("DEADLINE")); 
+	            for(int i=0;i<size;i++){//行转列 
+	            	val="VAL"+(i+1);
+	            	projectList.get(i).add((BigDecimal) en.get(val));
+	            }
+	            for(int i=0;i<size;i++){//行转列 
+	            	val="QYVALUE"+(i+1);
+	            	projectList.get(i+size).add((BigDecimal) en.get(val));
+	            }
+	            if(checkBox!=null&&checkBox1!=null&&checkBox.equals("1")&&!checkBox1.equals("1")){
+		            for(int i=0;i<size;i++){//行转列 
+		            	val="AVERAGEVALUE"+(i+1);
+		            	BigDecimal bd=null; 
+		            	if(en.get(val)==null){
+		            		
+		            	}else{
+		            		bd=BigDecimal.valueOf((Double) en.get(val));
+		            	}
+		            	projectList.get(i+size*2).add(bd);
+		            }
+	            }
+	            if(checkBox!=null&&checkBox1!=null&&!checkBox.equals("1")&&checkBox1.equals("1")){
+		            for(int i=0;i<size;i++){//行转列 
+		            	val="CPAVERAGEVALUE"+(i+1);
+		            	BigDecimal bd=null; 
+		            	if(en.get(val)==null){
+		            		
+		            	}else{
+		            		bd=(BigDecimal)en.get(val);
+		            	}
+		            	projectList.get(i+size*2).add(bd);
+		            }
+	            }
+	            if(checkBox!=null&&checkBox1!=null&&checkBox1.equals("1")&&checkBox.equals("1")){
+		            for(int i=0;i<size;i++){//行转列 
+		            	val="AVERAGEVALUE"+(i+1);
+		            	BigDecimal bd=null; 
+		            	if(en.get(val)==null){
+		            		
+		            	}else{
+		            		bd=BigDecimal.valueOf((Double) en.get(val));
+		            	}
+		            	projectList.get(i+size*2).add(bd);
+		            }
+		            for(int i=0;i<size;i++){//行转列 
+		            	val="CPAVERAGEVALUE"+(i+1);
+		            	projectList.get(i+size*3).add((BigDecimal) en.get(val));
+		            }
+	            }
+		 }
+	//统计项目名称
+	     List<Map<String,Object>> pnList=jdbcTemplate.queryForList(sqlp.toString());
+	     for(Map<String,Object> en:pnList){
+	   	  projectNames=en;
+	     }		
+	//设置higheCharList  每个highchar对象的 data 及name 
+	     String na="";
+	     for(int j=0;j<size;j++){
+	   	  na="NA"+(j+1);
+	   	  dataList.get(j).setData(projectList.get(j));
+	   	  dataList.get(j).setName((String)projectNames.get(na)+"季报");	  
+	     }
+	     for(int j=0;j<size;j++){
+		   	  na="NA"+(j+1);
+		   	  dataList.get(j+size).setData(projectList.get(j+size));
+		   	  dataList.get(j+size).setName((String)projectNames.get(na)+"月报季度化/月报年化");	  
+		}
+	     if(checkBox!=null&&checkBox1!=null&&checkBox.equals("1")&&!(checkBox1.equals("1"))){
+	         for(int j=0;j<size;j++){
+	       	  na="NA"+(j+1);
+	       	  dataList.get(j+size*2).setData(projectList.get(j+size*2));
+	       	  dataList.get(j+size*2).setName((String)projectNames.get(na)+insertStr);	  
+	         }	
+	     }
+	     if(checkBox!=null&&checkBox1!=null&&(!checkBox.equals("1")&&(checkBox1.equals("1")))){
+	         for(int j=0;j<size;j++){
+	       	  na="NA"+(j+1);
+	       	  dataList.get(j+size*2).setData(projectList.get(j+size*2));
+	       	  dataList.get(j+size*2).setName((String)projectNames.get(na)+insertStr1);	  
+	         }	
+	     }
+	     if(checkBox!=null&&checkBox1!=null&&(checkBox.equals("1")&&(checkBox1.equals("1")))){
+	         for(int j=0;j<size;j++){
+	       	  na="NA"+(j+1);
+	       	  dataList.get(j+size*2).setData(projectList.get(j+size*2));
+	       	  dataList.get(j+size*2).setName((String)projectNames.get(na)+insertStr);	  
+	         }	
+	         for(int j=0;j<size;j++){
+	       	  na="NA"+(j+1);
+	       	  dataList.get(j+size*3).setData(projectList.get(j+size*3));
+	       	  dataList.get(j+size*3).setName((String)projectNames.get(na)+insertStr1);	  
+	         }	
+	     }
+      }else{
+    	  for(Map<String,Object> en:list){			   
+			   String val=null;//字段别名
+	            xdataList.add((String)en.get("DEADLINE")); 
+	            for(int i=0;i<size;i++){//行转列 
+	            	val="VAL"+(i+1);
+	            	projectList.get(i).add((BigDecimal) en.get(val));
+	            }
+	            if(checkBox!=null&&checkBox1!=null&&checkBox.equals("1")&&!checkBox1.equals("1")){
+		            for(int i=0;i<size;i++){//行转列 
+		            	val="AVERAGEVALUE"+(i+1);
+		            	BigDecimal bd=null; 
+		            	if(en.get(val)==null){
+		            		
+		            	}else{
+		            		bd=BigDecimal.valueOf((Double) en.get(val));
+		            	}
+		            	projectList.get(i+size).add(bd);
+		            }
+	            }
+	            if(checkBox!=null&&checkBox1!=null&&!checkBox.equals("1")&&checkBox1.equals("1")){
+		            for(int i=0;i<size;i++){//行转列 
+		            	val="CPAVERAGEVALUE"+(i+1);
+		            	BigDecimal bd=null; 
+		            	if(en.get(val)==null){
+		            		
+		            	}else{
+		            		bd=(BigDecimal)en.get(val);
+		            	}
+		            	projectList.get(i+size).add(bd);
+		            }
+	            }
+	            if(checkBox!=null&&checkBox1!=null&&checkBox1.equals("1")&&checkBox.equals("1")){
+		            for(int i=0;i<size;i++){//行转列 
+		            	val="AVERAGEVALUE"+(i+1);
+		            	BigDecimal bd=null; 
+		            	if(en.get(val)==null){
+		            		
+		            	}else{
+		            		bd=BigDecimal.valueOf((Double) en.get(val));
+		            	}
+		            	projectList.get(i+size).add(bd);
+		            }
+		            for(int i=0;i<size;i++){//行转列 
+		            	val="CPAVERAGEVALUE"+(i+1);
+		            	projectList.get(i+size*2).add((BigDecimal) en.get(val));
+		            }
+	            }
+		 }
+//统计项目名称
+     List<Map<String,Object>> pnList=jdbcTemplate.queryForList(sqlp.toString());
+     for(Map<String,Object> en:pnList){
+   	  projectNames=en;
+   	  
+     }		
+//设置higheCharList  每个highchar对象的 data 及name 
+     String na="";
+     for(int j=0;j<size;j++){
+   	  na="NA"+(j+1);
+   	  dataList.get(j).setData(projectList.get(j));
+   	  dataList.get(j).setName((String)projectNames.get(na));	  
+     }
+     if(checkBox!=null&&checkBox1!=null&&checkBox.equals("1")&&!(checkBox1.equals("1"))){
+         for(int j=0;j<size;j++){
+       	  na="NA"+(j+1);
+       	  dataList.get(j+size).setData(projectList.get(j+size));
+       	  dataList.get(j+size).setName((String)projectNames.get(na)+insertStr);	  
+         }	
+     }
+     if(checkBox!=null&&checkBox1!=null&&(!checkBox.equals("1")&&(checkBox1.equals("1")))){
+         for(int j=0;j<size;j++){
+       	  na="NA"+(j+1);
+       	  dataList.get(j+size).setData(projectList.get(j+size));
+       	  dataList.get(j+size).setName((String)projectNames.get(na)+insertStr1);	  
+         }	
+     }
+     if(checkBox!=null&&checkBox1!=null&&(checkBox.equals("1")&&(checkBox1.equals("1")))){
+         for(int j=0;j<size;j++){
+       	  na="NA"+(j+1);
+       	  dataList.get(j+size).setData(projectList.get(j+size));
+       	  dataList.get(j+size).setName((String)projectNames.get(na)+insertStr);	  
+         }	
+         for(int j=0;j<size;j++){
+       	  na="NA"+(j+1);
+       	  dataList.get(j+size*2).setData(projectList.get(j+size*2));
+       	  dataList.get(j+size*2).setName((String)projectNames.get(na)+insertStr1);	  
+         }	
+     }
+      }
+		 
+	      
+	  //封装highchar json        
+	        jsonData.put("data", dataList);  
+	        jsonData.put("listXdata", xdataList);  
+	          
+	        return jsonData;    
+	}
+	
+	/**
+	 * 默认返回 制定口径下 当前前六期日期 字符串集合  如：年报（201212,201312,201412）
+	 * @param caliber
+	 * @param customerNum
+	 * @return
+	 */
+	public String getSixDeadline(String startdate,String backQs, String caliber,String customerNum){
+		String sixDeadLine=""; //默认当前前六期 截止日期
+		Boolean isTrue=false;
+		DateUtils dataUtils=new DateUtils();
+		int repnos=6;//默认期数
+		if(backQs!=null&&!"".equals(backQs)){//回溯期数不为空
+			repnos=Integer.valueOf(backQs);
+		}
+	
+		String firstDeadLines=dataUtils.getDeadlineByStratDate(startdate,caliber, 1);
+//		String sql="select count(0) from T_CM_CUSTOMER_FINANCE   where  CUSTOMER_NUM='"+customerNum+"'  and FINANCE_STATEMENT_DEADLINE ='"+firstDeadLines+"' ";
+//		ROOTDAO rootDao=ROOTDAOUtils.getROOTDAO();
+//		try {
+//			Integer count=0;
+//			Iterator<Integer> it= rootDao.queryBySQL(sql);
+//			while(it.hasNext()){
+//				count= (Integer)it.next();
+//			}
+//			if(count>0){
+//				isTrue=true;
+//			}
+//		} catch (CommonException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		
+		if(isTrue){
+			for(int i=1;i<=repnos;i++){
+				sixDeadLine+=dataUtils.getDeadlineByStratDate(startdate,caliber, i)+",";
+			}
+		}else{
+			for(int i=2;i<=repnos+1;i++){
+				sixDeadLine+=dataUtils.getDeadlineByStratDate(startdate,caliber, i)+",";
+			}
+		}
+		sixDeadLine=sixDeadLine.substring(0, sixDeadLine.length()-1);
+		return sixDeadLine;
+		
+	}
+		
+}

@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.huateng.ebank.entity.data.mng">
+	<class
+		name="UserOrgRoleRel"
+		table="T_USER_ORGROLE_REL"
+		lazy="false">
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="id"
+			type="string"
+			column="F_ID">
+ 			<generator class="uuid.hex" />
+		</id>
+		
+		<property
+			name="userId"
+			column="F_USER_ID"
+			type="string"
+			not-null="false"/>
+		<property
+			name="roleId"
+			column="F_ROLE_ID"
+			type="string"
+			not-null="false"/>
+		<property
+			name="orgId"
+			column="F_ORG_ID"
+			type="string"
+			not-null="false"
+			length="8"/>
+	</class>
+</hibernate-mapping>

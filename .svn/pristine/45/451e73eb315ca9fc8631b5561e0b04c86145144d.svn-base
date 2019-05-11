@@ -1,0 +1,24 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+<@CommonQueryMacro.page title="单规则预警处置-案例管理列表">
+<table>
+	<@CommonQueryMacro.CommonQuery id="SingleRulCases" init="true" submitMode="current">
+		<@CommonQueryMacro.DataTable id="SingleRulCasesTable" readonly="true" paginationbar="btHandle,moreHandle" 
+		fieldStr="id,casesCode,casesName,casesStatus,createDt,warnCount,inveCount,alreInveCount" width="100%" hasFrame="true"/>
+	</@CommonQueryMacro.CommonQuery>
+</table>
+<script>
+	function SingleRulCasesTable_onDbClick(){
+		btHandle_onClick();
+	}
+	function moreHandle_onClick(){
+		parent.parent.parent.GTab.addTab('SingleRulCases',"案例归档任务",'/gbicc-com-pages/single/ftl/single_rul_cases_task.ftl?flag=desk');
+	}
+	function btHandle_onClick(){
+		var businessId=SingleRulCases_dataset.getValue("id");
+		if(businessId!=null || businessId!=""){
+			parent.parent.parent.GTab.addTab('SingleRulCases',"案例归档任务",'/gbicc-com-pages/single/ftl/single_rul_cases_handle.ftl?businessId='+businessId);
+		}
+	}
+</script>
+</@CommonQueryMacro.page>

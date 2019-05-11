@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-11-20 11:33:26 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.person.creditMemo.entity.TPlCreditMemo" table="T_PL_CREDIT_MEMO" schema="ECUSER">
+        <comment>信贷备忘录表</comment>
+        <id name="id" column="fd_id" type="string" >
+		<generator class="uuid.hex" />  
+		</id>
+        <property name="startDate" type="date">
+            <column name="FD_START_DATE" length="10" />
+        </property>
+        <property name="custcode" type="string">
+            <column name="FD_CUSTCODE" length="50" />
+        </property>
+        <property name="custname" type="string">
+            <column name="FD_CUSTNAME" length="64" />
+        </property>
+        <property name="loanAccount" type="string">
+            <column name="FD_LOAN_ACCOUNT" length="50" />
+        </property>
+        <property name="reprotCode" type="string">
+            <column name="FD_REPROT_CODE" length="50" />
+        </property>
+        <property name="startRemark" type="string">
+            <column name="FD_START_REMARK" length="2000" />
+        </property>
+        <property name="controlmeasure" type="string">
+            <column name="FD_CONTROLMEASURE" length="200" />
+        </property>
+        <property name="operator" type="string">
+            <column name="FD_OPERATOR" length="64" />
+        </property>
+        <property name="operBank" type="string">
+            <column name="FD_OPER_BANK" length="64" />
+        </property>
+        <property name="startType" type="string">
+            <column name="FD_START_TYPE" length="64" />
+        </property>
+        <property name="businessId" type="string">
+            <column name="FD_BUSINESS_ID" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

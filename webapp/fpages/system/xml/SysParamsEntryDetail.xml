@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	txnlogflag:true记录日志
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="SysParamsEntryDetail.title" navigate="系统维护  &gt; 系统参数设置" type="call"
+	interface="true" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.huateng.ebank.business.approve.getter.SysParamsEntryDetailGetter">
+	<Include id="BankParam" />
+	<!-- 
+	<PageQryExp type="CSV" limit="true" encoding="GBK" url="/trans/qryExp.do" directory="F:/upload"/>
+	-->
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+
+		
+		<Field id="old_paramgroupId" desc="SysParamsEntry.field.paramgroupId" datatype="string" size="10" readonly="true" xpath="old_sysparams/id/paramgroupId"  />
+		<Field id="paramgroupId" desc="SysParamsEntry.field.paramgroupId"  datatype="string"  size="10" readonly="true" xpath="sysparams/id/paramgroupId"  />
+		
+		
+		<Field id="old_paramId" desc="SysParamsEntry.field.paramId" edittype="text" status="F" datatype="string" size="10" readonly="true" xpath="old_sysparams/id/paramId" valueProtected="true"/>
+		<Field id="paramId" desc="SysParamsEntry.field.paramId" edittype="text" status="F" datatype="string" size="10" readonly="true" xpath="sysparams/id/paramId" valueProtected="true"/>
+		
+		
+		<Field id="old_paramName" desc="SysParamsEntry.field.paramName" edittype="text" status="F" datatype="string" size="50" readonly="true" xpath="old_sysparams/paramName" />
+		<Field id="paramName" desc="SysParamsEntry.field.paramName" edittype="text" status="F" datatype="string" size="50" readonly="true" xpath="sysparams/paramName" />
+		
+		
+		<Field id="old_paramVal" desc="SysParamsEntry.field.paramVal" edittype="text" datatype="string" status="F" size="100" readonly="true" xpath="old_sysparams/paramVal" />
+		<Field id="paramVal" desc="SysParamsEntry.field.paramVal" edittype="text" datatype="string" status="F" size="100" readonly="true" xpath="sysparams/paramVal" />
+		
+		
+		<Field id="old_memo" desc="SysParamsEntry.field.memo" edittype="text" datatype="string" size="200" readonly="true" xpath="old_sysparams/memo" />
+		<Field id="memo" desc="SysParamsEntry.field.memo" edittype="text" datatype="string" size="200" readonly="true" xpath="sysparams/memo" />	
+	
+    </Fields>
+    
+<Operations>
+   <Button id="btClose" name="btClose" desc="返回" operation="syncsubmit"
+			url="#" txn="" />    
+    </Operations>
+
+	
+</CommQry>

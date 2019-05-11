@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="csmCreditGroup" navigate="csmCreditGroup" type="call" interface="false" pagesize="10" databusid="" async="true" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.company.view.riskoverview.entity.TCmRiskViewRulWarningGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<Field id="creditGroupMemberId" desc="授信集团成员信息" require="" edittype="text" datatype="string" method="None"   status="F"   
+			xpath="/creditGroupMemberId" />
+		<Field id="creditGroupLevel" desc="集团成员等级" require="" edittype="text" datatype="string" method="None"   status="F"   
+			xpath="/creditGroupLevel" />
+		<Field id="customerNum" desc="客户编号" require="" edittype="text" datatype="string" method="None"   status="F"   
+			xpath="/customerNum" />
+		<Field id="creditGroupParticipantId" desc="授信集团_参与人ID" require="" edittype="text" datatype="string" method="None"   status="F"   
+			xpath="/creditGroupParticipantId" />
+		<Field id="creditGroupRelInstruct" desc="授信集团关系说明" require="" edittype="text" datatype="string" method="None"   status="F"   
+			xpath="/creditGroupRelInstruct" />
+		<Field id="creditGroupRelationStatus" desc="授信集团关系状态" require="" edittype="text" datatype="string" method="None"   status="F"   
+			xpath="/creditGroupRelationStatus" />
+		<Field id="creditGroupSuperiorId" desc="上级成员" require="" edittype="text" datatype="string" method="None"   status="F"   
+			xpath="/creditGroupSuperiorId" />
+		<Field id="effectiveFlag" desc="是否生效标志" require="" edittype="text" datatype="string" method="None"   status="F"   
+			xpath="/effectiveFlag" />
+		<Field id="groupInfoNum" desc="集团编号" require="" edittype="text" datatype="string" method="None"   status="F"   
+			xpath="/groupInfoNum" />
+		<Field id="groupRelTypeCd" desc="集团关联关系类型代码" require="" edittype="text" datatype="string" method="None"   status="F"   
+			xpath="/groupRelTypeCd" />
+		<Field id="isCoreCustomer" desc="是否核心企业" require="" edittype="text" datatype="string" method="None"   status="F"   
+			xpath="/isCoreCustomer" />
+		<Field id="maintainOrgName" desc="认定机构" require="" edittype="text" datatype="string" method="None"   status="F"   
+			xpath="/maintainOrgName" />
+		<Field id="maintainTime" desc="认定时间" require="" edittype="text" datatype="string" method="None"   status="F"   
+			xpath="/maintainTime" />
+		<Field id="maintainTypeCd" desc="认定类型" require="" edittype="text" datatype="string" method="None"   status="F"   
+			xpath="/maintainTypeCd" />
+		<Field id="memberTypeCd" desc="集团成员公司类别代码" require="" edittype="text" datatype="string" method="None"   status="F"   
+			xpath="/memberTypeCd" />
+		<Field id="partyId" desc="参与人ID" require="" edittype="text" datatype="string" method="None"   status="F"   
+			xpath="/partyId" />
+		<Field id="relalationRelId" desc="关联关系ID" require="" edittype="text" datatype="string" method="None"   status="F"   
+			xpath="/relalationRelId" />
+	</Fields>
+	<Where>
+	</Where>
+	<Operations>
+	</Operations>
+</CommQry>

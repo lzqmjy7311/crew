@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<!--
+/**
+ *
+ * Licensed to the Apache Software Foundation (ASF) under one
+ * or more contributor license agreements.  See the NOTICE file
+ * distributed with this work for additional information
+ * regarding copyright ownership.  The ASF licenses this file
+ * to you under the Apache License, Version 2.0 (the
+ * "License"); you may not use this file except in compliance
+ * with the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+-->
+<configuration>
+ <property> 
+    <name>hbase.master</name> 
+    <value>localhost</value> 
+    </property> 
+    <property>  
+	<!--这个目录是region server的共享目录，用来持久化HBase。URL需要是'完全正确'的，还要包含文件系统的scheme。例如，要表示hdfs中的'/hbase'目录，namenode 运行在namenode.example.org的9090端口。则需要设置为hdfs://namenode.example.org:9000/hbase。默认情况下HBase是写到/tmp的。不改这个配置，数据会在重启的时候丢失。-->
+        <name>hbase.rootdir</name>  
+        <value>file:///D:/tmp/hbase/root</value>  
+    </property>  
+    <property> 
+	<!--本地文件系统的临时文件夹。可以修改到一个更为持久的目录上-->
+        <name>hbase.tmp.dir</name>  
+        <value>D:/tmp/hbase/tmp</value>  
+    </property>  
+    <property>  
+	<!--Zookeeper集群的地址列表，用逗号分割。例如："host1.mydomain.com,host2.mydomain.com,host3.mydomain.com".默认是localhost,是给伪分布式用的。要修改才能在完全分布式的情况下使用。如果在hbase-env.sh设置了HBASE_MANAGES_ZK，这些ZooKeeper节点就会和HBase一起启动-->
+        <name>hbase.zookeeper.quorum</name>  
+        <value>localhost</value>  
+    </property>  
+    <property> 
+	<!--ZooKeeper的zoo.conf中的配置。 快照的存储位置-->
+        <name>hbase.zookeeper.property.dataDir</name>  
+        <value>D:/tmp/hbase/zoo</value>  
+    </property>  
+	
+    <property>  
+	<!--HBase的运行模式。false是单机模式，true是分布式模式。若为false,HBase和Zookeeper会运行在同一个JVM里面-->
+        <name>hbase.cluster.distributed</name>  
+        <value>false</value>  
+    </property>  
+</configuration>

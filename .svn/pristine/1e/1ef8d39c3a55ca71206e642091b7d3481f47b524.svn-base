@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ConfigParam>
+	<DataAccessObjects>BankCommQueryDAO</DataAccessObjects>
+	<ViewAdapter>
+		com.huateng.commquery.config.adapter.FreemarkerViewAdapter
+	</ViewAdapter>
+	<InterfaceViewParam>
+		/templets/commonQuery/BankCommonQueryTabsFace.ftl
+	</InterfaceViewParam>
+	<ResultViewParam>
+		/templets/commonQuery/CommonQueryTabsView.ftl
+	</ResultViewParam>
+	<EmptyResultViewParam>
+		/templets/commonQuery/CommonQueryEmptyResult.ftl
+	</EmptyResultViewParam>
+	<ResultProcess>
+		com.huateng.commquery.process.BankResultProcess
+	</ResultProcess>
+	<InterfaceProcess>
+		com.huateng.commquery.process.InterfaceProcess
+	</InterfaceProcess>
+	<InterfaceViewURL>
+		/trans/CommonQueryInterface.do
+	</InterfaceViewURL>
+	<ResultViewURL>
+		/trans/CommonQueryResult.do
+	</ResultViewURL>
+
+	<WhereElementParser>
+		<Param id="TextBox"
+			class="com.huateng.commquery.config.parser.TextBoxElementParser" />
+		<Param id="Option"
+			class="com.huateng.commquery.config.parser.OptionElementParser" />
+		<Param id="Hidden"
+			class="com.huateng.commquery.config.parser.HiddenElementParser" />
+		<Param id="Reserve"
+			class="com.huateng.commquery.config.parser.ReserveElementParser" />
+		<Param id="HiddenOrder"
+			class="com.huateng.commquery.config.parser.HiddenOrderElementParser" />
+		<Param id="OptionOrder"
+			class="com.huateng.commquery.config.parser.OptionOrderElementParser" />
+		<Param id="CheckBoxGroup"
+			class="com.huateng.commquery.config.parser.CheckBoxGroupElementParser" />
+		<Param id="HiddenGroup"
+			class="com.huateng.commquery.config.parser.HiddenGroupElementParser" />
+	</WhereElementParser>
+	<OperationsParser>
+		<Param id="Button"
+			class="com.huateng.commquery.config.parser.ButtonOperationParser" />
+			<!--
+		<Param id="PriButton"
+			class="com.huateng.commquery.config.parser.PriButtonOperationParser" />
+			-->
+	</OperationsParser>
+</ConfigParam>

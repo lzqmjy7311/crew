@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<META>
+	<!-- 操作员增加 ： 所有岗位查询-->
+	<Query id="Management_AllRole" path="/fpages/management/xml/AllRole.xml"
+		desc="所有岗位查询" />
+	<Query id="TlrInfoForZGRWZYGetter" path="/gbicc-pages/bpm/xml/tlrInfoForZGRWZY.xml"
+		desc="对公任务转移岗位查询" />
+	<!-- 操作员管理 ： 操作员拥有的岗位查询-->
+	<Query id="Management_TlrRole" path="/fpages/management/xml/TlrRole.xml"
+		desc="操作员岗位查询" />
+
+	<!--  机构管理 -->
+	<Query id="Management_branchManage" path="/fpages/management/xml/branchManage.xml"
+		txn="" desc="" />
+	<!-- modify by shen_antonio JIRA:FPP-4 2011-12-18 begin -->
+	<!-- 机构下拉菜单 -->
+	<Query id="BranchInfoSelectWithZero"  path="/fpages/management/xml/BranchInfoSelectWithZero.xml" txn="" desc=""/>
+	<!-- modify by shen_antonio JIRA:FPP-4 2011-12-18 end -->
+	<!--  部门管理 -->
+	<Query id="Management_departmentInfoManage" path="/fpages/management/xml/departmentInfoManage.xml"
+		txn="" desc="" />
+
+	<!-- 机构权限管理 -->
+	<Query id="Management_branchFunc" path="/fpages/management/xml/branchFunc.xml" />
+	<!-- 操作员增加 -->
+	<Query id="Management_SelectTlrAdd" path="/fpages/management/xml/SelectTlrAdd.xml" />
+	<Query id="Management_TlrAdd" path="/fpages/management/xml/TlrAdd.xml" />
+	<!-- 操作员管理 ： 操作员信息查询-->
+	<Query id="Management_QryTlrAdd" path="/fpages/management/xml/QryTlrAdd.xml" />
+	<Query id="Management_TlrInfoEx" path="/fpages/management/xml/TlrInfoEx.xml"
+		desc="操作员信息查询" />
+	<!--  密码管理 -->
+	<Query id="changePwd" path="/fpages/management/xml/ChangePwd.xml"
+		txn="" desc="操作员密码修改" />
+	<Query id="passwordReset" path="/fpages/management/xml/PasswordReset.xml"
+		txn="" desc="操作员密码重置" />
+
+	<!-- 企业岗位维护 -->
+	<Query id="ebankCustRoleMng" path="/fpages/management/xml/ebankCustRoleMng.xml" />
+	<Query id="ebankCustRoleMngUser" path="/fpages/management/xml/ebankCustRoleMngUser.xml" />
+	<Query id="RoleFuncMng" path="/fpages/management/xml/RoleFuncMng.xml" />
+	<Query id="RoleFuncMngComp" path="/fpages/management/xml/RoleFuncMngCompare.xml" />
+	
+	<!-- 节假日信息查询 -->
+	<Query id="parammng_Holiday" path="/fpages/management/xml/holiday.xml"
+		desc="节假日信息查询" />
+	<Query id="parammng_HolidayDetail" path="/fpages/management/xml/holidayDetail.xml"
+		desc="节假日详细信息查询" />
+
+	<!-- add by haizhou.li 2010-11-20 岗位名称唯一性校验 -->
+	<Query id="PosiNameCheck" path="/fpages/management/xml/PosiNameCheck.xml"
+		txn="" desc="" />
+
+	<!-- add by lilinfeng 岗位权限管理 -->
+	<Query id="parammng_RoleInfo" path="/fpages/management/xml/RoleInfo.xml"
+		txn="90102" desc="岗位权限设置" />
+	<Query id="parammng_RoleInfo1" path="/fpages/management/xml/RoleInfo1.xml"
+		txn="90102" desc="岗位权限设置-设置岗位功能" />
+	<Query id="parammng_RoleInfo2" path="/fpages/management/xml/RoleInfo2.xml"
+		txn="90102" desc="岗位权限设置-设置报表浏览权限" />
+
+	<Query id="operLoggerQuery" path="/fpages/logger/xml/OperLoggerQuery.xml"
+		txn="" desc="日志查询" />
+
+	<!-- add by zhaozhiguo 2012/2/14 FPP-9 用户,岗位及机构的管理页面优化调整 begin -->
+	<Query id="operMngEntry" path="/fpages/regonization/xml/OperMngEntry.xml"
+		txn="" desc="" />
+	<Query id="operMngAdd" path="/fpages/regonization/xml/OperMngAdd.xml"
+		txn="" desc="" />
+	<Query id="operMngMod" path="/fpages/regonization/xml/OperMngMod.xml"
+		txn="" desc="" />
+	<Query id="operMngRoleInfo" path="/fpages/regonization/xml/OperMngRoleInfo.xml"
+		txn="" desc="" />
+	<Query id="UserAuthorityDown"   path="/fpages/management/xml/UserAuthorityDown.xml"
+	    txn="" desc="" />
+	<!-- add by zhaozhiguo 2012/2/14 FPP-9 用户,岗位及机构的管理页面优化调整 end -->
+
+
+	<Query id="subfileworkdate" path="/fpages/common/xml/SubFileWorkDate.xml"
+		desc="上报文件日期切换" />
+	<!-- add by zhiyang.he 角色管理，双岗功能 2012-09-03 begin -->
+	<Query id="RoleFuncMngCompare" path="/fpages/management/xml/RoleFuncMngCompare.xml" />
+	<!-- add by zhiyang.he 角色管理，双岗功能 2012-09-03 end -->
+	<!-- add by zhiyang.he 用户管理，双岗功能 2012-09-05 begin -->
+	<Query id="operMngModCompare" path="/fpages/regonization/xml/OperMngModCompare.xml"
+		txn="" desc="" />
+	<Query id="operMngRoleInfoCompare" path="/fpages/regonization/xml/OperMngRoleInfoCompare.xml"
+		txn="" desc="" />
+	<!-- add by zhiyang.he 用户管理，双岗功能 2012-09-05 end -->
+	
+	<Query id="bctlMngEntry" path="/fpages/regonization/xml/BctlMngEntry.xml" txn="" desc=""/>
+	
+	<Query id="operMngModCom" path="/fpages/regonization/xml/OperMngModCom.xml" txn="" desc="" />
+	<Query id="bctlMngEntryCom" path="/fpages/regonization/xml/BctlMngEntryCom.xml" txn="" desc=""/>
+	<Query id="operMngRoleInfoCom" path="/fpages/regonization/xml/OperMngRoleInfoCom.xml" txn="" desc="" />
+	<Query id="operMngModComSeri" path="/fpages/regonization/xml/OperMngModComSeri.xml" txn="" desc="" />
+	<Query id="bctlMngEntryComSeri" path="/fpages/regonization/xml/BctlMngEntryComSeri.xml" txn="" desc=""/>
+	<Query id="operMngRoleInfoComSeri" path="/fpages/regonization/xml/OperMngRoleInfoComSeri.xml" txn="" desc="" />
+	
+    <Query id="IconMge" path="/fpages/management/xml/IconMge.xml" />
+    <Query id="IconSelect" path="/fpages/management/xml/IconSelect.xml" />
+	<Query id="roleFuncTreeAsync" path="/fpages/management/xml/roleFuncTreeAsync.xml" />
+	<Query id="roleFuncTreeButton" path="/fpages/management/xml/roleFuncTreeButton.xml" />
+	<!-- 机构树 -->
+	<Query id="branchTree" path="/fpages/management/xml/branchTree.xml" />
+	<Query id="brTree" path="/gbicc-pages/bpm/xml/brTree.xml" />
+	<Query id="roleFuncTree" path="/fpages/management/xml/roleFuncTree.xml" />
+	<!-- 定时任务 -->
+	<Query id="jobmanage" path="/fpages/scheduler/xml/jobmanage.xml" />
+	<Query id="jobschedulermanage" path="/fpages/scheduler/xml/jobschedulermanage.xml" />
+	<!-- 定时任务日志查询 -->
+	<Query id="TblCronTaskJobLog" path="/fpages/dataquery/xml/TblCronTaskJobLog.xml" />
+	<Query id="BiQuartzJobLog" path="/fpages/dataquery/xml/BiQuartzJobLog.xml" />
+	<!-- 按钮管理 -->
+    <Query id="PagePath" path="/fpages/management/xml/PagePath.xml" />
+    <Query id="ButtonMng" path="/fpages/regonization/xml/ButtonMng.xml" />
+  
+    <Query id="CurrrateMng" path="/fpages/management/xml/CurrrateMng.xml" />
+</META>

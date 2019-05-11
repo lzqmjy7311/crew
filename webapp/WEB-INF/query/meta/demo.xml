@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<META>
+
+	<Query id="SelectData" path="/demo/xml/SelectData.xml" />
+	<Query id="t1DataDicEntry" path="/demo/xml/t1DataDicEntry.xml" />
+	<Query id="t2DataDicEntry" path="/demo/xml/t2DataDicEntry.xml" />
+	<Query id="tDataDicInfo" path="/demo/xml/tDataDicInfo.xml" />
+	<Query id="FunctionTree" path="/demo/xml/FunctionTreeSelectGetter.xml" />
+	<Query id="Fields" path="/demo/xml/Fields.xml" />
+	<Query id="Field" path="/demo/xml/Field.xml" />
+	<Query id="DataGridDemo1" path="/demo/xml/DataGridDemo1.xml" />
+	<Query id="ValidateField" path="/demo/xml/ValidateField.xml" />
+	<Query id="dropdownField" path="/demo/xml/dropdownField.xml" />
+
+	<Query id="DemoButton" path="/demo/xml/DemoButton.xml" />
+	<Query id="GridMergeFields" path="/demo/xml/GridMergeFields.xml" />
+	<Query id="GridCacheCount" path="/demo/xml/GridCacheCount.xml" />
+	<Query id="GroupFields" path="/demo/xml/GroupFields.xml" />
+	<Query id="GroupFieldsSelect" path="/demo/xml/GroupFieldsSelect.xml" />
+	<Query id="GroupFieldsDate" path="/demo/xml/GroupFieldsDate.xml" />
+	<Query id="GroupFieldsTextInput" path="/demo/xml/GroupFieldsTextInput.xml" />
+	<Query id="GroupValidateFields" path="/demo/xml/GroupValidateFields.xml" />
+	<Query id="GridFields" path="/demo/xml/GridFields.xml" />
+	<Query id="AccordionMenu" path="/demo/xml/AccordionMenu.xml" />
+	<Query id="AccordionMenuAsyc" path="/demo/xml/AccordionMenuAsyc.xml" />
+	<Query id="TreeNode" path="/demo/xml/TreeNode.xml" />
+	<Query id="StaticTreeNode" path="/demo/xml/StaticTreeNode.xml" />
+	<Query id="TreeNodeTest" path="/demo/xml/TreeNodeTest.xml" />
+	<Query id="DemoFields" path="/demo/xml/DemoFields.xml" />
+	<Query id="DemoFields2" path="/demo/xml/DemoFields2.xml" />
+	<Query id="GridFieldsMultiSelect" path="/demo/xml/GridFieldsMultiSelect.xml" />
+
+	<Query id="MasterTable" path="/demo/xml/MasterTable.xml" />
+	<Query id="ReferenceTable" path="/demo/xml/ReferenceTable.xml" />
+
+	<Query id="CQDemo" path="/demo/xml/CQDemo.xml" />	
+	<Query id="STATIC_TAB" path="/demo/xml/STATIC_TAB.xml" />
+	<Query id="SwitchAdd" path="/demo/xml/SwitchAdd.xml" />
+	<Query id="SwitchQuery" path="/demo/xml/SwitchQuery.xml" />
+	<Query id="CQCurrenyDemo" path="/demo/xml/CQCurrenyDemo.xml" />
+</META>

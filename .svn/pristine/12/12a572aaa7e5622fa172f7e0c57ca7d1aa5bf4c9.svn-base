@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="20" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.personCommon.getter.TEdwPlsIouGetter">
+	<Include id="BankParam" />
+	
+	<Fields>
+		<Field id="duebillno" desc="借据编号" xpath="/duebillno"/>
+		<Field id="loanacno" desc="账户编号" xpath="/loanacno"/>
+		<Field id="begindate" desc="放款日期" xpath="/begindate"/>
+		<Field id="custid" desc="客户编号" xpath="/custid" />
+        <Field id="custname" desc="客户名称" xpath="/custname"/>
+        <Field id="contno" desc="借款合同编号" xpath="/contno"/>
+        <Field id="listid" desc="单据序号" xpath="/listid"/>
+        <Field id="listtype" desc="单据类型" xpath="/listtype"/>
+        <Field id="busitype" desc="业务类型" edittype="select" translated="DATA_DIC.722"  xpath="/busitype"/>
+        <Field id="loanid" desc="业务编号" xpath="/loanid"/>
+        <Field id="subjid" desc="会计科目" xpath="/subjid"/>
+        <Field id="prodid" desc="产品代码" xpath="/prodid"/>
+        <Field id="tcapi" desc="贷款金额" xpath="/tcapi"/>
+        <Field id="tterm" desc="贷款期限" xpath="/tterm"/>
+        <Field id="enddate" desc="到期日期" xpath="/enddate"/>
+        <Field id="saveacno" desc="存款账号" xpath="/saveacno"/>
+        <Field id="bankid" desc="经办行" xpath="/bankid"/>
+        <Field id="operid" desc="经办人" xpath="/operid"/>
+	</Fields>
+	
+	<Where>
+    	<TextBox id="duebillno" desc="借据编号" edittype="text" status="F" datatype="string" size="10" index="2" />
+		<TextBox id="loanAccount" desc="账户编号" edittype="text" status="F" datatype="string" size="10" index="3" />			
+		<TextBox id="custid" desc="客户编号" edittype="text" status="F" datatype="string" size="10" index="4" />
+		<TextBox id="custname" desc="客户名称" edittype="text" status="F" datatype="string" size="32" />
+		<TextBox id="contno" desc="合同编号" edittype="text" status="F" datatype="string" size="32" />
+		<TextBox id="tterm" desc="贷款期限" edittype="text" status="F" datatype="string" size="32" />
+		<TextBox id="saveacno" desc="存款账号" edittype="text" status="F" datatype="string" size="32" />
+		<TextBox id="begindates" desc="放款日期(从)" edittype="date" status="F" datatype="date" size="32" />
+		<TextBox id="begindated" desc="放款日期(至)" edittype="date" status="F" datatype="date" size="32" />
+	</Where>
+	 
+	<Operations>
+		<Button id="BtnAdd" name="BtnAdd" desc="发起用途监控" icon="icon-add" updateClass="#" url="#" txn="" />
+		<Button id="BtnSave" name="BtnSave" desc="保存" icon="icon-ok" operation="asysubmit" 
+			updateClass="com.gbicc.person.monitor.update.TPlYtReportAdd" url="#" txn="" />	
+	</Operations>
+</CommQry>

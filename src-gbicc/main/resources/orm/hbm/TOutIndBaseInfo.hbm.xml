@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-2-25 17:00:15 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.financial.analysis.entity.TOutIndBaseInfo" table="T_OUT_IND_BASE_INFO" schema="ECUSER">
+        <comment>企业工商基本信息</comment>
+            <id name="id" type="string">
+                <column name="ID" length="50" />
+            </id>
+            <property name="companyName" type="string">
+                <column name="COMPANY_NAME" length="50" />
+            </property>
+            <property name="registorNo" type="string">
+                <column name="REGISTOR_NO" length="50" />
+            </property>
+            <property name="legalName" type="string">
+                <column name="LEGAL_NAME" length="50" />
+            </property>
+            <property name="certNo" type="string">
+                <column name="CERT_NO" length="50" />
+            </property>
+            <property name="cancelDate" type="date">
+                <column name="CANCEL_DATE" length="10" />
+            </property>
+            <property name="enterStatus" type="string">
+                <column name="ENTER_STATUS" length="50" />
+            </property>
+            <property name="busstartDate" type="date">
+                <column name="BUSSTART_DATE" length="10" />
+            </property>
+            <property name="busendDate" type="date">
+                <column name="BUSEND_DATE" length="10" />
+            </property>
+            <property name="busscope" type="string">
+                <column name="BUSSCOPE" length="1000" />
+            </property>
+            <property name="registorAmt" type="big_decimal">
+                <column name="REGISTOR_AMT" />
+            </property>
+            <property name="enterOrg" type="string">
+                <column name="ENTER_ORG" length="50" />
+            </property>
+            <property name="address" type="string">
+                <column name="ADDRESS" length="200" />
+            </property>
+            <property name="checkDate" type="date">
+                <column name="CHECK_DATE" length="10" />
+            </property>
+            <property name="shareHolder" type="string">
+                <column name="SHARE_HOLDER" length="50" />
+            </property>
+            <property name="sourceLink" type="string">
+                <column name="SOURCE_LINK" length="100" />
+            </property>
+            <property name="rowDate" type="date">
+                <column name="ROW_DATE" length="10" />
+            </property>
+            <property name="relaId" type="string">
+                <column name="RELA_ID" length="50" />
+            </property>
+    </class>
+</hibernate-mapping>

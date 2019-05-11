@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-12-5 15:33:01 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.financial.analysis.entity.TCmFinanceStatementData" table="T_CM_FINANCE_STATEMENT_DATA" schema="ECUSER">
+        <comment>财务报表数据</comment>
+        <id name="financeStatementDataId" type="string">
+            <column name="FINANCE_STATEMENT_DATA_ID" length="32" />
+            <generator class="assigned" />
+        </id>
+        <property name="financeStatementId" type="string">
+            <column name="FINANCE_STATEMENT_ID" length="32" />
+        </property>
+        <property name="customerFinanceId" type="string">
+            <column name="CUSTOMER_FINANCE_ID" length="32" />
+        </property>
+        <property name="projectValue" type="big_decimal">
+            <column name="PROJECT_VALUE" precision="15" scale="5" />
+        </property>
+        <property name="projectCd" type="string">
+            <column name="PROJECT_CD" length="32" />
+        </property>
+        <property name="addUpProjectValue" type="big_decimal">
+            <column name="ADD_UP_PROJECT_VALUE" precision="15" scale="5" />
+        </property>
+    </class>
+</hibernate-mapping>

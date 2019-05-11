@@ -1,0 +1,27 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign typeId="${RequestParameters['typeId']?default('')}" />
+<#assign fdDate="${RequestParameters['fdDate']?default('')}" />
+<#assign customerNum="${RequestParameters['customerNum']?default('')}" />
+<@CommonQueryMacro.page title="工商变更">
+<@CommonQueryMacro.CommonQuery id="TOutIndBaseInfo" init="true" submitMode="selected" navigate="false">
+
+<table align="left" width="100%">
+	<tr>
+		<td>
+			<@CommonQueryMacro.DataTable id ="datatable1" fieldStr="companyName,registorNo,legalName,certNo,cancelDate,enterStatus,busstartDate,busendDate,busscope,registorAmt,enterOrg,address,checkDate,shareHolder,sourceLink,rowDate"  readonly="true" width="100%"/></br>
+		</td>
+	</tr>
+</table>
+</@CommonQueryMacro.CommonQuery>
+<script language="JavaScript">
+var customerNum='${customerNum}';
+function initCallGetter_post(){
+	var typeId='${typeId}';
+	var fdDate='${fdDate}';
+	TOutIndBaseInfo_dataset.setParameter("typeid",typeId);
+	TOutIndBaseInfo_dataset.setParameter("data",fdDate);
+	TOutIndBaseInfo_dataset.setParameter("relaId",customerNum);
+	TOutIndBaseInfo_dataset.flushData();
+}
+</script>
+</@CommonQueryMacro.page>

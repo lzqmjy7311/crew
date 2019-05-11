@@ -1,0 +1,20 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+
+<#assign warningId=RequestParameters["warningId"]?default("")>
+
+<@CommonQueryMacro.page title="企业征信信息">
+<table>
+	<@CommonQueryMacro.CommonQuery id="L11" init="true" submitMode="current">
+		<@CommonQueryMacro.DataTable id="L11Table" readonly="true" fitColumns="false"
+		fieldStr="fdLoancardno,fdRegistAmt,fdCapitalCent,fdCapitalAvg,fdCapitalNum,fdNosettTbal,fdNosettTnum,fdNosettGzTbal,fdNosettGzTnum,fdNosettTloanbal,fdNosettTloannum,fdNosettBlTbal,fdNosettBlTnum,fdNosettBlTloanbal,fdNosettBlTloannum,fdSettGzTnum,fdSettTnum,fdSettTloannum,fdSettGzTloannum,fdSettBlTnum,fdSettBlTloannum,fdHisBlTnum,fdHisBlTloannum,fdGuatTnum,fdGuatTamt,fdGuatGzTbal,fdGuatBlTbal" width="100%" hasFrame="true"/>
+	</@CommonQueryMacro.CommonQuery>
+</table>
+<script>
+	//页面初始化
+	function initCallGetter_post(){
+		var warningId='${warningId}';
+		L11_dataset.setParameter("warningId",warningId);
+	}
+</script>
+</@CommonQueryMacro.page>

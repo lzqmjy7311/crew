@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="FIVE" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.fp.demo.getter.GroupFieldsGetter">
+	<Include id="BankParam" />
+	<PageQryExp type="XLS" limit="true" encoding="GBK"
+		url="/trans/qryExp.do" desc="XLS导出" perfetch="10" maxpage="3"
+		directory="F:/upload1" />
+	<Fields>
+		<Field id="text" desc="普通文本" edittype="datalabel" xpath="/text" />
+		<Field id="placeholder" desc="文本占位符" placeholder="请输入..."
+			edittype="text" xpath="" />
+		<Field id="textInput" desc="普通文本框" xpath="/textInput" />
+        <Field id="textyear" desc="年" size="4" width="40" xpath="" />
+        <Field id="textmonth" desc="月" size="2" width="20" xpath="" />
+        <Field id="textday" desc="日" size="2" width="20" xpath="" />
+		<Field id="integerText" desc="整数输入框" edittype="text" datatype="int"
+			xpath="/integerText" />
+		<Field id="doubleText" desc="浮点输入框" edittype="text" datatype="double"
+			size="6" scale="1" xpath="/doubleText" />
+		<Field id="currencyText" desc="货币输入框" edittype="text" datatype="currency"
+			size="20" scale="2" prefix="$" xpath="/currencyText" default="0" />
+		<Field id="textArea" desc="大文本框" edittype="textarea" xpath="/textArea"
+			height="100" width="300" />
+		<Field id="leftSel" desc="select左侧" edittype="text" xpath="/left"/>
+		<Field id="rightSel" desc="select右侧" edittype="text" xpath="/right"/>
+	</Fields>
+</CommQry>

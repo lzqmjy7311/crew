@@ -1,0 +1,33 @@
+<CommQry title="TTaskDivertDtl" navigate="TTaskDivertDtl" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.bpm.getter.TTaskDivertDtlGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+        <Field id="id" desc="ID主键" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/id" />
+        <Field id="taskDivertId" desc="主表ID" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/taskDivertId" />
+        <Field id="businessKey" desc="业务主键" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/businessKey" />
+        <Field id="procInstId" desc="流程实例ID" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/procInstId" />
+        <Field id="procName" desc="流程名称" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/procName" />
+        <Field id="taskDesc" desc="业务描述" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/taskDesc" />
+        <Field id="taskName" desc="任务名称" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/taskName" />
+        <Field id="taskId" desc="任务ID" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/taskId" />
+        <Field id="assignee" desc="任务处理人" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/assignee/tlrName" />
+        <Field id="createTime" desc="任务接收时间" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/createTime" />
+    </Fields>
+    <Where></Where>
+    <Operations>
+    	<Button id="btnSubmit" name="btnSubmit" desc="审核通过" icon="icon-ok" operation="asysubmit" 
+			updateClass="com.gbicc.bpm.update.TaskAfreshAssignAplUpdate" url="#" txn="" />
+		<Button id="btnBack" name="btnBack" desc="拒绝" icon="icon-back" operation="asysubmit" 
+			updateClass="com.gbicc.bpm.update.TaskAfreshAssignAplUpdate" url="#" txn="" />
+    </Operations>
+</CommQry>

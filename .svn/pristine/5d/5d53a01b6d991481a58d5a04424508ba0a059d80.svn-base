@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--
+    title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+<CommQry title="操作日志查询" navigate="操作日志查询" type="call"
+	interface="false" pagesize="30"  databusid="ELCDISC_DB"  async="true"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.logger.getter.OperLoggerQueryGetter">
+	<Include id="BankParam" />
+	<PageQryExp type="CSV" limit="true" encoding="GBK" url="/trans/qryExp.do" directory="D:/templet"/>
+    <Fields>
+        <Field id="id" desc="Id" status="N" method="None" xpath="/id" require="true"
+			edittype="text" datatype="integer" readonly="true" primary="true"
+			type="" size="100" default="" tip="Id" />
+      	<Field id="select" desc="选择" require="" edittype="checkbox" datatype="boolean" method="None"
+      		readonly="false" type="选择" size="20" default="" xpath="" />
+
+		<Field id="txnDate" desc="交易日期" require="" edittype="text" datatype="date" method="None"
+			readonly="true" size="30" status="F" default="" xpath="/txnDate" />
+
+		<Field id="brcode" desc="机构号" require="" edittype="text" datatype="string" method="None"
+			readonly="true" type="机构号" status="F" size="15" scale="2" default="" xpath="/brcode" />
+
+		<Field id="oprcode" desc="操作员号" require="" edittype="text" datatype="string" method="None"
+		    readonly="true" type="操作员号" status="F" size="15" scale="2" default="" xpath="/oprcode" />
+
+		<Field id="ipAdr" desc="IP地址" require="" edittype="text" datatype="string" method="None"
+			readonly="true" size="8" status="F" default="" xpath="/ipAdr" />
+
+		<Field id="oprtxncd" desc="交易类型" require="" edittype="text" datatype="string" method="None"
+			readonly="true" size="8" status="F" default="" xpath="/oprtxncd" />
+
+		<Field id="txnBizLog" desc="日志信息" require="" edittype="text" datatype="string" method="None"
+			readonly="true" size="8" status="F" default="" xpath="/txnBizLog" />
+
+		<Field id="txnStatus" desc="状态" require="" edittype="text" datatype="string"
+			translated="DATA_DIC.170" method="com.huateng.ebank.business.common.CQMethod.getDataDicName"
+			readonly="true" size="8" status="F" default="" xpath="/txnStatus" />
+	</Fields>
+	<Where>
+		<TextBox  id="brcode" tablename="ci" fieldname="brcode" datatype="text" colNm=""
+			 	operation="EQ" size="30"  desc="机构号"  tip="机构号" method="None" index="1"
+			 	 function="" width="" default="" require=""    readOnly="false" />
+		<TextBox id="txnDate" tablename="ci"
+			fieldname="txnDate" datatype="date" colNm="" operation="EQ"
+			size="20" desc="交易日期" tip="交易日期" method="None" index="13"
+			function="" width="" default="" require="" readOnly="false" />
+		<TextBox  id="oprtxncd" tablename="ci" fieldname="oprtxncd" datatype="text" colNm=""
+		 	operation="EQ" size="30"  desc="交易类型"  tip="交易类型" method="None" index="1"
+		 	 function="" width="" default="" require=""    readOnly="false" />
+		<TextBox  id="oprcode" tablename="ci" fieldname="oprcode" datatype="text" colNm=""
+			 	operation="EQ" size="30"  desc="操作员号"  tip="操作员号" method="None" index="1"
+			 	 function="" width="" default="" require=""    readOnly="false" />
+	</Where>
+	<Operations>
+		<Button id="btSettle" name="btSettle" desc="查看" operation="asysubmit"
+			updateClass="com.huateng.ebank.business.expiry.updater.SettleAcceptDraftInfoUpdate"
+			url="#" show="0" group="" txn="expiry_Accept_DraftInfoQuery.update"/>
+	</Operations>
+</CommQry>

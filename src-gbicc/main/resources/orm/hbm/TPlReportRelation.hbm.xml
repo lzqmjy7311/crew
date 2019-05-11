@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2011-11-6 21:23:13 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.person.monitor.entity.TPlReportRelation" table="T_PL_REPORT_RELATION" schema="ECUSER">
+        <comment>监控与报告关联中间表</comment>
+        <id name="id" column="id" type="string">
+			<generator class="uuid.hex" />  
+		</id>
+        <property name="reportId" type="string">
+            <column name="REPORT_ID" length="32" not-null="true" />
+        </property>
+        <property name="reportType" type="string">
+            <column name="REPORT_TYPE" length="20" not-null="true" />
+        </property>
+        <property name="businessId" type="string">
+            <column name="BUSINESS_ID" length="32" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

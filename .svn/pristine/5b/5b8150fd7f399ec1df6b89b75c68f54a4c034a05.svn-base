@@ -1,0 +1,40 @@
+<CommQry title="TRewC08DepotManageListId" navigate="TRewC08DepotManageListId" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.C08Getter">
+    <Include id="BankParam" />
+    <Fields>
+    	<Field id="contractNum" desc="主合同编号" edittype="text" datatype="string"
+        xpath="/contractNum" />
+        <Field id="borrowNum" desc="借据号" edittype="text" datatype="string"
+        xpath="/borrowNum" />
+        <Field id="resOpNum" desc="操作流水" edittype="text" datatype="string"
+        xpath="/resOpNum" />
+        <Field id="resNum" desc="库房实物编号" edittype="text" datatype="string" xpath="/resNum" />
+        <Field id="resOpUser" desc="操作用户编号" edittype="text" datatype="string"
+        xpath="/resOpUser" />
+        <Field id="resAmount" desc="本次操作金额" edittype="text" datatype="int"
+        xpath="/resAmount" />
+        <Field id="resSum" desc="本次操作数量" edittype="text" datatype="string" xpath="/resSum" />
+        <Field id="resSummary" desc="出入库原因描述" edittype="text" datatype="string"
+        xpath="/resSummary" />
+        <Field id="resOpDate" desc="操作日期" edittype="text" datatype="string"
+        xpath="/resOpDate" />
+        <Field id="resOpOrg" desc="操作机构" edittype="text" datatype="string"
+        xpath="/resOpOrg" />
+        
+        <!--
+        <Field id="depotManageListId" desc="" edittype="text" datatype="string"
+        xpath="/depotManageListId" />
+        <Field id="resOpType" desc="" edittype="text" datatype="string"
+        xpath="/resOpType" />
+        <Field id="resOpState" desc="" edittype="text" datatype="string"
+        xpath="/resOpState" />
+        <Field id="depotManageId" desc="" edittype="text" datatype="string"
+        xpath="/depotManageId" />
+        <Field id="warnId" desc="预警表ID" edittype="text" datatype="string"
+        xpath="/warnId" />
+        <Field id="dataDt" desc="数据日期" edittype="text" datatype="date"
+        xpath="/dataDt" />-->
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

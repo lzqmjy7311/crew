@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CommQry
+title="贷款复核"
+navigate="主页 &gt; 系统管理 &gt; 批处理管理"
+type="call"
+interface="false"
+pagesize="20"
+async="true"
+databusid="CUSTINFO_DB"
+transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.huateng.ebank.business.parammng.cqGetter.WarningLogGetter"
+>
+	<Include id="BankParam"/>
+
+	<ResultViewParam>
+		/fpages/parammng/ftl/warninglog.ftl
+	</ResultViewParam>
+	<Fields>
+		<Field id="id" desc="告警信息ID" status="F" method="None" readOnly="true" edittype="short"
+			primary="false" type="String" size="3" default="" xpath="/id" tip="告警信息ID" />
+
+		<Field id="txdate1" desc="日期" status="F" method="None" readOnly="true" edittype="date"
+			datatype="date" primary="false" type="String" size="20" default="" xpath="/txdate" tip="日期"/>
+
+		<Field id="jobno" desc="JOB号" status="F" method="None" readOnly="true" edittype="datalabel"
+			primary="false" type="String" size="4" default="" xpath="/jobno" tip="JOB号"/>
+
+		<Field id="step" desc="步骤号" status="F" method="None"  edittype="datalabel"
+			primary="false" type="String" size="4" default="" xpath="/step" tip="步骤号"/>
+
+		<Field id="substep" desc="子步骤号" status="F" method="None" readOnly="true" edittype="datalabel"
+			primary="false" type="String" size="4" default="" xpath="/substep" tip="子步骤号"/>
+
+		<Field id="contractno" desc="合同号" status="F" method="None" readOnly="true" edittype="datalabel"
+			primary="false" type="String" size="20" default="" xpath="/contractno" tip="合同号"/>
+
+		<Field id="peri" desc="期 号" status="F" method="None" readOnly="true"  edittype="text"
+			primary="false" type="String" size="4" default="" xpath="/peri" tip="期 号"/>
+
+		<Field id="msg" desc="信 息" status="F" method="None" readOnly="true" edittype="datalabel"
+			primary="false" type="String" size="1024" default="" xpath="/msg" tip="信息"/>
+
+        <Field id="line" desc="出错堆栈" status="F" method="None" readOnly="true" edittype="datalabel"
+			primary="false" type="String" size="1024" default="" xpath="/line" tip="出错堆栈"/>
+
+		<Field id="timestamps" desc="时间戳" status="F" method="None" readOnly="true"  edittype="text"
+			primary="false" type="String" size="100" default="" xpath="/timestamps" tip="时间戳"/>
+
+	</Fields>
+
+	<Where>
+
+	</Where>
+	<Operations>
+
+	</Operations>
+
+
+
+</CommQry>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="参数管理  &gt; 产品管理" navigate="参数管理  &gt; 产品管理" type="call"
+	interface="false" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.person.monitor.getter.TPlYtReportGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="id" desc="" edittype="text" datatype="string" size="32" xpath="/id" />
+		<Field id="loanVariety" desc="贷款品种" xpath="/loanVariety" readOnly="true"   />
+		<Field id="custName" desc="客户姓名" xpath="/custName" readOnly="true" colspan="4" width="400"/>
+		<Field id="custCode" desc="客户编号" xpath="/custCode" readOnly="true" colspan="4" width="400" />
+		<Field id="certType" desc="证件类型" xpath="/certType" readOnly="true" />
+		<Field id="certCode" desc="证件号码" xpath="/certCode" readOnly="true" />
+		<Field id="loanAmt" desc="贷款金额" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" xpath="/loanAmt" readOnly="true" default="0" />
+		<Field id="loanBalance" desc="贷款余额" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" xpath="/loanBalance" readOnly="true" default="0" />
+		<Field id="checkWay" desc="查访方式" default="1"  require="true" edittype="radio" translated="LIST:1,实地;2,非实地"
+            datatype="string" xpath="/checkWay" />
+        
+        <Field id="lendCode" desc="借据编号" xpath="/lendCode" readOnly="true" colspan="4" width="400"  />
+        <Field id="loanNo" desc="贷款账号" xpath="/loanNo" readOnly="true" colspan="4" width="400"  />
+        <Field id="checkAddress" desc="查访地点" xpath="/checkAddress" readOnly="false" />
+        <Field id="mainSurvPer" desc="主调查人" xpath="/mainSurvPer" readOnly="true" colspan="4"/>
+        <Field id="assistSurvPer" desc="辅助调查人" xpath="/assistSurvPer" readOnly="false" colspan="4" width="400"/>
+        <Field id="custTrade" desc="所属行业" width="400" xpath="/custTrade" readOnly="true"  edittype="select" translated="DATA_DIC.93"   />
+        <Field id="surveyDate" desc="调查日期" edittype="date" datatype="date" xpath="/surveyDate" readOnly="true" colspan="4" />
+        <Field id="productCode" desc="产品编号" xpath="/productCode" readOnly="true" edittype="select" translated="DATA_DIC.900"   />
+        
+        <Field id="operResult" desc="信贷资金使用是否与授信审批用途一致" xpath="/operResult" readOnly="false" edittype="radio" translated="LIST:1,是;2,否"/>
+        <Field id="buesResult" desc="信贷资金使用是否与客户经营范围一致" xpath="/buesResult" readOnly="false" edittype="radio" translated="LIST:1,是;2,否"/>
+        <Field id="guarResult" desc="担保抵押是否落实" xpath="/guarResult" readOnly="false" edittype="radio" translated="LIST:1,是;2,否" />
+        <Field id="earnResult" desc="有无其他预警信号" xpath="/earnResult" readOnly="false" edittype="radio" translated="LIST:1,是;2,否" />
+        <Field id="loanResult" desc="贷款资金是否已使用完" require="true" default="1" xpath="/loanResult" readOnly="false" edittype="radio" translated="LIST:1,是;2,否" />
+        <Field id="hasCert" desc="是否取得征信凭证" require="false" xpath="/hasCert" readOnly="false" edittype="radio" translated="LIST:1,是;2,否" />
+       
+        <Field id="lmtCtrl" status="N" desc="授信额度控制" edittype="checkbox" translated="DATA_DIC.113"
+            datatype="string" xpath="/lmtCtrl" />
+        <Field id="riskCtrl" status="N" desc="其他控制" edittype="checkbox" translated="DATA_DIC.114"
+            datatype="string" xpath="/riskCtrl" />
+        <Field id="otherCtrlDesc" desc="其他措施说明" xpath="/otherCtrlDesc" size="500"/>
+        <Field id="appendCtrl" desc="附加处理措施（可多选）" xpath="/appendCtrl" edittype="checkbox" translated="DATA_DIC.115" />
+        <Field id="applyOpin" desc="意见" xpath="/applyOpin"  size="500" edittype="textarea" height="100" width="300" />
+        
+          
+		<Field id="opinion" desc="审核意见" require="true" colspan="4" edittype="textarea" xpath="/opinion" height="100" width="500" />
+		<Field id="measCompleteDate" status="N" desc="措施完成时间" edittype="date"
+            datatype="date" xpath="/measCompleteDate" />
+         
+        <Field id="tempEmpty" desc="" require="" edittype="radio" translated="" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/tempEmpty" />
+    </Fields>
+    
+    <Operations>
+		<Button id="btnSave" name="btnSave" desc="保存" icon="icon-save" operation="asysubmit" 
+			updateClass="com.gbicc.person.monitor.update.TPlYtReportUpdate" url="#" txn="" />
+		<Button id="btnSelect" name="btnSelect" desc="提交" icon="icon-ok" 
+			updateClass="" url="#" txn="" />
+		<Button id="btnSubmit" name="btnSubmit" desc="提交" icon="icon-ok" operation="asysubmit" 
+			updateClass="com.gbicc.person.monitor.update.TPlYtReportUpdate" url="#" txn="" />
+		<Button id="btnBack" name="btnBack" desc="退回" icon="icon-back" operation="asysubmit" 
+			updateClass="com.gbicc.person.monitor.update.TPlYtReportUpdate" url="#" txn="" />
+		<Button id="btnPrint" name="btnPrint" desc="打印" icon="icon-print" updateClass="" url="#" txn="" />
+	</Operations>
+</CommQry>

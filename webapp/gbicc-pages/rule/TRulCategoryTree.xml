@@ -1,0 +1,38 @@
+<CommQry title="TRulCategoryId" navigate="TRulCategoryId" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+	transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.rule.getter.TRulCategoryGetter">
+	<Include id="BankParam" />
+	<PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+	<Fields>
+		<Field id="_id" desc="主键" require="" edittype="text" datatype="string" method="None"  type="" status="F" size="15" scale="2" default="" xpath="/id" />
+		<Field id="text" desc="目录名称" require="" edittype="text" datatype="string" method="None"  type="" status="F" size="15" scale="2" default=""
+			xpath="/text" />
+		<Field id="_text" desc="目录名称" require="" edittype="text" datatype="string" method="None"  type="" status="F" size="15" scale="2" default=""
+			xpath="/text" />
+		<Field id="_parentId" desc="parent" require="" edittype="text" datatype="string" method="None"  type="" status="F" size="15" scale="2" default=""
+			xpath="/pid" />
+		<Field id="_parentId" desc="parent" require="" edittype="text" datatype="string" method="None"  type="" status="F" size="15" scale="2" default=""
+			xpath="/pid" />
+		<Field id="_icon" desc="" method="" xpath="/iconCls" />	
+			
+		<Field id="categoryType" desc="categoryType" require="" edittype="text" datatype="string" method="None"  type="" status="F" size="15" scale="2" default=""
+			xpath="/attributes/categoryType" />
+		<Field id="categoryName" desc="categoryName" require="" edittype="text" datatype="string" method="None"  type="" status="F" size="15" scale="2" default=""
+			xpath="/attributes/categoryName" />
+		<Field id="categoryCode" desc="categoryCode" require="" edittype="text" datatype="string" method="None"  type="" status="F" size="15" scale="2" default=""
+			xpath="/attributes/categoryCode" />
+		<Field id="remark" desc="parent" require="" edittype="text" datatype="string" method="None"  type="" status="F" size="15" scale="2" default=""
+			xpath="/attributes/remark" />
+		<Field id="sno" desc="sno" require="" edittype="text" datatype="string" method="None"  type="" status="F" size="15" scale="2" default=""
+			xpath="/attributes/sno" />
+		<Field id="rulType" desc="rulType" require="" edittype="text" datatype="string" method="None"  type="" status="F" size="15" scale="2" default=""
+		xpath="/attributes/rulType" />
+	</Fields>
+	<Where></Where>
+	<Operations>
+		<Button id="btAdd" name="btAdd" desc="新增" icon="icon-add" operation="addrecord" updateClass="#" url="#" txn="" />
+		<Button id="btUpt" name="btUpt" desc="保存" icon="icon-save" operation="asysubmit" 
+			updateClass="com.gbicc.rule.update.TRuleCategoryUpdate" url="#" txn="" />
+		<Button id="btnDel" name="btnDel" desc="删除" icon="icon-remove" operation="asysubmit" 
+			updateClass="com.gbicc.rule.update.TRuleCategoryDel" url="#" txn="" />		
+	</Operations>
+</CommQry>

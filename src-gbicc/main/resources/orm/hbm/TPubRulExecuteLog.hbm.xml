@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-3-17 12:35:44 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+	<class name="com.gbicc.job.entity.TPubRulExecuteLog" table="T_PUB_RUL_EXECUTE_LOG" schema="ECUSER">
+		<comment>规则执行日志表</comment>
+		<id name="execId" type="string">
+			<column name="EXEC_ID" length="50" />
+			<generator class="assigned" />
+		</id>
+		<property name="ruleId" type="string">
+			<column name="RULE_ID" length="50" not-null="true" />
+		</property>
+		<property name="ruleCode" type="string">
+			<column name="RULE_CODE" length="50" not-null="true" />
+		</property>
+		<property name="startTime" type="timestamp">
+			<column name="START_TIME" length="26" />
+		</property>
+		<property name="endTime" type="timestamp">
+			<column name="END_TIME" length="26" />
+		</property>
+		<property name="execTime" type="big_decimal">
+			<column name="EXEC_TIME" precision="10" scale="4" />
+		</property>
+		<property name="isSuccess" type="string">
+			<column name="IS_SUCCESS" length="2" not-null="true" />
+		</property>
+		<property name="errorMsg" type="string">
+			<column name="ERROR_MSG" length="5000" />
+		</property>
+		<property name="rowDate" type="string">
+			<column name="ROW_DATE" length="10" />
+		</property>
+	</class>
+</hibernate-mapping>

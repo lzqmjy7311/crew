@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-11-3 19:39:26 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+    <class name="com.gbicc.warn.entity.TWarnDisposalRep" table="T_PL_WARN_DISPOSAL_REP" schema="ECUSER">
+            <id name="id" type="string">
+                <column name="ID" length="32" />
+                <generator class="uuid.hex" />
+            </id>
+            <property name="customerId" type="string">
+                <column name="CUSTOMER_ID" length="32" />
+            </property>
+            <property name="taskId" type="string">
+                <column name="TASK_ID" length="32" />
+            </property>
+            <property name="custCode" type="string">
+                <column name="CUST_CODE" length="32" />
+            </property>
+            <property name="custName" type="string">
+                <column name="CUST_NAME" length="64" />
+            </property>
+            <property name="custType" type="string">
+                <column name="CUST_TYPE" length="25" />
+            </property>
+            <property name="loanAccount" type="string">
+                <column name="LOAN_ACCOUNT" length="32" />
+            </property>
+            <property name="productCode" type="string">
+                <column name="PRODUCT_CODE" length="32" />
+            </property>
+            <property name="loanAmount" type="java.lang.Double">
+                <column name="LOAN_AMOUNT" precision="53" scale="0" />
+            </property>
+            <property name="loanBalance" type="java.lang.Double">
+                <column name="LOAN_BALANCE" precision="53" scale="0" />
+            </property>
+            <property name="loanPeriod" type="java.lang.Integer">
+                <column name="LOAN_PERIOD" />
+            </property>
+            <property name="operator" type="string">
+                <column name="OPERATOR" length="32" />
+            </property>
+            <property name="operBank" type="string">
+                <column name="OPER_BANK" length="32" />
+            </property>
+            <property name="industry" type="string">
+                <column name="INDUSTRY" length="25" />
+            </property>
+            <property name="guaranteeMethod" type="string">
+                <column name="GUARANTEE_METHOD" length="25" />
+            </property>
+            <property name="slidingScales" type="java.lang.Double">
+                <column name="SLIDING_SCALES" precision="53" scale="0" />
+            </property>
+            <property name="accountStatus" type="string">
+                <column name="ACCOUNT_STATUS" length="25" />
+            </property>
+            <property name="riskClass" type="string">
+                <column name="RISK_CLASS" length="25" />
+            </property>
+            <property name="visitWay" type="string">
+                <column name="VISIT_WAY" length="25" />
+            </property>
+            <property name="visitAdd" type="string">
+                <column name="VISIT_ADD" length="25" />
+            </property>
+            <property name="leadInvestigator" type="string">
+                <column name="LEAD_INVESTIGATOR" length="32" />
+            </property>
+            <property name="assInvestigator" type="string">
+                <column name="ASS_INVESTIGATOR" length="32" />
+            </property>
+            <property name="surveyDate" type="date">
+                <column name="SURVEY_DATE" length="10" />
+            </property>
+         
+            <many-to-one 
+			name="warnSignalId" 
+			column="WARN_SIGNAL_ID"
+            class="com.gbicc.warn.entity.TWarnSignal" 
+			cascade="save-update" 
+			fetch="select"
+			not-null="true"
+		    />
+		    
+            <property name="creLimconMeasures" type="string">
+                <column name="CRE_LIMCON_MEASURES" length="25" />
+            </property>
+            <property name="otherConMeasures" type="string">
+                <column name="OTHER_CON_MEASURES" length="25" />
+            </property>
+            <property name="addConMeasures" type="string">
+                <column name="ADD_CON_MEASURES" length="25" />
+            </property>
+            <property name="declarationOpi" type="string">
+                <column name="DECLARATION_OPI" length="128" />
+            </property>
+            <property name="isZdzqzwjfflss" type="string">
+                <column name="IS_ZDZQZWJFFLSS" length="25" />
+            </property>
+            <property name="isEytfyhzf" type="string">
+                <column name="IS_EYTFYHZF" length="25" />
+            </property>
+            <property name="isTdfsbh" type="string">
+                <column name="IS_TDFSBH" length="25" />
+            </property>
+            <property name="isTgxjzl" type="string">
+                <column name="IS_TGXJZL" length="25" />
+            </property>
+            <property name="isCweh" type="string">
+                <column name="IS_CWEH" length="25" />
+            </property>
+            <property name="isZyzc" type="string">
+                <column name="IS_ZYZC" length="25" />
+            </property>
+            <property name="isCzlhhfccg" type="string">
+                <column name="IS_CZLHHFCCG" length="25" />
+            </property>
+            <property name="isZzdx" type="string">
+                <column name="IS_ZZDX" length="25" />
+            </property>
+            <property name="isTcbtc" type="string">
+                <column name="IS_TCBTC" length="25" />
+            </property>
+            <property name="isPcbpc" type="string">
+                <column name="IS_PCBPC" length="25" />
+            </property>
+            <property name="isFmbd" type="string">
+                <column name="IS_FMBD" length="25" />
+            </property>
+            <property name="isZdzh" type="string">
+                <column name="IS_ZDZH" length="25" />
+            </property>
+            <property name="isBsxxycs" type="string">
+                <column name="IS_BSXXYCS" length="25" />
+            </property>
+            <property name="isXysmsx" type="string">
+                <column name="IS_XYSMSX" length="25" />
+            </property>
+    </class>
+</hibernate-mapping>

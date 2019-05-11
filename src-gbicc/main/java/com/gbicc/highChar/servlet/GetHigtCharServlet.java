@@ -1,0 +1,78 @@
+package com.gbicc.highChar.servlet;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+import net.sf.json.JSONObject;
+
+import com.gbicc.bpm.service.ProcessManagerService;
+import com.gbicc.highChar.service.GetHighCharDataService;
+import com.huateng.ebank.framework.util.ApplicationContextUtils;
+
+public class GetHigtCharServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	public GetHigtCharServlet() {
+		super();
+	}
+
+	protected void doGet(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		this.doPost(request, response);
+	}
+
+	protected void doPost(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+			request.setCharacterEncoding("UTF-8");
+			response.setCharacterEncoding("UTF-8");
+		try {
+			PrintWriter pw=response.getWriter();
+			String checkBox="";
+			String checkBox1="";
+			String jzyear=request.getParameter("jzyear");
+			String caliber=request.getParameter("caliber");//口径
+			String project=request.getParameter("project");//统计项
+			String backQs=request.getParameter("backQs");//回溯期数
+			String startDate=request.getParameter("startDate");//回溯起始时间
+			String type=request.getParameter("type");//业务类别  财报科目 course  财报指标 index 
+			String customerNum=request.getParameter("customerNum");//客户号 
+			checkBox=request.getParameter("checkBox");
+			checkBox1=request.getParameter("checkBox1");
+//			customerNum="000008203631";
+//			type="index";
+			if(type.equals("course")){
+				String firstStr=null;
+				JdbcTemplate jdbcTemplate=(JdbcTemplate) ApplicationContextUtils.getBean("JdbcTemplate");
+				
+				int i=project.indexOf(",");
+				if(project!=null&&!project.equals("")&&i!=-1){
+					firstStr=project.substring(0,i);
+					String QuerySql="SELECT COUNT(1) FROM ECUSER.T_CM_FINANCE_STATEMENT_CODE E WHERE E.PROJECT_CD='"+firstStr+"'";
+					int j=jdbcTemplate.queryForInt(QuerySql);
+					if(j==0){
+						project=project.substring(i+1);
+					}
+				}
+			}
+			String[] projects=project.split(",");
+		
+			GetHighCharDataService  getHighCharDataService=GetHighCharDataService.getInstance();
+			JSONObject jsonData= getHighCharDataService.getPlusCharts(caliber,projects,customerNum,type,startDate,backQs,checkBox,checkBox1);
+			String result=jsonData.toString();
+			pw.println(result);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+}

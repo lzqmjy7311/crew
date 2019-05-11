@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.huateng.ebank.entity.data.mng">
+	<class
+		name="FpPageDetail"
+		table="FP_PAGE_DETAIL"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="id"
+			type="string"
+			column="ID"
+		>
+			<generator class="uuid.hex" />  
+		</id>
+
+		<property
+			name="name"
+			column="NAME"
+			type="string"
+			not-null="true"
+			length="256"
+		/>
+		<property
+			name="descInfo"
+			column="DESC_INFO"
+			type="string"
+			not-null="true"
+			length="512"
+		/>
+		<property
+			name="pagfeUrl"
+			column="PAGFE_URL"
+			type="string"
+			not-null="true"
+			length="256"
+		/>
+		<property
+			name="paramList"
+			column="PARAM_LIST"
+			type="string"
+			not-null="true"
+			length="512"
+		/>
+		<property
+			name="parent"
+			column="PARENT"
+			type="string"
+			not-null="true"
+			length="36"
+		/>
+		<property
+			name="seqid"
+			column="SEQID"
+			type="string"
+			not-null="false"
+			length="3"
+		/>
+		<property
+			name="optDetails"
+			column="OPT_DETAILS"
+			type="string"
+			not-null="false"
+			length="512"
+		/>
+		<property
+			name="status"
+			column="STATUS"
+			type="string"
+			not-null="true"
+			length="1"
+		/>
+		<property
+			name="lastUpdTlr"
+			column="LAST_UPD_TLR"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="lastUpdTs"
+			column="LAST_UPD_TS"
+			type="string"
+			not-null="false"
+			length="17"
+		/>
+
+
+	</class>	
+</hibernate-mapping>

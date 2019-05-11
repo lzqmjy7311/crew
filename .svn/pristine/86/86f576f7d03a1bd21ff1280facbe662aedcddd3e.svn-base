@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-12-15 10:28:17 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.view.entity.AffiliatedCView" table="AFFILIATED_C_VIEW" schema="ECUSER">
+            <id name="affiCustNum" type="string">
+                <column name="AFFI_CUST_NUM" length="21" />
+            </id>
+            <property name="affiTpCd" type="string">
+                <column name="AFFI_TP_CD" length="1" />
+            </property>
+            <property name="customerNum" type="string">
+                <column name="CUSTOMER_NUM" length="21" />
+            </property>
+            <property name="custname" type="string">
+                <column name="CUSTNAME" />
+            </property>
+            <property name="businessLicenseNum" type="string">
+                <column name="BUSINESS_LICENSE_NUM" length="30" />
+            </property>
+            <property name="registeredCapital" type="big_decimal">
+                <column name="REGISTERED_CAPITAL" precision="22" />
+            </property>
+            <property name="foundedDate" type="string">
+                <column name="FOUNDED_DATE" length="25" />
+            </property>
+            <property name="outstandingAdvanceCount" type="java.lang.Integer">
+                <column name="OUTSTANDING_ADVANCE_COUNT" />
+            </property>
+            <property name="advanceBalance" type="big_decimal">
+                <column name="ADVANCE_BALANCE" precision="18" />
+            </property>
+    </class>
+</hibernate-mapping>

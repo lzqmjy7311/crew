@@ -1,0 +1,30 @@
+<CommQry title="TRewL17CompanyCreditBankacceptanceId" navigate="TRewL17CompanyCreditBankacceptanceId" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB"
+async="true" transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.L17Getter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="fdId" desc="" edittype="text" datatype="string" xpath="/fdId" />
+        <Field id="fdFinancecode" desc="授信机构" edittype="text" datatype="string"
+        xpath="/fdFinancecode" />
+        <Field id="fdContractcode" desc="业务编号" edittype="text" datatype="string"
+        xpath="/fdContractcode" />
+        <Field id="fdCurrency" desc="币种" edittype="text" datatype="string"
+        xpath="/fdCurrency" />
+        <Field id="fdPosum" desc="出票金额" edittype="text" datatype="string" xpath="/fdPosum" />
+        <Field id="fdPostartdate" desc="承兑日期" edittype="text" datatype="string"
+        xpath="/fdPostartdate" />
+        <Field id="fdPostopdate" desc="到期日期" edittype="text" datatype="string"
+        xpath="/fdPostopdate" />
+        <Field id="fdSettlementdate" desc="结清日期" edittype="text" datatype="string"
+        xpath="/fdSettlementdate" />
+        <Field id="fdFiveclasscode" desc="五级分类" edittype="text" datatype="string"
+        xpath="/fdFiveclasscode" />
+        <Field id="fdPaidbackflag" desc="垫款" edittype="text" datatype="string"
+        xpath="/fdPaidbackflag" />
+        <Field id="fdIndexId" desc="" edittype="text" datatype="string"
+        xpath="/fdIndexId" />
+        <Field id="fdIsbad" desc="是否正常" edittype="text" datatype="string" xpath="/fdIsbad" />
+        <Field id="fdWarnId" desc="" edittype="text" datatype="string" xpath="/fdWarnId" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

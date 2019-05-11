@@ -1,0 +1,164 @@
+package com.gbicc.bpm.getter;
+
+import java.util.List;
+import java.util.Map;
+
+import net.sf.json.JSONObject;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import com.gbicc.bpm.SpringContextHolder;
+import com.gbicc.bpm.operation.TLoanAccountDutyDistributeOperation;
+import com.huateng.common.err.Module;
+import com.huateng.common.err.Rescode;
+import com.huateng.commquery.result.Result;
+import com.huateng.commquery.result.ResultMng;
+import com.huateng.ebank.business.common.PageQueryResult;
+import com.huateng.ebank.framework.web.commQuery.BaseGetter;
+import com.huateng.exception.AppException;
+
+/**
+ * 获取分派前查检人
+ * @author likm
+ *
+ */
+public class OldCheckUserGetter extends BaseGetter {
+
+	@Override
+	public Result call() throws AppException {
+		try {
+			PageQueryResult pageResult = getData();
+			ResultMng.fillResultByList(getCommonQueryBean(),getCommQueryServletRequest(), pageResult.getQueryResult(),getResult());
+			result.setContent(pageResult.getQueryResult());
+			result.getPage().setTotalPage(pageResult.getPageCount(getResult().getPage().getEveryPage()));
+			result.init();
+			return result;
+		} catch (AppException appEx) {
+			throw appEx;
+		} catch (Exception ex) {
+			throw new AppException(Module.SYSTEM_MODULE,Rescode.DEFAULT_RESCODE, ex.getMessage(), ex);
+		}
+	}
+
+	protected PageQueryResult getData() throws Exception {
+		String loanacnos = (String) getCommQueryServletRequest().getParameterMap().get("loanacnos");
+		String flag = (String) getCommQueryServletRequest().getParameterMap().get("flag");
+		String condition = (String) getCommQueryServletRequest().getParameterMap().get("condition");
+		String bankid = (String) getCommQueryServletRequest().getParameterMap().get("bankid");
+		PageQueryResult result = new PageQueryResult();
+		List<Map<String,Object>> resultList=null;
+		if(StringUtils.isNotEmpty(flag) && flag.equals("all")){
+			resultList=getListByCondition(condition,bankid);
+		}else{
+			resultList=getListByLoanacnos(loanacnos);
+		}
+		if(resultList!=null){
+			result.setQueryResult(resultList);
+			result.setTotalCount(resultList.size());
+		}
+		return result;
+	}
+	
+	/**
+	 * 根据实际查询情况及机构得到分派前检查人
+	 * @param condition
+	 * @param bankid
+	 * @return
+	 */
+	public List<Map<String,Object>> getListByCondition(String condition,String bankid){
+		String sql="SELECT DISTINCT CASE WHEN D.FD_DUTYID IS NOT NULL THEN B1.BRCODE "+ 
+		"WHEN A.DUTYID IS NOT NULL THEN TLR.BRCODE ELSE '' END AS BRCODE,"+
+		"CASE WHEN D.FD_DUTYID IS NOT NULL THEN B1.BRNAME WHEN A.DUTYID IS NOT NULL THEN B2.BRNAME ELSE '' END AS BRNAME,"+
+		"CASE WHEN D.FD_DUTYID IS NOT NULL THEN D.FD_DUTYID WHEN A.DUTYID IS NOT NULL THEN A.DUTYID ELSE '' END AS TLRNO,"+
+		"CASE WHEN D.FD_DUTYID IS NOT NULL THEN D.FD_DUTYNAME WHEN A.DUTYID IS NOT NULL THEN TLR.TLR_NAME ELSE '' END AS TLRNAME "+
+		"FROM T_EDW_PLS_ACCOUNT A  LEFT JOIN T_PL_ACCOUNT_REL_DUTY D ON A.LOANACNO=D.FD_LOANACNO LEFT JOIN TLR_INFO TLR "+ 
+		"ON A.DUTYID=TLR.TLRNO LEFT JOIN TLR_INFO TLR2 ON D.FD_DUTYID=TLR2.TLRNO LEFT JOIN BCTL B1 ON TLR2.BRCODE=B1.BRCODE "+ 
+		"LEFT JOIN BCTL B2 ON TLR.BRCODE=B2.BRCODE "+
+		"WHERE A.PAYOFFFLAG='00' AND A.PRODID NOT IN ('93010200','96010200','96010100','93010100') AND A.BANKID='"+bankid+"' "+ 
+		"AND LOANACNO NOT IN (SELECT FD_LOANACNO FROM T_PL_ACCOUNT_DUTY_DISTRIBUTE WHERE FD_STATUS='"+TLoanAccountDutyDistributeOperation.STATUS_APL_ING+"' AND FD_DIST_FLAG='"+TLoanAccountDutyDistributeOperation.DIST_FLAG_SINGLE+"') "+
+		"AND LOANACNO NOT IN (SELECT T2.FD_LOANACNO FROM T_PL_ACCOUNT_DUTY_DISTRIBUTE T1 "+
+		"JOIN T_PL_ACCOUNT_REL_DISTRIBUTE T2 ON T1.FD_ID=T2.FD_DIST_ID WHERE T1.FD_DIST_FLAG='"+TLoanAccountDutyDistributeOperation.DIST_FLAG_MUCH+"' AND FD_STATUS='"+TLoanAccountDutyDistributeOperation.STATUS_APL_ING+"')";
+		if(StringUtils.isNotEmpty(condition)){
+			JSONObject json=JSONObject.fromObject(condition);
+			if(json.get("acctNo")!=null && StringUtils.isNotEmpty(json.getString("acctNo"))){
+				sql+=" and a.loanacno='"+json.getString("acctNo")+"' ";
+			}
+			if(json.get("prodname")!=null && StringUtils.isNotEmpty(json.getString("prodname"))){
+				sql+=" and a.prodname like '%"+json.getString("prodname")+"%' ";
+			}
+			if(json.get("custname")!=null && StringUtils.isNotEmpty(json.getString("custname"))){
+				sql+=" and a.custname like '%"+json.getString("custname")+"%' ";
+			}
+			if(json.get("acflag")!=null && StringUtils.isNotEmpty(json.getString("acflag"))){
+				sql+=" and a.acflag='"+json.getString("acflag")+"' ";
+			}
+			if(json.get("acflag2")!=null && StringUtils.isNotEmpty(json.getString("acflag2"))){
+				sql+=" and a.acflag2='"+json.getString("acflag2")+"' ";
+			}
+			if(json.get("riskflag")!=null && StringUtils.isNotEmpty(json.getString("riskflag"))){
+				sql+=" and a.riskflag='"+json.getString("riskflag")+"' ";
+			}
+			if(json.get("dutyid")!=null && StringUtils.isNotEmpty(json.getString("dutyid"))){
+				sql+=" and a.dutyid='"+json.getString("dutyid")+"' ";
+			}
+		}
+		JdbcTemplate jdbcTemplate=SpringContextHolder.getBean(JdbcTemplate.class);
+		List<Map<String,Object>> resultList=jdbcTemplate.queryForList(sql);
+		return resultList;
+	}
+	
+	/**
+	 * 根据贷款账号得到分派前检查人
+	 * @param loanacnos
+	 * @return
+	 */
+	public List<Map<String,Object>> getListByLoanacnos(String loanacnos){
+		List<Map<String,Object>> resultList=null;
+		if(StringUtils.isNotEmpty(loanacnos)){
+			String[] loannos=loanacnos.split(",");
+			String loanno="";
+			for(int i=0;i<loannos.length;i++){
+				loanno=loanno+"'"+loannos[i]+"',";
+			}
+			loanno=loanno.substring(0,loanno.length()-1);
+			//根据贷款账号查找，若T_PL_ACCOUNT_REL_DUTY(账户关联责任人和催收人表)中有记录则取该表中的记录，没有则取账户表中的记录。
+			String sql="SELECT DISTINCT"+
+			"  CASE "+
+			"  		WHEN D.FD_DUTYID IS NOT NULL THEN B1.BRCODE "+
+			"  		WHEN A.DUTYID IS NOT NULL THEN TLR.BRCODE "+
+			"  		ELSE ''  "+
+			"  END AS BRCODE, "+
+			"  CASE "+
+			"  		WHEN D.FD_DUTYID IS NOT NULL THEN B1.BRNAME "+
+			"  		WHEN A.DUTYID IS NOT NULL THEN B2.BRNAME "+
+			"  		ELSE '' "+
+			"  END AS BRNAME, "+
+			"  CASE "+
+			"  		WHEN D.FD_DUTYID IS NOT NULL THEN D.FD_DUTYID "+
+			"  		WHEN A.DUTYID IS NOT NULL THEN A.DUTYID "+
+			"  		ELSE '' "+
+			"  END AS TLRNO, "+
+			"  CASE "+
+			"  		WHEN D.FD_DUTYID IS NOT NULL THEN D.FD_DUTYNAME "+
+			"  		WHEN A.DUTYID IS NOT NULL THEN TLR.TLR_NAME "+
+			"  		ELSE '' "+
+			"  END AS TLRNAME "+
+			"FROM T_EDW_PLS_ACCOUNT A  "+
+			"LEFT JOIN T_PL_ACCOUNT_REL_DUTY D "+
+			"ON A.LOANACNO=D.FD_LOANACNO "+
+			"LEFT JOIN TLR_INFO TLR "+
+			"ON A.DUTYID=TLR.TLRNO "+
+			"LEFT JOIN TLR_INFO TLR2 "+
+			"ON D.FD_DUTYID=TLR2.TLRNO "+
+			"LEFT JOIN BCTL B1 "+
+			"ON TLR2.BRCODE=B1.BRCODE "+
+			"LEFT JOIN BCTL B2 "+
+			"ON TLR.BRCODE=B2.BRCODE "+
+			"WHERE A.LOANACNO IN ("+loanno+")";
+			JdbcTemplate jdbcTemplate=SpringContextHolder.getBean(JdbcTemplate.class);
+			resultList=jdbcTemplate.queryForList(sql);
+		}
+		return resultList;
+	}
+}

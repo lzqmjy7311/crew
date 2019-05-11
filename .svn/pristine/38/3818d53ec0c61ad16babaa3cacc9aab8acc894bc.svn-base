@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="5" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="">
+	<Include id="BankParam" />
+	
+	<Fields>
+        <Field id="dataItem" xpath="/dataItem"  desc="验证数据项" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" />
+        <Field id="creditSystem" desc="信贷系统" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/creditSystem" />
+        <Field id="creditInvestigationSystem" desc="征信系统" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/creditInvestigationSystem" />
+        <Field id="taxData" desc="工商税务数据" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/taxData" />
+        <Field id="GjfData" desc="公检法数据" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/GjfData" />
+        <Field id="verifyResult" desc="验证结果" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/verifyResult" />
+	</Fields>
+</CommQry>

@@ -1,0 +1,558 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<@CommonQueryMacro.page title="功能菜单表">
+	<@CommonQueryMacro.CommonQuery id="roleIndustryTreeAsync" init="false" submitMode="all">
+		<div style="padding:5px;width:800px;">
+			<a href="javascript:void(0)" id="mb1" class="easyui-menubutton" data-options="menu:'#mm1',iconCls:'icon-add'">菜单新增</a>
+			<a href="javascript:void(0)" id="mb2" class="easyui-menubutton" data-options="menu:'#mm2',iconCls:'icon-add'">功能新增</a>
+			<@CommonQueryMacro.Button id="btnEdit" />
+			<@CommonQueryMacro.SimpleButton id="sbtnRemove" desc="删除" icon="icon-remove" />
+			<@CommonQueryMacro.Button id="btnSave"/>
+			<@CommonQueryMacro.SimpleButton id="sbtnUp" desc="上移" />
+			<@CommonQueryMacro.SimpleButton id="sbtnDown" desc="下移" />
+			<div style="display:none">
+				<@CommonQueryMacro.SimpleButton id="sbtnTest" desc="测试" />
+				<@CommonQueryMacro.Button id="btnRemove" />
+			</div>
+		</div>
+		<div id="mm1" style="width:150px;">
+			<div onclick="javascript:prepareInsert(false,true)" data-options="iconCls:'icon-add'">同级目录</div>
+			<div onclick="javascript:prepareInsert(false,false)" data-options="iconCls:'icon-add'">同级菜单</div>
+			<div onclick="javascript:prepareInsert(true,true)" data-options="iconCls:'icon-add'">子目录</div>
+			<div onclick="javascript:prepareInsert(true,false)" data-options="iconCls:'icon-add'">子菜单</div>
+		</div>
+		<@CommonQueryMacro.DataTable id="datatable2" title="功能菜单表" treeGrid="true" hasFrame="true" height="" readonly="true" treeField="name" fieldStr="name[20%],id[40%],pagepath" width="100%" />
+  		<@CommonQueryMacro.FloatWindow id="signWindow" label="" width="550" resize="true" defaultZoom="normal" minimize="false" maximize="false" closure="true" float="true" exclusive="true" position="center" show="false" >
+  			<table width="100%">
+  				<tr>
+  					<td>
+						<@CommonQueryMacro.Group id="group1" label="详细属性" fieldStr="id,name" colNm="2"/>
+  					</td>
+  				</tr>
+  				<tr style="display:none">
+  					<td >
+  						<input id="pageid" type="file"  />
+  							<@CommonQueryMacro.Button id="buttonSave" />
+      				</td>
+      			</tr>
+  				<tr>
+  					<td align="center">
+  						<@CommonQueryMacro.SimpleButton id="sbtnSave" icon="icon-save" desc="保存" />
+      				</td>
+      			</tr>
+      		</table>
+ 		 </@CommonQueryMacro.FloatWindow>
+ 		 <@CommonQueryMacro.FloatWindow id="btWindow" label="" width="550" resize="true" defaultZoom="normal" minimize="false" maximize="false" closure="true" float="true" exclusive="true" position="center" show="false" >
+  			<table width="100%">
+  				<tr>
+  					<td>
+						<@CommonQueryMacro.Group id="bt1" label="详细属性" fieldStr="id,name" colNm="2"/>
+  					</td>
+  				</tr>
+  				<tr>
+  					<td align="center">
+  						<@CommonQueryMacro.SimpleButton id="butnSave" desc="保存"/>
+      				</td>
+      			</tr>
+      		</table>
+ 		 </@CommonQueryMacro.FloatWindow>
+ 		  <@CommonQueryMacro.FloatWindow id="subPage" label="" width="550" resize="true" defaultZoom="normal" minimize="false" maximize="false" closure="true" float="true" exclusive="true" position="center" show="false" >
+  			<table width="100%">
+  				<tr>
+  					<td>
+						<@CommonQueryMacro.Group id="bt2" label="详细属性" fieldStr="id,name" colNm="2"/>
+  					</td>
+  				</tr>
+  				<tr>
+  					<td align="center">
+  						<@CommonQueryMacro.SimpleButton id="subSave" desc="保存"/>
+      				</td>
+      			</tr>
+      		</table>
+ 		 </@CommonQueryMacro.FloatWindow>
+	</@CommonQueryMacro.CommonQuery>
+	<script>
+		var isTopMode = true;
+		var tmpSaveFlag = false;
+       
+		function butnSave_onClick(){
+			buttonSave.click();
+		}
+		function subSave_onClick(){
+			buttonSave.click();
+		} 
+		
+		function roleIndustryTreeAsync_dataset_onSetValue(dataset,field,value){
+			if(field.fieldName=='id'){
+				var oldv = dataset.getString('id');
+				if(oldv) {
+					var rec=getDataset().firstUnit;
+					while(rec) {
+						if(rec.getString('pid') == oldv){
+							rec.setValue('pid', value);
+						}
+						rec=rec.nextUnit;
+					}
+				}
+			}
+			return value;
+		}
+		
+		var subFlag=true;
+		function other_onClick(){
+			roleIndustryTreeAsync_dataset.setParameter("flag",2);
+			subNew_onClick();
+
+		}
+		
+		function subNew_onClick(){
+			var pid=roleIndustryTreeAsync_dataset.getValue("id");			
+			roleIndustryTreeAsync_dataset.insertRecord('child');
+			roleIndustryTreeAsync_dataset.setValue('pid',pid);
+			roleIndustryTreeAsync_dataset.setValue('location',isTopMode?'2':'1');
+			roleIndustryTreeAsync_dataset.setValue('isdirectory','0');
+			roleIndustryTreeAsync_dataset.setValue('status','1');
+			//按钮和子页面的资源类型为1,其他页面的资源类型为0或者不写。
+			roleIndustryTreeAsync_dataset.setFieldRequired("id",true);
+			subwindow_subPage.show();
+			roleIndustryTreeAsync_dataset.setParameter("flag",0);
+		}
+		
+		function subPage_floatWindow_afterClose(win){
+			roleIndustryTreeAsync_dataset.setFieldRequired("id",false);
+			if(subFlag){roleIndustryTreeAsync_dataset.cancelRecord();}
+		}
+    	function subPage_floatWindow_afterHide(win){
+    		roleIndustryTreeAsync_dataset.setFieldRequired("id",false);
+    		if(subFlag){roleIndustryTreeAsync_dataset.cancelRecord();}
+		}
+		
+		
+		
+		function createInput(){
+			var dom=$("#fileSelect");
+			if(dom.size()==0){
+	            $("#editor_pagepath").after($('<span id="fileSelect" class="combo-arrow" style=""></span>'));
+				var fileD=$("#pageid");
+				var sp=$("#fileSelect");
+				sp.bind("click",function(){
+					fileD[0].click();
+				});
+				fileD.bind('change',function(e){
+					var src = e.target || window.event.srcElement;  
+					var path=getFullPath(src);
+					alert(path);
+					roleIndustryTreeAsync_dataset.setValue('pagepath',path);
+				});
+				function getFullPath(obj){ 
+				  if(obj){ 
+					 if (window.navigator.userAgent.indexOf("MSIE")>=1){ 
+					      obj.select(); 
+					      return document.selection.createRange().text; 
+					 }else if(window.navigator.userAgent.indexOf("Firefox")>=1){ 
+					      if(obj.files){ 
+					        return obj.files.item(0).getAsDataURL(); 
+					      } 
+					     return obj.value; 
+					 } 
+					  return obj.value; 
+					 } 
+				  } 
+			}
+		}
+		
+		function sbtnTest_onClick(){
+			alert(getDataset().getValue('isdirectory'));
+		}
+		
+		function hasSelected(){
+			return $('#datatable2').treegrid('getSelected')!=null;
+		}
+		
+		function datatable2_onDbClick(record,index){
+			btnEdit.click();
+		}
+		
+		function sbtnUp_onClick(){
+			if(!hasSelected()){
+				return;
+			}
+			var curRecord = getDataset().record;
+			var pid = curRecord.getValue('pid');
+			
+			var arr = new Array();
+			var rec=getDataset().firstUnit;
+			while(rec) {
+				if(rec.getValue('pid') == pid && rec.recordState!='delete'){
+					arr.push(rec);
+				}
+			  	rec=rec.nextUnit;
+			}
+			sortByShowSeq(arr);
+			if(curRecord === arr[0]){
+				//当前记录是第一条记录，则无法往上移动
+				return;
+			}else{
+				//交换当前记录和下一条记录的showseq，并做位置交换
+				var index = -1;
+				for(var i=0;i<arr.length;i++){
+					if(curRecord===arr[i]){
+						index = i;
+					}
+					arr[i].setValue('showseq',i);
+				}
+				var tmp = curRecord.getValue('showseq');
+				var nextRecord = arr[index-1];
+				curRecord.setValue('showseq',nextRecord.getValue('showseq'));
+				nextRecord.setValue('showseq',tmp);
+				moveTreegridRecord(datatable2,'up');
+			}
+		}
+		
+		function isBlank(v){
+			if(isNaN(v)){
+				return true;
+			}
+			if(typeof(v)=="string"){
+				return $.trim(v)=='';
+			}
+		}
+		
+		function sortByShowSeq(arr){
+			arr.sort(function(a,b){
+				var v1 = isBlank(a.getString('showseq'))?Infinity:parseInt(a.getString('showseq'));
+				var v2 = isBlank(b.getString('showseq'))?Infinity:parseInt(b.getString('showseq'));
+				return v1>v2?1:-1;
+			});
+		}
+		
+		function sbtnDown_onClick(){
+			if(!hasSelected){
+				return;
+			}
+			var curRecord = getDataset().record;
+			var pid = curRecord.getValue('pid');
+			
+			var arr = new Array();
+			var rec=getDataset().firstUnit;
+			while(rec) {
+				if(rec.getValue('pid') == pid && rec.recordState!='delete'){
+					arr.push(rec);
+				}
+			  	rec=rec.nextUnit;
+			}
+			sortByShowSeq(arr);
+			if(curRecord === arr[arr.length-1]){
+				//当前记录是最后一条记录，则无法往下移动
+				return;
+			}else{
+				//交换当前记录和下一条记录的showseq，并做位置交换
+				var index = -1;
+				for(var i=0;i<arr.length;i++){
+					if(curRecord===arr[i]){
+						index = i;
+					}
+					arr[i].setValue('showseq',i);
+				}
+				var tmp = curRecord.getValue('showseq');
+				var nextRecord = arr[index+1];
+				curRecord.setValue('showseq',nextRecord.getValue('showseq'));
+				nextRecord.setValue('showseq',tmp);
+				moveTreegridRecord(datatable2,'down');
+			}
+		}
+		
+		function syncIcon(){
+			if(getDataset().getValue('isdirectory')=='1' && getDataset().getValue('iconCls')==''){
+				var $ic = $('.datagrid-row-selected>td>div>.tree-icon');
+				$ic.removeClass('tree-file');
+				$ic.addClass('tree-folder');
+			}
+		}
+		
+		function initMenu(){
+			$('#mb1').menubutton({
+				plain:false
+			});
+			$('#mb2').menubutton({
+				plain:false
+			});
+		}
+		
+		function buttonSave_onClickCheck(button){
+			var rec=getDataset().firstUnit;
+			var currentId = getDataset().getValue('id');
+			var isSameId = false;
+			while(rec) {
+				if(rec.getValue('id')==currentId && rec!=getDataset().record){
+					isSameId = true;
+					break;
+				}
+			  	rec=rec.nextUnit;
+			}
+			if(currentId&&isSameId){
+				alert('该编号已存在!');
+				return false;
+			}else{
+				var isSameId = false;
+				var rec=getDataset().firstUnit;
+				while(rec) {
+					if(rec!=getDataset().record){
+						isSameId = true;
+						break;
+					}
+				  	rec=rec.nextUnit;
+				}
+			}
+			
+			
+			
+			
+		}
+		
+		var buttonflag=true;
+		function buttonSave_postSubmit(button){
+            buttonflag=false;
+            subFlag=false;
+			subwindow_btWindow.close();
+			subwindow_subPage.close();
+		}
+		
+		function btWindow_floatWindow_afterClose(win){
+			roleIndustryTreeAsync_dataset.setFieldRequired("id",false);
+			roleIndustryTreeAsync_dataset.setFieldReadOnly("pagepath",false);
+			if(buttonflag)roleIndustryTreeAsync_dataset.cancelRecord();
+		    
+		}
+		function btWindow_floatWindow_afterHide(win){
+			roleIndustryTreeAsync_dataset.setFieldRequired("id",false);
+			roleIndustryTreeAsync_dataset.setFieldReadOnly("pagepath",false);
+      		if(buttonflag)roleIndustryTreeAsync_dataset.cancelRecord();
+		}
+		
+		function sbtnSave_onClick(){
+			var v1=$("#editor_id",$("#signWindow")).validatebox('isValid');
+			var rec=getDataset().firstUnit;
+			var currentId = getDataset().getValue('id');
+			var isSameId = false;
+			while(rec) {
+				if(rec.recordState !='discard'&&rec.getValue('id')==currentId && rec!=getDataset().record){
+					isSameId = true;
+					break;
+				}
+			  	rec=rec.nextUnit;
+			}
+			//getDataset().updateRecord();
+			if(isSameId){
+				alert('该编号已存在!');
+			}
+			if(v1&&!isSameId){
+				if(getDataset().getValue('isdirectory')!='1' && $.trim(getDataset().getValue('pagepath'))==''){
+					alert('非目录时必须指定页面路径!');
+					return;
+				}
+			
+				//插入文件夹时，强制文件夹图标
+				syncIcon();
+				pagepathBak='';
+				tmpSaveFlag = true;
+				subwindow_signWindow.close();
+			}
+		}
+		
+		function getDataset(){
+			return roleIndustryTreeAsync_dataset;
+		}
+			
+		
+		function doRefresh(){
+			roleIndustryTreeAsync_dataset.flushData(roleIndustryTreeAsync_dataset.pageIndex);
+		}
+		
+		function initCallGetter_post(){
+			roleIndustryTreeAsync_dataset.setParameter('mode',2);
+			doRefresh();
+			initMenu();
+			// 临时解决一次性加载树第一次不选中任何数据的bug
+			setTimeout(function(){$('#datatable2').treegrid('select',getDataset().getValue('_id'));},200);
+		}	
+		
+		function btnNew_onClick(){
+			buttonflag=true;
+			var pagepath=roleIndustryTreeAsync_dataset.getValue('pagepath');
+				if(!pagepath){
+					alert("你选中的为菜单目录，请先添加页面再添加功能资源。");
+					return ;
+				}
+			var id=roleIndustryTreeAsync_dataset.getValue('id');		
+			roleIndustryTreeAsync_dataset.insertRecord('child');
+			roleIndustryTreeAsync_dataset.setValue('pid',id);
+			roleIndustryTreeAsync_dataset.setValue('location',isTopMode?'2':'1');
+			roleIndustryTreeAsync_dataset.setValue('isdirectory','0');
+			roleIndustryTreeAsync_dataset.setValue('status','1');
+			//按钮的资源类型为1,其他页面的资源类型为0或者不写。
+			roleIndustryTreeAsync_dataset.setFieldRequired("id",true);
+			roleIndustryTreeAsync_dataset.setFieldReadOnly("pagepath",true);
+			subwindow_btWindow.show();
+		}
+		
+		function prepareInsert(asChild,isDir){
+			//检测插入子项时父节点是否为目录
+			if(asChild && getDataset().getValue('isdirectory')!='1'){
+				alert('子项的上级必须是目录！');
+				return;
+			}
+			
+			getDataset().setFieldReadOnly('id',false);
+			var pid = '0';
+			try{
+				pid = getDataset().getValue(asChild?'id':'pid');
+			}catch(e){
+			} 
+			getDataset().insertRecord(asChild?'child':'after');
+			getDataset().setValue('pid',pid);
+			getDataset().setValue('location',isTopMode?'2':'1');
+			getDataset().setValue('isdirectory',isDir?'1':'0');
+			getDataset().setValue('status','1');
+			getDataset().setValue('location',isTopMode?'2':'1');
+			getDataset().setFieldReadOnly('pagepath',isDir);
+			roleIndustryTreeAsync_dataset.setFieldRequired("id",true);
+			subwindow_signWindow.show();
+			//createInput();
+			//计算当前的showseq
+			var beforeseq = -1;
+			var afterseq = -1;
+			var finded = false;
+			var rec=getDataset().firstUnit;
+			while(rec) {
+				if(rec.getValue('pid')==pid){
+					var curSeqStr = rec.getValue('showseq');
+					var curSeq = $.isNumeric(curSeqStr)?parseInt(curSeqStr):0;
+					if(!finded && rec!=getDataset().record){
+						beforeseq = curSeq;
+					}else if(finded){
+						afterseq = curSeq;
+						break;
+					}else{
+						finded = true;
+					}
+				}
+			  	rec=rec.nextUnit;
+			}
+			
+			var seq;
+			if(afterseq==beforeseq){
+				seq=afterseq;
+			}else{
+				seq=beforeseq+1;
+			}
+			seq = seq<0?0:seq;
+			getDataset().setValue('showseq',seq);
+			
+			sbtnUp.click();
+			sbtnDown.click();
+		}
+		
+		function btnEdit_onClick(){
+			//getDataset().setFieldReadOnly('id',getDataset().record.recordState!='insert');//新增记录可编辑ID，旧记录则设置为false
+			var pid=roleIndustryTreeAsync_dataset.getValue('_parentId');	
+			if(funClass=='0'){
+				var pagepath=roleIndustryTreeAsync_dataset.getValue('pagepath');
+				subwindow_btWindow.show();
+				return ;
+			}
+			if(funClass=='1'){
+				var pagepath=roleIndustryTreeAsync_dataset.getValue('pagepath');
+				subwindow_subPage.show();
+				return ;
+			}
+			roleIndustryTreeAsync_dataset.setFieldRequired("id",true);
+			getDataset().setFieldReadOnly('pagepath',getDataset().getValue('isdirectory')=='1');
+			var pagepath=roleIndustryTreeAsync_dataset.getValue('pagepath');
+			subwindow_signWindow.show();
+		}
+		
+		function doClose(){
+			if(!tmpSaveFlag){
+				roleIndustryTreeAsync_dataset.cancelRecord();
+			}
+			syncIcon();
+			tmpSaveFlag = false;
+		}
+		
+		function signWindow_floatWindow_afterClose(){
+			roleIndustryTreeAsync_dataset.setFieldRequired("id",false);
+			doClose();
+		}
+		
+		function signWindow_floatWindow_afterHide(){
+			roleIndustryTreeAsync_dataset.setFieldRequired("id",false);
+			doClose();
+		}
+		
+		function isChanged(){
+			var re = getDataset().modified;
+			if(!re){
+				var rec=getDataset().firstUnit;
+				while(rec) {
+					if(rec.recordState!='none'){
+						re = true;
+						break;
+					}
+				  	rec=rec.nextUnit;
+				}
+			}
+			return re;
+		}
+		
+		
+		function btnSave_postSubmit(){
+			alert('保存成功！');
+			doRefresh();
+		}
+		
+		var pagepathBak='';
+		
+		function isdirectory_DropDown_onSelect(dropdown,record,editor){
+			var foo = record.getValue('data');
+			getDataset().setValue('isdirectory',foo);
+			if(foo=='1'){
+				pagepathBak = getDataset().getValue('pagepath');
+			}else{
+			}
+		}
+		
+		function sbtnRemove_onClick(){
+			var pid = getDataset().getValue('pid');
+			var afterRecord = null;
+			
+			var rec = getDataset().firstUnit;
+			var arr = new Array();
+			while(rec) {
+				if(rec.getValue('pid')==pid && rec.recordState!='delete'){
+					arr.push(rec);
+				}
+			  	rec=rec.nextUnit;
+			}
+			sortByShowSeq(arr);
+			var index = -1;
+			$.each(arr,function(i,v){
+				if(v===getDataset().record){
+					index = i;
+					return false;
+				}
+			});
+			
+			if(arr.length>1){
+				afterRecord = arr[(index==(arr.length-1))?index-1:index+1];
+			}else{
+				//选中父目录
+				afterRecord = getDataset().find(['id'],[pid]);
+			}
+			btnRemove.click();
+			
+			if(afterRecord){
+				getDataset().setRecord(afterRecord);
+			}
+		}
+	</script>
+</@CommonQueryMacro.page>

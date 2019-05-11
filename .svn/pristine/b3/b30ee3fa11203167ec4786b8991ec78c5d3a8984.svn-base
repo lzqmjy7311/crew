@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<!-- 所属机构及下属机构下拉树 -->
+<CommQry title="SaleLog" navigate="机构树" type="call"
+	interface="false" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.common.commonSelectCQ.getter.SelectUserCQTreeGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<Field id="tlrno" desc="brcode" primary="false" type="String"
+			method="trimStringRS" xpath="/tlrno" />
+		<Field id="tlrName" desc="用户名称" primary="false" type="String"
+			method="trimStringRS" xpath="/tlrName" />
+	</Fields>
+	<Parameters>
+        <Parameter id="id" desc="id" />
+    </Parameters>
+</CommQry>

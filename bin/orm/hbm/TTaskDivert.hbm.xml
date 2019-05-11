@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-11-20 10:40:45 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.bpm.entity.TTaskDivert" table="T_TASK_DIVERT" schema="ECUSER">
+        <comment>任务转移/重分配</comment>
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        
+        <many-to-one 
+			name="assignee" 
+			column="FD_ASSIGNEE"
+            class="com.huateng.ebank.entity.data.mng.TlrInfo" 
+			fetch="select"
+			not-null="false"
+	    />
+	    
+	    <many-to-one 
+			name="oldAssignee" 
+			column="FD_OLD_ASSIGNEE"
+            class="com.huateng.ebank.entity.data.mng.TlrInfo" 
+			fetch="select"
+			not-null="false"
+	    />
+	    
+	    <property name="aplDate" type="date">
+            <column name="FD_APL_DATE" />
+        </property>
+        
+        <many-to-one 
+			name="aplPer" 
+			column="FD_APL_PER"
+            class="com.huateng.ebank.entity.data.mng.TlrInfo" 
+			fetch="select"
+			not-null="false"
+	    />
+	    
+        <property name="passDate" type="date">
+            <column name="FD_PASS_DATE" />
+        </property>
+        <property name="status" type="string">
+            <column name="FD_STATUS" length="25" />
+        </property>
+    </class>
+</hibernate-mapping>

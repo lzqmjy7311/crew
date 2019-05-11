@@ -1,0 +1,23 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+<@CommonQueryMacro.page title="流程管理  &gt; 超时监督">
+	<script type="text/javascript" src="${contextPath}/gbicc-pages/regular/comm/common.js"></script>
+	<@CommonQueryMacro.CommonQuery id="TaskInfoEntry" init="false" submitMode="current">
+		<table>
+		<tr><td>
+		<@CommonQueryMacro.Interface id="qalityquery" label="查询" colNm="6" />
+		</td></tr>
+		<tr>
+		<td><@CommonQueryMacro.DataTable id="monitorReportTable" paginationbar="btHandle" readonly="true" 
+		fieldStr="warnLevel,loanAcct,custName,loanVariety,loanAmt,loanBalance,loanTerm,rptStatus,taskType,taskMatureDate,handler" width="100%" hasFrame="true"/>
+		</td></tr>
+		</table>
+	</@CommonQueryMacro.CommonQuery>
+	
+	<script>
+	function initCallGetter_post(){
+		TaskInfoEntry_dataset.setParameter("type","overTask");
+		TaskInfoEntry_dataset.flushData(TaskInfoEntry_dataset.pageIndex);
+	}
+	</script>
+</@CommonQueryMacro.page>

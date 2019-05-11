@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-12-5 15:33:01 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.financial.analysis.entity.TCmCustomerFinance" table="T_CM_CUSTOMER_FINANCE" schema="ECUSER">
+        <comment>财务报表代码表</comment>
+        <id name="customerFinanceId" type="string">
+            <column name="CUSTOMER_FINANCE_ID" length="32" />
+            <generator class="assigned" />
+        </id>
+        <property name="partyId" type="string">
+            <column name="PARTY_ID" length="32" />
+        </property>
+        <property name="customerNum" type="string">
+            <column name="CUSTOMER_NUM" length="21" />
+        </property>
+        <property name="participantTypeCd" type="string">
+            <column name="PARTICIPANT_TYPE_CD" length="20" />
+        </property>
+        <property name="customerTypeCd" type="string">
+            <column name="CUSTOMER_TYPE_CD" length="20" />
+        </property>
+        <property name="financeStatementDeadline" type="date">
+            <column name="FINANCE_STATEMENT_DEADLINE" length="10" />
+        </property>
+        <property name="financeStatementStatusCd" type="string">
+            <column name="FINANCE_STATEMENT_STATUS_CD" length="20" />
+        </property>
+        <property name="financeStatementTypeCd" type="string">
+            <column name="FINANCE_STATEMENT_TYPE_CD" length="20" />
+        </property>
+        <property name="caliberCd" type="string">
+            <column name="CALIBER_CD" length="20" />
+        </property>
+        <property name="currencyCd" type="string">
+            <column name="CURRENCY_CD" length="20" />
+        </property>
+        <property name="regulatedInd" type="string">
+            <column name="REGULATED_IND" length="1" />
+        </property>
+        <property name="regulationReason" type="string">
+            <column name="REGULATION_REASON" length="4000" />
+        </property>
+        <property name="accountingPrinciple" type="string">
+            <column name="ACCOUNTING_PRINCIPLE" length="100" />
+        </property>
+        <property name="auditedInd" type="string">
+            <column name="AUDITED_IND" length="1" />
+        </property>
+        <property name="auditCommentTypeCd" type="string">
+            <column name="AUDIT_COMMENT_TYPE_CD" length="20" />
+        </property>
+        <property name="auditCoName" type="string">
+            <column name="AUDIT_CO_NAME" length="100" />
+        </property>
+        <property name="bizLicenseNum" type="string">
+            <column name="BIZ_LICENSE_NUM" length="30" />
+        </property>
+        <property name="auditDept" type="string">
+            <column name="AUDIT_DEPT" length="100" />
+        </property>
+        <property name="auditDeptCommentCd" type="string">
+            <column name="AUDIT_DEPT_COMMENT_CD" length="20" />
+        </property>
+        <property name="auditTime" type="date">
+            <column name="AUDIT_TIME" length="10" />
+        </property>
+        <property name="validInd" type="string">
+            <column name="VALID_IND" length="1" />
+        </property>
+        <property name="userNum" type="string">
+            <column name="USER_NUM" length="20" />
+        </property>
+    </class>
+</hibernate-mapping>

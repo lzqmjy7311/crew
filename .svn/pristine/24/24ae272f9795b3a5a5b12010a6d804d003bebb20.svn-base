@@ -1,0 +1,29 @@
+<CommQry title="TRulCategoryId" navigate="TRulCategoryId" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+	transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.rule.getter.TRulCategoryGetter">
+	<Include id="BankParam" />
+	<PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+	<Fields>
+		<Field id="id" desc="主键" require="" edittype="text" datatype="string" method="None"  type="" status="F" size="15" scale="2" default=""
+			xpath="/id" />
+		<Field id="categoryName" desc="目录名称" require="true" edittype="text" datatype="string" method="None"  type="" status="F" size="50" scale="2" default=""
+			xpath="/categoryName" />
+		<Field id="parentId" desc="父ID" require="true" edittype="text" datatype="string" method="None"  type="" status="F" size="50" scale="2" default=""
+			xpath="/parentId" />
+		<Field id="categoryCode" desc="目录编号" require="true" edittype="text" datatype="string" method="None"  type="" status="F" size="20" scale="2" default=""
+			xpath="/categoryCode" />
+		<Field id="categoryType" desc="目录类型" require="true" edittype="text" datatype="string" method="None"  type="" status="F" size="50" scale="2" default=""
+			xpath="/categoryType" />
+		<Field id="sno" desc="序号" require="false" edittype="text" datatype="integer" xpath="/sno" />
+		<Field id="remark" desc="备注" require="" edittype="textarea" datatype="string" method="None"  type="" status="F" size="15" scale="2" default=""
+			xpath="/remark" />
+	</Fields>
+	<Where></Where>
+	<Operations>
+		<Button id="FbtAddCategory" name="btUpt" desc="保存" icon="icon-save" operation="asysubmit" 
+			updateClass="com.gbicc.rule.update.TRuleCategoryUpdate" url="#" txn="" />
+		<Button id="FbtAddRule" name="btUpt" desc="保存" icon="icon-save" operation="asysubmit" 
+			updateClass="com.gbicc.rule.update.TRuleCategoryUpdate" url="#" txn="" />	
+		<Button id="FbtnDel" name="FbtUpt" desc="删除" icon="icon-save" operation="asysubmit" 
+			updateClass="com.gbicc.rule.update.TRuleCategoryUpdate" url="#" txn="" />		
+	</Operations>
+</CommQry>

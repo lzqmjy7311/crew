@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	  navigate:导航信息
+	  type:方式（sql|call)
+	  interface:是否显示输入条件页面(true|false)
+	  databusid:数据总线编号
+	  transdataactionurl:数据整理URL
+	  async:异步提交标志
+	  pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry
+title="机构下拉菜单"
+navigate="机构下拉菜单"
+type="call"
+interface="true"
+pagesize="10"
+async="true"
+transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.huateng.ebank.business.management.getter.AllDownBrcodeSelectByQueryGetter"
+>
+	<Include id="BankParam"/>
+	<Fields>
+	<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+	<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+
+		<Field id="brcode" desc="brcode" status="F" method="None" readOnly="true" xpath="/brcode"
+			primary="true" type="String" size="20" default="" tip="id" width="170"/>
+
+		<Field id="brname" desc="机构名" status="F" method="None" readOnly="true" xpath="/brname"
+			primary="true" type="String" size="20" default="" tip="机构号" width="170"/>
+
+		<Field id="brcodeTypeName" desc="机构名称" status="F" method="None" readOnly="true" xpath="/brcodeTypeName"
+			primary="true" type="String" size="20" default="" tip="机构名称" width="170"/>
+
+		<Field id="brclass" desc="机构级别" status="F" method="None" readOnly="true" xpath="/brclass"
+			primary="true" type="String" size="20" default="" tip="机构级别" width="170"/>
+
+		<Field id="blnUpBrcode" desc="上级机构" status="F" method="None" readOnly="true" xpath="/blnUpBrcode"
+			primary="true" type="String" size="20" default="" tip="上级机构" width="170"/>
+
+		<Field id="brcodeQryTypeName" desc="机构号-机构名称" status="F" method="None" readOnly="true" xpath="/brcodeTypeName"
+			primary="true" type="String" size="20" default="" tip="机构号-机构名称" width="170"/>
+
+	</Fields>
+	<Parameters>
+		<Parameter id="value" value=""/>
+	</Parameters>
+
+	<Where>
+	</Where>
+	<Operations>
+	</Operations>
+</CommQry>

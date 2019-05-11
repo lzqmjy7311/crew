@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--jianxue.zhang-->
+<CommQry
+title="待办任务"
+navigate="系统维护 >主管确认 >待审批外汇日牌价维护"
+type="call"
+interface="false"
+pagesize="100"
+async="true"
+databusid=""
+txnlogflag="true"
+transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.huateng.ebank.business.approve.getter.TaskListBeanGetter"
+>
+	<Include id="BankParam"/>
+
+	<Fields>
+
+			<Field id="id" desc="任务编号" status="F" size="14"
+			require="false" readonly="false" edittype="text" datatype="string"
+			tip="任务编号" xpath="/id" />
+		<Field id="updTransCd" desc="操作说明"
+			status="F" size="2" require="false" readonly="false" edittype="select"
+			datatype="string" tip="操作说明" xpath="/sysTaskInfo/updTransCd"
+			translated="DATA_DIC.311" />
+		<Field id="crtDt" desc="创建日期" status="F"
+			size="8" require="false" readonly="false" edittype="text" datatype="date"
+			tip="创建日期" xpath="/sysTaskInfo/crtDt" />
+			<Field id="adtRcdPk" desc="原纪录主键" status="F"
+			size="32" require="false" readonly="false" edittype="text" datatype="string"
+			tip="原纪录主键" xpath="/sysTaskInfo/adtRcdPk" />
+			<Field id="intInsId" desc="记录类型" status="F"
+			size="10" require="false" readonly="false" edittype="select"
+			datatype="string" tip="记录类型" xpath="/sysTaskInfo/intInsId" translated="DATA_DIC.300001" />
+	<Field id="dayid" desc="币种" status="F" primary="false" method="None" readonly="false" type="String" size="20" default=""
+			   edittype="select" translated="CQ:CurrencySelect" fieldmap="dayid=currencyNo;idName=currencyNoName" viewField="currencyNoName" xpath="/biDayexchangerate/id" require="" tip="币种" />
+		<Field id="rateUnit" desc="单位" edittype="text"  datatype="double" size="10" xpath="/biDayexchangerate/rateUnit" />
+		<Field id="rateDate" desc="日期" edittype="text" datatype="date" xpath="/biDayexchangerate/rateDate" />
+		<Field id="rateMidprice" desc="中间价" edittype="text" datatype="double" xpath="/biDayexchangerate/rateMidprice" />
+
+	</Fields>
+
+	<Where>
+	</Where>
+	<Operations>
+	</Operations>
+
+
+
+</CommQry>

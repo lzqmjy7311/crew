@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="催收管理  &gt;  催收" navigate="催收管理    &gt; 催收" type="call"
+	interface="false" pagesize="25" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.person.collection.getter.TCollectionInfoGetter">
+	
+	<Include id="BankParam" />
+	<PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="批量下载-催收信息" />
+	<Fields>
+		<Field id="id" desc="" edittype="text" datatype="string" size="32" xpath="/id" />
+		<Field id="custCode" desc="客户编号" edittype="text" readOnly="true" datatype="string" size="25" xpath="/custCode" />
+		<Field id="custName" desc="客户名称" edittype="text" readOnly="true" datatype="string" size="64" xpath="/custName" />
+		<Field id="custType" desc="状态" status="F" readOnly="true" require="false" edittype="select"
+			datatype="string" method="None" primary="true" type="st"
+			translated="DATA_DIC.3001" size="30" default="" xpath="/custType" tip="" />
+		<Field id="loanAccount" desc="贷款账号" edittype="text" readonly="true" datatype="string" status="F" size="32" xpath="/loanAccount"/>
+		<Field id="accountLength" desc="账龄" edittype="text" datatype="int" status="F" size="100" xpath="/accountLength"/>
+		<Field id="productCode" desc="产品名称" status="F"
+			primary="false" method="None" readonly="true" type="String"
+			size="25" edittype="select" translated="CQ:AllProductSelect"
+			fieldmap="productCode=prodCode;productName=prodName"
+			viewField="prodName,prodCode" default="" xpath="/productCode"
+			require="false" tip="产品名称" />
+		<Field id="productName" desc="产品名称" status="F"
+			method="com.gbicc.common.CQMethod.getProcuctNameByProductCode"
+			width="" readonly="true" primary="true" type="String" size="150"
+			xpath="/productCode" default=""/>
+		<Field id="productType" desc="产品类型" edittype="text" datatype="string" size="64" xpath="/productType" />
+		<Field id="guarWay" desc="担保方式" status="F" require="false" edittype="select"
+			datatype="string" method="None" readonly="true" primary="true" type="st"
+			translated="DATA_DIC.42" size="30" default="" xpath="/guarWay" tip="" />
+		<Field id="acctStatus" desc="账户状态" status="F" require="false" edittype="select"
+			datatype="string" method="None" readonly="true" primary="true" type="st"
+			translated="DATA_DIC.11" size="30" default="" xpath="/acctStatus" tip="" />
+		<Field id="riskStatus" desc="风险状态" status="F" require="false" edittype="select"
+			datatype="string" method="None" readonly="true" primary="true" type="st"
+			translated="DATA_DIC.205" size="30" default="" xpath="/riskStatus" tip="" />
+		<Field id="loanBalance" desc="贷款余额" readonly="true" edittype="text" datatype="double" 
+			size="20" scale="2" prefix="￥" xpath="/loanBalance" default="0" />
+		<Field id="arrearAmt" desc="拖欠本金" readonly="true" edittype="text" datatype="double" 
+			size="20" scale="2" prefix="￥" xpath="/arrearAmt" default="0" />
+			<Field id="arrearInterests" desc="拖欠利息" readonly="true" edittype="text" datatype="double" 
+			size="20" scale="2" prefix="￥" xpath="/arrearInterests" default="0" />
+		<Field id="status" desc="流程状态" status="F" require="false" edittype="select"
+			datatype="string" method="None" readonly="true" primary="true" type="st"
+			translated="DATA_DIC.12581" size="30" default="" xpath="/status" tip="" />	
+		<Field id="arrearCount" desc="连续拖欠期数" readonly="true" edittype="text" datatype="int" status="F" size="100" xpath="/arrearCount"/>
+		<Field id="postLoanPer" desc="贷后责任人" readonly="true" edittype="text" datatype="string" status="F" size="64" xpath="/postLoanPer"/>
+		<Field id="matureDate" desc="到期日期" readonly="true" edittype="date" datatype="date" status="F" placeholder="yyyy-MM-dd" xpath="/matureDate"/>
+		<Field id="tel" desc="联系电话" edittype="text" readonly="true" datatype="string" status="F" size="64" xpath="/tel"/>
+		<Field id="collectionType" desc="催收方式" status="F" require="false" edittype="select"
+			datatype="string" method="None" readonly="false" primary="true" type="st"
+			translated="DATA_DIC.12580" size="30" default="" xpath="/collectionType" tip="" />
+		<Field id="collectionScore" desc="催收评分" edittype="text" datatype="int" 
+			size="20" xpath="/collectionScore" default="0" />
+		<Field id="collectionRank" desc="催收级别" edittype="text" readonly="true" datatype="string" status="F" size="32" xpath="/collectionRank"/>
+		<Field id="arrearReason" desc="拖欠原因" edittype="textarea" readonly="false" datatype="string" status="F" colspan="4" size="2000" xpath="/arrearReason" height="60" width="500" />
+		<Field id="situationExplain" desc="催收情况说明" edittype="textarea" datatype="string" status="F"  colspan="4" size="2000" xpath="/situationExplain" height="60" width="500" />
+		<Field id="receiptInfo" desc="催收通知回执" edittype="textarea" datatype="string" status="F" colspan="4"  size="2000" xpath="/receiptInfo" height="60" width="500" />
+		<Field id="resultInfo" desc="催收结果说明" edittype="textarea" datatype="string" status="F" colspan="4"  size="2000" xpath="/resultInfo" height="60" width="500" />
+		<Field id="collePersonName" desc="催收人员" edittype="text" readonly="true" datatype="string" status="F" size="64" xpath="/collePersonName"/>
+		<Field id="collePersonCode" desc="催收人员编号" edittype="text" datatype="string" status="F" size="64" xpath="/collePersonCode"/>
+		
+		<Field id="limitStartDate" desc="逾期开始日期" edittype="date" datatype="date" status="F" placeholder="yyyy-MM-dd" xpath="/limitStartDate"/>
+		<Field id="exprctReturnDate" desc="预计还款日" edittype="date" datatype="date" status="F" placeholder="yyyy-MM-dd" xpath="/exprctReturnDate"/>
+		
+		<Field id="credited" desc="任务生成日期" edittype="date" readonly="true" datatype="date" status="F" placeholder="yyyy-MM-dd" xpath="/credited"/>
+		<Field id="provideDate" desc="发放日期" edittype="date" readonly="true" datatype="date" status="F" placeholder="yyyy-MM-dd" xpath="/provideDate"/>
+		<Field id="earliestOverDate" desc="当前最早逾期日期"  readonly="true" edittype="date" datatype="date" status="F" placeholder="yyyy-MM-dd" xpath="/earliestOverDate"/>
+		<Field id="taskCount" desc="任务次数" edittype="text" readonly="true" datatype="string" status="F" size="64" xpath="/taskCount"/>
+		
+		<Field id="colleDate" desc="催收日期" edittype="date" datatype="date" status="F" placeholder="yyyy-MM-dd" xpath="/colleDate"/>
+		<Field id="registDate" desc="登记日期" edittype="date" colspan="4" datatype="date" status="F" placeholder="yyyy-MM-dd" xpath="/registDate"/>
+		<Field id="controlMeasure" desc="控制措施" width="500" colspan="4"
+            placeholder="占位符" edittype="select" translated="DATA_DIC.12596"
+            multiple="true" datatype="string" xpath="/controlMeasure" />
+		
+		<Field id="controlMeasureOth" desc="其他措施描述" edittype="text" datatype="string"  width="500" status="F" colspan="4" size="1000" xpath="/controlMeasureOth"/>
+        <Field id="operator" desc="经办人" edittype="text" readonly="true" datatype="string" status="F" size="64" xpath="/operator"/>
+        <Field id="operatorNam" desc="经办人" edittype="text" readonly="true" datatype="string" status="F" size="64" xpath="/operatorNam"/>
+		<Field id="operBank" desc="经办行" edittype="text" readonly="true" datatype="string" status="F" size="64" colspan="4" xpath="/operBank"/>
+		<Field id="operBankNam" desc="经办行" edittype="text" readonly="true" datatype="string" status="F" size="64" colspan="4" xpath="/operBankNam"/>
+		<Field id="remark" desc="备注" edittype="textarea" datatype="string" status="F" size="2000" colspan="4"  xpath="/remark" height="60" width="500" />
+		<Field id="opinion" desc="提交/退回备注" edittype="textarea" datatype="string" status="F" size="2000" colspan="4"  xpath="/opinion" height="60" width="500" />
+		<Field id="taskId" desc="对应任务ID" edittype="text" datatype="string" size="25" xpath="/taskId" />
+	</Fields>
+	<Where>
+		<TextBox id="custCode" desc="客户编号" edittype="text" datatype="string" size="10" require="" index="0" />
+		<TextBox id="custName" desc="客户名称" edittype="text" status="F" datatype="string" size="10" index="1" />\
+		<TextBox id="operator" desc="经办人" edittype="text" readonly="false" status="F" datatype="string" size="10" index="2" />\
+		<TextBox id="loanAccount" desc="贷款账号" edittype="text" status="F" datatype="string" size="10" index="3" />\					
+		<TextBox id="operBank" desc="经办行" edittype="text" readonly="false" status="F" datatype="string" size="10" index="4" />\
+		<Option id="productCode" desc="产品名称" status="N"
+	        fieldname="qdataNo" edittype="select" dropdowntype="dynamic"
+			dataType="String" readOnly="false" translated="CQ:AllProductSelect"
+			viewField="prodName,prodCode" init="true"
+			fieldmap="productName=prodName;productCode=prodCode" size="32"
+			primary="false" type="String" index="5" />\
+		<TextBox id="productName" desc="产品名称" edittype="text" status="F" datatype="string" size="32" />\
+	</Where>
+	
+	
+	<Operations>
+		<Button id="registInfoBtn" name="registInfoBtn" desc="处理" operation="" url="#" show="" group="" txn="" icon="icon-setting2"/>
+		<Button id="viewAll" name="viewAll" desc="查看全部" operation="" url="#" show="" group="" txn="" icon="icon-view-detail"/>
+		<Button id="checkBtn" name="registInfoBtn" desc="审核" operation="" url="#" show="" group="" txn="" icon="icon-view-detail"/>
+		<Button id="btnSave" name="btnSave" desc="保存" icon="icon-save" operation="asysubmit" 
+			updateClass="com.gbicc.person.collection.update.TCollectionInfoSubmitUpdate" txn=""/>
+		<Button id="btnSubmit" name="btnSubmit" desc="提交" icon="icon-ok" operation="asysubmit" 
+			updateClass="com.gbicc.person.collection.update.TCollectionInfoSubmitUpdate" txn=""/>
+		<Button id="btnBack" name="btnBack" desc="退回" icon="icon-undo" operation="asysubmit" 
+			updateClass="com.gbicc.person.collection.update.TCollectionInfoSubmitUpdate" txn=""/>	
+	
+		<Button id="moreHandle" name="moreHandle" desc="更多" icon="icon-sys-search-org" updateClass="#" url="" txn="" />
+	</Operations>
+	
+	
+	
+	
+	
+	
+</CommQry>

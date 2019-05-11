@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Buffer id="Error" type="Buffer.sample.Error" name="Error" desc="错误消息">
+	<Field id="version" type="S" desc="消息版本号" name="version" length="20"  initValue="" xpath="/version"/>
+	<Field id="rspcode" type="S" desc="应答码" name="rspcode" length="4"  initValue="" xpath="/rspcode"/>
+	<Field id="rspmsg" type="S" desc="应带消息" name="rspmsg" length="50"  initValue="0000" xpath="/rspmsg"/>
+</Buffer>

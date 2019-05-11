@@ -1,0 +1,84 @@
+package com.gbicc.person.monitor.update;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.gbicc.person.monitor.entity.TPlYtReport;
+import com.gbicc.person.monitor.operation.TPlDqReportAjOperation;
+import com.gbicc.person.monitor.operation.TPlYtReportOperation;
+import com.gbicc.person.monitor.service.TPlYtReportService;
+import com.gbicc.warn.entity.TWarnSignal;
+import com.huateng.common.err.Module;
+import com.huateng.common.err.Rescode;
+import com.huateng.commquery.result.MultiUpdateResultBean;
+import com.huateng.commquery.result.UpdateResultBean;
+import com.huateng.commquery.result.UpdateReturnBean;
+import com.huateng.ebank.framework.operation.OPCaller;
+import com.huateng.ebank.framework.operation.OperationContext;
+import com.huateng.ebank.framework.web.commQuery.BaseUpdate;
+import com.huateng.exception.AppException;
+
+public class TPlYtReportUpdate extends BaseUpdate {
+	private static final String DATASET_ID ="YtMonitorReportWin";
+	@Override
+	public UpdateReturnBean saveOrUpdate(MultiUpdateResultBean arg0,
+			HttpServletRequest arg1, HttpServletResponse arg2)
+			throws AppException {
+		try {
+			UpdateReturnBean updateReturnBean = new UpdateReturnBean();
+			UpdateResultBean yBean = multiUpdateResultBean.getUpdateResultBeanByID(DATASET_ID);
+			UpdateResultBean pBean = multiUpdateResultBean.getUpdateResultBeanByID("Yt_PlWarnSignal");
+			TPlYtReport dd = new TPlYtReport();
+			OperationContext oc = new OperationContext();
+			
+			if (yBean.hasNext()) {
+				@SuppressWarnings("rawtypes")
+				Map map = yBean.next();
+				String id=(String) map.get("id");
+				if(StringUtils.isNotEmpty(id)){
+					dd = TPlYtReportService.getInstance().get((String) map.get("id"));
+					oc.setAttribute(TPlYtReportOperation.CMD,TPlYtReportOperation.CMD_UPDATE);
+				}else{
+					oc.setAttribute(TPlYtReportOperation.CMD, TPlYtReportOperation.CMD_INSERT);
+				}
+				String opinion="";
+				if(map.get("opinion")!=null && !map.get("opinion").equals("")){
+					opinion=map.get("opinion").toString();
+				}
+				oc.setAttribute("opinion",opinion);
+				mapToObject(dd, map);
+			}
+			String businessId = yBean.getParameter("businessId");
+			String op = yBean.getParameter("op");
+			oc.setAttribute(TPlDqReportAjOperation.BUSINESS_ID,businessId);
+			if(null==op){
+				op="";
+			}
+			oc.setAttribute("op", op);
+			
+			//预警信息
+			List<TWarnSignal> tWarnSignals=new ArrayList<TWarnSignal>();
+			while(pBean.hasNext()){
+				TWarnSignal signal=new TWarnSignal();
+				mapToObject(signal, pBean.next());
+				tWarnSignals.add(signal);
+			}
+			oc.setAttribute(TPlYtReportOperation.IN_WARN_LIST, tWarnSignals);
+			oc.setAttribute(TPlYtReportOperation.IN_PARAM, dd);
+			OPCaller.call(TPlYtReportOperation.ID, oc);
+			return updateReturnBean;
+		} catch (AppException appEx) {
+			throw appEx;
+		} catch (Exception ex) {
+			throw new AppException(Module.SYSTEM_MODULE,
+					Rescode.DEFAULT_RESCODE, ex.getMessage(), ex);
+		}
+	}
+
+}

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="参数管理  &gt; 产品管理" navigate="参数管理  &gt; 产品管理" type="call"
+	interface="false" pagesize="15" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.bpm.getter.MyProcessHistoryGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="procInstId" desc="流程实例ID" xpath="/procInstId" edittype="text" datatype="string" />
+		<Field id="procName" desc="任务类型" xpath="/procName" edittype="text" datatype="string" />
+		<Field id="taskId" desc="任务编号" xpath="/taskId" edittype="text" datatype="string" />
+		<Field id="taskName" desc="任务名称" xpath="/taskName" edittype="text" datatype="string" />
+		<Field id="taskDesc" desc="任务描述" xpath="/taskDesc" edittype="text" datatype="string" />
+		<Field id="assignee" desc="当前操作人" xpath="/assignee" edittype="text" datatype="string" />
+		<Field id="createTime" desc="任务接收时间" xpath="/createTime" edittype="text" datatype="string" />
+		<Field id="businessId" desc="业务主键" xpath="/businessId" edittype="text" datatype="string" />
+    </Fields>
+    <Where>
+    	<Option id="procName" desc="任务类型" translated="CQ:subAutoProcessType" placeholder="占位符"
+			fieldmap="procName=procId;procNameName=procName" viewField="procName" dropdowntype="dynamic"
+            primary="true" init="true" index="0"/>
+        <TextBox id="businessKey" desc="业务ID" datatype="string"/>
+		<TextBox id="taskName" desc="任务名称" edittype="text" datatype="string" index="1" />
+		<TextBox id="createTimeStart" desc="任务接收时间" edittype="text" datatype="date" index="2" />
+    	<TextBox id="createTimeEnd" desc="至" edittype="text" datatype="date" index="3" />
+	</Where>
+	<Operations>
+		<Button id="btnRead" name="btnRead" desc="查看流转历史" icon="icon-form-search" />
+	</Operations>
+</CommQry>

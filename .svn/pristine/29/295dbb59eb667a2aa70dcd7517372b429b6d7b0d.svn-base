@@ -1,0 +1,28 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign typeId="${RequestParameters['typeId']?default('')}" />
+<#assign fdDate="${RequestParameters['fdDate']?default('')}" />
+<#assign customerNum="${RequestParameters['customerNum']?default('')}" />
+<@CommonQueryMacro.page title="ÅÐ¾ö¹«¸æ">
+<@CommonQueryMacro.CommonQuery id="TOutCouJudgmentDetail" init="true" submitMode="selected" navigate="false">
+
+<table align="left" width="100%">
+	<tr>
+		<td>
+			<@CommonQueryMacro.DataTable id ="datatable1" fieldStr="companyAnme,caseType,writNo,writTitle,judgCourt,judgDate,content,sourceLink,baseId,rowDate" readonly="true" width="100%"/></br>
+		</td>
+	</tr>
+</table>
+</@CommonQueryMacro.CommonQuery>
+<script language="JavaScript">
+var customerNum='${customerNum}';
+function initCallGetter_post(){
+	var typeId='${typeId}';
+	var fdDate='${fdDate}';
+	TOutCouJudgmentDetail_dataset.setParameter("typeid",typeId);
+	TOutCouJudgmentDetail_dataset.setParameter("data",fdDate);
+	TOutCouJudgmentDetail_dataset.setParameter("relaId",customerNum);
+	TOutCouJudgmentDetail_dataset.flushData();
+}
+
+</script>
+</@CommonQueryMacro.page>

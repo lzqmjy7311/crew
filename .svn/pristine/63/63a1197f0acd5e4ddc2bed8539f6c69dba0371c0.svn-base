@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.person.monitor.getter.TPlYjReportByIdGetter">
+	<Include id="BankParam" />
+	
+	<Fields>
+		<Field id="fdId" desc="" edittype="text" datatype="string" size="32" xpath="/fdId" />
+		<Field id="fdLoanAccount" desc="贷款账号" xpath="/fdLoanAccount" readonly="true" colspan="4" width="600" />
+		<Field id="fdCustCode" desc="客户编号" xpath="/fdCustCode" readonly="true" colspan="4" width="600" />
+		<Field id="fdCustName" desc="客户姓名" xpath="/fdCustName" readonly="true" colspan="4" width="600" />
+		<Field id="fdIndustry" desc="所属行业" multiple="false" init="true" readonly="true"
+        placeholder="占位符" edittype="select" translated="DATA_DIC.93"
+        datatype="string" size="50" xpath="/fdIndustry" />
+
+		<Field id="fdProductName" desc="产品名称" status="F" 			
+			width="" readonly="true" primary="true" type="String" size="150"
+			xpath="/fdProductCode" default="/fdProductCode"/>		
+		<Field id="fdLoanAmt" desc="贷款金额"   readonly="true" scale="2" prefix="￥" edittype="text" datatype="currency" status="F" size="100" xpath="/fdLoanAmt"/>
+		<Field id="fdLoanBalance" desc="贷款余额" readonly="true"  scale="2" prefix="￥" edittype="text" datatype="currency" status="F" size="100" xpath="/fdLoanBalance"/>
+		<Field id="fdGuarWay" desc="担保方式"  readonly="true" edittype="select" translated="DATA_DIC.123" datatype="string" status="F" size="100" xpath="/fdGuarWay"/>
+		
+		<Field id="fdSlidingScales" desc="浮动比例" readonly="true" edittype="text" datatype="double" 
+			size="20" scale="2"  xpath="/fdSlidingScales" default="0" />
+		<Field id="fdAcctStatus" desc="账号状态" readonly="true" multiple="false" init="true" 
+        placeholder="占位符" edittype="select" translated="DATA_DIC.120"
+        datatype="string" size="50" xpath="/fdAcctStatus" />
+		<Field id="fdRiskClass" desc="风险分类" readonly="true" multiple="false" init="true" 
+        placeholder="占位符" edittype="select" translated="DATA_DIC.122"
+        datatype="string" size="50" xpath="/fdRiskClass" />
+        
+		
+        <Field id="fdVisitWay" desc="查访方式" readonly="" multiple="false" init="true"  
+        placeholder="占位符" edittype="radio" translated="DATA_DIC.12585" default="1"   
+        datatype="string" size="50" xpath="/fdVisitWay" />
+        	
+		<Field id="fdVisitAdd" desc="查访地点" edittype="text" datatype="string"  xpath="/fdVisitAdd"/>
+		<Field id="fdLeadInvestigator" desc="主调查人" colspan="4" edittype="text" datatype="string"  readonly="true" xpath="/fdLeadInvestigator"/>
+		<Field id="fdAssInvestigator" desc="辅调查人" colspan="4" edittype="text" datatype="string" xpath="/fdAssInvestigator"/>
+		<Field id="fdSurveyDate" desc="调查日期" colspan="4" edittype="text" readonly="true" datatype="date" xpath="/fdSurveyDate"/>
+		
+	
+            
+		
+		
+		<Field id="fdCreLimconMeasures" desc="授信额度控制(单选项)" multiple="false" init="true" 
+        placeholder="占位符" edittype="checkbox" translated="DATA_DIC.113"
+        datatype="string" size="50" xpath="/fdCreLimconMeasures" />
+		<Field id="fdOtherConMeasures" desc="其他控制（单选项）" multiple="false" init="true" 
+        placeholder="占位符" edittype="checkbox" translated="DATA_DIC.114"
+        datatype="string" size="50" xpath="/fdOtherConMeasures" />
+        <Field id="fdOtherConMeasuresDesc" status="N" desc="其他控制说明" edittype="textarea" 
+            datatype="string" xpath="/fdOtherConMeasuresDesc" height="100" width="580" size="500" />
+        
+		<Field id="fdAddConMeasures" desc="附加处理措施(可多选)" multiple="false" init="true" 
+        placeholder="占位符" edittype="checkbox" translated="DATA_DIC.115"
+        datatype="string" size="50" xpath="/fdAddConMeasures" />
+        <Field id="frequency" desc="监控频率" xpath="/frequency" translated="CQ:subAutoDataDic" 
+			   fieldmap="frequency=dataNo;frequencyName=dataName" viewField="dataName"  default="12"
+			   edittype="select" dropdowntype="dynamic" init="true" size="10" />
+       
+		<Field id="fdApplyOpin" status="N" desc="意见" edittype="textarea" 
+            datatype="string" xpath="/fdApplyOpin"  height="100" width="580" size="120" />
+        <Field id="tempEmpty" desc="" require="" edittype="radio" translated="" datatype="string" method="None" readonly="false" type="" status="F" size="15" scale="2" default=""
+        xpath="/tempEmpty" />    
+            
+		<Field id="fdIsZdzqzwjfflss" desc="借款人是否涉及或者即将涉及重大债权债务纠纷、法律诉讼:（诉讼）" edittype="radio" translated="LIST:1,是;2,否"
+            datatype="string" xpath="/fdIsZdzqzwjfflss" />
+        <Field id="fdIsZdzqzwjfflssDesc" desc="若有，请说明" edittype="textarea" datatype="string" 
+			size="128" scale="2" xpath="/fdIsZdzqzwjfflssDesc"/> 
+		<Field id="fdIsEytfyhzf" desc="借款人是否存在恶意逃废银行债务行为:（逃废债）" edittype="radio" translated="LIST:1,是;2,否"
+            datatype="string" xpath="/fdIsEytfyhzf" />
+        <Field id="fdIsEytfyhzfDesc" desc="若有，请说明" edittype="textarea" datatype="string" 
+			size="128" scale="2" xpath="/fdIsEytfyhzfDesc"/> 	  
+		<Field id="fdIsTdfsbh" desc="借款人是否存在对银行的态度发生变化，尤其是缺乏合作态度，不主动提供财务及经营情况资料:（合作）" edittype="radio" translated="LIST:1,是;2,否"
+            datatype="string" xpath="/fdIsTdfsbh" />
+        <Field id="fdIsTdfsbhDesc" desc="若有，请说明" edittype="textarea" datatype="string" 
+			size="128" scale="2" xpath="/fdIsTdfsbhDesc"/> 
+		<Field id="fdIsTgxjzl" desc="借款人是否存在提供虚假资料行为:（虚假资料）" edittype="radio" translated="LIST:1,是;2,否"
+            datatype="string" xpath="/fdIsTgxjzl" />
+        <Field id="fdIsTgxjzlDesc" desc="若有，请说明" edittype="textarea" datatype="string" 
+			size="128" scale="2" xpath="/fdIsTgxjzlDesc"/> 
+		<Field id="fdIsCweh" desc="借款人是否存在财务恶化，需要进行消极重组及信贷相关策略的调整:（恶化）" edittype="radio" translated="LIST:1,是;2,否"
+            datatype="string" xpath="/fdIsCweh" />
+        <Field id="fdIsCwehDesc" desc="若有，请说明" edittype="textarea" datatype="string" 
+			size="128" scale="2" xpath="/fdIsCwehDesc"/> 
+		<Field id="fdIsZyzc" desc="借款人是否存在转移资产行为:（转移资产）" edittype="radio" translated="LIST:1,是;2,否"
+            datatype="string" xpath="/fdIsZyzc" />
+        <Field id="fdIsZyzcDesc" desc="若有，请说明" edittype="textarea" datatype="string" 
+			size="128" scale="2" xpath="/fdIsZyzcDesc"/> 	  
+		<Field id="fdIsCzlhhfccg" desc="借款人是否存在承包、租赁、联营、合并(兼并)、合作、分立、产权有偿转让、重组（资产重组、债务重组、股权重组等）、改制行为:（改制）" edittype="radio" translated="LIST:1,是;2,否"
+            datatype="string" xpath="/fdIsCzlhhfccg" />
+        <Field id="fdIsCzlhhfccgDesc" desc="若有，请说明" edittype="textarea" datatype="string" 
+			size="128" scale="2" xpath="/fdIsCzlhhfccgDesc"/> 
+		<Field id="fdIsZzdx" desc="借款人是否存在重要资质证书被国家相关部门吊销（勒令关闭）" edittype="radio" translated="LIST:1,是;2,否"
+            datatype="string" xpath="/fdIsZzdx" />
+        <Field id="fdIsZzdxDesc" desc="若有，请说明" edittype="textarea" datatype="string" 
+			size="128" scale="2" xpath="/fdIsZzdxDesc"/> 
+		<Field id="fdIsTcbtc" desc="借款人是否处于停产或半停产状态，或向我行申请贷款的固定资产项目处于停建或缓建状态:（停产）" edittype="radio" translated="LIST:1,是;2,否"
+            datatype="string" xpath="/fdIsTcbtc" />
+        <Field id="fdIsTcbtcDesc" desc="若有，请说明" edittype="textarea" datatype="string" 
+			size="128" scale="2" xpath="/fdIsTcbtcDesc"/> 
+		<Field id="fdIsPcbpc" desc="借款人是否处于申请破产或已破产状况:（破产）" edittype="radio" translated="LIST:1,是;2,否"
+            datatype="string" xpath="/fdIsPcbpc" />
+        <Field id="fdIsPcbpcDesc" desc="若有，请说明" edittype="textarea" datatype="string" 
+			size="128" scale="2" xpath="/fdIsPcbpcDesc"/> 
+		<Field id="fdIsFmbd" desc="借款人是否在公共媒体上出现负面报道、产生负面影响:（负面影响）" edittype="radio" translated="LIST:1,是;2,否"
+            datatype="string" xpath="/fdIsFmbd" />
+        <Field id="fdIsFmbdDesc" desc="若有，请说明" edittype="textarea" datatype="string" 
+			size="128" scale="2" xpath="/fdIsFmbdDesc"/> 
+		<Field id="fdIsZdzh" desc="借款人是否出现重大灾害（如:自然灾害、重大疾病、重大安全事故等）" edittype="radio" translated="LIST:1,是;2,否"
+            datatype="string" xpath="/fdIsZdzh" />
+        <Field id="fdIsZdzhDesc" desc="若有，请说明" edittype="textarea" datatype="string" 
+			size="128" scale="2" xpath="/fdIsZdzhDesc"/> 	  
+		<Field id="fdIsBsxxycs" desc="借款人是否投资于不熟悉的新业务、新产品及新市场:（投资）" edittype="radio" translated="LIST:1,是;2,否"
+            datatype="string" xpath="/fdIsBsxxycs" />
+        <Field id="fdIsBsxxycsDesc" desc="若有，请说明" edittype="textarea" datatype="string" 
+			size="128" scale="2" xpath="/fdIsBsxxycsDesc"/> 
+		<Field id="fdIsXysmsx" desc="借款人是否有需要说明的其他重大事项:（其他）" edittype="radio" translated="LIST:1,是;2,否"
+            datatype="string" xpath="/fdIsXysmsx" />
+        <Field id="fdIsXysmsxDesc" desc="若有，请说明" edittype="textarea" datatype="string" 
+			size="128" scale="2" xpath="/fdIsXysmsxDesc"/> 			
+        <Field id="fdCompleteDate" desc="措施完成时间" edittype="date" datatype="date" 
+			colspan="4"  xpath="/fdCompleteDate"/> 			
+        
+        
+	</Fields>
+	
+	<Operations>
+		<Button id="yjReportUpd" name="yjReportUpd" desc="保存" operation="asysubmit"
+			updateClass="com.gbicc.person.monitor.update.TPlYjReportUpdate"   icon="icon-save"
+			url="" txn="" />
+		<Button id="yjReportSubmit" name="yjReportSubmit" desc="提交" icon="icon-ok" />
+		<Button id="yjReportSubmitTrue" name="yjReportSubmitTrue" desc="提交" operation="asysubmit"
+			updateClass="com.gbicc.person.monitor.update.TPlYjReportUpdate" icon="icon-ok"
+			url="#" txn="" />
+		<Button id="yjReportBack" name="yjReportBack" desc="退回" operation="asysubmit"
+			updateClass="com.gbicc.person.monitor.update.TPlYjReportUpdate" icon="icon-back"
+			url="" txn="" />
+		<Button id="contractBtn" name="contractBtn" desc="打印" icon="icon-print" updateClass="#" url="#" txn="" />	
+	</Operations>
+</CommQry>

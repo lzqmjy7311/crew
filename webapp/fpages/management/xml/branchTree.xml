@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="树形表格" navigate="树形表格" type="call"
+    interface="false" pagesize="10" async="true" databusid=""
+    transdataactionurl="/trans/TransDataAction.do"
+    txnlogflag="true"
+    getterclassname="com.huateng.ebank.business.management.getter.BranchTreeGetter">
+    <Include id="BankParam" />
+    <!-- 在下拉菜单中，注意以下的域的位置顺序，必须以id,name,lastdirectory和_hasChild_的顺序来写 -->
+    <!-- 如果是在树形表格中，必须定义一个id字段，该字段只定义出来做内部处理 -->
+    <Fields>
+        <Field id="id" desc="节点编号" xpath="/id" readonly="false"/>
+        <Field id="name" desc="节点名称" xpath="/text" readonly="false"/>
+        <Field id="pid" desc="上级节点" xpath="/pid" readonly="false"/>
+         
+         
+        <!-- 做为下拉和普通树控件必须属性 -->
+        <Field id="_hasChild_" desc="是否有孩子节点" xpath="/hasChild" readonly="false"/>
+        <Field id="_id" xpath="/id" />
+        <Field id="_parentId" xpath="/pid" />
+        <!-- 做为普通树控件必须属性 -->
+        <Field id="_text" desc="" method="" xpath="/text" />
+        <!-- 做为树控件扩展属性 -->
+        <Field id="_icon" desc="" method="" xpath="/iconCls" />
+    </Fields>
+    <Parameters>
+        <Parameter id="id" desc="id" />
+    </Parameters>
+</CommQry>

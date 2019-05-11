@@ -1,0 +1,81 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign result = "[{'id':1,'text':'delete','seperator':false,'iconCls':'','attributes':'','href':'','children':[]}]">
+<#assign customerNum="${RequestParameters['customerNum']?default('')}" />
+<@CommonQueryMacro.page title="规则配置">
+<@CommonQueryMacro.LayoutPanel id="rule" inbody="false" >
+	<style>
+	.CodeMirror{
+		height:430px;
+	}
+  </style>
+  
+    <@CommonQueryMacro.LayoutWest id="1" title="请选择该客户的所持账户" width="200" split="true" >
+    <div style="border:1px">
+		<@CommonQueryMacro.CommonQuery id="TreeNode123" init="true" submitMode="current" >
+		  <@CommonQueryMacro.DynamicTree id="tree123" />
+		</@CommonQueryMacro.CommonQuery>
+    </div>
+    </@CommonQueryMacro.LayoutWest>
+    
+    <@CommonQueryMacro.LayoutCenter id="2" title=""  >
+		<@CommonQueryMacro.CommonQuery id="ZtMmfxy" init="true" submitMode="current">
+			<@CommonQueryMacro.Interface id="interface" label="请输入查询条件" showButton="false" />
+		<div style="text-align:center;margin:10px 0 10px 0">
+			<@CommonQueryMacro.Button id="btQuery"/>&nbsp;&nbsp;<@CommonQueryMacro.Button id="btCancel"/>
+		</div>
+		<div style="text-align:center">
+		<table><tr>
+			<td style=margin:0 10px 0 10px><@CommonQueryMacro.GroupField fId="accountType"/></td>
+			<td style=margin:0 10px 0 10px><@CommonQueryMacro.GroupField fId="BankAccount"/></td>
+		</tr></table>
+		</div>
+		<table>
+			<tr><td><@CommonQueryMacro.DataTable id="table23" fieldStr="fxyid,jyfx,bussdate,sfje,CustomerNum,dsfZjzh,dsfHm,bz" hasFrame="true"/>
+		 </@CommonQueryMacro.CommonQuery>
+			</td></tr>
+		</table>
+				<div style="margin:10px 10px 10px 10px">备注：客户经理可以查询一个月的流水信息，总分支行风险监测岗、管理岗可以查询三个月的流水信息。</div>
+    </@CommonQueryMacro.LayoutCenter>   
+</@CommonQueryMacro.LayoutPanel>
+	<script type="text/javascript">
+	var account="";
+	var customerNum = "${customerNum}";
+
+	function btQuery_onClick(){	
+		var bussdate=ZtMmfxy_interface_dataset.getValue("bussdate");
+		var endbussdate=ZtMmfxy_interface_dataset.getValue("endbussdate");
+		ZtMmfxy_dataset.setParameter("bussdate",bussdate);
+		ZtMmfxy_dataset.setParameter("endbussdate",endbussdate);
+		ZtMmfxy_dataset.setParameter("BankAccount",account);
+		ZtMmfxy_dataset.flushData(ZtMmfxy_dataset.pageIndex);
+	}
+	function initCallGetter_post(){
+		TreeNode123_dataset.setParameter("id",customerNum);
+		load();
+	}
+	function btCancel_onClick(){	
+		ZtMmfxy_interface_dataset.setValue("bussdate","");
+		ZtMmfxy_interface_dataset.setValue("endbussdate","");
+		ZtMmfxy_dataset.flushData(ZtMmfxy_dataset.pageIndex);
+	}	
+
+	function load(){
+		var $dtree = DynamicTree_tree123;
+		//$dtree.expandAll();
+		var rt = $dtree.getRoot();
+		if(rt){
+			$dtree.select(rt.id);
+		}
+	}
+	
+	//左侧机构树点击节点后刷新右侧子机构列表
+	function DynamicTree_tree123_onSelect(e,node){
+		account= node.id;
+	}
+	//定位一条记录
+	function locate(id) {
+		var record = TreeNode123_dataset.find(["accounts"],[id]);
+		
+	}
+	</script>
+</@CommonQueryMacro.page>

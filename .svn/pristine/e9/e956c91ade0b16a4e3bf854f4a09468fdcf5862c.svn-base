@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-12-15 16:54:09 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.view.entity.AffiliatedPView" table="AFFILIATED_P_VIEW" schema="ECUSER">
+            <id name="affiTpCd" type="string">
+                <column name="AFFI_TP_CD" length="1" />
+            </id>
+            <property name="customerNum" type="string">
+                <column name="CUSTOMER_NUM" length="21" />
+            </property>
+            <property name="affiCustCoreNum" type="string">
+                <column name="AFFI_CUST_CORE_NUM" />
+            </property>
+            <property name="custname" type="string">
+                <column name="CUSTNAME" />
+            </property>
+            <property name="refNum" type="string">
+                <column name="REF_NUM" />
+            </property>
+            <property name="residential" type="string">
+                <column name="RESIDENTIAL" />
+            </property>
+            <property name="highestEduTpCd" type="string">
+                <column name="HIGHEST_EDU_TP_CD" length="20" />
+            </property>
+            <property name="loanBalance" type="big_decimal">
+                <column name="LOAN_BALANCE" precision="10" />
+            </property>
+            <property name="unpaidCount" type="java.lang.Integer">
+                <column name="UNPAID_COUNT" />
+            </property>
+    </class>
+</hibernate-mapping>

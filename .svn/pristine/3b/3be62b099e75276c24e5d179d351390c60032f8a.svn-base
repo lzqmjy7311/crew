@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="" navigate="主页 &gt; 系统管理 &gt; 部门信息维护" type="call"
+	interface="false" pagesize="10" async="false" databusid="FIVE"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.management.getter.DepartmentInfoManageQueryGetter">
+	<Include id="BankParam" />
+	<InterfaceViewParam>
+		/fpages/management/ftl/DepartmentInfoMge.ftl
+	</InterfaceViewParam>
+	<ResultViewParam>
+		/fpages/management/ftl/DepartmentInfoMge.ftl
+	</ResultViewParam>
+	<PageQryExp type="CSV" limit="true" encoding="GBK" url="/trans/qryExp.do" />
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+
+		<Field id="departmentCode" desc="部门代码" status="F" primary="false"
+			edittype="" method="None" type="Long" size="20" require="false"
+			readonly="true" default="false" xpath="/departmentCode" tip="部门代码" />
+
+		<Field id="departmentName" desc="部门名称" status="F" primary="false"
+			method="None" readonly="true" type="String" size="20" default=""
+			xpath="/departmentName" require="true" tip="部门名称" />
+
+		<Field id="brcode" desc="所属机构号" status="F" primary="false"
+			method="None" readonly="true" type="String" size="20" default=""
+			edittype="select" translated="CQ:AllBranchSelect" init="true" dropdowntype="dynamic"
+			fieldmap="brcode=brcode;brcodeName=brcode" viewField="brcodeTypeName"
+			xpath="/brcode" require="true" tip="所属机构号" />
+
+		<Field id="status" desc="有效标志" status="F" edittype="select" readonly="true"
+			method="None" primary="false" type="String" default="" size="1"
+			xpath="/status" tip="有效标志" translated="DATA_DIC.308" />
+
+		<Field id="lastUpdTlr" desc="" status="N" method="None" size="8"
+			primary="false" type="String" default="" xpath="/lastUpdTlr"
+			tip="" />
+
+		<Field id="lastUpdDate" desc="" status="N" method="None"
+			primary="false" type="Date" default="" xpath="/lastUpdDate"
+			tip="" />
+
+		<Field id="BZ" desc="备注" status="F" method="None" size="128"
+			edittype="textarea"	primary="false" type="String"
+			default="" xpath="/BZ" tip="备注" />
+
+	</Fields>
+	<Where></Where>
+	<Operations>
+		<Button id="btnAdd" name="btnAdd" desc="增加新记录"
+			operation="addrecord" url="" show="" group="" txn="" />
+		<Button id="btnDel" name="btnDel" desc="删除"
+			operation="delrecord" url="" show="" group="" txn="" />
+		<Button id="btSave" name="btSave" desc="保存"
+			operation="asysubmit"
+			updateClass="com.huateng.ebank.business.management.updater.DepartmentInfoManageUpdate"
+			url="/fpages/management/ftl/DepartmentInfoMge.ftl" txn="" />
+	</Operations>
+</CommQry>

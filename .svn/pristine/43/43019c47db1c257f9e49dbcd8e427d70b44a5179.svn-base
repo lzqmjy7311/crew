@@ -1,0 +1,20 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+
+<#assign warningId=RequestParameters["warningId"]?default("")>
+
+<@CommonQueryMacro.page title="帐务交易流水">
+<table>
+	<@CommonQueryMacro.CommonQuery id="A01" init="true" submitMode="current">
+		<@CommonQueryMacro.DataTable id="A01Table" readonly="true" fitColumns="false"
+		fieldStr="custId,acctName,acctId,itemId,txnSerialId,txnCd,txnName,ccy,txnAmt,debCrdInd,txnAftrBal,oppoAcctId,txnCateg,prodId,txnOrg,txnDt,txnTm[150],aa,aaa,aaaa,aaaaa,chnSerialId" width="100%" hasFrame="true"/>
+	</@CommonQueryMacro.CommonQuery>
+</table>
+<script>
+	//页面初始化
+	function initCallGetter_post(){
+		var warningId='${warningId}';
+		A01_dataset.setParameter("warningId",warningId);
+	}
+</script>
+</@CommonQueryMacro.page>

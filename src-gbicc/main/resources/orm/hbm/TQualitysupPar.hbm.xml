@@ -1,0 +1,77 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.gbicc.person.supervision.entity">
+	<class name="QualitysuPar" table="T_PL_QUALITYSUPPAR1" lazy="false">
+		<meta attribute="sync-DAO">false</meta>
+	
+		<id name="id" 
+			column="FD_ID" 
+			type="string">
+			<generator class="uuid.hex" />  
+		</id>
+		
+		<property
+			name="bankName"
+			column="FD_BANKNAME"
+			type="string"
+			not-null="false"
+			length="50"
+		/>
+		<property
+			name="productName"
+			column="FD_PRODUCTNAME"
+			type="string"
+			not-null="false"
+			length="100"
+		/>
+		<property
+			name="riskSignal"
+			column="FD_RISKSIGNAL"
+			type="string"
+			not-null="false"
+			length="50"
+		/>
+		<property
+			name="assureType"
+			column="FD_ASSURETYPE"
+			type="string"
+			not-null="false"
+			length="40"
+		/>
+		<property
+			name="warningLevel"
+			column="FD_WARNINGLEVEL"
+			type="string"
+			not-null="false"
+			length="25"
+		/>
+		<property
+			name="qualitysupPerc"
+			column="FD_QUALITYSUPPERC"
+			type="double"
+			not-null="false"
+		/>
+		<property
+			name="status"
+			column="FD_STATUS"
+			type="string"
+			not-null="false"
+			length="10"
+		/>
+		<property
+			name="startTime"
+			column="FD_STARTTIME"
+			type="date"
+			not-null="false"
+		/>
+		<property
+			name="endTime"
+			column="FD_ENDTIME"
+			type="date"
+			not-null="false"
+		/>
+	</class>
+</hibernate-mapping>

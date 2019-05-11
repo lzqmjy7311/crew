@@ -1,0 +1,77 @@
+<CommQry title="TRewC15CorpIndexId" navigate="TRewC15CorpIndexId" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.C15Getter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="customerNum" desc="对公客户编号" edittype="text" datatype="string"
+        xpath="/customerNum" />
+        <Field id="advanceAmount" desc="贷款金额" edittype="text" datatype="currency"
+        xpath="/advanceAmount" />
+        <Field id="advanceBalance" desc="贷款余额" edittype="text" datatype="currency"
+        xpath="/advanceBalance" />
+        <Field id="groupCustomerNum" desc="集团客户号" edittype="text" datatype="string"
+        xpath="/groupCustomerNum" />
+        <Field id="lastMSalAmount" desc="上月代发工资额" edittype="text" datatype="currency"
+        xpath="/lastMSalAmount" />
+        <Field id="lastTwoMSalAmount" desc="上2月代发工资额" edittype="text" datatype="currency"
+        xpath="/lastTwoMSalAmount" />
+        <Field id="lastThreeMSalAmount" desc="上3月代发工资额" edittype="text" datatype="currency"
+        xpath="/lastThreeMSalAmount" />
+        <Field id="lastMPubAmount" desc="上月代扣水电费" edittype="text" datatype="currency"
+        xpath="/lastMPubAmount" />
+        <Field id="lastTwoMPubAmount" desc="上2月代扣水电费" edittype="text" datatype="currency"
+        xpath="/lastTwoMPubAmount" />
+        <Field id="lastThreeMPubAmount" desc="上3月代扣水电费" edittype="text" datatype="currency"
+        xpath="/lastThreeMPubAmount" />
+        <Field id="coreCustomerNum" desc="核心客户号" edittype="text" datatype="string"
+        xpath="/coreCustomerNum" />
+        <Field id="creditAmount" desc="授信总额" edittype="text" datatype="currency"
+        xpath="/creditAmount" />
+        <Field id="creditBalance" desc="授信余额" edittype="text" datatype="currency"
+        xpath="/creditBalance" />
+        <Field id="normalAdvanceBal" desc="正常类贷款余额" edittype="text" datatype="currency"
+        xpath="/normalAdvanceBal" />
+        <Field id="mentionAdvanceBal" desc="关注类贷款余额" edittype="text" datatype="currency"
+        xpath="/mentionAdvanceBal" />
+        <Field id="substdAdvanceBalance" desc="次级类贷款余额" edittype="text" datatype="currency"
+        xpath="/substdAdvanceBalance" />
+        <Field id="doutfulAdvanceBal" desc="可疑类贷款余额" edittype="text" datatype="currency"
+        xpath="/doutfulAdvanceBal" />
+        <Field id="lossAdvanceBal" desc="损失类贷款余额" edittype="text" datatype="currency"
+        xpath="/lossAdvanceBal" />
+        <Field id="custManagerId" desc="主办客户经理名字（编号）" edittype="text" datatype="string"
+        xpath="/custManagerId" />
+        <Field id="overdueAdvanceBal" desc="逾期贷款余额" edittype="text" datatype="currency"
+        xpath="/overdueAdvanceBal" />
+        <Field id="outsideGuaranteeAmount" desc="对外担保合同金额" edittype="text" datatype="currency"
+        xpath="/outsideGuaranteeAmount" />
+        <Field id="outstandingAdvanceCount" desc="未结清贷款笔数" edittype="text" datatype="currency"
+        xpath="/outstandingAdvanceCount" />
+        <Field id="handlingOrgCd" desc="经办机构名（机构代码）" edittype="text" datatype="string"
+        xpath="/handlingOrgCd" />
+        <Field id="corporative" desc="法定代表人" edittype="text" datatype="string"
+        xpath="/corporative" />
+        <Field id="isOverdue" desc="是否逾期" edittype="select" translated="LIST:0,否;1,是" datatype="string"
+        xpath="/isOverdue" />
+        <Field id="fiveLevel" desc="五级分类" translated="DATA_DIC.2006" init="true" multiple="false" edittype="text" datatype="string"
+        xpath="/fiveLevel" />
+        <Field id="classificationDate" desc="五级分类认定日期" edittype="text" datatype="string"
+        xpath="/classificationDate" />
+        <Field id="customerName" desc="客户名称" edittype="text" datatype="string"
+        xpath="/customerName" />
+        <Field id="id" desc="ID" edittype="text" datatype="string" xpath="/id" />
+        <Field id="dataDate" desc="数据日期" edittype="text" datatype="string"
+        xpath="/dataDate" />
+        <Field id="coreHandlingOrgCd" desc="核心机构号" edittype="text" datatype="string"
+        xpath="/coreHandlingOrgCd" />
+        <Field id="depositBal" desc="当日存款余额" edittype="text" datatype="string"
+        xpath="/depositBal" />
+        <Field id="groupName" desc="所在集团集团名称" edittype="text" datatype="string"
+        xpath="/groupName" />
+        <Field id="warnId" desc="预警编号" edittype="text" datatype="string"
+        xpath="/warnId" />
+        <Field id="dataDt" desc="数据日期" edittype="text" datatype="string"
+        xpath="/dataDt" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

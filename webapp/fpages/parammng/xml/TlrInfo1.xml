@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="操作员管理" navigate="主页 &gt; 系统管理 &gt; 操作员管理"
+	type="call"
+	interface="true"
+	pagesize="5"
+	async="true"
+	databusid="DEMO"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.parammng.cqGetter.TlrInfo1Getter">
+	<Include id="BankParam" />
+	<ResultViewParam>/fpages/parammng/ftl/TlrInfo1.ftl</ResultViewParam>
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="brno" desc="机构号" status="N" method="None"
+			readonly="" primary="true" type="String" size="20" default=""
+			xpath="/brno" />
+
+		<Field id="tlrno" desc="操作员号" status="N" method="None"
+			readonly="" primary="true" type="String" size="20" xpath="/tlrno"
+			default="" />
+
+		<Field id="tlrName" desc="姓名" status="N" method="None"
+			width="50" readonly="" primary="true" type="String" size="20"
+			xpath="/tlrName" default="" />
+
+		<Field id="status" desc="状态" status="N" readonly="true"
+			translated="DATA_DIC.37" require="true" edittype="select" width="90"
+			method="None" primary="true" type="String" size="20"
+			xpath="/status" default="" />
+
+		<Field id="createDate" desc="建立日期" status="F" require="false"
+			method="None" width="90" primary="false" xpath="/createDate"
+			type="String" size="2" />
+
+		<Field id="lastaccesstm" desc="最近登陆时间" require="true" edittype="text" datatype=""
+			status="F" method="None" width="180" primary="false" type="String"
+			size="6" xpath="/lastaccesstm" default="" />
+
+		<Field id="lastlogouttm" desc="最近签退时间" require="true" edittype="text" datatype=""
+			status="F" method="None" width="180" primary="false" type="String"
+			size="6" xpath="/lastlogouttm" default="" />
+
+		<Field id="effectDate" desc="生效日期" require="true" status="F"
+			method="None" width="90" primary="false" type="String" size="20"
+			xpath="/effectDate" default="" />
+
+		<Field id="expireDate" desc="失效日期" require="true" status="F"
+			method="None" width="90" primary="false" type="String" size="20"
+			xpath="/expireDate" default="" />
+
+		<Field id="email" desc="EMAIL" require="" status="F"
+			method="None" width="" primary="false" type="String" size="20"
+			xpath="/email" default="" />
+
+		<Field id="misc" desc="所属部门" require="" status="F" method="None"
+			width="" primary="false" type="String" size="20" xpath="/misc"
+			default="" />
+		<Field id="defRoleid" desc="默认岗位" require="true" status="F"
+			readonly="false" edittype="select" fieldmap="" method="None"
+			translated="DATA_DIC.100" width="90" viewField="" primary="false"
+			type="String" size="10" xpath="/roleid" tip="请先选择操作员岗位"/>
+
+	</Fields>
+
+	<Where>
+		<!-- <TextBox id="brcode" tablename="ci" fieldname="brcode"
+			type="String" dataType="" operation="EQ" size="20" desc="机构号"
+			tip="机构号" method="None" index="0" function="" width="" default=""
+			scale="" require="" readOnly="" rules="" errmsg="" /> -->
+
+		<Option id="brcode1" fieldname="brcode1" operation="EQ" size=""
+			desc="机构号" tip="机构号" type="string" translated="CQ:BctlAllSelect"
+			fieldmap="brcode1=brcode;brcode1Name=brcodeTypeName"
+			viewField="brcodeTypeName" dropdowntype="dynamic" init="true"
+			require="false" readOnly="" />
+
+		<TextBox id="tlrno1" tablename="ci" fieldname="tlrno1"
+			type="String" dataType="" operation="EQ" size="8" desc="操作员号"
+			tip="操作员号" method="genLikeP" index="1" function="" width=""
+			default="" scale="" require="" readOnly="" rules="" errmsg="操作员号必须是八位" />
+
+
+	</Where>
+
+	<Operations>
+		<!-- operation( addrecord:delrecord:syncsubmit:asyncqrysubmit:asyncupadasubmit ) -->
+		<Button id="btn" name="btn" desc="确定"
+			operation="submitform" url="/fpages/parammng/ftl/TlrInfo2New.ftl"
+			txn="MSYSMOV002" />
+
+	</Operations>
+	<Sql>
+	</Sql>
+</CommQry>

@@ -1,0 +1,77 @@
+<CommQry title="TPlTriggerRuleAcct" navigate="TPlTriggerRuleAcct" type="call" interface="false" pagesize="20" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.person.eliminate.getter.TPlTriggerRuleAcctHistoryGetter">
+    <Include id="BankParam" />
+    <Fields>
+    	<Field id="id" xpath="/id" desc="记录编号" edittype="text" status="F" datatype="string" 
+			   readonly="true" width="250" />
+        <Field id="loanacno" xpath="/triggerRuleAcct/loanacno" desc="贷款账号" edittype="text" status="F" datatype="string" 
+			   readonly="true" width="250" />
+		<Field id="loanid" xpath="/triggerRuleAcct/loanid" desc="业务编号" edittype="text" status="F" datatype="string" />
+		<Field id="custid" xpath="/custid" desc="客户编号" edittype="text" status="F" datatype="string" 
+			   readonly="true" width="250" />
+		<Field id="custname" xpath="/triggerRuleAcct/custname" desc="客户名称" edittype="text" status="F" datatype="string" 
+			   readonly="true" width="250" />
+		<Field id="corpcustid" xpath="/triggerRuleAcct/corpcustid" desc="法人客户编号" edittype="text" status="F" datatype="string" />
+		
+		<Field id="prodid" xpath="/triggerRuleAcct/prodid" desc="产品类型" edittype="text" status="F" datatype="string" 
+			   readonly="true" width="250" />
+		<Field id="prodname" xpath="/triggerRuleAcct/prodname" desc="产品名称" edittype="text" status="F" datatype="string" 
+			   readonly="true" width="250" />
+		<Field id="tcapi" desc="贷款金额" xpath="/triggerRuleAcct/tcapi" edittype="text" datatype="currency" 
+			   size="20" scale="2" prefix="￥"  readOnly="false" default="0" />
+		<Field id="tterm" xpath="/triggerRuleAcct/tterm" desc="贷款期限" edittype="date"
+			   datatype="date" readOnly="false" />
+		<Field id="retukind" xpath="/triggerRuleAcct/retukind" desc="还款方式" edittype="text" status="F" datatype="string" />
+		<Field id="storagedate" xpath="/triggerRuleAcct/storagedate" desc="权证入库日期" edittype="date"
+			   datatype="date" readOnly="false" />
+		<Field id="projid" xpath="/triggerRuleAcct/projid" desc="楼盘项目编号" edittype="text" status="F" datatype="string" />
+		<Field id="payoffflag" xpath="/triggerRuleAcct/payoffflag" desc="是否结清" edittype="text" status="F" datatype="string" />
+		<Field id="unprofname" xpath="/triggerRuleAcct/unprofname" desc="联保小组名称" edittype="text" status="F" datatype="string" />
+		<Field id="begindate" xpath="/triggerRuleAcct/begindate" desc="开户日期" edittype="date"
+			   datatype="date" readOnly="false" />
+		<Field id="enddate" xpath="/triggerRuleAcct/enddate" desc="到期日期" edittype="date"
+			   datatype="date" readOnly="false" />
+		<Field id="operidId" xpath="/triggerRuleAcct/operid" desc="经办人Id" edittype="text" status="F" datatype="string" />
+		<Field id="operidName" xpath="/triggerRuleAcct/opername" desc="经办人" edittype="text" status="F" datatype="string" />
+		<Field id="bankidId" xpath="/triggerRuleAcct/bankid" desc="经办行Id" edittype="text" status="F" datatype="string"/>
+		<Field id="bankidName" xpath="/triggerRuleAcct/bankname" desc="经办行" edittype="text" status="F" datatype="string" 
+			   readonly="true" width="250" />
+		<Field id="dutyid" xpath="/triggerRuleAcct/dutyid" desc="责任人" edittype="text" status="F" datatype="string" />
+		<Field id="assukind" xpath="/triggerRuleAcct/assukind" desc="担保方式" edittype="text" status="F" datatype="string" />
+		<Field id="floatinterate" desc="浮动比例" xpath="/triggerRuleAcct/floatinterate" edittype="text" datatype="double" 
+			   size="20" scale="2" />
+		<Field id="acflag" xpath="/triggerRuleAcct/acflag" desc="账户状态" edittype="select" translated="DATA_DIC.120" status="F" datatype="string" 
+			   readonly="true" width="250" />
+		<Field id="riskflag" xpath="/triggerRuleAcct/riskflag" desc="风险状态" edittype="select" translated="DATA_DIC.122" status="F" datatype="string" 
+			   readonly="true" width="250" />
+		<Field id="acflag2" xpath="/triggerRuleAcct/acflag2" desc="应计非应计" edittype="select" translated="DATA_DIC.121" status="F" datatype="string" />
+		<Field id="contno" xpath="/triggerRuleAcct/contno" desc="合同编号" edittype="text" status="F" datatype="string" />
+		
+		<Field id="dutyInfo" xpath="/triggerRuleAcct/dutyInfo" desc="贷后检查人" edittype="text" status="F" datatype="string" />
+		
+		<Field id="overbal" xpath="/triggerRuleAcct/overbal" desc="拖欠本金" edittype="text" datatype="currency" 
+			   size="20" scale="2" prefix="￥" readOnly="false" default="0"/>
+			   
+		<Field id="date" xpath="/date" desc="更改日期" edittype="date"
+			   datatype="date" readOnly="false" />
+		<Field id="launchPer"  xpath="/launchPer/tlrno"  desc="发起人"  edittype="text" status="F" datatype="string" />
+    </Fields>
+    <Where>
+    	<TextBox id="loanacno" desc="贷款账号" edittype="text" status="F" datatype="string" index="0" />
+    	<TextBox id="custname" desc="客户名称" edittype="text" status="F" datatype="string" index="1" />
+    	<TextBox id="opername" desc="经办人" edittype="text" status="F" datatype="string" index="2" />
+    	<!--<TextBox id="bankname"  desc="经办行"  edittype="text" status="F" datatype="string" index="3" />-->
+    	
+    	<Option id="bankName" desc="经办行" translated="CQ:subAutoOrgTree"
+			fieldmap="bank=brcode;bankName=brname" viewField="brname"
+			edittype="select" dropdowntype="dynamic" primaty="true" init="true" size="10" 
+			editable="true" index="3"/>
+    	<TextBox id="launchPer" desc="发起人"  edittype="text" status="F" datatype="string" index="4" />
+    	<TextBox id="createTimeStart" desc="更改时间起" edittype="text" datatype="date" index="5" />
+    	<TextBox id="createTimeEnd" desc="至" edittype="text" datatype="date" index="6" />
+    </Where>
+    <Operations>
+    	<Button id="btnAdd" name="btnAdd" desc="规则排除/恢复" icon="icon-add" updateClass="#" url="#" txn="" />
+    	<Button id="btnRead" name="btnRead" desc="查看" icon="icon-smile" updateClass="#" url="#" txn="" />
+    </Operations>
+</CommQry>

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dwr PUBLIC "-//GetAhead Limited//DTD Direct Web Remoting 2.0//EN" "http://getahead.org/dwr/dwr20.dtd">
+
+<dwr>
+
+  <allow>
+
+    <!-- intro - for the test on index.html -->
+    <create creator="new" javascript="CommonQueryResultProcess">
+	      <param name="class" value="com.huateng.commquery.process.BankResultProcess"/>
+	      <include method="processAsyncBean"/>
+     </create>
+
+   	<!--<create creator="new" javascript="GetProcessInstances">
+      <param name="class" value="com.huateng.ebank.business.loancenter.getter.GetProcessInstances"/>
+      <include method="getProcessInstances"/>
+    </create>
+
+    --><create creator="new" javascript="CommonQueryUpdateProcess">
+	      <param name="class" value="com.huateng.commquery.process.BankUpdateProcess"/>
+	      <include method="savaOrUpdate"/>
+     </create>
+
+     <create creator="new" javascript="PortletProcess">
+	      <param name="class" value="com.huateng.commquery.process.PortletProcess"/>
+	      <include method="process"/>
+     </create>
+     
+     <create creator="new" javascript="SessionTicketProcess">
+	      <param name="class" value="com.huateng.commquery.result.databus.SessionTicketProcess"/>
+	      <include method="setAciveTicket"/>
+	      <include method="clearTcket"/>
+     </create>
+
+	<create creator="new" javascript="PrivAction">
+		<param name="class" value="com.huateng.ebank.business.dwr.DwrFunctions"/>
+		<include method="getFuncArray"/>
+		<include method="getFuncArrayCopram"/>
+		<include method="getFunctionByBranchId"/>
+		<include method="updateBranchFunc"/>
+		<include method="getFuncArrayByFavt"/>
+		<include method="getFavtList"/>
+		<include method="saveFavt"/>
+		<include method="getRoleFuncByIdCom"/>
+		<include method="getRoleFuncByIdComSeri"/>
+		<!-- 岗位权限设置 -->
+		<include method="getRoleFuncByid"/>
+		<include method="updateRoleFunc"/>
+		<!-- 工作日期维护 -->
+		<include method="getWorkDateByYear"/>
+		<include method="saveOrUpdateWorkDate"/>
+		<include method="getProgress"/>
+		<include method="getcurrentFileType"/>
+		<include method="checkWorkdateLock"/>
+		<include method="getWorkDateByDetail"/>
+<!-- 		设置当前的tabid -->
+        <include method="setCurrentTabId"/>
+        <include method="getPagePath"/>
+		<include method="setCurrentTabFuncId"/>
+	</create>
+	
+	<create creator="new" javascript="SysMonitor">
+		<param name="class" value="com.huateng.ebank.business.dwr.SysMonitorFunctions"/>
+		<include method="getJVMAvailableMem"/>
+		<include method="getJVMMemInfo"/>
+		<include method="getOSProperty"/>
+		<include method="getMemoryFree"/>
+		<include method="getMemoryInfo"/>
+		<include method="getCpuInfo"/>
+		<include method="getCpuUser"/>
+		<include method="getNetworkInfo"/>
+		<include method="getNetwork"/>
+		<include method="getFile"/>
+		<include method="getFileInfo"/>
+	</create>
+
+
+    <convert match="map" converter="java.util.Map"/>
+    <convert match="com.huateng.exception.AppException" converter="bean"/>
+    <convert match="com.huateng.commquery.result.ResultParamBean" javascript="ResultParamBean" converter="bean"/>
+    <convert match="com.huateng.commquery.result.ResCdMsg" javascript="ResCdMsg" converter="bean"/>
+    <convert match="com.huateng.commquery.result.MultiUpdateResultBean" converter="bean"/>
+    <convert match="com.huateng.commquery.result.UpdateResultBean" converter="bean"/>
+    <convert match="com.huateng.commquery.result.UpdateReturnBean" converter="bean"/>
+	<convert match="resource.bean.pub.FunctionInfo" converter="bean"/>
+	<convert match="resource.bean.pub.BranchInfo" converter="bean"/>
+	<convert match="resource.bean.pub.RoleInfo" converter="bean"/>
+	<convert match="resource.bean.pub.RoleFuncRel" converter="bean"/>
+	<convert match="com.huateng.report.imports.model.Constant" converter="bean"/>
+
+     <create creator="new" javascript="UploadMonitor">
+            <param name="class" value="com.huateng.commquery.fileupload.UploadMonitor"/>
+        </create>
+     <convert converter="bean" match="com.huateng.commquery.fileupload.UploadInfo"/>
+
+	<!--GBICC start-->
+	<create creator="new" javascript="TaskVariable">
+		<param name="class" value="com.gbicc.bpm.service.ProcessManagerService"/>
+		<include method="findTaskVariable"/>
+		<include method="findRuningTaskByBusinessKey"/>
+		<include method="findOrgInfoByUserId"/>
+		<include method="findOrgInfoByUserIds"/>
+		<include method="getSystemCurrentDate"/>
+		<include method="updateRoleFunc"/>
+		<include method="isProcessingByAccid"/>
+	</create>
+	<create creator="new" javascript="RuleEliminate">
+		<param name="class" value="com.gbicc.person.eliminate.service.TPlRuleEliminateDtlService"/>
+		<include method="dwrFindEliminateList"/>
+	</create>
+	<create creator="new" javascript="ZxrfInfoAjax">
+		<param name="class" value="com.gbicc.person.zxrf.service.TPlZxrfInfoService"/>
+		<include method="findReport"/>
+		<include method="testTemp"/>
+	</create>
+	<create creator="new" javascript="TCmWarnDisposalAjax">
+		<param name="class" value="com.gbicc.company.warnDisposal.service.TCmWarnTaskService"/>
+		<include method="personStartDC"/>
+		<include method="personStartRC"/>
+		<include method="startProcessRC"/>
+		<include method="ddelTCmWarnTaskRel"/>
+		<include method="isSubmitNext"/>
+	</create>
+	<create creator="new" javascript="ComninationWarnSAjax">
+		<param name="class" value="com.gbicc.warn.ComninationWarn.service.ComninationWarnService"/>
+		<include method="warnCountTXT"/>
+		<include method="warnCountZXT"/>
+		<include method="warnValZXT"/>
+		<include method="findIndexInfoAjx"/>
+		<include method="industryValZXT"/>
+		<include method="industryValZXT2"/>
+	</create>
+	<create creator="new" javascript="AComninationWarnDAjax">
+		<param name="class" value="com.gbicc.warn.ComninationWarn.service.ComninationWarnService"/>
+		<include method="warnCountTXT"/>
+		<include  method="warnCountZXT"/>
+		<include  method="warnValZXT"/>
+		<include  method="findIndexInfoAjx"/>
+		<include method="warnValDDZXT"/>
+		<include method="warnValType3ZXT"/>
+		<include method="industryValZXT"/>
+	</create>
+	<create creator="new" javascript="BComninationWarnDAjax">
+		<param name="class" value="com.gbicc.warn.ComninationWarn.service.ComninationWarnService"/>
+		<include method="warnCountTXT"/>
+		<include  method="warnCountZXT"/>
+		<include  method="warnValZXT"/>
+		<include  method="findIndexInfoAjx"/>
+		<include method="warnValDDZXT"/>
+		<include method="warnValType3ZXT"/>
+		<include method="industryValZXT"/>
+	</create>
+	<create creator="new" javascript="CComninationWarnDAjax">
+		<param name="class" value="com.gbicc.warn.ComninationWarn.service.ComninationWarnService"/>
+		<include method="industryValZXT2"/>
+	</create>
+	<create creator="new" javascript="EComninationWarnDAjax">
+		<param name="class" value="com.gbicc.warn.ComninationWarn.service.ComninationWarnService"/>
+		<include method="industryValZXT3"/>
+	</create>
+	<create creator="new" javascript="TCmWarnTaskRelAjax">
+		<param name="class" value="com.gbicc.company.warnDisposal.service.TCmWarnTaskRelService"/>
+		<include method="removeTCmWarnTaskRel"/>
+		<include method="addTCmWarnTaskRel"/>
+	</create>
+	<create creator="new" javascript="QualityAjax">
+		<param name="class" value="com.gbicc.person.supervision.service.superInfoService"/>
+		<include method="ChangeStatus"/>
+	</create>
+	<create creator="new" javascript="InveRelWarning">
+		<param name="class" value="com.gbicc.company.single.service.TCmSingleRulInveRelWarningService"/>
+		<include method="dwrFindWarningIds"/>
+		<include method="dwrFindWarningCount"/>
+	</create>
+	<create creator="new" javascript="AccountDutyDistribute">
+		<param name="class" value="com.gbicc.bpm.service.TLoanAccountDutyDistributeService"/>
+		<include method="dwrFindDistributeRuningProcess"/>
+		<include method="dwrFindOldCheckUser"/>
+		<include method="dwrFindLeftCheckUser"/>
+	</create>
+	<create creator="new" javascript="MonitorReportCtrl">
+		<param name="class" value="com.gbicc.person.monitor.service.TPlDqMonitorService"/>
+		<include method="dwrFindCtrl"/>
+		<include method="dwrGetReportWarnInfo"/>
+		<include method="dwrFindFrequency"/>
+	</create>
+	<!--GBICC end-->
+    </allow>
+
+	<signatures>
+		<![CDATA[
+		import java.util.List;
+		import java.util.Map;
+		import com.huateng.commquery.result.UpdateReturnBean;
+		import com.huateng.commquery.result.UpdateResultBean;
+		import com.huateng.commquery.process.BankResultProcess;
+		import com.huateng.commquery.process.BankUpdateProcess;
+		import com.huateng.commquery.result.MultiUpdateResultBean;
+		BankResultProcess.processAsyncBean(Map<String,String> map,HttpServletRequest request,HttpServletResponse response);
+		BankUpdateProcess.savaOrUpdate(String updateClassName,MultiUpdateResultBean bean,HttpServletRequest request,HttpServletResponse response);
+		MultiUpdateResultBean.setUpdateResult(Map<String,UpdateResultBean> map);
+		MultiUpdateResultBean.setParamMap(Map<String,String> map);
+		UpdateReturnBean.setParamMap(Map<String,String> map);
+		UpdateResultBean.setParamMap(Map<String,String> map);
+		UpdateResultBean.setTotalList(List<Map> list);
+		]]>
+	</signatures>
+
+<!--
+  <signatures>
+  <![CDATA[
+  	import com.huateng.commquery.process.BankResultProcess;
+  	import java.util.Map ;
+  	import javax.servlet.ServletRequest;
+  	BankResultProcess.processAsyncBean(Map<String,String> map,HttpServletRequest request,HttpServletResponse response);
+  ]]>
+ </signatures>
+-->
+</dwr>

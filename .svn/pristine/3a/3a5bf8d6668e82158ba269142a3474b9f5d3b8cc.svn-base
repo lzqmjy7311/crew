@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.fp.demo.getter.GroupFieldsGetter">
+	<Include id="BankParam" />
+	
+	<Fields>
+		<Field id="loanVariety" desc="贷款品种" xpath="" colspan="4" width="600" />
+		<Field id="custName" desc="客户姓名" xpath="" colspan="4" width="600" />
+		<Field id="custCode" desc="客户编号" xpath="" colspan="4" width="600" />
+		<Field id="certType" desc="证件类型" xpath="" />
+		<Field id="certCode" desc="证件号码" xpath="" />
+		<Field id="coopObj" desc="合作商" xpath="" />
+		<Field id="coopObjName" desc="合作商名称" xpath="" />
+		<Field id="loanAmt" desc="贷款金额" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" xpath="" default="0" />
+		<Field id="loanBalance" desc="贷款余额" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" xpath="" default="0" />
+		<Field id="issueDate" desc="发放日期" edittype="date"
+            datatype="date" xpath="" />
+		<Field id="completeDate" desc="完成日期" edittype="date"
+            datatype="date" xpath="" />
+		<Field id="issueAmt" desc="已发放金额" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" xpath="" default="0" />
+		<Field id="lendCode" desc="借据编号" xpath=""/>
+		<Field id="guarWay" desc="担保方式" xpath=""/>
+		<Field id="gageCode" desc="押品入库编号" xpath=""/>
+		<Field id="arrearAmt" desc="拖欠本金" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" xpath="" default="0" />
+		<Field id="riskStatus" desc="风险状态" xpath=""/>
+		<Field id="acctStatus" desc="账户状态" xpath=""/>
+		<Field id="checkPerCode" desc="检查责任人工号" xpath=""/>
+		<Field id="checkWay" desc="检查方式" edittype="radio" translated="LIST:1,现场;2,非现场"
+            datatype="string" xpath="" colspan="4" width="600" />
+		<Field id="checkPlace" status="N" desc="【现场】检查场所" xpath="" method="None" />
+		<Field id="checkDate" status="N" desc="【现场】检查时间" edittype="date"
+            datatype="date" xpath="" />
+		<Field id="checkType" status="N" desc="【非现场】检查方式" edittype="radio" translated="LIST:1,征信;2,电话;3,报表分析;4,其他"
+            datatype="string" xpath="" colspan="4" width="600" />
+            
+            
+		<Field id="healthCond" status="N" desc="健康状况" edittype="radio" translated="LIST:1,良好;2,较差;3,死亡"
+            datatype="string" xpath="" />
+		<Field id="marriageCond" status="N" desc="婚姻状况" edittype="radio" translated="LIST:1,未婚;2,已婚;3,离异"
+            datatype="string" xpath="" />
+		<Field id="contactWay" status="N" desc="联系方式变化" edittype="radio" translated="LIST:1,无变化;2,已变更"
+            datatype="string" xpath="" />
+        <Field id="contactWayUpd" desc="地址/电话更新" xpath=""/>
+        <Field id="profession" status="N" desc="职业变化" edittype="radio" translated="LIST:1,无变化;2,已变更"
+            datatype="string" xpath="" />
+        <Field id="professionUpd" desc="单位更新" xpath=""/>
+        <Field id="property" status="N" desc="资产" edittype="radio" translated="LIST:1,无变化;2,减少;3,增加"
+            datatype="string" xpath="" />
+        <Field id="income" status="N" desc="收入" edittype="radio" translated="LIST:1,无变化;2,减少;3,增加"
+            datatype="string" xpath="" />
+		<Field id="liabilities" status="N" desc="负债" edittype="radio" translated="LIST:1,无变化;2,减少;3,增加"
+            datatype="string" xpath="" />
+		<Field id="IfInflRepmt" status="N" desc="变化情况是否对于还款付息具有较大影响" edittype="radio" translated="LIST:1,是;2,否"
+            datatype="string" xpath="" />
+            
+        
+        <Field id="coopItem" desc="合作商/合作项目名称（可多选）" edittype="checkbox" translated="LIST:1,楼盘开发商;2,中介公司;3,担保公司;4,其他" />
+		<Field id="devComp" desc="楼盘开发商" xpath=""/>
+		<Field id="mediumComp" desc="中介公司" xpath=""/>
+		<Field id="guarComp" desc="担保公司" xpath=""/>
+		<Field id="projectEvolve" status="N" desc="楼盘工程进度" edittype="radio" translated="LIST:1,正常;2,异常"
+            datatype="string" xpath="" />
+        <Field id="exceDesc" desc="异常情况说明" xpath=""/>
+        <Field id="deliverCond" status="N" desc="楼盘交付情况（预售房合同交付日期为准）" edittype="radio" translated="LIST:1,正常;2,延期"
+            datatype="string" xpath="" />
+        <Field id="postpDesc" desc="延期情况说明" xpath=""/>
+        <Field id="tranCardCond" status="N" desc="楼盘他证办证情况" edittype="radio" translated="LIST:1,已办理;2,未办理;3,长期无法办理"
+            datatype="string" xpath="" />
+        <Field id="tranCardCondDesc" desc="情况说明" xpath=""/>
+        
+        
+	</Fields>
+	
+	<Operations>
+		<Button id="loanPerAdd" name="loanPerAdd" desc="新增" icon="icon-add" updateClass="#" url="#" txn="" />
+		<Button id="loanPerUpd" name="loanPerUpd" desc="编辑" icon="icon-add" updateClass="#" url="#" txn="" />
+		<Button id="loanPerDel" name="loanPerDel" desc="删除" icon="icon-delete" operation="delrecord" updateClass="#" url="" />
+		<Button id="loanPerConfirm" name="loanPerConfirm" desc="确定" icon="icon-save" updateClass="#" url="#" txn="" />
+	</Operations>
+</CommQry>

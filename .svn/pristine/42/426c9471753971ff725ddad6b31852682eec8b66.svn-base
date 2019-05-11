@@ -1,0 +1,414 @@
+package com.gbicc.person.zxrf.service;
+
+
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpException;
+import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.gbicc.bpm.BpmDescUtil;
+import com.gbicc.bpm.entity.TLoanAccountRelDuty;
+import com.gbicc.bpm.service.ProcessManagerService;
+import com.gbicc.common.CommonService;
+import com.gbicc.common.FileUpDownProperties;
+import com.gbicc.common.TemplateBuilder;
+import com.gbicc.company.warnDisposal.service.TCmWarnTaskService;
+import com.gbicc.person.monitor.entity.TPlReportRelation;
+import com.gbicc.person.monitor.entity.TPlTask;
+import com.gbicc.person.monitor.entity.TPlZxrfMonitor;
+import com.gbicc.person.monitor.service.TPlTaskService;
+import com.gbicc.person.monitor.service.TPlZxrfMonitorService;
+import com.gbicc.person.product.entity.Product;
+import com.gbicc.person.zxrf.dao.TPlZxrfInfoDAO;
+import com.gbicc.person.zxrf.entity.TPlZxrfInfo;
+import com.gbicc.personCommon.entity.TEdwPlsAccount;
+import com.gbicc.personCommon.entity.TEdwPlsCust;
+import com.gbicc.rule.update.TRuleDefinitionCheck;
+import com.gbicc.warn.entity.TWarnSignal;
+import com.huateng.commquery.result.UpdateReturnBean;
+import com.huateng.ebank.business.management.service.TlrInfoService;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.entity.data.mng.TlrInfo;
+import com.huateng.ebank.framework.exceptions.CommonException;
+import com.huateng.ebank.framework.util.ApplicationContextUtils;
+
+import freemarker.template.TemplateException;
+
+/**
+ * 
+ * @author liufei
+ *
+ * 版本：2015年11月12日 上午17:31:41
+ * 类说明：中小融辅管理 service
+ */
+public class TPlZxrfInfoService {
+	
+	private static final Logger log=LoggerFactory.getLogger(TPlZxrfInfoService.class);
+	
+	public TPlZxrfInfoService() {
+	}
+
+	public synchronized static TPlZxrfInfoService getInstance() {
+		return (TPlZxrfInfoService) ApplicationContextUtils
+				.getBean(TPlZxrfInfoService.class.getSimpleName());
+	}
+	
+	public TPlZxrfInfoDAO getDao(){
+		return (TPlZxrfInfoDAO) ApplicationContextUtils.getBean("TPlZxrfInfoDAO");
+	}
+	
+	public TPlZxrfInfo get(String id) throws CommonException{
+		TPlZxrfInfoDAO dao=getDao();
+		return dao.query(id);
+	}
+	
+	public void save(TPlZxrfInfo tPlZxrfInfo) throws CommonException{
+		TPlZxrfInfoDAO dao=getDao();
+		dao.insert(tPlZxrfInfo);
+	}
+	
+	public void update(TPlZxrfInfo tPlZxrfInfo) throws CommonException{
+		TPlZxrfInfoDAO dao=getDao();
+		dao.update(tPlZxrfInfo);
+	}
+	
+	public void delete(String id) throws CommonException{
+		TPlZxrfInfoDAO dao=getDao();
+		dao.delete(id);
+	}
+	public void delete(TPlZxrfInfo tPlZxrfInfo)throws CommonException{
+		TPlZxrfInfoDAO dao=getDao();
+		dao.getHibernateTemplate().delete(tPlZxrfInfo);
+	}
+	
+	/**
+	 * 根据业务ID启动流程
+	 * @param businessId
+	 * false失败  ture 成功
+	 * @return
+	 */
+	public boolean startProcess(TPlZxrfMonitor dqMonitor) {
+		try{
+			
+			CommonService comService =  CommonService.getInstance();
+			//账户信息表
+			TEdwPlsAccount accountEntity=(TEdwPlsAccount)comService.queryOneHQL("from TEdwPlsAccount where loanacno='"+dqMonitor.getLoanAcct()+"'");
+			//客户信息表
+			TEdwPlsCust custEntity=null;
+			//产品
+			Product product=null;
+			if(accountEntity!=null){
+				if(accountEntity.getCustid()!=null){
+					custEntity=(TEdwPlsCust)comService.queryOneHQL("from TEdwPlsCust where custid='"+accountEntity.getCustid()+"'");
+				}
+				if(accountEntity.getProdid()!=null){
+					List<Product> list=(List<Product>)comService.queryListHQL("from Product where prodCode='"+accountEntity.getProdid()+"'");
+					if(list.size()>0){
+						product=list.get(0);
+					}
+				}
+			}
+			//责任人表
+			TLoanAccountRelDuty tLoanAccountRelDuty=(TLoanAccountRelDuty)comService.queryOneHQL("from TLoanAccountRelDuty where loanacno='"+dqMonitor.getLoanAcct()+"'");
+			//保存任务信息
+			this.addZxrfInfoTask(dqMonitor, comService, accountEntity, custEntity, tLoanAccountRelDuty, product);
+			this.setTplZxrfInfoParam(dqMonitor, comService, accountEntity, custEntity, tLoanAccountRelDuty, product);
+			
+			//启动流程
+			String businessId=dqMonitor.getId();
+			String processKey = FileUpDownProperties.readValue("zxrf_process");
+			ProcessManagerService procService = ProcessManagerService.getInstace();
+			Map<String, Object> map = new HashMap<String, Object>();
+			if(tLoanAccountRelDuty!=null&&tLoanAccountRelDuty.getDutyid()!=null){
+				map.put("assignee", tLoanAccountRelDuty.getDutyid());
+				map.put("desc",BpmDescUtil.getDesc(businessId, dqMonitor.getCustName(),dqMonitor.getCustCode()));
+				procService.startProcess(businessId, processKey, dqMonitor.getHandler().getTlrno(), map);
+			}else if(dqMonitor.getHandler()!=null){
+				map.put("assignee", dqMonitor.getHandler().getTlrno());
+				map.put("desc",BpmDescUtil.getDesc(businessId, dqMonitor.getCustName(),dqMonitor.getCustCode()));
+				procService.startProcess(businessId, processKey, dqMonitor.getHandler().getTlrno(), map);
+			}
+		}catch(Exception e){
+			log.error("启动中小融辅流程异常---------", e);
+			e.printStackTrace();
+			return false;
+		}
+		return true;
+	}
+	
+	
+	/**
+	 * 保存主表信息
+	 * @param dqMonitor
+	 * @param accountEntity
+	 * @param custEntity
+	 * @param plsKpiAcc
+	 * @param tLoanAccountRelDuty
+	 * @param product
+	 * @return
+	 * @throws CommonException
+	 */
+	private TPlZxrfMonitor addZxrfInfoTask(TPlZxrfMonitor dqMonitor,CommonService comService,TEdwPlsAccount accountEntity,TEdwPlsCust custEntity,TLoanAccountRelDuty tLoanAccountRelDuty,Product product) throws CommonException{
+		
+		TPlZxrfMonitorService service = TPlZxrfMonitorService.getInstance();
+		Date nowDate=new Date();
+		dqMonitor.setTaskCreatDate(nowDate);
+		dqMonitor.setTaskMatureDate(new Date(nowDate.getTime()+15*24*60*60*1000));
+		dqMonitor.setRptStatus("1");
+		dqMonitor.setTaskType("RF");
+		
+		dqMonitor.setReportUrl("/gbicc-pages/zxrfProcess/ftl/TPlZxrfInfoWin.ftl");
+		if(product!=null){
+			dqMonitor.setLoanVariety(product.getProdCode());
+		}
+		if(accountEntity!=null){
+			dqMonitor.setLoanVariety(accountEntity.getProdid());
+			dqMonitor.setLoanAmt(accountEntity.getTcapi().doubleValue());
+			dqMonitor.setLoanBalance(accountEntity.getBal().doubleValue());
+			if(accountEntity.getTterm()!=null){
+				dqMonitor.setLoanTerm(accountEntity.getTterm().toString());
+			}
+			TlrInfo handler= TlrInfoService.getInstance().getTlrInfoByTlrno(accountEntity.getDutyid());
+			dqMonitor.setHandler(handler);
+		}
+		if(custEntity!=null){
+			dqMonitor.setCustName(custEntity.getCustname());
+			dqMonitor.setCustCode(custEntity.getCustid());
+		}
+		if(tLoanAccountRelDuty!=null){
+			if(tLoanAccountRelDuty.getDutyid()!=null){
+				TlrInfo handler= TlrInfoService.getInstance().getTlrInfoByTlrno(tLoanAccountRelDuty.getDutyid());
+				dqMonitor.setHandler(handler);
+			}
+		}
+		if(dqMonitor.getHandler()==null || dqMonitor.getHandler().getTlrno()==null){
+			dqMonitor.setHandler(TlrInfoService.getInstance().getTlrInfoByTlrno(TCmWarnTaskService.getInstance().getDateDicName(FileUpDownProperties.readValue("task_distribute_mng_type"))));
+			 
+		}
+		service.save(dqMonitor);
+		return dqMonitor;
+		
+	}
+	/**
+	 * 复制任务表中数据至报告表
+	 * @param task
+	 * @param info
+	 * @throws CommonException 
+	 */
+	private void setTplZxrfInfoParam(TPlZxrfMonitor task,CommonService comService,TEdwPlsAccount accountEntity,TEdwPlsCust custEntity,TLoanAccountRelDuty tLoanAccountRelDuty,Product product) throws CommonException{
+		
+		TPlZxrfInfo  info=new TPlZxrfInfo();
+		
+		if(accountEntity!=null){
+			info.setLoanAccount(accountEntity.getLoanacno());
+			info.setProductCode(accountEntity.getProdid());
+			info.setLoanAmount(accountEntity.getTcapi().doubleValue());
+			info.setGrantDate(accountEntity.getBegindate());
+			info.setOverDate(accountEntity.getEnddate());
+			info.setOperator(accountEntity.getDutyid());
+			info.setOperBank(accountEntity.getBankid());
+			info.setLoanBalance(accountEntity.getBal().doubleValue());
+		}
+		if(custEntity!=null){
+			info.setCustname(custEntity.getCustname());
+			info.setCustcode(custEntity.getCustid());
+			info.setIndustry(custEntity.getWaykind());
+		}
+		info.setCredited(new Date());
+		if(tLoanAccountRelDuty!=null){
+			if(tLoanAccountRelDuty.getDutyid()!=null){
+				info.setOperator(tLoanAccountRelDuty.getDutyid());
+				TlrInfo handler= TlrInfoService.getInstance().getTlrInfoByTlrno(tLoanAccountRelDuty.getDutyid());
+				info.setOperBank(handler.getBrcode());
+			}
+		}
+		if(product!=null){
+			info.setProductType(product.getProdType());
+		}
+		info.setStatus("0");
+		info.setRedCount(0);
+		info.setYellowCount(0);
+		TPlZxrfInfoService.getInstance().save(info);
+		
+		TPlReportRelation relation=new TPlReportRelation();
+		relation.setBusinessId(task.getId());
+		relation.setReportId(info.getId());
+		relation.setReportType("RF");
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		rootdao.getHibernateTemplate().save(relation);
+	}
+	
+	/**
+	 * 
+	 * @param businessId
+	 * @return
+	 */
+	public Map<String, String> findReport(String businessId){
+		
+		Map<String, String> map = new HashMap<String, String>();
+		try{
+			TPlTaskService tplTaskservice = TPlTaskService.getInstance();
+			TPlTask taskM = tplTaskservice.get(businessId);
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyyMM");
+//			找财报
+			String sql="SELECT T.CREATE_DATE FROM T_EDW_PLS_CUSTDAILY T WHERE T.CUSTID='"+taskM.getCustCode()+"'";
+			ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+			Iterator it=rootdao.queryBySQL(sql);
+			List<Date> list = new ArrayList<Date>();
+			while(it.hasNext()){
+				String dd=(String) it.next();
+				list.add(sdf.parse(dd));
+			}
+			//至少有两份财报
+			if(list!=null&&list.size()>1){
+				//任务生成日期
+				Date credit=taskM.getTaskCreatDate();
+				//计算最早才不与任务生成日期月份长度
+				int dateLength=this.calculteMonLength(list.get(0),credit);
+				String lackMonth="";
+				for(int i=dateLength-1;i>=0;i--){
+					Calendar calendar=Calendar.getInstance();
+					calendar.setTime(credit);
+					calendar.add(Calendar.MONTH, i-dateLength);
+					boolean b=false;
+					for(Date date:list){
+						if(sdf.format(calendar.getTime()).equals(sdf.format(date))){
+							b=true;break;
+						}
+					}
+					if(!b){//无财报月份记录下来
+						if("".equals(lackMonth)){
+							lackMonth=sdf.format(calendar.getTime());
+						}else{
+							lackMonth=lackMonth+","+sdf.format(calendar.getTime());
+						}
+					}
+				}
+				if(!"".equals(lackMonth)){
+					map.put("success", "false");
+					map.put("message", "财报有缺失，请补录财报！缺失月为："+lackMonth);
+				}else{
+					map.put("success", "true");
+					map.put("message", "财报齐全");
+				}
+			}else{
+				//测试需要 返回true
+//				map.put("success", "true");
+				map.put("success", "false");
+				map.put("message", "财报数量少于两个月，请补录财报！");
+				return map;
+			}
+		}catch(Exception e){
+			log.error("中小融辅财报查取异常---------", e);
+			map.put("success", "false");
+			map.put("message", "系统出错，请联系管理员");
+			e.printStackTrace();
+		}
+		
+		return map;
+	}
+	
+	
+	/**
+	 * 调用中小融辅规则
+	 * @param businessId
+	 * @param domain
+	 * @param updateReturnBean
+	 */
+	public UpdateReturnBean calculteWarnSigal(TPlZxrfInfo domain,UpdateReturnBean updateReturnBean){
+		try {
+			
+			if(StringUtils.isBlank(domain.getId())||StringUtils.isBlank(domain.getLoanAccount())){
+				updateReturnBean.setParameter("msg", "数据异常，计算失败，请联系管理员！");
+				updateReturnBean.setParameter("success", "false");
+				return updateReturnBean;
+			}
+			//在此处调用规则，生成规则,保存至warnSignal表中
+			//在规则表中无需保存规则结果值。
+			//多次点击规则时，只保留最新结果
+			ROOTDAO rootdao=ROOTDAOUtils.getROOTDAO();
+			rootdao.executeSql("DELETE FROM ECUSER.T_PL_WARN_SIGNAL WHERE FD_REPORT_ID='"+domain.getId()+"' ");
+			
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyyMMdd");
+			String urlStr=FileUpDownProperties.readValue("ZXRF_WARN_URL");
+			String url =urlStr+"?rulecode=PR0000&rowdate=" + sdf.format(new Date())+"&reportId="+domain.getId()+"&customerId="+domain.getCustcode()+"&accountId="+domain.getLoanAccount()+"&isSynchronize=true";
+			HttpClient httpClient =new HttpClient();
+			GetMethod get =new GetMethod(url);
+			try {
+				httpClient.executeMethod(get);
+				String response =get.getResponseBodyAsString();
+				System.out.println(url);
+				if(response!=null && !"".equals(response.trim())){
+					updateReturnBean.setParameter("success", "true");
+					System.out.println("执行成功");
+				}else{
+					updateReturnBean.setParameter("msg", "计算失败，请联系管理员！");
+					updateReturnBean.setParameter("success", "false");
+				}
+
+			} catch (HttpException e) {
+				log.error("中小融辅规则计算异常---HttpException-----", e);
+				updateReturnBean.setParameter("msg", "计算失败，请联系管理员！");
+				updateReturnBean.setParameter("success", "false");
+				e.printStackTrace();
+			} catch (IOException e) {
+				log.error("中小融辅规则计算异常---IOException-----", e);
+				updateReturnBean.setParameter("msg", "计算失败，请联系管理员！");
+				updateReturnBean.setParameter("success", "false");
+				e.printStackTrace();
+			} finally{
+				get.releaseConnection();
+			}
+			
+		} catch (Exception e) {
+			log.error("中小融辅规则计算异常---Exception-----", e);
+			updateReturnBean.setParameter("msg", "计算失败，请联系管理员！");
+			updateReturnBean.setParameter("success", "false");
+			e.printStackTrace();
+		}
+		
+		return updateReturnBean;
+		
+	}
+	
+	
+	
+	private int calculteMonLength(Date sm,Date big){
+		Calendar c1=Calendar.getInstance();
+		Calendar c2=Calendar.getInstance();
+		c1.setTime(sm);
+		c2.setTime(big);
+		int year=c2.get(Calendar.YEAR)-c1.get(Calendar.YEAR);
+		
+		return year*12+c2.get(Calendar.MONTH)-c1.get(Calendar.MONTH);
+	}
+	
+	
+	public static void main(String[] args) throws ParseException {
+		String sss="201511";
+		SimpleDateFormat sdf=new SimpleDateFormat("yyyyMM");
+		System.out.println(sdf.parse(sss));
+	}
+	
+	public Map<String, String> testTemp() throws IOException, TemplateException{
+		Map<String,Object> map=new HashMap<String, Object>();
+		map.put("ABC", "AAAA");
+		map.put("CBA", "CCCCCc");
+		System.out.println(TemplateBuilder.getInstance().getReportContent("afefsb.ftl", map));
+		return null;
+	}
+}

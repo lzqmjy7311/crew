@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.huateng.ebank.entity.data.mng">
+	<class
+		name="FpPageOptDetail"
+		table="FP_PAGE_OPT_DETAIL"
+	>
+		<meta attribute="sync-DAO">false</meta>
+		<id
+			name="id"
+			type="string"
+			column="ID"
+		>
+			<generator class="uuid.hex" />  
+		</id>
+
+		<property
+			name="name"
+			column="NAME"
+			type="string"
+			not-null="true"
+			length="256"
+		/>
+		<property
+			name="descInfo"
+			column="DESC_INFO"
+			type="string"
+			not-null="true"
+			length="512"
+		/>
+		<property
+			name="operation"
+			column="OPERATION"
+			type="string"
+			not-null="true"
+			length="1"
+		/>
+		<property
+			name="optClazz"
+			column="OPT_CLAZZ"
+			type="string"
+			not-null="false"
+			length="256"
+		/>
+		<property
+			name="optScript"
+			column="OPT_SCRIPT"
+			type="string"
+			not-null="false"
+			length="1024"
+		/>
+		<property
+			name="defaultCqid"
+			column="DEFAULT_CQID"
+			type="string"
+			not-null="false"
+			length="64"
+		/>
+		<property
+			name="parent"
+			column="PARENT"
+			type="string"
+			not-null="true"
+			length="36"
+		/>
+		<property
+			name="status"
+			column="STATUS"
+			type="string"
+			not-null="true"
+			length="1"
+		/>
+		<property
+			name="seqid"
+			column="SEQID"
+			type="string"
+			not-null="true"
+			length="3"
+		/>
+		<property
+			name="lastUpdTlr"
+			column="LAST_UPD_TLR"
+			type="string"
+			not-null="false"
+			length="20"
+		/>
+		<property
+			name="lastUpdTs"
+			column="LAST_UPD_TS"
+			type="string"
+			not-null="false"
+			length="17"
+		/>
+        <property
+			name="icon"
+			column="ICON"
+			type="string"
+			not-null="false"
+			length="30"
+		/>
+
+	</class>	
+</hibernate-mapping>

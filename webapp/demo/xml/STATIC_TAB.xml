@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 用于多tab页面的模板查询 -->
+<CommQry title="静态标签页" navigate="">
+	<Include id="BankTabs" />
+	<Fields></Fields>
+	<Where></Where>
+	<Operations>
+		<Button id="tab1" name="tabName1" desc="按钮" url="/demo/ftl/button_tab.ftl" />
+		<Button id="tab2" name="tabName2" desc="下拉(默认选中)" url="/demo/ftl/select_tab.ftl" />
+        <Button id="tab3" name="tabName3" desc="不显示" url="/demo/ftl/textinput_tab.ftl" />
+        <Button id="tab4" name="tabName4" desc="文本" url="/demo/ftl/textinput_tab.ftl" />
+	</Operations>
+	<Sql></Sql>
+	<Script></Script>
+</CommQry>

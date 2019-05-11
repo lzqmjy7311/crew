@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-1-12 20:17:39 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.warnDisposal.entity.TCmWarnPersonRule" table="T_CM_WARN_PERSON_RULE" schema="ECUSER">
+        <comment>定性规则表</comment>
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="warnCode" type="string">
+            <column name="FD_WARN_CODE" length="100" />
+        </property>
+        <property name="warnName" type="string">
+            <column name="FD_WARN_NAME" length="100" />
+        </property>
+        <property name="warnSubjectCode" type="string">
+            <column name="FD_WARN_SUBJECT_CODE" length="100" />
+        </property>
+        <property name="warnLevel" type="string">
+            <column name="FD_WARN_LEVEL" length="100" />
+        </property>
+        <property name="warnProcessLevel" type="string">
+            <column name="FD_WARN_PROCESS_LEVEL" length="100" />
+        </property>
+        <property name="desc" type="string">
+            <column name="FD_DESC" length="2000" />
+        </property>
+        <property name="credited" type="date">
+            <column name="CREDITED" length="10" />
+        </property>
+        <property name="updated" type="date">
+            <column name="UPDATED" length="10" />
+        </property>
+    </class>
+</hibernate-mapping>

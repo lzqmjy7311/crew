@@ -1,0 +1,27 @@
+<CommQry title="TRewC13CorpAffiliatedId" navigate="TRewC13CorpAffiliatedId" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.C13Getter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="customerNum" desc="对公客户编号" edittype="text" datatype="string"
+        xpath="/customerNum" />
+        <Field id="affiCustIdTpCd" desc="关联人证件类型" edittype="select" translated="DATA_DIC.21" init="true" multiple="false" datatype="string"
+        xpath="/affiCustIdTpCd" />
+        <Field id="affiCustIdNum" desc="关联人证件号码" edittype="text" datatype="string"
+        xpath="/affiCustIdNum" />
+        <Field id="affiCustNum" desc="关联人信贷客户号" edittype="text" datatype="string"
+        xpath="/affiCustNum" />
+        <Field id="affiCustCoreNum" desc="关联人核心客户编号" edittype="text" datatype="string"
+        xpath="/affiCustCoreNum" />
+        <Field id="affiTpCd" desc="关联类型" edittype="select" translated="DATA_DIC.2024" init="true" multiple="false" datatype="string"
+        xpath="/affiTpCd" />
+        <Field id="affiCustTpCd" desc="关联人类型" edittype="select" translated="DATA_DIC.2053" init="true" multiple="false" datatype="string"
+        xpath="/affiCustTpCd" />
+        <Field id="id" desc="" edittype="text" datatype="string" xpath="/id" />
+        <Field id="warnId" desc="预警表ID" edittype="text" datatype="string"
+        xpath="/warnId" />
+        <Field id="dataDt" desc="数据日期" edittype="text" datatype="date"
+        xpath="/dataDt" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

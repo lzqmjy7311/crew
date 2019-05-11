@@ -1,0 +1,99 @@
+package com.gbicc.warn.update;
+
+import java.util.Date;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+
+
+
+
+
+
+
+
+
+
+
+import org.apache.commons.lang.StringUtils;
+
+import com.gbicc.person.monitor.entity.TPlYjMonitor;
+import com.gbicc.person.monitor.operation.TPlYjMonitorOperation;
+import com.gbicc.personCommon.entity.TPlTaskRuleTrig;
+import com.gbicc.rule.entity.TRulCategory;
+import com.gbicc.util.DateUtils;
+import com.gbicc.warn.operation.TPlTaskRuleTrigOperation;
+import com.gbicc.warn.service.TPlTaskRuleTrigService;
+import com.huateng.common.err.Module;
+import com.huateng.common.err.Rescode;
+import com.huateng.commquery.result.MultiUpdateResultBean;
+import com.huateng.commquery.result.UpdateResultBean;
+import com.huateng.commquery.result.UpdateReturnBean;
+import com.huateng.ebank.business.management.service.TlrInfoService;
+import com.huateng.ebank.framework.operation.OPCaller;
+import com.huateng.ebank.framework.operation.OperationContext;
+import com.huateng.ebank.framework.web.commQuery.BaseUpdate;
+import com.huateng.exception.AppException;
+
+public class TPlTaskRuleTrigAllUpdate extends BaseUpdate {
+	private static final String DATASET_ID =TPlTaskRuleTrig.class.getSimpleName()+"All";
+	private static final int TRIGTYPE=1;//人工触发
+	@Override
+	public UpdateReturnBean saveOrUpdate(MultiUpdateResultBean arg0,
+			HttpServletRequest arg1, HttpServletResponse arg2)
+			throws AppException {
+		try {
+			UpdateReturnBean updateReturnBean = new UpdateReturnBean();
+			UpdateResultBean updateResultBean = multiUpdateResultBean.getUpdateResultBeanByID(DATASET_ID);
+			TPlTaskRuleTrig dd = new TPlTaskRuleTrig();			
+			OperationContext oc = new OperationContext();
+			
+		    String id=null;
+		    String AccId=null;
+			if (updateResultBean.hasNext()) {
+				@SuppressWarnings("rawtypes")
+			    Map map = updateResultBean.next();
+				 id=(String) map.get("id");
+			     AccId=(String) map.get("accId");
+				if(StringUtils.isNotBlank(id)){
+					dd = TPlTaskRuleTrigService.getInstance().get(id);
+				}					
+					dd.setTrigType(TRIGTYPE);//触发种类
+					//dd.setTrigType(TRIGTYPE);
+					dd.setTrigDate(new Date());//触发日期
+														
+					oc.setAttribute(TPlYjMonitorOperation.IN_PARAM2,dd);
+				
+				//mapToObject(dd, map);
+			}
+			TPlYjMonitor yjMonitor=new TPlYjMonitor();
+			yjMonitor.setRptStatus("1");
+			yjMonitor.setTaskType("YJ");
+			
+			yjMonitor.setWarnLevel(dd.getRuleRank());//预警等级
+			yjMonitor.setRuleId(dd.getRuleId());//规则id
+			yjMonitor.setRuleCode(dd.getRuleCode());//规则code
+			yjMonitor.setRuleDesc(dd.getRuleName());//规则描述
+			yjMonitor.setRuleName(dd.getRuleName());//规则描述
+			
+			//yjMonitor.setLoanAcct(dd.getAccId());//账号id
+			yjMonitor.setLoanAcct(AccId);//账号id
+			yjMonitor.setRuleTrigId(dd.getId());//规则表id
+			yjMonitor.setTaskMatureDate(DateUtils.addDay(new Date(),15));
+			yjMonitor.setReportUrl("/gbicc-pages/warn/ftl/YjMonitorReportWin.ftl");
+			
+			oc.setAttribute(TPlYjMonitorOperation.CMD,TPlYjMonitorOperation.CMD_INSERT);
+			oc.setAttribute(TPlYjMonitorOperation.IN_PARAM,yjMonitor);
+			OPCaller.call(TPlYjMonitorOperation.ID, oc);
+			return updateReturnBean;
+		} catch (AppException appEx) {
+			throw appEx;
+		} catch (Exception ex) {
+			throw new AppException(Module.SYSTEM_MODULE,
+					Rescode.DEFAULT_RESCODE, ex.getMessage(), ex);
+		}
+	}
+
+}

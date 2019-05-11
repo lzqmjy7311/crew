@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<META>
+	<Include id="BaseParam" path="/WEB-INF/query/include/BaseConfigParam.xml" />
+	<!-- 用户基本的通用查询，自动生成ＳＱＬ -->
+	<Include id="BankParam" path="/WEB-INF/query/include/BankConfigParam.xml" />
+	<Include id="BankTabs" path="/WEB-INF/query/include/BasicTabConfigParam.xml" />
+		<!-- 用户通过后台服务获取数据实现展现的通用查询 -->
+	<Include id="BankCall"
+		path="/WEB-INF/query/include/BankCallParam.xml" />
+	<Include id="BankForm"
+		path="/WEB-INF/query/include/BankFormParam.xml" />
+
+	<Include id="BasicTabParam"
+		path="/WEB-INF/query/include/BasicTabConfigParam.xml" />
+	<!-- 岗位下拉菜单-->
+	<Query id="RoleSelect" path="/fpages/common/xml/RoleSelect.xml" />
+    <!-- 操作员列表下拉菜单
+    <Query id="OperatorNameSelect" path="/fpages/common/xml/OperatorNameSelect.xml" />-->
+	
+	<Query id="BctlAllSelect"		path="/fpages/parammng/xml/BctlAllSelect.xml" />
+</META>

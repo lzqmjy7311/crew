@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CommQry title="日志查询" navigate="主页 &gt; 数据查询&gt; 用户登录时间次数查询" type="call"
+	interface="true" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.dataquery.getter.TlrLoginLogCountQueryGetter">
+	<Include id="BankParam" />
+	<PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="批量下载-用户日志查询" perfetch="15" maxpage="3" directory="E:/upload1"/>
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<!-- 日志信息 -->
+		
+		<Field id="tlrno" desc="操作员编号" require="" edittype="text" datatype="string" method="None"
+	 	  readonly="false" size="20" status="F" default="" xpath="tlrno" />
+
+		<Field id="brno" desc="机构编号" require="" edittype="text" datatype="string" method="None"
+	 	  readonly="false" size="20" status="F" default="" xpath="/brno" />
+        <Field id="startDate" desc="开始日期" require="" edittype="text" datatype="string" method="None"
+	 	  readonly="false" size="20" status="F" default="" xpath="/startDate" />
+
+      <Field id="endDate" desc="结束日期" require="" edittype="text" datatype="string" method="None"
+	 	  readonly="false" size="20" status="F" default="" xpath="/endDate" />
+      <Field id="count" desc="登录次数" require="" edittype="text" datatype="int" method="None"
+	 	  readonly="false" size="20" status="F" default="" xpath="/count" />
+
+</Fields>
+		
+	<Where>
+		<TextBox id="qtlrNo" type="String" operation="EQ" size="8" 
+			desc="操作员编号" tip="操作员编号" index="0" />
+		<Option id="qbrNo" operation="EQ" size=""
+			desc="所属机构" tip="机构号" type="string" translated="CQ:BctlAllSelect"
+			fieldmap="qbrNo=brno;qbrNoName=brcodeTypeName"
+			viewField="brcodeTypeName" dropdowntype="dynamic" init="true"
+			require="false" readOnly="" index="1"/>
+		<DateTextBox id="startDate" desc="开始日期" tip="开始日期"
+			require="false" status="F" datatype="date" method="None" size="150"
+			width="" primary="false" index="3" type="String" />
+		<DateTextBox id="endDate" desc="结束日期" tip="结束日期" require="false"
+			status="F" datatype="date" method="None" size="150" width="" primary="false"
+			index="4" type="String" />
+	</Where>
+	<Operations>
+
+
+	</Operations>
+</CommQry>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CommQry
+title="工作流参数配置"
+navigate="工作流参数配置 "
+type="call"
+interface="true"
+pagesize="20"
+async="true"
+databusid="__NULL__"
+transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.huateng.ebank.business.management.getter.WorkflowParamEntryQueryGetter"
+>
+	<Include id="BankParam"/>
+	<ResultViewParam>
+		/fpages/management/ftl/WorkflowParamEntry.ftl
+	</ResultViewParam>
+    <PageQryExp type="CSV" limit="true" encoding="GBK" url="/trans/qryExp.do" directory="D:/templet"/>
+	<Fields>
+	<!--
+		<Field id="procName" desc="审批结果"  method="None" translated="LIST:Agree,同意;Refuse,不同意;GoBack,退回"
+			readOnly="false" primary="true" type="String" size="20" default="" edittype="select"
+			tip="审批结果" xpath="/procName" width="" />
+-->
+		<Field id="procName" desc="流程名" status="F" method="None" xpath="/procName" datatype="string" readonly=""
+			translated="CQ:WorkflowProcNameSelect" fieldmap="procName=name;procNameName=description" width="200"
+			viewField="description" edittype="select" dropdowntype="dynamic"
+			primary="true" type="string" size="20"  default="" tip="流程名" />
+
+		<Field id="nodeName" desc="节点名" status="F" method="None" xpath="/nodeName" datatype="string" readonly="true"
+			translated="CQ:WorkflowTaskNameSelect" fieldmap="nodeName=name;nodeNameName=name" width="200"
+			viewField="name" edittype="select" dropdowntype="dynamic" init="false"
+			primary="true" type="string" size="4" default="" tip="节点名" require="false"/>
+
+
+		<Field id="nodeType1" desc="节点类型" status="F" method="None" xpath="/nodeType1" datatype="string" translated="DATA_DIC.49" edittype="select"
+			primary="true" type="string" size="20" default="" tip="节点类型" require="false" width="200" readonly="true"/>
+
+		<Field id="brclass" desc="机构级别" status="F" method="None" xpath="/workflowParam/brclass"  translated="DATA_DIC.58" edittype="select" width="200"
+			datatype="string"  primary="true" type="string" size="20" default="" tip="机构级别" require="false"/>
+
+		<Field id="bizClass" desc="业务品种" status="F" method="None" xpath="/workflowParam/bizClass" translated="DATA_DIC.29" edittype="select"
+			datatype="string" primary="true" type="string" size="4" default="" tip="业务品种" require="true" width="200"/>
+
+		<Field id="assignType" desc="分配策略" status="F" method="None" xpath="/workflowParam/assignType" translated="DATA_DIC.50" edittype="select" width="200"
+			datatype="string" primary="true" type="string" size="20" default="" tip="分配策略" require="false"/>
+
+		<Field id="roleId" desc="角色号" status="F" method="com.huateng.ebank.business.common.CQMethod.getRoleName" xpath="/workflowParam/roleId"
+			translated="CQ:RoleSelect"  edittype="select"
+			fieldmap="roleId=roleid;roleIdName=rolename" viewField="rolename"
+			primary="true" type="roleId" size="20" default="" tip="角色号" require="true"/>
+
+<!--
+		<Field id="roleId" desc="角色"   xpath="/workflowParam/roleId"
+			translated="CQ:RoleSelect"  edittype="select" width="200"
+			fieldmap="roleId=roleid;rolename=rolename" viewField="rolename"
+			primary="true" type="roleId" size="20" default="" tip="角色" require="true"/>
+ -->
+		<Field id="roleIdName" desc="角色" method="None"
+			xpath="/roleIdName" primary="true" type="roleIdName" size="20" default="" tip="角色" />
+
+	</Fields>
+
+	<Where>
+	<!--
+		<TextBox  id="bussType" tablename="ci" fieldname="bussType"
+			type="bussType"  dataType="" 	operation="EQ" size="4"  desc="业务品种"  tip="业务品种"
+			method="None"  index="0" function="" width="" default=""
+			scale="" require=""    readOnly=""
+			errmsg=""/>
+		 -->
+		 <!--
+		<Option id="procNameQuery" tablename="ci" fieldname="procNameQuery"
+			operation="EQ"  size=""  desc="流程名" tip="流程名"
+			type="procName" translated="CQ:WorkflowProcNameSelect" fieldmap="procNameQuery=name;procNameQueryName=description"
+			viewField="description" edittype="select" dropdowntype="dynamic" require="true"
+			method="None"   index="1" width="" height="" default="" onchange=""
+		    readOnly="">
+		</Option>
+		 -->
+		<Option id="procNameQuery" tablename="ci" fieldname="procNameQuery"
+			operation="EQ"  size=""  desc="流程名" tip="流程名"
+			type="procNameQuery" translated="CQ:WorkflowProcNameSelect" fieldmap="procNameQuery=name;procNameQueryName=description"
+			viewField="description" edittype="select" dropdowntype="dynamic" require="true"
+			method="None"   index="1" width="" height="" default="" onchange=""
+		    readOnly="">
+		</Option>
+	</Where>
+	<Operations>
+		<Button id="btNew" name="btNew" desc="新增" operation="addrecord" url="" show="" group="" txn="" />
+		<Button id="btDelete" name="btDelete" desc="删除" operation="delrecord" url="" txn="" />
+		<!-- add by jornezhang 20100108 BMS-2362  增加交易流水记录 begin -->
+		<Button id="btSave" name="btSave" desc="保存" operation="asysubmit"
+			updateClass="com.huateng.ebank.business.management.updater.SaveWorklowParamEntryUpdate"
+			url="#" txn="management.workflowparamsave.save" />
+		<!-- add by jornezhang 20100108 BMS-2362  增加交易流水记录 end -->
+
+	</Operations>
+
+
+
+</CommQry>

@@ -1,0 +1,265 @@
+package com.gbicc.bpm.service;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+
+import net.sf.json.JSONObject;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.gbicc.bpm.entity.TLoanAccountDutyDistribute;
+import com.gbicc.bpm.entity.TLoanAccountRelDuty;
+import com.gbicc.bpm.getter.SubAutoUserAndOrgGetter;
+import com.gbicc.bpm.operation.TLoanAccountDutyDistributeOperation;
+import com.gbicc.common.FileUpDownProperties;
+import com.gbicc.personCommon.entity.TEdwPlsAccount;
+import com.huateng.ebank.business.management.service.TlrInfoService;
+import com.huateng.ebank.entity.dao.mng.ROOTDAO;
+import com.huateng.ebank.entity.dao.mng.ROOTDAOUtils;
+import com.huateng.ebank.entity.data.mng.TlrInfo;
+import com.huateng.ebank.framework.exceptions.CommonException;
+import com.huateng.ebank.framework.util.ApplicationContextUtils;
+
+public class TLoanAccountDutyDistributeService {
+	public TLoanAccountDutyDistributeService() {
+	}
+
+	public synchronized static TLoanAccountDutyDistributeService getInstance() {
+		return (TLoanAccountDutyDistributeService) ApplicationContextUtils
+				.getBean(TLoanAccountDutyDistributeService.class.getSimpleName());
+	}
+	
+	public ROOTDAO dao(){
+		return  ROOTDAOUtils.getROOTDAO();
+	}
+	
+	public TLoanAccountDutyDistribute get(String id) throws CommonException{
+		return dao().query(TLoanAccountDutyDistribute.class, id);
+	}
+	
+	public void save(TLoanAccountDutyDistribute tloanaccountdutydistribute) throws CommonException{
+		dao().save(tloanaccountdutydistribute);
+	}
+	
+	public void update(TLoanAccountDutyDistribute tloanaccountdutydistribute) throws CommonException{
+		dao().update(tloanaccountdutydistribute);
+	}
+	
+	public void delete(String id) throws CommonException{
+		dao().delete(id);
+	}
+	
+	/**
+	 * 查找运行中流程是否有分派任务
+	 * @param businessId
+	 * @return
+	 * @throws CommonException 
+	 */
+	@SuppressWarnings("rawtypes")
+	public String dwrFindDistributeRuningProcess(String loanacno) throws CommonException{
+		List list=TLoanAccountDutyDistributeService.getInstance().dao().queryByCondition("from TLoanAccountDutyDistribute where (loanacno='"+loanacno+"' or id in (select distId from TLoanAccountRelDistribute where loanacno='"+loanacno+"')) and status!='"+TLoanAccountDutyDistributeOperation.STATUS_APL_PASS+"' ");
+		String bool="false";
+		if(null!=list && list.size()>0){
+			TLoanAccountDutyDistribute distribute=(TLoanAccountDutyDistribute) list.get(0);
+			bool=ProcessManagerService.getInstace().findRuningTaskByBusinessKey(distribute.getId());
+		}
+		return bool;
+	}
+	
+	/**
+	 * 查找分派前检查人
+	 * @param loanacnos
+	 * @return
+	 * @throws CommonException
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public String dwrFindOldCheckUser(String loanacnos,String type) throws CommonException{
+		StringBuffer oldCheckUserBuf = new StringBuffer();
+		if(StringUtils.isNotEmpty(loanacnos)){
+			String[] arrs=loanacnos.split(",");
+			ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+			Map<String,String> map=new HashMap<String, String>();
+			for(int i=0;i<arrs.length;i++){
+				StringBuffer hql = new StringBuffer("from TLoanAccountRelDuty t where loanacno='"+arrs[i]+"' ");
+				List list=rootdao.queryByCondition(hql.toString());
+				if(null!=list && list.size()>0){
+					TLoanAccountRelDuty relDuty=(TLoanAccountRelDuty) list.get(0);
+					TlrInfo tlrInfo=null;
+					String actHql="from TEdwPlsAccount where loanacno='"+relDuty.getLoanacno()+"' ";
+					if(type.equals(TLoanAccountDutyDistributeOperation.DIST_TYPE_DUTY)){
+						if(StringUtils.isNotEmpty(relDuty.getDutyid())){
+							tlrInfo=TlrInfoService.getInstance().getTlrInfoByTlrno(relDuty.getDutyid());
+						}else{
+							List acts=rootdao.queryByCondition(actHql);
+							TEdwPlsAccount act=(TEdwPlsAccount) acts.get(0);
+							tlrInfo=TlrInfoService.getInstance().getTlrInfoByTlrno(act.getDutyid());
+						}
+					}else if(type.equals(TLoanAccountDutyDistributeOperation.DIST_TYPE_COLL)){
+						if(StringUtils.isNotEmpty(relDuty.getCollid())){
+							tlrInfo=TlrInfoService.getInstance().getTlrInfoByTlrno(relDuty.getCollid());
+						}else{
+							List acts=rootdao.queryByCondition(actHql);
+							TEdwPlsAccount act=(TEdwPlsAccount) acts.get(0);
+							tlrInfo=TlrInfoService.getInstance().getTlrInfoByTlrno(act.getDutyid2());
+						}
+					}
+					String desc=tlrInfo.getBrcode()+","+tlrInfo.getTlrName()+","+tlrInfo.getTlrno();
+					map.put(tlrInfo.getTlrno(),desc);
+				}else{
+					String actHql="from TEdwPlsAccount t where loanacno ='"+arrs[i]+"' ";
+					list=rootdao.queryByCondition(actHql);
+					TEdwPlsAccount account=(TEdwPlsAccount) list.get(0);
+					TlrInfo tlrInfo=null;
+					if(type.equals(TLoanAccountDutyDistributeOperation.DIST_TYPE_DUTY)){
+						tlrInfo=TlrInfoService.getInstance().getTlrInfoByTlrno(account.getDutyid());
+					}else if(type.equals(TLoanAccountDutyDistributeOperation.DIST_TYPE_COLL)){
+						tlrInfo=TlrInfoService.getInstance().getTlrInfoByTlrno(account.getDutyid2());
+					}
+					if(tlrInfo!=null){
+						String desc=tlrInfo.getBrcode()+","+tlrInfo.getTlrName()+","+tlrInfo.getTlrno();
+						map.put(tlrInfo.getTlrno(),desc);
+					}
+				}
+			}
+			Set<Entry<String, String>> set=map.entrySet();
+			Iterator it=set.iterator();
+			while(it.hasNext()){
+				Entry<String, String> entry=(Entry<String, String>) it.next();
+				oldCheckUserBuf.append(entry.getKey()+"="+entry.getValue()+";");
+			}
+		}
+		return oldCheckUserBuf.toString();
+	}
+	
+	/**
+	 * 根据机构ID查找所有客户经理
+	 * @param orgId
+	 * @return
+	 * @throws CommonException 
+	 */
+	@SuppressWarnings("rawtypes")
+	public String dwrFindLeftCheckUser(String orgId,String checkUserIds) throws CommonException{
+		StringBuffer leftCheckUserBuf = new StringBuffer();
+		String roleId=FileUpDownProperties.readValue(SubAutoUserAndOrgGetter.SUBBRANCH_MNG);
+		StringBuffer hql = new StringBuffer("from TlrInfo t where t.brcode='"+orgId+"' and t.tlrno in (select tlrno from TlrRoleRel where roleId='"+roleId+"') ");
+		if(StringUtils.isNotEmpty(checkUserIds)){
+			String userStr="";
+			if(checkUserIds.indexOf(",")>-1){
+				String[] users=checkUserIds.split(",");
+				for(String user:users){
+					userStr=userStr+"'"+user+"',";
+				}
+				userStr=userStr.substring(0,userStr.length()-1);
+			}else{
+				userStr="'"+checkUserIds+"'";
+			}
+			hql.append(" and t.tlrno not in ("+userStr+") ");
+		}
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		List list=rootdao.queryByCondition(hql.toString());
+		for(int i=0;i<list.size();i++){
+			TlrInfo tlrInfo=(TlrInfo) list.get(i);
+			String desc=tlrInfo.getBrcode()+","+tlrInfo.getTlrName()+","+tlrInfo.getTlrno();
+			leftCheckUserBuf.append(tlrInfo.getTlrno()+"="+desc+";");
+		}
+		System.out.println(leftCheckUserBuf.toString());
+		return leftCheckUserBuf.toString();
+	}
+	
+	/**
+	 * 根据机构号得到所有贷款帐号
+	 * @param orgId
+	 * @return
+	 * @throws CommonException 
+	 */
+	@SuppressWarnings("unchecked")
+	public String[] dwrGetLoanAccountNos(String orgId,String condition) throws CommonException{
+		String hql="from TEdwPlsAccount where bankid='"+orgId+"' ";
+		if(StringUtils.isNotEmpty(condition)){
+			JSONObject json=JSONObject.fromObject(condition);
+			if(json.get("acctNo")!=null && StringUtils.isNotEmpty(json.getString("acctNo"))){
+				hql+=" and loanacno='"+json.getString("acctNo")+"' ";
+			}
+			if(json.get("prodname")!=null && StringUtils.isNotEmpty(json.getString("prodname"))){
+				hql+=" and prodname like '%"+json.getString("prodname")+"%' ";
+			}
+			if(json.get("custname")!=null && StringUtils.isNotEmpty(json.getString("custname"))){
+				hql+=" and custname like '%"+json.getString("custname")+"%' ";
+			}
+			if(json.get("acflag")!=null && StringUtils.isNotEmpty(json.getString("acflag"))){
+				hql+=" and acflag='"+json.getString("acflag")+"' ";
+			}
+			if(json.get("acflag2")!=null && StringUtils.isNotEmpty(json.getString("acflag2"))){
+				hql+=" and acflag2='"+json.getString("acflag2")+"' ";
+			}
+			if(json.get("riskflag")!=null && StringUtils.isNotEmpty(json.getString("riskflag"))){
+				hql+=" and riskflag='"+json.getString("riskflag")+"' ";
+			}
+			if(json.get("dutyid")!=null && StringUtils.isNotEmpty(json.getString("dutyid"))){
+				hql+=" and dutyid='"+json.getString("dutyid")+"' ";
+			}
+		}
+		ROOTDAO rootdao = ROOTDAOUtils.getROOTDAO();
+		List<TEdwPlsAccount> list=rootdao.queryByCondition(hql.toString());
+		String loanAccountNos="";
+		String bool="";
+		String runingProcessActnos="";
+		String oldCheckUsers="";
+		String collOldCheckUsers="";
+		for(int i=0;i<list.size();i++){
+			TEdwPlsAccount account=(TEdwPlsAccount) list.get(i);
+			TLoanAccountRelDuty duty=TLoanAccountRelDutyService.getInstance().get(account.getLoanacno());
+			if(null!=duty){
+				if(StringUtils.isNotEmpty(duty.getDutyid())){
+					TlrInfo tlr=TlrInfoService.getInstance().getTlrInfoByTlrno(duty.getDutyid());
+					account.setDutyInfo(tlr.getBrcode()+","+tlr.getTlrName()+","+tlr.getTlrno());
+				}else{
+					TlrInfo tlr=TlrInfoService.getInstance().getTlrInfoByTlrno(account.getDutyid());
+					account.setDutyInfo(tlr.getBrcode()+","+tlr.getTlrName()+","+tlr.getTlrno());
+				}
+				if(StringUtils.isNotEmpty(duty.getCollid())){
+					TlrInfo collTlr=TlrInfoService.getInstance().getTlrInfoByTlrno(duty.getCollid());
+					account.setCollInfo(collTlr.getBrcode()+","+collTlr.getTlrName()+","+collTlr.getTlrno());
+				}else{
+					TlrInfo collTlr=TlrInfoService.getInstance().getTlrInfoByTlrno(account.getDutyid2());
+					account.setCollInfo(collTlr.getBrcode()+","+collTlr.getTlrName()+","+collTlr.getTlrno());
+				}
+			}else{
+				TlrInfo tlr=TlrInfoService.getInstance().getTlrInfoByTlrno(account.getDutyid());
+				if(tlr!=null){
+					account.setDutyInfo(tlr.getBrcode()+","+tlr.getTlrName()+","+tlr.getTlrno());
+				}
+				TlrInfo collTlr=TlrInfoService.getInstance().getTlrInfoByTlrno(account.getDutyid2());
+				if(collTlr!=null){
+					account.setCollInfo(collTlr.getBrcode()+","+collTlr.getTlrName()+","+collTlr.getTlrno());
+				}
+			}
+			
+			bool=dwrFindDistributeRuningProcess(account.getLoanacno());
+			if(bool.equals("true")){
+				runingProcessActnos=runingProcessActnos+account.getLoanacno()+",";
+			}else{
+				loanAccountNos=loanAccountNos+account.getLoanacno()+",";
+				oldCheckUsers=oldCheckUsers+account.getDutyInfo()+";";
+				collOldCheckUsers=collOldCheckUsers+account.getCollInfo()+";";
+			}
+		}
+		if(StringUtils.isNotEmpty(loanAccountNos)){
+			loanAccountNos=loanAccountNos.substring(0,loanAccountNos.length()-1);
+		}
+		if(StringUtils.isNotEmpty(runingProcessActnos)){
+			runingProcessActnos=runingProcessActnos.substring(0,runingProcessActnos.length()-1);
+		}
+		if(StringUtils.isNotEmpty(oldCheckUsers)){
+			oldCheckUsers=oldCheckUsers.substring(0,oldCheckUsers.length()-1);
+		}
+		if(StringUtils.isNotEmpty(collOldCheckUsers)){
+			collOldCheckUsers=collOldCheckUsers.substring(0,collOldCheckUsers.length()-1);
+		}
+		return new String[]{loanAccountNos,runingProcessActnos,oldCheckUsers,collOldCheckUsers};
+	}
+}

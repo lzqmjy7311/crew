@@ -1,0 +1,14 @@
+<CommQry title="报表统计口径" navigate="TbCsmFinanceStatementData" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.financial.analysis.getter.AllRepnoSelect">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="dataTypeNo" desc="字典类别号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2"
+        default="" xpath="/dataTypeNo" />
+        <Field id="dataName" desc="名称" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2"
+        default="" xpath="/dataName" />
+        <Field id="dataNo" desc="数据" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/dataNo" />       
+    </Fields>
+
+    <Operations></Operations>
+</CommQry>

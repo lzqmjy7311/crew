@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-12-18 9:58:44 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.company.warnDisposal.entity.TCmWarnTaskRel" table="T_CM_WARN_TASK_REL" schema="ECUSER">
+        <comment>预警任务关联预警信息表</comment>
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="warnCode" type="string">
+            <column name="FD_WARN_CODE" length="50" />
+        </property>
+        <property name="customerId" type="string">
+            <column name="FD_CUSTOMER_ID" length="32" />
+        </property>
+        <property name="warnId" type="string">
+            <column name="FD_WARN_ID" length="32" />
+        </property>
+        <property name="taskId" type="string">
+            <column name="FD_TASK_ID" length="32" />
+        </property>
+        <property name="warnSubject" type="string">
+            <column name="FD_WARN_SUBJECT" length="200" />
+        </property>
+        <property name="warnName" type="string">
+            <column name="FD_WARN_NAME" length="200" />
+        </property>
+        <property name="warnDate" type="date">
+            <column name="FD_WARN_DATE" length="10" />
+        </property>
+        <property name="warnElimIs" type="string">
+            <column name="FD_WARN_ELIM_IS" length="50" />
+        </property>
+        <property name="warnElimDesc" type="string">
+            <column name="FD_WARN_ELIM_DESC" length="1000" />
+        </property>
+        <property name="warnElimDate" type="date">
+            <column name="FD_WARN_ELIM_DATE" length="10" />
+        </property>
+        <property name="relieveDate" type="date">
+            <column name="FD_WARNING_RELIEVE_DT" length="10" />
+        </property>
+        <property name="relieveIs" type="string">
+            <column name="FD_RELIEVE_IS" length="50" />
+        </property>
+        <property name="relieveDesc" type="string">
+            <column name="FD_RELIEVE_DESC" length="1000" />
+        </property>
+        <property name="warnLevel" type="string">
+            <column name="FD_WARN_LEVEL" length="50" />
+        </property>
+        <property name="warnStatus" type="string">
+            <column name="FD_WARN_STATUS" length="50" />
+        </property>
+        <property name="halfresult" type="string">
+            <column name="FD_HALFRESULT" length="500" />
+        </property>
+        <property name="warnType" type="string">
+            <column name="FD_WARN_TYPE" length="50" />
+        </property>
+        <property name="riskDesc" type="string">
+            <column name="FD_RISK_DESC" length="1000" />
+        </property>
+        <property name="warnDesc" type="string">
+            <column name="FD_WARN_DESC" length="2000" />
+        </property>
+        <property name="processLevel" type="string">
+            <column name="FD_PROCESS_LEVEL" />
+        </property>
+    </class>
+</hibernate-mapping>

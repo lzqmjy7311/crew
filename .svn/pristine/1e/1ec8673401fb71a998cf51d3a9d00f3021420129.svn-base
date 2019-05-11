@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Buffer id="CEReq" name="CEReq" desc="卡片参与请求消息请求">
+<!--  
+type  枚举说明
+S:字符串类型
+RBS:右补空字符串类型
+RBNS:右补空数字字符串类型
+N:数字类型
+LZN:左补0数字类型
+LZC:左补零数值类型
+SLZC:代符号位的左补零数值类型
+-->
+	<Field id="version" type="S" desc="消息版本号" name="version" length="20"  initValue="" xpath="/version"/>
+	<Field id="xtype" type="S" desc="交易类型" name="xtype" length="4" xpath="/xtype"/>
+	<Field id="xclass" type="S" desc="交易类别" name="xclass" length="1" xpath="/xclass"/>
+	<Field id="pan" type="S" desc="卡号" name="pan" length="19" xpath="/pan"/>
+    <Buffer id="Merchant" type="Buffer.Element.CERes_Merchant" desc="商户信息" name="Merchant">
+		<Field id="acqBIN" type="S" desc="acqBIN" name="acqBIN" length="11"  initValue="" xpath="/merchant/acqBIN"/>
+		<Field id="merID" type="S" desc="merID" name="merID" length="24"  initValue="" xpath="/merchant/merID"/>
+		<Field id="password" type="S" desc="password" name="password" length="8"  initValue="" xpath="/merchant/password"/>
+		<Field id="name" type="S" desc="name" name="name" length="25" initValue="" xpath="/merchant/name"/>
+		<Field id="country" type="S" desc="country" name="country" length="3" initValue="" xpath="/merchant/country"/>
+	</Buffer>
+	<Array id="array" desc="数组List" name="array" xpath="/array">
+		<Buffer id="Purchase" desc="交易信息" name="Purchase" xpath="com.huateng.fs.micro.demo.bean.Purchase">
+			<Field id="purchAmount" type="N" desc="交易金额" name="purchAmount" length="12" xpath="/purchAmount" />
+			<Field id="currency" type="S" desc="交易币种" name="currency" length="3" xpath="/currency" />
+			<Field id="exponent" type="S" desc="货币指数" name="exponent" length="1" xpath="/exponent" />
+			<Field id="trsFeeAmount" type="N" desc="交易手续费" name="trsFeeAmount" length="9" xpath="trsFeeAmount" />
+		</Buffer>
+	</Array>
+</Buffer>

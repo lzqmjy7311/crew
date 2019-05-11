@@ -1,0 +1,20 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+
+<#assign warningId=RequestParameters["warningId"]?default("")>
+
+<@CommonQueryMacro.page title="查冻扣登记簿">
+<table>
+	<@CommonQueryMacro.CommonQuery id="A30" init="true" submitMode="current">
+		<@CommonQueryMacro.DataTable id="A30Table" nowrap="true" height="305" readonly="true" fitColumns="false"
+		fieldStr="postDate,postTime,acctNo,customerName,governmentAgency,lawEnforceOfir,officerIdName,officerIdNo,legalDocName,noticeNo,freezeType,freezeReason,odInd,freezeAmount,oriFreezeJrnlNo,oriFreezeDate,freezeMatDate,seqNo,trfType,trfAmount,receiveAcctNo,receiveCustName,receiveBankName,trfSrnNo,enquiryContent,remark,subType,volumeNo,sequenceNo,priorityNo,acctBalance,availAmt,othGovFreeAmt,marFreeAmt,pleFreeFlg,realFreezeAmt,origFreezeAmt,warnId,dataDt,tellerNo,branchNo,supTellerNo,jrnlNo,businessType,status,socNo" width="100%" hasFrame="true"/>
+	</@CommonQueryMacro.CommonQuery>
+</table>
+<script>
+	//页面初始化
+	function initCallGetter_post(){
+		var warningId='${warningId}';
+		A30_dataset.setParameter("warningId",warningId);
+	}
+</script>
+</@CommonQueryMacro.page>

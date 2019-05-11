@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="流程管理  &gt; 任务重分配" navigate="流程管理  &gt; 任务重分配" type="call"
+	interface="false" pagesize="15" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.bpm.getter.TlrInfoForZGRWZYGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="tlrNo" desc="操作人编号" xpath="/tlrNo" />
+		<Field id="tlrName" xpath="/tlrName" desc="操作人名称" width="100" edittype="text" status="F" datatype="string" />
+		<Field id="status" xpath="/status" desc="是否有效" width="150" edittype="text" status="F" datatype="string" />
+		<Field id="brCode" xpath="/brCode" desc="机构编号"  edittype="text" status="F" datatype="string" />
+		<Field id="brName" xpath="/brName" desc="机构名称"  edittype="text" status="F" datatype="string" />
+		<Field id="roleId" xpath="/roleId" desc="角色编号"  edittype="text" status="F" datatype="string" />
+		<Field id="roleName" xpath="/roleName" desc="任务处理人" width="80" edittype="text" status="F" datatype="string" />
+			
+    </Fields>
+    <Where>
+    	<TextBox id="tlrNo" desc="操作人编号" edittype="text" status="F" datatype="string" index="4" />
+    	<TextBox id="tlrName" desc="操作人名称" edittype="text" status="F" datatype="string" index="4" />
+    </Where>
+	<Operations>
+		<Button id="btDivert" name="btDivert" desc="转移" operation="asysubmit" 
+			updateClass="com.gbicc.bpm.update.TaskDivertPUpdate" url="#" txn="" />
+	</Operations>
+</CommQry>

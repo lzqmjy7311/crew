@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-11-12 17:49:34 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.person.eliminate.entity.TPlTriggerRuleAcct" table="T_PL_TRIGGER_RULE_ACCT" schema="ECUSER" lazy="false">
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="loanAcct" type="string">
+            <column name="FD_LOAN_ACCT" length="100" />
+        </property>
+        <property name="custName" type="string">
+            <column name="FD_CUST_NAME" length="100" />
+        </property>
+        <property name="warnLevel" type="string">
+            <column name="FD_WARN_LEVEL" length="50" />
+        </property>
+        <property name="warnDate" type="date">
+            <column name="FD_WARN_DATE" length="10" />
+        </property>
+        <property name="loanVariety" type="string">
+            <column name="FD_LOAN_VARIETY" length="100" />
+        </property>
+        <property name="loanAmt" type="java.lang.Double">
+            <column name="FD_LOAN_AMT" precision="53" scale="0" />
+        </property>
+        <property name="loanBalance" type="java.lang.Double">
+            <column name="FD_LOAN_BALANCE" precision="53" scale="0" />
+        </property>
+        <property name="loanTerm" type="string">
+            <column name="FD_LOAN_TERM" length="50" />
+        </property>
+    </class>
+</hibernate-mapping>

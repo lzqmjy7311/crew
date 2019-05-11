@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE dwr PUBLIC "-//GetAhead Limited//DTD Direct Web Remoting 2.0//EN" "http://www.getahead.ltd.uk/dwr/dwr20.dtd">
+<dwr>
+  <allow>
+  		<create javascript="pointTlaService" creator="spring">
+  			<param name="beanName" value="pointTlaServiceProxy"></param>
+  			<include method="setSession"/>
+  			<include method="getSession"/>
+  			<include method="getAllClasses"/>
+  			<include method="writeClassId"/>
+  			<include method="getAllMembersFromSession"/>
+  			<include method="writeSessionForImport"/>
+  			<include method="getmMembersByClassId"/>
+  			<include method="initializeSessoin"/>
+  			<include method="setDataMap"/>
+  			<include method="initializeDataList"/>
+  			<include method="setSessionList"/>
+  			<include method="setSessionListWithoutFeeBack"/>
+  			<include method="setListMember"/>
+  			<include method="addLHSList"/>
+  			<include method="setLHSList"/>
+  			<include method="setListClass"/>
+  			<include method="removeClassList"/>
+  			<include method="removeMemberFromList"/>
+  			<include method="removeMemberList"/>
+  			<include method="saveRules"/>
+  			<include method="cleanSession"/>
+  			<include method="setTabSelect"/>
+  			<include method="setEditText"/>
+  			<include method="addRhsList"/>
+  			<include method="setRhsListMember"/>
+  			<include method="removeRhsList"/>
+  			<include method="setExeText"/>
+  			<include method="addRhsListMember"/>
+  			<include method="genMemberOpSelect"/>
+  			<include method="getAllRhsClasses"/>
+  			<include method="getMemberDicList" />
+  		</create>
+
+  		<convert converter="bean" match="com.huateng.ebank.entity.data.TlaClassinfo"/>
+  		<convert converter="bean" match="com.huateng.ebank.entity.data.TlaMemberinfo"/>
+  </allow>
+
+</dwr>
+
+

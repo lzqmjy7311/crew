@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--jianxue.zhang -->
+<CommQry title="待办任务" navigate="系统维护 >主管确认 >待审批币种信息" type="call"
+	interface="false" pagesize="100" async="true" databusid="" txnlogflag="true"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.approve.getter.TaskListBeanGetter">
+	<Include id="BankParam" />
+
+	<Fields>
+
+		<Field id="id" desc="任务编号" status="F" size="14" require="false"
+			readonly="false" edittype="text" datatype="string" tip="任务编号" xpath="/id" />
+		<Field id="updTransCd" desc="操作说明" status="F" size="2" require="false"
+			readonly="false" edittype="select" datatype="string" tip="操作说明"
+			xpath="/sysTaskInfo/updTransCd" translated="DATA_DIC.311" />
+		<Field id="crtDt" desc="创建日期" status="F" size="8" require="false"
+			readonly="false" edittype="text" datatype="date" tip="创建日期"
+			xpath="/sysTaskInfo/crtDt" />
+		<Field id="adtRcdPk" desc="原纪录主键" status="F" size="32" require="false"
+			readonly="false" edittype="text" datatype="string" tip="原纪录主键"
+			xpath="/sysTaskInfo/adtRcdPk" />
+		<Field id="intInsId" desc="记录类型" status="F" size="10" require="false"
+			readonly="false" edittype="select" datatype="string" tip="记录类型"
+			xpath="/sysTaskInfo/intInsId" translated="DATA_DIC.300001" />
+		<Field id="currencyid" desc="币种货币代码" edittype="text" require="true"
+			size="6" errmsg="币种代码不能为空！" datatype="string" status="F" xpath="/currency/id" />
+		<Field id="currencyName" desc="币种货币代码"
+			edittype="text" size="52" require="true" errmsg="币种名称不能为空！" datatype="string"
+			status="F" xpath="/currency/currencyName" />
+
+	</Fields>
+
+	<Where>
+	</Where>
+	<Operations>
+	</Operations>
+
+
+
+</CommQry>

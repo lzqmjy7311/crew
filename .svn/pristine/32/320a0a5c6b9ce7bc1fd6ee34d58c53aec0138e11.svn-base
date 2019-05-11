@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2015-12-23 9:23:44 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.person.monitor.entity.TPlDqReportJyMortgage" table="T_PL_DQ_REPORT_JY_MORTGAGE" schema="ECUSER">
+        <comment>经营类监控报告抵质押信息表</comment>
+        <id name="id" type="string">
+            <column name="FD_ID" length="32" />
+            <generator class="uuid.hex" />
+        </id>
+        <property name="assusort" type="string">
+            <column name="FD_ASSUSORT" length="1" />
+        </property>
+        <property name="assuname" type="string">
+            <column name="FD_ASSUNAME" length="60" />
+        </property>
+        <property name="impatype" type="string">
+            <column name="FD_IMPATYPE" length="6" />
+        </property>
+        <property name="oldowner" type="string">
+            <column name="FD_OLDOWNER" length="32" />
+        </property>
+        <property name="orgivalue" type="big_decimal">
+            <column name="FD_ORGIVALUE" precision="12" />
+        </property>
+        <property name="evalvalue" type="big_decimal">
+            <column name="FD_EVALVALUE" precision="12" />
+        </property>
+        <property name="confvalue" type="big_decimal">
+            <column name="FD_CONFVALUE" precision="12" />
+        </property>
+        <property name="validdate" type="date">
+            <column name="FD_VALIDDATE" length="10" />
+        </property>
+        <property name="impanum" type="java.lang.Integer">
+            <column name="FD_IMPANUM" />
+        </property>
+        <property name="assurate2" type="big_decimal">
+            <column name="FD_ASSURATE2" precision="10" scale="4" />
+        </property>
+        <property name="addr" type="string">
+            <column name="FD_ADDR" length="200" />
+        </property>
+        <property name="businessid" type="string">
+            <column name="FD_BUSINESSID" length="32" />
+        </property>
+    </class>
+</hibernate-mapping>

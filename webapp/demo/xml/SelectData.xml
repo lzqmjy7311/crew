@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	txnlogflag:true记录日志
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="DataDicEntry.title" navigate="数据字典" type="call"
+	interface="false" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.huateng.fp.demo.getter.SelectData">
+	<Include id="BankParam" />
+	<!-- 
+	<PageQryExp type="CSV" limit="true" encoding="GBK" url="/trans/qryExp.do" directory="F:/upload"/>
+	-->
+	<PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="批量下载-数据字典" perfetch="20" maxpage="20" directory="F:/upload1"/>
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+
+		<Field id="id" desc="" edittype="text" datatype="int" size="10" xpath="/id" />
+		<Field id="dataTypeNo" desc="DataDicEntry.field.dataTypeNo" colspan="4" rowspan="4"  width="600"  edittype="text" status="F" datatype="string" size="10" xpath="/dataTypeNo|/dataTypeName" />
+		<Field id="dataTypeName" desc="字典类型名称" edittype="text" status="F" datatype="string" size="60" xpath="/dataTypeName" />
+		<Field id="dataNo" desc="字典码" edittype="text" datatype="string" status="F" size="20" xpath="/dataNo" />
+		<Field id="dataNoLen" desc="字典长度" edittype="text" datatype="int" size="10" xpath="/dataNoLen" />
+		<Field id="dataName" desc="数据名称" edittype="text" datatype="string" status="F" size="100" xpath="/dataName" />
+		<Field id="limitFlag" desc="限制标志" edittype="text" datatype="string" size="1" xpath="/limitFlag" />
+		<Field id="highLimit" desc="字典上限" edittype="text" datatype="string" size="20" xpath="/highLimit" />
+		<Field id="lowLimit" desc="字典下限" edittype="text" datatype="string" size="20" xpath="/lowLimit" />
+		<Field id="effectDate" desc="生效日期" edittype="text" datatype="date" xpath=""  default="20120717"/>
+		<Field id="expireDate" desc="失效日期" edittype="text" datatype="date" xpath="" />
+		<Field id="timestamps" desc="创建时间" edittype="text" datatype="timestamp" xpath="" />
+		
+		<Field id="opr" desc="操作" edittype="text" datatype="string" xpath="/id" />
+		
+       </Fields>
+
+	<Parameters>
+	   	<Parameter id="value1" desc="字典码"  value=""  height="" width=""/>
+		<Parameter id="value2" desc="字典名称"  value=""  height="" width="" />	
+	</Parameters>
+	
+
+	<Script></Script>
+
+</CommQry>

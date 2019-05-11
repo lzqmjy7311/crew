@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Hello SyntaxHighlighter</title>
+<script type="text/javascript" src="syntaxhighlighter/scripts/shCore.js"></script>
+<script type="text/javascript" src="syntaxhighlighter/scripts/shBrushPlain.js"></script>
+<script type="text/javascript" src="syntaxhighlighter/scripts/shBrushXml.js"></script>
+<link type="text/css" rel="stylesheet" href="syntaxhighlighter/styles/shCoreEclipse.css" />
+<script type="text/javascript">
+	SyntaxHighlighter.all();
+</script>
+</head>
+<body>
+<h1>FTL代码</h1>
+<pre class="brush: text">
+&lt;#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+&lt;@CommonQueryMacro.page title="动态树预览">
+&lt;#assign result = "[{'id':1,'text':'delete','seperator':false,'iconCls':'','attributes':'','href':'','children':[]}]">
+&lt;@CommonQueryMacro.MenuItem id="mm" json=result />
+&lt;@CommonQueryMacro.CommonQuery id="TreeNode" init="true" submitMode="current" navigate="false">
+&lt;@CommonQueryMacro.DynamicTree id="tree1" contextmenu="mm"/>
+&lt;/@CommonQueryMacro.CommonQuery>
+&lt;script>
+function Menu_mm_onClick(item, data) {
+	var t = data.tree;
+	var n = data.node;
+	DynamicTree_tree1.remove(n.id);
+}
+&lt;/script>
+&lt;/@CommonQueryMacro.page>
+</pre>
+<h1>CommQry代码</h1>
+<pre class="brush: xml">
+&lt;?xml version="1.0" encoding="UTF-8"?>
+&lt;CommQry title="树形" navigate="树形" type="call"
+	interface="false" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.huateng.fp.demo.getter.TreeNodeGetter">
+	&lt;Include id="BankParam" />
+	&lt;!-- 在下拉菜单中，注意以下的域的位置顺序，必须以id,name,lastdirectory和_hasChild_的顺序来写 -->
+	&lt;!-- 如果是在树形表格中，必须定义一个id字段，该字段只定义出来做内部处理 -->
+	&lt;Fields>
+		&lt;Field id="id" desc="节点编号" xpath="/id" readonly="false"/>
+		&lt;Field id="name" desc="节点名称" xpath="/name" readonly="false"/>
+        &lt;!-- 做为下拉和普通树控件必须属性 -->
+		&lt;Field id="_hasChild_" desc="是否有孩子节点" xpath="/hasChildren" readonly="false"/>
+        &lt;Field id="_id" xpath="/id" />
+        &lt;Field id="_parentId" xpath="/pid" />
+        &lt;!-- 做为普通树控件必须属性 -->
+        &lt;Field id="_text" desc="" method="" xpath="/name" />
+        &lt;!-- 做为树控件扩展属性 -->
+        &lt;Field id="_icon" desc="" method="" xpath="" />
+	&lt;/Fields>
+	&lt;Parameters>
+		&lt;Parameter id="id" desc="id" />
+	&lt;/Parameters>
+&lt;/CommQry>
+</pre>
+</body>
+</html>

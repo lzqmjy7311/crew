@@ -1,0 +1,62 @@
+<CommQry title="TPlTaskRuleTrig" navigate="TPlTaskRuleTrig" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.warn.getter.TPlTaskRuleTrigAllGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+        <Field id="id" desc="ID" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/id" />
+        <Field id="accId" desc="账户ID" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/accId" />
+        <Field id="ruleId" desc="规则标示" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/ruleId" />
+        <Field id="ruleCode" desc="规则代码" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/ruleCode" />
+        <Field id="ruleName" desc="规则名称" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/ruleName" />
+        <Field id="ruleDesc" desc="规则描述" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/ruleDesc" />
+       
+        <Field id="ruleRank" desc="规则等级"  multiple="false" init="true" 
+        placeholder="占位符" edittype="select" translated="DATA_DIC.200"
+        datatype="string" size="50" xpath="/ruleRank" /> 
+        <Field id="ruleType" desc="规则类型" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/ruleType" />
+        <Field id="ruleFor" desc="规则适用对象" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/ruleFor" />
+        <Field id="ruleTrigType" desc="规则触发类型" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/ruleTrigType" />
+        <Field id="ruleTrigPeriod" desc="规则触发周期" require="" edittype="text" datatype="int" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/ruleTrigPeriod" />
+        <Field id="ruleTrigUnit" desc="规则触发周期单位" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/ruleTrigUnit" />
+        <Field id="trigDate" desc="任务实际触发日期" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/trigDate" />
+   
+        <Field id="trigType" desc="任务触发类型"  multiple="false" init="true" 
+        placeholder="占位符" edittype="select" translated="DATA_DIC.206"
+        datatype="string" size="50" xpath="/trigType" /> 
+        <Field id="processDate" desc="数据处理日期" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/processDate" />
+    </Fields>
+    <Where>
+    	 <TextBox id="ruleCode" desc="规则代码" require="" edittype="text" datatype="string" method="None"  type="" status="F" size="28" scale="2" default=""
+         />
+    	 <TextBox id="ruleName" desc="规则名称" require="" edittype="text" datatype="string" method="None"  type="" status="F" size="28" scale="2" default=""
+         />
+        <Option id="ruleRank" desc="规则等级" multiple="false" init="true" 
+         placeholder="占位符" edittype="select" translated="DATA_DIC.200"
+         datatype="string" size="50"/>
+         <DateTextBox id="trigDate" desc="任务实际触发日期" require="" edittype="text" datatype="date" method="None" readonly="" type="" status="F" size="15" scale="2" default=""
+        />
+       <Option id="trigType" desc="任务触发类型" multiple="false" init="true" 
+         placeholder="占位符" edittype="select" translated="DATA_DIC.206"
+         datatype="string" size="50"/>
+        <DateTextBox id="processDate" desc="数据处理日期" require="" edittype="text" datatype="date" method="None" readonly="" type="" status="F" size="15" scale="2" default=""
+        />
+    </Where>
+    <Operations>
+    	<Button id="rgyjReportUpd" name="rgyjReportUpd" desc="触发预警处置报告" operation="asysubmit"
+			updateClass="com.gbicc.warn.update.TPlTaskRuleTrigAllUpdate"
+			url="" txn="" />
+    </Operations>
+</CommQry>

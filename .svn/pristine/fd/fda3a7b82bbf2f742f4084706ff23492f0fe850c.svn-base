@@ -1,0 +1,70 @@
+<CommQry title="TbCsmFinanceIndexData" navigate="TbCsmFinanceIndexDataId" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.financial.analysis.getter.TCmFinanceIndexDataGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+    	<!---树结构所需field-->
+		<Field id="name" desc="名称" xpath="/text" readonly="false" width="200" />
+		<Field id="pid" desc="上级节点" xpath="/pid" readonly="false" />
+
+
+		<!-- 做为下拉和普通树控件必须属性 -->
+		<Field id="_hasChild_" desc="是否有孩子节点" edittype="checkbox" xpath="/hasChild" readonly="true" />
+		<Field id="_id" desc="节点ID" xpath="/id" />
+		<Field id="_parentId" desc="父节点" xpath="/pid" readonly="true" />
+		<!-- 做为普通树控件必须属性 -->
+		<Field id="_text" desc="" method="" xpath="/text" />
+		<Field id="_checked" desc="" method="" xpath="/checked" />
+		<!-- 做为树控件扩展属性 -->
+		<Field id="_icon" desc="" method="" xpath="/iconCls" />
+    	
+    	
+        <Field id="indexDataId" desc="指标数据id" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/indexDataId" />
+        <Field id="indexType" desc="指标类别" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/indexType" />
+        <Field id="indexTypeName" desc="指标类别名称" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/indexTypeName" />
+        <Field id="indexName" desc="指标名称" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/indexName" />
+         <Field id="stringType" desc="当前值" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/stringType" />
+        <Field id="sStringType" desc="上期值" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/sStringType" />
+        <Field id="ssStringType" desc="上二期值" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/ssStringType" />
+        <Field id="avgStringType" desc="历史均值" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/avgStringType" />
+        <Field id="updown" desc="升/降" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/upDown" />
+       	<Field id="chineseName" desc="姓名" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/chineseName" />
+      
+       
+        <Field id="indexDisp" desc="指标解释" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/indexDisp" />
+        <Field id="indexCd" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/indexCd" />
+        <Field id="customerNum" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+         />
+        
+        <Field id="jzyear" desc="年度" require="true" edittype="text" status="F" datatype="int" size="10" index="2" />
+        
+        
+        <Field id="caliber" desc="口径类型" require="true"  edittype="select" multiple="false" editable="true"  placeholder="占位符" translated="DATA_DIC.706" datatype="int" size="10" xpath="" />
+       
+       
+        
+        <Field id="repno" desc="期数" 
+			viewField="dataName"   require="true"  translated="CQ:repnoSelect" fieldmap="repno=dataNo;repnoName=dataName" 
+			edittype="select" /> 
+    </Fields>
+    <Where>
+    	
+    </Where>
+    <Operations>
+    	<Button id="btModOrAdd" name="btModOrAdd" desc="查询" 
+			updateClass=""
+			url="" txn="" />
+    </Operations>
+</CommQry>

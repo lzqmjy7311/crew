@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CommQry title="数据字典管理" navigate="数据字典" type="call"
+	interface="false" pagesize="10" async="false" databusid="FIVE"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.datadic.getter.DataDicEntryGetter">
+	<Include id="BankParam" />
+
+	<Fields>
+<!-- 页面生成的编辑框为文本框模式下，各种文本框的输入类型 -->
+		<Field id="int1" desc="文本框-整型" edittype="text"   datatype="int" size="3" readonly="false"  default="11"
+		   rules="isNum" errmsg="只允许输入字母或数字"  />
+		<Field id="int2" desc="文本框-字符型" edittype="text" datatype="string" size="5" default="11" validtype="url"  />
+		<Field id="int21" desc="文本框-字符型" edittype="text" datatype="string" size="5" default="11" rules="isURL" errmsg="只允许输入网页地址"  />
+		<Field id="int3" desc="文本框-double型" edittype="text" datatype="double" size="10" scale="5" />
+		<Field id="int4" desc="文本框-float型" edittype="text" datatype="float" size="10" scale="2" />
+		<Field id="int5" desc="文本框-货币型" edittype="text" datatype="currency" size="10"  scale="2" prefix="$" default="1234" />
+<!-- 页面生成的编辑框为文本域模式下，各种文本框的输入类型 -->				
+		<Field id="textarea" desc="文本域-字符型" edittype="textarea" datatype="string" colspan="4" size="10"  height="100" width="580" />
+		
+<!--页面生成的编辑框为data模式下,各种日期的输入  -->		
+		<Field id="data1" desc="日期框-日期型" edittype="date" datatype="date" default="20120717"  />
+		<Field id="data2" desc="日期框-指定日期的之前" edittype="date" datatype="predate" />
+		<Field id="data3" desc="日期框-指定日期的之后" edittype="date" datatype="postdate" />
+		<Field id="data4" desc="日期框-时间型" edittype="date" datatype="time" />
+		<Field id="data5" desc="日期框-时间戳型" edittype="date" datatype="timestamp" />
+		<Field id="data6" desc="日期框-年月型" edittype="month" datatype="month" startyear="2000" yearlength="10" default="201209"
+		       require="true"
+		/>
+    </Fields>
+</CommQry>

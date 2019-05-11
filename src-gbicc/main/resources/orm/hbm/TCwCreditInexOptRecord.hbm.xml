@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-1-13 11:06:41 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.gbicc.warn.ComninationWarn.entity.TCwCreditInexOptRecord" table="T_CW_CREDIT_INEX_OPT_RECORD" schema="ECUSER">
+        <id name="id" type="int">
+            <column name="FD_ID" />
+            <generator class="assigned" />
+        </id>
+        <property name="username" type="string">
+            <column name="FD_USERNAME" length="20" />
+        </property>
+        <property name="sucesscount" type="java.lang.Integer">
+            <column name="FD_SUCESSCOUNT" />
+        </property>
+        <property name="errorcount" type="java.lang.Integer">
+            <column name="FD_ERRORCOUNT" />
+        </property>
+        <property name="date" type="timestamp">
+            <column name="FD_DATE" length="26" />
+        </property>
+    </class>
+</hibernate-mapping>

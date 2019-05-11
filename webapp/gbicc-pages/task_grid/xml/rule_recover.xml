@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="参数管理  &gt; 产品管理" navigate="参数管理  &gt; 产品管理" type="call"
+	interface="false" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.bpm.getter.ProcessDefinitionGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="warnLevel" desc="预警等级"  edittype="text" status="F" datatype="string" xpath="" />
+		<Field id="loanAcct" desc="贷款账号"  edittype="text" status="F" datatype="string" xpath="" />
+		<Field id="custName" desc="客户名称"  edittype="text" status="F" datatype="string" xpath="" />
+		<Field id="prodName" desc="产品名称"  edittype="text" status="F" datatype="string" xpath="" />
+		<Field id="loanAmt" desc="贷款金额" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" xpath="" default="0" />
+		<Field id="loanBalance" desc="贷款余额" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" xpath="" default="0" />
+		<Field id="loanTerm" desc="贷款期限"  edittype="text" status="F" datatype="string" xpath="" />
+		<Field id="status" desc="状态"  edittype="text" status="F" datatype="string" xpath="" />
+		<Field id="warningRule" desc="预警规则"  edittype="text" status="F" datatype="string" xpath="" />
+		<Field id="removeRuleDesc" desc="排除规则说明"  edittype="text" status="F" datatype="string" xpath="" />
+		<Field id="openAcctDate" desc="开户日期" edittype="date" datatype="date" xpath="" />
+		<Field id="matureDate" desc="到期日期" edittype="date" datatype="date" xpath="" />
+		<Field id="recoverStartDate" desc="恢复开始日期" edittype="date" datatype="date" xpath="" />
+    </Fields>
+    <Where>
+    </Where>
+</CommQry>

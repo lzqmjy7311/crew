@@ -1,0 +1,256 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+<@CommonQueryMacro.page title="案例查询列表">
+<@CommonQueryMacro.CommonQuery id="SingleRulCasesQuery" init="true" submitMode="current">
+	<table>
+		<tr>
+			<td>
+				<@CommonQueryMacro.Interface id="intface" label="请输入查询条件" showButton="false" labelwidth="100" colNm=8/>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<div align="center" style="margin-bottom:10px">
+					<@CommonQueryMacro.InterfaceButton desc="查询" />
+					<@CommonQueryMacro.SimpleButton id="btnReset" desc="重置" icon="icon-reload" />
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<@CommonQueryMacro.DataTable id="SingleRulCasesQueryTable" readonly="true" paginationbar="btn_Read,btnReplenish" 
+				fieldStr="casesCode[100],casesName[150],casesStatus[80],createUserId[100],createUser[150],createDt[100],warnCount[100],inveCount[150],alreInveCount[100]" width="100%" hasFrame="true"/>
+			</td>
+		</tr>
+	</table>
+</@CommonQueryMacro.CommonQuery>
+<@CommonQueryMacro.FloatWindow id="SingleRulCasesQueryFW" modal="true" label="查看案例" 
+resize="true" minimize="false" width="1200" height="650" maximize="true" closure="true" show="false" defaultZoom="normal">
+<table>
+	<tr>
+		<td>
+			<@CommonQueryMacro.CommonQuery id="SingleRulCasesQuery" mode="1" init="true" submitMode="current">
+				<@CommonQueryMacro.Group id="SingleRulCasesQueryGroup" label="" colNm=4 labelwidth="150"
+				fieldStr="casesCode,casesName,casesNature,followupFlag,createDt,createOrg,casesDesc,casesConclusion"/>
+			</@CommonQueryMacro.CommonQuery>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<@CommonQueryMacro.GroupBox id="SingleRulWarningSelectBox" label="已有预警信号列表" expand="true">
+				<@CommonQueryMacro.CommonQuery id="SingleRulWarningSelect" init="false" submitMode="selected">
+					<@CommonQueryMacro.DataTable id="SingleRulWarningSelectTable" nowrap="true" fitColumns="false" readonly="true" paginationbar="btnShow" 
+					fieldStr="select,rulCode[70],rulType[120],rulName[150],fcettypecode[100],fcetname[150],warnStatus[100],warnDt[80],mainOrg[120],warningRelieve" width="100%" hasFrame="true"/>
+				</@CommonQueryMacro.CommonQuery>
+			</@CommonQueryMacro.GroupBox>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<@CommonQueryMacro.GroupBox id="SingleRulInvestigationBox" label="协查任务列表" expand="true">
+				<@CommonQueryMacro.CommonQuery id="SingleRulInvestigation" init="false" submitMode="current">
+					<@CommonQueryMacro.DataTable nowrap="true" id="SingleRulInvestigationTable" readonly="true" paginationbar="btnRead" 
+					fieldStr="inveCode[120],inveName[150],inveOrgName[120],inveUser[150],inveCont[150],createDt[100],status[100],matureDt[100],inveNumb[80],inveFeedDt[100]" width="100%" hasFrame="true"/>
+				</@CommonQueryMacro.CommonQuery>
+			</@CommonQueryMacro.GroupBox>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<@CommonQueryMacro.CommonQuery id="TaskApprovalHistory" init="false" submitMode="all">
+				<@CommonQueryMacro.GroupBox id="taskApprovalHistoryBox" label="审批历史">
+					<@CommonQueryMacro.DataTable nowrap="true" id="taskApprovalHistoryTable" paginationbar="btnOpinion"
+					fieldStr="taskName,assignee,startTime,endTime,operation,opinionGrid" width="100%" hasFrame="true"/>
+					<@CommonQueryMacro.FloatWindow id="taskApprovalHistoryFW" modal="true" label="查看意见" position="center" 
+						closure="true" show="false" defaultZoom="normal">
+						<@CommonQueryMacro.Group id="taskApprovalHistoryGroup" label="" colNm=4 fieldStr="opinion"/>
+					</@CommonQueryMacro.FloatWindow>
+				</@CommonQueryMacro.GroupBox>
+			</@CommonQueryMacro.CommonQuery>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<@CommonQueryMacro.CommonQuery id="SingleRulCasesDutyinfo" init="false" submitMode="all">
+				<@CommonQueryMacro.GroupBox id="SingleRulCasesDutyinfoBox" label="案例信息补录">
+					<@CommonQueryMacro.DataTable id="SingleRulCasesDutyinfoTable" readonly="false" paginationbar="btnAddDuty"
+					fieldStr="duty[150],dutyOrg[150],desc[300]" width="100%" hasFrame="true"/>
+				</@CommonQueryMacro.GroupBox>
+				<br/><center>
+					<@CommonQueryMacro.Button id="btnSubmitDuty" />
+					<@CommonQueryMacro.Button id="btnCancelDuty" />
+				</center>
+			</@CommonQueryMacro.CommonQuery>
+		</td>
+	</tr>
+</table>
+</@CommonQueryMacro.FloatWindow>
+<script>
+	var invetask_wait_submit_status="1";//协查任务待提交状态
+	var invetask_already_complete="3";//协查任务已协查状态
+	//页面初始化
+	function initCallGetter_post(){
+		
+	}
+	function btnAddDuty_onClick(){
+		SingleRulCasesDutyinfo_dataset.insertRecord("end");
+	}
+	function btnReplenish_onClick(){
+		var casesStatus=SingleRulCasesQuery_dataset.getValue("casesStatus");
+		if(casesStatus!="4"){
+			top.easyMsg.info("只有【已归档】状态的数据才能进行案例信息补录！");
+			return;
+		}
+		subwindow_SingleRulCasesQueryFW.show();
+		
+		var casesId=SingleRulCasesQuery_dataset.getValue("id");
+		TaskApprovalHistory_dataset.setParameter("businessId",casesId);
+		TaskApprovalHistory_dataset.flushData(TaskApprovalHistory_dataset.pageIndex);
+		
+		SingleRulWarningSelect_dataset.setParameter("casesId",casesId);
+		SingleRulWarningSelect_dataset.flushData(SingleRulWarningSelect_dataset.pageIndex);
+		
+		SingleRulInvestigation_dataset.setParameter("casesId",casesId);
+		SingleRulInvestigation_dataset.flushData(SingleRulInvestigation_dataset.pageIndex);
+		
+		SingleRulCasesDutyinfo_dataset.setParameter("casesId",casesId);
+		SingleRulCasesDutyinfo_dataset.flushData(SingleRulCasesDutyinfo_dataset.pageIndex);
+		
+		SingleRulCasesDutyinfo_dataset.setValue("dutyName",SingleRulCasesDutyinfo_dataset.getValue("tempDutyName"));
+		SingleRulCasesDutyinfo_dataset.setValue("dutyOrgName",SingleRulCasesDutyinfo_dataset.getValue("tempDutyOrgName"));
+		
+		$("a[id=btnSubmitDuty]").show();
+		$("a[id=btnCancelDuty]").show();
+		$("a[id=btnAddDuty]").show();
+	}
+	function SingleRulCasesQueryTable_onDbClick(){
+		btn_Read_onClick();
+	}
+	//查看 单规则 详细 
+	function btnShow_onClick(){
+		var record=SingleRulWarningSelect_dataset.getFirstRecord();
+		var records=[];
+		while(record){
+			if(record.getValue("select")==true){
+				records.push(record);
+			}
+			record=record.getNextRecord();
+		}
+		var warningIds="";
+		for(var i=0;i<records.length;i++){
+			warningIds=warningIds+records[i].getValue("id")+",";
+		}
+		if(warningIds.length>0){
+			warningIds=warningIds.substring(0,warningIds.length-1);
+			openSubWin("singleRuleWin","单规则预警信号详细信息","/gbicc-com-pages/single/query_ftl/single_rul_warning_read_win.ftl?businessId="+warningIds,"1200","700");
+		}else{
+			warningIds="0";
+			top.easyMsg.info("未选择预警信号");
+		}
+		
+	} 
+	
+	function btn_Read_onClick(){
+		subwindow_SingleRulCasesQueryFW.show();
+		
+		var casesId=SingleRulCasesQuery_dataset.getValue("id");
+		TaskApprovalHistory_dataset.setParameter("businessId",casesId);
+		TaskApprovalHistory_dataset.flushData(TaskApprovalHistory_dataset.pageIndex);
+		
+		SingleRulWarningSelect_dataset.setParameter("casesId",casesId);
+		SingleRulWarningSelect_dataset.flushData(SingleRulWarningSelect_dataset.pageIndex);
+		
+		SingleRulInvestigation_dataset.setParameter("casesId",casesId);
+		SingleRulInvestigation_dataset.flushData(SingleRulInvestigation_dataset.pageIndex);
+		
+		SingleRulCasesDutyinfo_dataset.setParameter("casesId",casesId);
+		SingleRulCasesDutyinfo_dataset.flushData(SingleRulCasesDutyinfo_dataset.pageIndex);
+		
+		SingleRulCasesDutyinfo_dataset.setValue("dutyName",SingleRulCasesDutyinfo_dataset.getValue("tempDutyName"));
+		SingleRulCasesDutyinfo_dataset.setValue("dutyOrgName",SingleRulCasesDutyinfo_dataset.getValue("tempDutyOrgName"));
+		
+		$("a[id=btnSubmitDuty]").hide();
+		$("a[id=btnCancelDuty]").hide();
+		$("a[id=btnAddDuty]").hide();
+	}
+	//案例信息补录列表刷新触发
+	function btnSubmitDuty_onClickCheck(){
+		var casesId=SingleRulCasesQuery_dataset.getValue("id");
+		SingleRulCasesDutyinfo_dataset.setParameter("casesId",casesId);
+		var record=SingleRulCasesDutyinfo_dataset.getFirstRecord();
+		var bool=true;
+		while(record){
+			if(record.getValue("duty")==null || record.getValue("duty")=="" || record.getValue("dutyOrg")==null || record.getValue("dutyOrg")=="" || record.getValue("desc")==null || record.getValue("desc")==""){
+				bool=false;
+				break;
+			}
+			record=record.getNextRecord();
+		}
+		if(!bool){
+			top.easyMsg.info("责任人，责任机构，详细说明均不能为空！");
+			return false;
+		}
+	}
+	function btnSubmitDuty_postSubmit(button) {
+		button.url="#";
+		top.easyMsg.info("操作成功！");
+		subwindow_SingleRulCasesQueryFW.close();
+		SingleRulCasesQuery_dataset.flushData(SingleRulCasesQuery_dataset.pageIndex);
+	}
+	function btnCancelDuty_onClick(){
+		subwindow_SingleRulCasesQueryFW.close();
+	}
+	//责任人
+	function duty_DropDown_beforeOpen(dropDown){
+		subAutoUserAndOrg_DropDownDataset.setParameter("roleFlag","true");
+		duty_DropDown.cached=false;//让qGroupId不存入缓存
+	}
+	//责任人按键弹起事件
+	function duty_DropDown_onKeyup(val){
+		if(val.length>=0){
+			return true;
+		}
+		return false;
+	}
+	function btnRead_onClick(){
+		var id = SingleRulInvestigation_dataset.getValue("id");
+		if (id.length > 0)
+			openInvestigationWinAllFun("read");
+		else
+			top.easyMsg.info("未选择协查任务");
+	}
+	function openInvestigationWinAllFun(oper){
+		var casesId=SingleRulInvestigation_dataset.getValue("casesId");
+		var inveId=SingleRulInvestigation_dataset.getValue("id");
+		var warningIds="";
+		InveRelWarning.dwrFindWarningIds(inveId,function(y){
+			if(y.length>0){
+				for(var i=0;i<y.length;i++){
+					warningIds=warningIds+y[i]+",";
+				}
+			}else{
+				warningIds="0";
+			}
+			openInvestigationWinAll(casesId,warningIds,inveId,oper);
+		});
+	}
+	//打开任务协查窗口
+	function openInvestigationWinAll(casesId,warningIds,inveId,oper){
+		investigationWin=openSubWin("investigationWin","协查任务","/gbicc-com-pages/single/ftl/single_rul_investigation.ftl?casesId="+casesId+"&warningIds="+warningIds+"&inveId="+inveId+"&oper="+oper,"950","700");
+	}
+	function btnReset_onClick(){
+		SingleRulCasesQuery_interface_dataset.clearData();
+	}
+	//查看意见
+	function btnOpinion_onClick(button){
+		var id = TaskApprovalHistory_dataset.getValue("taskName");
+		if (id.length > 0)
+			subwindow_taskApprovalHistoryFW.show();
+		else
+			top.easyMsg.info("未选择历史意见");
+	}
+</script>
+<script type='text/javascript' src='${contextPath}/dwr/interface/InveRelWarning.js'> </script>
+<script type='text/javascript' src='${contextPath}/dwr/interface/TaskVariable.js'> </script>
+<script type="text/javascript" src="${contextPath}/gbicc-pages/jquery-form.js"></script>
+</@CommonQueryMacro.page>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="abc" navigate="abc" type="call" interface="false" pagesize="30" databusid="" async="true" transdataactionurl="/trans/TransDataAction.do"
+getterclassname="com.gbicc.company.view.riskoverview.getter.TRiskoverViewGetter">
+    <Include id="BankParam" />
+    <Fields>
+    </Fields>
+    <Where>
+    	<Option  id="deptName" desc="所属机构" status="N" 
+            multiple="false" translated="CQ:branchTree" placeholder="占位符"
+            fieldmap="deptCd=id;deptName=name"
+            viewField="name" edittype="select" dropdowntype="dynamictree"
+            primary="true" init="false" size="3" default="2"  />
+		<Option id="deptCd" desc="所属机构" status="N" 
+            multiple="false" translated="CQ:Bctl" placeholder="占位符"
+            fieldmap="deptCd=id;deptName=name"
+            viewField="name" edittype="select" dropdowntype="dynamictree"
+            primary="true" init="false" size="3" default="2"/>
+  		<Option id="startDt" desc="开始时间" placeholder="yyyyMM" edittype="select" dropdowntype="custom" url="/templets/lib/yyyyMM.ftl" require="false" fieldmap="startDt=yyyyMM" viewField="yyyyMM" />
+  		<Option id="endDt" desc="结束时间"  placeholder="yyyyMM" edittype="select" dropdowntype="custom" url="/templets/lib/yyyyMM.ftl" require="false" fieldmap="endDt=yyyyMM" viewField="yyyyMM"  /> 
+  		<Option id="warnLevel" desc="预警信号等级" primary="false" multiple="true" viewField="warnLevel" edittype="select" translated="DATA_DIC.12606"  />
+  		<Option id="customerManager" desc="客户经理" viewField="customerManager"   require=""  translated="CQ:TlrInfo" fieldmap="customerManager=tlrName;customerManager=tlrno"/>
+		<Option id="customerManagerName" desc="客户经理" viewField="tlrName"   require=""  translated="CQ:TlrInfo" fieldmap="customerManagerName=tlrName;customerManager=tlrno"/>             
+    </Where>
+    <Operations>
+    	<Button id="btQuery" name="btQuery" desc="查询" icon="icon-search" updateClass="#" url="" txn="" />
+    	<Button id="btRest" name="btRest" desc="重置" icon="" updateClass="#" url="" txn="" />
+    </Operations>
+</CommQry>

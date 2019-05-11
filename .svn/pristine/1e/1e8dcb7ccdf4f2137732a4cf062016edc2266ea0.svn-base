@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "/WEB-INF/dtd/spring-beans-2.0.dtd">
+<beans>
+	<bean id="SpringContextHolder" class="com.gbicc.bpm.SpringContextHolder"></bean>
+	<bean id="ProcessManagerService" class="com.gbicc.bpm.service.ProcessManagerService">
+		<property name="processEngine" ref="processEngine" />
+		<property name="repositoryService" ref="repositoryService" />
+		<property name="runtimeService" ref="runtimeService" />
+		<property name="taskService" ref="taskService" />
+		<property name="historyService" ref="historyService" />
+	</bean>
+	
+	<bean id="ProductOperation" class="com.gbicc.person.product.operation.ProductOperation"></bean>
+	<bean id="ProductDelOperation" class="com.gbicc.person.product.operation.ProductDelOperation"></bean>
+	<bean id="ProductService" class="com.gbicc.person.product.service.ProductService"></bean>
+	
+	<!-- 产品管理服务 2015年10月27日16:34:54 -->
+  	<bean id="com.gbicc.person.product.service.ProductService"
+   		  class="com.gbicc.person.product.service.ProductService">
+  	</bean>
+	<!--客户管理-->
+	<bean id="TCustomerMngOperation"
+		class="com.gbicc.person.customer.opration.TCustomerMngOperation">
+	</bean>
+	<bean id="TCustomerService"
+		class="com.gbicc.person.customer.service.TCustomerService">
+	</bean>
+	<bean id="TPlCustGreatEventDtlOperation" class="com.gbicc.person.customer.opration.TPlCustGreatEventDtlOperation"></bean>
+	<bean id="TPlCustGreatEventDtlService" class="com.gbicc.person.customer.service.TPlCustGreatEventDtlService"></bean>
+	<bean id="com.gbicc.person.customer.service.TPlCustGreatEventDtlService"
+   		  class="com.gbicc.person.customer.service.TPlCustGreatEventDtlService">
+  	</bean>
+  	<bean id="TPlCustGreatEventService" class="com.gbicc.person.customer.service.TPlCustGreatEventService"></bean>
+	<bean id="com.gbicc.person.customer.service.TPlCustGreatEventService"
+   		  class="com.gbicc.person.customer.service.TPlCustGreatEventService">
+  	</bean>
+  	<bean id="TPlGreatEventOperation" class="com.gbicc.person.great.operation.TPlGreatEventOperation"></bean>
+	<bean id="TPlGreatEventService" class="com.gbicc.person.great.service.TPlGreatEventService"></bean>
+	<bean id="com.gbicc.person.great.service.TPlGreatEventService"
+   		  class="com.gbicc.person.great.service.TPlGreatEventService">
+  	</bean>
+	<!--预警处置报告-->
+	<bean id="TWarnDisposalRepService"
+		class="com.gbicc.warn.service.TWarnDisposalRepService">
+	</bean>
+	<bean id="TWarnDisposalRepOperation"
+		class="com.gbicc.warn.operation.TWarnDisposalRepOperation">
+	</bean>
+	<!-- 定期监控报告 2015年11月3日20:46:13 -->
+	<bean id="TPlDqMonitorOperation" class="com.gbicc.person.monitor.operation.TPlDqMonitorOperation"></bean>
+	<bean id="TPlDqMonitorService" class="com.gbicc.person.monitor.service.TPlDqMonitorService"></bean>
+	<bean id="com.gbicc.person.monitor.service.TPlDqMonitorService"
+   		  class="com.gbicc.person.monitor.service.TPlDqMonitorService">
+  	</bean>
+  	<bean id="TPlDqReportAjOperation" class="com.gbicc.person.monitor.operation.TPlDqReportAjOperation"></bean>
+	<bean id="TPlDqReportAjService" class="com.gbicc.person.monitor.service.TPlDqReportAjService"></bean>
+	<bean id="com.gbicc.person.monitor.service.TPlDqReportAjService"
+   		  class="com.gbicc.person.monitor.service.TPlDqReportAjService">
+  	</bean>
+  	<bean id="TPlTaskService" class="com.gbicc.person.monitor.service.TPlTaskService"></bean>
+	<bean id="com.gbicc.person.monitor.service.TPlTaskService"
+   		  class="com.gbicc.person.monitor.service.TPlTaskService">
+  	</bean>
+  	<bean id="TPlDqReportXfOperation" class="com.gbicc.person.monitor.operation.TPlDqReportXfOperation"></bean>
+	<bean id="TPlDqReportXfService" class="com.gbicc.person.monitor.service.TPlDqReportXfService"></bean>
+	<bean id="com.gbicc.person.monitor.service.TPlDqReportXfService"
+   		  class="com.gbicc.person.monitor.service.TPlDqReportXfService">
+  	</bean>
+  	<bean id="TPlDqReportJyOperation" class="com.gbicc.person.monitor.operation.TPlDqReportJyOperation"></bean>
+	<bean id="TPlDqReportJyService" class="com.gbicc.person.monitor.service.TPlDqReportJyService"></bean>
+	<bean id="com.gbicc.person.monitor.service.TPlDqReportJyService"
+   		  class="com.gbicc.person.monitor.service.TPlDqReportJyService">
+  	</bean>
+  	<bean id="WarningMonitorEndExecutionListener"
+		class="com.gbicc.bpm.listener.WarningMonitorEndExecutionListener">
+	</bean>
+  	<bean id="RegularMonitorEndExecutionListener"
+		class="com.gbicc.bpm.listener.RegularMonitorEndExecutionListener">
+	</bean>
+	<bean id="MonitorProcessEndOperation" class="com.gbicc.person.monitor.operation.MonitorProcessEndOperation"></bean>
+	<bean id="GenerateDqMonitorTaskOperation" class="com.gbicc.person.monitor.operation.GenerateDqMonitorTaskOperation"></bean>
+    <!-- 预警处置报告  -->
+	<bean id="TPlYjMonitorOperation" class="com.gbicc.person.monitor.operation.TPlYjMonitorOperation"></bean>
+	<bean id="TPlYjReportOperation" class="com.gbicc.person.monitor.operation.TPlYjReportOperation"></bean>
+	<bean id="TPlYjMonitorService" class="com.gbicc.person.monitor.service.TPlYjMonitorService"></bean>
+	<bean id="com.gbicc.person.monitor.service.TPlYjReportService"
+   		  class="com.gbicc.person.monitor.service.TPlYjReportService">
+  	</bean>
+  	<bean id="WarningMonitorProcessEndOperation" class="com.gbicc.person.monitor.operation.WarningMonitorProcessEndOperation"></bean>
+  	<!--人工发起预警处置-->
+  	<bean id="TPlTaskRuleTrigService"   class="com.gbicc.warn.service.TPlTaskRuleTrigService"></bean>
+	<bean id="TPlTaskRuleTrigOperation" class="com.gbicc.warn.operation.TPlTaskRuleTrigOperation"></bean>
+  		<!--催收管理-->
+	<bean id="TCollectionInfoOperation"
+		class="com.gbicc.person.collection.opration.TCollectionInfoOperation">
+	</bean>
+	<bean id="TCollectionInfoStartProcessOperation"
+		class="com.gbicc.person.collection.opration.TCollectionInfoStartProcessOperation">
+	</bean>
+	<bean id="TCollectionInfoProcessEndOperation"
+		class="com.gbicc.person.collection.opration.TCollectionInfoProcessEndOperation">
+	</bean>
+	<bean id="TCollectionInfoService"
+		class="com.gbicc.person.collection.service.TCollectionInfoService">
+	</bean>
+	<bean id="TPlControlmeasureService"
+		class="com.gbicc.person.monitor.service.TPlControlmeasureService">
+	</bean>
+	<!--中小融辅-->
+	<bean id="TPlZxrfInfoOperation"
+		class="com.gbicc.person.zxrf.opration.TPlZxrfInfoOperation">
+	</bean>
+	<bean id="TPlZxrfInfoCalculteOperation"
+		class="com.gbicc.person.zxrf.opration.TPlZxrfInfoCalculteOperation">
+	</bean>
+	<bean id="TPlZxrfInfoService"
+		class="com.gbicc.person.zxrf.service.TPlZxrfInfoService">
+	</bean>
+	<bean id="TPlZxrfInfoMonitorProcessEndOperation" class="com.gbicc.person.monitor.operation.TPlZxrfInfoMonitorProcessEndOperation"></bean>
+	<bean id="TPlZxrfMonitorOperation" class="com.gbicc.person.monitor.operation.TPlZxrfMonitorOperation"></bean>
+	<bean id="TPlZxrfMonitorService" class="com.gbicc.person.monitor.service.TPlZxrfMonitorService"></bean>
+	<!--规则管理-->
+	<bean id="TRulCategoryOperation"
+		class="com.gbicc.rule.operation.TRulCategoryOperation">
+	</bean>
+	<bean id="TRulDefinitionOperation"
+		class="com.gbicc.rule.operation.TRulDefinitionOperation">
+	</bean>
+	<bean id="TRulExecuteLogOperation"
+		class="com.gbicc.rule.operation.TRulExecuteLogOperation">
+	</bean>
+	<bean id="TRulCategoryService"
+		class="com.gbicc.rule.service.TRulCategoryService">
+	</bean>
+	<bean id="TRulDefinitionService"
+		class="com.gbicc.rule.service.TRulDefinitionService">
+	</bean>
+	<!--质量监督参数管理-->
+	<bean id="QualitysuParOperation"
+		class="com.gbicc.person.supervision.operation.QualitysuParOperation">
+	</bean>
+	<bean id="QualitysuParService"
+		class="com.gbicc.person.supervision.service.QualitysuParService">
+	</bean>	
+	<!--阈值管理-->
+	<bean id="TCwThresholdversionOperation"
+		class="com.gbicc.warn.ComninationWarn.operation.TCwThresholdversionOperation">
+	</bean>
+	<bean id="TCwThresholdversionService"
+		class="com.gbicc.warn.ComninationWarn.service.TCwThresholdversionService">
+	</bean>	
+	<bean id="TCwIdnexManageOperation"
+		class="com.gbicc.warn.ComninationWarn.operation.TCwIdnexManageOperation">
+	</bean>
+	<bean id="TCwIdnexManageService"
+		class="com.gbicc.warn.ComninationWarn.service.TCwIdnexManageService">
+	</bean>	
+	<!--用途监控-->
+	<bean id="TPlYtReportOperation"
+		class="com.gbicc.person.monitor.operation.TPlYtReportOperation">
+	</bean>
+	<bean id="TPlYtReportService"
+		class="com.gbicc.person.monitor.service.TPlYtReportService">
+	</bean>
+	<bean id="CommonService"
+		class="com.gbicc.common.CommonService">
+	</bean>
+	<bean id="CollectionMngProEndExecutionListener"
+		class="com.gbicc.bpm.listener.CollectionMngProEndExecutionListener">
+	</bean>
+	<bean id="ZxrfInfoMonitorEndExecutionListener"
+		class="com.gbicc.bpm.listener.ZxrfInfoMonitorEndExecutionListener">
+	</bean>
+	<bean id="YongTuMonitorEndExecutionListener"
+		class="com.gbicc.bpm.listener.YongTuMonitorEndExecutionListener">
+	</bean>
+	<!-- 规则排除/恢复 2015年11月13日13:53:33 -->
+	<bean id="TPlTriggerRuleAcctOperation" class="com.gbicc.person.eliminate.operation.TPlTriggerRuleAcctOperation"></bean>
+	<bean id="TPlTriggerRuleAcctService" class="com.gbicc.person.eliminate.service.TPlTriggerRuleAcctService"></bean>
+	<bean id="com.gbicc.person.eliminate.service.TPlTriggerRuleAcctService"
+   		  class="com.gbicc.person.eliminate.service.TPlTriggerRuleAcctService">
+  	</bean>
+  	<bean id="TPlRuleEliminateOperation" class="com.gbicc.person.eliminate.operation.TPlRuleEliminateOperation"></bean>
+	<bean id="TPlRuleEliminateService" class="com.gbicc.person.eliminate.service.TPlRuleEliminateService"></bean>
+	<bean id="com.gbicc.person.eliminate.service.TPlRuleEliminateService"
+   		  class="com.gbicc.person.eliminate.service.TPlRuleEliminateService">
+  	</bean>
+  	<bean id="TPlRuleEliminateDtlService" class="com.gbicc.person.eliminate.service.TPlRuleEliminateDtlService"></bean>
+	<bean id="com.gbicc.person.eliminate.service.TPlRuleEliminateDtlService"
+   		  class="com.gbicc.person.eliminate.service.TPlRuleEliminateDtlService">
+  	</bean>
+  	<!--调整监控频率 -->
+  	<bean id="TPlTriggerFrequencyAcctOperation" class="com.gbicc.person.frequency.opration.TPlTriggerFrequencyAcctOperation"></bean>
+	<bean id="TPlTriggerFrequencyAcctService" class="com.gbicc.person.frequency.service.TPlTriggerFrequencyAcctService"></bean>
+	<bean id="TriggerFrequencyEndExecutionListener"
+		class="com.gbicc.bpm.listener.TriggerFrequencyEndExecutionListener">
+	</bean>
+	<bean id="TriggerFrequencyProcessEndOperation" class="com.gbicc.person.frequency.opration.TriggerFrequencyProcessEndOperation"></bean>
+	<!-- 信贷备忘录   -->
+	<bean id="TPlCreditMemoOperation" class="com.gbicc.person.creditMemo.operation.TPlCreditMemoOperation"></bean>
+	<bean id="TPlCreditMemoService" class="com.gbicc.person.creditMemo.service.TPlCreditMemoService"></bean>
+  	<bean id="RuleEliminateRecoverEndExecutionListener"
+		class="com.gbicc.bpm.listener.RuleEliminateRecoverEndExecutionListener">
+	</bean>
+	<bean id="EliminateProcessEndOperation" class="com.gbicc.person.eliminate.operation.EliminateProcessEndOperation"></bean>
+	<!-- 任务转移/重新分配 2015年11月20日10:47:46 -->
+	<bean id="TaskDivertEndExecutionListener"
+		class="com.gbicc.bpm.listener.TaskDivertEndExecutionListener">
+	</bean>
+	<bean id="TaskAfreshAssignOperation" class="com.gbicc.bpm.operation.TaskAfreshAssignOperation"></bean>
+	<bean id="TTaskDivertService" class="com.gbicc.bpm.service.TTaskDivertService"></bean>
+	<bean id="com.gbicc.bpm.service.TTaskDivertService"
+   		  class="com.gbicc.bpm.service.TTaskDivertService">
+  	</bean>
+  	<bean id="TTaskDivertDtlService" class="com.gbicc.bpm.service.TTaskDivertDtlService"></bean>
+	<bean id="com.gbicc.bpm.service.TTaskDivertDtlService"
+   		  class="com.gbicc.bpm.service.TTaskDivertDtlService">
+  	</bean>
+  	<bean id="TLoanAccountRelDutyService" class="com.gbicc.bpm.service.TLoanAccountRelDutyService"></bean>
+	<bean id="com.gbicc.bpm.service.TLoanAccountRelDutyService"
+   		  class="com.gbicc.bpm.service.TLoanAccountRelDutyService">
+  	</bean>
+  	<bean id="TLoanAccountDutyDistributeOperation" class="com.gbicc.bpm.operation.TLoanAccountDutyDistributeOperation"></bean>
+	<bean id="TLoanAccountDutyDistributeService" class="com.gbicc.bpm.service.TLoanAccountDutyDistributeService"></bean>
+	<bean id="com.gbicc.bpm.service.TLoanAccountDutyDistributeService"
+   		  class="com.gbicc.bpm.service.TLoanAccountDutyDistributeService">
+  	</bean>
+  	<bean id="AccountDutyDistributeProcessEndOperation" class="com.gbicc.bpm.operation.AccountDutyDistributeProcessEndOperation"></bean>
+  	<bean id="AccountDutyDistributeEndExecutionListener" class="com.gbicc.bpm.listener.AccountDutyDistributeEndExecutionListener"></bean>
+  	<bean id="TLoanAccountService" class="com.gbicc.bpm.service.TLoanAccountService"></bean>
+	<bean id="com.gbicc.bpm.service.TLoanAccountService"
+   		  class="com.gbicc.bpm.service.TLoanAccountService">
+  	</bean>
+  	<bean id="TLoanAccountRelDistributeService" class="com.gbicc.bpm.service.TLoanAccountRelDistributeService"></bean>
+	<bean id="com.gbicc.bpm.service.TLoanAccountRelDistributeService"
+   		  class="com.gbicc.bpm.service.TLoanAccountRelDistributeService">
+  	</bean>
+  	<bean id="TLoanAccountDutyDistributeDelOperation" class="com.gbicc.bpm.operation.TLoanAccountDutyDistributeDelOperation"></bean>
+  	<!--TXT导入-->
+	<bean id="ImporttextPersonService"
+		class="com.gbicc.person.importtext.service.ImporttextPersonService">
+	</bean>
+	<bean id="ImporttextService"
+		class="com.gbicc.person.importtext.service.ImporttextService">
+	</bean>
+	
+	<!-- 单规则预警处置 2015年11月27日15:12:30 -->
+	<bean id="TCmSingleRulWarningOperation" class="com.gbicc.company.single.operation.TCmSingleRulWarningOperation"></bean>
+	<bean id="TCmSingleRulWarningService" class="com.gbicc.company.single.service.TCmSingleRulWarningService"></bean>
+	<bean id="com.gbicc.company.single.service.TCmSingleRulWarningService"
+   		  class="com.gbicc.company.single.service.TCmSingleRulWarningService">
+  	</bean>
+	<bean id="TCmSingleRulCasesOperation" class="com.gbicc.company.single.operation.TCmSingleRulCasesOperation"></bean>
+  	<bean id="TCmSingleRulCasesService" class="com.gbicc.company.single.service.TCmSingleRulCasesService"></bean>
+	<bean id="com.gbicc.company.single.service.TCmSingleRulCasesService"
+   		  class="com.gbicc.company.single.service.TCmSingleRulCasesService">
+  	</bean>
+  	<bean id="TCmSingleRulInvestigationOperation" class="com.gbicc.company.single.operation.TCmSingleRulInvestigationOperation"></bean>
+  	<bean id="TCmSingleRulInvestigationService" class="com.gbicc.company.single.service.TCmSingleRulInvestigationService"></bean>
+	<bean id="com.gbicc.company.single.service.TCmSingleRulInvestigationService"
+   		  class="com.gbicc.company.single.service.TCmSingleRulInvestigationService">
+  	</bean>
+  	<bean id="TCmSingleRulInveRelWarningService" class="com.gbicc.company.single.service.TCmSingleRulInveRelWarningService"></bean>
+	<bean id="com.gbicc.company.single.service.TCmSingleRulInveRelWarningService"
+   		  class="com.gbicc.company.single.service.TCmSingleRulInveRelWarningService">
+  	</bean>
+  	<bean id="TCmSingleRulRemoveWarningOperation" class="com.gbicc.company.single.operation.TCmSingleRulRemoveWarningOperation"></bean>
+  	<bean id="GenerateSingleRulWarningTaskOperation" class="com.gbicc.company.single.operation.GenerateSingleRulWarningTaskOperation"></bean>
+  	<bean id="TCmSingleRulCasesDelOperation" class="com.gbicc.company.single.operation.TCmSingleRulCasesDelOperation"></bean>
+  	<bean id="TCmSingleRulCasesDutyinfoOperation" class="com.gbicc.company.single.operation.TCmSingleRulCasesDutyinfoOperation"></bean>
+  	<bean id="TCmSingleRulCasesDutyinfoService" class="com.gbicc.company.single.service.TCmSingleRulCasesDutyinfoService"></bean>
+	<bean id="com.gbicc.company.single.service.TCmSingleRulCasesDutyinfoService"
+   		  class="com.gbicc.company.single.service.TCmSingleRulCasesDutyinfoService">
+  	</bean>
+  	<bean id="TCmSingleRulCasesMngOperation" class="com.gbicc.company.single.operation.TCmSingleRulCasesMngOperation"></bean>
+	<!-- 对公 单客户预警处置  -->
+	<bean id="TCmWarnDisposalEndExecutionListener"
+		class="com.gbicc.bpm.listener.TCmWarnDisposalEndExecutionListener">
+	</bean>
+	<bean id="TCmCustomerService"
+		class="com.gbicc.company.warnDisposal.service.TCmCustomerService">
+	</bean>
+	<bean id="TCmWarnControlmeasureService"
+		class="com.gbicc.company.warnDisposal.service.TCmWarnControlmeasureService">
+	</bean>
+	<bean id="TCmWarnTaskRelService"
+		class="com.gbicc.company.warnDisposal.service.TCmWarnTaskRelService">
+	</bean>
+	<bean id="TCmWarnTaskService"
+		class="com.gbicc.company.warnDisposal.service.TCmWarnTaskService">
+	</bean>
+	<bean id="TCmWarnPersonRuleService"
+		class="com.gbicc.company.warnDisposal.service.TCmWarnPersonRuleService">
+	</bean>
+	
+	<bean id="TCmWarnPersonRuleOperation"
+		class="com.gbicc.company.warnDisposal.operation.TCmWarnPersonRuleOperation">
+	</bean>
+	<bean id="TCmCustomerOperation"
+		class="com.gbicc.company.warnDisposal.operation.TCmCustomerOperation">
+	</bean>
+	<bean id="TCmWarnControlmeasureOperation"
+		class="com.gbicc.company.warnDisposal.operation.TCmWarnControlmeasureOperation">
+	</bean>
+	<bean id="TCmWarnTaskOperation"
+		class="com.gbicc.company.warnDisposal.operation.TCmWarnTaskOperation">
+	</bean>
+	<bean id="TCmWarnTaskRelOperation"
+		class="com.gbicc.company.warnDisposal.operation.TCmWarnTaskRelOperation">
+	</bean>
+	<bean id="TCmWarnTaskStartProOperation"
+		class="com.gbicc.company.warnDisposal.operation.TCmWarnTaskStartProOperation">
+	</bean>
+	<bean id="TCmWarnDisPosalProcessEndOperation"
+		class="com.gbicc.company.warnDisposal.operation.TCmWarnDisPosalProcessEndOperation">
+	</bean>
+  	<!--通用文件上传-->
+  	<bean id="FileUploadOperation" class="com.gbicc.common.filemng.FileUploadOperation"></bean>
+  	<bean id="GetHighCharDataService" class="com.gbicc.highChar.service.GetHighCharDataService"></bean>
+	
+	<!--  事务处理  -->
+  	<bean id="StartWarnTaskRcOperation" class="com.gbicc.company.warnDisposal.operation.StartWarnTaskRcOperation"></bean>
+  	<bean id="StartWarnTaskDcOperation" class="com.gbicc.company.warnDisposal.operation.StartWarnTaskDcOperation"></bean>
+  	<bean id="TPlZxrfInfoStartProcessOperation" class="com.gbicc.person.zxrf.opration.TPlZxrfInfoStartProcessOperation"></bean>
+	
+	
+</beans>

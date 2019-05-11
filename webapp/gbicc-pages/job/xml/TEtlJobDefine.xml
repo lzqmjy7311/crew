@@ -1,0 +1,27 @@
+<CommQry title="TEtlJobDefine" navigate="TEtlJobDefine" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.job.getter.TEtlJobDefineGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+    	<Field id="jobName" desc="任务名称" datatype="string" xpath="/jobName" />
+    	<Field id="runMatchine"  desc="运行机器" datatype="string" xpath="/runMatchine" />
+    	<Field id="proType"  desc="任务类型" edittype="select" translated="LIST:URL,URL;SHL,SHELL;PRD,PRODUCE" datatype="string" xpath="/proType" />
+    	<Field id="proLevel"  desc="任务级别" datatype="string" xpath="/proLevel" />
+    	<Field id="proStatus"  desc="任务状态" edittype="select" translated="LIST:0,未执行;1,正在执行中;2,执行结束" datatype="string" xpath="/proStatus" />
+    	<Field id="beginTime"  desc="开始时间" datatype="string" xpath="/beginTime" />
+    	<Field id="endTime"  desc="结束时间" datatype="string" xpath="/endTime" />
+    	<Field id="isSuccess"  desc="任务标识" edittype="select" translated="LIST:0,失败;1,成功" xpath="/isSuccess" />
+    	
+    	<Field id="des"  desc="描述" datatype="string" xpath="/des" />
+    	<Field id="proFlag"  desc="任务标识" datatype="string" xpath="/proFlag" />
+    </Fields>
+    <Where>
+    	<Option id="proStatus" desc="任务状态" edittype="select" translated="LIST:0,未执行;1,正在执行中;2,执行结束"  datatype="string"  />
+		<Option id="isSuccess" desc="任务标识" edittype="select"  translated="LIST:0,失败;1,成功"  datatype="string"  />
+    	<Option id="proType" desc="任务类型" edittype="select"  translated="LIST:URL,URL;SHL,SHELL;PRD,PRODUCE"  datatype="string"  />
+    </Where>
+    <Operations>
+    	<Button id="restartJob" name="restartJob" desc="唤醒失败任务" icon="icon-add" operation="asysubmit"
+			updateClass="com.gbicc.job.update.TEtlJobDefineUpdate"/>
+    </Operations>
+</CommQry>

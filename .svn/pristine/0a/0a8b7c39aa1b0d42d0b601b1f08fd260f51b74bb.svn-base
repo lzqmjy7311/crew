@@ -1,0 +1,103 @@
+package com.huateng.ebank.business.management.service;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.huateng.ebank.business.common.GlobalInfo;
+import com.huateng.ebank.business.common.bean.MenuItem;
+import com.huateng.ebank.business.common.bean.TreeNode;
+import com.huateng.ebank.entity.data.mng.FunctionInfo;
+import com.huateng.ebank.framework.exceptions.CommonException;
+import com.huateng.ebank.framework.report.common.ReportConstant;
+
+public class FunctionService {
+
+	/**
+	 * 生成主页顶层的菜单HTML
+	 * 
+	 * @return
+	 * @throws CommonException
+	 */
+	public static String getTopMenuHTML() throws CommonException {
+		GlobalInfo globalInfo = GlobalInfo.getCurrentInstance();
+		GlobalInfo.setCurrentInstance(globalInfo);
+		List<FunctionInfo> funcList = UserMgrService.getInstance().getUserFunctions(globalInfo.getTlrno());
+		Map<String, MenuItem> functions = new HashMap<String, MenuItem>();
+		MenuItem menu = null;
+		for (FunctionInfo f : funcList) {
+			if (2 != f.getLocation())
+				continue;
+			menu = new MenuItem();
+			menu.setId(f.getId());
+			menu.setHref(f.getPagepath());
+			menu.setText(f.getFuncname());
+			menu.setIconCls(f.getIconCls());
+			functions.put(f.getId(), menu);
+		}
+
+		List<MenuItem> menus = new ArrayList<MenuItem>();
+		MenuItem parent = null;
+		for (FunctionInfo f : funcList) {
+			if (2 != f.getLocation())
+				continue;
+			if (ReportConstant.APPROVE_FUNC_ID.equals(f.getLastdirectory()))
+				continue;
+			if (functions.containsKey(f.getLastdirectory())) {
+				parent = functions.get(f.getLastdirectory());
+				parent.addChild(functions.get(f.getId()));
+			} else { 
+				if ("0".equals(f.getLastdirectory()))
+					menus.add(functions.get(f.getId()));
+			}
+		}
+
+		StringBuffer menuBar = new StringBuffer();
+		for (MenuItem m : menus) {
+			menuBar.append("<a id='mb" + m.getId() + "' href='javascript:void(0)' menu='#mm" + m.getId() + "' class='easyui-menubutton' iconCls='" + m.getIconCls() + "' duration='0'>" + m.getText() + "</a>");
+			menuBar.append("<div id='mm" + m.getId() + "' MENU_ITEM style='width:150px;' iconCls='" + m.getIconCls() + "'>");
+			try {
+				for (TreeNode f2 : m.getChildren()) {
+					MenuItem m2 = (MenuItem) f2;
+					menuBar.append(getSubDiv(m2));
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			menuBar.append("</div>");
+		}
+		return menuBar.toString();
+	}
+
+	private static StringBuffer getSubDiv(MenuItem item) throws CommonException {
+		int width = 150;
+		StringBuffer menuDiv = new StringBuffer();
+		String clickEvent = "";
+		if (item.getHref() != null) {
+			clickEvent = "onclick=\"doWork('" + item.getId() + "','" + item.getText() + "','" + item.getHref() + "');\"";
+		}
+		menuDiv.append("<div iconCls='" + item.getIconCls() + "' title='" + item.getText() + "' " + clickEvent + ">");
+		if (item.isHasChild()) {
+			StringBuffer subDiv = new StringBuffer();
+			for (TreeNode fi2 : item.getChildren()) {
+				MenuItem m = (MenuItem) fi2;
+				subDiv.append(getSubDiv(m));
+			}
+			if (subDiv.length() == 0) {
+				menuDiv.append(item.getText());
+			} else {
+				menuDiv.append("<span>" + item.getText() + "</span>");
+				menuDiv.append("<div style='width:" + width + "px;'>");
+				menuDiv.append(subDiv);
+				menuDiv.append("</div>");
+			}
+		} else {
+			menuDiv.append(item.getText());
+		}
+		menuDiv.append("</div>");
+
+		return menuDiv;
+	}
+
+}

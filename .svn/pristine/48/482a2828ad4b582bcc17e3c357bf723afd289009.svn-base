@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="单客户预警处置  &gt;  预警处置" navigate="预警处置    &gt; 预警处置" type="call" interface="false" pagesize="20" async="true" databusid="" transdataactionurl="/trans/TransDataAction.do" txnlogflag="true" getterclassname="com.gbicc.company.warnDisposal.getter.TCmWarnTaskSelectGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="客户预警任务信息" maxPage="20" perfecth="20"  directory="D:/templet" />
+    <Fields>
+        <Field id="id" desc="ID" require="" edittype="text" datatype="string" readonly="false" type="" size="15" scale="2" default="" 
+        xpath="/id" status="N"/>
+        <Field id="taskOrg" desc="任务机构" edittype="text" datatype="string" readonly="false" status="F" xpath="/taskOrg" />
+        <Field id="taskCode" desc="任务编号" require="" edittype="text" datatype="string" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/taskCode" status="F"/>
+        <Field id="taskType" desc="任务类型" require="" edittype="select" translated="DATA_DIC.12609" datatype="string" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/taskType" status="F"/>
+        <Field id="custcode" desc="客户编号" require="" edittype="text" datatype="string" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/tCmCustomer/custcode" status="F"/>
+        <Field id="custname" desc="客户名称" require="" edittype="text" datatype="string" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/tCmCustomer/custname" status="F"/>
+        <Field id="warnLevel" desc="预警等级" require="" edittype="select" translated="DATA_DIC.12607" datatype="string" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/warnLevel" status="N"/>
+        <Field id="warnCunt" desc="预警数量" require="" edittype="text" datatype="int" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/warnCunt" status="F"/>
+        <Field id="status" desc="任务状态" require="" edittype="select" datatype="string" readonly="false" primary="true" type="st" translated="DATA_DIC.12593" size="30" scale="2" default=""
+        xpath="/status" status="F"/>
+        <Field id="taskCreatDate" desc="任务发起日期" require="" edittype="text" datatype="date" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/taskCreatDate" status="F"/>
+        <Field id="taskMatureDate" desc="任务到期日期" require="" edittype="text" datatype="date" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/taskMatureDate" status="F"/>
+        <Field id="startType" desc="任务生成方式" require=""  edittype="select" translated="DATA_DIC.12610" datatype="string" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/startType" status="F"/>
+        <Field id="inspectors" desc="核查人员" require="" edittype="text" datatype="string" readonly="true" type="" size="15" scale="2" default=""
+        xpath="/inspectors" status="F"/>
+        <Field id="inspectorsNam" desc="核查人员" 
+			method="com.gbicc.common.CQMethod.getUserNameByCode"
+			width="" readonly="true" primary="true" type="String" size="150"
+			xpath="/inspectors" status="N"/>
+		<Field id="taskOverran" desc="是否超时" require="" edittype="text" datatype="string" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/taskOverran" status="F"/>
+        <Field id="inspeMethod" desc="核查方式" require="" edittype="radio" translated="DATA_DIC.12585" datatype="string" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/inspeMethod" status="N"/>
+        <Field id="inspeDate" desc="核查日期" require="true" edittype="text" datatype="date" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/inspeDate" status="N"/>
+        <Field id="inspeInfo" desc="核查说明" width="500" colspan="4"  require="" edittype="textarea" height="50" datatype="string" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/inspeInfo" status="N"/>
+        <Field id="inspeCitDate" desc="核查录入时间" require="" edittype="text" datatype="date" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/inspeCitDate" status="N"/>
+        <Field id="disposalPer" desc="处置人员" require="" edittype="text" datatype="string" readonly="true" type="" size="15" scale="2" default=""
+        xpath="/disposalPer" status="N"/>
+        <Field id="disposalPerNam" desc="核查人员"
+			method="com.gbicc.common.CQMethod.getUserNameByCode"
+			width="" readonly="true" primary="true" type="String" size="150"
+			xpath="/disposalPer" status="N"/>
+        <Field id="disposalDate" desc="处置日期" require="" edittype="text" datatype="date" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/disposalDate" status="N"/>
+        <Field id="disposalInfo" desc="处置措施详情" width="500" colspan="4"  require="" edittype="textarea" datatype="string" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/disposalInfo" status="N"/>
+        <Field id="dispoCitDate" desc="处置录入时间" require=""  colspan="4" edittype="text" datatype="date" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/dispoCitDate" status="N"/>
+        <Field id="customerId" desc="客户ID" require="" edittype="text" datatype="string" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/customerId" status="N"/>
+        <Field id="contMeasure" desc="拟采取控制措施" width="500" colspan="4"
+            placeholder="占位符" edittype="select" translated="DATA_DIC.12596"
+            multiple="true" datatype="string" xpath="/contMeasure" status="N"/>
+        <Field id="contOth" desc="拟采取控制措施其他项说明" require="" width="500" colspan="4" edittype="text" datatype="string" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/contOth" status="N"/>
+        <Field id="contDesc" desc="拟采取措施说明" width="500" colspan="4"  require="" edittype="textarea" height="50" datatype="string" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/contDesc" status="N"/>
+        
+        <Field id="isSubmitNext" desc="是否提交至总行" require="" colspan="4" edittype="radio" translated="DATA_DIC.10004" datatype="string" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/isSubmitNext" status="N"/>
+        
+        <Field id="opinionResult" desc="审核结果" require="" edittype="radio" translated="DATA_DIC.12590" datatype="string" readonly="false" type="" size="15" scale="2" default="1"
+        xpath="/opinionResult" status="N"/>
+        <Field id="backPerson" desc="退回人" require="" edittype="radio" translated="DATA_DIC.12592" datatype="string" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/backPerson" status="N"/>
+        <Field id="opinion" desc="提交/退回备注" edittype="textarea" datatype="string" size="2000" colspan="4"  
+       	xpath="/opinion" status="N" height="60" width="500" />
+        <Field id="isContinue" desc="是否持续关注" require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/isContinue" status="N"/>
+        
+        <Field id="processLevel" desc="审批等级" require="" edittype="text" datatype="string" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/processLevel" status="N"/>
+        <Field id="overRc" desc="是否预警解除" require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/overRc" status="N"/>
+        <Field id="isOver" desc="是否拒绝" require="" edittype="radio" translated="DATA_DIC.10004" datatype="string" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/isOver" status="N"/>
+        <Field id="dddd" desc="" require="" edittype="radio" translated="" datatype="string" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/dddd" status="N"/>
+        <Field id="overDesc" desc="解除说明" width="500" colspan="4"  require="" edittype="textarea" height="50" datatype="string" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/overDesc" status="N"/>
+        
+        <Field id="nextStartTaskDate" desc="下次流程启动时间" require="" edittype="text" datatype="date" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/nextStartTaskDate" status="N"/>
+        <Field id="inspeEndDate" desc="核查完成时间" require="" edittype="text" datatype="date" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/inspeEndDate" status="N"/>
+        <Field id="creditDate" desc="任务生成日期" require="" edittype="text" datatype="date" readonly="false" type="" size="15" scale="2" default=""
+        xpath="/creditDate" status="N"/>
+        
+    </Fields>
+    <Where>
+    	<TextBox id="warnCode" desc="规则编号" edittype="text"  datatype="string" index="0" />
+		<TextBox id="taskCode" desc="任务编号" edittype="text" datatype="string" index="1" />
+    	<TextBox id="custcode" desc="客户编号" edittype="text" datatype="string" require="" index="2" />
+		<TextBox id="custname" desc="客户名称" edittype="text" datatype="string" index="3" />
+		<TextBox id="operator" desc="经办人编号" edittype="text" readonly="false" datatype="string" index="4" />
+		<TextBox id="operBank" desc="经办行编号" edittype="text" readonly="false" datatype="string" index="5" />
+		<Option id="startType" desc="任务发起类型" translated="DATA_DIC.12610" multiple="false" edittype="select" datatype="string" index="6"/>
+		<Option id="status" desc="任务状态" translated="DATA_DIC.12593" multiple="false" edittype="select" datatype="string" index="7"/>
+		<Option id="warnLevel" desc="预警等级" translated="DATA_DIC.12607" multiple="false" edittype="select" datatype="string" index="8"/>
+    	<TextBox id="CreatDateStart" desc="任务发起时间" edittype="text" datatype="date" index="9" />
+    	<TextBox id="CreatDateEnd" desc="至" edittype="text" datatype="date" index="10" />
+    </Where>
+    <Operations>
+    	<Button id="btHandle" name="btHandle" desc="查看" icon="icon-setting2" updateClass="#" url="" txn="" />
+    	<Button id="startProcess" name="startProcess" desc="启动流程" icon="icon-add" operation="asysubmit" 
+			updateClass="com.gbicc.company.warnDisposal.update.TCmWarnTaskStartProUpdate" txn=""/>
+    	<Button id="warnTaskSave" name="warnTaskSave" desc="保存" icon="icon-save" operation="asysubmit" 
+			updateClass="com.gbicc.company.warnDisposal.update.TCmWarnTaskUpdate" txn=""/>
+		<Button id="warnTaskSubmit" name="warnTaskSubmit" desc="提交" icon="icon-default" operation="asysubmit" 
+			updateClass="com.gbicc.company.warnDisposal.update.TCmWarnTaskUpdate" txn=""/>
+		<Button id="warnTaskEnd" name="warnTaskEnd" desc="拒绝" icon="icon-no" operation="asysubmit" 
+			updateClass="com.gbicc.company.warnDisposal.update.TCmWarnTaskUpdate" txn=""/>
+		<Button id="selectTheTask" name="selectTheTask" desc="确定" icon="icon-save" updateClass="#" url="#" txn="" />
+    </Operations>
+</CommQry>

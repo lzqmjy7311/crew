@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- for 系统管理 > 综合信息管理 > 汇率维护 第一屏 -->
+<CommQry title="核算管理" navigate="主页 &gt; 系统管理 &gt; 综合信息管理 &gt; 汇率维护" type="call"
+	interface="false"
+	pagesize="10"
+	async="true"
+	databusid="databus"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.management.getter.CurrrateMngGetter">
+
+	<Include id="BankParam" />
+	<ResultViewParam>
+		/fpages/management/ftl/currrateMng.ftl
+	</ResultViewParam>
+	<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+	<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+	<Fields>
+
+		<Field id="id" desc="币种ID" status="F" require="false" method="none" width="140" xpath="/id" datatype="String"
+			primary="true" type="String" size="" default="" />
+
+		<Field id="tocurcd" desc="兑换币种" status="F"
+			translated="CQ:CurrencyLoadPageSelect" edittype="select" require="true"
+			fieldmap="tocurcd=curcd;tocurcdName=cename" viewField="cename"
+			method="None" readOnly="false" primary="true" type="String" dropdowntype="dynamic" init="true"
+			default="" tip="兑换币种" xpath="/tocurcd" width="140" />
+
+		<Field id="tocurcdName" desc="兑换币种名称" status="F" readonly="true"
+			type="String" size="20" default=""  edittype="select"
+			method="com.huateng.ebank.business.common.CQMethod.getCurNameByCurNo"
+			xpath="/tocurcd" />
+
+		<Field id="curcd" desc="币种" status="F"
+			translated="CQ:CurrencyLoadPageSelect" edittype="select" require="true"
+			fieldmap="curcd=curcd;curcdName=cename" viewField="cename"
+			method="None" readOnly="false" primary="true" type="String" dropdowntype="dynamic" init="true"
+			default="" tip="币种" xpath="/curcd" width="140" />
+
+		<Field id="curcdName" desc="币种名称" status="F" readonly="true"
+			type="String" size="20" default=""  edittype="select"
+			method="com.huateng.ebank.business.common.CQMethod.getCurNameByCurNo"
+			xpath="/curcd" />
+
+
+		<Field id="buyrate" desc="买入价" status="F" require="true" width="140" method="None"
+			primary="true" type="string" size="16" datatype="currency" scale="3"
+			xpath="/buyrate" default="" edittype="text" readOnly="false"
+			/>
+		<Field id="exchgrate" desc="中间价" status="F" require="true" width="140" method="None"
+			primary="true" type="string" size="16" datatype="currency" scale="3"
+			xpath="/exchgrate" default="" edittype="text" readOnly="false"
+			/>
+		<Field id="sellrate" desc="卖出价" status="F" require="true" width="140" method="None"
+			primary="true" type="string" size="16" datatype="currency" scale="3"
+			xpath="/sellrate" default="" edittype="text" readOnly="false"
+			/>
+
+		<Field id="currrateDate" desc="汇率日期" status="F" require="false" method="none" width="120" xpath="/currrateDate"
+			primary="false" type="String" datatype="date" edittype="date" size="" default="" />
+
+		<Field id="opr" desc="操作" status="F" method="None"
+			primary="false" type="String" default="" xpath=""
+			tip="操作" />
+
+	</Fields>
+	<Where>
+
+
+		<Option id="tocurcd" tablename="ci" fieldname="curcd"
+			operation="EQ"  size=""  desc="兑换币种" tip="币种"
+			type="procNameQuery" translated="CQ:CurrencyLoadPageSelect" fieldmap="tocurcd=curcd;tocurcdName=cename"
+			viewField="cename" edittype="select" dropdowntype="dynamic" require=""
+			method="None"   index="0" width="200" height="" default="" onchange=""
+		    readOnly="">
+		</Option>
+		<Option id="curcd" tablename="ci" fieldname="curcd"
+			operation="EQ"  size=""  desc="币种" tip="币种"
+			type="procNameQuery" translated="CQ:CurrencyLoadPageSelect" fieldmap="curcd=curcd;curcdName=cename"
+			viewField="cename" edittype="select" dropdowntype="dynamic" require=""
+			method="None"   index="0" width="200" height="" default="" onchange=""
+		    readOnly="">
+		</Option>
+
+		<DateTextBox id="currrateDate" desc="汇率日期" status="F" require="false" method="none" width="200" xpath="/id/currrateDate"
+			primary="false" type="String" datatype="string" edittype="string" size="" default="" />
+<!--  		<DateTextBox id="currrateDate" tablename="Intrate" fieldname="effectDate"
+		type="String" dataType="date" operation="EQ" size="10" desc="生效日期"
+		tip="生效日期" method="" index="6" function="" width="" default="" scale=""
+		require="" readOnly="" rules="" errmsg="" />-->
+
+
+	</Where>
+	<Operations>
+		<Button id="btNew" name="btNew" desc="新增" icon="icon-add"
+			operation="" updateClass=""
+			url="" show="" group="" txn="" />
+
+		<Button id="btDel" name="btDel" desc="删除"
+			operation="asysubmit" updateClass="com.huateng.ebank.business.management.updater.CurrrateMngDelUpdate"
+			url="#" show="" group="" txn="" />
+		<Button id="btCancel" name="btCancel" desc="取消" icon="icon-cancel"
+			 url="" show="" group="" txn="" />
+		<Button id="btReturn" name="btReturn" desc="返回" icon="icon-back"
+			 url="" show="" group="" txn="" />
+		<Button id="btnClose" name="btnClose" desc="关闭" icon="icon-cancel"
+			 url="" show="" group="" txn="" />
+		<Button id="btAddSave" name="btAddSave" desc="保存" icon="icon-save"
+			 operation="asysubmit" updateClass="com.huateng.ebank.business.management.updater.CurrrateMngUpdate"
+			 url="#" show="" group="" txn=""/>
+		<Button id="btSave" name="btSave" desc="保存" icon="icon-save"
+			operation="asysubmit" updateClass="com.huateng.ebank.business.management.updater.CurrrateMngModUpdate"
+			url="/fpages/management/ftl/currrateMng.ftl" show="" group="" txn="" />
+	</Operations>
+
+</CommQry>

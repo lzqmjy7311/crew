@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-27 13:30:38 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.gbicc.company.financial.analysis.entity.TOutCouNoticeDetail" table="T_OUT_COU_NOTICE_DETAIL" schema="ECUSER">
+		<comment>裁判文书</comment>
+		<id name="id" type="string">
+			<column name="ID" length="50" />
+		</id>
+		<property name="courtName" type="string">
+			<column name="COURT_NAME" length="50" />
+		</property>
+		<property name="court2Name" type="string">
+			<column name="COURT2_NAME" length="50" />
+		</property>
+		<property name="tryDate" type="date">
+			<column name="TRY_DATE" length="10" />
+		</property>
+		<property name="caseNo" type="string">
+			<column name="CASE_NO" length="50" />
+		</property>
+		<property name="caseReason" type="string">
+			<column name="CASE_REASON" length="500" />
+		</property>
+		<property name="mainDept" type="string">
+			<column name="MAIN_DEPT" length="50" />
+		</property>
+		<property name="tryName" type="string">
+			<column name="TRY_NAME" length="50" />
+		</property>
+		<property name="accuser" type="string">
+			<column name="ACCUSER" length="200" />
+		</property>
+		<property name="defendant" type="string">
+			<column name="DEFENDANT" length="200" />
+		</property>
+		<property name="baseId" type="string">
+			<column name="BASE_ID" length="50" />
+		</property>
+		<property name="sourceLink" type="string">
+			<column name="SOURCE_LINK" length="200" />
+		</property>
+		<property name="relaId" type="string">
+			<column name="RELA_ID" length="50" />
+		</property>
+		<property name="rowDate" type="date">
+			<column name="ROW_DATE" length="10" />
+		</property>
+	</class>
+</hibernate-mapping>

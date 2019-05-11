@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="操作员管理" navigate="主页 &gt; 系统管理 &gt; 操作员管理"
+	type="call"
+	interface="true"
+	pagesize="15"
+	async="true"
+	btnNm="aaa"
+	databusid="DEMO"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.opermng.getter.OperMngEntryGetter">
+	<Include id="BankParam" />
+
+	<PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="数据导出-用户信息"  />
+
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="brno" desc="机构号" status="N" method="None"
+			readonly="" primary="true" type="String" size="20" default=""
+			xpath="/brno" />
+
+		<Field id="brname" desc="操作机构" status="N"  method="com.huateng.ebank.business.common.CQMethod.getBrhName"
+			readonly="" primary="true" type="String" size="20" default=""
+			xpath="/brcode" />
+
+		<Field id="tlrno" desc="操作员号" status="F" method="None"
+			readonly="" primary="true" type="String" size="20" xpath="/tlrno"
+			default="" />
+
+		<Field id="tlrName" desc="操作员名称" status="F" method="None"
+			width="50" readonly="" primary="true" type="String" size="20"
+			xpath="/tlrName" default="" />
+
+		<Field id="status" desc="登陆状态" status="N" readonly="true" translated="DATA_DIC.37"   edittype="select" width="90"
+			method="None" primary="true" type="String" size="20"
+			xpath="/status"  />
+
+
+		<Field id="flag" desc="有效状态" status="F" readonly="true"
+			translated="LIST:1,有效;0,无效" require="true" edittype="select" width="90"
+			method="None" primary="true" type="String" size="20"
+			xpath="/flag" default="" />
+
+		<Field id="createDate" desc="建立日期" status="N" require="false"
+			method="None" width="90" primary="false" xpath="/createDate"
+			type="String" size="2" />
+
+		<Field id="lastaccesstm" desc="最近登陆时间" require="" edittype="text" datatype="timestamp"
+			status="F" method="None" width="180" primary="false" type="String"
+			size="6" xpath="/lastaccesstm" default=""/>
+
+		<Field id="lastlogouttm" desc="最近签退时间" require="" edittype="text" datatype="timestamp"
+			status="F" method="None" width="180" primary="false" type="String"
+			size="6" xpath="/lastlogouttm" default=""/>
+
+		<Field id="effectDate" desc="生效日期" require="" status="N"
+			method="None" width="90" primary="false" type="String" size="20"
+			xpath="/effectDate" default="" />
+
+		<Field id="expireDate" desc="失效日期" require="" status="N"
+			method="None" width="90" primary="false" type="String" size="20"
+			xpath="/expireDate" default="" />
+
+		<Field id="email" desc="EMAIL" require="" status="N"
+			method="None" width="" primary="false" type="String" size="20"
+			xpath="/email" default="" />
+
+		<Field id="misc" desc="所属部门" require="" status="N" method="None"
+			width="" primary="false" type="String" size="20" xpath="/misc"
+			default="" />
+		<Field id="defRoleid" desc="默认岗位" require="" status="N"
+			readonly="false" edittype="select" fieldmap="" method="None"
+			translated="DATA_DIC.100" width="90" viewField="" primary="false"
+			type="String" size="10" xpath="/roleid" tip="请先选择操作员岗位"/>
+
+		<Field id="isLock" desc="锁定状态" require="" status="N" method="None" translated="LIST:1,已锁定;0,未锁定"
+			edittype="select" width="" primary="false" type="String" size="20" xpath="/isLock"
+			default="" />
+
+		<Field id="opr" desc="操作" status="N" method="None" xpath=""
+			primary="true" type="" size="20" default="" tip="操作" require=""/>
+
+		<!--add by zhiyang.he 用户管理双岗复核改造 2012-09-04 begin -->
+		<Field id="isLockModify" desc="修改锁定状态" status="N" method="None" xpath="/isLockModify"
+			primary="true" type="" size="20" default="" tip="修改锁定状态" require=""/>
+		<Field id="st" desc="记录状态" status="N" readonly="" tip="修改锁定状态"
+			translated="DATA_DIC.3001" require="" edittype="select" width="90"
+			method="None" primary="true" type="String" size="20"
+			xpath="/st" default="" />
+		<!--add by zhiyang.he 用户管理双岗复核改造 2012-09-04 end -->
+	</Fields>
+
+	<Where>
+		<TextBox id="qtlrno"
+			type="String" dataType="" operation="EQ" size="8" desc="操作员号"
+			tip="操作员号" method="genLikeP" index="0" function="" width=""
+			default="" scale="" require="" readOnly="" rules="" errmsg="操作员号必须是八位" />
+		<TextBox id="qtlrnoName"
+			type="String" dataType="" operation="EQ" size="8" desc="操作员名称"
+			tip="操作员名称" method="genLikeP" index="1" function="" width=""
+			default="" scale="" require="" readOnly="" />
+	</Where>
+
+	<Operations>
+		<Button id="btAdd" name="btAdd" desc="新增" operation=""
+			url="#" show="" group="" txn=""  icon="icon-add"/>
+
+		<Button id="btDel" name="btDel" desc="删除" operation="asysubmit"
+			updateClass="com.huateng.ebank.business.opermng.update.OperMngDelUpdate"
+			url="#" txn="" />
+
+		<Button id="btModify" name="btModify" desc="修改" operation=""
+			url="#" show="" group="" txn="" />
+
+		<Button id="btSave" name="btSave" desc="保存" operation="asysubmit"
+			updateClass="com.huateng.ebank.business.opermng.update.TlrInfoUpdate"
+			url="#" txn="" />
+
+		<Button id="btStatus" name="btStatus" desc="有效/无效" operation="asysubmit"
+			updateClass="com.huateng.ebank.business.opermng.update.OperStatusChgUpdate"
+			url="#" txn="" icon="icon-set"/>
+
+		<Button id="btAuth" name="btAuth" desc="分配角色" operation="" url="#" txn=""/>
+
+		<Button id="btResetPwd"  name="btResetPwd" desc="重置密码"
+			updateClass="com.huateng.ebank.business.opermng.update.OperMngResetPwdUpdate"
+			operation="asysubmit" url="#" show="" group="" txn="management.userresetpwd.update"></Button>
+		<Button id="btResetPwd2" name="btResetPwd2" desc="重置密码" operation="" url="#" txn=""/>
+
+		<Button id="unLock"  name="unLock" desc="解锁"
+			updateClass="com.huateng.ebank.business.opermng.update.OperMngUnlockUpdate"
+			operation="asysubmit" url="#" show="" group="" txn="" icon="icon-unlock"></Button>
+
+		<Button id="btLoginStatus"  name="btLoginStatus" desc="强行签退"
+			updateClass="com.huateng.ebank.business.opermng.update.OperStatusChgUpdate"
+			operation="asysubmit" url="#" show="" group="" txn="" icon="icon-undo"></Button>
+	</Operations>
+	<Sql>
+	</Sql>
+</CommQry>

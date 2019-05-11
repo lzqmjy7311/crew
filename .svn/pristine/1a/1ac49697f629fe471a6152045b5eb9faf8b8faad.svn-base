@@ -1,0 +1,372 @@
+<%@page import="com.huateng.ebank.business.common.GlobalInfo"%>
+<%@page import="com.huateng.ebank.entity.data.mng.RoleInfo"%>
+<%@page import="com.huateng.ebank.business.management.service.UserMgrService"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="/tags/application-tags" prefix="app"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>上海农商银行信用风险预警系统</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<link rel="icon" type="image/png" href="<%=request.getContextPath() %>/login/images/indeximg/sh-logo.png"/>
+<%GlobalInfo g=((GlobalInfo) session.getAttribute(GlobalInfo.KEY_GLOBAL_INFO));%>
+<%String sysType=g.getExtensbean().getRoleSysType();if(sysType==null){sysType="CM";};%>
+<% if("CM".equals(sysType)){%>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/templets/ui/themes/start/easyui.css">
+<% }else{ %>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/templets/ui/themes/blue/easyui.css">
+<% } %>
+<link rel="stylesheet" type="text/css" href="<%=request.getContextPath() %>/templets/ui/themes/icon.css">
+<script type="text/javascript" src="<%=request.getContextPath() %>/templets/ui/js/jquery-1.8.2.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/templets/ui/js/uicore-min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/templets/ui/locale/lang-zh_CN.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/templets/ui/js/basic.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/templets/ui/js/properties.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/templets/ui/js/uiextend-min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath() %>/templets/ui/js/uirender-min.js"></script>
+<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/engine.js'> </script>
+<script type='text/javascript' src='<%=request.getContextPath()%>/dwr/util.js'> </script>
+<script type='text/javascript' src="<%=request.getContextPath()%>/dwr/interface/PrivAction.js" ></script>
+<script type='text/javascript' src="<%=request.getContextPath()%>/dwr/interface/SessionTicketProcess.js" ></script>
+<script type="text/javascript">
+<!--
+var _application_root="<%=request.getContextPath() %>";
+var _current_user = '<%=g.getTlrno()%>';
+switchTheme();
+//-->
+</script>
+<style>
+	.theme-container{
+		position:absolute;
+		display:none;
+		z-index:3;
+		width:210px;
+		height:460px;
+	}
+	.role-container{
+		position:absolute;
+		display:none;
+		z-index:3;
+		width:210px;
+		height:160px;
+	}
+	.banner-logo{
+		width:200px;
+	}
+</style>
+</head>
+
+<body scroll="no" style="overflow:hidden;padding:0px;marggin:0px">
+<div id="northDiv" region="north" class="index-north" border="false">
+<table id="headtbl" cellpadding="0" cellspacing="0" width="100%" height="0px" border="0" >
+	<tr valign="top"  id="topIndex">
+		<td class="banner-logo" rowspan=2 >
+			<img src="images/indeximg/srcb-logo1_2.png" style="padding-top:10px;">
+		</td>
+		<td nowrap="nowrap">
+			<ul class="small-tool">
+				<li style="padding-top:3px;">
+					<a href="javascript:void(0);"  class="icon-user-password" title="密码修改" onclick="parent.doWork('999999','密码修改','/fpages/management/ftl/ChangePwd.ftl')" ></a>
+				</li>
+				<li id="li5"><a href="javascript:void(0)" title="切换主题" onclick="changeTheme()"></a></li>
+				<li id="li1"><a href="javascript:void(0)" title="返回主页" onclick="showHome()"></a></li>
+				<li id="li2"><a href="javascript:void(0)" title="切换角色" onclick="chooseRole()"></a></li>
+				<li id="li3"><a href="javascript:void(0)" title="精简菜单" onclick="topHidden()"></a></li>
+				<li id="li4"><a href="javascript:void(0)" title="退出" onclick="JavaScript:sExit()"></a></li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<%@ include file="menu/easymenu.jsp"%>
+		</td>
+		<td id="topMenu" class="menubar" style="display:none;white-space:nowrap;border-left:0px" nowrap="nowrap" valign="top">
+			<ul class="small-tool">
+				<li id="li3"><a href="javascript:void(0)" title="还原" onclick="topShow()"></a></li>
+				<li id="li4"><a href="javascript:void(0)" title="退出" onclick="JavaScript:sExit()"></a></li>
+			</ul>
+		</td>
+	</tr>
+</table>
+</div>
+<div region="center" border="false" id="centerDiv">
+<div id ="workframe"></div>
+</div>
+<div region="south" border="false" class="index-south">
+<table id="footer" cellpadding="0" cellspacing="0"  border="0">
+	<td class="footer-left">
+		<div class="footer-text"><app:userinfotag /></div>
+	</td>
+	<td class="footer-right" nowrap="nowrap">
+	        版本:v2.6
+	</td>
+</table>
+</div>
+<%
+String rno=GlobalInfo.getCurrentInstance().getTlrno();
+RoleInfo roleInfo=UserMgrService.getInstance().queryDefaultRoleInfo(rno);
+String p="";
+if(roleInfo!=null){
+	p=roleInfo.getFucUrl();
+}
+%>
+<script type="text/javascript">
+	$('body').layout();
+	function showHome() {
+		dts.select('home');
+	}
+	function chooseRole(){
+		var container = $(".role-container");
+		if(!container[0]){
+			container = $("<div class='role-container'/>").appendTo("body");
+			var ifr = $('<iframe scrolling="no" frameborder="0" onload="(function(){})()" style="width:100%;height:100%;"></iframe>').appendTo(container);
+			ifr[0].src="<%=request.getContextPath()%>/login/chooseRole.jsp";
+			if (ifr[0].attachEvent){ 
+				ifr[0].attachEvent("onload", showC); 
+			} else {
+				ifr[0].onload=showC;
+			}
+			var _c;
+			container.bind("mouseenter",function(){clearTimeout(_c);});
+		}
+		var l = $("#li2").offset().left;
+		var t = $("#li2").offset().top;
+		if(container.css("display")=="block"){
+			container.hide();
+		}else{
+			showC();
+		}
+		function showC(){
+			container.css({left:l-container.width(),top:t+25}).slideDown("fast");
+		}
+	}
+	
+	function topHidden(){
+    	$('#topIndex').hide();
+    	$('#topMenu').show();
+    	$('#northDiv').height($("#headtbl").height());
+    	$('body').layout('panel','north').panel('resize',{height:$("#headtbl").height()});
+		$('body').layout('resize');
+	}
+
+	function topShow(){
+    	$('#topIndex').show();
+    	$('#topMenu').hide();
+    	$('#northDiv').height($("#headtbl").height());
+    	$('body').layout('panel','north').panel('resize',{height:$("#headtbl").height()});
+		$('body').layout('resize');
+	}
+
+	function sExit(){
+        easyMsg.confirm("确定要退出系统吗?",function(){window.open("<%=request.getContextPath()%>/custlogout.do", "_top");});
+	}
+
+    function doWork(id, title, url, funcId,closable){
+    	if(funcId==null && dts.getSelected()){
+    		funcId=dts.getSelected().data('panel').options.funcId;
+    	}
+    	if(closable==null){
+    		closable=true;
+    	}
+    	if(url.indexOf("_blank:")==0) {
+    		 window.open(_application_root+url.substring(7), "_blank");
+    	} else if(url=='null') {
+    		dts.add({id:id,title:title,funcId:funcId,_rootName:_rootName,content:'<h2>页面['+title+']未实现......</h2>',closable:closable});
+    	} else {
+    		dts.add({id:id,title:title,funcId:funcId,_rootName:_rootName,url:url,closable:closable});
+    	}
+    	GTab.id=id;
+    	return  dts.getSelectedId();
+    }
+    function _GTabFuc(){
+    	this.id=null;
+    	this.isHomeEmbed=false;
+    	var me=this;
+    	this.addTab=function(id, title, url, funcId,closable){
+    		doWork(id, title, url, funcId,closable);
+    	}
+    	this.refreshTab=function(id){
+    		if(id){
+    			dts.refresh(id);
+    		}else{
+    			dts.refresh(GTab.id);
+    		}
+    	}
+    	this.refreshHome=function(id){
+    		if(id!=""){
+    			dts.refresh(id);
+    		}else{
+    			dts.refresh('home');
+    		}
+    	}
+    	this.closeTab=function(id){
+    		if(id!=""){
+    			dts.close(id);
+    			dts.refresh('home');
+    		}else{
+    			dts.close(GTab.id);
+    			dts.refresh('home');
+    		}
+    	}
+    	return this;
+    }
+    GTab=new _GTabFuc();
+    
+    var dts = new DynamicTabSet($("#workframe"),{isHaveNavigate:false});
+    var _rootName=null;
+    $(function(){
+    	$("#_MenuBar a").hover(
+    			function(e){
+    				var src = e.target || window.event.srcElement;
+    				var rName=src.outerText||src.textContent;
+    				_rootName=rName;
+    			},
+    			function(){}
+    	);
+    	$('#northDiv').css('overflow','visible');
+    	$('#northDiv').parent().css('overflow','visible');
+    	var p='<%=p%>';
+    	if(p!=''){
+        	GTab.addTab('home','主页','/'+p,null,false);
+        	GTab.id='home';
+        }
+		_resize();
+    });
+
+ 	function _resize() {
+       	$('#northDiv').width($(this)._outerWidth());
+       	$('#northDiv').height($("#headtbl").height());
+       	$('body').layout('panel','north').panel('resize',{height:$("#headtbl").height()});
+		$('body').layout('resize');
+    }
+    //优化
+    $(window).resize(_resize);
+	function _openTab(id,title,url,ticket,refresh){
+		if(ticket != null){
+			dts.openTab(id, title, url, {refresh:refresh,ticket:ticket});
+		}else{
+			var $tab = navTab._getTabs().eq(navTab._currentIndex);
+			dts.openTab(tabName, url, { title:vtitle,rel:"extend",fresh:true,external:true,data:vdata },$tab.attr("_ticket_"));
+		}
+	}
+	function changeSession(ticket, funcId){
+		 //portal
+		 dwr.engine.setAsync(false);  
+		 SessionTicketProcess.setAciveTicket(ticket);
+		 PrivAction.setCurrentTabFuncId(funcId);
+         dwr.engine.setAsync(true); 
+		 //web
+         callWebSession(ticket,"change");
+		 //record cookie
+         $.cookie('SESSION_TICKET',ticket); 
+	}
+	function clearSession(ticket){
+		 //portal
+		 dwr.engine.setAsync(false);  
+		 SessionTicketProcess.clearTcket(ticket);
+         dwr.engine.setAsync(true); 
+		 //web
+		 callWebSession(ticket,"clear");			
+	}
+	function callWebSession(ticket,option){
+		var website = "<%try{out.print(com.huateng.ebank.business.remote.base.RemoteSysMap.getValue("SESSION_TICKET"));}catch(Exception e){out.print("");}%>";
+		if(website) {
+			var ws = website.split(";");
+			for(var i=0;i<ws.legnth;i++) {
+				if(ws[i]) {
+					 $.ajax({type:'POST',
+			                url: ws[i] + "?option=" + option + "&ticket=" + ticket,
+			                dataType:"json",
+			                async:false,
+			                cache: false
+			        });
+				}
+			}
+		}
+	}
+	function focusFrame(){
+		var $tab = dts.getSelected();
+		var ticket = $tab.attr("_ticket_");
+		var cticket = $.cookie('SESSION_TICKET');
+		if(ticket){
+			if(cticket && cticket==ticket){
+			  //ignore
+			}else{
+				changeSession(ticket);
+			}
+		}else{
+			//ignore	
+		}
+	}   
+	
+	function changeTheme(){
+		//openSubWin("changeTheme", "主题切换", "<%=request.getContextPath()%>/login/theme.jsp");
+		var container = $(".theme-container");
+		if(!container[0]){
+			container = $("<div class='theme-container'/>").appendTo("body");
+			var ifr = $('<iframe scrolling="no" frameborder="0" onload="(function(){})()" style="width:100%;height:100%;"></iframe>').appendTo(container);
+			ifr[0].src="<%=request.getContextPath()%>/login/theme.jsp";
+			if (ifr[0].attachEvent){ 
+				ifr[0].attachEvent("onload", showC); 
+			} else {
+				ifr[0].onload=showC;
+			}
+			var _c;
+			container.bind("mouseout",function(){_c=setTimeout(function(){container.hide();},500);}).bind("mouseenter",function(){clearTimeout(_c);});
+		}
+		var l = $("#li5").offset().left;
+		var t = $("#li5").offset().top;
+		showC();
+		function showC(){
+			container.css({left:l-container.width()+5,top:t+10}).slideDown("fast");
+		}
+	}
+	
+	function _contextmenu_onfilter(_contextmenu, tabset, opts) {
+		var _id = opts.title;
+		if(_contextmenu.find('[name="menuitem_favorite"]').size()==0){
+			_contextmenu.menu('appendItem', {
+				name:'menuitem_favorite',
+				text:$.fn.tabs.defaults.m_favorite,
+				iconCls: 'icon-favorite',
+				onclick: function(item){
+					PrivAction.saveFavt(_contextmenu.data('current-id'),1,function(rs){
+						alert(rs==0?"收藏成功":rs==1?"已经收藏":"不允许收藏");
+					});
+				}
+			});
+		}
+		if(tabset.getSelectedId() == _id) {
+			_contextmenu.find('[name="menuitem_refresh"]').removeClass('menu-item-disabled');
+		} else {
+			_contextmenu.find('[name="menuitem_refresh"]').addClass('menu-item-disabled');
+		}
+		if(_id=='home') {
+			_contextmenu.find('[name="menuitem_close"]').addClass('menu-item-disabled');
+			_contextmenu.find('[name="menuitem_favorite"]').addClass('menu-item-disabled').hide();
+		} else {
+			_contextmenu.find('[name="menuitem_close"]').removeClass('menu-item-disabled');
+			_contextmenu.find('[name="menuitem_favorite"]').removeClass('menu-item-disabled').hide();
+		}
+		
+	}
+	
+	function batchExp_onforward() {
+		var expid = '999998';
+		if(dts.isExist(expid)){
+			dts.refresh(expid);
+			dts.select(expid);
+		} else {
+			doWork(expid,'我的下载任务','/fpages/pageqryexp/ftl/mydownload.ftl');
+		}
+	}
+</script>
+<script type="text/javascript">
+	<% if (request.getSession().getAttribute("singleLogin") != null) {%>
+		alert('该用户已经在其它电脑登录!');
+	<% } %>
+	<%request.getSession().removeAttribute("singleLogin");%>
+</script>
+</body>
+</html>

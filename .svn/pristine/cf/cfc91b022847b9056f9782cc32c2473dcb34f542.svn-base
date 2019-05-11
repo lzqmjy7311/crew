@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.1//EN" "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+
+	<!--======================= Form Bean Definitions  =======================-->
+	<form-beans>
+		<form-bean name="loginForm" type="com.gbicc.override.MyLoginForm">
+			<display-name>LoginForm</display-name>
+		</form-bean>
+		<form-bean name="logoutForm" type="com.huateng.ebank.business.management.bean.LogoutForm">
+			<display-name>LogoutForm</display-name>
+		</form-bean>
+		<form-bean name="changePwdForm" type="com.huateng.ebank.business.management.bean.ChangePwdForm">
+			<display-name>ChangePwdForm</display-name>
+		</form-bean>
+	</form-beans>
+
+	<!-- ========== Global Exceptions Definitions =================================== -->
+	<global-exceptions>
+		<exception type="java.lang.Exception" key="errors.general"
+			handler="com.huateng.ebank.framework.web.struts.ActionExceptionHandler" />
+	</global-exceptions>
+	<global-forwards>
+		<forward name="error" path="/common/error.jsp" />
+		<forward name="ok" path="/send.do"></forward>
+	</global-forwards>
+
+	<action-mappings>
+		<!-- =================== Action Mapping Definitions =====================-->
+		<action path="/custlogin"
+			type="com.huateng.ebank.business.management.action.LoginAction" name="loginForm"
+			scope="request" input="/login/login.jsp">
+			<forward name="login" path="/"></forward>
+			<forward name="success" path="/login/index.jsp" redirect="true"/>
+			<forward name="error" path="/common/error.jsp" />
+			<forward name="chgpwd" path="/fpages/management/ftl/ChangePwd.ftl" redirect="true"/>
+			<forward name="riskView" path="/gbicc-com-pages/riskview/ftl/riskView.ftl" redirect="true" />
+			<forward name="warning_info" path="/gbicc-com-pages/warning_test/ftl/warning_info.ftl" redirect="true" />
+		</action>
+		<action path="/custlogout"
+			type="com.huateng.ebank.business.management.action.LogoutAction" name="logoutForm"
+			scope="request">
+			<forward name="success" path="/" redirect="true"></forward>
+			<forward name="failure" path="/" redirect="true"></forward>
+		</action>
+
+		<!-- ===============================navg menu forward -->
+		<action path="/menunavg"
+			type="com.huateng.report.common.action.NavigationAction" scope="request">
+			<forward name="Report0101" redirect="true" path="/login/index.jsp"></forward>
+			<forward name="Report0302" redirect="true" path="/login/index.jsp"></forward>
+		</action>
+
+		<!-- 查询导出 begin -->
+		<action path="/trans/qryExp" type="com.huateng.ebank.framework.web.struts.QryExpAction">
+		</action>
+		<!-- 查询导出 end -->
+		
+		<!-- add by zhaozhiguo 2011-12-12 国际化 begin -->
+		<action path="/switchLanuage"
+			type="com.huateng.ebank.business.management.action.SwitchLanuageAction"
+			name="logoutForm"
+			input="/login_c.jsp"
+			scope="request">
+		</action>
+		<!-- add by zhaozhiguo 2011-12-12 国际化 end -->
+		
+		
+    	<action path="/pageqryexp/DownloadAction" type="com.huateng.ebank.business.pageqryexp.action.FileDownloadAction">
+    		<forward name="success" path="/common/success.jsp" />
+    	</action>
+    	
+    	
+	</action-mappings>
+	<controller nocache="true" />
+	<message-resources parameter="resources/errorcode.properties"/>
+	<!-- add by zhaozhiguo 2011-12-12 国际化 JIRA:FPP-3 begin -->
+	<!--
+	     null="true"   如果资源文件中找不到KEY,则会产生空指针异常
+	     null="false"  如果资源文件中找不到KEY,则返回 ???[language]_[Country].[KEY]???
+	             如果想自定义,则需要重写com.huateng.struts.util.PropertyMessageResourcesExt#getMessage(Locale locale, String key)方法
+	-->
+	<message-resources parameter="resources.UIi18n" null="false" factory="com.huateng.struts.util.PropertyMessageResourcesFactory"/>
+	<!-- add by zhaozhiguo 2011-12-12 国际化 JIRA: FPP-3 end -->
+
+</struts-config>

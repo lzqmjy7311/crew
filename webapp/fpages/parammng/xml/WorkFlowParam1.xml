@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+
+	  <CommQry title="流程超时配置" navigate="主页 &gt; 系统管理 &gt; 工作流参数配置" type="call"
+	interface="false" pagesize="10" async="true" databusid="DEMO"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.workflow.getter.WorkFlowParamGetter">
+	<Include id="BankParam" />
+	<ResultViewParam>/fpages/parammng/ftl/WorkFlowParam.ftl</ResultViewParam>
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+
+		 <Field id="processTemplate" desc="工作流模板名" status="F" width="170"
+			edittype="select" translated="CQ:WfpTemplateSelect" require="true"
+			fieldmap="processTemplate=processTemplate;processTemplateName=processTemplateName"
+			viewField="processTemplateName" method="None" primary="false"
+			readonly="false" type="String" size="100" default=""
+			xpath="/processTemplate" tip="工作流模板名" dropdowntype="dynamic" init="false" />
+
+		<Field id="processTemplateName" desc="工作流模板名" status="F" width="170"
+			method="None" primary="false" type="String" size="100" default=""
+			xpath="/processTemplateName" tip="工作流模板名" />
+
+		<Field id="taskName" desc="任务名" status="F" width="170"
+			edittype="select" translated="CQ:WfpTaskSelect" require=""
+			fieldmap="taskName=taskName;taskNameName=taskNameLable"
+			viewField="taskNameLable" method="None" primary="false"
+			readonly="false" type="String" size="100" default=""
+			xpath="/taskName" tip="任务名" dropdowntype="dynamic" init="false" />
+
+		<Field id="taskNameName" desc="任务名" status="F" width="170"
+			method="None" primary="false" type="String" size="100" default=""
+			xpath="/taskNameName" tip="任务名" />
+
+ 		<Field id="apptype" desc="申请类型" status="F" width="170"
+			edittype="select" translated="CQ:WfpappTypeSelect" require=""
+			fieldmap="apptype=appType;apptypeName=appTypeName"
+			viewField="appTypeName" method="None" primary="false"
+			readonly="flase" type="String" size="100" default=""
+			xpath="/apptype" tip="申请类型" dropdowntype="dynamic" init="false" />
+
+		<Field id="appTypeName" desc="申请类型" status="F" width="170"
+			method="None" primary="false" type="String" size="100" default=""
+			xpath="/appTypeName" tip="申请类型" />
+	</Fields>
+
+	<Where>
+
+
+	</Where>
+
+	<Operations>
+		<Button id="btSave" name="btSave" desc="查询"
+			operation="submitform" url="/fpages/parammng/ftl/WorkFlowParam.ftl"
+			txn="" />
+	</Operations>
+
+</CommQry>

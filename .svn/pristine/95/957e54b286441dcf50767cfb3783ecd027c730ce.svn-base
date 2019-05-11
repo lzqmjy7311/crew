@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	txnlogflag:true记录日志
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="SysParamsSecDetail.title" navigate="系统维护  &gt; 安全参数设置" type="call"
+	interface="true" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.huateng.ebank.business.approve.getter.SysParamsSecDetailGetter">
+	<Include id="BankParam" />
+	<!-- 
+	<PageQryExp type="CSV" limit="true" encoding="GBK" url="/trans/qryExp.do" directory="F:/upload"/>
+	-->
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+
+		
+		<Field id="old_magicId" desc="参数标识" datatype="string" size="3" readonly="true" xpath="old_pfsysparam/id/magicId"  />
+		<Field id="magicId" desc="参数标识"  datatype="string"  size="3" readonly="true" xpath="pfsysparam/id/magicId"  />
+				
+		<Field id="old_paramValueTx" desc="系统参数" edittype="text" status="F"  datatype="string" size="50"  readonly="true"  xpath="old_pfsysparam/paramValueTx" />
+		<Field id="paramValueTx" desc="系统参数" edittype="text" status="F" datatype="string" size="50" readonly="false" xpath="pfsysparam/paramValueTx" />
+		
+		<Field id="old_desc0" desc="参数说明" edittype="text" datatype="string" status="F" size="100" readonly="true" xpath="old_pfsysparam/desc0" />
+		<Field id="desc0" desc="参数说明" edittype="text" datatype="string" status="F" size="100" readonly="true" xpath="pfsysparam/desc0" />
+		
+    </Fields>
+    
+<Operations>
+   <Button id="btClose" name="btClose" desc="返回" operation="syncsubmit"
+			url="#" txn="" />    
+    </Operations>
+
+	
+</CommQry>

@@ -1,0 +1,112 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<#assign customerNum="${RequestParameters['customerNum']?default('')}" />
+<#assign bean=JspTaglibs["/WEB-INF/struts-bean.tld"] />
+<@CommonQueryMacro.page title="外部风险数据">
+<@CommonQueryMacro.CommonQuery id="dataverification" init="true" submitMode="current" navigate="false">
+<@CommonQueryMacro.DataTable id="dataabc"  title="数据验真"  fieldStr="indexName,xyVal,gsVal,zxVal,yzVal" />
+</@CommonQueryMacro.CommonQuery>
+<@CommonQueryMacro.CommonQuery id="externaldatastatistics" init="true" submitMode="current" navigate="false">
+<@CommonQueryMacro.DataTable id="externaldatatable"  title="外部数据" fieldStr="fdType,onemonth,threemonth,halfYear,oneYear,twoyear" />
+</@CommonQueryMacro.CommonQuery>
+</@CommonQueryMacro.page>
+
+<script>
+function dataabc_yzval_onRefresh(cell,value,record) {
+	if (record) {//当存在记录时
+		if(record.getValue("yzVal")=="1"){
+			cell.innerHTML="<img src='${contextPath}/templets/lib/functionTree/imgs/up.png' width='20' height='15' />";
+		}else if(record.getValue("yzVal")=="0"){
+			cell.innerHTML="<img src='${contextPath}/templets/lib/functionTree/imgs/delete.png' width='20' height='15' />";
+		}else{
+			cell.innerHTML="<img src='${contextPath}/templets/lib/functionTree/imgs/clo.png' width='20' height='15' />";
+		}
+	} else {//当不存在记录时
+		cell.innerHTML="&nbsp;";
+	}
+}
+function externaldatatable_onemonth_onRefresh(cell,value,record) {
+	if (record) {//当存在记录时
+		var fdType=record.getValue("fdType");
+		var typeId=record.getValue("typeId");
+		cell.innerHTML="<a href=\"JavaScript:aclick('"+fdType+"','"+typeId+"','time1')\">"+value+"</a>";
+	} else {//当不存在记录时
+		cell.innerHTML="&nbsp;";
+	}
+}
+function externaldatatable_threemonth_onRefresh(cell,value,record) {
+	if (record) {//当存在记录时
+		var fdType=record.getValue("fdType");
+		var typeId=record.getValue("typeId");
+		cell.innerHTML="<a href=\"JavaScript:aclick('"+fdType+"','"+typeId+"','time3')\">"+value+"</a>";
+	} else {//当不存在记录时
+		cell.innerHTML="&nbsp;";
+	}
+}
+function externaldatatable_halfyear_onRefresh(cell,value,record) {
+	if (record) {//当存在记录时
+		var fdType=record.getValue("fdType");
+		var typeId=record.getValue("typeId");
+		cell.innerHTML="<a href=\"JavaScript:aclick('"+fdType+"','"+typeId+"','timehalf')\">"+value+"</a>";
+	} else {//当不存在记录时
+		cell.innerHTML="&nbsp;";
+	}
+}
+function externaldatatable_oneyear_onRefresh(cell,value,record) {
+	if (record) {//当存在记录时
+		var fdType=record.getValue("fdType");
+		var typeId=record.getValue("typeId");
+		cell.innerHTML="<a href=\"JavaScript:aclick('"+fdType+"','"+typeId+"','timeyear')\">"+value+"</a>";
+	} else {//当不存在记录时
+		cell.innerHTML="&nbsp;";
+	}
+}
+function externaldatatable_twoyear_onRefresh(cell,value,record) {
+	if (record) {//当存在记录时
+		var fdType=record.getValue("fdType");
+		var typeId=record.getValue("typeId");
+		cell.innerHTML="<a href=\"JavaScript:aclick('"+fdType+"','"+typeId+"','timetwo')\">"+value+"</a>";
+	} else {//当不存在记录时
+		cell.innerHTML="&nbsp;";
+	}
+}
+
+function aclick(fdType,typeId,fdDate){
+	var customerNum='${customerNum}';
+	switch(typeId){
+	case 'SP':
+		windows = openSubWin("wbdata", "外部数据明细：&nbsp;"+fdType, "/gbicc-com-pages/financialIndexAnalsis/ftl/TOutCouJudgmentDetail.ftl?typeId="+typeId+"&fdDate="+fdDate+"&customerNum="+customerNum,"1024","300",false,true,'',false);
+	case 'SK':
+		windows = openSubWin("wbdata", "外部数据明细：&nbsp;"+fdType, "/gbicc-com-pages/financialIndexAnalsis/ftl/TOutCouNoticeDetail.ftl?typeId="+typeId+"&fdDate="+fdDate+"&customerNum="+customerNum,"1024","300",false,true,'',false);
+	case 'GB':
+		windows = openSubWin("wbdata", "外部数据明细：&nbsp;"+fdType, "/gbicc-com-pages/financialIndexAnalsis/ftl/TOutIndBaseInfo.ftl?typeId="+typeId+"&fdDate="+fdDate+"&customerNum="+customerNum,"1024","300",false,true,'',false);
+	case 'SZ':
+		windows = openSubWin("wbdata", "外部数据明细：&nbsp;"+fdType, "/gbicc-com-pages/financialIndexAnalsis/ftl/TOutDataTax.ftl?typeId="+typeId+"&fdDate="+fdDate+"&customerNum="+customerNum,"800","300",false,true,'',false);
+	case 'SQ':
+		windows = openSubWin("wbdata", "外部数据明细：&nbsp;"+fdType, "/gbicc-com-pages/financialIndexAnalsis/ftl/TDataOwingTaxes.ftl?typeId="+typeId+"&fdDate="+fdDate+"&customerNum="+customerNum,"800","300",false,true,'',false);
+	case 'SF':
+		windows = openSubWin("wbdata", "外部数据明细：&nbsp;"+fdType, "/gbicc-com-pages/financialIndexAnalsis/ftl/TDataUnnormalTaxes.ftl?typeId="+typeId+"&fdDate="+fdDate+"&customerNum="+customerNum,"800","300",false,true,'',false);	
+	case 'GG':
+		windows = openSubWin("wbdata", "外部数据明细：&nbsp;"+fdType, "/gbicc-com-pages/financialIndexAnalsis/ftl/TDataGsxtJudicialEquityFreezon.ftl?typeId="+typeId+"&fdDate="+fdDate+"&customerNum="+customerNum,"1024","300",false,true,'',false);
+	case 'GX':
+		windows = openSubWin("wbdata", "外部数据明细：&nbsp;"+fdType, "/gbicc-com-pages/financialIndexAnalsis/ftl/TDataGsxtIcPunishment.ftl?typeId="+typeId+"&fdDate="+fdDate+"&customerNum="+customerNum,"1024","300",false,true,'',false);
+	case 'GJ':
+		windows = openSubWin("wbdata", "外部数据明细：&nbsp;"+fdType, "/gbicc-com-pages/financialIndexAnalsis/ftl/TDataGsxtIcException.ftl?typeId="+typeId+"&fdDate="+fdDate+"&customerNum="+customerNum,"1024","300",false,true,'',false);
+	case 'GY':
+		windows = openSubWin("wbdata", "外部数据明细：&nbsp;"+fdType, "/gbicc-com-pages/financialIndexAnalsis/ftl/TDataGsxtIcIllegal.ftl?typeId="+typeId+"&fdDate="+fdDate+"&customerNum="+customerNum,"1024","300",false,true,'',false);
+	
+	}
+	
+}
+//$(document).ready(function(){
+//	var strid;
+//	$("a").mouseover(function(){
+//		var str1=$(this).attr("id");
+//		strid="#div"+str1;
+//		$("#div").css('display','block');
+//		$("#div").text("现在点击的表格ID是"+strid);
+//	});
+//	$("a").mouseleave(function(){
+//		$("#div").css('display','none');
+//	});
+//})
+</script>

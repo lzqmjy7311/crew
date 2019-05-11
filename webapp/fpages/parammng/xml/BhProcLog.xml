@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="流程超时配置" navigate="主页 &gt; 系统管理 &gt; 批处理状态信息" type="call"
+	interface="false" pagesize="20" async="true" databusid="DEMO"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.parammng.cqGetter.BhProcLogGetter">
+	<Include id="BankParam" />
+	<ResultViewParam>/fpages/parammng/ftl/BhProcLog.ftl</ResultViewParam>
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="v_id" desc="" status="N" require="" edittype="text" datatype="int"
+			method="None" readonly="true" primary="true" type="String" size="4"
+			default="false" xpath="/v_id" />
+
+		<Field id="id" desc="" status="N" require="" edittype="text" datatype="int"
+			method="None" readonly="true" primary="true" type="String" size="4"
+			default="false" xpath="/id" />
+
+		<Field id="bhdate" desc="批量日期" status="F"  require="true" readonly="true"
+			edittype="date" datatype="date" method="None" width="100"
+			primary="false" type="String" size="20" xpath="/bhdate" default="false" />
+
+		<Field id="jobno" desc="作业号" status="F" require="true" datatype="int"
+			width="60" method="None" readonly="true" primary="true" type="String"
+			size="4" xpath="/jobno" default="" />
+
+		<Field id="step" desc="步骤号" status="F" readonly="true" datatype="int"
+			 require="true"  width="60" method="None" primary="true" type="String" size="4"
+			xpath="/step" default="" />
+
+		<Field id="subStep" desc="子步骤号" require="true" readonly="true" datatype="int"
+			status="F" width="70" method="None" primary="false" type="String"
+			size="4" xpath="/subStep" default="" />
+
+		<Field id="processFunction" desc="批量程序名" status="F" require="false"  readonly="true" size="120"
+			method="None"  width="300" primary="false" xpath="/processFunction" type="String"  default="" />
+
+		<Field id="status" desc="批量状态" status="F" require="false" edittype="select" translated="DATA_DIC.6000" readonly="true" method="None"
+			primary="false" type="String" size="1" xpath="/status"  width="100" default="" />
+	</Fields>
+
+	<Where>
+	</Where>
+	<Operations>
+	</Operations>
+	<Sql>
+		<![CDATA[
+				select
+				role_id,
+				role_name,
+				status,
+				workflow_role,
+				role_type
+				from role_info as ri
+    	]]>
+	</Sql>
+</CommQry>

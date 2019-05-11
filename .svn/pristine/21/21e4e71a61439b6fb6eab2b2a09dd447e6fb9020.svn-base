@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="参数管理  &gt; 产品管理" navigate="参数管理  &gt; 产品管理" type="call"
+	interface="false" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.person.eliminate.getter.TPlRuleEliminateGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="id" xpath="/id" edittype="textarea" height="100" width="400" />
+		<Field id="eliminateRuleDesc" xpath="/eliminateRuleDesc" desc="排除/恢复规则说明"
+			edittype="textarea" height="100" width="400" size="500" />
+    </Fields>
+    <Operations>
+    	<Button id="btn_save" name="btn_save" desc="保存" icon="icon-save" operation="asysubmit" 
+			updateClass="com.gbicc.person.eliminate.update.TPlRuleEliminateUpdate" url="#" txn="" />
+		<Button id="btn_submit" name="btn_submit" desc="提交" icon="icon-default" />
+		<Button id="btn_submit_true" name="btn_submit_true" desc="提交" icon="icon-default" operation="asysubmit" 
+			updateClass="com.gbicc.person.eliminate.update.TPlRuleEliminateUpdate" url="#" txn="" />
+    </Operations>
+</CommQry>

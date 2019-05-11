@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="核算管理" navigate="主页 &gt; 会计管理 &gt; 产品核算参数设置" type="call"
+	interface="true"
+	pagesize="10"
+	async="true"
+	databusid="ACEENTRY_DB"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.ace.web.manager.SubjActQueryGetter">
+
+	<Include id="BankParam" />
+	<ResultViewParam>
+		/fpages_ace/manager/ftl/LoanAceSubjActQuery.ftl
+	</ResultViewParam>
+	<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+	<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+	<Fields>
+
+		<Field id="curcd" desc="币种" status="F" edittype="select"
+			method="None" readOnly="true" primary="true" type="String" size="3"
+			default="" tip="币种" xpath="/curcd" width="80" translated="CQ:CurCdSelect" fieldmap="curcd=curcd;curcdName=curnm"  viewField="curnm"  init ="false" dropdowntype="dynamic" require="true"/>
+
+		<Field id="busiprop" desc="业务类型" status="F"  width="50" method="None"
+			primary="true" type="String" size="2"
+			xpath="/busiprop" default="10" edittype="text" readOnly="false"
+			tip="" />
+
+		<Field id="prodprop" desc="产品种类" status="F" width="150"
+			edittype="select" require="true" translated="CQ:QueryLoanID"
+			fieldmap="prodprop=lnid;prodpropName=loanTypeName"
+			viewField="loanTypeName" method="None" primary="false" type="String"
+			size="100" height="500" default="" xpath="/prodprop" tip="产品种类" dropdowntype="dynamic" init="false" colspan="4"/>
+
+		<Field id="acts_1" desc="账户大类" status="F" edittype="select"
+			method="None" readOnly="false" primary="true" type="String" size="2"
+			default="" tip="账户大类" xpath="/acts_1" width="" translated="DATA_DIC.725" require="true"/>
+
+		<Field id="acts_2" desc="账户子类" status="F" edittype="select"
+			method="None" readOnly="false" primary="true" type="String" size="2"
+			default="" tip="账户子类" xpath="/acts_2" width="" translated="DATA_DIC.726" require="true"/>
+
+		<Field id="subjid" desc="科目号" status="F" edittype="select"
+			method="None" readOnly="false" primary="true" type="String" size="8"
+			default="" tip="科目号" xpath="/subjid" width="100" translated="CQ:AceSubjSelect"  fieldmap="subjid=insubjid;subjidName=subjnm"  viewField="subjnm" dropdowntype="dynamic" init="false" require="true"/>
+
+		<Field id="iseft" desc="有效" status="F"  width="20" method="None"
+			primary="true" type="String" size="1"
+			xpath="/iseft" default="Y" edittype="text" readOnly="false"
+			tip="" />
+
+		<Field id="id" desc="ID" status="F"  width="50" method="None"
+			primary="true" type="String" size="2"
+			xpath="/id" default="10" edittype="text" readOnly="false"
+			tip="" />
+
+	</Fields>
+	<Where>
+			<Option id="curcd" tablename="TLA_SUBJ" fieldname="curcd"
+			operation="EQ"  size=""  desc="货币代码" tip="货币代码" type="string"
+			translated="CQ:CurCdSelect" fieldmap="curcd=curcd;curcdName=curnm"  viewField="curnm" dropdowntype="dynamic" init="false"
+			require="true" readOnly=""/>
+
+			<Option id="lntype" desc="产品种类" status="F" method="com.huateng.ebank.business.common.CQMethod.getLnTypeName" require="true"
+			primary="false" type="String" size="100" width="170" height="500"  translated="CQ:QueryLoanID"
+			fieldmap="lntype=lnid;lntypeName=loanTypeName"  viewField="loanTypeName" dropdowntype="dynamic" init="true"
+			default="" tip="产品种类"/>
+
+
+
+	</Where>
+	<Operations>
+		<Button id="btNew" name="btNew" desc="新增"
+			operation="addRecord" updateClass=""
+			url="" show="" group="" txn="" />
+		<Button id="btDel" name="btDel" desc="删除"
+			operation="delrecord"
+			url="" show="" group="" txn="" />
+		<Button id="btSave" name="btSave" desc="保存"
+			operation="asysubmit" updateClass="com.huateng.ebank.ace.web.manager.SaveSubjActUpdate"
+			url="/success.jsp" show="" group="" txn="" />
+		<Button id="btBack" name="btBack" desc="返回" operation="submitform"
+			url="/fpages/parammng/ftl/LoanCoreParamInfo.ftl" txn=""/>
+	</Operations>
+
+</CommQry>

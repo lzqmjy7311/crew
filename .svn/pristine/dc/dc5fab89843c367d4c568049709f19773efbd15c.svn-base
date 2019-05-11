@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="5" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="">
+	<Include id="BankParam" />
+	
+	<Fields>
+		<Field id="Item"  xpath="/Item"  desc="" require="" edittype="text" datatype="string" status="F"  default="" />
+        <Field id="onemonth" xpath="/onemonth"  desc="近一个月" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" />
+        <Field id="threemonth" desc="近三个月" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/threemonth" />
+        <Field id="halfyear" desc="近半年" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/halfyear" />
+        <Field id="oneyear" desc="近一年" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/oneyear" />
+        <Field id="twoyear" desc="近两年" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/twoyear" />
+        <Field id="customerNum" desc="客户编号" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/customerNum" />
+	</Fields>
+</CommQry>

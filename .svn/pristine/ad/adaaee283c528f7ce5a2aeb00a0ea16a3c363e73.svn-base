@@ -1,0 +1,63 @@
+<CommQry title="TCmSingleRulCases" navigate="TCmSingleRulCases" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.getter.TCmSingleRulCasesGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+        <Field id="id" desc="ID主键"  edittype="text" datatype="string" readonly="true"  xpath="/id" />
+        <Field id="casesCode" desc="案例编号" size="100" edittype="text" datatype="string" readonly="true" 
+        xpath="/casesCode" width="250"/>
+        <Field id="casesName" desc="案例名称" size="100" edittype="text" datatype="string" readonly="true" 
+        xpath="/casesName" width="250"/>
+        <Field id="casesStatus" desc="案例状态" xpath="/casesStatus" multiple="false" init="true"  readonly="true"
+            placeholder="占位符" edittype="select" translated="DATA_DIC.106"
+            datatype="string" size="50" />
+        <Field id="casesDesc" desc="案例描述" size="500" edittype="textarea" datatype="string" readonly="true" 
+        xpath="/casesDesc" colspan="4" height="100" width="722"/>
+        <Field id="casesConclusion" desc="案例处置结论" size="500" edittype="textarea" datatype="string" readonly="false" 
+        xpath="/casesConclusion" colspan="4" height="100" width="722"/>
+        <Field id="createDt" desc="创建日期"  edittype="text" datatype="date" readonly="true" 
+        xpath="/createDt" width="250"/>
+        <Field id="createOrgId" desc="创建机构Id"  edittype="text" datatype="string" readonly="true" 
+        xpath="/createOrg/brcode" />
+        <Field id="createOrg" desc="创建机构"  edittype="text" datatype="string" readonly="true" 
+        xpath="/createOrg/brname" width="250"/>
+        <Field id="createUserId" desc="创建人Id"  edittype="text" datatype="string" readonly="false" 
+        xpath="/createUser/tlrno" />
+        <Field id="createUser" desc="创建人"  edittype="text" datatype="string" readonly="false" 
+        xpath="/createUser/tlrName" />
+        <Field id="handleOrgFlag" desc="处理机构标识"  edittype="text" datatype="string" readonly="false" 
+        xpath="/handleOrgFlag" />
+        <Field id="warnCount" desc="预警信息条数" xpath="/warnCount" edittype="text" datatype="int" 
+		/>
+		<Field id="inveCount" desc="发起协查任务数" xpath="/inveCount" edittype="text" datatype="int" 
+		/>
+		<Field id="alreInveCount" desc="已完成协查任务数" xpath="/alreInveCount" edittype="text" datatype="int" 
+		/>
+		<Field id="opinion" desc="审核意见" xpath="/opinion" size="500" edittype="textarea" 
+        colspan="4" height="100" width="722" />
+        <Field id="casesNature" desc="案例性质" xpath="/casesNature" multiple="false" init="true"  
+            placeholder="占位符" edittype="select" translated="DATA_DIC.109"
+            datatype="string" size="50" width="250"/>
+		<Field id="followupFlag" desc="是否后续关注" xpath="/followupFlag" multiple="false" init="true"  
+            placeholder="占位符" edittype="select" translated="DATA_DIC.8000"
+            datatype="string" size="50" width="250"/>
+    </Fields>
+    
+    <Operations>
+    	<Button id="btnSubmit" name="btnSubmit" desc="提交" icon="icon-ok" operation="asysubmit" 
+			updateClass="com.gbicc.company.single.update.TCmSingleRulAddCasesUpdate" url="#" txn="" />
+		<Button id="btCancel" name="btCancel" desc="取消" icon="icon-cancel" updateClass="#" url="" txn="" />
+		
+		<Button id="moreHandle" name="moreHandle" desc="更多" icon="icon-sys-search-org" updateClass="#" url="" txn="" />
+    	<Button id="btHandle" name="btHandle" desc="处理" icon="icon-add" updateClass="#" url="" txn="" />
+    	<Button id="btnCasesDel" name="btnCasesDel" desc="删除" icon="icon-form-del" operation="asysubmit" 
+    		updateClass="com.gbicc.company.single.update.TCmSingleRulDelCasesUpdate"/>
+    	<Button id="btFiling" name="btFiling" desc="申请归档" icon="icon-ok" operation="asysubmit" 
+			updateClass="com.gbicc.company.single.update.TCmSingleRulCasesUpdate" url="#" txn="" />
+		<Button id="btAgree" name="btAgree" desc="同意" icon="icon-ok" operation="asysubmit" 
+			updateClass="com.gbicc.company.single.update.TCmSingleRulCasesUpdate" url="#" txn="" />
+		<Button id="btBack" name="btBack" desc="退回" icon="icon-back" operation="asysubmit" 
+			updateClass="com.gbicc.company.single.update.TCmSingleRulCasesUpdate" url="#" txn="" />
+		<Button id="btClose" name="btClose" desc="关闭" icon="icon-cancel" updateClass="#" url="" txn="" />
+    </Operations>
+</CommQry>

@@ -1,0 +1,148 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC_CN"/>
+<title>文件系统资源监控</title>
+<link rel="stylesheet" type="text/css" href="../../../templets/ui/themes/blue/easyui.css">
+<link rel="stylesheet" type="text/css" href="../../../templets/ui/themes/icon.css">
+<script type="text/javascript" src="../../../templets/ui/js/jquery-1.8.2.js"></script>
+<script type="text/javascript" src="../../../templets/ui/js/basic.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../templets/ui/js/chart/highcharts.js"></script>
+<script type="text/javascript" src="../../../templets/ui/js/chart/highcharts-more.js"></script>
+<script type="text/javascript" src="../../../templets/ui/js/uicore-min.js" charset="utf-8"></script>
+<script type="text/javascript" src="../../../templets/ui/js/uirender-min.js" charset="utf-8"></script>
+<script type="text/javascript" src='../../../dwr/engine.js'> </script>
+<script type="text/javascript" src='../../../dwr/util.js'> </script>  
+<script type='text/javascript' src='../../../dwr/interface/SysMonitor.js'> </script>	
+<style type="text/css">  
+body,html {  
+    margin: 0;  
+    padding: 0;  
+    width: 100%;  
+    font-size: 14px;  
+    font-family: arial;  
+} 
+#dynamicNetwork {  
+    margin: 10px auto 0;  
+    padding: 5px;  
+    width: 80%;  
+    height: 250px;  
+    border: 1px solid #ccc;  
+    border-radius: 5px;  
+}  
+#charts{
+     position: relative;
+} 
+#grid {
+    padding: 5px;  
+    width: 90%;  
+    margin: 8px auto 0;
+    position: relative;
+}
+</style>  
+<script type="text/javascript">  
+/*
+$(function () {
+       $('#dynamicio').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false
+        },
+        title: {
+            text: '系统磁盘使用情况'
+        },
+        tooltip: {
+    	    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    color: '#000000',
+                    connectorColor: '#000000',
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                }
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: '系统磁盘',
+            data: [
+            ]
+        }],
+       }, 
+        // Add some life
+	function (chart) {
+		if (!chart.renderer.forExport) {
+		    setInterval(function () {
+		        SysMonitor.getFileInfo(function(list){  
+		          chart.series[0]={ type: "pie",name: "系统磁盘",data: [['已使用', list[0]],['未使用',list[1]]] };
+                 }); 
+		    }, 3000);
+		}
+	});
+	});
+	*/
+</script>  
+</head>
+<body>
+<!-- 
+<div id="dynamicio"></div>
+-->
+<table id="pg" class="easyui-propertygrid" style="" showGroup="true" scrollbarSize="0" data-options="columns: mycolumns"/>
+<script type="text/javascript">
+var mycolumns = [[
+            {field:'name',title:'参数名',width:200,sortable:true},
+               {field:'value',title:'参数值',width:300,resizable:true}
+        ]];
+SysMonitor.getFile(function(list){
+	if(list!=null){
+     var rows = new Array();
+	for(var i=0;i<list.length;i++){
+	   var nk = list[i];
+	   var groupName = '';
+       var j=0;
+	   for(var property in nk){ 
+        if(nk[property]=='GROUP'){
+          groupName = property;
+        }else{
+     	   var row = { name:property, value:nk[property], group:groupName};
+     	   rows[i*10 + j]=row;
+     	   j++;
+	    }
+      }
+   }
+   $('#pg').propertygrid();
+   $("#pg").propertygrid('loadData', rows);
+   }
+});
+ setInterval(function(){  
+ SysMonitor.getFile(function(list){
+ 	if(list!=null){
+ 	
+     var rows = new Array();
+	for(var i=0;i<list.length;i++){
+	   var nk = list[i];
+	   var groupName = '';
+       var j=0;
+	   for(var property in nk){ 
+        if(nk[property]=='GROUP'){
+          groupName = property;
+        }else{
+     	   var row = { name:property, value:nk[property], group:groupName};
+     	   rows[i*10 + j]=row;
+     	   j++;
+	    }
+      }
+   }
+   $('#pg').propertygrid();
+   $("#pg").propertygrid('loadData', rows);
+   
+ 	}
+});
+},5000);
+</script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	  navigate:导航信息
+	  type:方式（sql|call)
+	  interface:是否显示输入条件页面(true|false)
+	  databusid:数据总线编号
+	  transdataactionurl:数据整理URL
+	  async:异步提交标志
+	  pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry
+title="任务移交"
+navigate="主页 &gt; 系统管理 &gt; 任务移交"
+type="call"
+interface="true"
+pagesize="10"
+async="true"
+databusid=""
+getterclassname="com.huateng.ebank.business.parammng.cqGetter.ForwardTaskListGetter"
+transdataactionurl="/trans/TransDataAction.do"
+>
+	<Include id="BankParam"/>
+	<ResultViewParam>
+	/fpages/parammng/ftl/ForwardTaskList.ftl
+	</ResultViewParam>
+	<EmptyResultViewParam>
+	/fpages/parammng/ftl/ForwardTaskList.ftl
+	</EmptyResultViewParam>
+	<Fields>
+		<Field id="select" desc="选择" status="F" method="None" xpath="" readOnly="false" datatype="boolean"
+			primary="true" type="String" size="1" edittype="checkbox" default="" tip="选择"  />
+
+		<Field id="taskId" desc="任务序号" status="F" method="None" readOnly="true" edittype="text"
+			primary="false" type="String" size="100" default="" xpath="/taskId" tip="任务序号" />
+
+		<Field id="contractno" desc="合同号" status="F" method="None" readOnly="true" edittype="text"
+			primary="false" type="String" size="200" default="" xpath="/contractno" tip="合同号"/>
+       <!-- modify by lizh 2010/09/13 处理TLS-410 begin: -->
+		<!-- <Field id="taskName" desc="待办事宜名称" status="F" method="None" readOnly="true" edittype="text" translated="DATA_DIC.1112"
+			primary="false" type="String" size="100" default="" xpath="/taskName" tip="待办事宜名称"/> -->
+	   <Field id="taskName" desc="待办事宜名称" status="F" method="None" readOnly="true" edittype="select" translated="LIST:StartFlow,发起申请;CustMngInput,授信申请;SubLeaderAudit,客户经理复核;BrhAudit3,授信审查;BrhAudit4,风控审批;BrhLeaderApprove,副总经理审批;BrhLeaderApprove3,总经理终审;BrhLeaderApprove4,信审会审批;CustMngModify,退回修改;LoanCustMngInput,合同建立;LoanArchivesAudit,客户经理复核;LoanCustMngAudit,合同审查;LoanLawAudit,风控审批;LoanCensorAudit,副总经理审批;LoanLeaderAudit,总经理终审;LoanLombardAudit,信审会审批;LoanCustMngModify,退回修改;CustMngCheckTask,客户经理复核;CreditMngAuditTask,合同审查;RiskControlApproveTask,风控审批;ViceGenMngApproveTask,副总经理审批;GenMngApproveTask,总经理终审;BackToModifyTask,退回修改"
+			primary="false" type="String" size="200" default="" xpath="/taskName" tip="待办事宜名称"/>
+		<Field id="taskState" desc="任务状态" status="F" method="None"  edittype="select"  translated="DATA_DIC.1111"
+			primary="false" type="String" size="100" default="" xpath="/taskState" tip="任务状态"/>
+
+		<Field id="userName" desc="任务办理者" status="F" method="None" readOnly="true" edittype="text"
+			primary="false" type="String" size="100" default="" xpath="/userName" tip="任务办理者"/>
+
+	<!-- <Field id="procName" desc="流程名称" status="F" method="None" readOnly="true" edittype="text" translated="DATA_DIC.1110"
+			primary="false" type="String" size="100" default="" xpath="/procName" tip="流程名称" /> -->
+			<Field id="procName" desc="流程名称" status="F" method="None" readOnly="true" edittype="select" translated="LIST:CreditApplyProcess,企贷-授信申请流程;LoanApplyProcess,企贷-合同审批流程;LoanAlterLongProcess,个贷-贷后变更长流程;LoanApplyLongProcess,个贷-贷款申请长流程;LongApplyShortProcess,个贷-贷款申请短流程;PostLoanGuattypeChgProcess,个贷-贷后担保方式变更;PostLoanRateChgProcess,个贷-贷后利率变更长流程;PostLoanTermChgProcess,个贷-贷后期限变更长流程"
+			primary="false" type="String" size="200" default="" xpath="/procName" tip="流程名称" />
+         <!-- modify by lizh 2010/09/13 处理TLS-410 end -->
+<!--		<Field id="bizClass" desc="业务类别" status="F" method="None" readOnly="true"  edittype="text"-->
+<!--			primary="false" type="String" size="100" default="" xpath="/bizClass" tip="业务类别"/>-->
+
+<!--		<Field id="starter" desc="发起者" status="F" method="None" readOnly="true" edittype="text"-->
+<!--			primary="false" type="String" size="100" default="" xpath="/starter" tip="发起者"/>-->
+
+		<Field id="taskStartTime" desc="流程发起时间" status="F" method="None" readOnly="true"  edittype="text"
+			primary="false" type="String" size="100" default="" xpath="/taskStartTime" tip="流程发起时间"/>
+
+		<Field id="appno" desc="申请号" status="F" method="None" readOnly="true"  edittype="text"
+			primary="false" type="String" size="100" default="" xpath="/appno" tip="申请号"/>
+
+		<Field id="piid" desc="流程实例号" readonly="false" type="String" size="20"
+			edittype="text" datatype="string" xpath="/piid"/>
+
+<!--		<Field id="bizSubclass" desc="贷款大类" status="F" method="None" readOnly="true"  edittype="text"-->
+<!--			primary="false" type="String" size="100" default="" xpath="/bizSubclass" tip="贷款大类"/>-->
+
+<!--		<Field id="amount" desc="贷款金额" status="F" method="None" readOnly="true"  edittype="text"-->
+<!--			primary="false" type="String" size="100" default="" xpath="/amount" tip="贷款金额"/>-->
+
+		<Field id="appType" desc="申请类型" status="F" method="None" readOnly="true" edittype="text"
+			primary="false" type="String" size="100" default="" xpath="/appType" tip="申请类型" />
+			
+	</Fields>
+
+	<Where>
+		<TextBox  id="tlrno"
+			type="String"  dataType="string" size="8"  desc="操作员" index="0"
+			method="None" width="" scale="" require="true"   readOnly="false" rules="" errmsg=""/>
+
+	</Where>
+	<Operations>
+
+<!--		<Button id="btForwardTask" desc="移交工作" operation="asysubmit"-->
+<!--		updateclass="com.huateng.ebank.business.parammng.update.ForwardTaskUpdate"-->
+<!--		url="/common/success.jsp" show="" group="" txn=""/>-->
+	</Operations>
+
+
+</CommQry>

@@ -1,0 +1,26 @@
+<CommQry title="TCwCreditInexOptRecord" navigate="TCwCreditInexOptRecord" type="call" interface="false" pagesize="30" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.warn.ComninationWarn.getter.TCwCreditInexOptRecordGetter">
+    <Include id="BankParam" />
+    <PageQryExp type="CSV" limit="true" encoding="UTF-8" url="/trans/qryExp.do" directory="D:/templet" />
+    <Fields>
+        <Field id="id" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/id" />
+        <Field id="username" desc="操作ID" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/username" />
+        <Field id="sucesscount" desc="导入数据(行)" require="" edittype="text" datatype="int" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/sucesscount" />
+        <Field id="errorcount" desc="失败数据(行)" require="" edittype="text" datatype="int" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/errorcount" />
+        <Field id="date" desc="操作日期" require="" edittype="text" datatype="timestamp" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/date" />
+        
+    </Fields>
+    <Where>
+    	<TextBox id="username" desc="操作ID" require="" edittype="text" datatype="string" />
+    	<TextBox id="date" desc="操作日期" require="" edittype="text" datatype="date"  />
+    </Where>
+    <Operations>
+    			<Button id="btCancel" name="btCancel" desc="返回" operation="href" url="" />
+		<Button id="btImport" name="btImport" desc="导入" operation="" url="#" show="" group="" txn="" icon="icon-add"/>
+		<Button id="btModify" name="btModify" desc="修改" operation="" url="#" show="" group="" txn="" icon="icon-edit"/>
+		<Button id="btUpload" name="btUpload" desc="上传" operation="" url="#" show="" group="" txn="" icon="icon-add"/>		
+    </Operations>
+</CommQry>

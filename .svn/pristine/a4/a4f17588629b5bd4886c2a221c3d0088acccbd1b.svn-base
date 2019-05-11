@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CommQry title="逾期清单" navigate="逾期清单" type="call"
+	interface="false" pagesize="25" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.person.collection.getter.TEdwPlsAccountGetter">
+	
+	<Include id="BankParam" />
+	<PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="批量下载-催收信息" />
+    <Fields>
+        <Field id="loanacno" desc="贷款账户" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/loanacno" />
+        <Field id="loanid" desc="业务编号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/loanid" />
+        <Field id="custid" desc="客户编号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/custid" />
+        <Field id="controlid" desc="实际控制人编号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/controlid" />
+        <Field id="corpcustid" desc="法人客户编号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/corpcustid" />
+        <Field id="prodid" desc="产品类型" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/prodid" />
+        <Field id="prodname" desc="产品名称" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/prodname" />
+        <Field id="tcapi" desc="贷款金额" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/tcapi" />
+        <Field id="tterm" desc="贷款期限" require="" edittype="text" datatype="int" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/tterm" />
+        <Field id="retukind" desc="还款方式" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/retukind" />
+        <Field id="warrno" desc="凭证编号 : DCWARRINFO-担保管理-重要凭证管理" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2"
+        default="" xpath="/warrno" />
+        <Field id="enstroid" desc="入库编号 : DCWARRINFO-担保管理-重要凭证管理" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2"
+        default="" xpath="/enstroid" />
+        <Field id="warrbusidate" desc="权证入库日期 : DCWARRINFO-担保管理-重要凭证管理--》交易日期" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F"
+        size="15" scale="2" default="" xpath="/warrbusidate" />
+        <Field id="totalMortgageValue" desc="总押品价值" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/totalMortgageValue" />
+        <Field id="buildingprojid" desc="楼盘项目编号 : DAPROJINFO-合作项目-楼盘信息--》项目编号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F"
+        size="15" scale="2" default="" xpath="/buildingprojid" />
+        <Field id="payoffflag" desc="是否结清 : 源表字段（结清标志）" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2"
+        default="" xpath="/payoffflag" />
+        <Field id="unprofname" desc="联保小组名称 : DBAPPFARMER-贷款申请-详细信息-农户--》联保小组名称" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F"
+        size="15" scale="2" default="" xpath="/unprofname" />
+        <Field id="begindate" desc="开户日期" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/begindate" />
+        <Field id="enddate" desc="到期日期" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/enddate" />
+        <Field id="operid" desc="经办人 : 客户经理ID" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/operid" />
+        <Field id="opername" desc="经办人名称 : 客户经理名称" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/opername" />
+        <Field id="bankid" desc="经办行 : （机构ID）" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/bankid" />
+        <Field id="bankname" desc="经办行名称 : （机构名称）" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/bankname" />
+        <Field id="assukind" desc="担保方式" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/assukind" />
+        <Field id="floatinterate" desc="浮动比例" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/floatinterate" />
+        <Field id="acflag" desc="账户状态" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/acflag" />
+        <Field id="acflag2" desc="账户状态2" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/acflag2" />
+        <Field id="riskflag" desc="风险分类" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/riskflag" />
+        <Field id="contno" desc="合同编号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/contno" />
+        <Field id="dutyid" desc="检查人编号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/dutyid" />
+        <Field id="dutyid2" desc="催收人编号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/dutyid2" />
+        <Field id="reckday" desc="账单日" require="" edittype="text" datatype="int" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/reckday" />
+        <Field id="retuday" desc="每期还款日" require="" edittype="text" datatype="int" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/retuday" />
+        <Field id="corpid" desc="合作方编号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/corpid" />
+        <Field id="corpname" desc="合作方名称" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/corpname" />
+        <Field id="projid" desc="合作项目编号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/projid" />
+        <Field id="corpappid" desc="合作项目额度编号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/corpappid" />
+        <Field id="basicinterate" desc="基准利率 : ‰" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/basicinterate" />
+        <Field id="interate" desc="贷款利率 : ‰" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/interate" />
+        <Field id="oldinterate" desc="调整前贷款利率 : ‰" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/oldinterate" />
+        <Field id="goodsamt" desc="全额价款 : DBAPP-贷款申请-基本信息" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2"
+        default="" xpath="/goodsamt" />
+        <Field id="loanhousecount" desc="贷款购置住房套数 : DBAPPHOUSE-贷款申请-详细信息-购房" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F"
+        size="15" scale="2" default="" xpath="/loanhousecount" />
+        <Field id="familyhousecount" desc="家庭所购房套数 : DBAPPHOUSE-贷款申请-详细信息-购房" require="" edittype="text" datatype="int" method="None" readonly="true" type="" status="F" size="15"
+        scale="2" default="" xpath="/familyhousecount" />
+        <Field id="spousecustid" desc="配偶客户编号" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/spousecustid" />
+        <Field id="bal" desc="贷款余额" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default="" xpath="/bal" />
+        <Field id="overbal" desc="拖欠本金" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/overbal" />
+        <Field id="overinte" desc="拖欠利息" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/overinte" />
+        <Field id="sumtcapi" desc="累计发放金额" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/sumtcapi" />
+        <Field id="isOver" desc="是否逾期 : 0：未逾期 1：已逾期" require="" edittype="text" datatype="int" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/isOver" />
+        <Field id="overStartDate" desc="逾期开始日 : 需要EDW计算" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/overStartDate" />
+        <Field id="overDays" desc="当前逾期天数 : 需要EDW计算" require="" edittype="text" datatype="int" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/overDays" />
+        <Field id="overCount" desc="当前逾期期数 : 需要EDW计算" require="" edittype="text" datatype="int" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/overCount" />
+        <Field id="overCountLast12M" desc="12个月内逾期期数 : 需要EDW计算" require="" edittype="text" datatype="int" method="None" readonly="true" type="" status="F" size="15" scale="2"
+        default="" xpath="/overCountLast12M" />
+        <Field id="overCountMaxHis" desc="历史最高逾期期数 : 需要EDW计算" require="" edittype="text" datatype="int" method="None" readonly="true" type="" status="F" size="15" scale="2"
+        default="" xpath="/overCountMaxHis" />
+        <Field id="overCountSumHis" desc="历史累计逾期期数 : 需要EDW计算" require="" edittype="text" datatype="int" method="None" readonly="true" type="" status="F" size="15" scale="2"
+        default="" xpath="/overCountSumHis" />
+        <Field id="isDefault" desc="是否违约 : 0：未违约 1：已违约" require="" edittype="text" datatype="int" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/isDefault" />
+        <Field id="defaultStartDate" desc="违约开始日期 : 需要EDW计算" require="" edittype="text" datatype="date" method="None" readonly="true" type="" status="F" size="15" scale="2"
+        default="" xpath="/defaultStartDate" />
+        <Field id="defaultCount" desc="当前违约次数 : 需要EDW计算" require="" edittype="text" datatype="int" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/defaultCount" />
+        <Field id="defaultCountHis" desc="历史累计违约次数 : 需要EDW计算" require="" edittype="text" datatype="int" method="None" readonly="true" type="" status="F" size="15" scale="2"
+        default="" xpath="/defaultCountHis" />
+        <Field id="custname" desc="" require="" edittype="text" datatype="string" method="None" readonly="true" type="" status="F" size="15" scale="2" default=""
+        xpath="/custname" />
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

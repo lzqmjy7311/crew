@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CommQry title="表单项" navigate="" type="call"
+	interface="false" pagesize="10" async="false" databusid="FIVE"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.fp.demo.getter.FieldGetter">
+	<Include id="BankParam" />
+
+	<Fields>
+		<Field id="a" desc="email1" xpath="/1"  editable="false" rules="isEmail" errmsg="必须是邮箱格式" size="8" width="100" />
+		<Field id="b" desc="number" xpath="/2"  editable="false"   rules="isNum" errmsg="必须是数字" size="8"/>
+		<Field id="c" desc="数字字典下拉" edittype="select" readonly="false" translated="DATA_DIC.100"
+         datatype="int" size="10" xpath="/dataNoLen" editable="false"  require="true"/>
+        <Field id="d" desc="日期框-日期型" edittype="text" datatype="date" default=""  require="true" editable="false"/>
+        <Field id="e" desc="动态下拉框－CQ" status="N" fieldname="dataNo" edittype="select" dropdowntype="dynamic"
+            dataType="String" readonly="false" translated="CQ:AllDownBrcodeSelect"  require="true"
+            viewField="brname" init="true"  fieldmap="e=brcode;eName=brname" size="20"
+            primary="false" type="String" xpath="/comboxDropdown" editable="false"/>
+        <Field id="f" desc="动态下拉框－树" status="N"  translated="CQ:FunctionTree"  method="com.huateng.ebank.business.common.CQMethod.getDataDicName" readonly="false" require="true"
+	        fieldmap="f=funcid;fName=funcname" viewField="funcname" edittype="select" editable="false"
+	        dropdowntype="dynamictree" primary="true"  init="false" size="3" default="2" xpath="/comboxDropdown" />
+	    <Field id="g" desc="LIST下拉" edittype="select" multiple="true" editable="false" readonly="false" translated="LIST:0,10;1,20;2,30;3,40;4,50" datatype="int" size="10" xpath="/dataNoLen"  require="true"/>
+        <Field id="h" desc="数字字典下拉" edittype="select" multiple="true" readonly="false" editable="false"  translated="DATA_DIC.100" datatype="int" size="10" xpath="/dataNoLen" />
+        <Field id="i" desc="文本域-字符型" edittype="textarea" datatype="string"  colspan="4" size="10" editable="false"  height="100" width="280" require="true" />
+        <Field id="j" desc="custom-年月型" edittype="select"  dropdowntype="custom"  url="/templets/lib/yyyyMM.ftl" editable="false"  startyear="2005" yearlength="10"
+		       require="true"  />
+	    <Field id="select3" desc="custom" edittype="select"  dropdowntype="custom"  url="/fpages/sample/ftl/ValidateField.ftl" editable="false" require="true"  />
+    </Fields>
+    
+    <Operations>
+        <Button id="btSave" name="btSave" desc="保存" operation="asysubmit" updateClass="com.huateng.fp.demo.updater.FieldUpdate" url="#" txn="" />
+    </Operations>
+</CommQry>

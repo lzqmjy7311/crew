@@ -1,0 +1,385 @@
+<#import "/templets/commonQuery/CommonQueryTagMacro.ftl" as CommonQueryMacro>
+<@CommonQueryMacro.page title="规则配置">
+
+<link rel="stylesheet" href="${contextPath}/gbicc-pages/lib/codemirror-5.8/lib/codemirror.css"/>
+<link rel="stylesheet" href="${contextPath}/gbicc-pages/lib/codemirror-5.8/theme/cobalt.css"/>
+
+<script type="text/javascript" src='${contextPath}/gbicc-pages/lib/codemirror-5.8/lib/codemirror.js'> </script>
+<script type="text/javascript" src='${contextPath}/gbicc-pages/lib/codemirror-5.8/mode/groovy/groovy.js'> </script>
+
+
+<#assign result = "[{'id':1,'text':'新增分类','seperator':false,'iconCls':'icon-add','attributes':'','href':'','children':[]},{'id':2,'text':'新增规则','seperator':false,'iconCls':'icon-add','attributes':'','href':'','children':[]},{'id':3,'text':'修改','seperator':false,'iconCls':'icon-edit','attributes':'','href':'','children':[]},{'id':4,'text':'删除','seperator':false,'iconCls':'icon-remove','attributes':'','href':'','children':[]}]">
+<@CommonQueryMacro.MenuItem id="mm" json=result />
+
+<@CommonQueryMacro.LayoutPanel id="rule" >
+	<style>
+	.CodeMirror{
+		height:430px;
+	}
+  </style>
+    <@CommonQueryMacro.LayoutWest title="规则分类树" width="300" split="true" >
+	  
+	  <@CommonQueryMacro.CommonQuery id="TRulCategoryTree" init="false" submitMode="current">
+	  		<!--<div style="margin-bottom:20px;">
+	  			<a href="javascript:void(0)" id="mb1" class="easyui-menubutton" iconCls="icon-edit">新增</a>
+	  			<div id="mm1" style="width:150px;">
+	  				<div iconCls="icon-add">新增分类</div>
+	  				<div iconCls="icon-add">新增规则</div>
+	  			</div>
+	  			<@CommonQueryMacro.Button id="btUpt"/>
+	  			<@CommonQueryMacro.Button id="btnDel"/>
+	  		</div>-->
+	  		
+	  		<div style="display:none;">
+	  			<@CommonQueryMacro.Button id="btUpt"/>
+	  			<@CommonQueryMacro.Button id="btnDel"/>
+	  		</div>
+			<@CommonQueryMacro.DynamicTree id="tree1" contextmenu="mm" />
+	  </@CommonQueryMacro.CommonQuery>
+	 
+    </@CommonQueryMacro.LayoutWest>
+    
+    
+    <@CommonQueryMacro.LayoutCenter>
+    	<@CommonQueryMacro.CommonQuery id="TRulDefinition" init="false" submitMode="current">
+    		<@CommonQueryMacro.LayoutNorth  height="260" split="true" >
+            	<@CommonQueryMacro.DataTable id="TRulDefinitionddd" height="240" fitColumns="false"   paginationbar="DbtnAdd,-,DbtnUpload"  fieldStr="opr[120],ruleCode[150],ruleName[150],ruleUpdateddate[150],ruleType[60],triggerPeriodInterval[150],triggerPeriodUnit[150],ruleLevel[150],ruleApplyobj[150],ruleVersion[80],ruleStatus[80],ruleRemark[250]" readonly="true" width="100%"/></br>
+        	</@CommonQueryMacro.LayoutNorth>
+        
+         	<@CommonQueryMacro.LayoutCenter>
+        	 <@CommonQueryMacro.DynamicTabSet id="demotab" hasMenu="true" height="500" selected="base_tab1">
+        		<@CommonQueryMacro.DynamicTab id="base_tab2" title="规则明细"> 
+        			 <center>
+        	  			<div style="display:none;"  id="saveBtn">
+        	  			<@CommonQueryMacro.Button id="CDbtnUpt"/>
+        	  			<@CommonQueryMacro.Button id="DbtnCheck"/>
+        	  			<@CommonQueryMacro.Button id="DbtnExcute"/>
+        	  			</div>
+        	  		 </center>
+        			<@CommonQueryMacro.SingleField fId="ruleContent" />
+        		</@CommonQueryMacro.DynamicTab>
+        	 </@CommonQueryMacro.DynamicTabSet>
+        	  
+        	</@CommonQueryMacro.LayoutCenter>
+    
+    		<@CommonQueryMacro.FloatWindow id="TRulDefinitionForm" label="修改规则" closure="true"  modal="true" width="500" height="400" >
+			<@CommonQueryMacro.Group id="group1" label=""
+    			  fieldStr="ruleName,ruleType,triggerType,triggerPeriodInterval,triggerPeriodUnit,ruleLevel,ruleApplyobj,ruleRemark" colNm=2/>
+    			<br/>
+    		<center>
+				<@CommonQueryMacro.Button id="DbtnUpt"/>
+			</center>
+			</@CommonQueryMacro.FloatWindow>
+			
+			<div style="display:none;">
+        	  	<@CommonQueryMacro.Button id="CDbtnUpload"/>
+        	  	<@CommonQueryMacro.Button id="DbtnCopy"/>
+        	  	<@CommonQueryMacro.Button id="DbtnDel"/>
+        	</div>
+			
+	    </@CommonQueryMacro.CommonQuery>
+    </@CommonQueryMacro.LayoutCenter>
+    
+    <@CommonQueryMacro.CommonQuery id="TRulCategory" init="false" submitMode="current">
+		<@CommonQueryMacro.FloatWindow id="TRulCategoryForm" label="编辑分类" closure="true" modal="true" width="500" height="250" >
+			<@CommonQueryMacro.Group id="group1" label=""
+    			  fieldStr="categoryCode,categoryName,sno,remark" colNm=2/>
+    			<br/>
+    		<center>
+				<@CommonQueryMacro.Button id="FbtAddCategory"/>
+			</center>
+		</@CommonQueryMacro.FloatWindow>
+	</@CommonQueryMacro.CommonQuery>
+	
+	<@CommonQueryMacro.CommonQuery id="TRulCategory" init="false" submitMode="current">
+		<@CommonQueryMacro.FloatWindow id="TRulCategoryForm2" label="编辑规则" closure="true"  modal="true" width="500" height="250" >
+			<@CommonQueryMacro.Group id="group1" label=""
+    			  fieldStr="categoryCode,categoryName,sno,remark" colNm=2/>
+    			<br/>
+    		<center>
+				<@CommonQueryMacro.Button id="FbtAddRule"/>
+			</center>
+		</@CommonQueryMacro.FloatWindow>
+	</@CommonQueryMacro.CommonQuery>
+	
+  </@CommonQueryMacro.LayoutPanel>
+  
+  <script>
+  		var code_eidtor=null;
+  		
+  		$(function(){
+  			$('#mb1').menubutton({
+				plain:false,
+				menu:'#mm1'
+			});
+	  		var editorContent=document.getElementById("editor_ruleContent");
+			code_eidtor=CodeMirror.fromTextArea(editorContent,{
+				lineNumbers:true,
+				mode:'text/x-groovy'
+			});
+  		});
+  		
+  		function ruleType_DropDown_onSelect(dropDown,record,editor){
+  			if(record[0]=="T1" || record[0]=="T2"){
+  				$("[id=editor_triggerPeriodInterval]").closest("tr").hide();
+  				$("[id=editor_triggerPeriodUnit]").closest("tr").hide();
+  				TRulDefinition_dataset.setValue("triggerPeriodInterval","");
+  				TRulDefinition_dataset.setValue("triggerPeriodUnit","");
+  			}else{
+  				$("[id=editor_triggerPeriodInterval]").closest("tr").show();
+  				$("[id=editor_triggerPeriodUnit]").closest("tr").show();
+  			}
+  			return true;
+  		}
+  		
+  		function DynamicTree_tree1_onSelect(){
+  			var n = DynamicTree_tree1.getSelected();
+  			if(n){
+  				var ctype=n.attributes.record.getValue("categoryType");
+  				if(ctype=="T1"){
+            		return;
+            	}
+            	
+  				TRulDefinition_dataset.setParameter("categoryId",n.id);
+  				TRulDefinition_dataset.flushData(TRulDefinition_dataset.pageIndex);
+  				$("#saveBtn").css("display","none");
+  				code_eidtor.getDoc().setValue("");
+  				code_eidtor.refresh();
+  			}
+  		}
+  		
+        function Menu_mm_onClick(node){
+        	var n = DynamicTree_tree1.getSelected();
+        	if(!n){
+        		alert('请选择一个节点');
+				return;
+        	}
+        	
+        	var ctype=n.attributes.record.getValue("categoryType");
+        	
+        	if(node.id==1){//新增目录
+        		//clear
+        		TRulCategory_dataset.setFieldReadOnly("categoryCode",false);
+        		TRulCategory_dataset.setValue('categoryCode',"");
+        		TRulCategory_dataset.setValue('sno',"");
+            	TRulCategory_dataset.setValue('categoryName',"");
+            	TRulCategory_dataset.setValue('remark',"");
+        		//
+        		TRulCategory_dataset.setParameter("op","newcategory");
+        		TRulCategory_dataset.setValue("parentId",n.id);
+        		TRulCategory_dataset.setValue('categoryType','T1');
+            	subwindow_TRulCategoryForm.show();
+            }else if(node.id==2){//新增规则
+            	$("div[id=TRulCategoryForm2] label[datafield=categoryCode]").text('规则编号');
+            	$("div[id=TRulCategoryForm2] label[datafield=categoryName]").text('规则名称');
+            	
+            	if(ctype=="T2"){
+            		alert('规则只能新增目录，不能新增规则!');
+            		return;
+            	}
+            	TRulCategory_dataset.setFieldReadOnly("categoryCode",false);
+            	
+            	//clear
+        		TRulCategory_dataset.setValue('categoryCode',"");
+        		TRulCategory_dataset.setValue('sno',"");
+            	TRulCategory_dataset.setValue('categoryName',"");
+            	TRulCategory_dataset.setValue('remark',"");
+        		//
+           	    TRulCategory_dataset.setParameter("op","newrule");
+           	    TRulCategory_dataset.setValue("parentId",n.id);
+        		TRulCategory_dataset.setValue('categoryType','T2');
+           	    subwindow_TRulCategoryForm2.show();
+            }else if(node.id==3){
+	            if(n.id=='Root'){
+	        		alert('根节点不能修改');
+					return;
+	        	}
+	        	$("div[id=TRulCategoryForm2] label[datafield=categoryCode]").text('规则编号');
+            	$("div[id=TRulCategoryForm2] label[datafield=categoryName]").text('规则名称');
+            	
+	        	TRulCategory_dataset.setFieldReadOnly("categoryCode",true);
+            	TRulCategory_dataset.setValue('id',n.attributes.record.getValue("_id"));
+            	TRulCategory_dataset.setValue('categoryName',n.attributes.record.getValue("categoryName"));
+            	TRulCategory_dataset.setValue('parentId'," ");
+            	
+            	TRulCategory_dataset.setValue('categoryCode',n.attributes.record.getValue("categoryCode"));
+            	TRulCategory_dataset.setValue('sno',n.attributes.record.getValue("sno"));
+            	
+            	if(ctype=="T1"){
+            		TRulCategory_dataset.setParameter("op","uptcategory");
+            		TRulCategory_dataset.setValue('categoryType',"T1");
+            		subwindow_TRulCategoryForm.show();
+            	}else if(ctype=="T2"){
+            		TRulCategory_dataset.setParameter("op","uptrule");
+            		TRulCategory_dataset.setValue('categoryType',"T2");
+            		TRulCategory_dataset.setValue('remark',n.attributes.record.getValue("remark"));
+            	    subwindow_TRulCategoryForm2.show();
+            	}
+            }else if(node.id==4){
+            	if(n.id=='Root'){
+	        		alert('根节点不能删除');
+					return;
+	        	}
+	        	
+           		TRulCategoryTree_dataset.setParameter('id',n.id);
+            	top.easyMsg.confirm("该操作将同时删除所有历史定义规则，是否确认删除?", function(){
+            		btnDel.click();
+                }, function(){
+                } );
+            }
+        }
+        function btnDel_postSubmit(){
+        	DynamicTree_tree1.refresh();
+        	TRulDefinition_dataset.flushData(TRulDefinition_dataset.pageIndex);
+        }
+        function FbtAddCategory_postSubmit(button){
+        	subwindow_TRulCategoryForm.close();
+        	DynamicTree_tree1.refresh();
+        }
+        function FbtAddRule_postSubmit(button){
+        	subwindow_TRulCategoryForm2.close();
+        	DynamicTree_tree1.refresh();
+        }
+        //表格选中行改变事件
+        function TRulDefinition_dataset_afterScroll() {
+        	doModify();
+        }
+        //表格新增操作按钮
+        function TRulDefinitionddd_opr_onRefresh(cell,value,record) {
+			if (record) {//当存在记录时
+				cell.innerHTML="<a href='JavaScript:doModify(\""+value+"\")'>查看详情</a> &nbsp; <a href='JavaScript:doDelete(\""+value+"\")'>删除</a>";
+			} else {//当不存在记录时
+				cell.innerHTML="&nbsp;";
+			}
+		}
+
+		function doModify(id){
+			var record=(TRulDefinition_dataset.record);
+			if(record){
+				if(record.getValue("ruleStatus")=="0"){
+					$("#saveBtn").css("display","block");
+				}else{
+					$("#saveBtn").css("display","none");
+				}
+				var _ruleContent=record.getValue("ruleContent");
+				code_eidtor.getDoc().setValue(_ruleContent);
+				code_eidtor.refresh();
+			}
+		}
+		function doDelete(id){
+		 	var record=(TRulDefinition_dataset.record);
+        	if(record.getValue("ruleStatus")=="1"||record.getValue("ruleStatus")=="2"){
+        		alert('该状态不能删除');
+        		return;
+        	}
+			top.easyMsg.confirm("你确认删除此记录吗？", function(){
+            		DbtnDel.click();
+                }, function(){
+            } );
+		}
+		//修改完成 
+		function DbtnUpt_postSubmit(){
+        	TRulDefinition_dataset.flushData(TRulDefinition_dataset.pageIndex);
+        	subwindow_TRulDefinitionForm.hide();
+        	doModify();
+        }
+        //修改规则按钮点击之前
+		function DbtnUpt_onClickCheck(){
+        	TRulDefinition_dataset.setParameter("op","mod");
+        }
+        //保存完成
+        function CDbtnUpt_postSubmit(){
+        	TRulDefinition_dataset.flushData(TRulDefinition_dataset.pageIndex);
+        	subwindow_TRulDefinitionForm.hide();
+        	doModify();
+        }
+        
+        function cleanValue(){
+        	var _val=code_eidtor.getDoc().getValue();
+        	/*_val=_val.replace(/</g,"&lt;");
+        	_val=_val.replace(/>/g,"&gt;");
+        	_val=_val.replace(/"/g,"&quot;");
+        	_val=_val.replace(/\$/g,"&cmt;");
+        	_val=_val.replace(/'/g,"&apos;");*/
+        	return _val;
+        }
+        
+        //保存规则按钮之前
+        function CDbtnUpt_onClickCheck(){
+        	var _val=cleanValue();
+        	
+        	TRulDefinition_dataset.setValue("ruleContent",_val);
+        	TRulDefinition_dataset.setParameter("op","uptContent");
+        }
+        //发布按钮
+        function DbtnUpload_onClick(){
+       	    var record=(TRulDefinition_dataset.record);
+        	if(record.getValue("ruleStatus")=="1"){
+        		alert('不能重新发布');
+        		return;
+        	}
+        	top.easyMsg.confirm("你确认要发布此版本吗？", function(){
+            	TRulDefinition_dataset.setParameter("op","upload");
+            	CDbtnUpload.click();
+            }, function(){
+            } );
+        }
+        function CDbtnUpload_postSubmit(){
+        	TRulDefinition_dataset.flushData(TRulDefinition_dataset.pageIndex);
+        }
+        
+        //生草稿记录
+        function DbtnCopy_onClickCheck(){
+        	TRulDefinition_dataset.setParameter("op","copy");
+        }
+        function DbtnCopy_postSubmit(){
+        	TRulDefinition_dataset.flushData(TRulDefinition_dataset.pageIndex);
+        }
+        
+        //删除
+        function DbtnDel_onClickCheck(){
+        	TRulDefinition_dataset.setParameter("op","del");
+        }
+        function DbtnDel_postSubmit(){
+        	TRulDefinition_dataset.flushData(TRulDefinition_dataset.pageIndex);
+        }
+        
+        //规则验证
+        function DbtnCheck_onClickCheck(){
+        	var _val=cleanValue();
+        	var record=(TRulDefinition_dataset.record);
+        	TRulDefinition_dataset.setParameter("op","check");
+        	TRulDefinition_dataset.setValue("id",record.getValue("id"));
+        	TRulDefinition_dataset.setValue("ruleContent",_val);
+        }
+         //规则执行
+        function DbtnExcute_onClickCheck(){
+        	var _val=cleanValue();
+        	var record=(TRulDefinition_dataset.record);
+        	TRulDefinition_dataset.setParameter("op","execute");
+        	TRulDefinition_dataset.setValue("id",record.getValue("id"));
+        	TRulDefinition_dataset.setValue("ruleContent",_val);
+        }
+        function DbtnCheck_postSubmit(){
+        	alert('规则验证通过');
+        }
+        function DbtnExcute_postSubmit(){
+        	alert('规则执行成功');
+        }
+        
+        function DbtnAdd_onClick(){
+        	var record=(TRulDefinition_dataset.record);
+        	var ruleStatus=record.getValue("ruleStatus");
+        	if(ruleStatus=="0"){//草稿
+        		subwindow_TRulDefinitionForm.show();
+        	}else if(ruleStatus=="1"){//发布
+        		top.easyMsg.confirm("不能直接修改发布版本，点击确认生成草稿", function(){
+            		DbtnCopy.click();
+                }, function(){
+                } );
+        	}else if(ruleStatus=="2"){//历史
+        		alert('历史状态不能修改');
+        	}
+        }
+  </script>
+</@CommonQueryMacro.page>

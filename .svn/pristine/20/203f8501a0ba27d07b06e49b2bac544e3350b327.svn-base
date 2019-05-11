@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<CommQry title="参数管理  &gt; 产品管理" navigate="参数管理  &gt; 产品管理" type="call"
+	interface="false" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.gbicc.person.eliminate.getter.TPlRuleEliminateTaskGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+		<Field id="id" desc="" xpath="id" readonly="true" edittype="text" status="F" datatype="string"/>
+		<Field id="triggerRuleAcctId" desc="触发规则的用户ID" xpath="/triggerRuleAcct/id" readonly="true" edittype="text" status="F" datatype="string"/>
+		<Field id="loanacno" desc="贷款账号" xpath="/triggerRuleAcct/loanacno" readonly="true" edittype="text" status="F" datatype="string"/>
+		<Field id="custname" desc="客户名称" xpath="/triggerRuleAcct/custname" readonly="true" edittype="text" status="F" datatype="string"/>
+		<Field id="prodid" desc="产品编号" xpath="/triggerRuleAcct/prodid" readonly="true" edittype="text" status="F" datatype="string"/>
+		<Field id="prodname" desc="产品名称" xpath="/triggerRuleAcct/prodname" readonly="true" edittype="text" status="F" datatype="string"/>
+		<Field id="acflag" desc="账户状态" xpath="/triggerRuleAcct/acflag" readonly="true" edittype="text" status="F" datatype="string"/>
+		<Field id="riskflag" desc="风险状态" xpath="/triggerRuleAcct/riskflag" readonly="true" edittype="text" status="F" datatype="string"/>
+		
+		<Field id="handler" desc="经办人" xpath="/launchPer/tlrName" edittype="text" status="F" datatype="string"/>
+		<Field id="handleOrg" desc="经办行" xpath="/launchOrg/brname" readonly="true" edittype="text" status="F" datatype="string"/>
+		
+		<Field id="status" desc="状态" xpath="/status" edittype="text" status="F" datatype="string"/>
+		<Field id="eliminateRuleDesc" size="500" xpath="/eliminateRuleDesc" readonly="true" desc="排除/恢复规则说明" require="true" edittype="textarea" height="50" width="500" colspan="4" />
+		<Field id="opinion" xpath="/opinion" size="500" desc="审核意见" edittype="textarea" height="50" width="500" colspan="4" />
+		<Field id="openAcctDate" xpath="" desc="开户日期" edittype="date" datatype="date"/>
+		<Field id="matureDate" xpath="" desc="到期日期" edittype="date" datatype="date"/>
+    </Fields>
+    
+    <Operations>
+		<Button id="btHandle" name="btHandle" desc="处理" icon="icon-add" updateClass="#" url="" txn="" />
+    	<Button id="btnSave" name="btnSave" desc="保存" icon="icon-save" operation="asysubmit" 
+			updateClass="com.gbicc.person.eliminate.update.TPlRuleEliminateTaskUpdate" url="#" txn="" />
+		<Button id="btnSubmit" name="btnSubmit" desc="提交" icon="icon-ok" operation="asysubmit" 
+			updateClass="com.gbicc.person.eliminate.update.TPlRuleEliminateTaskUpdate" url="#" txn="" />
+		<Button id="btnBack" name="btnBack" desc="退回" icon="icon-back" operation="asysubmit" 
+			updateClass="com.gbicc.person.eliminate.update.TPlRuleEliminateTaskUpdate" url="#" txn="" />
+		
+		<Button id="moreHandle" name="moreHandle" desc="更多" icon="icon-sys-search-org" updateClass="#" url="" txn="" />
+	</Operations>
+</CommQry>

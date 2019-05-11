@@ -1,0 +1,117 @@
+package com.gbicc.company.financial.analysis.getter;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.xalan.lib.Redirect;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import com.gbicc.company.financial.analysis.entity.TWbData;
+import com.huateng.common.err.Module;
+import com.huateng.common.err.Rescode;
+import com.huateng.commquery.result.Result;
+import com.huateng.commquery.result.ResultMng;
+import com.huateng.ebank.business.common.PageQueryResult;
+import com.huateng.ebank.framework.util.ApplicationContextUtils;
+import com.huateng.ebank.framework.web.commQuery.BaseGetter;
+import com.huateng.exception.AppException;
+
+@SuppressWarnings("unchecked")
+public class TWbDataGetter extends BaseGetter {
+
+	@Override
+	public Result call() throws AppException {
+		try {
+			PageQueryResult pageResult = getData();
+			ResultMng.fillResultByList(getCommonQueryBean(),
+					getCommQueryServletRequest(), pageResult.getQueryResult(),
+					getResult());
+			result.setContent(pageResult.getQueryResult());
+			result.getPage().setTotalPage(
+					pageResult.getPageCount(getResult().getPage()
+							.getEveryPage()));
+			result.init();
+			return result;
+		} catch (AppException appEx) {
+			throw appEx;
+		} catch (Exception ex) {
+			throw new AppException(Module.SYSTEM_MODULE,
+					Rescode.DEFAULT_RESCODE, ex.getMessage(), ex);
+		}
+	}
+
+	protected PageQueryResult getData() throws Exception {
+		String customerNum = (String) getCommQueryServletRequest().getParameterMap()
+				.get("customerNum");
+		List<TWbData> list=new ArrayList<TWbData>();
+		String IdQuery="SELECT distinct T0.FD_TYPEID as typeId from T_WB_TEST_V T0 ";
+		JdbcTemplate jdbcTemplate=(JdbcTemplate) ApplicationContextUtils.getBean("JdbcTemplate");
+		List<TWbData> typeIdlist=jdbcTemplate.query(IdQuery, BeanPropertyRowMapper.newInstance(TWbData.class));
+		Collections.reverse(typeIdlist);
+		Iterator<TWbData>typeId=typeIdlist.iterator();
+		SimpleDateFormat df= new SimpleDateFormat("yyyy-MM-dd");
+		Date nowdat=new Date();
+		String nowstr=df.format(nowdat);
+		Date lastdat=new Date();
+		Calendar cd= Calendar.getInstance();
+		cd.add(Calendar.MONTH, -1);
+		lastdat=cd.getTime();
+		String onemonth=df.format(lastdat);
+		cd= Calendar.getInstance();
+		cd.add(Calendar.MONTH, -3);
+		lastdat=cd.getTime();
+		String threemonth=df.format(lastdat);
+		cd= Calendar.getInstance();
+		cd.add(Calendar.MONTH, -6);
+		lastdat=cd.getTime();
+		String halfyear=df.format(lastdat);
+		cd= Calendar.getInstance();
+		cd.add(Calendar.YEAR, -1);
+		lastdat=cd.getTime();
+		String oneyear=df.format(lastdat);
+		cd= Calendar.getInstance();
+		cd.add(Calendar.YEAR, -2);
+		lastdat=cd.getTime();
+		String twoyear=df.format(lastdat);
+		
+		while(typeId.hasNext()){
+			String typeIdstr=typeId.next().getTypeId();
+			StringBuffer sql= new StringBuffer("SELECT"
+					+" s0.FD_TYPEID as typeId,s0.FD_TYPE as fdType,S1.onemonth,S2.threemonth,S3.HALFYEAR,S4.ONEYEAR,S5.TWOYEAR as twoYear FROM "
+					+ "(SELECT T0.FD_TYPEID,T0.FD_TYPE FROM T_WB_TEST_V T0 "
+					+ "WHERE T0.FD_TYPEID='"+typeIdstr+"' GROUP BY T0.FD_TYPE,T0.FD_TYPEID ) S0 ,"
+					+"(SELECT  COUNT(1) AS ONEMONTH FROM T_WB_TEST_V T "
+					+" WHERE T.FD_DATA BETWEEN to_date('"+onemonth+"','yyyy-mm-dd') AND"
+					+" to_date('"+nowstr+"','yyyy-mm-dd') AND T.FD_TYPEID='"+typeIdstr+"' AND T.FD_CUSTOMERNUM='"+customerNum+"') S1 ,"
+					+" (SELECT COUNT(1) AS threeMONTH FROM T_WB_TEST_V T" 
+			        +" WHERE FD_DATA BETWEEN to_date('"+threemonth+"','yyyy-mm-dd') AND"
+			        +" to_date('"+nowstr+"','yyyy-mm-dd')AND T.FD_TYPEID='"+typeIdstr+"' AND T.FD_CUSTOMERNUM='"+customerNum+"') S2,"
+			        +" (SELECT  COUNT(1) AS HALFYEAR  FROM  T_WB_TEST_V T " 
+			        +" WHERE  FD_DATA BETWEEN to_date('"+halfyear+"','yyyy-mm-dd') AND "
+			        +" to_date('"+nowstr+"','yyyy-mm-dd')AND T.FD_TYPEID='"+typeIdstr+"' AND T.FD_CUSTOMERNUM='"+customerNum+"') S3, "
+			        +" (SELECT  COUNT(1) AS ONEYEAR  FROM  T_WB_TEST_V T "
+			        +" WHERE  FD_DATA BETWEEN to_date('"+oneyear+"','yyyy-mm-dd') AND"
+			        +" to_date('"+nowstr+"','yyyy-mm-dd')AND T.FD_TYPEID='"+typeIdstr+"' AND T.FD_CUSTOMERNUM='"+customerNum+"') S4,"
+			        + "(SELECT  COUNT(1) AS TWOYEAR  FROM  T_WB_TEST_V T "
+			        +" WHERE  FD_DATA BETWEEN to_date('"+twoyear+"','yyyy-mm-dd') AND"
+			        +" to_date('"+nowstr+"','yyyy-mm-dd')AND T.FD_TYPEID='"+typeIdstr+"' AND T.FD_CUSTOMERNUM='"+customerNum+"') S5 ");
+			 jdbcTemplate=(JdbcTemplate) ApplicationContextUtils.getBean("JdbcTemplate" );
+			 List<TWbData> listT=jdbcTemplate.query(sql.toString(), BeanPropertyRowMapper.newInstance(TWbData.class));
+			 list.add(listT.get(0));
+			 
+		}
+		 PageQueryResult pageQueryResult = new PageQueryResult();
+		 pageQueryResult.setQueryResult(list);
+
+		 return pageQueryResult;
+		
+	}
+	
+}
+

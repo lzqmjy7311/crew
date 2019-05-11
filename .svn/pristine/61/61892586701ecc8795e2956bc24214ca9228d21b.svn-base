@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-1 9:20:37 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.gbicc.company.financial.analysis.entity.TDataOwingTaxes" table="T_DATA_OWING_TAXES" schema="ECUSER">
+		<id name="fdRunNum" type="int">
+			<column name="FD_RUN_NUM" />
+		</id>
+		<property name="fdPuk" type="string">
+			<column name="FD_PUK" length="1000" />
+		</property>
+		<property name="fdUri" type="string">
+			<column name="FD_URI" length="1000" />
+		</property>
+		<property name="fdVersions" type="string">
+			<column name="FD_VERSIONS" length="1000" />
+		</property>
+		<property name="fdUpdateTime" type="timestamp">
+			<column name="FD_UPDATE_TIME" length="26" />
+		</property>
+		<property name="fdCreateTime" type="timestamp">
+			<column name="FD_CREATE_TIME" length="26" />
+		</property>
+		<property name="fdSource" type="string">
+			<column name="FD_SOURCE" length="100" />
+		</property>
+		<property name="fdCustomerState" type="java.lang.Integer">
+			<column name="FD_CUSTOMER_STATE" />
+		</property>
+		<property name="fdTaskId" type="string">
+			<column name="FD_TASK_ID" length="15" />
+		</property>
+		<property name="fdTaxPayer" type="string">
+			<column name="FD_TAX_PAYER" length="1000" />
+		</property>
+		<property name="fdTaxId" type="string">
+			<column name="FD_TAX_ID" length="200" />
+		</property>
+		<property name="fdCorporateName" type="string">
+			<column name="FD_CORPORATE_NAME" length="200" />
+		</property>
+		<property name="fdIdCard" type="string">
+			<column name="FD_ID_CARD" length="200" />
+		</property>
+		<property name="fdIdCardNum" type="string">
+			<column name="FD_ID_CARD_NUM" length="200" />
+		</property>
+		<property name="fdTaxCategory" type="string">
+			<column name="FD_TAX_CATEGORY" length="200" />
+		</property>
+		<property name="fdTotalTaxMoney" type="string">
+			<column name="FD_TOTAL_TAX_MONEY" length="200" />
+		</property>
+		<property name="fdBeforeTaxMoney" type="string">
+			<column name="FD_BEFORE_TAX_MONEY" length="200" />
+		</property>
+		<property name="fdThisYearTaxMoney" type="string">
+			<column name="FD_THIS_YEAR_TAX_MONEY" length="200" />
+		</property>
+		<property name="fdSubstation" type="string">
+			<column name="FD_SUBSTATION" length="1000" />
+		</property>
+		<property name="fdJbkId" type="string">
+			<column name="FD_JBK_ID" length="1000" />
+		</property>
+	</class>
+</hibernate-mapping>

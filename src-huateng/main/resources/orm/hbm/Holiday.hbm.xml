@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping>
+    <class name="com.huateng.ebank.entity.data.mng.Holiday" table="HOLIDAY" >
+        <id name="id" type="string">
+            <column name="ID" />
+            <generator class="uuid.hex" />  
+        </id>
+        <property name="year"
+        type="integer">
+            <column name="YEAR" not-null="false" />
+        </property>
+
+        <property name="holidayDef"
+        type="string">
+            <column name="HOLIDAY_DEF"
+            not-null="false" />
+        </property>
+
+        <property name="lastUpdOperId"
+        type="string">
+            <column name="LAST_UPD_OPER_ID" not-null="false" />
+        </property>
+
+        <property name="lastUpdTime" type="string">
+            <column name="LAST_UPD_TIME"
+			not-null="false" />
+        </property>
+    </class>
+</hibernate-mapping>

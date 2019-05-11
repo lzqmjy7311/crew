@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  用于直接生成SQL语句，支持同步和异步提交 -->
+<!--  title:标题
+	navigate:导航信息
+	type:方式（sql|call)
+	interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号
+	transdataactionurl:数据整理URL
+	async:异步提交标志
+	pagesize:页面显示记录数(缺省为10)
+-->
+<CommQry title="关系信息维护" navigate="主页 &gt; 系统管理 &gt; 关系信息维护" type="call"
+	interface="false" pagesize="10" async="true" databusid="TEST"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.management.getter.RelationCodeGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+
+		<Field id="id" desc="关系代码" status="N" require="true"
+			edittype="text" datatype="String" readonly="true" primary="true"
+			type="String" size="3" xpath="/id" />
+
+		<Field id="relationName" desc="关系名称" status="N" require="true"
+			edittype="text" datatype="String" readonly="false" primary="true"
+			type="String" size="10" xpath="/relationName" />
+
+		<Field id="oppositeCode" desc="对应关系代码" status="N"
+			require="false" edittype="text" datatype="String" readonly="false"
+			primary="true" type="String" size="3" xpath="/oppositeCode" />
+
+		<Field id="relationDesc" desc="描述" status="N" require="false"
+			edittype="textarea" datatype="String" readonly="false" primary="true"
+			colspan="4" type="String" size="256" xpath="/relationDesc" />
+
+		<Field id="cusType" desc="何种客户使用" status="N" require="true"
+			translated="DATA_DIC.825" edittype="select" readonly="false"
+			primary="true" size="" xpath="/cusType" />
+
+		<Field id="unique" desc="关系是否唯一" status="N" require="true"
+			translated="DATA_DIC.308" edittype="select" readonly="false"
+			primary="true" size="" xpath="/unique" />
+
+		<Field id="needCustno" desc="关联客户号必输" status="N" require="true"
+			translated="DATA_DIC.308" edittype="select" readonly="false"
+			primary="true" size="" xpath="/needCustno" />
+
+		<Field id="needMemorabilia" desc="是否记录大事记" status="N"
+			translated="DATA_DIC.308" require="true" edittype="select"
+			readonly="false" primary="true" size="" xpath="/needMemorabilia" />
+
+		<Field id="lastUpdTlr" desc="最后更新操作员号" status="N"
+			require="false" edittype="text" datatype="String" readonly="false"
+			primary="true" type="String" xpath="/lastUpdTlr" />
+
+		<Field id="lastUpdFunc" desc="最后更新交易号" status="N"
+			require="false" edittype="text" datatype="String" readonly="false"
+			primary="true" type="String" xpath="/lastUpdFunc" />
+
+		<Field id="lastUpdDate" desc="最后更新时间" status="N" require="false"
+			edittype="text" datatype="String" readonly="false" primary="true"
+			type="String" xpath="/lastUpdFunc" />
+
+	</Fields>
+
+	<Where>
+
+	</Where>
+	<Operations>
+		<!-- operation( addrecord:delrecord:syncsubmit:asyncqrysubmit:asyncupadasubmit ) -->
+		<Button id="btnAdd" name="btnAdd" desc="增加新记录"
+			operation="addRecord" url="" show="" group="" txn="" />
+		<Button id="btnDel" name="btnDel" desc="删除"
+			operation="delRecord" url="" show="" group="" txn="" />
+		<Button id="btSave" name="btSave" desc="保存"
+			operation="asysubmit"
+			updateClass="com.huateng.ebank.business.management.updater.RelationCodeUpdate"
+			url="/fpages/management/ftl/RelationCode.ftl" txn="" />
+	</Operations>
+</CommQry>

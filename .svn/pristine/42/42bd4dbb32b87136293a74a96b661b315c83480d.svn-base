@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CommQry title="DataDicEntry.title" navigate="数据字典" type="call"
+	interface="false" pagesize="10" async="true" databusid=""
+	transdataactionurl="/trans/TransDataAction.do"
+	txnlogflag="true"
+	getterclassname="com.huateng.ebank.business.pages.getter.FPPageOptDetailGetter">
+	<Include id="BankParam" />
+	<Fields>
+		<!-- status :F-基本信息中显示  N-不显示 D-详细信息中显示 A-基本、详细信息中都显示  -->
+		<!-- primary : true-作为表单项记录上传　false-不作为表单项上传 -->
+        <Field id="select"  xpath="/select" />
+		<Field id="id"  desc="编号" edittype="text" datatype="string" size="32" xpath="/id" />
+		<Field id="name" desc="组合对象ID" edittype="text" size="128" xpath="/name" width="300" require="true" />
+		<Field id="descInfo" desc="描述信息" edittype="textarea" status="F" datatype="string" size="256" xpath="/descInfo" width="300" require="true"/>
+		<Field id="operation" desc="动作类型" edittype="select" translated="LIST:0,自定义;1,数据提交;2,数据查询;3,超链接"  status="F" datatype="string" size="1" xpath="/operation" width="300" require="true"/>
+		<Field id="optClazz" desc="数据提交" edittype="textarea"  datatype="string" size="256" xpath="/optClazz" width="300" />
+		<Field id="optScript"  desc="动作事件脚本" edittype="textarea" datatype="string" status="F" size="1024" xpath="/optScript" width="300" />
+		<Field id="defaultCqid"  desc="默认数据集ID" edittype="text" datatype="string" status="F" size="64" xpath="/defaultCqid" width="300" />
+		<Field id="parent" desc="组合序号" edittype="text" datatype="string" size="32" xpath="/parent" width="300" />
+		<Field id="seqid" desc="排序序号" edittype="text" datatype="string" status="F" size="3" xpath="/seqid" />
+		<Field id="status" desc="有效标示" edittype="select" translated="LIST:0,无效;1,有效"  xpath="/status" width="300" require="true"/>
+		<Field id="lastUpdTlr" desc="最后修改操作员" edittype="text" datatype="string" size="20" xpath="/lastUpdTlr" width="300" />
+		<Field id="lastUpdTs" desc="最后修改时间" edittype="text" datatype="string" size="17" xpath="/lastUpdTs" width="300" />
+		<Field id="icon" desc="图标" status="N" translated="CQ:IconSelect" colspan="4"
+			readonly="false" require="false" fieldmap="icon=id;iconName=url"  method=""
+			viewField="id,url" edittype="select" dropdowntype="img" init="true"
+			xpath="/icon" />
+			
+      </Fields>
+
+	<Parameters></Parameters>
+
+    <Operations>
+		 <Button id="btNew1" name="btNew1" desc="新增" operation="addrecord"  icon="icon-add"/>
+		<Button id="btNew2" name="btNew2" desc="快速新增" operation="" url="" show="" group="" txn="" icon="icon-add"/>
+		<Button id="btSave" name="btSave" desc="保存" operation="asysubmit" updateClass="com.huateng.ebank.business.pages.updater.FPPageOptDetailUpdater" icon="icon-save"/>
+		<Button id="btSaveSort" name="btSave" desc="保存" operation="asysubmit" updateClass="com.huateng.ebank.business.pages.updater.FPPageOptDetailUpdater" icon="icon-save"/>
+		<Button id="btCopy" name="btCopy" desc="快速复制" operation="" updateClass="" url="#" txn="" icon="icon-restart-panel"/>
+		<Button id="btView" name="btView" desc="详情" operation="" url="" show="" group=""  icon="icon-side-list"  />
+		<Button id="btDel" name="btDel" desc="删除"  operation="asysubmit" updateClass="com.huateng.ebank.business.pages.updater.FPPageOptDetailUpdater" show="" group="" txn="" icon="icon-cancel" />
+		<Button id="btDef" name="btPro" desc="生成代码" operation="" url="" show="" group="" txn="" icon="icon-setting-upgrade" />
+		<Button id="btEdit" name="btEdit" desc="修改" operation="" url="" show="" group="" txn="" icon="icon-edit" />
+	</Operations>
+
+	<Script></Script>
+
+</CommQry>

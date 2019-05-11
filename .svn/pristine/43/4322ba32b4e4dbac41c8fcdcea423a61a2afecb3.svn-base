@@ -1,0 +1,48 @@
+
+<!--
+/*
+		<tr>
+			<td>
+				<@CommonQueryMacro.CommonQuery id="controlmeasureList" init="true" submitMode="all">	
+					<@CommonQueryMacro.GroupBox id="box22" label="控制措施选择">
+						<@CommonQueryMacro.FloatWindow id="TCmWarnControlmeasureWin" modal="true" label="控制措施选择"  position="top"
+							resize="true" minimize="false" maximize="true" closure="true" show="false" defaultZoom="normal">
+					<@CommonQueryMacro.Interface id="interface" label="请输入查询条件" />
+					<@CommonQueryMacro.DataTable id="warnSignalTableddd" paginationbar="" pagination="true" 
+			             fieldStr="select,dataNo,dataName" width="100%" hasFrame="true"/>
+			             <center>
+							<@CommonQueryMacro.Button id="dictionaryBtn" />
+							</center>
+					    </@CommonQueryMacro.FloatWindow>	
+									
+		           </@CommonQueryMacro.GroupBox>
+				</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+		 <tr>
+			<td>
+				<@CommonQueryMacro.CommonQuery id="TCmWarnControlmeasure" init="true" submitMode="all">	
+					<@CommonQueryMacro.GroupBox id="box11" label="控制措施">
+						<@CommonQueryMacro.DataTable id="TCmWarnControlmeasureTab" paginationbar="addContBtn,delContBtn" pagination="true" 
+			             fieldStr="conmeasName,conmeasDesc" width="100%" hasFrame="true"/>
+		           </@CommonQueryMacro.GroupBox>
+				</@CommonQueryMacro.CommonQuery>
+			</td>
+		</tr>
+		*/
+function addContBtn_onClick(button) {
+	subwindow_TCmWarnControlmeasureWin.show();
+}
+function dictionaryBtn_onClick(button) {
+	var record=controlmeasureList_dataset.firstUnit;
+	while(record){
+		if(record.getValue("select")=="true"){
+			TCmWarnControlmeasure_dataset.insertRecord("end");
+			TCmWarnControlmeasure_dataset.setValue("conmeasDesc",record.getValue("dataNo"));
+			TCmWarnControlmeasure_dataset.setValue("conmeasName",record.getValue("dataName"));
+		}
+		record=record.nextUnit;
+	}
+}
+
+-->

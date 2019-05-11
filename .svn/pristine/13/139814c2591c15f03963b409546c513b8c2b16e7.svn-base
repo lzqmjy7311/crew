@@ -1,0 +1,149 @@
+<CommQry title="TRewC05BuyContractId" navigate="TRewC05BuyContractId" type="call" interface="false" pagesize="10" databusid="ELCDISC_DB" async="true"
+transdataactionurl="/trans/TransDataAction.do" getterclassname="com.gbicc.company.single.outputgetter.C05Getter">
+    <Include id="BankParam" />
+    <Fields>
+        <Field id="id" desc="买入协议ID" edittype="text" datatype="string"  xpath="/id" />
+        <Field id="customerCustno" desc="客户号" edittype="text" datatype="string" 
+        xpath="/customerCustno" />
+        <Field id="customerName" desc="客户名称" edittype="text" datatype="string" 
+        xpath="/customerName" />
+        <Field id="customerBankNo" desc="客户开户行号" edittype="text" datatype="int" 
+        xpath="/customerBankNo" />
+        <Field id="customerAccount" desc="客户开户账号" edittype="text" datatype="string" 
+        xpath="/customerAccount" />
+        <Field id="businessNo" desc="业务编号" edittype="text" datatype="string" 
+        xpath="/businessNo" />
+		<Field id="appno" desc="申请编号" edittype="text" datatype="string"  
+		xpath="/appno" />
+	<!--<Field id="aa" desc="票号" edittype="text" datatype="string"  xpath="/aa" />-->
+	<!--<Field id="aaa" desc="票据状态" edittype="text" datatype="string"  xpath="/aa" />-->
+		<Field id="branchId" desc="机构号" edittype="text" datatype="int"  
+		xpath="/branchId" />
+		<Field id="centralBankflg" desc="转贴现或再贴现" edittype="text" datatype="string" 
+        xpath="/centralBankflg" />
+        <Field id="draftType" desc="票据类型" edittype="text" datatype="string" 
+        xpath="/draftType" />
+	<!--<Field id="aaaa" desc="出票日" edittype="text" datatype="string" xpath="/aa" />-->
+	<!--<Field id="aaaaa" desc="出票人名称" edittype="text" datatype="string" xpath="/aa" />-->
+	<!--<Field id="aaaaaa" desc="出票人账户" edittype="text" datatype="string" xpath="/aa" />-->
+	<!--<Field id="aaaaaaa" desc="票面到期日" edittype="text" datatype="string" xpath="/aa" />-->
+	<!--<Field id="aaaaaaaa" desc="出票人开户行ID" edittype="text" datatype="string" xpath="/aa" />-->
+	<!--<Field id="aaaaaaaaa" desc="出票人开户行名称" edittype="text" datatype="string" xpath="/aa" />-->
+		<Field id="rate" desc="利率" edittype="text" datatype="string" 
+		xpath="/rate" />
+		<Field id="buyDate" desc="买入日期" edittype="text" datatype="date" 
+		xpath="/buyDate" />
+		<Field id="innerFlag" desc="是否系统内" edittype="select" translated="LIST:0,否;1,是" datatype="string" 
+        xpath="/innerFlag" />
+        <Field id="payType" desc="付息方式" edittype="text" datatype="string" 
+        xpath="/payType" />
+        <Field id="payerName" desc="付息人名称" edittype="text" datatype="string" 
+        xpath="/payerName" />
+        <Field id="agentName" desc="代理人名称" edittype="text" datatype="string" 
+        xpath="/agentName" />
+        <Field id="managerId" desc="客户经理ID" edittype="text" datatype="int" 
+        xpath="/managerId" />
+        
+        <!--
+        <Field id="acctBranchId" desc="" edittype="text" datatype="int" 
+        xpath="/acctBranchId" />
+        <Field id="taskType" desc="" edittype="text" datatype="string" 
+        xpath="/taskType" />
+        <Field id="buyType" desc="" edittype="text" datatype="string" 
+        xpath="/buyType" />
+        <Field id="buybizType" desc="" edittype="text" datatype="string" 
+        xpath="/buybizType" />
+        <Field id="buySigMk" desc="" edittype="text" datatype="string" 
+        xpath="/buySigMk" />
+        <Field id="draftAttr" desc="" edittype="text" datatype="string" 
+        xpath="/draftAttr" />
+        <Field id="customerId" desc="" edittype="text" datatype="int" 
+        xpath="/customerId" />
+        <Field id="rateType" desc="" edittype="text" datatype="string" 
+        xpath="/rateType" />
+        <Field id="rerate" desc="" edittype="text" datatype="string"  xpath="/rerate" />
+        <Field id="rerateType" desc="" edittype="text" datatype="string" 
+        xpath="/rerateType" />
+        <Field id="sttlmMk" desc="" edittype="text" datatype="string" 
+        xpath="/sttlmMk" />
+        <Field id="postponeType" desc="" edittype="text" datatype="string" 
+        xpath="/postponeType" />
+        <Field id="twoWayDate" desc="" edittype="text" datatype="date" 
+        xpath="/twoWayDate" />
+        <Field id="buySellDate" desc="" edittype="text" datatype="date" 
+        xpath="/buySellDate" />
+        <Field id="buyBackBeginDate" desc="" edittype="text" datatype="date" 
+        xpath="/buyBackBeginDate" />
+        <Field id="buyBackEndDate" desc="" edittype="text" datatype="date" 
+        xpath="/buyBackEndDate" />
+        <Field id="virtualFlag" desc="" edittype="text" datatype="string" 
+        xpath="/virtualFlag" />
+        <Field id="riskScale" desc="" edittype="text" datatype="string" 
+        xpath="/riskScale" />
+        <Field id="innerCustFlag" desc="" edittype="text" datatype="string" 
+        xpath="/innerCustFlag" />
+        <Field id="payerBankName" desc="" edittype="text" datatype="string" 
+        xpath="/payerBankName" />
+        <Field id="payerAccount" desc="" edittype="text" datatype="string" 
+        xpath="/payerAccount" />
+        <Field id="payerScale" desc="" edittype="text" datatype="string" 
+        xpath="/payerScale" />
+        <Field id="departId" desc="" edittype="text" datatype="int"  xpath="/departId" />
+        <Field id="discountFirstFlag" desc="" edittype="text" datatype="string" 
+        xpath="/discountFirstFlag" />
+        <Field id="mendFlag" desc="" edittype="text" datatype="string" 
+        xpath="/mendFlag" />
+        <Field id="addLastDate" desc="" edittype="text" datatype="date" 
+        xpath="/addLastDate" />
+        <Field id="acturallyIndusty" desc="" edittype="text" datatype="string" 
+        xpath="/acturallyIndusty" />
+        <Field id="operatorId" desc="" edittype="text" datatype="int" 
+        xpath="/operatorId" />
+        <Field id="txnDate" desc="" edittype="text" datatype="date"  xpath="/txnDate" />
+        <Field id="logicCheckStatus" desc="" edittype="text" datatype="string" 
+        xpath="/logicCheckStatus" />
+        <Field id="riskCheckStatus" desc="" edittype="text" datatype="string" 
+        xpath="/riskCheckStatus" />
+        <Field id="creditCheckStatus" desc="" edittype="text" datatype="string" 
+        xpath="/creditCheckStatus" />
+        <Field id="auditStatus" desc="" edittype="text" datatype="string" 
+        xpath="/auditStatus" />
+        <Field id="calcStatus" desc="" edittype="text" datatype="string" 
+        xpath="/calcStatus" />
+        <Field id="accountStatus" desc="" edittype="text" datatype="string" 
+        xpath="/accountStatus" />
+        <Field id="maturityStatus" desc="" edittype="text" datatype="string" 
+        xpath="/maturityStatus" />
+        <Field id="disaffirmStatus" desc="" edittype="text" datatype="string" 
+        xpath="/disaffirmStatus" />
+        <Field id="interestStatus" desc="" edittype="text" datatype="string" 
+        xpath="/interestStatus" />
+        <Field id="agentRate" desc="" edittype="text" datatype="string" 
+        xpath="/agentRate" />
+        <Field id="agentRateType" desc="" edittype="text" datatype="string" 
+        xpath="/agentRateType" />
+        <Field id="profitAssignStatus" desc="" edittype="text" datatype="string" 
+        xpath="/profitAssignStatus" />
+        <Field id="misc" desc="" edittype="text" datatype="string"  xpath="/misc" />
+        <Field id="lastUpdOperId" desc="" edittype="text" datatype="int" 
+        xpath="/lastUpdOperId" />
+        <Field id="lastUpdTime" desc="" edittype="text" datatype="string" 
+        xpath="/lastUpdTime" />
+        <Field id="discountFlag" desc="" edittype="text" datatype="string" 
+        xpath="/discountFlag" />
+        <Field id="resellContractId" desc="" edittype="text" datatype="int" 
+        xpath="/resellContractId" />
+        <Field id="creditType" desc="" edittype="text" datatype="string" 
+        xpath="/creditType" />
+        <Field id="mgnOptTime" desc="" edittype="text" datatype="string" 
+        xpath="/mgnOptTime" />
+        <Field id="transStatus" desc="" edittype="text" datatype="string" 
+        xpath="/transStatus" />
+        <Field id="warnId" desc="预警表ID" edittype="text" datatype="string" 
+        xpath="/warnId" />
+        <Field id="dataDt" desc="数据日期" edittype="text" datatype="date" 
+        xpath="/dataDt" />-->
+    </Fields>
+    <Where></Where>
+    <Operations></Operations>
+</CommQry>

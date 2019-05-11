@@ -1,0 +1,132 @@
+<ehcache>
+    <diskStore path="/was/profiles/Appsrv01/crew/cache"/>
+	<cache name="resource.bean.pub.DataDic"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="false" />
+	<cache name="com.huateng.ebank.entity.data.Bctl"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="false" />
+	<cache name="com.huateng.ebank.entity.data.LoanParam"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="false" />
+	<cache name="org.hibernate.cache.StandardQueryCache"
+		maxElementsInMemory="50" eternal="false" timeToIdleSeconds="3600"
+		timeToLiveSeconds="7200" overflowToDisk="false" />
+	<cache name="org.hibernate.cache.UpdateTimestampsCache"
+		maxElementsInMemory="5000" eternal="true" overflowToDisk="false" />
+	<defaultCache maxElementsInMemory="10000" eternal="false"
+		timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="false"
+		diskPersistent="false" diskExpiryThreadIntervalSeconds="120"
+		memoryStoreEvictionPolicy="LRU" />
+
+<!--
+	<cache name="com.huateng.topbpm.graph.def.ExceptionHandler"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.graph.def.Action"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.taskmgmt.def.Task"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.graph.def.ProcessDefinition"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.module.def.ModuleDefinition"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.graph.def.Node"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.instantiation.Delegation"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.graph.def.Event"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.graph.def.Transition"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.context.def.VariableAccess"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.taskmgmt.def.TaskController"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.graph.def.ProcessDefinition.nodes"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.graph.def.Node.leavingTransitions"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.graph.node.Decision.decisionConditions"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.taskmgmt.def.Task.events"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.graph.def.Transition.exceptionHandlers"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.graph.def.Event.actions"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.graph.node.ProcessState.variableAccesses"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.graph.def.ExceptionHandler.actions"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.file.def.FileDefinition.processFiles"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.graph.def.Node.events"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.graph.def.Transition.events"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.taskmgmt.def.TaskMgmtDefinition.tasks"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.taskmgmt.def.TaskMgmtDefinition.swimlanes"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.graph.def.Node.arrivingTransitions"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.taskmgmt.def.Swimlane.tasks"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.graph.def.Node.exceptionHandlers"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.graph.action.Script.variableAccesses"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.graph.node.TaskNode.tasks"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.taskmgmt.def.Task.exceptionHandlers"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.graph.def.ProcessDefinition.actions"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.graph.def.ProcessDefinition.exceptionHandlers"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.graph.def.ProcessDefinition.definitions"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.graph.def.ProcessDefinition.events"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.graph.def.SuperState.nodes"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+	<cache name="com.huateng.topbpm.taskmgmt.def.TaskController.variableAccesses"
+		maxElementsInMemory="2000" eternal="false" timeToLiveSeconds="7200"
+		timeToIdleSeconds="3600" overflowToDisk="true" />
+		-->
+</ehcache>

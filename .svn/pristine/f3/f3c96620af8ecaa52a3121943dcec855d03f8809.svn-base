@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommQry title="表单项" navigate="" type="call" interface="false"
+	pagesize="10" async="false" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.gbicc.person.monitor.getter.TPlDqReportJyByIdGetter">
+	<Include id="BankParam" />
+	
+	<Fields>
+		<Field id="id" xpath="/id" />
+		
+		<Field id="loanAcct" desc="贷款账号" xpath="/loanAcct" readOnly="true" size="100" colspan="4" width="722" />
+		<Field id="prodName" desc="产品名称" xpath="/prodName" readOnly="true" size="200" colspan="4" width="722" />
+		<Field id="loanAmt" desc="贷款金额" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" xpath="/loanAmt" readOnly="true" default="0" width="250"/>
+		<Field id="loanBalance" desc="贷款余额" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" xpath="/loanBalance" readOnly="true" default="0" width="250"/>
+		<Field id="guarWay" desc="担保方式" xpath="/guarWay" edittype="select" translated="DATA_DIC.123" size="50" readOnly="true" width="250"/>
+		<Field id="rateFloPct" desc="浮动比例" xpath="/rateFloPct" readOnly="true" edittype="text" datatype="double" 
+			size="20" scale="2" width="250"/>
+		<Field id="acctStatus" desc="账户状态" xpath="/acctStatus" edittype="select" translated="DATA_DIC.120" size="50" readOnly="true" width="250"/>
+		<Field id="riskType" desc="风险分类" xpath="/riskType" edittype="select" translated="DATA_DIC.122" size="50" readOnly="true" width="250"/>
+		<Field id="zhongZhengMa" desc="中征码" xpath="/zhongZhengMa" size="100" width="250"/>
+		
+		
+		<Field id="custName" desc="客户名称" xpath="/custName" readOnly="true" colspan="4" width="722" />
+		<Field id="custCode" desc="客户编号" xpath="/custCode" readOnly="true" colspan="4" width="722" />
+		<Field id="surveyDate" desc="调查日期" edittype="predate" 
+            datatype="date" xpath="/surveyDate" colspan="4" width="722"/>
+		<Field id="mainSurvPer" desc="主调查人" xpath="/mainSurvPer" size="50" colspan="4" width="722"/>
+		<Field id="assistSurvPer" desc="辅助调查人" xpath="/assistSurvPer" size="50" colspan="4" width="722"/>
+		
+		
+		<Field id="estaDate" desc="成立时间" edittype="date" readOnly="true"
+            datatype="date" xpath="/estaDate" colspan="4" width="722"/>
+        <Field id="regiAddr" desc="注册地址" xpath="/regiAddr" colspan="4" width="722" readOnly="true" />
+        <Field id="finaDeptAddr" desc="财务部地址" xpath="/finaDeptAddr" size="200" colspan="4" width="722" />
+        <Field id="operAddr" desc="经营地址" xpath="/operAddr" colspan="4" readOnly="true" width="722" />
+        <Field id="operStartDate" desc="经营期限" edittype="date" readOnly="true"
+            datatype="date" xpath="/operStartDate" width="250"/>
+		<Field id="operEndDate" desc="至" edittype="date"
+            datatype="date" xpath="/operEndDate" width="250"/>
+		<Field id="enteProp" desc="企业性质" xpath="/enteProp" size="50" colspan="4" width="722"/>
+		<Field id="induClass" desc="行业分类" xpath="/induClass" size="50" width="250"/>
+		<Field id="staffQuan" desc="职工人数" xpath="/staffQuan" datatype="int" readOnly="true" width="250"/>
+		<Field id="regiCapi" desc="注册资本" xpath="/regiCapi" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" width="250"/>
+		<Field id="rcvCapi" desc="实收资本" xpath="/rcvCapi" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" width="250"/>
+		<Field id="operScope" desc="经营范围" xpath="/operScope" readOnly="true" colspan="4" width="722"/>
+		<Field id="enteScale" desc="企业规模" xpath="/enteScale" size="50" width="250"/>
+		<Field id="enteGrade" desc="内评等级" xpath="/enteGrade" size="50" width="250"/>
+		<Field id="juirPerDelegate" desc="法人代表" xpath="/juirPerDelegate" size="50" width="250"/>
+		<Field id="juirPerIdentCode" desc="身份证号码" xpath="/juirPerIdentCode" size="50" width="250"/>
+		<Field id="realCtrlPer" desc="实际控制人" xpath="/realCtrlPer" size="50" width="250"/>
+		<Field id="realCtrlPerIdentCode" desc="身份证号码" xpath="/realCtrlPerIdentCode" size="50" width="250"/>
+		<Field id="busiLice" desc="营业执照/批准书" xpath="/busiLice" size="100" width="250"/>
+		<Field id="orgCode" desc="组织机构代码" xpath="/orgCode" size="50" width="250"/>
+		<Field id="taxRegiCode" desc="税务登记号" xpath="/taxRegiCode" size="100" width="250"/>
+		<Field id="enviFlag" desc="环保标识" xpath="/enviFlag" colspan="4" size="100" width="722"/>
+		<Field id="specOperCode" desc="特种经营许可证" xpath="/specOperCode" colspan="4" size="100" width="722"/>
+		
+		
+		<Field id="regiCapiChange" status="N" desc="注册资本变化情况" edittype="select" translated="LIST:1,增加;2,未变;3,减少"
+            datatype="string" xpath="/regiCapiChange" colspan="4" width="722" />
+        <Field id="ifHaveCapiRpt" status="N" desc="变更注册资本的，是否提供有法定资格验资机构出具的验资报告" edittype="select" translated="LIST:1,是;2,否"
+            datatype="string" xpath="/ifHaveCapiRpt" colspan="4" width="722" />
+        <Field id="regiCapiChangeDesc" desc="注册资本变动情况说明" edittype="textarea" size="500" xpath="/regiCapiChangeDesc" height="50" width="472" />
+        
+        
+        <Field id="enteNameIfChange" status="N" desc="企业中文名称是否发生变化" edittype="select" translated="LIST:1,发生变化;2,未发生变化"
+            datatype="string" xpath="/enteNameIfChange" />
+        <Field id="orgCodeIfChange" status="N" desc="组织机构代码证是否发生变化" edittype="select" translated="LIST:1,发生变化;2,未发生变化"
+            datatype="string" xpath="/orgCodeIfChange" />
+        <Field id="busiLiceIfChange" status="N" desc="营业执照/批准证书是否发生变化" edittype="select" translated="LIST:1,发生变化;2,未发生变化"
+            datatype="string" xpath="/busiLiceIfChange" />
+		<Field id="taxRegiCodeIfChange" status="N" desc="税务登记证号码是否发生变化" edittype="select" translated="LIST:1,发生变化;2,未发生变化"
+            datatype="string" xpath="/taxRegiCodeIfChange" />
+		<Field id="loanCardIfChange" status="N" desc="贷款卡号是否发生变化" edittype="select" translated="LIST:1,发生变化;2,未发生变化"
+            datatype="string" xpath="/loanCardIfChange" />
+		<Field id="specOperCodeIfChange" status="N" desc="特种生产经营许可证是否发生变化" edittype="select" translated="LIST:1,发生变化;2,未发生变化"
+            datatype="string" xpath="/specOperCodeIfChange" />
+		<Field id="induClassIfChange" status="N" desc="企业所属行业是否发生变化" edittype="select" translated="LIST:1,发生变化;2,未发生变化"
+            datatype="string" xpath="/induClassIfChange" />
+		<Field id="enteIdentIfLose" status="N" desc="企业相关证照是否失效" edittype="select" translated="LIST:1,存在;2,不存在"
+            datatype="string" xpath="/enteIdentIfLose" />
+		<Field id="enteInfoChangeDesc" desc="若有，请予以说明" edittype="textarea" size="500" xpath="/enteInfoChangeDesc" height="50" width="622" />
+		
+		
+		<Field id="finaRptIfCredible" status="N" desc="财务报表是否可信" edittype="select" translated="LIST:1,基本可信;2,不可信"
+            datatype="string" xpath="/finaRptIfCredible" />
+        <Field id="loanPerFinaCond" status="N" desc="与上期相比，借款人财务状况" edittype="select" translated="LIST:1,向好;2,持平;3,向差;4,无法判断"
+            datatype="string" xpath="/loanPerFinaCond" />
+        <Field id="enteAmtIfChange" status="N" desc="企业资金链、现金流是否发生重大变化" edittype="select" translated="LIST:1,正常;2,不正常"
+            datatype="string" xpath="/enteAmtIfChange" colspan="4" />
+		<Field id="predRepmtSrc" status="N" desc="预计还款来源" edittype="select" translated="LIST:1,经营活动现金流;2,投资活动现金流;3,筹资活动现金流"
+            datatype="string" xpath="/predRepmtSrc" colspan="4" />
+		<Field id="finaAnalEval" desc="财务分析评价（对财务数据的可信度、以及财务其他变化方面的分析评价）" size="500" edittype="textarea" xpath="/finaAnalEval" height="50" width="622" />
+		
+		
+		<Field id="guarantorName" desc="保证人名称" xpath="/guarantorName" readOnly="true" colspan="4" width="722" />
+		<Field id="ourbankGuarTotAmt" desc="本行担保总额" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" xpath="/ourbankGuarTotAmt" default="0" width="250"/>
+		<Field id="othbankGuarTotAmt" desc="他行担保总额" edittype="text" datatype="currency" 
+			size="20" scale="2" prefix="￥" xpath="/othbankGuarTotAmt" default="0" width="250"/>
+		<Field id="ourbankLoanBal" desc="本行贷款余额" edittype="text" readOnly="true" datatype="currency" 
+			size="20" scale="2" prefix="￥" xpath="/ourbankLoanBal" default="0" width="250"/>
+		<Field id="othbankLoanBal" desc="他行贷款余额" edittype="text" readOnly="true" datatype="currency" 
+			size="20" scale="2" prefix="￥" xpath="/othbankLoanBal" default="0" width="250"/>
+			
+			
+		<Field id="relaPer" status="N" desc="联系人" edittype="select" translated="LIST:1,保证人本人;2,配偶;3,亲属;4,单位同事;5,其他相关人【填写其他联系人】"
+            datatype="string" xpath="/relaPer" colspan="4" width="522" />
+		<Field id="othRelaPer" desc="其他联系人" xpath="/othRelaPer" colspan="4" size="100" width="522" />
+		<Field id="guarantorWorkChange" status="N" desc="保证人工作变动情况" edittype="select" translated="LIST:1,无变化;2,新单位【填写新单位名称】;3,失业"
+            datatype="string" xpath="/guarantorWorkChange" colspan="4" width="522" />
+		<Field id="newCompName" desc="新单位名称" xpath="/newCompName" size="100" colspan="4" width="522" />
+		<Field id="guarantorPhoneChange" status="N" desc="保证人联系电话更新" edittype="select" translated="LIST:1,无变化;2,新电话【填写新电话】"
+            datatype="string" xpath="/guarantorPhoneChange" colspan="4" width="522" />
+		<Field id="guarantorNewPhone" desc="新电话" xpath="/guarantorNewPhone" size="50" colspan="4" width="522" />
+		<Field id="guarantorAddrChange" status="N" desc="家庭住址变动情况" edittype="select" translated="LIST:1,无变化;2,新住址【填写新住址】"
+            datatype="string" xpath="/guarantorAddrChange" colspan="4" width="522" />
+		<Field id="guarantorNewAddr" desc="新住址" xpath="/guarantorNewAddr" size="200" colspan="4" width="522" />
+		<Field id="guarantorIncomeChange" status="N" desc="保证人月收入变动情况" edittype="select" translated="LIST:1,无变化;2,收入下降;3,收入增加"
+            datatype="string" xpath="/guarantorIncomeChange" colspan="4" width="522" />
+		<Field id="guarantorPosiChange" status="N" desc="保证人职务变动情况" edittype="select" translated="LIST:1,无变化;2,发生变动【填写新职务】"
+            datatype="string" xpath="/guarantorPosiChange" colspan="4" width="522" />
+		<Field id="guarantorNewPosi" desc="新职务" xpath="/guarantorNewPosi" size="50" colspan="4" width="522" />
+		<Field id="guarantorOperChange" status="N" desc="保证人经营变动情况" edittype="select" translated="LIST:1,经营正常;2,经营遇到困难;3,其他"
+            datatype="string" xpath="/guarantorOperChange" colspan="4" width="522" />
+		<Field id="guarantorInfoChangeDesc" desc="保证人信息变化情况、及其他需要关注事（发生重大事件）项说明" size="500" edittype="textarea" xpath="/guarantorInfoChangeDesc" height="50" width="522" />
+		
+		
+		<Field id="guarantorWishChange" status="N" desc="保证人保证意愿是否变化" edittype="select" translated="LIST:1,无变化;2,有变化"
+            datatype="string" xpath="/guarantorWishChange" />
+		<Field id="guarantorGuarStre" status="N" desc="保证人的担保（或保证）实力" edittype="select" translated="LIST:1,不变;2,下降"
+            datatype="string" xpath="/guarantorGuarStre" />
+		<Field id="guarantorWishChangeDesc" desc="保证人保证意愿变化说明" edittype="textarea" size="200" xpath="/guarantorWishChangeDesc" height="50" width="250" />
+		<Field id="guarantorGuarStreDesc" desc="保证人的担保（或保证）实力变化说明" edittype="textarea" size="200" xpath="/guarantorGuarStreDesc" height="50" width="250" />
+		
+		
+		<Field id="loanPerIfInvoLawsuit" status="N" desc="借款人是否涉及或者即将涉及重大债权债务纠纷、法律诉讼" edittype="select" translated="LIST:1,是;2,否"
+            datatype="string" xpath="/loanPerIfInvoLawsuit"/>
+		<Field id="loanPerIfInvoLawsuitDesc" desc="借款人是否涉及或者即将涉及重大债权债务纠纷、法律诉讼说明" edittype="textarea" size="500" xpath="/loanPerIfInvoLawsuitDesc" height="100" width="300" />
+		
+		
+		<Field id="lmtCtrl" status="N" desc="授信额度控制" edittype="checkbox" translated="DATA_DIC.113"
+            datatype="string" xpath="/lmtCtrl" />
+        <Field id="riskCtrl" status="N" desc="其他控制" edittype="checkbox" translated="DATA_DIC.114"
+            datatype="string" xpath="/riskCtrl" />
+        <Field id="otherCtrlDesc" desc="其他措施说明" xpath="/otherCtrlDesc" size="500"/>
+        <Field id="appendCtrl" desc="附加处理措施（可多选）" xpath="/appendCtrl" edittype="checkbox" translated="DATA_DIC.115" />
+        <Field id="applyOpin" desc="申报意见" edittype="textarea" xpath="/applyOpin" height="100" width="300" />
+        <Field id="frequency" desc="监控频率" xpath="/frequency" translated="CQ:subAutoDataDic" 
+			   fieldmap="frequency=dataNo;frequencyName=dataName" viewField="dataName"
+			   edittype="select" dropdowntype="dynamic" init="true" size="10" />
+        
+        <Field id="opinion" desc="意见" edittype="textarea" xpath="/opinion" height="100" width="700" />
+		<Field id="measCompleteDate" status="N" desc="措施完成时间" edittype="postdate"
+            datatype="date" xpath="/measCompleteDate" />
+            
+            
+        <Field id="sharStruIfChange" status="N" desc="股东结构是否发生变化" edittype="select" translated="LIST:1,发生变化;2,未发生变化"
+            datatype="string" xpath="/sharStruIfChange" />
+        <Field id="realCtrlPerIfChange" status="N" desc="实际控制人是否发生变化" edittype="select" translated="LIST:1,发生变化;2,未发生变化"
+            datatype="string" xpath="/realCtrlPerIfChange" />
+		<Field id="stockStruChangeDesc" xpath="/stockStruChangeDesc" desc="若存在变化，针对股权结构变动进行说明" size="500" edittype="textarea" colspan="4" height="50" width="622" />
+		
+		
+		<Field id="mortCond" status="N" desc="抵押物当前状况" edittype="select" translated="LIST:1,完好;2,毁损;3,被转移;4,被变卖;5,被再抵押;6,被有关机关依法查封、冻结、扣押"
+            datatype="string" xpath="/mortCond" colspan="4" width="522"/>
+		<Field id="mortIfDevalue" status="N" desc="是否存在市场贬值" edittype="select" translated="LIST:1,是;2,否"
+            datatype="string" xpath="/mortIfDevalue" />
+		<Field id="mortAsseInsuIfExpire" status="N" desc="押品的财产保险是否到期" edittype="select" translated="LIST:1,是;2,否"
+            datatype="string" xpath="/mortAsseInsuIfExpire" />
+		<Field id="mortIssueAndDesc" xpath="/mortIssueAndDesc" desc="存在问题及说明（对抵押物足值性、安全性、合法性以及易变现性检查中，发现不利于我行贷款安全的情况说明）" size="500" edittype="textarea" height="50" width="622" />
+		
+		
+		<Field id="collatCond" status="N" desc="质押物当前状况" edittype="select" translated="LIST:1,无变化;2,有变化（有变化根据实情填写相关信息）"
+            datatype="string" xpath="/collatCond" colspan="4" width="522"/>
+        <Field id="collatCondDesc" desc="质押物变化情况说明" edittype="textarea" xpath="/collatCondDesc" size="500" colspan="4" height="50" width="522" />
+		<Field id="collatIfDevalue" status="N" desc="是否存在市场贬值" edittype="select" translated="LIST:1,是;2,否"
+            datatype="string" xpath="/collatIfDevalue" colspan="4" width="522" />
+		<Field id="collatImelIfExpire" status="N" desc="时效性是否到期" edittype="select" translated="LIST:1,是;2,否"
+            datatype="string" xpath="/collatImelIfExpire" colspan="4" width="522" />
+		<Field id="collatIfLoseLawPote" status="N" desc="权利质押是否失去法律效力" edittype="select" translated="LIST:1,是;2,否"
+            datatype="string" xpath="/collatIfLoseLawPote" colspan="4" width="522" />
+		<Field id="collatIssueAndDesc" xpath="/collatIssueAndDesc" desc="存在问题及说明" edittype="textarea" size="500" colspan="4" height="50" width="522" />
+		
+		<Field id="mobilecall" desc="联系电话" xpath="/mobilecall" readOnly="true" size="20" width="250"/>
+        <Field id="contaddr" desc="联系地址" xpath="/contaddr" readOnly="true" size="200" width="250"/>
+	</Fields>
+	
+	<Operations>
+		<Button id="btnSave" name="btnSave" desc="保存" icon="icon-save" operation="asysubmit" 
+			updateClass="com.gbicc.person.monitor.update.TPlDqReportJyUpdate" url="#" txn="" />
+		<Button id="btnSubmit" name="btnSubmit" desc="提交" icon="icon-ok" />
+		<Button id="btnSubmitTrue" name="btnSubmitTrue" desc="提交" icon="icon-ok" operation="asysubmit" 
+			updateClass="com.gbicc.person.monitor.update.TPlDqReportJyUpdate" url="#" txn="" />
+		<Button id="btnBack" name="btnBack" desc="退回" icon="icon-back" operation="asysubmit" 
+			updateClass="com.gbicc.person.monitor.update.TPlDqReportJyUpdate" url="#" txn="" />
+		<Button id="btnPrint" name="btnPrint" desc="打印" icon="icon-print" />
+	</Operations>
+</CommQry>

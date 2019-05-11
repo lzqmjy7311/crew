@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<CommQry title="表单项" navigate="" type="call"
+	interface="false" pagesize="12" async="false" databusid="FIVE"
+	transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.fp.demo.getter.FieldGetter">
+	<Include id="BankParam" />
+    
+    <PageQryExp type="XLS" limit="true" encoding="GBK" url="/trans/qryExp.do" desc="XLS导出" perfetch="20" maxpage="20" directory="F:/upload1"/>
+    
+	<Fields>
+<!-- 页面生成的编辑框为文本框模式下，各种文本框的输入类型 -->
+		<Field id="select" desc="select" edittype="checkbox" xpath="" default=""/>
+        <Field id="textString3" desc="文本框－字符（必须）"  xpath="/textString" require="true" placeholder="holder"  default="require"/>
+        <Field id="id" desc="普通文本" edittype="" xpath="/id" status="F" default=""/>
+        <Field id="labelString" desc="普通文本" edittype="datalabel" xpath="/labelString" status="F" default="label"/>
+        <Field id="textString" desc="文本框－字符"   align="left" xpath="/textString" default="string"  rules="" errmsg="只允许输入字母或数字"/>
+        <Field id="textString2" desc="文本框－字符（只读）"   xpath="/textString" readonly="true" default="readonly"/>
+        <Field id="textComposite1" desc="组合域1"  prelabel="组合域" xpath="" compositeflag="true" placeholder="开始"  compositeindex="start"/>
+        <Field id="textComposite2" desc="组合域2"  prelabel="组合域" xpath="/textString" placeholder="12.01"  compositeflag="true" edittype="text"/>
+        <Field id="textComposite3" desc="组合域3"  preLable="组合域" xpath="" compositeflag="true" placeholder="结束"  compositeindex="end"/>
+        <Field id="textInteger" desc="文本框-整型" edittype="text" datatype="int" size="3" align="right"  xpath="/textInteger" rules="isNum" errmsg="只允许输入字母或数字"  />
+        
+        <Field id="textHidden" desc="文本框－隐藏域"  edittype="hidden" xpath="/textString" default="hidden"/>
+		<Field id="int2" desc="文本框-URL" edittype="text" datatype="string" size="10" default="abc" validtype="url"  />
+        <Field id="dialog" desc="文本框-dialog" editable="true" edittype="select"  dropdowntype="dialog" fieldMap="dialog=textString;dialogName=textInteger;textString=textString"  url="/fpages/sample/ftl/Field.ftl" datatype="string" />
+		<Field id="radio" desc="radio" edittype="radio" readonly="false" translated="LIST:0,10;1,20;2,30;3,40;4,50" datatype="string" size="10" xpath="" />
+        <Field id="check" desc="check" align="center" edittype="checkbox" readonly="false" translated="LIST:0,10;1,20;2,30;3,40;4,50" datatype="boolean" size="10" xpath="" />
+        <Field id="comboxList" desc="LIST下拉" edittype="select" multiple="" editable="true" readonly="false" placeholder="占位符" translated="LIST:0,10;1,20;2,30;3,40;4,50" datatype="int" size="10" />
+        <Field id="comboxDic" desc="数字字典下拉" edittype="select" multiple="" editable="" readonly="false" placeholder="占位符" translated="DATA_DIC.37" datatype="int" size="10" xpath="" />
+        <Field id="comboxTree" desc="动态下拉框－树" status="N" multiple="false" editable="true"  translated="CQ:FunctionTree" placeholder="占位符" method="com.huateng.ebank.business.common.CQMethod.getDataDicName" readonly="false"
+	        fieldmap="comboxTree=funcid;comboxTreeName=funcname;textString=funcid;textString2=funcname" viewField="funcname" edittype="select" 
+	        dropdowntype="dynamictree" primary="true"  init="false" size="3" default="2" xpath="/comboxDropdown"/>
+        <Field id="comboxDropdown" desc="动态下拉框－CQ" status="N" editable="true" multiple="false" fieldname="dataNo" placeholder="占位符" edittype="select" dropdowntype="dynamic"
+            dataType="String" readonly="false" translated="CQ:AllDownBrcodeSelect"
+            viewField="brcode" init="true"  fieldmap="textString=brcode;textString2=brname;comboxDropdown=brcode;comboxDropdownName=brname" size="20"
+            primary="false" type="String" xpath="/comboxDropdown" />
+		<Field id="int3" desc="文本框-double型" edittype="text" placeholder="双精度数字" datatype="double" size="10" scale="5" />
+		<Field id="int4" desc="文本框-float型" edittype="text" datatype="float" size="10" scale="2" />
+		<Field id="int5" desc="文本框-货币型" edittype="text" datatype="currency" size="10"  scale="2" prefix="$" default="1234354134132.213123" />
+<!-- 页面生成的编辑框为文本域模式下，各种文本框的输入类型  		
+		<Field id="textarea" desc="文本域-字符型" edittype="textarea" datatype="string" placeholder="占位符" colspan="4" size="10"  height="100" width="580" />
+		-->
+<!--页面生成的编辑框为data模式下,各种日期的输入  -->		
+		<Field id="data1" desc="日期框-日期型" edittype="date" placeholder="yyyy-MM-dd" editable="true" datatype="date" default="" xpath="/textDate"/>
+		<Field id="data11" desc="日期框-日期型1" edittype="date" placeholder="yyyy-MM-dd" editable="true" datatype="string" default="" xpath="/textDate"/>
+        <Field id="data2" desc="日期框-指定日期的之前" edittype="predate" editable="true" datatype="predate"/>
+		<Field id="data3" desc="日期框-指定日期的之后" edittype="postdate"   datatype="postdate" />
+        <Field id="data4" desc="年月" placeholder="yyyyMM" edittype="select" editable="true" dropdowntype="custom"  url="/templets/lib/yyyyMM.ftl" startyear="2005" yearlength="10"
+               require="false"  fieldmap="data4=yyyyMM;data4Name=yyyyMM" viewField="yyyyMM" />
+		<!-- <Field id="data4" desc="日期框-时间型" edittype="time" datatype="time" /> -->
+		<Field id="data5" desc="日期框-时间戳型" placeholder="yyyy-MM-dd HH:mm:ss"
+           editable="true" edittype="timestamp" datatype="timestamp" xpath="/textTimestamp"/>
+        
+        
+        <Field id="mulCol" desc="组合列" mergefields="col1,col2" xpath="/textString" default="string"/>
+        <Field id="mulCol2" desc="组合列" mergefields="col1,col4" xpath="/textString" default="string"/>
+        <Field id="col1" desc="列1"  default="string"  xpath="/textTimestamp" readonly="true"/>
+        <Field id="col2" desc="列2" mergefields="col3,col4" xpath="/textString" default="string"/>
+        <Field id="col3" desc="列3"  xpath="/textString" edittype="" default="string"/>
+        <Field id="col4" desc="列4"  xpath="/textString" edittype="" default="string"/>
+		
+    </Fields>
+<Where>
+		
+		<DateTextBox id="workDate" desc="工作日期" tip="工作日期" readonly="true"
+			require="true" status="F" datatype="date" method="None" size="150"
+			primary="false" index="0" type="String" />
+    </Where>
+
+    <Operations>
+        <Button id="btSave" name="btSave" desc="保存" icon="icon-save" operation="asysubmit" updateClass="com.huateng.fp.demo.updater.FieldUpdate" url="#" txn="" />
+    <Button id="btSave2" name="btSave" desc="新增" icon="icon-add" operation="asysubmit" updateClass="#" url="#" txn="" />
+    </Operations>
+</CommQry>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 用于直接生成SQL语句，支持同步和异步提交 -->
+<!-- title:标题 navigate:导航信息 type:方式（sql|call) interface:是否显示输入条件页面(true|false)
+	databusid:数据总线编号 transdataactionurl:数据整理URL async:异步提交标志 pagesize:页面显示记录数(缺省为10) -->
+<CommQry title="机构信息维护" navigate="系统维护 &gt;系统配置信息&gt;机构信息维护" type="call" interface="false"
+	pagesize="10" async="true" databusid="" transdataactionurl="/trans/TransDataAction.do"
+	getterclassname="com.huateng.ebank.business.approve.getter.RbsBranchCodeMappEntryGetter">
+	<Include id="BankParam" />
+
+	<Fields>
+		<!-- status :F-基本信息中显示 N-不显示 D-详细信息中显示 A-基本、详细信息中都显示 -->
+		<!-- primary : true-作为表单项记录上传 false-不作为表单项上传 -->
+		<Field id="id" desc="主键" require="" edittype="text" datatype="string"
+			method="None" readonly="false" size="32" status="F" default=""
+			primary="true" xpath="/id" />
+
+		<Field id="rbsbranchcode" desc="RBS机构号" status="F" edittype="text" size="3" require="true"
+			method="None" primary="false" type="String" default="" xpath="/rbsbranchcode"
+			tip="机构代码" />
+
+		<Field id="busitype" desc="业务类型" require="true" edittype="select"
+			datatype="string" method="None" readonly="false" size="2" status="F" translated="DATA_DIC.35"
+			default="" primary="true" xpath="/busitype" />
+
+		<Field id="branchcode" desc="金融机构号" edittype="text" require="true"
+			datatype="string" method="None" readonly="false" size="12" status="F"
+			default="" primary="true" xpath="/branchcode" />
+
+		<Field id="status" desc="有效/无效" edittype="select" translated="DATA_DIC.80" require="true"
+			datatype="string" method="None" readonly="false" size="1" status="F"
+			default="" primary="true" xpath="/status" />
+
+		<Field id="crtTm" desc="创建时间" require="" edittype="text"
+			datatype="timestamp" method="None" readonly="false" size="14" status="F"
+			default="" primary="true" xpath="/crtTm" />
+
+		<Field id="crtTlr" desc="创建人" require="" edittype="text"
+			datatype="string" method="None" readonly="false" size="20" status="F"
+			default="" primary="true" xpath="/crtTlr" />
+			
+		<Field id="lstUpdTm" desc="最后更新时间" require="" edittype="text"
+			datatype="timestamp" method="None" readonly="false" size="14" status="F"
+			default="" primary="true" xpath="/lstUpdTm" />
+			
+		<Field id="lstUpdTlr" desc="最后更新人" require="" edittype="text"
+			datatype="string" method="None" readonly="false" size="20" status="F"
+			default="" primary="true" xpath="/lstUpdTlr" />
+		
+		<Field id="operation" desc="操作" datatype="string" xpath="/id"/>
+
+	</Fields>
+
+	<Parameters></Parameters>
+	<Where>
+		<TextBox id="qrbsbranchcode" desc="RBS机构号" datatype="string" index="1" size="3"/>
+		<Option id="qbusitype" desc="业务类型" datatype="string" index="0" translated="DATA_DIC.35" require="false" ></Option>
+		<TextBox id="qbranchcode" desc="金融机构号" datatype="string" index="2" size="12"/>
+	</Where>
+
+
+
+	<Operations>
+		<Button id="btModOrAdd" name="btModOrAdd" desc="保存" operation="asysubmit"
+			updateClass="com.huateng.ebank.business.approve.updater.RbsBranchCodeMappUpdate"
+			url="#" txn="" />
+		<Button id="btCancel" name="btCancel" desc="返回" operation="href" url="" />
+		<Button id="btStatus" name="btStatus" desc="有效/无效" operation="asysubmit"
+			updateClass="com.huateng.ebank.business.approve.updater.RbsBranchCodeMappUpdate"
+			url="#" txn="" />
+	</Operations>
+
+	<Script></Script>
+
+</CommQry>

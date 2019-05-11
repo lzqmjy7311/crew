@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-6-27 13:30:38 by Hibernate Tools 3.4.0.CR1 -->
+<hibernate-mapping>
+	<class name="com.gbicc.company.financial.analysis.entity.TOutTaxGraveBreak" table="T_OUT_TAX_GRAVE_BREAK" schema="ECUSER">
+		<comment>税务机关-重大税收违法</comment>
+		<id name="id" type="string">
+			<column name="ID" length="50" />
+		</id>
+		<property name="paytexUser" type="string">
+			<column name="PAYTEX_USER" length="50" />
+		</property>
+		<property name="paytexDistcode" type="string">
+			<column name="PAYTEX_DISTCODE" length="50" />
+		</property>
+		<property name="orgcode" type="string">
+			<column name="ORGCODE" length="50" />
+		</property>
+		<property name="registorAddress" type="string">
+			<column name="REGISTOR_ADDRESS" length="500" />
+		</property>
+		<property name="legalName" type="string">
+			<column name="LEGAL_NAME" length="100" />
+		</property>
+		<property name="mainName" type="string">
+			<column name="MAIN_NAME" length="100" />
+		</property>
+		<property name="secondmName" type="string">
+			<column name="SECONDM_NAME" length="100" />
+		</property>
+		<property name="caseType" type="string">
+			<column name="CASE_TYPE" length="200" />
+		</property>
+		<property name="itemContent" type="string">
+			<column name="ITEM_CONTENT" length="500" />
+		</property>
+		<property name="relaId" type="string">
+			<column name="RELA_ID" length="50" />
+		</property>
+		<property name="rowDate" type="date">
+			<column name="ROW_DATE" length="10" />
+		</property>
+	</class>
+</hibernate-mapping>

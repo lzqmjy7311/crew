@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Buffer id="CEReq_Attr" name="CEReq_Attr" desc="卡片参与请求消息请求">
+	<Attr id="testAttr" type="RBS" desc="测试属性" name="testAttr" length="20" initValue="" xpath="/testAttr" />
+	<Attr id="xtype" type="RBS" desc="测试属性" name="xtype" length="20" initValue="" xpath="/xtype" />
+	<!-- type 枚举说明 SL:字符串类型 S:右补空字符串类型 RBNS:右补空数字字符串类型 N:数字类型 LZN:左补0数字类型 LZC:左补零数值类型 SLZC:代符号位的左补零数值类型 -->
+	<Field id="version" type="RBS" desc="消息版本号" name="version" length="20" initValue="1234556" xpath="/version">
+		<Attr id="testAttr-1" type="RBS" desc="消息版本号" name="vertest" length="10" initValue="" xpath="/version" />
+		<Attr id="testAttr-2" type="RBS" desc="消息版本号" name="testAttr-2" length="10" initValue="" xpath="/version" />
+	</Field>
+	<Field id="xtype" type="RBS" desc="交易类型" name="xtype" length="2" xpath="">
+		<Attr id="xtype" type="RBS" desc="交易类型" name="xtype" length="2" initValue="" xpath="/xtype" />
+	</Field>
+	<Field id="xclass" type="RBS" desc="交易类别" name="xclass" length="1" xpath="/xclass" />
+	<Field id="pan" type="RBS" desc="卡号" name="pan" length="19" xpath="/pan" />
+	<Buffer id="Merchant" type="Buffer.Element.CERes_Merchant" desc="商户信息" name="Merchant">
+		<Attr id="testAttr-b" type="RBS" desc="消息版本号" name="testAttr-b" length="20" initValue="" xpath="/pan" />
+		<Field id="acqBIN" type="RBS" desc="acqBIN" name="acqBIN" length="11" initValue="" xpath="/merchant/acqBIN" />
+		<Field id="merID" type="RBS" desc="merID" name="merID" length="24" initValue="" xpath="/merchant/merID" />
+		<Field id="password" type="RBS" desc="password" name="password" length="8" initValue="" xpath="/merchant/password" />
+		<Field id="name" type="RBS" desc="name" name="name" length="25" initValue="" xpath="/merchant/name" />
+		<Field id="country" type="RBS" desc="country" name="country" length="3" initValue="" xpath="/merchant/country" />
+	</Buffer>
+	<Array id="array" desc="数组List" name="array" xpath="/array">
+		<Attr id="testAttr-a" type="RBS" desc="消息版本号" name="testAttr-a" length="11" initValue="" xpath="/merchant/merID" />
+		<Buffer id="Purchase" desc="交易信息" name="Purchase" xpath="com.huateng.fs.micro.demo.bean.Purchase">
+			<Attr id="testAttr-ab" type="RBS" desc="消息版本号" name="testAttr-ab" length="1" initValue="" xpath="/exponent" />
+			<Field id="purchAmount" type="LZN" desc="交易金额" name="purchAmount" length="12" xpath="/purchAmount" />
+			<Field id="currency" type="RBS" desc="交易币种" name="currency" length="3" xpath="/currency" />
+			<Field id="exponent" type="RBS" desc="货币指数" name="exponent" length="1" xpath="/exponent" />
+			<Field id="trsFeeAmount" type="LZN" desc="交易手续费" name="trsFeeAmount" length="9" xpath="trsFeeAmount" />
+		</Buffer>
+	</Array>
+</Buffer>
